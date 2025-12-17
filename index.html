@@ -302,6 +302,7 @@ const categories = {
   de: ["📞 Notfall","📋 Hausregeln","🏖️ Strände","🍽️ Restaurants","🏛️ Historische Orte","🎨 Museen & Kultur","🍸 Bars & Nachtleben","🛒 Supermärkte","🚌 Transport","🏥 Gesundheit & Apotheken","🏧 Geldautomaten & Banken","🥾 Wanderwege","⛵ Bootstouren","⛳ Golfplätze"]
 };
 
+<script>
 function setLanguage(lang) {
   const titles = {
     pt: "Guia Belleview Apartments",
@@ -362,6 +363,28 @@ function setLanguage(lang) {
   document.getElementById("catPrintTop").innerText = buttonTexts.print[lang];
   document.getElementById("catShareTop").innerText = buttonTexts.share[lang];
   document.getElementById("catBackBottom").innerText = buttonTexts.back[lang];
+}
+
+function showCategory(lang,key,catName) {
+  document.getElementById("categories").style.display="none";
+  document.getElementById("categoryContent").style.display="block";
+  document.getElementById("categoryTitle").innerText=catName;
+
+  if (key==="rules") {
+    document.getElementById("categoryText").innerHTML = rules[lang];
+  } else if (key==="emergency") {
+    document.getElementById("categoryText").innerHTML = emergency[lang];
+  } else if (key==="beaches") {
+    document.getElementById("categoryText").innerHTML = beaches[lang];
+  } else {
+    document.getElementById("categoryText").innerHTML = "<p>Conteúdo desta categoria ainda em desenvolvimento.</p>";
+  }
+
+  // traduz botões
+  document.getElementById("catBackTopContent").innerText=buttonTexts.back[lang];
+  document.getElementById("catPrintContent").innerText=buttonTexts.print[lang];
+  document.getElementById("catShareContent").innerText=buttonTexts.share[lang];
+  document.getElementById("catBackBottomContent").innerText=buttonTexts.back[lang];
 }
 
 function showCategories() {
