@@ -252,6 +252,38 @@ const emergency = {
 `
 };
 
+const beaches = {
+  pt: `
+<h3>Praias de Lagos (10 praias)</h3>
+
+<div class="category-card"><h3>Meia Praia</h3><p>Extensa, ampla e com areal enorme. Excelente para caminhadas longas, desportos náuticos e famílias.</p><p>Distância: 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Batata</h3><p>Pequena praia urbana, muito próxima do centro de Lagos. Abrigada e com águas calmas.</p><p>Distância: 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Famosa pelo arco romano entre rochas. Pequena e muito fotogénica.</p><p>Distância: 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Praia pequena e tranquila, rodeada por falésias altas. Ideal para relaxar.</p><p>Distância: 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinhão+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Praia Dona Ana</h3><p>Uma das praias mais bonitas do Algarve, falésias douradas e águas calmas.</p><p>Distância: 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Camilo</h3><p>Acesso por escadaria icónica. Belíssima água azul-turquesa e formações rochosas.</p><p>Distância: 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Selvagem e menos frequentada. Ideal para quem procura sossego junto às falésias da Ponta da Piedade.</p><p>Distância: 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Canavial</h3><p>Uma praia escondida entre falésias altas, muito tranquila e com ambiente natural.</p><p>Distância: 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Grande areal, ótima para dias de praia com serviços e restaurantes. Muito procurada para surf.</p><p>Distância: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+Mós+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Luz</h3><p>Praia ampla, familiar e com uma vila turística acolhedora. Águas calmas e boa infraestrutura.</p><p>Distância: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<h3>Praias de Portimão (6 praias)</h3>
+... (segue o mesmo formato para Alvor, Vau, Careanos, Três Castelos, Rocha, Caneiros)
+
+<h3>Praias de Vila do Bispo (6 praias)</h3>
+... (segue o mesmo formato para Burgau, Salema, Figueira, Furnas, Zavial, Ingrina)
+`
+};
+  
 
 // Textos dos botões
 const buttonTexts = {
@@ -279,6 +311,25 @@ function setLanguage(lang) {
     it: "Guida Appartamenti Belleview",
     de: "Belleview Apartments Führer"
   };
+li.onclick = () => {
+  if (
+    cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") ||
+    cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")
+  ) {
+    showCategory(lang,"rules",cat);
+  } else if (
+    cat.includes("Emerg") || cat.includes("Urgenc") || cat.includes("Notfall")
+  ) {
+    showCategory(lang,"emergency",cat);
+  } else if (
+    cat.includes("Praias") || cat.includes("Beaches") || cat.includes("Playas") ||
+    cat.includes("Plages") || cat.includes("Spiagge") || cat.includes("Strände")
+  ) {
+    showCategory(lang,"beaches",cat);
+  } else {
+    showCategory(lang,"other",cat);
+  }
+};
 
   document.getElementById("title").innerText = titles[lang];
   document.getElementById("categoriesTitle").innerText =
@@ -329,6 +380,28 @@ function showCategory(lang,key,catName) {
   document.getElementById("categories").style.display="none";
   document.getElementById("categoryContent").style.display="block";
   document.getElementById("categoryTitle").innerText=catName;
+  function showCategory(lang,key,catName) {
+  document.getElementById("categories").style.display="none";
+  document.getElementById("categoryContent").style.display="block";
+  document.getElementById("categoryTitle").innerText=catName;
+
+  if (key==="rules") {
+    document.getElementById("categoryText").innerHTML = rules[lang];
+  } else if (key==="emergency") {
+    document.getElementById("categoryText").innerHTML = emergency[lang];
+  } else if (key==="beaches") {
+    document.getElementById("categoryText").innerHTML = beaches[lang];
+  } else {
+    document.getElementById("categoryText").innerHTML = "<p>Conteúdo desta categoria ainda em desenvolvimento.</p>";
+  }
+
+  // traduz botões
+  document.getElementById("catBackTopContent").innerText=buttonTexts.back[lang];
+  document.getElementById("catPrintContent").innerText=buttonTexts.print[lang];
+  document.getElementById("catShareContent").innerText=buttonTexts.share[lang];
+  document.getElementById("catBackBottomContent").innerText=buttonTexts.back[lang];
+}
+
 
   if (key==="rules") {
   document.getElementById("categoryText").innerHTML = rules[lang];
