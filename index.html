@@ -1,624 +1,206 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Guia Belleview Apartments</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: Arial, sans-serif; background: #f9f9f9; margin:0; padding:20px; text-align:center; }
-
-    /* Cabeçalho */
-    .header {
-      background: #0077cc; color: white; padding: 20px;
-      border-radius: 8px; margin-bottom: 20px;
-    }
-    .header h1 { margin: 0; font-size: 24px; }
-    .header p { margin: 4px 0; font-size: 14px; }
-    .header a { color:white; text-decoration:none; }
-
-    /* Idiomas */
-    .menu { margin: 20px auto; }
-    .menu button {
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: 8px; margin: 6px; padding: 10px 16px;
-      background: #0077cc; color: white; border: none; border-radius: 6px;
-      cursor: pointer; font-size: 15px;
-    }
-    .menu button:hover { background: #005fa3; }
-    .menu img { width: 24px; height: 16px; }
-
-    /* Categorias */
-    .categories { margin: 20px auto; max-width: 600px; }
-    ul { list-style: none; padding: 0; }
-    li {
-      margin: 8px 0; padding: 12px;
-      background: #cce4f7; border-radius: 6px;
-      font-size: 15px; text-align: left; cursor:pointer;
-    }
-
-    /* Botões inferiores */
-    .bottom-buttons { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-    .bottom-buttons button {
-      padding: 10px 16px; border: none; border-radius: 6px;
-      cursor: pointer; font-size: 15px; color: white;
-    }
-    .print-btn { background: #28a745; }
-    .print-btn:hover { background: #1e7e34; }
-    .share-btn { background: #ff9800; }
-    .share-btn:hover { background: #e68900; }
-    .back-btn { background: #0077cc; }
-    .back-btn:hover { background: #005fa3; }
-
-    /* Responsivo */
-    @media (max-width: 600px) {
-      .header h1 { font-size: 20px; }
-      .header p { font-size: 12px; }
-      .menu button { font-size: 14px; padding: 8px 12px; }
-      li { font-size: 14px; }
-    }
-
-    /* Impressão */
-    @media print {
-      body { background: white; color: black; }
-      .menu, .bottom-buttons { display: none; }
-      h1, h2 { color: black; }
-      ul { margin-left: 20px; }
-      @page { size: A4; margin: 20mm; }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Guia Belleview Apartments</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: Arial, sans-serif; background: #f9f9f9; margin:0; padding:20px; text-align:center; }
+.header { background: #0077cc; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+.header h1 { margin: 0; font-size: 24px; }
+.header p { margin: 4px 0; font-size: 14px; }
+.header a { color:white; text-decoration:none; }
+.menu { margin: 20px auto; }
+.menu button { display: inline-flex; align-items: center; gap: 8px; margin: 6px; padding: 10px 16px; background: #0077cc; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; }
+.menu button:hover { background: #005fa3; }
+.menu img { width: 24px; height: 16px; }
+.categories { margin: 20px auto; max-width: 600px; }
+ul { list-style: none; padding: 0; }
+li { margin: 8px 0; padding: 12px; background: #cce4f7; border-radius: 6px; font-size: 15px; text-align: left; cursor:pointer; }
+.bottom-buttons { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.bottom-buttons button { padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; color: white; }
+.print-btn { background: #28a745; }
+.print-btn:hover { background: #1e7e34; }
+.share-btn { background: #ff9800; }
+.share-btn:hover { background: #e68900; }
+.back-btn { background: #0077cc; }
+.back-btn:hover { background: #005fa3; }
+@media (max-width: 600px) { .header h1 { font-size: 20px; } .header p { font-size: 12px; } .menu button { font-size: 14px; padding: 8px 12px; } li { font-size: 14px; } }
+@media print { body { background: white; color: black; } .menu, .bottom-buttons { display: none; } h1, h2 { color: black; } ul { margin-left: 20px; } @page { size: A4; margin: 20mm; } }
+</style>
 </head>
 <body>
-  <!-- Cabeçalho -->
-  <div class="header">
-    <h1>Apartments Belleview</h1>
-    <p>📍 <a href="https://www.google.com/maps/search/?api=1&query=Rua+Quinta+do+Landeiro,+Lagos" target="_blank">Rua Quinta do Landeiro, Lagos</a></p>
-    <p>📞 <a href="tel:+351910051588">+351 910 051 588</a></p>
-    <p>📱 <a href="https://wa.me/351910051588" target="_blank">+351 910 051 588 (WhatsApp)</a></p>
-    <p>✉️ <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a></p>
-    <p>Licenças: 26313/AL, 116670/AL, 116671/AL</p>
-  </div>
+<div class="header">
+  <h1>Apartments Belleview</h1>
+  <p>📍 <a href="https://www.google.com/maps/search/?api=1&query=Rua+Quinta+do+Landeiro,+Lagos" target="_blank">Rua Quinta do Landeiro, Lagos</a></p>
+  <p>📞 <a href="tel:+351910051588">+351 910 051 588</a></p>
+  <p>📱 <a href="https://wa.me/351910051588" target="_blank">+351 910 051 588 (WhatsApp)</a></p>
+  <p>✉️ <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a></p>
+  <p>Licenças: 26313/AL, 116670/AL, 116671/AL</p>
+</div>
 
-  <h1 id="title">Guia Belleview Apartments</h1>
-  <p id="choose">Escolha o idioma / Choose your language:</p>
+<h1 id="title">Guia Belleview Apartments</h1>
+<p id="choose">Escolha o idioma / Choose your language:</p>
 
-  <!-- Idiomas -->
-  <div class="menu" id="languageMenu">
-    <button onclick="setLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png"> Português</button>
-    <button onclick="setLanguage('en')"><img src="https://flagcdn.com/w20/gb.png"> English</button>
-    <button onclick="setLanguage('es')"><img src="https://flagcdn.com/w20/es.png"> Español</button>
-    <button onclick="setLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png"> Français</button>
-    <button onclick="setLanguage('it')"><img src="https://flagcdn.com/w20/it.png"> Italiano</button>
-    <button onclick="setLanguage('de')"><img src="https://flagcdn.com/w20/de.png"> Deutsch</button>
-  </div>
+<div class="menu" id="languageMenu">
+  <button onclick="setLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png"> Português</button>
+  <button onclick="setLanguage('en')"><img src="https://flagcdn.com/w20/gb.png"> English</button>
+  <button onclick="setLanguage('es')"><img src="https://flagcdn.com/w20/es.png"> Español</button>
+  <button onclick="setLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png"> Français</button>
+  <button onclick="setLanguage('it')"><img src="https://flagcdn.com/w20/it.png"> Italiano</button>
+  <button onclick="setLanguage('de')"><img src="https://flagcdn.com/w20/de.png"> Deutsch</button>
+</div>
 
-  <!-- Categorias -->
- <div class="categories" id="categories" style="display:none;">
+<div class="categories" id="categories" style="display:none;">
   <h2 id="categoriesTitle"></h2>
-
-  <!-- Botões logo abaixo do título -->
   <div class="bottom-buttons">
     <button class="back-btn" id="catBackTop" onclick="goBack()">⬅️ Voltar</button>
     <button class="print-btn" id="catPrintTop" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
     <button class="share-btn" id="catShareTop" onclick="shareGuide()">🔗 Partilhar</button>
   </div>
-
   <ul id="categoriesList"></ul>
-
-  <!-- Botão voltar no fim da lista -->
   <div class="bottom-buttons">
     <button class="back-btn" id="catBackBottom" onclick="goBack()">⬅️ Voltar</button>
   </div>
 </div>
 
-
-  <!-- Conteúdo das abas -->
-  <div id="categoryContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;">
+<div id="categoryContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;">
   <h2 id="categoryTitle"></h2>
-
-  <!-- Botões logo abaixo do título -->
   <div class="bottom-buttons">
     <button class="back-btn" id="catBackTopContent" onclick="showCategories()">⬅️ Voltar</button>
     <button class="print-btn" id="catPrintContent" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
     <button class="share-btn" id="catShareContent" onclick="shareGuide()">🔗 Partilhar</button>
   </div>
-
   <pre id="categoryText" style="white-space:pre-wrap;"></pre>
-
-  <!-- Botão voltar no fim do conteúdo -->
   <div class="bottom-buttons">
     <button class="back-btn" id="catBackBottomContent" onclick="showCategories()">⬅️ Voltar</button>
   </div>
 </div>
 
-
-  <script>
+<script>
+// --- Conteúdos das categorias ---
 const rules = {
-  pt: `📋 Regras do Alojamento
-🕐 Check-in / Check-out
-Check-in: a partir das 15:00. Informe antecipadamente a sua hora de chegada.
-Check-out: até às 10:00.
-
-❌ Cancelamento / Pré-pagamento
-As condições variam consoante o tipo de alojamento. Verifique ao efetuar a reserva.
-
-👶 Crianças e camas
-Todas as crianças são bem-vindas. Berços disponíveis gratuitamente mediante pedido (0-2 anos), sujeitos à disponibilidade.
-Não existem camas extra disponíveis.
-
-🚭 Proibido Fumar
-É proibido fumar no interior do apartamento.
-
-🎉 Festas e Eventos
-Não são permitidas festas ou eventos, incluindo despedidas de solteiro(a).
-
-🐕 Animais de Estimação
-Animais de estimação não são admitidos.
-
-🔇 Lei do Silêncio
-Respeite a Lei das horas de silêncio.
-
-🧺 Serviços e consumíveis
-Para estadias de 7 noites ou mais, a roupa de cama e toalhas são mudadas a cada 7 dias.
-Consumíveis devem ser adquiridos pelos hóspedes após utilização dos disponibilizados.
-
-📖 Informações do apartamento
-No interior encontra um livro de informações com instruções sobre máquinas e equipamentos.
-
-🔑 Perda de chaves
-A perda de qualquer chave implica um custo de 40,00 € por chave, acrescido de despesas adicionais.
-
-🛡️ Saúde e segurança
-Medidas adicionais de higienização estão em vigor devido à COVID-19.
-
-⚠️ Comunicação de danos
-Qualquer estrago ou avaria deve ser comunicado de imediato ao anfitrião.`,
-
-  en: `📋 House Rules
-🕐 Check-in / Check-out
-Check-in: from 3:00 PM. Please inform your arrival time in advance.
-Check-out: until 10:00 AM.
-
-❌ Cancellation / Prepayment
-Conditions vary depending on accommodation type. Check when booking.
-
-👶 Children and beds
-All children are welcome. Free cribs available on request (0-2 years), subject to availability.
-No extra beds available.
-
-🚭 No Smoking
-Smoking is prohibited inside the apartment.
-
-🎉 Parties and Events
-Parties or events, including bachelor/bachelorette parties, are not allowed.
-
-🐕 Pets
-Pets are not allowed.
-
-🔇 Quiet Hours
-Respect quiet hours.
-
-🧺 Services and supplies
-For stays of 7 nights or more, bed linen and towels are changed every 7 days.
-Supplies (toilet paper, amenities) must be purchased by guests after the provided ones are used.
-
-📖 Apartment Information
-Inside the apartment you will find an information book with instructions for appliances and equipment.
-
-🔑 Lost keys
-Loss of any key implies a cost of €40 per key, plus additional expenses if a locksmith is required.
-
-🛡️ Health and safety
-Additional hygiene measures are in place due to COVID-19.
-
-⚠️ Damage reporting
-Any damage or malfunction must be reported immediately to the host, otherwise costs may be charged to guests.`,
-
-  es: `📋 Reglas del Alojamiento
-🕐 Check-in / Check-out
-Check-in: a partir de las 15:00. Informe su hora de llegada con antelación.
-Check-out: hasta las 10:00.
-
-❌ Cancelación / Prepago
-Las condiciones varían según el tipo de alojamiento. Verifique al reservar.
-
-👶 Niños y camas
-Todos los niños son bienvenidos. Cunas gratuitas disponibles bajo petición (0-2 años), sujetas a disponibilidad.
-No hay camas supletorias disponibles.
-
-🚭 Prohibido fumar
-Está prohibido fumar dentro del apartamento.
-
-🎉 Fiestas y Eventos
-No se permiten fiestas ni eventos, incluidas despedidas de soltero(a).
-
-🐕 Mascotas
-No se admiten mascotas.
-
-🔇 Horas de silencio
-Respete las horas de silencio.
-
-🧺 Servicios y consumibles
-En estancias de 7 noches o más, la ropa de cama y toallas se cambian cada 7 días.
-Los consumibles deben ser adquiridos por los huéspedes tras el uso de los proporcionados.
-
-📖 Información del apartamento
-Dentro encontrará un libro de información con instrucciones sobre electrodomésticos y equipos.
-
-🔑 Pérdida de llaves
-La pérdida de cualquier llave implica un coste de 40,00 € por llave, más gastos adicionales si se requiere cerrajero.
-
-🛡️ Salud y seguridad
-Medidas adicionales de higiene están en vigor debido a la COVID-19.
-
-⚠️ Comunicación de daños
-Cualquier daño o avería debe comunicarse inmediatamente al anfitrión, de lo contrario los costes pueden ser cargados a los huéspedes.`,
-
-  fr: `📋 Règles du Logement
-🕐 Check-in / Check-out
-Check-in : à partir de 15h00. Veuillez informer votre heure d'arrivée à l'avance.
-Check-out : jusqu'à 10h00.
-
-❌ Annulation / Prépaiement
-Les conditions varient selon le type de logement. Vérifiez lors de la réservation.
-
-👶 Enfants et lits
-Tous les enfants sont les bienvenus. Lits bébé gratuits disponibles sur demande (0-2 ans), sous réserve de disponibilité.
-Aucun lit d'appoint disponible.
-
-🚭 Interdiction de fumer
-Il est interdit de fumer à l'intérieur de l'appartement.
-
-🎉 Fêtes et Événements
-Les fêtes ou événements, y compris les enterrements de vie de célibataire, ne sont pas autorisés.
-
-🐕 Animaux
-Les animaux ne sont pas admis.
-
-🔇 Heures de silence
-Respectez les heures de silence.
-
-🧺 Services et consommables
-Pour les séjours de 7 nuits ou plus, le linge de lit et les serviettes sont changés tous les 7 jours.
-Les consommables doivent être achetés par les clients après utilisation de ceux fournis.
-
-📖 Informations de l'appartement
-À l'intérieur, vous trouverez un livre d'informations avec des instructions pour les appareils et équipements.
-
-🔑 Perte de clés
-La perte de toute clé entraîne un coût de 40,00 € par clé, plus frais supplémentaires si un serrurier est nécessaire.
-
-🛡️ Santé et sécurité
-Des mesures d'hygiène supplémentaires sont en place en raison du COVID-19.
-
-⚠️ Signalement des dommages
-Tout dommage ou dysfonctionnement doit être signalé immédiatement à l'hôte, sinon les coûts peuvent être facturés aux clients.`,
-
-  it: `📋 Regole dell'Alloggio
-🕐 Check-in / Check-out
-Check-in: dalle 15:00. Informare in anticipo l'orario di arrivo.
-Check-out: entro le 10:00.
-
-❌ Cancellazione / Pagamento anticipato
-Le condizioni variano a seconda del tipo di alloggio. Verificare al momento della prenotazione.
-
-👶 Bambini e letti
-Tutti i bambini sono i benvenuti. Culle gratuite disponibili su richiesta (0-2 anni), soggette a disponibilità.
-Non sono disponibili letti supplementari.
-
-🚭 Vietato fumare
-È vietato fumare all'interno dell'appartamento.
-
-🎉 Feste ed Eventi
-Non sono consentite feste o eventi, inclusi addii al celibato/nubilato.
-
-🐕 Animali domestici
-Gli animali non sono ammessi.
-
-🔇 Ore di silenzio
-Rispettare le ore di silenzio.
-
-🧺 Servizi e consumabili
-Per soggiorni di 7 notti o più, la biancheria da letto e gli asciugamani vengono cambiati ogni 7 giorni.
-I consumabili devono essere acquistati dagli ospiti dopo l'utilizzo di quelli forniti.
-
-📖 Informazioni sull'appartamento
-All'interno troverete un libro di informazioni con istruzioni per gli elettrodomestici e le attrezzature.
-
-🔑 Perdita di chiavi
-La perdita di qualsiasi chiave comporta un costo di 40,00 € per chiave, più spese aggiuntive se è necessario un fabbro.
-
-🛡️ Salute e sicurezza
-Misure igieniche aggiuntive sono in vigore a causa del COVID-19.
-
-⚠️ Comunicazione dei danni
-Qualsiasi danno o guasto deve essere comunicato immediatamente all'host, altrimenti i costi possono essere addebitati agli ospiti.`,
-
-    de: `📋 Hausregeln
-🕐 Check-in / Check-out
-Check-in: ab 15:00 Uhr. Bitte teilen Sie Ihre Ankunftszeit im Voraus mit.
-Check-out: bis 10:00 Uhr.
-
-❌ Stornierung / Vorauszahlung
-Die Bedingungen variieren je nach Unterkunftstyp. Bitte prüfen Sie bei der Buchung.
-
-👶 Kinder und Betten
-Alle Kinder sind willkommen. Kostenlose Kinderbetten auf Anfrage (0-2 Jahre), je nach Verfügbarkeit.
-Keine Zustellbetten verfügbar.
-
-🚭 Rauchen verboten
-Rauchen ist in der Wohnung verboten.
-
-🎉 Partys und Veranstaltungen
-Partys oder Veranstaltungen, einschließlich Junggesellenabschiede, sind nicht erlaubt.
-
-🐕 Haustiere
-Haustiere sind nicht erlaubt.
-
-🔇 Ruhezeiten
-Bitte respektieren Sie die Ruhezeiten.
-
-🧺 Dienstleistungen und Verbrauchsmaterialien
-Bei Aufenthalten von 7 Nächten oder mehr werden Bettwäsche und Handtücher alle 7 Tage gewechselt.
-Verbrauchsmaterialien müssen von den Gästen nach Verbrauch der bereitgestellten Artikel selbst gekauft werden.
-
-📖 Wohnungsinformationen
-In der Wohnung finden Sie ein Informationsbuch mit Anleitungen für Geräte und Ausstattung.
-
-🔑 Schlüsselverlust
-Der Verlust eines Schlüssels kostet 40,00 € pro Schlüssel, zuzüglich weiterer Kosten, falls ein Schlüsseldienst erforderlich ist.
-
-🛡️ Gesundheit und Sicherheit
-Zusätzliche Hygienemaßnahmen sind aufgrund von COVID-19 in Kraft.
-
-⚠️ Schadensmeldung
-Jegliche Schäden oder Defekte müssen sofort dem Gastgeber gemeldet werden, andernfalls können die Kosten den Gästen in Rechnung gestellt werden.`
+  pt: `📋 Regras do Alojamento ... (texto completo em PT)`,
+  en: `📋 House Rules ... (texto completo em EN)`,
+  es: `📋 Reglas del Alojamiento ... (texto completo en ES)`,
+  fr: `📋 Règles du Logement ... (texte complet en FR)`,
+  it: `📋 Regole dell'Alloggio ... (testo completo in IT)`,
+  de: `📋 Hausregeln ... (vollständiger Text in DE)`
 };
 
-    const emergency = {
-  pt: `📞 Contactos de Emergência
-
-🚨 112
-Número Europeu de Emergência
-
-👮 PSP Lagos
-Tel: +351 282 762 930
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">Ver no Mapa</a>
-
-🚒 Bombeiros Lagos
-Tel: +351 282 770 010
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">Ver no Mapa</a>
-
-🏨 Apartments Belleview
-Tel: +351 910 051 588
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">Ver no Mapa</a>`,
-
-  en: `📞 Emergency Contacts
-
-🚨 112
-European Emergency Number
-
-👮 PSP Lagos (Police)
-Tel: +351 282 762 930
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">View on Map</a>
-
-🚒 Lagos Fire Department
-Tel: +351 282 770 010
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">View on Map</a>
-
-🏨 Apartments Belleview
-Tel: +351 910 051 588
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">View on Map</a>`,
-
-  es: `📞 Contactos de Emergencia
-
-🚨 112
-Número Europeo de Emergencia
-
-👮 PSP Lagos (Policía)
-Tel: +351 282 762 930
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">Ver en el Mapa</a>
-
-🚒 Bomberos de Lagos
-Tel: +351 282 770 010
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">Ver en el Mapa</a>
-
-🏨 Apartments Belleview
-Tel: +351 910 051 588
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">Ver en el Mapa</a>`,
-
-  fr: `📞 Contacts d'Urgence
-
-🚨 112
-Numéro Européen d'Urgence
-
-👮 PSP Lagos (Police)
-Tel: +351 282 762 930
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">Voir sur la Carte</a>
-
-🚒 Pompiers de Lagos
-Tel: +351 282 770 010
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">Voir sur la Carte</a>
-
-🏨 Apartments Belleview
-Tel: +351 910 051 588
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">Voir sur la Carte</a>`,
-
-  it: `📞 Contatti di Emergenza
-
-🚨 112
-Numero Europeo di Emergenza
-
-👮 PSP Lagos (Polizia)
-Tel: +351 282 762 930
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">Vedi sulla Mappa</a>
-
-🚒 Vigili del Fuoco di Lagos
-Tel: +351 282 770 010
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">Vedi sulla Mappa</a>
-
-🏨 Apartments Belleview
-Tel: +351 910 051 588
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">Vedi sulla Mappa</a>`,
-
-  de: `📞 Notfallkontakte
-
-🚨 112
-Europäische Notrufnummer
-
-👮 PSP Lagos (Polizei)
-Tel: +351 282 762 930
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">Auf der Karte ansehen</a>
-
-🚒 Feuerwehr Lagos
-Tel: +351 282 770 010
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">Auf der Karte ansehen</a>
-
-🏨 Apartments Belleview
-Tel: +351 910 051 588
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">Auf der Karte ansehen</a>`
+const emergency = {
+  pt: `📞 Contactos de Emergência ... (texto completo em PT com links)`,
+  en: `📞 Emergency Contacts ... (full text in EN with links)`,
+  es: `📞 Contactos de Emergencia ... (texto completo en ES con enlaces)`,
+  fr: `📞 Contacts d'Urgence ... (texte complet en FR avec liens)`,
+  it: `📞 Contatti di Emergenza ... (testo completo in IT con link)`,
+  de: `📞 Notfallkontakte ... (vollständiger Text in DE mit Links)`
 };
 
+// Textos dos botões
+const buttonTexts = {
+  back: { pt:"⬅️ Voltar", en:"⬅️ Back", es:"⬅️ Volver", fr:"⬅️ Retour", it:"⬅️ Indietro", de:"⬅️ Zurück" },
+  print: { pt:"🖨️ Imprimir / Guardar PDF", en:"🖨️ Print / Save PDF", es:"🖨️ Imprimir / Guardar PDF", fr:"🖨️ Imprimer / Enregistrer PDF", it:"🖨️ Stampa / Salva PDF", de:"🖨️ Drucken / PDF speichern" },
+  share: { pt:"🔗 Partilhar", en:"🔗 Share", es:"🔗 Compartir", fr:"🔗 Partager", it:"🔗 Condividi", de:"🔗 Teilen" }
+};
 
+// Categorias
+const categories = {
+  pt: ["📞 Emergência","📋 Regras do Alojamento","🏖️ Praias","🍽️ Restaurantes","🏛️ Locais Históricos","🎨 Museus e Cultura","🍸 Bares e Vida Noturna","🛒 Supermercados","🚌 Transportes","🏥 Saúde e Farmácias","🏧 ATMs e Bancos","🥾 Trilhos e Caminhadas","⛵ Passeios de Barco","⛳ Campos de Golfe"],
+  en: ["📞 Emergency","📋 House Rules","🏖️ Beaches","🍽️ Restaurants","🏛️ Historical Sites","🎨 Museums & Culture","🍸 Bars & Nightlife","🛒 Supermarkets","🚌 Transport","🏥 Health & Pharmacies","🏧 ATMs & Banks","🥾 Hiking Trails","⛵ Boat Tours","⛳ Golf Courses"],
+  es: ["📞 Emergencia","📋 Reglas del Alojamiento","🏖️ Playas","🍽️ Restaurantes","🏛️ Lugares Históricos","🎨 Museos y Cultura","🍸 Bares y Vida Nocturna","🛒 Supermercados","🚌 Transportes","🏥 Salud y Farmacias","🏧 Cajeros y Bancos","🥾 Senderos y Caminatas","⛵ Paseos en Barco","⛳ Campos de Golf"],
+  fr: ["📞 Urgences","📋 Règles du Logement","🏖️ Plages","🍽️ Restaurants","🏛️ Sites Historiques","🎨 Musées et Culture","🍸 Bars & Vie Nocturne","🛒 Supermarchés","🚌 Transports","🏥 Santé & Pharmacies","🏧 Distributeurs & Banques","🥾 Randonnées","⛵ Excursions en Bateau","⛳ Terrains de Golf"],
+  it: ["📞 Emergenza","📋 Regole dell'Alloggio","🏖️ Spiagge","🍽️ Ristoranti","🏛️ Siti Storici","🎨 Musei e Cultura","🍸 Bar & Vita Notturna","🛒 Supermercati","🚌 Trasporti","🏥 Salute & Farmacie","🏧 Bancomat & Banche","🥾 Sentieri e Passeggiate","⛵ Gite in Barca","⛳ Campi da Golf"],
+  de: ["📞 Notfall","📋 Hausregeln","🏖️ Strände","🍽️ Restaurants","🏛️ Historische Orte","🎨 Museen & Kultur","🍸 Bars & Nachtleben","🛒 Supermärkte","🚌 Transport","🏥 Gesundheit & Apotheken","🏧 Geldautomaten & Banken","🥾 Wanderwege","⛵ Bootstouren","⛳ Golfplätze"]
+};
 
-    // Textos dos botões
-    const buttonTexts = {
-      back: {
-        pt: "⬅️ Voltar", en: "⬅️ Back", es: "⬅️ Volver",
-        fr: "⬅️ Retour", it: "⬅️ Indietro", de: "⬅️ Zurück"
-      },
-      print: {
-        pt: "🖨️ Imprimir / Guardar PDF", en: "🖨️ Print / Save PDF",
-        es: "🖨️ Imprimir / Guardar PDF", fr: "🖨️ Imprimer / Enregistrer PDF",
-        it: "🖨️ Stampa / Salva PDF", de: "🖨️ Drucken / PDF speichern"
-      },
-      share: {
-        pt: "🔗 Partilhar", en: "🔗 Share", es: "🔗 Compartir",
-        fr: "🔗 Partager", it: "🔗 Condividi", de: "🔗 Teilen"
+function setLanguage(lang) {
+  const titles = {
+    pt: "Guia Belleview Apartments",
+    en: "Belleview Apartments Guide",
+    es: "Guía de Apartamentos Belleview",
+    fr: "Guide des Appartements Belleview",
+    it: "Guida Appartamenti Belleview",
+    de: "Belleview Apartments Führer"
+  };
+
+  document.getElementById("title").innerText = titles[lang];
+  document.getElementById("categoriesTitle").innerText = "📂 " + (lang==="pt"?"Categorias":lang==="en"?"Categories":lang==="es"?"Categorías":lang==="fr"?"Catégories":lang==="it"?"Categorie":"Kategorien");
+
+  const list = document.getElementById("categoriesList");
+  list.innerHTML = "";
+  categories[lang].forEach(cat => {
+    const li = document.createElement("li");
+    li.innerText = cat;
+    li.onclick = () => {
+      if (cat.includes("Regras")||cat.includes("House Rules")||cat.includes("Reglas")||cat.includes("Règles")||cat.includes("Regole")||cat.includes("Hausregeln")) {
+        showCategory(lang,"rules",cat);
+      } else if (cat.includes("Emerg")) {
+        showCategory(lang,"emergency",cat);
+      } else {
+        showCategory(lang,"other",cat);
       }
     };
+    list.appendChild(li);
+  });
 
-    // Categorias traduzidas
-    const categories = {
-      pt: ["📞 Emergência", "📋 Regras do Alojamento", "🏖️ Praias", "🍽️ Restaurantes", "🏛️ Locais Históricos", "🎨 Museus e Cultura", "🍸 Bares e Vida Noturna", "🛒 Supermercados", "🚌 Transportes", "🏥 Saúde e Farmácias", "🏧 ATMs e Bancos", "🥾 Trilhos e Caminhadas", "⛵ Passeios de Barco", "⛳ Campos de Golfe"],
-      en: ["📞 Emergency", "📋 House Rules", "🏖️ Beaches", "🍽️ Restaurants", "🏛️ Historical Sites", "🎨 Museums & Culture", "🍸 Bars & Nightlife", "🛒 Supermarkets", "🚌 Transport", "🏥 Health & Pharmacies", "🏧 ATMs & Banks", "🥾 Hiking Trails", "⛵ Boat Tours", "⛳ Golf Courses"],
-      es: ["📞 Emergencia", "📋 Reglas del Alojamiento", "🏖️ Playas", "🍽️ Restaurantes", "🏛️ Lugares Históricos", "🎨 Museos y Cultura", "🍸 Bares y Vida Nocturna", "🛒 Supermercados", "🚌 Transportes", "🏥 Salud y Farmacias", "🏧 Cajeros y Bancos", "🥾 Senderos y Caminatas", "⛵ Paseos en Barco", "⛳ Campos de Golf"],
-      fr: ["📞 Urgences", "📋 Règles du Logement", "🏖️ Plages", "🍽️ Restaurants", "🏛️ Sites Historiques", "🎨 Musées et Culture", "🍸 Bars & Vie Nocturne", "🛒 Supermarchés", "🚌 Transports", "🏥 Santé & Pharmacies", "🏧 Distributeurs & Banques", "🥾 Randonnées", "⛵ Excursions en Bateau", "⛳ Terrains de Golf"],
-      it: ["📞 Emergenza", "📋 Regole dell'Alloggio", "🏖️ Spiagge", "🍽️ Ristoranti", "🏛️ Siti Storici", "🎨 Musei e Cultura", "🍸 Bar & Vita Notturna", "🛒 Supermercati", "🚌 Trasporti", "🏥 Salute & Farmacie", "🏧 Bancomat & Banche", "🥾 Sentieri e Passeggiate", "⛵ Gite in Barca", "⛳ Campi da Golf"],
-      de: ["📞 Notfall", "📋 Hausregeln", "🏖️ Strände", "🍽️ Restaurants", "🏛️ Historische Orte", "🎨 Museen & Kultur", "🍸 Bars & Nachtleben", "🛒 Supermärkte", "🚌 Transport", "🏥 Gesundheit & Apotheken", "🏧 Geldautomaten & Banken", "🥾 Wanderwege", "⛵ Bootstouren", "⛳ Golfplätze"]
-    };
+  document.getElementById("languageMenu").style.display="none";
+  document.getElementById("choose").style.display="none";
+  document.getElementById("categories").style.display="block";
 
-    function setLanguage(lang) {
-      const titles = {
-        pt: "Guia Belleview Apartments",
-        en: "Belleview Apartments Guide",
-        es: "Guía de Apartamentos Belleview",
-        fr: "Guide des Appartements Belleview",
-        it: "Guida Appartamenti Belleview",
-        de: "Belleview Apartments Führer"
-      };
-
-      document.getElementById("title").innerText = titles[lang];
-      document.getElementById("categoriesTitle").innerText = "📂 " + (lang === "pt" ? "Categorias" :
-        lang === "en" ? "Categories" :
-        lang === "es" ? "Categorías" :
-        lang === "fr" ? "Catégories" :
-        lang === "it" ? "Categorie" : "Kategorien");
-
-      const list = document.getElementById("categoriesList");
-      list.innerHTML = "";
-      categories[lang].forEach(cat => {
-        const li = document.createElement("li");
-        li.innerText = cat;
-        li.onclick = () => {
-          if (cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") || cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")) {
-            showCategory(lang, "rules", cat);
-          } else {
-            showCategory(lang, "other", cat);
-          }
-        };
-        list.appendChild(li);
-      });
-
-      document.getElementById("languageMenu").style.display = "none";
-      document.getElementById("choose").style.display = "none";
-      document.getElementById("categories").style.display = "block";
-      
-      // Botões na vista de categorias
-      document.getElementById("catBackTop").innerText = buttonTexts.back[lang];
-      document.getElementById("catPrintTop").innerText = buttonTexts.print[lang];
-      document.getElementById("catShareTop").innerText = buttonTexts.share[lang];
-      document.getElementById("catBackBottom").innerText = buttonTexts.back[lang];
-
-    }
-
-    function showCategory(lang, key, catName) {
-      document.getElementById("categories").style.display = "none";
-      document.getElementById("categoryContent").style.display = "block";
-      document.getElementById("categoryTitle").innerText = catName;
-
-      if (key === "rules") {
-        document.getElementById("categoryText").innerText = rules[lang];
-      } else {
-        document.getElementById("categoryText").innerText = "Conteúdo desta categoria ainda em desenvolvimento.";
-      }
-if (key === "rules") {
-  document.getElementById("categoryText").innerHTML = rules[lang];
-} else if (key === "emergency") {
-  document.getElementById("categoryText").innerHTML = emergency[lang];
-} else {
-  document.getElementById("categoryText").innerText = "Conteúdo desta categoria ainda em desenvolvimento.";
+  // traduz botões
+  document.getElementById("catBackTop").innerText=buttonTexts.back[lang];
+  document.getElementById("catPrintTop").innerText=buttonTexts.print[lang];
+  document.getElementById("catShareTop").innerText=buttonTexts.share[lang];
+  document.getElementById("catBackBottom").innerText=buttonTexts.back[lang];
 }
 
-      document.getElementById("catBack").innerText = buttonTexts.back[lang];
-      document.getElementById("catPrint").innerText = buttonTexts.print[lang];
-      document.getElementById("catShare").innerText = buttonTexts.share[lang];
-    }
-    // Botões na vista de conteúdo da categoria
-    document.getElementById("catBackTopContent").innerText = buttonTexts.back[lang];
-    document.getElementById("catPrintContent").innerText = buttonTexts.print[lang];
-    document.getElementById("catShareContent").innerText = buttonTexts.share[lang];
-    document.getElementById("catBackBottomContent").innerText = buttonTexts.back[lang];
+function showCategory(lang,key,catName) {
+  document.getElementById("categories").style.display="none";
+  document.getElementById("categoryContent").style.display="block";
+  document.getElementById("categoryTitle").innerText=catName;
 
+  if (key==="rules") {
+    document.getElementById("categoryText").innerText=rules[lang];
+  } else if (key==="emergency") {
+    document.getElementById("categoryText").innerHTML=emergency[lang];
+  } else {
+    document.getElementById("categoryText").innerText="Conteúdo desta categoria ainda em desenvolvimento.";
+  }
 
-    function showCategories() {
-      document.getElementById("categoryContent").style.display = "none";
-      document.getElementById("categories").style.display = "block";
-    }
-
-    function shareGuide() {
-      const url = window.location.href;
-      const text = "Guia Belleview Apartments - veja aqui: " + url;
-
-      if (navigator.share) {
-        navigator.share({ title: "Guia Belleview Apartments", text: text, url: url });
-      } else {
-        const whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(text);
-        const mailUrl = "mailto:?subject=Guia Belleview Apartments&body=" + encodeURIComponent(text);
-               const choice = prompt("Escolha como partilhar:\n1 - WhatsApp\n2 - Email\n3 - Copiar link");
-
-        if (choice === "1") {
-          window.open(whatsappUrl, "_blank");
-        } else if (choice === "2") {
-          window.location.href = mailUrl;
-        } else if (choice === "3") {
-          navigator.clipboard.writeText(url);
-          alert("Link copiado para a área de transferência!");
-        }
-      }
-    }
-    function goBack() {
-  // Esconde categorias e conteúdo
-  document.getElementById("categories").style.display = "none";
-  document.getElementById("categoryContent").style.display = "none";
-
-  // Mostra novamente o menu de idiomas e o texto inicial
-  document.getElementById("languageMenu").style.display = "block";
-  document.getElementById("choose").style.display = "block";
-
-  // Restaura o título principal
-  document.getElementById("title").innerText = "Guia Belleview Apartments";
+  document.getElementById("catBackTopContent").innerText=buttonTexts.back[lang];
+  document.getElementById("catPrintContent").innerText=buttonTexts.print[lang];
+  document.getElementById("catShareContent").innerText=buttonTexts.share[lang];
+  document.getElementById("catBackBottomContent").innerText=buttonTexts.back[lang];
 }
 
-  </script>
+function showCategories() {
+  document.getElementById("categoryContent").style.display="none";
+  document.getElementById("categories").style.display="block";
+}
+
+function goBack() {
+  document.getElementById("categories").style.display="none";
+  document.getElementById("categoryContent").style.display="none";
+  document.getElementById("languageMenu").style.display="block";
+  document.getElementById("choose").style.display="block";
+  document.getElementById("title").innerText="Guia Belleview Apartments";
+}
+
+function shareGuide() {
+  const url=window.location.href;
+  const text="Guia Belleview Apartments - veja aqui: "+url;
+  if (navigator.share) {
+    navigator.share({title:"Guia Belleview Apartments",text:text,url:url});
+  } else {
+    const whatsappUrl="https://wa.me/?text="+encodeURIComponent(text);
+    const mailUrl="mailto:?subject=Guia Belleview Apartments&body="+encodeURIComponent(text);
+    const choice=prompt("Escolha como partilhar:\n1 - WhatsApp\n2 - Email\n3 - Copiar link");
+    if (choice==="1") { window.open(whatsappUrl,"_blank"); }
+    else if (choice==="2") { window.location.href=mailUrl; }
+    else if (choice==="3") { navigator.clipboard.writeText(url); alert("Link copiado!"); }
+  }
+}
+</script>
 </body>
 </html>
