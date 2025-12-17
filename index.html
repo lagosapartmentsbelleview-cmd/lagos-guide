@@ -311,26 +311,8 @@ function setLanguage(lang) {
     it: "Guida Appartamenti Belleview",
     de: "Belleview Apartments Führer"
   };
-li.onclick = () => {
-  if (
-    cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") ||
-    cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")
-  ) {
-    showCategory(lang,"rules",cat);
-  } else if (
-    cat.includes("Emerg") || cat.includes("Urgenc") || cat.includes("Notfall")
-  ) {
-    showCategory(lang,"emergency",cat);
-  } else if (
-    cat.includes("Praias") || cat.includes("Beaches") || cat.includes("Playas") ||
-    cat.includes("Plages") || cat.includes("Spiagge") || cat.includes("Strände")
-  ) {
-    showCategory(lang,"beaches",cat);
-  } else {
-    showCategory(lang,"other",cat);
-  }
-};
 
+  // título e categorias
   document.getElementById("title").innerText = titles[lang];
   document.getElementById("categoriesTitle").innerText =
     "📂 " + (
@@ -342,6 +324,7 @@ li.onclick = () => {
       "Kategorien"
     );
 
+  // lista de categorias
   const list = document.getElementById("categoriesList");
   list.innerHTML = "";
   categories[lang].forEach(cat => {
@@ -357,6 +340,11 @@ li.onclick = () => {
         cat.includes("Emerg") || cat.includes("Urgenc") || cat.includes("Notfall")
       ) {
         showCategory(lang,"emergency",cat);
+      } else if (
+        cat.includes("Praias") || cat.includes("Beaches") || cat.includes("Playas") ||
+        cat.includes("Plages") || cat.includes("Spiagge") || cat.includes("Strände")
+      ) {
+        showCategory(lang,"beaches",cat);
       } else {
         showCategory(lang,"other",cat);
       }
@@ -364,6 +352,7 @@ li.onclick = () => {
     list.appendChild(li);
   });
 
+  // mostrar categorias e esconder menu de idiomas
   document.getElementById("languageMenu").style.display="none";
   document.getElementById("choose").style.display="none";
   document.getElementById("categories").style.display="block";
@@ -373,49 +362,6 @@ li.onclick = () => {
   document.getElementById("catPrintTop").innerText = buttonTexts.print[lang];
   document.getElementById("catShareTop").innerText = buttonTexts.share[lang];
   document.getElementById("catBackBottom").innerText = buttonTexts.back[lang];
-}
-
-
-function showCategory(lang,key,catName) {
-  document.getElementById("categories").style.display="none";
-  document.getElementById("categoryContent").style.display="block";
-  document.getElementById("categoryTitle").innerText=catName;
-  function showCategory(lang,key,catName) {
-  document.getElementById("categories").style.display="none";
-  document.getElementById("categoryContent").style.display="block";
-  document.getElementById("categoryTitle").innerText=catName;
-
-  if (key==="rules") {
-    document.getElementById("categoryText").innerHTML = rules[lang];
-  } else if (key==="emergency") {
-    document.getElementById("categoryText").innerHTML = emergency[lang];
-  } else if (key==="beaches") {
-    document.getElementById("categoryText").innerHTML = beaches[lang];
-  } else {
-    document.getElementById("categoryText").innerHTML = "<p>Conteúdo desta categoria ainda em desenvolvimento.</p>";
-  }
-
-  // traduz botões
-  document.getElementById("catBackTopContent").innerText=buttonTexts.back[lang];
-  document.getElementById("catPrintContent").innerText=buttonTexts.print[lang];
-  document.getElementById("catShareContent").innerText=buttonTexts.share[lang];
-  document.getElementById("catBackBottomContent").innerText=buttonTexts.back[lang];
-}
-
-
-  if (key==="rules") {
-  document.getElementById("categoryText").innerHTML = rules[lang];
-} else if (key==="emergency") {
-  document.getElementById("categoryText").innerHTML = emergency[lang];
-} else {
-  document.getElementById("categoryText").innerHTML = "<p>Conteúdo desta categoria ainda em desenvolvimento.</p>";
-}
-
-
-  document.getElementById("catBackTopContent").innerText=buttonTexts.back[lang];
-  document.getElementById("catPrintContent").innerText=buttonTexts.print[lang];
-  document.getElementById("catShareContent").innerText=buttonTexts.share[lang];
-  document.getElementById("catBackBottomContent").innerText=buttonTexts.back[lang];
 }
 
 function showCategories() {
