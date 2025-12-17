@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Guia Belleview Apartments</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsivo -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { font-family: Arial, sans-serif; background: #f9f9f9; margin:0; padding:20px; text-align:center; }
 
@@ -17,47 +17,33 @@
     }
     .header h1 { margin: 0; font-size: 24px; }
     .header p { margin: 4px 0; font-size: 14px; }
+    .header a { color:white; text-decoration:none; }
 
-    /* Botões de idioma */
+    /* Idiomas */
     .menu { margin: 20px auto; }
     .menu button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin: 6px;
-      padding: 10px 16px;
-      background: #0077cc;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 15px;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; margin: 6px; padding: 10px 16px;
+      background: #0077cc; color: white; border: none; border-radius: 6px;
+      cursor: pointer; font-size: 15px;
     }
     .menu button:hover { background: #005fa3; }
     .menu img { width: 24px; height: 16px; }
 
     /* Categorias */
-    .categories { margin: 20px auto; max-width: 500px; }
+    .categories { margin: 20px auto; max-width: 600px; }
     ul { list-style: none; padding: 0; }
     li {
-      margin: 8px 0;
-      padding: 12px;
-      background: #cce4f7; /* azul mais claro */
-      border-radius: 6px;
-      font-size: 15px;
-      text-align: left;
+      margin: 8px 0; padding: 12px;
+      background: #cce4f7; border-radius: 6px;
+      font-size: 15px; text-align: left; cursor:pointer;
     }
 
     /* Botões inferiores */
     .bottom-buttons { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
     .bottom-buttons button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 15px;
-      color: white;
+      padding: 10px 16px; border: none; border-radius: 6px;
+      cursor: pointer; font-size: 15px; color: white;
     }
     .print-btn { background: #28a745; }
     .print-btn:hover { background: #1e7e34; }
@@ -85,32 +71,27 @@
   </style>
 </head>
 <body>
- <!-- Cabeçalho -->
-<div class="header">
-  <h1>Apartments Belleview</h1>
-  <p>
-    📍 <a href="https://www.google.com/maps/search/?api=1&query=Rua+Quinta+do+Landeiro,+Lagos" target="_blank" style="color:white; text-decoration:none;">
-      Rua Quinta do Landeiro, Lagos
-    </a>
-  </p>
-  <p>📞 <a href="tel:+351910051588" style="color:white; text-decoration:none;">+351 910 051 588</a></p>
-  <p>📱 <a href="https://wa.me/351910051588" target="_blank" style="color:white; text-decoration:none;">+351 910 051 588 (WhatsApp)</a></p>
-  <p>✉️ <a href="mailto:belleview@sapo.pt" style="color:white; text-decoration:none;">belleview@sapo.pt</a></p>
-  <p>Licenças: 26313/AL, 116670/AL, 116671/AL</p>
-</div>
-
+  <!-- Cabeçalho -->
+  <div class="header">
+    <h1>Apartments Belleview</h1>
+    <p>📍 <a href="https://www.google.com/maps/search/?api=1&query=Rua+Quinta+do+Landeiro,+Lagos" target="_blank">Rua Quinta do Landeiro, Lagos</a></p>
+    <p>📞 <a href="tel:+351910051588">+351 910 051 588</a></p>
+    <p>📱 <a href="https://wa.me/351910051588" target="_blank">+351 910 051 588 (WhatsApp)</a></p>
+    <p>✉️ <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a></p>
+    <p>Licenças: 26313/AL, 116670/AL, 116671/AL</p>
+  </div>
 
   <h1 id="title">Guia Belleview Apartments</h1>
   <p id="choose">Escolha o idioma / Choose your language:</p>
 
-  <!-- Menu de idiomas -->
+  <!-- Idiomas -->
   <div class="menu" id="languageMenu">
-    <button onclick="setLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png" alt="PT"> Português</button>
-    <button onclick="setLanguage('en')"><img src="https://flagcdn.com/w20/gb.png" alt="EN"> English</button>
-    <button onclick="setLanguage('es')"><img src="https://flagcdn.com/w20/es.png" alt="ES"> Español</button>
-    <button onclick="setLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français</button>
-    <button onclick="setLanguage('it')"><img src="https://flagcdn.com/w20/it.png" alt="IT"> Italiano</button>
-    <button onclick="setLanguage('de')"><img src="https://flagcdn.com/w20/de.png" alt="DE"> Deutsch</button>
+    <button onclick="setLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png"> Português</button>
+    <button onclick="setLanguage('en')"><img src="https://flagcdn.com/w20/gb.png"> English</button>
+    <button onclick="setLanguage('es')"><img src="https://flagcdn.com/w20/es.png"> Español</button>
+    <button onclick="setLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png"> Français</button>
+    <button onclick="setLanguage('it')"><img src="https://flagcdn.com/w20/it.png"> Italiano</button>
+    <button onclick="setLanguage('de')"><img src="https://flagcdn.com/w20/de.png"> Deutsch</button>
   </div>
 
   <!-- Categorias -->
@@ -130,7 +111,251 @@
     <button class="share-btn" id="shareButton" onclick="shareGuide()">🔗 Partilhar</button>
   </div>
 
+  <!-- Conteúdo das regras (um bloco por idioma) -->
+  <div id="rulesContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;"></div>
+
   <script>
+    const rules = {
+      pt: `📋 Regras do Alojamento
+🕐 Check-in / Check-out
+Check-in: a partir das 15:00. Informe antecipadamente a sua hora de chegada.
+Check-out: até às 10:00.
+
+❌ Cancelamento / Pré-pagamento
+As condições variam consoante o tipo de alojamento. Verifique ao efetuar a reserva.
+
+👶 Crianças e camas
+Todas as crianças são bem-vindas. Berços disponíveis gratuitamente mediante pedido (0-2 anos), sujeitos à disponibilidade.
+Não existem camas extra disponíveis.
+
+🚭 Proibido Fumar
+É proibido fumar no interior do apartamento.
+
+🎉 Festas e Eventos
+Não são permitidas festas ou eventos, incluindo despedidas de solteiro(a).
+
+🐕 Animais de Estimação
+Animais de estimação não são admitidos.
+
+🔇 Lei do Silêncio
+Respeite a Lei das horas de silêncio.
+
+🧺 Serviços e consumíveis
+Para estadias de 7 noites ou mais, a roupa de cama e toalhas são mudadas a cada 7 dias.
+Consumíveis devem ser adquiridos pelos hóspedes após utilização dos disponibilizados.
+
+📖 Informações do apartamento
+No interior encontra um livro de informações com instruções sobre máquinas e equipamentos.
+
+🔑 Perda de chaves
+A perda de qualquer chave implica um custo de 40,00 € por chave, acrescido de despesas adicionais.
+
+🛡️ Saúde e segurança
+Medidas adicionais de higienização estão em vigor devido à COVID-19.
+
+⚠️ Comunicação de danos
+Qualquer estrago ou avaria deve ser comunicado de imediato ao anfitrião.`,
+           en: `📋 House Rules
+🕐 Check-in / Check-out
+Check-in: from 3:00 PM. Please inform your arrival time in advance.
+Check-out: until 10:00 AM.
+
+❌ Cancellation / Prepayment
+Conditions vary depending on accommodation type. Check when booking.
+
+👶 Children and beds
+All children are welcome. Free cribs available on request (0-2 years), subject to availability.
+No extra beds available.
+
+🚭 No Smoking
+Smoking is prohibited inside the apartment.
+
+🎉 Parties and Events
+Parties or events, including bachelor/bachelorette parties, are not allowed.
+
+🐕 Pets
+Pets are not allowed.
+
+🔇 Quiet Hours
+Respect quiet hours.
+
+🧺 Services and supplies
+For stays of 7 nights or more, bed linen and towels are changed every 7 days.
+Supplies (toilet paper, amenities) must be purchased by guests after the provided ones are used.
+
+📖 Apartment Information
+Inside the apartment you will find an information book with instructions for appliances and equipment.
+
+🔑 Lost keys
+Loss of any key implies a cost of €40 per key, plus additional expenses if a locksmith is required.
+
+🛡️ Health and safety
+Additional hygiene measures are in place due to COVID-19.
+
+⚠️ Damage reporting
+Any damage or malfunction must be reported immediately to the host, otherwise costs may be charged to guests.`,
+
+      es: `📋 Reglas del Alojamiento
+🕐 Check-in / Check-out
+Check-in: a partir de las 15:00. Informe su hora de llegada con antelación.
+Check-out: hasta las 10:00.
+
+❌ Cancelación / Prepago
+Las condiciones varían según el tipo de alojamiento. Verifique al reservar.
+
+👶 Niños y camas
+Todos los niños son bienvenidos. Cunas gratuitas disponibles bajo petición (0-2 años), sujetas a disponibilidad.
+No hay camas supletorias disponibles.
+
+🚭 Prohibido fumar
+Está prohibido fumar dentro del apartamento.
+
+🎉 Fiestas y Eventos
+No se permiten fiestas ni eventos, incluidas despedidas de soltero(a).
+
+🐕 Mascotas
+No se admiten mascotas.
+
+🔇 Horas de silencio
+Respete las horas de silencio.
+
+🧺 Servicios y consumibles
+En estancias de 7 noches o más, la ropa de cama y toallas se cambian cada 7 días.
+Los consumibles deben ser adquiridos por los huéspedes tras el uso de los proporcionados.
+
+📖 Información del apartamento
+Dentro encontrará un libro de información con instrucciones sobre electrodomésticos y equipos.
+
+🔑 Pérdida de llaves
+La pérdida de cualquier llave implica un coste de 40,00 € por llave, más gastos adicionales si se requiere cerrajero.
+
+🛡️ Salud y seguridad
+Medidas adicionales de higiene están en vigor debido a la COVID-19.
+
+⚠️ Comunicación de daños
+Cualquier daño o avería debe comunicarse inmediatamente al anfitrión, de lo contrario los costes pueden ser cargados a los huéspedes.`,
+
+      fr: `📋 Règles du Logement
+🕐 Check-in / Check-out
+Check-in : à partir de 15h00. Veuillez informer votre heure d'arrivée à l'avance.
+Check-out : jusqu'à 10h00.
+
+❌ Annulation / Prépaiement
+Les conditions varient selon le type de logement. Vérifiez lors de la réservation.
+
+👶 Enfants et lits
+Tous les enfants sont les bienvenus. Lits bébé gratuits disponibles sur demande (0-2 ans), sous réserve de disponibilité.
+Aucun lit d'appoint disponible.
+
+🚭 Interdiction de fumer
+Il est interdit de fumer à l'intérieur de l'appartement.
+
+🎉 Fêtes et Événements
+Les fêtes ou événements, y compris les enterrements de vie de célibataire, ne sont pas autorisés.
+
+🐕 Animaux
+Les animaux ne sont pas admis.
+
+🔇 Heures de silence
+Respectez les heures de silence.
+
+🧺 Services et consommables
+Pour les séjours de 7 nuits ou plus, le linge de lit et les serviettes sont changés tous les 7 jours.
+Les consommables doivent être achetés par les clients après utilisation de ceux fournis.
+
+📖 Informations de l'appartement
+À l'intérieur, vous trouverez un livre d'informations avec des instructions pour les appareils et équipements.
+
+🔑 Perte de clés
+La perte de toute clé entraîne un coût de 40,00 € par clé, plus frais supplémentaires si un serrurier est nécessaire.
+
+🛡️ Santé et sécurité
+Des mesures d'hygiène supplémentaires sont en place en raison du COVID-19.
+
+⚠️ Signalement des dommages
+Tout dommage ou dysfonctionnement doit être signalé immédiatement à l'hôte, sinon les coûts peuvent être facturés aux clients.`,
+
+      it: `📋 Regole dell'Alloggio
+🕐 Check-in / Check-out
+Check-in: dalle 15:00. Informare in anticipo l'orario di arrivo.
+Check-out: entro le 10:00.
+
+❌ Cancellazione / Pagamento anticipato
+Le condizioni variano a seconda del tipo di alloggio. Verificare al momento della prenotazione.
+
+👶 Bambini e letti
+Tutti i bambini sono i benvenuti. Culle gratuite disponibili su richiesta (0-2 anni), soggette a disponibilità.
+Non sono disponibili letti supplementari.
+
+🚭 Vietato fumare
+È vietato fumare all'interno dell'appartamento.
+
+🎉 Feste ed Eventi
+Non sono consentite feste o eventi, inclusi addii al celibato/nubilato.
+
+🐕 Animali domestici
+Gli animali non sono ammessi.
+
+🔇 Ore di silenzio
+Rispettare le ore di silenzio.
+
+🧺 Servizi e consumabili
+Per soggiorni di 7 notti o più, la biancheria da letto e gli asciugamani vengono cambiati ogni 7 giorni.
+I consumabili devono essere acquistati dagli ospiti dopo l'utilizzo di quelli forniti.
+
+📖 Informazioni sull'appartamento
+All'interno troverete un libro di informazioni con istruzioni per gli elettrodomestici e le attrezzature.
+
+🔑 Perdita di chiavi
+La perdita di qualsiasi chiave comporta un costo di 40,00 € per chiave, più spese aggiuntive se è necessario un fabbro.
+
+🛡️ Salute e sicurezza
+Misure igieniche aggiuntive sono in vigore a causa del COVID-19.
+
+⚠️ Comunicazione dei danni
+Qualsiasi danno o guasto deve essere comunicato immediatamente all'host, altrimenti i costi possono essere addebitati agli ospiti.`,
+
+      de: `📋 Hausregeln
+🕐 Check-in / Check-out
+Check-in: ab 15:00 Uhr. Bitte teilen Sie Ihre Ankunftszeit im Voraus mit.
+Check-out: bis 10:00 Uhr.
+
+❌ Stornierung / Vorauszahlung
+Die Bedingungen variieren je nach Unterkunftstyp. Bitte prüfen Sie bei der Buchung.
+
+👶 Kinder und Betten
+Alle Kinder sind willkommen. Kostenlose Kinderbetten auf Anfrage (0-2 Jahre), je nach Verfügbarkeit.
+Keine Zustellbetten verfügbar.
+
+🚭 Rauchen verboten
+Rauchen ist in der Wohnung verboten.
+
+🎉 Partys und Veranstaltungen
+Partys oder Veranstaltungen, einschließlich Junggesellenabschiede, sind nicht erlaubt.
+
+🐕 Haustiere
+Haustiere sind nicht erlaubt.
+
+🔇 Ruhezeiten
+Bitte respektieren Sie die Ruhezeiten.
+
+🧺 Dienstleistungen und Verbrauchsmaterialien
+Bei Aufenthalten von 7 Nächten oder mehr werden Bettwäsche und Handtücher alle 7 Tage gewechselt.
+Verbrauchsmaterialien müssen von den Gästen nach Verbrauch der bereitgestellten Artikel selbst gekauft werden.
+
+📖 Wohnungsinformationen
+In der Wohnung finden Sie ein Informationsbuch mit Anleitungen für Geräte und Ausstattung.
+
+🔑 Schlüsselverlust
+Der Verlust eines Schlüssels kostet 40,00 € pro Schlüssel, zuzüglich weiterer Kosten, falls ein Schlüsseldienst erforderlich ist.
+
+🛡️ Gesundheit und Sicherheit
+Zusätzliche Hygienemaßnahmen sind aufgrund von COVID-19 in Kraft.
+
+⚠️ Schadensmeldung
+Jegliche Schäden oder Defekte müssen sofort dem Gastgeber gemeldet werden, andernfalls können die Kosten den Gästen in Rechnung gestellt werden.`
+    };
+
     function setLanguage(lang) {
       const titles = {
         pt: "Guia Belleview Apartments",
@@ -141,6 +366,15 @@
         de: "Belleview Apartments Führer"
       };
 
+      const categories = {
+        pt: ["📞 Emergência", "📋 Regras do Alojamento", "🏖️ Praias", "🍽️ Restaurantes", "🏛️ Locais Históricos", "🛍️ Compras e Mercados"],
+        en: ["📞 Emergency", "📋 House Rules", "🏖️ Beaches", "🍽️ Restaurants", "🏛️ Historical Sites", "🛍️ Shopping & Markets"],
+                es: ["📞 Emergencia", "📋 Reglas del Alojamiento", "🏖️ Playas", "🍽️ Restaurantes", "🏛️ Lugares Históricos", "🛍️ Compras y Mercados"],
+        fr: ["📞 Urgences", "📋 Règles du Logement", "🏖️ Plages", "🍽️ Restaurants", "🏛️ Sites Historiques", "🛍️ Shopping et Marchés"],
+        it: ["📞 Emergenza", "📋 Regole dell'Alloggio", "🏖️ Spiagge", "🍽️ Ristoranti", "🏛️ Siti Storici", "🛍️ Shopping e Mercati"],
+        de: ["📞 Notfall", "📋 Hausregeln", "🏖️ Strände", "🍽️ Restaurants", "🏛️ Historische Orte", "🛍️ Einkaufen & Märkte"]
+      };
+
       const categoriesTitle = {
         pt: "📂 Categorias",
         en: "📂 Categories",
@@ -148,15 +382,6 @@
         fr: "📂 Catégories",
         it: "📂 Categorie",
         de: "📂 Kategorien"
-      };
-
-      const categories = {
-        pt: ["📞 Emergência", "📋 Regras do Alojamento", "🏖️ Praias", "🍽️ Restaurantes", "🏛️ Locais Históricos", "🛍️ Compras e Mercados"],
-        en: ["📞 Emergency", "📋 House Rules", "🏖️ Beaches", "🍽️ Restaurants", "🏛️ Historical Sites", "🛍️ Shopping & Markets"],
-        es: ["📞 Emergencia", "📋 Reglas del Alojamiento", "🏖️ Playas", "🍽️ Restaurantes", "🏛️ Lugares Históricos", "🛍️ Compras y Mercados"],
-        fr: ["📞 Urgences", "📋 Règles du Logement", "🏖️ Plages", "🍽️ Restaurants", "🏛️ Sites Historiques", "🛍️ Shopping et Marchés"],
-        it: ["📞 Emergenza", "📋 Regole dell'Alloggio", "🏖️ Spiagge", "🍽️ Ristoranti", "🏛️ Siti Storici", "🛍️ Shopping e Mercati"],
-        de: ["📞 Notfall", "📋 Hausregeln", "🏖️ Strände", "🍽️ Restaurants", "🏛️ Historische Orte", "🛍️ Einkaufen & Märkte"]
       };
 
       const backButtonText = {
@@ -186,6 +411,27 @@
         de: "🔗 Teilen"
       };
 
+      // Atualiza título e categorias
+      document.getElementById("title").innerText = titles[lang];
+      document.getElementById("categoriesTitle").innerText = categoriesTitle[lang];
+
+      const list = document.getElementById("categoriesList");
+      list.innerHTML = "";
+      categories[lang].forEach(cat => {
+        const li = document.createElement("li");
+        li.innerText = cat;
+        li.onclick = () => {
+          if (cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") || cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")) {
+            document.getElementById("rulesContent").style.display = "block";
+            document.getElementById("rulesContent").innerText = rules[lang];
+          } else {
+            document.getElementById("rulesContent").style.display = "block";
+            document.getElementById("rulesContent").innerText = "Conteúdo desta categoria ainda em desenvolvimento.";
+          }
+        };
+        list.appendChild(li);
+      });
+
       // Atualiza botões
       document.getElementById("backButton").innerText = backButtonText[lang];
       document.getElementById("printButton").innerText = printButtonText[lang];
@@ -199,11 +445,11 @@
     }
 
     function goBack() {
-      // Voltar ao menu de idiomas
       document.getElementById("languageMenu").style.display = "block";
       document.getElementById("choose").style.display = "block";
       document.getElementById("categories").style.display = "none";
       document.getElementById("backBtn").style.display = "none";
+      document.getElementById("rulesContent").style.display = "none";
       document.getElementById("title").innerText = "Guia Belleview Apartments";
     }
 
@@ -212,18 +458,14 @@
       const text = "Guia Belleview Apartments - veja aqui: " + url;
 
       if (navigator.share) {
-        // API nativa de partilha (funciona em smartphones)
         navigator.share({
           title: "Guia Belleview Apartments",
           text: text,
           url: url
         });
       } else {
-        // Alternativas: WhatsApp, Email ou copiar link
         const whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(text);
         const mailUrl = "mailto:?subject=Guia Belleview Apartments&body=" + encodeURIComponent(text);
-
-        // Pergunta ao utilizador
         const choice = prompt("Escolha como partilhar:\n1 - WhatsApp\n2 - Email\n3 - Copiar link");
 
         if (choice === "1") {
