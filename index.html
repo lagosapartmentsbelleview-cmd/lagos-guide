@@ -5,8 +5,18 @@
   <title>Guia Belleview Apartments</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsivo -->
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #f9f9f9; margin:0; padding:20px; }
-    h1 { margin-top: 20px; }
+    body { font-family: Arial, sans-serif; background: #f9f9f9; margin:0; padding:20px; text-align:center; }
+
+    /* Cabeçalho */
+    .header {
+      background: #0077cc;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .header h1 { margin: 0; font-size: 24px; }
+    .header p { margin: 4px 0; font-size: 14px; }
 
     /* Botões de idioma */
     .menu { margin: 20px auto; }
@@ -17,7 +27,7 @@
       gap: 8px;
       margin: 6px;
       padding: 10px 16px;
-      background: #0077cc; /* azul principal */
+      background: #0077cc;
       color: white;
       border: none;
       border-radius: 6px;
@@ -39,43 +49,35 @@
       text-align: left;
     }
 
-    /* Botão voltar */
-    .back-btn button {
-      margin-top: 15px;
-      padding: 10px 18px;
-      background: #0077cc;
-      color: white;
+    /* Botões inferiores */
+    .bottom-buttons { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .bottom-buttons button {
+      padding: 10px 16px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       font-size: 15px;
+      color: white;
     }
+    .print-btn { background: #28a745; }
+    .print-btn:hover { background: #1e7e34; }
+    .share-btn { background: #ff9800; }
+    .share-btn:hover { background: #e68900; }
+    .back-btn button { background: #0077cc; }
     .back-btn button:hover { background: #005fa3; }
 
-    /* Botão imprimir */
-    .print-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #28a745;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 15px;
-    }
-    .print-btn:hover { background: #1e7e34; }
-
-    /* Responsivo para smartphones */
+    /* Responsivo */
     @media (max-width: 600px) {
-      h1 { font-size: 20px; }
+      .header h1 { font-size: 20px; }
+      .header p { font-size: 12px; }
       .menu button { font-size: 14px; padding: 8px 12px; }
       li { font-size: 14px; }
     }
 
-    /* Estilo para impressão */
+    /* Impressão */
     @media print {
       body { background: white; color: black; }
-      .menu, .back-btn, .print-btn { display: none; } /* Esconde botões na impressão */
+      .menu, .back-btn, .bottom-buttons { display: none; }
       h1, h2 { color: black; }
       ul { margin-left: 20px; }
       @page { size: A4; margin: 20mm; }
@@ -83,8 +85,18 @@
   </style>
 </head>
 <body>
+  <!-- Cabeçalho com dados -->
+  <div class="header">
+    <h1>Apartments Belleview</h1>
+    <p>Rua Quinta do Landeiro, Lagos</p>
+    <p>📞 +351 910 051 588</p>
+    <p>📱 +351 910 051 588 (WhatsApp)</p>
+    <p>✉️ belleview@sapo.pt</p>
+    <p>Licenças: 26313/AL, 116670/AL, 116671/AL</p>
+  </div>
+
   <h1 id="title">Guia Belleview Apartments</h1>
-  <p id="choose">Escolha o idioma:</p>
+  <p id="choose">Escolha o idioma / Choose your language:</p>
 
   <!-- Menu de idiomas -->
   <div class="menu" id="languageMenu">
@@ -104,11 +116,14 @@
 
   <!-- Botão voltar -->
   <div class="back-btn" id="backBtn" style="display:none;">
-    <button onclick="goBack()">⬅️ Voltar</button>
+    <button id="backButton" onclick="goBack()">⬅️ Voltar</button>
   </div>
 
-  <!-- Botão imprimir -->
-  <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  <!-- Botões imprimir e partilhar -->
+  <div class="bottom-buttons">
+    <button class="print-btn" id="printButton" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+    <button class="share-btn" id="shareButton" onclick="shareGuide()">🔗 Partilhar</button>
+  </div>
 
   <script>
     function setLanguage(lang) {
@@ -139,18 +154,37 @@
         de: ["📞 Notfall", "📋 Hausregeln", "🏖️ Strände", "🍽️ Restaurants", "🏛️ Historische Orte", "🛍️ Einkaufen & Märkte"]
       };
 
-      // Atualiza título
-      document.getElementById("title").innerText = titles[lang];
-      document.getElementById("categoriesTitle").innerText = categoriesTitle[lang];
+      const backButtonText = {
+        pt: "⬅️ Voltar",
+        en: "⬅️ Back",
+        es: "⬅️ Volver",
+        fr: "⬅️ Retour",
+        it: "⬅️ Indietro",
+        de: "⬅️ Zurück"
+      };
 
-      // Atualiza lista de categorias
-      const list = document.getElementById("categoriesList");
-      list.innerHTML = "";
-      categories[lang].forEach(cat => {
-        const li = document.createElement("li");
-        li.innerText = cat;
-        list.appendChild(li);
-      });
+      const printButtonText = {
+        pt: "🖨️ Imprimir / Guardar PDF",
+        en: "🖨️ Print / Save PDF",
+        es: "🖨️ Imprimir / Guardar PDF",
+        fr: "🖨️ Imprimer / Enregistrer PDF",
+        it: "🖨️ Stampa / Salva PDF",
+        de: "🖨️ Drucken / PDF speichern"
+      };
+
+      const shareButtonText = {
+        pt: "🔗 Partilhar",
+        en: "🔗 Share",
+        es: "🔗 Compartir",
+        fr: "🔗 Partager",
+        it: "🔗 Condividi",
+        de: "🔗 Teilen"
+      };
+
+      // Atualiza botões
+      document.getElementById("backButton").innerText = backButtonText[lang];
+      document.getElementById("printButton").innerText = printButtonText[lang];
+      document.getElementById("shareButton").innerText = shareButtonText[lang];
 
       // Mostrar categorias e botão voltar, esconder menu de idiomas
       document.getElementById("languageMenu").style.display = "none";
@@ -166,6 +200,36 @@
       document.getElementById("categories").style.display = "none";
       document.getElementById("backBtn").style.display = "none";
       document.getElementById("title").innerText = "Guia Belleview Apartments";
+    }
+
+    function shareGuide() {
+      const url = window.location.href;
+      const text = "Guia Belleview Apartments - veja aqui: " + url;
+
+      if (navigator.share) {
+        // API nativa de partilha (funciona em smartphones)
+        navigator.share({
+          title: "Guia Belleview Apartments",
+          text: text,
+          url: url
+        });
+      } else {
+        // Alternativas: WhatsApp, Email ou copiar link
+        const whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(text);
+        const mailUrl = "mailto:?subject=Guia Belleview Apartments&body=" + encodeURIComponent(text);
+
+        // Pergunta ao utilizador
+        const choice = prompt("Escolha como partilhar:\n1 - WhatsApp\n2 - Email\n3 - Copiar link");
+
+        if (choice === "1") {
+          window.open(whatsappUrl, "_blank");
+        } else if (choice === "2") {
+          window.location.href = mailUrl;
+        } else if (choice === "3") {
+          navigator.clipboard.writeText(url);
+          alert("Link copiado para a área de transferência!");
+        }
+      }
     }
   </script>
 </body>
