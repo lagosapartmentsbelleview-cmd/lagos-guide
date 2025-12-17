@@ -434,7 +434,7 @@
       de: ["📞 Notfall","📋 Hausregeln","🏖️ Strände","🍽️ Restaurants","🏛️ Historische Orte","🎨 Museen & Kultur","🍸 Bars & Nachtleben","🛒 Supermärkte","🚌 Transport","🏥 Gesundheit & Apotheken","🏧 Geldautomaten & Banken","🥾 Wanderwege","⛵ Bootstouren","⛳ Golfplätze"]
     };
 
-    // Lógica de idioma e categorias
+        // Lógica de idioma e categorias
     function setLanguage(lang) {
       const titles = {
         pt: "Guia Belleview Apartments",
@@ -462,23 +462,24 @@
         const li = document.createElement("li");
         li.innerText = cat;
         li.onclick = () => {
-          if (
-            cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") ||
-            cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")
-          ) {
-            showCategory(lang, "rules", cat);
-          } else if (
-            cat.includes("Emerg") || cat.includes("Urgenc") || cat.includes("Notfall")
-          ) {
-            showCategory(lang, "emergency", cat);
-          } else if (
-            cat.includes("Praias") || cat.includes("Beaches") || cat.includes("Playas") ||
-            cat.includes("Plages") || cat.includes("Spiagge") || cat.includes("Strände")
-          ) {
-            showCategory(lang, "beaches", cat);
-          } else {
-            showCategory(lang, "other", cat);
-          }
+          let key = "";
+          if (cat.includes("Regras") || cat.includes("House Rules")) key = "rules";
+          else if (cat.includes("Emerg")) key = "emergency";
+          else if (cat.includes("Praias") || cat.includes("Beaches")) key = "beaches";
+          else if (cat.includes("Restaurantes") || cat.includes("Restaurants")) key = "restaurants";
+          else if (cat.includes("Histó") || cat.includes("Historical")) key = "historicalSites";
+          else if (cat.includes("Museus") || cat.includes("Museums")) key = "museums";
+          else if (cat.includes("Vida") || cat.includes("Nightlife")) key = "nightlife";
+          else if (cat.includes("Supermercados") || cat.includes("Supermarkets")) key = "supermarkets";
+          else if (cat.includes("Transport")) key = "transport";
+          else if (cat.includes("Saúde") || cat.includes("Health")) key = "health";
+          else if (cat.includes("ATM") || cat.includes("Banks")) key = "atms";
+          else if (cat.includes("Trilhos") || cat.includes("Hiking")) key = "trails";
+          else if (cat.includes("Passeios") || cat.includes("Boat")) key = "boatTours";
+          else if (cat.includes("Golfe") || cat.includes("Golf")) key = "golf";
+          else key = "other";
+
+          showCategory(lang, key, cat);
         };
         list.appendChild(li);
       });
@@ -498,12 +499,8 @@
       document.getElementById("categoryContent").style.display="block";
       document.getElementById("categoryTitle").innerText = catName;
 
-      if (key === "rules") {
-        document.getElementById("categoryText").innerHTML = rules[lang];
-      } else if (key === "emergency") {
-        document.getElementById("categoryText").innerHTML = emergency[lang];
-      } else if (key === "beaches") {
-        document.getElementById("categoryText").innerHTML = beaches[lang];
+      if (contents[key]) {
+        document.getElementById("categoryText").innerHTML = contents[key][lang];
       } else {
         document.getElementById("categoryText").innerHTML = "<p>Conteúdo desta categoria ainda em desenvolvimento.</p>";
       }
