@@ -7,25 +7,56 @@
     body { font-family: Arial, sans-serif; text-align: center; background: #f9f9f9; }
     h1 { margin-top: 30px; }
     .menu { margin: 20px auto; max-width: 400px; }
-    .menu a {
+    .menu button {
       display: block;
-      margin: 10px;
+      margin: 10px auto;
       padding: 12px;
       background: #0077cc;
       color: white;
-      text-decoration: none;
+      border: none;
       border-radius: 6px;
+      cursor: pointer;
+      width: 200px;
     }
-    .menu a:hover { background: #005fa3; }
+    .menu button:hover { background: #005fa3; }
   </style>
 </head>
 <body>
-  <h1>🌐 Guia Belleview Apartments</h1>
-  <p>Escolha o idioma:</p>
+  <h1 id="title">Guia Belleview Apartments</h1>
+  <p id="choose">Escolha o idioma:</p>
+
   <div class="menu">
-    <a href="pt.html">🇵🇹 Português</a>
-    <a href="en.html">🇬🇧 English</a>
-    <a href="es.html">🇪🇸 Español</a>
+    <button onclick="setLanguage('pt')">🇵🇹 Português</button>
+    <button onclick="setLanguage('en')">🇬🇧 English</button>
+    <button onclick="setLanguage('es')">🇪🇸 Español</button>
+    <button onclick="setLanguage('fr')">🇫🇷 Français</button>
+    <button onclick="setLanguage('it')">🇮🇹 Italiano</button>
+    <button onclick="setLanguage('de')">🇩🇪 Deutsch</button>
   </div>
+
+  <script>
+    function setLanguage(lang) {
+      const titles = {
+        pt: "Guia Belleview Apartments",
+        en: "Belleview Apartments Guide",
+        es: "Guía de Apartamentos Belleview",
+        fr: "Guide des Appartements Belleview",
+        it: "Guida Appartamenti Belleview",
+        de: "Belleview Apartments Führer"
+      };
+
+      const chooseText = {
+        pt: "Escolha o idioma:",
+        en: "Choose your language:",
+        es: "Elige el idioma:",
+        fr: "Choisissez la langue :",
+        it: "Scegli la lingua:",
+        de: "Wählen Sie die Sprache:"
+      };
+
+      document.getElementById("title").innerText = titles[lang];
+      document.getElementById("choose").innerText = chooseText[lang];
+    }
+  </script>
 </body>
 </html>
