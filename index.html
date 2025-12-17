@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Guia Belleview Apartments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsivo -->
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #f9f9f9; }
-    h1 { margin-top: 30px; }
-    .menu { margin: 20px auto; max-width: 400px; }
-    .menu button {
+    body { font-family: Arial, sans-serif; text-align: center; background: #f9f9f9; margin:0; padding:20px; }
+    h1 { margin-top: 20px; }
+    .menu, .categories, .back-btn { margin: 20px auto; max-width: 400px; }
+    .menu button, .back-btn button {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -19,15 +20,30 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      width: 240px;
+      width: 100%;
       font-size: 16px;
     }
-    .menu button:hover { background: #005fa3; }
+    .menu button:hover, .back-btn button:hover { background: #005fa3; }
     .menu img { width: 24px; height: 16px; }
     ul { list-style: none; padding: 0; }
-    li { margin: 8px 0; }
+    li { margin: 8px 0; padding:10px; background:#eee; border-radius:6px; }
 
-    /* Botão imprimir */
+    /* Responsivo para smartphones */
+    @media (max-width: 600px) {
+      h1 { font-size: 20px; }
+      .menu button, .back-btn button { font-size: 14px; padding: 10px; }
+      li { font-size: 14px; }
+    }
+
+    /* Estilo para impressão */
+    @media print {
+      body { background: white; color: black; }
+      .menu, .back-btn, .print-btn { display: none; } /* Esconde botões na impressão */
+      h1, h2 { color: black; }
+      ul { margin-left: 20px; }
+      @page { size: A4; margin: 20mm; }
+    }
+
     .print-btn {
       margin-top: 20px;
       padding: 10px 20px;
@@ -38,22 +54,14 @@
       cursor: pointer;
     }
     .print-btn:hover { background: #1e7e34; }
-
-    /* Estilo para impressão */
-    @media print {
-      body { background: white; color: black; }
-      .menu, .print-btn { display: none; } /* Esconde botões na impressão */
-      h1, h2 { color: black; }
-      ul { margin-left: 20px; }
-      @page { size: A4; margin: 20mm; }
-    }
   </style>
 </head>
 <body>
   <h1 id="title">Guia Belleview Apartments</h1>
   <p id="choose">Escolha o idioma:</p>
 
-  <div class="menu">
+  <!-- Menu de idiomas -->
+  <div class="menu" id="languageMenu">
     <button onclick="setLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png" alt="PT"> Português</button>
     <button onclick="setLanguage('en')"><img src="https://flagcdn.com/w20/gb.png" alt="EN"> English</button>
     <button onclick="setLanguage('es')"><img src="https://flagcdn.com/w20/es.png" alt="ES"> Español</button>
@@ -62,9 +70,18 @@
     <button onclick="setLanguage('de')"><img src="https://flagcdn.com/w20/de.png" alt="DE"> Deutsch</button>
   </div>
 
-  <h2 id="categoriesTitle"></h2>
-  <ul id="categoriesList"></ul>
+  <!-- Categorias -->
+  <div class="categories" id="categories" style="display:none;">
+    <h2 id="categoriesTitle"></h2>
+    <ul id="categoriesList"></ul>
+  </div>
 
+  <!-- Botão voltar -->
+  <div class="back-btn" id="backBtn" style="display:none;">
+    <button onclick="goBack()">⬅️ Voltar</button>
+  </div>
+
+  <!-- Botão imprimir -->
   <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
 
   <script>
@@ -76,15 +93,6 @@
         fr: "Guide des Appartements Belleview",
         it: "Guida Appartamenti Belleview",
         de: "Belleview Apartments Führer"
-      };
-
-      const chooseText = {
-        pt: "Escolha o idioma:",
-        en: "Choose your language:",
-        es: "Elige el idioma:",
-        fr: "Choisissez la langue :",
-        it: "Scegli la lingua:",
-        de: "Wählen Sie die Sprache:"
       };
 
       const categoriesTitle = {
@@ -105,9 +113,8 @@
         de: ["📞 Notfall", "📋 Hausregeln", "🏖️ Strände", "🍽️ Restaurants", "🏛️ Historische Orte", "🛍️ Einkaufen & Märkte"]
       };
 
-      // Atualiza título e texto
+      // Atualiza título
       document.getElementById("title").innerText = titles[lang];
-      document.getElementById("choose").innerText = chooseText[lang];
       document.getElementById("categoriesTitle").innerText = categoriesTitle[lang];
 
       // Atualiza lista de categorias
@@ -118,6 +125,21 @@
         li.innerText = cat;
         list.appendChild(li);
       });
+
+      // Mostrar categorias e botão voltar, esconder menu de idiomas
+      document.getElementById("languageMenu").style.display = "none";
+      document.getElementById("choose").style.display = "none";
+      document.getElementById("categories").style.display = "block";
+      document.getElementById("backBtn").style.display = "block";
+    }
+
+    function goBack() {
+      // Voltar ao menu de idiomas
+      document.getElementById("languageMenu").style.display = "block";
+      document.getElementById("choose").style.display = "block";
+      document.getElementById("categories").style.display = "none";
+      document.getElementById("backBtn").style.display = "none";
+      document.getElementById("title").innerText = "Guia Belleview Apartments";
     }
   </script>
 </body>
