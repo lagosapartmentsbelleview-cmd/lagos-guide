@@ -335,6 +335,19 @@ Any damage or malfunction must be reported immediately to the host, otherwise co
         }
       }
     }
+    function goBack() {
+  // Esconde categorias e conteúdo
+  document.getElementById("categories").style.display = "none";
+  document.getElementById("categoryContent").style.display = "none";
+
+  // Mostra novamente o menu de idiomas e o texto inicial
+  document.getElementById("languageMenu").style.display = "block";
+  document.getElementById("choose").style.display = "block";
+
+  // Restaura o título principal
+  document.getElementById("title").innerText = "Guia Belleview Apartments";
+}
+
   </script>
 </body>
 </html>
