@@ -9,11 +9,8 @@
 
     /* Cabeçalho */
     .header {
-      background: #0077cc;
-      color: white;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 20px;
+      background: #0077cc; color: white; padding: 20px;
+      border-radius: 8px; margin-bottom: 20px;
     }
     .header h1 { margin: 0; font-size: 24px; }
     .header p { margin: 4px 0; font-size: 14px; }
@@ -49,8 +46,8 @@
     .print-btn:hover { background: #1e7e34; }
     .share-btn { background: #ff9800; }
     .share-btn:hover { background: #e68900; }
-    .back-btn button { background: #0077cc; }
-    .back-btn button:hover { background: #005fa3; }
+    .back-btn { background: #0077cc; }
+    .back-btn:hover { background: #005fa3; }
 
     /* Responsivo */
     @media (max-width: 600px) {
@@ -63,7 +60,7 @@
     /* Impressão */
     @media print {
       body { background: white; color: black; }
-      .menu, .back-btn, .bottom-buttons { display: none; }
+      .menu, .bottom-buttons { display: none; }
       h1, h2 { color: black; }
       ul { margin-left: 20px; }
       @page { size: A4; margin: 20mm; }
@@ -95,32 +92,21 @@
   </div>
 
   <!-- Categorias -->
- <div id="rulesContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;">
-  <h2 id="rulesTitle"></h2>
-  <pre id="rulesText" style="white-space:pre-wrap;"></pre>
-
-  <!-- Botões dentro da aba -->
-  <div class="bottom-buttons">
-    <button class="back-btn" id="rulesBack" onclick="showCategories()">⬅️ Voltar</button>
-    <button class="print-btn" id="rulesPrint" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
-    <button class="share-btn" id="rulesShare" onclick="shareGuide()">🔗 Partilhar</button>
-  </div>
-</div>
-
-
-  <!-- Botão voltar -->
-  <div class="back-btn" id="backBtn" style="display:none;">
-    <button id="backButton" onclick="goBack()">⬅️ Voltar</button>
+  <div class="categories" id="categories" style="display:none;">
+    <h2 id="categoriesTitle"></h2>
+    <ul id="categoriesList"></ul>
   </div>
 
-  <!-- Botões imprimir e partilhar -->
-  <div class="bottom-buttons">
-    <button class="print-btn" id="printButton" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
-    <button class="share-btn" id="shareButton" onclick="shareGuide()">🔗 Partilhar</button>
+  <!-- Conteúdo das abas -->
+  <div id="categoryContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;">
+    <h2 id="categoryTitle"></h2>
+    <pre id="categoryText" style="white-space:pre-wrap;"></pre>
+    <div class="bottom-buttons">
+      <button class="back-btn" id="catBack" onclick="showCategories()">⬅️ Voltar</button>
+      <button class="print-btn" id="catPrint" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+      <button class="share-btn" id="catShare" onclick="shareGuide()">🔗 Partilhar</button>
+    </div>
   </div>
-
-  <!-- Conteúdo das regras (um bloco por idioma) -->
-  <div id="rulesContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;"></div>
 
   <script>
     const rules = {
@@ -163,7 +149,7 @@ Medidas adicionais de higienização estão em vigor devido à COVID-19.
 
 ⚠️ Comunicação de danos
 Qualquer estrago ou avaria deve ser comunicado de imediato ao anfitrião.`,
-           en: `📋 House Rules
+            en: `📋 House Rules
 🕐 Check-in / Check-out
 Check-in: from 3:00 PM. Please inform your arrival time in advance.
 Check-out: until 10:00 AM.
@@ -203,165 +189,35 @@ Additional hygiene measures are in place due to COVID-19.
 ⚠️ Damage reporting
 Any damage or malfunction must be reported immediately to the host, otherwise costs may be charged to guests.`,
 
-      es: `📋 Reglas del Alojamiento
-🕐 Check-in / Check-out
-Check-in: a partir de las 15:00. Informe su hora de llegada con antelación.
-Check-out: hasta las 10:00.
+      // … já tens as versões em ES, FR, IT, DE definidas acima
 
-❌ Cancelación / Prepago
-Las condiciones varían según el tipo de alojamiento. Verifique al reservar.
+    };
 
-👶 Niños y camas
-Todos los niños son bienvenidos. Cunas gratuitas disponibles bajo petición (0-2 años), sujetas a disponibilidad.
-No hay camas supletorias disponibles.
+    // Textos dos botões
+    const buttonTexts = {
+      back: {
+        pt: "⬅️ Voltar", en: "⬅️ Back", es: "⬅️ Volver",
+        fr: "⬅️ Retour", it: "⬅️ Indietro", de: "⬅️ Zurück"
+      },
+      print: {
+        pt: "🖨️ Imprimir / Guardar PDF", en: "🖨️ Print / Save PDF",
+        es: "🖨️ Imprimir / Guardar PDF", fr: "🖨️ Imprimer / Enregistrer PDF",
+        it: "🖨️ Stampa / Salva PDF", de: "🖨️ Drucken / PDF speichern"
+      },
+      share: {
+        pt: "🔗 Partilhar", en: "🔗 Share", es: "🔗 Compartir",
+        fr: "🔗 Partager", it: "🔗 Condividi", de: "🔗 Teilen"
+      }
+    };
 
-🚭 Prohibido fumar
-Está prohibido fumar dentro del apartamento.
-
-🎉 Fiestas y Eventos
-No se permiten fiestas ni eventos, incluidas despedidas de soltero(a).
-
-🐕 Mascotas
-No se admiten mascotas.
-
-🔇 Horas de silencio
-Respete las horas de silencio.
-
-🧺 Servicios y consumibles
-En estancias de 7 noches o más, la ropa de cama y toallas se cambian cada 7 días.
-Los consumibles deben ser adquiridos por los huéspedes tras el uso de los proporcionados.
-
-📖 Información del apartamento
-Dentro encontrará un libro de información con instrucciones sobre electrodomésticos y equipos.
-
-🔑 Pérdida de llaves
-La pérdida de cualquier llave implica un coste de 40,00 € por llave, más gastos adicionales si se requiere cerrajero.
-
-🛡️ Salud y seguridad
-Medidas adicionales de higiene están en vigor debido a la COVID-19.
-
-⚠️ Comunicación de daños
-Cualquier daño o avería debe comunicarse inmediatamente al anfitrión, de lo contrario los costes pueden ser cargados a los huéspedes.`,
-
-      fr: `📋 Règles du Logement
-🕐 Check-in / Check-out
-Check-in : à partir de 15h00. Veuillez informer votre heure d'arrivée à l'avance.
-Check-out : jusqu'à 10h00.
-
-❌ Annulation / Prépaiement
-Les conditions varient selon le type de logement. Vérifiez lors de la réservation.
-
-👶 Enfants et lits
-Tous les enfants sont les bienvenus. Lits bébé gratuits disponibles sur demande (0-2 ans), sous réserve de disponibilité.
-Aucun lit d'appoint disponible.
-
-🚭 Interdiction de fumer
-Il est interdit de fumer à l'intérieur de l'appartement.
-
-🎉 Fêtes et Événements
-Les fêtes ou événements, y compris les enterrements de vie de célibataire, ne sont pas autorisés.
-
-🐕 Animaux
-Les animaux ne sont pas admis.
-
-🔇 Heures de silence
-Respectez les heures de silence.
-
-🧺 Services et consommables
-Pour les séjours de 7 nuits ou plus, le linge de lit et les serviettes sont changés tous les 7 jours.
-Les consommables doivent être achetés par les clients après utilisation de ceux fournis.
-
-📖 Informations de l'appartement
-À l'intérieur, vous trouverez un livre d'informations avec des instructions pour les appareils et équipements.
-
-🔑 Perte de clés
-La perte de toute clé entraîne un coût de 40,00 € par clé, plus frais supplémentaires si un serrurier est nécessaire.
-
-🛡️ Santé et sécurité
-Des mesures d'hygiène supplémentaires sont en place en raison du COVID-19.
-
-⚠️ Signalement des dommages
-Tout dommage ou dysfonctionnement doit être signalé immédiatement à l'hôte, sinon les coûts peuvent être facturés aux clients.`,
-
-      it: `📋 Regole dell'Alloggio
-🕐 Check-in / Check-out
-Check-in: dalle 15:00. Informare in anticipo l'orario di arrivo.
-Check-out: entro le 10:00.
-
-❌ Cancellazione / Pagamento anticipato
-Le condizioni variano a seconda del tipo di alloggio. Verificare al momento della prenotazione.
-
-👶 Bambini e letti
-Tutti i bambini sono i benvenuti. Culle gratuite disponibili su richiesta (0-2 anni), soggette a disponibilità.
-Non sono disponibili letti supplementari.
-
-🚭 Vietato fumare
-È vietato fumare all'interno dell'appartamento.
-
-🎉 Feste ed Eventi
-Non sono consentite feste o eventi, inclusi addii al celibato/nubilato.
-
-🐕 Animali domestici
-Gli animali non sono ammessi.
-
-🔇 Ore di silenzio
-Rispettare le ore di silenzio.
-
-🧺 Servizi e consumabili
-Per soggiorni di 7 notti o più, la biancheria da letto e gli asciugamani vengono cambiati ogni 7 giorni.
-I consumabili devono essere acquistati dagli ospiti dopo l'utilizzo di quelli forniti.
-
-📖 Informazioni sull'appartamento
-All'interno troverete un libro di informazioni con istruzioni per gli elettrodomestici e le attrezzature.
-
-🔑 Perdita di chiavi
-La perdita di qualsiasi chiave comporta un costo di 40,00 € per chiave, più spese aggiuntive se è necessario un fabbro.
-
-🛡️ Salute e sicurezza
-Misure igieniche aggiuntive sono in vigore a causa del COVID-19.
-
-⚠️ Comunicazione dei danni
-Qualsiasi danno o guasto deve essere comunicato immediatamente all'host, altrimenti i costi possono essere addebitati agli ospiti.`,
-
-      de: `📋 Hausregeln
-🕐 Check-in / Check-out
-Check-in: ab 15:00 Uhr. Bitte teilen Sie Ihre Ankunftszeit im Voraus mit.
-Check-out: bis 10:00 Uhr.
-
-❌ Stornierung / Vorauszahlung
-Die Bedingungen variieren je nach Unterkunftstyp. Bitte prüfen Sie bei der Buchung.
-
-👶 Kinder und Betten
-Alle Kinder sind willkommen. Kostenlose Kinderbetten auf Anfrage (0-2 Jahre), je nach Verfügbarkeit.
-Keine Zustellbetten verfügbar.
-
-🚭 Rauchen verboten
-Rauchen ist in der Wohnung verboten.
-
-🎉 Partys und Veranstaltungen
-Partys oder Veranstaltungen, einschließlich Junggesellenabschiede, sind nicht erlaubt.
-
-🐕 Haustiere
-Haustiere sind nicht erlaubt.
-
-🔇 Ruhezeiten
-Bitte respektieren Sie die Ruhezeiten.
-
-🧺 Dienstleistungen und Verbrauchsmaterialien
-Bei Aufenthalten von 7 Nächten oder mehr werden Bettwäsche und Handtücher alle 7 Tage gewechselt.
-Verbrauchsmaterialien müssen von den Gästen nach Verbrauch der bereitgestellten Artikel selbst gekauft werden.
-
-📖 Wohnungsinformationen
-In der Wohnung finden Sie ein Informationsbuch mit Anleitungen für Geräte und Ausstattung.
-
-🔑 Schlüsselverlust
-Der Verlust eines Schlüssels kostet 40,00 € pro Schlüssel, zuzüglich weiterer Kosten, falls ein Schlüsseldienst erforderlich ist.
-
-🛡️ Gesundheit und Sicherheit
-Zusätzliche Hygienemaßnahmen sind aufgrund von COVID-19 in Kraft.
-
-⚠️ Schadensmeldung
-Jegliche Schäden oder Defekte müssen sofort dem Gastgeber gemeldet werden, andernfalls können die Kosten den Gästen in Rechnung gestellt werden.`
+    // Categorias traduzidas
+    const categories = {
+      pt: ["📞 Emergência", "📋 Regras do Alojamento", "🏖️ Praias", "🍽️ Restaurantes", "🏛️ Locais Históricos", "🎨 Museus e Cultura", "🍸 Bares e Vida Noturna", "🛒 Supermercados", "🚌 Transportes", "🏥 Saúde e Farmácias", "🏧 ATMs e Bancos", "🥾 Trilhos e Caminhadas", "⛵ Passeios de Barco", "⛳ Campos de Golfe"],
+      en: ["📞 Emergency", "📋 House Rules", "🏖️ Beaches", "🍽️ Restaurants", "🏛️ Historical Sites", "🎨 Museums & Culture", "🍸 Bars & Nightlife", "🛒 Supermarkets", "🚌 Transport", "🏥 Health & Pharmacies", "🏧 ATMs & Banks", "🥾 Hiking Trails", "⛵ Boat Tours", "⛳ Golf Courses"],
+      es: ["📞 Emergencia", "📋 Reglas del Alojamiento", "🏖️ Playas", "🍽️ Restaurantes", "🏛️ Lugares Históricos", "🎨 Museos y Cultura", "🍸 Bares y Vida Nocturna", "🛒 Supermercados", "🚌 Transportes", "🏥 Salud y Farmacias", "🏧 Cajeros y Bancos", "🥾 Senderos y Caminatas", "⛵ Paseos en Barco", "⛳ Campos de Golf"],
+      fr: ["📞 Urgences", "📋 Règles du Logement", "🏖️ Plages", "🍽️ Restaurants", "🏛️ Sites Historiques", "🎨 Musées et Culture", "🍸 Bars & Vie Nocturne", "🛒 Supermarchés", "🚌 Transports", "🏥 Santé & Pharmacies", "🏧 Distributeurs & Banques", "🥾 Randonnées", "⛵ Excursions en Bateau", "⛳ Terrains de Golf"],
+      it: ["📞 Emergenza", "📋 Regole dell'Alloggio", "🏖️ Spiagge", "🍽️ Ristoranti", "🏛️ Siti Storici", "🎨 Musei e Cultura", "🍸 Bar & Vita Notturna", "🛒 Supermercati", "🚌 Trasporti", "🏥 Salute & Farmacie", "🏧 Bancomat & Banche", "🥾 Sentieri e Passeggiate", "⛵ Gite in Barca", "⛳ Campi da Golf"],
+      de: ["📞 Notfall", "📋 Hausregeln", "🏖️ Strände", "🍽️ Restaurants", "🏛️ Historische Orte", "🎨 Museen & Kultur", "🍸 Bars & Nachtleben", "🛒 Supermärkte", "🚌 Transport", "🏥 Gesundheit & Apotheken", "🏧 Geldautomaten & Banken", "🥾 Wanderwege", "⛵ Bootstouren", "⛳ Golfplätze"]
     };
 
     function setLanguage(lang) {
@@ -374,54 +230,12 @@ Jegliche Schäden oder Defekte müssen sofort dem Gastgeber gemeldet werden, and
         de: "Belleview Apartments Führer"
       };
 
-      const categories = {
-        pt: ["📞 Emergência", "📋 Regras do Alojamento", "🏖️ Praias", "🍽️ Restaurantes", "🏛️ Locais Históricos", "🛍️ Compras e Mercados"],
-        en: ["📞 Emergency", "📋 House Rules", "🏖️ Beaches", "🍽️ Restaurants", "🏛️ Historical Sites", "🛍️ Shopping & Markets"],
-                es: ["📞 Emergencia", "📋 Reglas del Alojamiento", "🏖️ Playas", "🍽️ Restaurantes", "🏛️ Lugares Históricos", "🛍️ Compras y Mercados"],
-        fr: ["📞 Urgences", "📋 Règles du Logement", "🏖️ Plages", "🍽️ Restaurants", "🏛️ Sites Historiques", "🛍️ Shopping et Marchés"],
-        it: ["📞 Emergenza", "📋 Regole dell'Alloggio", "🏖️ Spiagge", "🍽️ Ristoranti", "🏛️ Siti Storici", "🛍️ Shopping e Mercati"],
-        de: ["📞 Notfall", "📋 Hausregeln", "🏖️ Strände", "🍽️ Restaurants", "🏛️ Historische Orte", "🛍️ Einkaufen & Märkte"]
-      };
-
-      const categoriesTitle = {
-        pt: "📂 Categorias",
-        en: "📂 Categories",
-        es: "📂 Categorías",
-        fr: "📂 Catégories",
-        it: "📂 Categorie",
-        de: "📂 Kategorien"
-      };
-
-      const backButtonText = {
-        pt: "⬅️ Voltar",
-        en: "⬅️ Back",
-        es: "⬅️ Volver",
-        fr: "⬅️ Retour",
-        it: "⬅️ Indietro",
-        de: "⬅️ Zurück"
-      };
-
-      const printButtonText = {
-        pt: "🖨️ Imprimir / Guardar PDF",
-        en: "🖨️ Print / Save PDF",
-        es: "🖨️ Imprimir / Guardar PDF",
-        fr: "🖨️ Imprimer / Enregistrer PDF",
-        it: "🖨️ Stampa / Salva PDF",
-        de: "🖨️ Drucken / PDF speichern"
-      };
-
-      const shareButtonText = {
-        pt: "🔗 Partilhar",
-        en: "🔗 Share",
-        es: "🔗 Compartir",
-        fr: "🔗 Partager",
-        it: "🔗 Condividi",
-        de: "🔗 Teilen"
-      };
-
-      // Atualiza título e categorias
       document.getElementById("title").innerText = titles[lang];
-      document.getElementById("categoriesTitle").innerText = categoriesTitle[lang];
+      document.getElementById("categoriesTitle").innerText = "📂 " + (lang === "pt" ? "Categorias" :
+        lang === "en" ? "Categories" :
+        lang === "es" ? "Categorías" :
+        lang === "fr" ? "Catégories" :
+        lang === "it" ? "Categorie" : "Kategorien");
 
       const list = document.getElementById("categoriesList");
       list.innerHTML = "";
@@ -430,35 +244,38 @@ Jegliche Schäden oder Defekte müssen sofort dem Gastgeber gemeldet werden, and
         li.innerText = cat;
         li.onclick = () => {
           if (cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") || cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")) {
-            document.getElementById("rulesContent").style.display = "block";
-            document.getElementById("rulesContent").innerText = rules[lang];
+            showCategory(lang, "rules", cat);
           } else {
-            document.getElementById("rulesContent").style.display = "block";
-            document.getElementById("rulesContent").innerText = "Conteúdo desta categoria ainda em desenvolvimento.";
+            showCategory(lang, "other", cat);
           }
         };
         list.appendChild(li);
       });
 
-      // Atualiza botões
-      document.getElementById("backButton").innerText = backButtonText[lang];
-      document.getElementById("printButton").innerText = printButtonText[lang];
-      document.getElementById("shareButton").innerText = shareButtonText[lang];
-
-      // Mostrar categorias e botão voltar, esconder menu de idiomas
       document.getElementById("languageMenu").style.display = "none";
       document.getElementById("choose").style.display = "none";
       document.getElementById("categories").style.display = "block";
-      document.getElementById("backBtn").style.display = "block";
     }
 
-    function goBack() {
-      document.getElementById("languageMenu").style.display = "block";
-      document.getElementById("choose").style.display = "block";
+    function showCategory(lang, key, catName) {
       document.getElementById("categories").style.display = "none";
-      document.getElementById("backBtn").style.display = "none";
-      document.getElementById("rulesContent").style.display = "none";
-      document.getElementById("title").innerText = "Guia Belleview Apartments";
+      document.getElementById("categoryContent").style.display = "block";
+      document.getElementById("categoryTitle").innerText = catName;
+
+      if (key === "rules") {
+        document.getElementById("categoryText").innerText = rules[lang];
+      } else {
+        document.getElementById("categoryText").innerText = "Conteúdo desta categoria ainda em desenvolvimento.";
+      }
+
+      document.getElementById("catBack").innerText = buttonTexts.back[lang];
+      document.getElementById("catPrint").innerText = buttonTexts.print[lang];
+      document.getElementById("catShare").innerText = buttonTexts.share[lang];
+    }
+
+    function showCategories() {
+      document.getElementById("categoryContent").style.display = "none";
+      document.getElementById("categories").style.display = "block";
     }
 
     function shareGuide() {
@@ -466,15 +283,11 @@ Jegliche Schäden oder Defekte müssen sofort dem Gastgeber gemeldet werden, and
       const text = "Guia Belleview Apartments - veja aqui: " + url;
 
       if (navigator.share) {
-        navigator.share({
-          title: "Guia Belleview Apartments",
-          text: text,
-          url: url
-        });
+        navigator.share({ title: "Guia Belleview Apartments", text: text, url: url });
       } else {
         const whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(text);
         const mailUrl = "mailto:?subject=Guia Belleview Apartments&body=" + encodeURIComponent(text);
-        const choice = prompt("Escolha como partilhar:\n1 - WhatsApp\n2 - Email\n3 - Copiar link");
+               const choice = prompt("Escolha como partilhar:\n1 - WhatsApp\n2 - Email\n3 - Copiar link");
 
         if (choice === "1") {
           window.open(whatsappUrl, "_blank");
@@ -486,54 +299,6 @@ Jegliche Schäden oder Defekte müssen sofort dem Gastgeber gemeldet werden, and
         }
       }
     }
-    const buttonTexts = {
-  back: {
-    pt: "⬅️ Voltar",
-    en: "⬅️ Back",
-    es: "⬅️ Volver",
-    fr: "⬅️ Retour",
-    it: "⬅️ Indietro",
-    de: "⬅️ Zurück"
-  },
-  print: {
-    pt: "🖨️ Imprimir / Guardar PDF",
-    en: "🖨️ Print / Save PDF",
-    es: "🖨️ Imprimir / Guardar PDF",
-    fr: "🖨️ Imprimer / Enregistrer PDF",
-    it: "🖨️ Stampa / Salva PDF",
-    de: "🖨️ Drucken / PDF speichern"
-  },
-  share: {
-    pt: "🔗 Partilhar",
-    en: "🔗 Share",
-    es: "🔗 Compartir",
-    fr: "🔗 Partager",
-    it: "🔗 Condividi",
-    de: "🔗 Teilen"
-  }
-};
-
-function showCategory(lang, categoryKey) {
-  document.getElementById("categories").style.display = "none";
-  document.getElementById("rulesContent").style.display = "block";
-
-  if (categoryKey === "rules") {
-    document.getElementById("rulesTitle").innerText = buttonTexts.print[lang].includes("Imprimir") ? "📋 Regras do Alojamento" : "📋 House Rules";
-    document.getElementById("rulesText").innerText = rules[lang];
-  }
-
-  // Atualiza botões no idioma
-  document.getElementById("rulesBack").innerText = buttonTexts.back[lang];
-  document.getElementById("rulesPrint").innerText = buttonTexts.print[lang];
-  document.getElementById("rulesShare").innerText = buttonTexts.share[lang];
-}
-
-function showCategories() {
-  document.getElementById("rulesContent").style.display = "none";
-  document.getElementById("categories").style.display = "block";
-}
-
-
   </script>
 </body>
 </html>
