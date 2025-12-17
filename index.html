@@ -92,21 +92,44 @@
   </div>
 
   <!-- Categorias -->
-  <div class="categories" id="categories" style="display:none;">
-    <h2 id="categoriesTitle"></h2>
-    <ul id="categoriesList"></ul>
+ <div class="categories" id="categories" style="display:none;">
+  <h2 id="categoriesTitle"></h2>
+
+  <!-- Botões logo abaixo do título -->
+  <div class="bottom-buttons">
+    <button class="back-btn" id="catBackTop" onclick="goBack()">⬅️ Voltar</button>
+    <button class="print-btn" id="catPrintTop" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+    <button class="share-btn" id="catShareTop" onclick="shareGuide()">🔗 Partilhar</button>
   </div>
+
+  <ul id="categoriesList"></ul>
+
+  <!-- Botão voltar no fim da lista -->
+  <div class="bottom-buttons">
+    <button class="back-btn" id="catBackBottom" onclick="goBack()">⬅️ Voltar</button>
+  </div>
+</div>
+
 
   <!-- Conteúdo das abas -->
   <div id="categoryContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;">
-    <h2 id="categoryTitle"></h2>
-    <pre id="categoryText" style="white-space:pre-wrap;"></pre>
-    <div class="bottom-buttons">
-      <button class="back-btn" id="catBack" onclick="showCategories()">⬅️ Voltar</button>
-      <button class="print-btn" id="catPrint" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
-      <button class="share-btn" id="catShare" onclick="shareGuide()">🔗 Partilhar</button>
-    </div>
+  <h2 id="categoryTitle"></h2>
+
+  <!-- Botões logo abaixo do título -->
+  <div class="bottom-buttons">
+    <button class="back-btn" id="catBackTopContent" onclick="showCategories()">⬅️ Voltar</button>
+    <button class="print-btn" id="catPrintContent" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+    <button class="share-btn" id="catShareContent" onclick="shareGuide()">🔗 Partilhar</button>
   </div>
+
+  <pre id="categoryText" style="white-space:pre-wrap;"></pre>
+
+  <!-- Botão voltar no fim do conteúdo -->
+  <div class="bottom-buttons">
+    <button class="back-btn" id="catBackBottomContent" onclick="showCategories()">⬅️ Voltar</button>
+  </div>
+</div>
+
 
   <script>
     const rules = {
@@ -255,6 +278,13 @@ Any damage or malfunction must be reported immediately to the host, otherwise co
       document.getElementById("languageMenu").style.display = "none";
       document.getElementById("choose").style.display = "none";
       document.getElementById("categories").style.display = "block";
+      
+      // Botões na vista de categorias
+      document.getElementById("catBackTop").innerText = buttonTexts.back[lang];
+      document.getElementById("catPrintTop").innerText = buttonTexts.print[lang];
+      document.getElementById("catShareTop").innerText = buttonTexts.share[lang];
+      document.getElementById("catBackBottom").innerText = buttonTexts.back[lang];
+
     }
 
     function showCategory(lang, key, catName) {
@@ -272,6 +302,12 @@ Any damage or malfunction must be reported immediately to the host, otherwise co
       document.getElementById("catPrint").innerText = buttonTexts.print[lang];
       document.getElementById("catShare").innerText = buttonTexts.share[lang];
     }
+    // Botões na vista de conteúdo da categoria
+    document.getElementById("catBackTopContent").innerText = buttonTexts.back[lang];
+    document.getElementById("catPrintContent").innerText = buttonTexts.print[lang];
+    document.getElementById("catShareContent").innerText = buttonTexts.share[lang];
+    document.getElementById("catBackBottomContent").innerText = buttonTexts.back[lang];
+
 
     function showCategories() {
       document.getElementById("categoryContent").style.display = "none";
