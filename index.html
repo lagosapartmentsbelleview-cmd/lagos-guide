@@ -16,9 +16,11 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      width: 200px;
+      width: 220px;
     }
     .menu button:hover { background: #005fa3; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 8px 0; }
   </style>
 </head>
 <body>
@@ -33,6 +35,9 @@
     <button onclick="setLanguage('it')">🇮🇹 Italiano</button>
     <button onclick="setLanguage('de')">🇩🇪 Deutsch</button>
   </div>
+
+  <h2 id="categoriesTitle"></h2>
+  <ul id="categoriesList"></ul>
 
   <script>
     function setLanguage(lang) {
@@ -54,8 +59,37 @@
         de: "Wählen Sie die Sprache:"
       };
 
+      const categoriesTitle = {
+        pt: "📂 Categorias",
+        en: "📂 Categories",
+        es: "📂 Categorías",
+        fr: "📂 Catégories",
+        it: "📂 Categorie",
+        de: "📂 Kategorien"
+      };
+
+      const categories = {
+        pt: ["📞 Emergência", "📋 Regras do Alojamento", "🏖️ Praias", "🍽️ Restaurantes", "🏛️ Locais Históricos", "🛍️ Compras e Mercados"],
+        en: ["📞 Emergency", "📋 House Rules", "🏖️ Beaches", "🍽️ Restaurants", "🏛️ Historical Sites", "🛍️ Shopping & Markets"],
+        es: ["📞 Emergencia", "📋 Reglas del Alojamiento", "🏖️ Playas", "🍽️ Restaurantes", "🏛️ Lugares Históricos", "🛍️ Compras y Mercados"],
+        fr: ["📞 Urgences", "📋 Règles du Logement", "🏖️ Plages", "🍽️ Restaurants", "🏛️ Sites Historiques", "🛍️ Shopping et Marchés"],
+        it: ["📞 Emergenza", "📋 Regole dell'Alloggio", "🏖️ Spiagge", "🍽️ Ristoranti", "🏛️ Siti Storici", "🛍️ Shopping e Mercati"],
+        de: ["📞 Notfall", "📋 Hausregeln", "🏖️ Strände", "🍽️ Restaurants", "🏛️ Historische Orte", "🛍️ Einkaufen & Märkte"]
+      };
+
+      // Atualiza título e texto
       document.getElementById("title").innerText = titles[lang];
       document.getElementById("choose").innerText = chooseText[lang];
+      document.getElementById("categoriesTitle").innerText = categoriesTitle[lang];
+
+      // Atualiza lista de categorias
+      const list = document.getElementById("categoriesList");
+      list.innerHTML = "";
+      categories[lang].forEach(cat => {
+        const li = document.createElement("li");
+        li.innerText = cat;
+        list.appendChild(li);
+      });
     }
   </script>
 </body>
