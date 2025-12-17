@@ -112,7 +112,93 @@
 
   <script>
     // --- Conteúdos multilíngua já prontos ---
-    const rules = { /* conteúdo multilíngua completo como já tinhas */ };
+        const rules = {
+      pt: `
+<div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: a partir das 15:00<br>Check-out: até às 10:00</p></div>
+<div class="category-card"><h3>❌ Cancelamento / Pré-pagamento</h3><p>As condições variam consoante o tipo de alojamento. Verifique ao efetuar a reserva.</p></div>
+<div class="category-card"><h3>👶 Crianças e camas</h3><p>Todas as crianças são bem-vindas.<br>Berços gratuitos (0-2 anos), sujeitos à disponibilidade.<br>Não existem camas extra.</p></div>
+<div class="category-card"><h3>🚭 Proibido Fumar</h3><p>É proibido fumar no interior do apartamento.</p></div>
+<div class="category-card"><h3>🎉 Festas e Eventos</h3><p>Não são permitidas festas ou eventos.</p></div>
+<div class="category-card"><h3>🐕 Animais de Estimação</h3><p>Animais de estimação não são admitidos.</p></div>
+<div class="category-card"><h3>🔇 Lei do Silêncio</h3><p>Respeite as horas de silêncio.</p></div>
+<div class="category-card"><h3>🧺 Serviços e consumíveis</h3><p>Para estadias de 7 noites ou mais, roupa de cama e toalhas são mudadas a cada 7 dias.<br>Consumíveis devem ser adquiridos pelos hóspedes após utilização dos disponibilizados.</p></div>
+<div class="category-card"><h3>📖 Informações do apartamento</h3><p>No interior encontra um livro de informações com instruções sobre máquinas e equipamentos.</p></div>
+<div class="category-card"><h3>🔑 Perda de chaves</h3><p>A perda de qualquer chave implica um custo de 40,00 € por chave.</p></div>
+<div class="category-card"><h3>🛡️ Saúde e segurança</h3><p>Medidas adicionais de higienização estão em vigor devido à COVID-19.</p></div>
+<div class="category-card"><h3>⚠️ Comunicação de danos</h3><p>Qualquer estrago ou avaria deve ser comunicado de imediato ao anfitrião.</p></div>
+`,
+      en: `
+<div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: from 3:00 PM<br>Check-out: until 10:00 AM</p></div>
+<div class="category-card"><h3>❌ Cancellation / Prepayment</h3><p>Conditions vary depending on accommodation type. Check when booking.</p></div>
+<div class="category-card"><h3>👶 Children and beds</h3><p>All children are welcome.<br>Free cribs (0-2 years), subject to availability.<br>No extra beds available.</p></div>
+<div class="category-card"><h3>🚭 No Smoking</h3><p>Smoking is prohibited inside the apartment.</p></div>
+<div class="category-card"><h3>🎉 Parties and Events</h3><p>Parties or events are not allowed.</p></div>
+<div class="category-card"><h3>🐕 Pets</h3><p>Pets are not allowed.</p></div>
+<div class="category-card"><h3>🔇 Quiet Hours</h3><p>Please respect quiet hours.</p></div>
+<div class="category-card"><h3>🧺 Services and supplies</h3><p>For stays of 7 nights or more, bed linen and towels are changed every 7 days.<br>Supplies must be purchased by guests after the provided ones are used.</p></div>
+<div class="category-card"><h3>📖 Apartment Information</h3><p>An information book with appliance instructions is available inside.</p></div>
+<div class="category-card"><h3>🔑 Lost keys</h3><p>Loss of any key implies a cost of €40 per key.</p></div>
+<div class="category-card"><h3>🛡️ Health and safety</h3><p>Additional hygiene measures are in place due to COVID-19.</p></div>
+<div class="category-card"><h3>⚠️ Damage reporting</h3><p>Any damage or malfunction must be reported immediately to the host.</p></div>
+`,
+      es: `
+<div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: a partir de las 15:00<br>Check-out: hasta las 10:00</p></div>
+<div class="category-card"><h3>❌ Cancelación / Prepago</h3><p>Las condiciones varían según el tipo de alojamiento. Verifique al reservar.</p></div>
+<div class="category-card"><h3>👶 Niños y camas</h3><p>Todos los niños son bienvenidos.<br>Cunas gratuitas (0-2 años), sujetas a disponibilidad.<br>No hay camas supletorias.</p></div>
+<div class="category-card"><h3>🚭 Prohibido fumar</h3><p>Está prohibido fumar dentro del apartamento.</p></div>
+<div class="category-card"><h3>🎉 Fiestas y Eventos</h3><p>No se permiten fiestas ni eventos.</p></div>
+<div class="category-card"><h3>🐕 Mascotas</h3><p>No se admiten mascotas.</p></div>
+<div class="category-card"><h3>🔇 Horas de silencio</h3><p>Respete las horas de silencio.</p></div>
+<div class="category-card"><h3>🧺 Servicios y consumibles</h3><p>En estancias de 7 noches o más, la ropa de cama y toallas se cambian cada 7 días.<br>Los consumibles deben ser adquiridos por los huéspedes tras usar los proporcionados.</p></div>
+<div class="category-card"><h3>📖 Información del apartamento</h3><p>Dentro encontrará un libro con instrucciones de electrodomésticos y equipos.</p></div>
+<div class="category-card"><h3>🔑 Pérdida de llaves</h3><p>La pérdida de cualquier llave implica un coste de 40,00 € por llave.</p></div>
+<div class="category-card"><h3>🛡️ Salud y seguridad</h3><p>Medidas adicionales de higiene están en vigor debido a la COVID-19.</p></div>
+<div class="category-card"><h3>⚠️ Comunicación de daños</h3><p>Cualquier daño o avería debe comunicarse inmediatamente al anfitrión.</p></div>
+`,
+      fr: `
+<div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in : à partir de 15h00<br>Check-out : jusqu'à 10h00</p></div>
+<div class="category-card"><h3>❌ Annulation / Prépaiement</h3><p>Les conditions varient selon le type de logement. Vérifiez lors de la réservation.</p></div>
+<div class="category-card"><h3>👶 Enfants et lits</h3><p>Tous les enfants sont les bienvenus.<br>Lits bébé gratuits (0-2 ans), sous réserve de disponibilité.<br>Aucun lit d'appoint.</p></div>
+<div class="category-card"><h3>🚭 Interdiction de fumer</h3><p>Il est interdit de fumer à l'intérieur de l'appartement.</p></div>
+<div class="category-card"><h3>🎉 Fêtes et Événements</h3><p>Les fêtes ou événements ne sont pas autorisés.</p></div>
+<div class="category-card"><h3>🐕 Animaux</h3><p>Les animaux ne sont pas admis.</p></div>
+<div class="category-card"><h3>🔇 Heures de silence</h3><p>Respectez les heures de silence.</p></div>
+<div class="category-card"><h3>🧺 Services et consommables</h3><p>Pour les séjours de 7 nuits ou plus, le linge et les serviettes sont changés tous les 7 jours.<br>Les consommables doivent être achetés après usage des fournis.</p></div>
+<div class="category-card"><h3>📖 Informations de l'appartement</h3><p>Un livret d’informations avec instructions pour les appareils est disponible.</p></div>
+<div class="category-card"><h3>🔑 Perte de clés</h3><p>La perte de toute clé entraîne un coût de 40,00 € par clé.</p></div>
+<div class="category-card"><h3>🛡️ Santé et sécurité</h3><p>Des mesures d'hygiène supplémentaires sont en place en raison du COVID-19.</p></div>
+<div class="category-card"><h3>⚠️ Signalement des dommages</h3><p>Tout dommage ou dysfonctionnement doit être signalé immédiatement à l'hôte.</p></div>
+`,
+      it: `
+<div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: dalle 15:00<br>Check-out: entro le 10:00</p></div>
+<div class="category-card"><h3>❌ Cancellazione / Pagamento anticipato</h3><p>Le condizioni variano in base al tipo di alloggio. Verificare al momento della prenotazione.</p></div>
+<div class="category-card"><h3>👶 Bambini e letti</h3><p>Tutti i bambini sono i benvenuti.<br>Culle gratuite (0-2 anni), soggette a disponibilità.<br>Nessun letto supplementare disponibile.</p></div>
+<div class="category-card"><h3>🚭 Vietato fumare</h3><p>È vietato fumare all'interno dell'appartamento.</p></div>
+<div class="category-card"><h3>🎉 Feste ed Eventi</h3><p>Non sono consentite feste o eventi.</p></div>
+<div class="category-card"><h3>🐕 Animali domestici</h3><p>Gli animali non sono ammessi.</p></div>
+<div class="category-card"><h3>🔇 Ore di silenzio</h3><p>Rispettare le ore di silenzio.</p></div>
+<div class="category-card"><h3>🧺 Servizi e consumabili</h3><p>Per soggiorni di 7 notti o più, biancheria e asciugamani vengono cambiati ogni 7 giorni.<br>I consumabili vanno acquistati dagli ospiti dopo l’uso di quelli forniti.</p></div>
+<div class="category-card"><h3>📖 Informazioni sull'appartamento</h3><p>È disponibile un libro informativo con istruzioni per gli elettrodomestici.</p></div>
+<div class="category-card"><h3>🔑 Perdita di chiavi</h3><p>La perdita di qualsiasi chiave comporta un costo di €40 per chiave.</p></div>
+<div class="category-card"><h3>🛡️ Salute e sicurezza</h3><p>Misure igieniche aggiuntive sono in vigore a causa del COVID-19.</p></div>
+<div class="category-card"><h3>⚠️ Comunicazione dei danni</h3><p>Qualsiasi danno o guasto deve essere comunicato immediatamente all'host.</p></div>
+`,
+      de: `
+<div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: ab 15:00 Uhr<br>Check-out: bis 10:00 Uhr</p></div>
+<div class="category-card"><h3>❌ Stornierung / Vorauszahlung</h3><p>Bedingungen variieren je nach Unterkunftstyp. Bitte bei der Buchung prüfen.</p></div>
+<div class="category-card"><h3>👶 Kinder und Betten</h3><p>Alle Kinder sind willkommen.<br>Kostenlose Kinderbetten (0–2 Jahre), je nach Verfügbarkeit.<br>Keine Zustellbetten verfügbar.</p></div>
+<div class="category-card"><h3>🚭 Rauchen verboten</h3><p>Rauchen ist in der Wohnung verboten.</p></div>
+<div class="category-card"><h3>🎉 Partys und Veranstaltungen</h3><p>Partys oder Veranstaltungen sind nicht erlaubt.</p></div>
+<div class="category-card"><h3>🐕 Haustiere</h3><p>Haustiere sind nicht erlaubt.</p></div>
+<div class="category-card"><h3>🔇 Ruhezeiten</h3><p>Bitte respektieren Sie die Ruhezeiten.</p></div>
+<div class="category-card"><h3>🧺 Dienstleistungen und Verbrauchsmaterialien</h3><p>Bei Aufenthalten ab 7 Nächten werden Bettwäsche und Handtücher alle 7 Tage gewechselt.<br>Verbrauchsmaterialien sind nach Verbrauch der bereitgestellten Artikel selbst zu kaufen.</p></div>
+<div class="category-card"><h3>📖 Wohnungsinformationen</h3><p>Ein Informationsbuch mit Gerätehinweisen ist in der Wohnung verfügbar.</p></div>
+<div class="category-card"><h3>🔑 Schlüsselverlust</h3><p>Der Verlust eines Schlüssels kostet 40,00 € pro Schlüssel.</p></div>
+<div class="category-card"><h3>🛡️ Gesundheit und Sicherheit</h3><p>Zusätzliche Hygienemaßnahmen sind aufgrund von COVID-19 in Kraft.</p></div>
+<div class="category-card"><h3>⚠️ Schadensmeldung</h3><p>Jegliche Schäden oder Defekte sind umgehend dem Gastgeber zu melden.</p></div>
+`
+    };
+
     const emergency = { /* conteúdo multilíngua completo como já tinhas */ };
     const beaches = { /* conteúdo multilíngua completo como já tinhas */ };
     const restaurants = { /* conteúdo multilíngua completo como já tinhas */ };
