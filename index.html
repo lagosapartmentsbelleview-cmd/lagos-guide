@@ -8,7 +8,10 @@
     h1 { margin-top: 30px; }
     .menu { margin: 20px auto; max-width: 400px; }
     .menu button {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       margin: 10px auto;
       padding: 12px;
       background: #0077cc;
@@ -16,12 +19,34 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      width: 220px;
+      width: 240px;
       font-size: 16px;
     }
     .menu button:hover { background: #005fa3; }
+    .menu img { width: 24px; height: 16px; }
     ul { list-style: none; padding: 0; }
     li { margin: 8px 0; }
+
+    /* Botão imprimir */
+    .print-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .print-btn:hover { background: #1e7e34; }
+
+    /* Estilo para impressão */
+    @media print {
+      body { background: white; color: black; }
+      .menu, .print-btn { display: none; } /* Esconde botões na impressão */
+      h1, h2 { color: black; }
+      ul { margin-left: 20px; }
+      @page { size: A4; margin: 20mm; }
+    }
   </style>
 </head>
 <body>
@@ -29,16 +54,18 @@
   <p id="choose">Escolha o idioma:</p>
 
   <div class="menu">
-    <button onclick="setLanguage('pt')">🇵🇹 Português</button>
-    <button onclick="setLanguage('en')">🇬🇧 English</button>
-    <button onclick="setLanguage('es')">🇪🇸 Español</button>
-    <button onclick="setLanguage('fr')">🇫🇷 Français</button>
-    <button onclick="setLanguage('it')">🇮🇹 Italiano</button>
-    <button onclick="setLanguage('de')">🇩🇪 Deutsch</button>
+    <button onclick="setLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png" alt="PT"> Português</button>
+    <button onclick="setLanguage('en')"><img src="https://flagcdn.com/w20/gb.png" alt="EN"> English</button>
+    <button onclick="setLanguage('es')"><img src="https://flagcdn.com/w20/es.png" alt="ES"> Español</button>
+    <button onclick="setLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français</button>
+    <button onclick="setLanguage('it')"><img src="https://flagcdn.com/w20/it.png" alt="IT"> Italiano</button>
+    <button onclick="setLanguage('de')"><img src="https://flagcdn.com/w20/de.png" alt="DE"> Deutsch</button>
   </div>
 
   <h2 id="categoriesTitle"></h2>
   <ul id="categoriesList"></ul>
+
+  <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
 
   <script>
     function setLanguage(lang) {
