@@ -209,108 +209,49 @@ const rules = {
 };
 
 const emergency = {
-  pt: `📞 Contactos de Emergência
+  pt: `
+<div class="category-card"><h3>🚨 Emergência Geral</h3><p><a href="tel:112">📞 112</a></p></div>
+<div class="category-card"><h3>👮 PSP Lagos</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>🚒 Bombeiros Lagos</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+`,
 
-🚨 112
-📞 <a href="tel:112">112</a>
+  en: `
+<div class="category-card"><h3>🚨 General Emergency</h3><p><a href="tel:112">📞 112</a></p></div>
+<div class="category-card"><h3>👮 PSP Lagos (Police)</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>🚒 Lagos Fire Department</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 View on Map</a></p></div>
+`,
 
-👮 PSP Lagos
-📞 <a href="tel:+351282762930">+351 282 762 930</a>
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">Ver no Mapa</a>
+  es: `
+<div class="category-card"><h3>🚨 Emergencia General</h3><p><a href="tel:112">📞 112</a></p></div>
+<div class="category-card"><h3>👮 PSP Lagos (Policía)</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>🚒 Bomberos de Lagos</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+`,
 
-🚒 Bombeiros Lagos
-📞 <a href="tel:+351282770010">+351 282 770 010</a>
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">Ver no Mapa</a>
+  fr: `
+<div class="category-card"><h3>🚨 Urgence Générale</h3><p><a href="tel:112">📞 112</a></p></div>
+<div class="category-card"><h3>👮 PSP Lagos (Police)</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>🚒 Pompiers de Lagos</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+`,
 
-🏨 Apartments Belleview
-📞 <a href="tel:+351910051588">+351 910 051 588</a>
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">Ver no Mapa</a>`,
+  it: `
+<div class="category-card"><h3>🚨 Emergenza Generale</h3><p><a href="tel:112">📞 112</a></p></div>
+<div class="category-card"><h3>👮 PSP Lagos (Polizia)</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>🚒 Vigili del Fuoco di Lagos</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+`,
 
-  en: `📞 Emergency Contacts
-
-🚨 112
-📞 <a href="tel:112">112</a>
-
-👮 PSP Lagos (Police)
-📞 <a href="tel:+351282762930">+351 282 762 930</a>
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">View on Map</a>
-
-🚒 Lagos Fire Department
-📞 <a href="tel:+351282770010">+351 282 770 010</a>
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">View on Map</a>
-
-🏨 Apartments Belleview
-📞 <a href="tel:+351910051588">+351 910 051 588</a>
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">View on Map</a>`,
-
-  es: `📞 Contactos de Emergencia
-
-🚨 112
-📞 <a href="tel:112">112</a>
-
-👮 PSP Lagos (Policía)
-📞 <a href="tel:+351282762930">+351 282 762 930</a>
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">Ver en el Mapa</a>
-
-🚒 Bomberos de Lagos
-📞 <a href="tel:+351282770010">+351 282 770 010</a>
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">Ver en el Mapa</a>
-
-🏨 Apartments Belleview
-📞 <a href="tel:+351910051588">+351 910 051 588</a>
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">Ver en el Mapa</a>`,
-
-  fr: `📞 Contacts d'Urgence
-
-🚨 112
-📞 <a href="tel:112">112</a>
-
-👮 PSP Lagos (Police)
-📞 <a href="tel:+351282762930">+351 282 762 930</a>
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">Voir sur la Carte</a>
-
-🚒 Pompiers de Lagos
-📞 <a href="tel:+351282770010">+351 282 770 010</a>
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">Voir sur la Carte</a>
-
-🏨 Apartments Belleview
-📞 <a href="tel:+351910051588">+351 910 051 588</a>
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">Voir sur la Carte</a>`,
-
-    it: `📞 Contatti di Emergenza
-
-🚨 112
-📞 <a href="tel:112">112</a>
-
-👮 PSP Lagos (Polizia)
-📞 <a href="tel:+351282762930">+351 282 762 930</a>
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">Vedi sulla Mappa</a>
-
-🚒 Vigili del Fuoco di Lagos
-📞 <a href="tel:+351282770010">+351 282 770 010</a>
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">Vedi sulla Mappa</a>
-
-🏨 Apartments Belleview
-📞 <a href="tel:+351910051588">+351 910 051 588</a>
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">Vedi sulla Mappa</a>`,
-
-  de: `📞 Notfallkontakte
-
-🚨 112
-📞 <a href="tel:112">112</a>
-
-👮 PSP Lagos (Polizei)
-📞 <a href="tel:+351282762930">+351 282 762 930</a>
-📍 <a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">Auf der Karte ansehen</a>
-
-🚒 Feuerwehr Lagos
-📞 <a href="tel:+351282770010">+351 282 770 010</a>
-📍 <a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">Auf der Karte ansehen</a>
-
-🏨 Apartments Belleview
-📞 <a href="tel:+351910051588">+351 910 051 588</a>
-📍 <a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">Auf der Karte ansehen</a>`
+  de: `
+<div class="category-card"><h3>🚨 Allgemeiner Notfall</h3><p><a href="tel:112">📞 112</a></p></div>
+<div class="category-card"><h3>👮 PSP Lagos (Polizei)</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>🚒 Feuerwehr Lagos</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+`
 };
+
 
 // Textos dos botões
 const buttonTexts = {
