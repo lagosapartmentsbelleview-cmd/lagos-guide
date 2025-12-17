@@ -1,123 +1,119 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<title>Guia Belleview Apartments</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body { font-family: Arial, sans-serif; background: #f9f9f9; margin:0; padding:20px; text-align:center; }
-.header { background: #0077cc; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-.header h1 { margin: 0; font-size: 24px; }
-.header p { margin: 4px 0; font-size: 14px; }
-.header a { color:white; text-decoration:none; }
-.menu { margin: 20px auto; }
-.menu button { display: inline-flex; align-items: center; gap: 8px; margin: 6px; padding: 10px 16px; background: #0077cc; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; }
-.menu button:hover { background: #005fa3; }
-.menu img { width: 24px; height: 16px; }
-.categories { margin: 20px auto; max-width: 600px; }
-ul { list-style: none; padding: 0; }
-li { margin: 8px 0; padding: 12px; background: #cce4f7; border-radius: 6px; font-size: 15px; text-align: left; cursor:pointer; }
-.bottom-buttons { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-.bottom-buttons button { padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; color: white; }
-.print-btn { background: #28a745; }
-.print-btn:hover { background: #1e7e34; }
-.share-btn { background: #ff9800; }
-.share-btn:hover { background: #e68900; }
-.back-btn { background: #0077cc; }
-.back-btn:hover { background: #005fa3; }
-@media (max-width: 600px) { .header h1 { font-size: 20px; } .header p { font-size: 12px; } .menu button { font-size: 14px; padding: 8px 12px; } li { font-size: 14px; } }
-@media print { body { background: white; color: black; } .menu, .bottom-buttons { display: none; } h1, h2 { color: black; } ul { margin-left: 20px; } @page { size: A4; margin: 20mm; } }
-  .category-content {
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  font-size: 15px;
-  line-height: 1.6;
-}
+  <meta charset="UTF-8" />
+  <title>Guia Belleview Apartments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; margin:0; padding:20px; text-align:center; }
+    .header { background: #0077cc; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+    .header h1 { margin: 0; font-size: 24px; }
+    .header p { margin: 4px 0; font-size: 14px; }
+    .header a { color:white; text-decoration:none; }
 
-.category-card {
-  background: #f1f7ff;
-  border-left: 4px solid #0077cc;
-  padding: 12px;
-  margin-bottom: 12px;
-  border-radius: 6px;
-}
+    .menu { margin: 20px auto; }
+    .menu button { display: inline-flex; align-items: center; gap: 8px; margin: 6px; padding: 10px 16px; background: #0077cc; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; }
+    .menu button:hover { background: #005fa3; }
+    .menu img { width: 24px; height: 16px; }
 
-.category-card h3 {
-  margin: 0 0 6px;
-  font-size: 16px;
-  color: #0077cc;
-}
+    .categories { margin: 20px auto; max-width: 600px; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 8px 0; padding: 12px; background: #cce4f7; border-radius: 6px; font-size: 15px; text-align: left; cursor:pointer; }
 
-.category-card p {
-  margin: 4px 0;
-}
+    .bottom-buttons { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .bottom-buttons button { padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; color: white; }
+    .print-btn { background: #28a745; } .print-btn:hover { background: #1e7e34; }
+    .share-btn { background: #ff9800; } .share-btn:hover { background: #e68900; }
+    .back-btn { background: #0077cc; } .back-btn:hover { background: #005fa3; }
 
-.category-card a {
-  color: #0077cc;
-  text-decoration: none;
-  font-weight: bold;
-}
+    @media (max-width: 600px) {
+      .header h1 { font-size: 20px; }
+      .header p { font-size: 12px; }
+      .menu button { font-size: 14px; padding: 8px 12px; }
+      li { font-size: 14px; }
+    }
 
-.category-card a:hover {
-  text-decoration: underline;
-}
+    @media print {
+      body { background: white; color: black; }
+      .menu, .bottom-buttons { display: none; }
+      h1, h2 { color: black; }
+      ul { margin-left: 20px; }
+      @page { size: A4; margin: 20mm; }
+    }
 
-</style>
+    .category-content {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .category-card {
+      background: #f1f7ff;
+      border-left: 4px solid #0077cc;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+    }
+    .category-card h3 { margin: 0 0 6px; font-size: 16px; color: #0077cc; }
+    .category-card p { margin: 4px 0; }
+    .category-card a { color: #0077cc; text-decoration: none; font-weight: bold; }
+    .category-card a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-<div class="header">
-  <h1>Apartments Belleview</h1>
-  <p>📍 <a href="https://www.google.com/maps/search/?api=1&query=Rua+Quinta+do+Landeiro,+Lagos" target="_blank">Rua Quinta do Landeiro, Lagos</a></p>
-  <p>📞 <a href="tel:+351910051588">+351 910 051 588</a></p>
-  <p>📱 <a href="https://wa.me/351910051588" target="_blank">+351 910 051 588 (WhatsApp)</a></p>
-  <p>✉️ <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a></p>
-  <p>Licenças: 26313/AL, 116670/AL, 116671/AL</p>
-</div>
-
-<h1 id="title">Guia Belleview Apartments</h1>
-<p id="choose">Escolha o idioma / Choose your language:</p>
-
-<div class="menu" id="languageMenu">
-  <button onclick="setLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png"> Português</button>
-  <button onclick="setLanguage('en')"><img src="https://flagcdn.com/w20/gb.png"> English</button>
-  <button onclick="setLanguage('es')"><img src="https://flagcdn.com/w20/es.png"> Español</button>
-  <button onclick="setLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png"> Français</button>
-  <button onclick="setLanguage('it')"><img src="https://flagcdn.com/w20/it.png"> Italiano</button>
-  <button onclick="setLanguage('de')"><img src="https://flagcdn.com/w20/de.png"> Deutsch</button>
-</div>
-
-<div class="categories" id="categories" style="display:none;">
-  <h2 id="categoriesTitle"></h2>
-  <div class="bottom-buttons">
-    <button class="back-btn" id="catBackTop" onclick="goBack()">⬅️ Voltar</button>
-    <button class="print-btn" id="catPrintTop" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
-    <button class="share-btn" id="catShareTop" onclick="shareGuide()">🔗 Partilhar</button>
+  <div class="header">
+    <h1>Apartments Belleview</h1>
+    <p>📍 <a href="https://www.google.com/maps/search/?api=1&query=Rua+Quinta+do+Landeiro,+Lagos" target="_blank">Rua Quinta do Landeiro, Lagos</a></p>
+    <p>📞 <a href="tel:+351910051588">+351 910 051 588</a></p>
+    <p>📱 <a href="https://wa.me/351910051588" target="_blank">+351 910 051 588 (WhatsApp)</a></p>
+    <p>✉️ <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a></p>
+    <p>Licenças: 26313/AL, 116670/AL, 116671/AL</p>
   </div>
-  <ul id="categoriesList"></ul>
-  <div class="bottom-buttons">
-    <button class="back-btn" id="catBackBottom" onclick="goBack()">⬅️ Voltar</button>
-  </div>
-</div>
 
-<div id="categoryContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;">
-  <h2 id="categoryTitle"></h2>
-  <div class="bottom-buttons">
-    <button class="back-btn" id="catBackTopContent" onclick="showCategories()">⬅️ Voltar</button>
-    <button class="print-btn" id="catPrintContent" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
-    <button class="share-btn" id="catShareContent" onclick="shareGuide()">🔗 Partilhar</button>
-  </div>
- <div id="categoryText" class="category-content"></div>
-  <div class="bottom-buttons">
-    <button class="back-btn" id="catBackBottomContent" onclick="showCategories()">⬅️ Voltar</button>
-  </div>
-</div>
+  <h1 id="title">Guia Belleview Apartments</h1>
+  <p id="choose">Escolha o idioma / Choose your language:</p>
 
-<script>
-// --- Conteúdos das categorias ---
-const rules = {
-  pt: `
+  <div class="menu" id="languageMenu">
+    <button onclick="setLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png" alt=""> Português</button>
+    <button onclick="setLanguage('en')"><img src="https://flagcdn.com/w20/gb.png" alt=""> English</button>
+    <button onclick="setLanguage('es')"><img src="https://flagcdn.com/w20/es.png" alt=""> Español</button>
+    <button onclick="setLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png" alt=""> Français</button>
+    <button onclick="setLanguage('it')"><img src="https://flagcdn.com/w20/it.png" alt=""> Italiano</button>
+    <button onclick="setLanguage('de')"><img src="https://flagcdn.com/w20/de.png" alt=""> Deutsch</button>
+  </div>
+
+  <div class="categories" id="categories" style="display:none;">
+    <h2 id="categoriesTitle"></h2>
+    <div class="bottom-buttons">
+      <button class="back-btn" id="catBackTop" onclick="goBack()">⬅️ Voltar</button>
+      <button class="print-btn" id="catPrintTop" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+      <button class="share-btn" id="catShareTop" onclick="shareGuide()">🔗 Partilhar</button>
+    </div>
+    <ul id="categoriesList"></ul>
+    <div class="bottom-buttons">
+      <button class="back-btn" id="catBackBottom" onclick="goBack()">⬅️ Voltar</button>
+    </div>
+  </div>
+
+  <div id="categoryContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;">
+    <h2 id="categoryTitle"></h2>
+    <div class="bottom-buttons">
+      <button class="back-btn" id="catBackTopContent" onclick="showCategories()">⬅️ Voltar</button>
+      <button class="print-btn" id="catPrintContent" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+      <button class="share-btn" id="catShareContent" onclick="shareGuide()">🔗 Partilhar</button>
+    </div>
+    <div id="categoryText" class="category-content"></div>
+    <div class="bottom-buttons">
+      <button class="back-btn" id="catBackBottomContent" onclick="showCategories()">⬅️ Voltar</button>
+    </div>
+  </div>
+
+  <script>
+    // --- Conteúdos das categorias (Regras) ---
+    const rules = {
+      pt: `
 <div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: a partir das 15:00<br>Check-out: até às 10:00</p></div>
 <div class="category-card"><h3>❌ Cancelamento / Pré-pagamento</h3><p>As condições variam consoante o tipo de alojamento. Verifique ao efetuar a reserva.</p></div>
 <div class="category-card"><h3>👶 Crianças e camas</h3><p>Todas as crianças são bem-vindas.<br>Berços gratuitos (0-2 anos), sujeitos à disponibilidade.<br>Não existem camas extra.</p></div>
@@ -131,8 +127,7 @@ const rules = {
 <div class="category-card"><h3>🛡️ Saúde e segurança</h3><p>Medidas adicionais de higienização estão em vigor devido à COVID-19.</p></div>
 <div class="category-card"><h3>⚠️ Comunicação de danos</h3><p>Qualquer estrago ou avaria deve ser comunicado de imediato ao anfitrião.</p></div>
 `,
-
-  en: `
+      en: `
 <div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: from 3:00 PM<br>Check-out: until 10:00 AM</p></div>
 <div class="category-card"><h3>❌ Cancellation / Prepayment</h3><p>Conditions vary depending on accommodation type. Check when booking.</p></div>
 <div class="category-card"><h3>👶 Children and beds</h3><p>All children are welcome.<br>Free cribs (0-2 years), subject to availability.<br>No extra beds available.</p></div>
@@ -146,8 +141,7 @@ const rules = {
 <div class="category-card"><h3>🛡️ Health and safety</h3><p>Additional hygiene measures are in place due to COVID-19.</p></div>
 <div class="category-card"><h3>⚠️ Damage reporting</h3><p>Any damage or malfunction must be reported immediately to the host.</p></div>
 `,
-
-  es: `
+      es: `
 <div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: a partir de las 15:00<br>Check-out: hasta las 10:00</p></div>
 <div class="category-card"><h3>❌ Cancelación / Prepago</h3><p>Las condiciones varían según el tipo de alojamiento. Verifique al reservar.</p></div>
 <div class="category-card"><h3>👶 Niños y camas</h3><p>Todos los niños son bienvenidos.<br>Cunas gratuitas (0-2 años), sujetas a disponibilidad.<br>No hay camas supletorias.</p></div>
@@ -161,8 +155,7 @@ const rules = {
 <div class="category-card"><h3>🛡️ Salud y seguridad</h3><p>Medidas adicionales de higiene están en vigor debido a la COVID-19.</p></div>
 <div class="category-card"><h3>⚠️ Comunicación de daños</h3><p>Cualquier daño o avería debe comunicarse inmediatamente al anfitrión.</p></div>
 `,
-
-  fr: `
+      fr: `
 <div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in : à partir de 15h00<br>Check-out : jusqu'à 10h00</p></div>
 <div class="category-card"><h3>❌ Annulation / Prépaiement</h3><p>Les conditions varient selon le type de logement. Vérifiez lors de la réservation.</p></div>
 <div class="category-card"><h3>👶 Enfants et lits</h3><p>Tous les enfants sont les bienvenus.<br>Lits bébé gratuits (0-2 ans), sous réserve de disponibilité.<br>Aucun lit d'appoint.</p></div>
@@ -176,8 +169,7 @@ const rules = {
 <div class="category-card"><h3>🛡️ Santé et sécurité</h3><p>Des mesures d'hygiène supplémentaires sont en place en raison du COVID-19.</p></div>
 <div class="category-card"><h3>⚠️ Signalement des dommages</h3><p>Tout dommage ou dysfonctionnement doit être signalé immédiatement à l'hôte.</p></div>
 `,
-
-  it: `
+      it: `
 <div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: dalle 15:00<br>Check-out: entro le 10:00</p></div>
 <div class="category-card"><h3>❌ Cancellazione / Pagamento anticipato</h3><p>Le condizioni variano in base al tipo di alloggio. Verificare al momento della prenotazione.</p></div>
 <div class="category-card"><h3>👶 Bambini e letti</h3><p>Tutti i bambini sono i benvenuti.<br>Culle gratuite (0-2 anni), soggette a disponibilità.<br>Nessun letto supplementare disponibile.</p></div>
@@ -191,8 +183,7 @@ const rules = {
 <div class="category-card"><h3>🛡️ Salute e sicurezza</h3><p>Misure igieniche aggiuntive sono in vigore a causa del COVID-19.</p></div>
 <div class="category-card"><h3>⚠️ Comunicazione dei danni</h3><p>Qualsiasi danno o guasto deve essere comunicato immediatamente all'host.</p></div>
 `,
-
-  de: `
+      de: `
 <div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: ab 15:00 Uhr<br>Check-out: bis 10:00 Uhr</p></div>
 <div class="category-card"><h3>❌ Stornierung / Vorauszahlung</h3><p>Bedingungen variieren je nach Unterkunftstyp. Bitte bei der Buchung prüfen.</p></div>
 <div class="category-card"><h3>👶 Kinder und Betten</h3><p>Alle Kinder sind willkommen.<br>Kostenlose Kinderbetten (0–2 Jahre), je nach Verfügbarkeit.<br>Keine Zustellbetten verfügbar.</p></div>
@@ -206,214 +197,350 @@ const rules = {
 <div class="category-card"><h3>🛡️ Gesundheit und Sicherheit</h3><p>Zusätzliche Hygienemaßnahmen sind aufgrund von COVID-19 in Kraft.</p></div>
 <div class="category-card"><h3>⚠️ Schadensmeldung</h3><p>Jegliche Schäden oder Defekte sind umgehend dem Gastgeber zu melden.</p></div>
 `
-};
+    };
 
-const emergency = {
-  pt: `
+    // --- Emergência (cartões, todos idiomas) ---
+    const emergency = {
+      pt: `
 <div class="category-card"><h3>🚨 Emergência Geral</h3><p><a href="tel:112">📞 112</a></p></div>
 <div class="category-card"><h3>👮 PSP Lagos</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 <div class="category-card"><h3>🚒 Bombeiros Lagos</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 <div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 `,
-
-  en: `
+      en: `
 <div class="category-card"><h3>🚨 General Emergency</h3><p><a href="tel:112">📞 112</a></p></div>
 <div class="category-card"><h3>👮 PSP Lagos (Police)</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 View on Map</a></p></div>
 <div class="category-card"><h3>🚒 Lagos Fire Department</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 View on Map</a></p></div>
 <div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 View on Map</a></p></div>
 `,
-
-  es: `
+      es: `
 <div class="category-card"><h3>🚨 Emergencia General</h3><p><a href="tel:112">📞 112</a></p></div>
 <div class="category-card"><h3>👮 PSP Lagos (Policía)</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
 <div class="category-card"><h3>🚒 Bomberos de Lagos</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
 <div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
 `,
-
-  fr: `
+      fr: `
 <div class="category-card"><h3>🚨 Urgence Générale</h3><p><a href="tel:112">📞 112</a></p></div>
 <div class="category-card"><h3>👮 PSP Lagos (Police)</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
 <div class="category-card"><h3>🚒 Pompiers de Lagos</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
 <div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
 `,
-
-  it: `
+      it: `
 <div class="category-card"><h3>🚨 Emergenza Generale</h3><p><a href="tel:112">📞 112</a></p></div>
 <div class="category-card"><h3>👮 PSP Lagos (Polizia)</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
 <div class="category-card"><h3>🚒 Vigili del Fuoco di Lagos</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
 <div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
 `,
-
-  de: `
+      de: `
 <div class="category-card"><h3>🚨 Allgemeiner Notfall</h3><p><a href="tel:112">📞 112</a></p></div>
 <div class="category-card"><h3>👮 PSP Lagos (Polizei)</h3><p><a href="tel:+351282762930">📞 +351 282 762 930</a></p><p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
 <div class="category-card"><h3>🚒 Feuerwehr Lagos</h3><p><a href="tel:+351282770010">📞 +351 282 770 010</a></p><p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
 <div class="category-card"><h3>🏨 Apartments Belleview</h3><p><a href="tel:+351910051588">📞 +351 910 051 588</a></p><p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
 `
-};
+    };
 
-const beaches = {
-  pt: `
+    // --- Praias (cartões, todos idiomas) ---
+    const beaches = {
+      pt: `
 <h3>Praias de Lagos (10 praias)</h3>
-
 <div class="category-card"><h3>Meia Praia</h3><p>Extensa, ampla e com areal enorme. Excelente para caminhadas longas, desportos náuticos e famílias.</p><p>Distância: 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-
 <div class="category-card"><h3>Praia da Batata</h3><p>Pequena praia urbana, muito próxima do centro de Lagos. Abrigada e com águas calmas.</p><p>Distância: 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-
 <div class="category-card"><h3>Praia dos Estudantes</h3><p>Famosa pelo arco romano entre rochas. Pequena e muito fotogénica.</p><p>Distância: 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-
 <div class="category-card"><h3>Praia do Pinhão</h3><p>Praia pequena e tranquila, rodeada por falésias altas. Ideal para relaxar.</p><p>Distância: 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinhão+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-
 <div class="category-card"><h3>Praia Dona Ana</h3><p>Uma das praias mais bonitas do Algarve, falésias douradas e águas calmas.</p><p>Distância: 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-
 <div class="category-card"><h3>Praia do Camilo</h3><p>Acesso por escadaria icónica. Belíssima água azul-turquesa e formações rochosas.</p><p>Distância: 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-
 <div class="category-card"><h3>Praia dos Pinheiros</h3><p>Selvagem e menos frequentada. Ideal para quem procura sossego junto às falésias da Ponta da Piedade.</p><p>Distância: 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-
 <div class="category-card"><h3>Praia do Canavial</h3><p>Uma praia escondida entre falésias altas, muito tranquila e com ambiente natural.</p><p>Distância: 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-
-<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Grande areal, ótima para dias de praia com serviços e restaurantes. Muito procurada para surf.</p><p>Distância: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+Mós+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-
-<div class="category-card"><h3>Praia da Luz</h3><p>Praia ampla, familiar e com uma vila turística acolhedora. Águas calmas e boa infraestrutura.</p><p>Distância: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Grande areal, ótima para dias de praia com serviços e restaurantes. Muito procurada para surf.</p><p>Distância: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Luz</h3><p>Praia ampla, familiar e com uma vila turística acolhedora. Águas calmas e boa infraestrutura.</p><p>Distância: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Ver no Mapa</a></p></div>
 
 <h3>Praias de Portimão (6 praias)</h3>
-... (segue o mesmo formato para Alvor, Vau, Careanos, Três Castelos, Rocha, Caneiros)
+<div class="category-card"><h3>Praia de Alvor</h3><p>Areal extenso e dunas naturais. Muito procurada para passeios e desportos náuticos.</p><p>Distância: 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia do Vau</h3><p>Falésias bonitas e mar calmo. Muito popular entre famílias.</p><p>Distância: 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Pequenas enseadas entre rochas, águas claras e ótimas vistas.</p><p>Distância: 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Paisagem incrível com enormes formações rochosas. Ótima para fotografias.</p><p>Distância: 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Rocha</h3><p>Das praias mais famosas de Portugal. Grande areal e muita oferta turística.</p><p>Distância: 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Praia pequena junto a falésia, ambiente sofisticado e restaurante icónico.</p><p>Distância: 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 Ver no Mapa</a></p></div>
 
 <h3>Praias de Vila do Bispo (6 praias)</h3>
-... (segue o mesmo formato para Burgau, Salema, Figueira, Furnas, Zavial, Ingrina)
+<div class="category-card"><h3>Praia do Burgau</h3><p>Pequena enseada pitoresca com vila de pescadores. Ótima para famílias.</p><p>Distância: 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Salema</h3><p>Vila tranquila e muito charmosa, praia familiar e com falésias bonitas.</p><p>Distância: 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Figueira</h3><p>Acesso mais selvagem e areal protegido entre falésias. Muito sossegada.</p><p>Distância: 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia das Furnas</h3><p>Praia isolada, perfeita para quem quer tranquilidade total.</p><p>Distância: 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia do Zavial</h3><p>Muito apreciada por surfistas, águas limpas e falésias altas.</p><p>Distância: 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Baía calma e semicircular, ótima para snorkeling e famílias.</p><p>Distância: 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Ver no Mapa</a></p></div>
+`,
+      en: `
+<h3>Beaches of Lagos (10 beaches)</h3>
+<div class="category-card"><h3>Meia Praia</h3><p>Long, wide beach with vast sand. Great for long walks, water sports, and families.</p><p>Distance: 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia da Batata</h3><p>Small urban beach near Lagos center. Sheltered with calm waters.</p><p>Distance: 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Famous for the Roman arch between rocks. Small and very photogenic.</p><p>Distance: 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Small, peaceful beach surrounded by high cliffs. Ideal to relax.</p><p>Distance: 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinh%C3%A3o+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia Dona Ana</h3><p>One of Algarve’s most beautiful beaches, golden cliffs and calm waters.</p><p>Distance: 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia do Camilo</h3><p>Iconic stairway access. Gorgeous turquoise waters and rock formations.</p><p>Distance: 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Wild and less crowded. Perfect for tranquility near Ponta da Piedade cliffs.</p><p>Distance: 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia do Canavial</h3><p>Hidden between tall cliffs, very peaceful and natural.</p><p>Distance: 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Large sandy beach, great for full beach days with services and restaurants. Popular for surfing.</p><p>Distance: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia da Luz</h3><p>Wide family beach with a welcoming tourist village. Calm waters and good infrastructure.</p><p>Distance: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 View on Map</a></p></div>
+
+<h3>Beaches of Portimão (6 beaches)</h3>
+<div class="category-card"><h3>Praia de Alvor</h3><p>Extensive sand and natural dunes. Popular for walks and water sports.</p><p>Distance: 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia do Vau</h3><p>Beautiful cliffs and calm sea. Very popular among families.</p><p>Distance: 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Small coves among rocks, clear waters and great views.</p><p>Distance: 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Incredible scenery with huge rock formations. Great for photos.</p><p>Distance: 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia da Rocha</h3><p>One of the most famous beaches in Portugal. Large sand and lots of tourist offer.</p><p>Distance: 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Small beach by a cliff, sophisticated vibe and iconic restaurant.</p><p>Distance: 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 View on Map</a></p></div>
+
+<h3>Beaches of Vila do Bispo (6 beaches)</h3>
+<div class="category-card"><h3>Praia do Burgau</h3><p>Picturesque small cove with a fishing village. Great for families.</p><p>Distance: 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia da Salema</h3><p>Quiet and charming village, family beach with beautiful cliffs.</p><p>Distance: 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia da Figueira</h3><p>Wilder access and protected sand among cliffs. Very peaceful.</p><p>Distance: 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia das Furnas</h3><p>Isolated beach, perfect for total tranquility.</p><p>Distance: 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia do Zavial</h3><p>Highly appreciated by surfers, clean waters and high cliffs.</p><p>Distance: 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Calm semicircular bay, great for snorkeling and families.</p><p>Distance: 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 View on Map</a></p></div>
+`,
+      es: `
+<h3>Playas de Lagos (10 playas)</h3>
+<div class="category-card"><h3>Meia Praia</h3><p>Extensa y amplia, con gran arenal. Excelente para paseos largos, deportes acuáticos y familias.</p><p>Distancia: 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Batata</h3><p>Pequeña playa urbana, muy cerca del centro de Lagos. Resguardada y con aguas tranquilas.</p><p>Distancia: 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Famosa por el arco romano entre rocas. Pequeña y muy fotogénica.</p><p>Distancia: 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Playa pequeña y tranquila, rodeada de altos acantilados. Ideal para relajarse.</p><p>Distancia: 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinh%C3%A3o+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia Dona Ana</h3><p>Una de las playas más bonitas del Algarve, acantilados dorados y aguas tranquilas.</p><p>Distancia: 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia do Camilo</h3><p>Acceso por escalinata icónica. Aguas turquesas bellísimas y formaciones rocosas.</p><p>Distancia: 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Salvaje y menos frecuentada. Ideal para quien busca tranquilidad junto a los acantilados de Ponta da Piedade.</p><p>Distancia: 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia do Canavial</h3><p>Playa escondida entre altos acantilados, muy tranquila y natural.</p><p>Distancia: 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Gran arenal, ideal para día de playa con servicios y restaurantes. Muy buscada para surf.</p><p>Distancia: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Luz</h3><p>Playa amplia y familiar con una acogedora villa turística. Aguas tranquilas y buena infraestructura.</p><p>Distancia: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<h3>Playas de Portimão (6 playas)</h3>
+<div class="category-card"><h3>Praia de Alvor</h3><p>Arenal extenso y dunas naturales. Muy buscada para paseos y deportes acuáticos.</p><p>Distancia: 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia do Vau</h3><p>Bonitos acantilados y mar tranquilo. Muy popular entre familias.</p><p>Distancia: 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Pequeñas calas entre rocas, aguas claras y grandes vistas.</p><p>Distancia: 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Paisaje increíble con grandes formaciones rocosas. Ideal para fotos.</p><p>Distancia: 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Rocha</h3><p>De las playas más famosas de Portugal. Gran arenal y mucha oferta turística.</p><p>Distancia: 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Playa pequeña junto a un acantilado, ambiente sofisticado y restaurante icónico.</p><p>Distancia: 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<h3>Playas de Vila do Bispo (6 playas)</h3>
+<div class="category-card"><h3>Praia do Burgau</h3><p>Pequeña cala pintoresca con villa pesquera. Ideal para familias.</p><p>Distancia: 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Salema</h3><p>Villa tranquila y encantadora, playa familiar y acantilados bonitos.</p><p>Distancia: 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Figueira</h3><p>Acceso más salvaje y arenal protegido entre acantilados. Muy tranquila.</p><p>Distancia: 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia das Furnas</h3><p>Playa aislada, perfecta para tranquilidad total.</p><p>Distancia: 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia do Zavial</h3><p>Muy apreciada por surfistas, aguas limpias y altos acantilados.</p><p>Distancia: 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Bahía semicircular y calma, ideal para snorkel y familias.</p><p>Distancia: 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Ver en el Mapa</a></p></div>
+`,
+      fr: `
+<h3>Plages de Lagos (10 plages)</h3>
+<div class="category-card"><h3>Meia Praia</h3><p>Plage longue et large, grand sable. Excellent pour les longues promenades, sports nautiques et familles.</p><p>Distance : 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia da Batata</h3><p>Petite plage urbaine, très proche du centre de Lagos. Abritée, eaux calmes.</p><p>Distance : 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Célèbre pour l’arc romain entre les rochers. Petite et très photogénique.</p><p>Distance : 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Petite plage paisible entourée de hautes falaises. Idéale pour se détendre.</p><p>Distance : 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinh%C3%A3o+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia Dona Ana</h3><p>Une des plus belles plages de l’Algarve, falaises dorées et eaux calmes.</p><p>Distance : 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia do Camilo</h3><p>Accès par escalier iconique. Magnifiques eaux turquoise et formations rocheuses.</p><p>Distance : 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Sauvage et moins fréquentée. Parfaite pour la tranquillité près des falaises de Ponta da Piedade.</p><p>Distance : 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia do Canavial</h3><p>Cachée entre hautes falaises, très paisible et naturelle.</p><p>Distance : 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Grand sable, idéale pour une journée avec services et restaurants. Très prisée pour le surf.</p><p>Distance : 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia da Luz</h3><p>Plage large et familiale avec village touristique accueillant. Eaux calmes et bonne infrastructure.</p><p>Distance : 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<h3>Plages de Portimão (6 plages)</h3>
+<div class="category-card"><h3>Praia de Alvor</h3><p>Grand sable et dunes naturelles. Très fréquentée pour promenades et sports nautiques.</p><p>Distance : 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia do Vau</h3><p>Belles falaises et mer calme. Très populaire auprès des familles.</p><p>Distance : 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Petites criques entre rochers, eaux claires et superbes vues.</p><p>Distance : 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Décor incroyable avec grandes formations rocheuses. Idéale pour photos.</p><p>Distance : 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia da Rocha</h3><p>Parmi les plages les plus célèbres du Portugal. Grand sable et offre touristique importante.</p><p>Distance : 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Petite plage au pied d’une falaise, ambiance sophistiquée et restaurant iconique.</p><p>Distance : 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<h3>Plages de Vila do Bispo (6 plages)</h3>
+<div class="category-card"><h3>Praia do Burgau</h3><p>Petite crique pittoresque avec village de pêcheurs. Idéale pour familles.</p><p>Distance : 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia da Salema</h3><p>Village calme et charmant, plage familiale et falaises magnifiques.</p><p>Distance : 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia da Figueira</h3><p>Accès plus sauvage, sable protégé entre falaises. Très tranquille.</p><p>Distance : 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia das Furnas</h3><p>Plage isolée, parfaite pour une tranquillité totale.</p><p>Distance : 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia do Zavial</h3><p>Très appréciée des surfeurs, eaux limpides et hautes falaises.</p><p>Distance : 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Baie calme et semi-circulaire, idéale pour le snorkeling et les familles.</p><p>Distance : 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Voir sur la Carte</a></p></div>
+`,
+      it: `
+<h3>Spiagge di Lagos (10 spiagge)</h3>
+<div class="category-card"><h3>Meia Praia</h3><p>Lunga e ampia, grande arenile. Ottima per lunghe passeggiate, sport acquatici e famiglie.</p><p>Distanza: 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia da Batata</h3><p>Piccola spiaggia urbana, vicina al centro di Lagos. Riparata, acque calme.</p><p>Distanza: 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Famosa per l’arco romano tra le rocce. Piccola e molto fotogenica.</p><p>Distanza: 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Piccola spiaggia tranquilla, circondata da alte scogliere. Ideale per rilassarsi.</p><p>Distanza: 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinh%C3%A3o+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia Dona Ana</h3><p>Una delle spiagge più belle dell’Algarve, scogliere dorate e acque calme.</p><p>Distanza: 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia do Camilo</h3><p>Accesso tramite iconica scalinata. Splendide acque turchesi e formazioni rocciose.</p><p>Distanza: 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Selvaggia e meno affollata. Perfetta per la tranquillità vicino alle scogliere di Ponta da Piedade.</p><p>Distanza: 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia do Canavial</h3><p>Nascosta tra alte scogliere, molto tranquilla e naturale.</p><p>Distanza: 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Ampio arenile, ideale per giornate di mare con servizi e ristoranti. Molto ricercata per il surf.</p><p>Distanza: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia da Luz</h3><p>Spiaggia ampia e familiare con un accogliente villaggio turistico. Acque calme e buona infrastruttura.</p><p>Distanza: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<h3>Spiagge di Portimão (6 spiagge)</h3>
+<div class="category-card"><h3>Praia de Alvor</h3><p>Arenile esteso e dune naturali. Molto ricercata per passeggiate e sport acquatici.</p><p>Distanza: 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia do Vau</h3><p>Belle scogliere e mare calmo. Molto popolare tra le famiglie.</p><p>Distanza: 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Piccole cale tra rocce, acque limpide e ottime viste.</p><p>Distanza: 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Paisaggio incredibile con grandi formazioni rocciose. Ottima per fotografie.</p><p>Distanza: 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia da Rocha</h3><p>Tra le spiagge più famose del Portogallo. Ampio arenile e grande offerta turistica.</p><p>Distanza: 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Piccola spiaggia ai piedi di una scogliera, ambiente sofisticato e ristorante iconico.</p><p>Distanza: 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<h3>Spiagge di Vila do Bispo (6 spiagge)</h3>
+<div class="category-card"><h3>Praia do Burgau</h3><p>Piccola cala pittoresca con villaggio di pescatori. Ottima per famiglie.</p><p>Distanza: 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia da Salema</h3><p>Villaggio tranquillo e molto affascinante, spiaggia familiare con belle scogliere.</p><p>Distanza: 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia da Figueira</h3><p>Accesso più selvaggio e arenile protetto tra scogliere. Molto tranquilla.</p><p>Distanza: 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia das Furnas</h3><p>Spiaggia isolata, perfetta per totale tranquillità.</p><p>Distanza: 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia do Zavial</h3><p>Molto apprezzata dai surfisti, acque pulite e alte scogliere.</p><p>Distanza: 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Baia calma e semicircolare, ottima per snorkeling e famiglie.</p><p>Distanza: 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+`,
+      de: `
+<h3>Strände von Lagos (10 Strände)</h3>
+<div class="category-card"><h3>Meia Praia</h3><p>Langer, breiter Strand mit großem Sand. Ideal für lange Spaziergänge, Wassersport und Familien.</p><p>Entfernung: 1,76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia da Batata</h3><p>Kleiner Stadtstrand nahe dem Zentrum von Lagos. Geschützt, ruhiges Wasser.</p><p>Entfernung: 1,91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Berühmt für den römischen Bogen zwischen Felsen. Klein und sehr fotogen.</p><p>Entfernung: 2,13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Kleiner, ruhiger Strand, umgeben von hohen Klippen. Ideal zum Entspannen.</p><p>Entfernung: 2,31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinh%C3%A3o+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia Dona Ana</h3><p>Einer der schönsten Strände der Algarve, goldene Klippen und ruhiges Wasser.</p><p>Entfernung: 2,66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia do Camilo</h3><p>Ikonischer Treppenabgang. Wunderschönes türkisfarbenes Wasser und Felsformationen.</p><p>Entfernung: 3,15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Wild und weniger besucht. Perfekt für Ruhe nahe den Klippen von Ponta da Piedade.</p><p>Entfernung: 3,49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia do Canavial</h3><p>Zwischen hohen Klippen versteckt, sehr ruhig und natürlich.</p><p>Entfernung: 3,57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Großer Sandstrand, ideal für Strandtage mit Service und Restaurants. Sehr beliebt zum Surfen.</p><p>Entfernung: 3,58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia da Luz</h3><p>Breiter Familienstrand mit einem einladenden Touristenort. Ruhiges Wasser und gute Infrastruktur.</p><p>Entfernung: 5,83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<h3>Strände von Portimão (6 Strände)</h3>
+<div class="category-card"><h3>Praia de Alvor</h3><p>Weitläufiger Sand und natürliche Dünen. Beliebt für Spaziergänge und Wassersport.</p><p>Entfernung: 6,43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia do Vau</h3><p>Schöne Klippen und ruhiges Meer. Sehr beliebt bei Familien.</p><p>Entfernung: 9,95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Kleine Buchten zwischen Felsen, klares Wasser und tolle Aussichten.</p><p>Entfernung: 10,32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Beeindruckende Landschaft mit großen Felsformationen. Super für Fotos.</p><p>Entfernung: 11,08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia da Rocha</h3><p>Einer der berühmtesten Strände Portugals. Großer Sand und viel touristisches Angebot.</p><p>Entfernung: 12,23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Kleiner Strand an einer Klippe, gehobenes Ambiente und ikonisches Restaurant.</p><p>Entfernung: 14,01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<h3>Strände von Vila do Bispo (6 Strände)</h3>
+<div class="category-card"><h3>Praia do Burgau</h3><p>Malereische kleine Bucht mit Fischerort. Ideal für Familien.</p><p>Entfernung: 10,42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia da Salema</h3><p>Ruhiger, sehr charmanter Ort, Familienstrand mit schönen Klippen.</p><p>Entfernung: 14,68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia da Figueira</h3><p>Wilderer Zugang, geschützter Sand zwischen Klippen. Sehr ruhig.</p><p>Entfernung: 16,10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia das Furnas</h3><p>Abgelegener Strand, perfekt für totale Ruhe.</p><p>Entfernung: 17,55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia do Zavial</h3><p>Von Surfern sehr geschätzt, sauberes Wasser und hohe Klippen.</p><p>Entfernung: 19,40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Ruhige, halbkreisförmige Bucht, ideal zum Schnorcheln und für Familien.</p><p>Entfernung: 19,97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Auf der Karte ansehen</a></p></div>
 `
-};
-  
-
-// Textos dos botões
-const buttonTexts = {
-  back: { pt:"⬅️ Voltar", en:"⬅️ Back", es:"⬅️ Volver", fr:"⬅️ Retour", it:"⬅️ Indietro", de:"⬅️ Zurück" },
-  print: { pt:"🖨️ Imprimir / Guardar PDF", en:"🖨️ Print / Save PDF", es:"🖨️ Imprimir / Guardar PDF", fr:"🖨️ Imprimer / Enregistrer PDF", it:"🖨️ Stampa / Salva PDF", de:"🖨️ Drucken / PDF speichern" },
-  share: { pt:"🔗 Partilhar", en:"🔗 Share", es:"🔗 Compartir", fr:"🔗 Partager", it:"🔗 Condividi", de:"🔗 Teilen" }
-};
-
-// Categorias
-const categories = {
-  pt: ["📞 Emergência","📋 Regras do Alojamento","🏖️ Praias","🍽️ Restaurantes","🏛️ Locais Históricos","🎨 Museus e Cultura","🍸 Bares e Vida Noturna","🛒 Supermercados","🚌 Transportes","🏥 Saúde e Farmácias","🏧 ATMs e Bancos","🥾 Trilhos e Caminhadas","⛵ Passeios de Barco","⛳ Campos de Golfe"],
-  en: ["📞 Emergency","📋 House Rules","🏖️ Beaches","🍽️ Restaurants","🏛️ Historical Sites","🎨 Museums & Culture","🍸 Bars & Nightlife","🛒 Supermarkets","🚌 Transport","🏥 Health & Pharmacies","🏧 ATMs & Banks","🥾 Hiking Trails","⛵ Boat Tours","⛳ Golf Courses"],
-  es: ["📞 Emergencia","📋 Reglas del Alojamiento","🏖️ Playas","🍽️ Restaurantes","🏛️ Lugares Históricos","🎨 Museos y Cultura","🍸 Bares y Vida Nocturna","🛒 Supermercados","🚌 Transportes","🏥 Salud y Farmacias","🏧 Cajeros y Bancos","🥾 Senderos y Caminatas","⛵ Paseos en Barco","⛳ Campos de Golf"],
-  fr: ["📞 Urgences","📋 Règles du Logement","🏖️ Plages","🍽️ Restaurants","🏛️ Sites Historiques","🎨 Musées et Culture","🍸 Bars & Vie Nocturne","🛒 Supermarchés","🚌 Transports","🏥 Santé & Pharmacies","🏧 Distributeurs & Banques","🥾 Randonnées","⛵ Excursions en Bateau","⛳ Terrains de Golf"],
-  it: ["📞 Emergenza","📋 Regole dell'Alloggio","🏖️ Spiagge","🍽️ Ristoranti","🏛️ Siti Storici","🎨 Musei e Cultura","🍸 Bar & Vita Notturna","🛒 Supermercati","🚌 Trasporti","🏥 Salute & Farmacie","🏧 Bancomat & Banche","🥾 Sentieri e Passeggiate","⛵ Gite in Barca","⛳ Campi da Golf"],
-  de: ["📞 Notfall","📋 Hausregeln","🏖️ Strände","🍽️ Restaurants","🏛️ Historische Orte","🎨 Museen & Kultur","🍸 Bars & Nachtleben","🛒 Supermärkte","🚌 Transport","🏥 Gesundheit & Apotheken","🏧 Geldautomaten & Banken","🥾 Wanderwege","⛵ Bootstouren","⛳ Golfplätze"]
-};
-
-<script>
-function setLanguage(lang) {
-  const titles = {
-    pt: "Guia Belleview Apartments",
-    en: "Belleview Apartments Guide",
-    es: "Guía de Apartamentos Belleview",
-    fr: "Guide des Appartements Belleview",
-    it: "Guida Appartamenti Belleview",
-    de: "Belleview Apartments Führer"
-  };
-
-  // título e categorias
-  document.getElementById("title").innerText = titles[lang];
-  document.getElementById("categoriesTitle").innerText =
-    "📂 " + (
-      lang==="pt" ? "Categorias" :
-      lang==="en" ? "Categories" :
-      lang==="es" ? "Categorías" :
-      lang==="fr" ? "Catégories" :
-      lang==="it" ? "Categorie" :
-      "Kategorien"
-    );
-
-  // lista de categorias
-  const list = document.getElementById("categoriesList");
-  list.innerHTML = "";
-  categories[lang].forEach(cat => {
-    const li = document.createElement("li");
-    li.innerText = cat;
-    li.onclick = () => {
-      if (
-        cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") ||
-        cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")
-      ) {
-        showCategory(lang,"rules",cat);
-      } else if (
-        cat.includes("Emerg") || cat.includes("Urgenc") || cat.includes("Notfall")
-      ) {
-        showCategory(lang,"emergency",cat);
-      } else if (
-        cat.includes("Praias") || cat.includes("Beaches") || cat.includes("Playas") ||
-        cat.includes("Plages") || cat.includes("Spiagge") || cat.includes("Strände")
-      ) {
-        showCategory(lang,"beaches",cat);
-      } else {
-        showCategory(lang,"other",cat);
-      }
     };
-    list.appendChild(li);
-  });
 
-  // mostrar categorias e esconder menu de idiomas
-  document.getElementById("languageMenu").style.display="none";
-  document.getElementById("choose").style.display="none";
-  document.getElementById("categories").style.display="block";
+    // Textos dos botões
+    const buttonTexts = {
+      back: { pt:"⬅️ Voltar", en:"⬅️ Back", es:"⬅️ Volver", fr:"⬅️ Retour", it:"⬅️ Indietro", de:"⬅️ Zurück" },
+      print: { pt:"🖨️ Imprimir / Guardar PDF", en:"🖨️ Print / Save PDF", es:"🖨️ Imprimir / Guardar PDF", fr:"🖨️ Imprimer / Enregistrer PDF", it:"🖨️ Stampa / Salva PDF", de:"🖨️ Drucken / PDF speichern" },
+      share: { pt:"🔗 Partilhar", en:"🔗 Share", es:"🔗 Compartir", fr:"🔗 Partager", it:"🔗 Condividi", de:"🔗 Teilen" }
+    };
 
-  // traduz botões
-  document.getElementById("catBackTop").innerText = buttonTexts.back[lang];
-  document.getElementById("catPrintTop").innerText = buttonTexts.print[lang];
-  document.getElementById("catShareTop").innerText = buttonTexts.share[lang];
-  document.getElementById("catBackBottom").innerText = buttonTexts.back[lang];
-}
+    // Categorias
+    const categories = {
+      pt: ["📞 Emergência","📋 Regras do Alojamento","🏖️ Praias","🍽️ Restaurantes","🏛️ Locais Históricos","🎨 Museus e Cultura","🍸 Bares e Vida Noturna","🛒 Supermercados","🚌 Transportes","🏥 Saúde e Farmácias","🏧 ATMs e Bancos","🥾 Trilhos e Caminhadas","⛵ Passeios de Barco","⛳ Campos de Golfe"],
+      en: ["📞 Emergency","📋 House Rules","🏖️ Beaches","🍽️ Restaurants","🏛️ Historical Sites","🎨 Museums & Culture","🍸 Bars & Nightlife","🛒 Supermarkets","🚌 Transport","🏥 Health & Pharmacies","🏧 ATMs & Banks","🥾 Hiking Trails","⛵ Boat Tours","⛳ Golf Courses"],
+      es: ["📞 Emergencia","📋 Reglas del Alojamiento","🏖️ Playas","🍽️ Restaurantes","🏛️ Lugares Históricos","🎨 Museos y Cultura","🍸 Bares y Vida Nocturna","🛒 Supermercados","🚌 Transportes","🏥 Salud y Farmacias","🏧 Cajeros y Bancos","🥾 Senderos y Caminatas","⛵ Paseos en Barco","⛳ Campos de Golf"],
+      fr: ["📞 Urgences","📋 Règles du Logement","🏖️ Plages","🍽️ Restaurants","🏛️ Sites Historiques","🎨 Musées et Culture","🍸 Bars & Vie Nocturne","🛒 Supermarchés","🚌 Transports","🏥 Santé & Pharmacies","🏧 Distributeurs & Banques","🥾 Randonnées","⛵ Excursions en Bateau","⛳ Terrains de Golf"],
+      it: ["📞 Emergenza","📋 Regole dell'Alloggio","🏖️ Spiagge","🍽️ Ristoranti","🏛️ Siti Storici","🎨 Musei e Cultura","🍸 Bar & Vita Notturna","🛒 Supermercati","🚌 Trasporti","🏥 Salute & Farmacie","🏧 Bancomat & Banche","🥾 Sentieri e Passeggiate","⛵ Gite in Barca","⛳ Campi da Golf"],
+      de: ["📞 Notfall","📋 Hausregeln","🏖️ Strände","🍽️ Restaurants","🏛️ Historische Orte","🎨 Museen & Kultur","🍸 Bars & Nachtleben","🛒 Supermärkte","🚌 Transport","🏥 Gesundheit & Apotheken","🏧 Geldautomaten & Banken","🥾 Wanderwege","⛵ Bootstouren","⛳ Golfplätze"]
+    };
 
-function showCategory(lang,key,catName) {
-  document.getElementById("categories").style.display="none";
-  document.getElementById("categoryContent").style.display="block";
-  document.getElementById("categoryTitle").innerText=catName;
+    // Lógica de idioma e categorias
+    function setLanguage(lang) {
+      const titles = {
+        pt: "Guia Belleview Apartments",
+        en: "Belleview Apartments Guide",
+        es: "Guía de Apartamentos Belleview",
+        fr: "Guide des Appartements Belleview",
+        it: "Guida Appartamenti Belleview",
+        de: "Belleview Apartments Führer"
+      };
 
-  if (key==="rules") {
-    document.getElementById("categoryText").innerHTML = rules[lang];
-  } else if (key==="emergency") {
-    document.getElementById("categoryText").innerHTML = emergency[lang];
-  } else if (key==="beaches") {
-    document.getElementById("categoryText").innerHTML = beaches[lang];
-  } else {
-    document.getElementById("categoryText").innerHTML = "<p>Conteúdo desta categoria ainda em desenvolvimento.</p>";
-  }
+      document.getElementById("title").innerText = titles[lang];
+      document.getElementById("categoriesTitle").innerText =
+        "📂 " + (
+          lang==="pt" ? "Categorias" :
+          lang==="en" ? "Categories" :
+          lang==="es" ? "Categorías" :
+          lang==="fr" ? "Catégories" :
+          lang==="it" ? "Categorie" :
+          "Kategorien"
+        );
 
-  // traduz botões
-  document.getElementById("catBackTopContent").innerText=buttonTexts.back[lang];
-  document.getElementById("catPrintContent").innerText=buttonTexts.print[lang];
-  document.getElementById("catShareContent").innerText=buttonTexts.share[lang];
-  document.getElementById("catBackBottomContent").innerText=buttonTexts.back[lang];
-}
+      const list = document.getElementById("categoriesList");
+      list.innerHTML = "";
+      categories[lang].forEach(cat => {
+        const li = document.createElement("li");
+        li.innerText = cat;
+        li.onclick = () => {
+          if (
+            cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") ||
+            cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")
+          ) {
+            showCategory(lang, "rules", cat);
+          } else if (
+            cat.includes("Emerg") || cat.includes("Urgenc") || cat.includes("Notfall")
+          ) {
+            showCategory(lang, "emergency", cat);
+          } else if (
+            cat.includes("Praias") || cat.includes("Beaches") || cat.includes("Playas") ||
+            cat.includes("Plages") || cat.includes("Spiagge") || cat.includes("Strände")
+          ) {
+            showCategory(lang, "beaches", cat);
+          } else {
+            showCategory(lang, "other", cat);
+          }
+        };
+        list.appendChild(li);
+      });
 
-function showCategories() {
-  document.getElementById("categoryContent").style.display="none";
-  document.getElementById("categories").style.display="block";
-}
+      document.getElementById("languageMenu").style.display="none";
+      document.getElementById("choose").style.display="none";
+      document.getElementById("categories").style.display="block";
 
-function goBack() {
-  document.getElementById("categories").style.display="none";
-  document.getElementById("categoryContent").style.display="none";
-  document.getElementById("languageMenu").style.display="block";
-  document.getElementById("choose").style.display="block";
-  document.getElementById("title").innerText="Guia Belleview Apartments";
-}
+      document.getElementById("catBackTop").innerText = buttonTexts.back[lang];
+      document.getElementById("catPrintTop").innerText = buttonTexts.print[lang];
+      document.getElementById("catShareTop").innerText = buttonTexts.share[lang];
+      document.getElementById("catBackBottom").innerText = buttonTexts.back[lang];
+    }
 
-function shareGuide() {
-  const url=window.location.href;
-  const text="Guia Belleview Apartments - veja aqui: "+url;
-  if (navigator.share) {
-    navigator.share({title:"Guia Belleview Apartments",text:text,url:url});
-  } else {
-    const whatsappUrl="https://wa.me/?text="+encodeURIComponent(text);
-    const mailUrl="mailto:?subject=Guia Belleview Apartments&body="+encodeURIComponent(text);
-    const choice=prompt("Escolha como partilhar:\n1 - WhatsApp\n2 - Email\n3 - Copiar link");
-    if (choice==="1") { window.open(whatsappUrl,"_blank"); }
-    else if (choice==="2") { window.location.href=mailUrl; }
-    else if (choice==="3") { navigator.clipboard.writeText(url); alert("Link copiado!"); }
-  }
-}
-</script>
+    function showCategory(lang, key, catName) {
+      document.getElementById("categories").style.display="none";
+      document.getElementById("categoryContent").style.display="block";
+      document.getElementById("categoryTitle").innerText = catName;
+
+      if (key === "rules") {
+        document.getElementById("categoryText").innerHTML = rules[lang];
+      } else if (key === "emergency") {
+        document.getElementById("categoryText").innerHTML = emergency[lang];
+      } else if (key === "beaches") {
+        document.getElementById("categoryText").innerHTML = beaches[lang];
+      } else {
+        document.getElementById("categoryText").innerHTML = "<p>Conteúdo desta categoria ainda em desenvolvimento.</p>";
+      }
+
+      document.getElementById("catBackTopContent").innerText = buttonTexts.back[lang];
+      document.getElementById("catPrintContent").innerText = buttonTexts.print[lang];
+      document.getElementById("catShareContent").innerText = buttonTexts.share[lang];
+      document.getElementById("catBackBottomContent").innerText = buttonTexts.back[lang];
+    }
+
+    function showCategories() {
+      document.getElementById("categoryContent").style.display="none";
+      document.getElementById("categories").style.display="block";
+    }
+
+    function goBack() {
+      document.getElementById("categories").style.display="none";
+      document.getElementById("categoryContent").style.display="none";
+      document.getElementById("languageMenu").style.display="block";
+      document.getElementById("choose").style.display="block";
+      document.getElementById("title").innerText = "Guia Belleview Apartments";
+    }
+
+    function shareGuide() {
+      const url = window.location.href;
+      const text = "Guia Belleview Apartments - veja aqui: " + url;
+      if (navigator.share) {
+        navigator.share({ title: "Guia Belleview Apartments", text, url });
+      } else {
+        const whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(text);
+        const mailUrl = "mailto:?subject=Guia Belleview Apartments&body=" + encodeURIComponent(text);
+        const choice = prompt("Escolha como partilhar:\n1 - WhatsApp\n2 - Email\n3 - Copiar link");
+        if (choice === "1") { window.open(whatsappUrl, "_blank"); }
+        else if (choice === "2") { window.location.href = mailUrl; }
+        else if (choice === "3") { navigator.clipboard.writeText(url); alert("Link copiado!"); }
+      }
+    }
+  </script>
 </body>
 </html>
