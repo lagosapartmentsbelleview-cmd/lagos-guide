@@ -7,31 +7,68 @@
   <style>
     body { font-family: Arial, sans-serif; text-align: center; background: #f9f9f9; margin:0; padding:20px; }
     h1 { margin-top: 20px; }
-    .menu, .categories, .back-btn { margin: 20px auto; max-width: 400px; }
-    .menu button, .back-btn button {
-      display: flex;
+
+    /* Botões de idioma */
+    .menu { margin: 20px auto; }
+    .menu button {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin: 10px auto;
+      margin: 6px;
+      padding: 10px 16px;
+      background: #0077cc; /* azul principal */
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .menu button:hover { background: #005fa3; }
+    .menu img { width: 24px; height: 16px; }
+
+    /* Categorias */
+    .categories { margin: 20px auto; max-width: 500px; }
+    ul { list-style: none; padding: 0; }
+    li {
+      margin: 8px 0;
       padding: 12px;
+      background: #cce4f7; /* azul mais claro */
+      border-radius: 6px;
+      font-size: 15px;
+      text-align: left;
+    }
+
+    /* Botão voltar */
+    .back-btn button {
+      margin-top: 15px;
+      padding: 10px 18px;
       background: #0077cc;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      width: 100%;
-      font-size: 16px;
+      font-size: 15px;
     }
-    .menu button:hover, .back-btn button:hover { background: #005fa3; }
-    .menu img { width: 24px; height: 16px; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 8px 0; padding:10px; background:#eee; border-radius:6px; }
+    .back-btn button:hover { background: #005fa3; }
+
+    /* Botão imprimir */
+    .print-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .print-btn:hover { background: #1e7e34; }
 
     /* Responsivo para smartphones */
     @media (max-width: 600px) {
       h1 { font-size: 20px; }
-      .menu button, .back-btn button { font-size: 14px; padding: 10px; }
+      .menu button { font-size: 14px; padding: 8px 12px; }
       li { font-size: 14px; }
     }
 
@@ -43,17 +80,6 @@
       ul { margin-left: 20px; }
       @page { size: A4; margin: 20mm; }
     }
-
-    .print-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #28a745;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .print-btn:hover { background: #1e7e34; }
   </style>
 </head>
 <body>
