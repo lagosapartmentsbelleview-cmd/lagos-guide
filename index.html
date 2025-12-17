@@ -95,10 +95,18 @@
   </div>
 
   <!-- Categorias -->
-  <div class="categories" id="categories" style="display:none;">
-    <h2 id="categoriesTitle"></h2>
-    <ul id="categoriesList"></ul>
+ <div id="rulesContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;">
+  <h2 id="rulesTitle"></h2>
+  <pre id="rulesText" style="white-space:pre-wrap;"></pre>
+
+  <!-- Botões dentro da aba -->
+  <div class="bottom-buttons">
+    <button class="back-btn" id="rulesBack" onclick="showCategories()">⬅️ Voltar</button>
+    <button class="print-btn" id="rulesPrint" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+    <button class="share-btn" id="rulesShare" onclick="shareGuide()">🔗 Partilhar</button>
   </div>
+</div>
+
 
   <!-- Botão voltar -->
   <div class="back-btn" id="backBtn" style="display:none;">
@@ -478,6 +486,54 @@ Jegliche Schäden oder Defekte müssen sofort dem Gastgeber gemeldet werden, and
         }
       }
     }
+    const buttonTexts = {
+  back: {
+    pt: "⬅️ Voltar",
+    en: "⬅️ Back",
+    es: "⬅️ Volver",
+    fr: "⬅️ Retour",
+    it: "⬅️ Indietro",
+    de: "⬅️ Zurück"
+  },
+  print: {
+    pt: "🖨️ Imprimir / Guardar PDF",
+    en: "🖨️ Print / Save PDF",
+    es: "🖨️ Imprimir / Guardar PDF",
+    fr: "🖨️ Imprimer / Enregistrer PDF",
+    it: "🖨️ Stampa / Salva PDF",
+    de: "🖨️ Drucken / PDF speichern"
+  },
+  share: {
+    pt: "🔗 Partilhar",
+    en: "🔗 Share",
+    es: "🔗 Compartir",
+    fr: "🔗 Partager",
+    it: "🔗 Condividi",
+    de: "🔗 Teilen"
+  }
+};
+
+function showCategory(lang, categoryKey) {
+  document.getElementById("categories").style.display = "none";
+  document.getElementById("rulesContent").style.display = "block";
+
+  if (categoryKey === "rules") {
+    document.getElementById("rulesTitle").innerText = buttonTexts.print[lang].includes("Imprimir") ? "📋 Regras do Alojamento" : "📋 House Rules";
+    document.getElementById("rulesText").innerText = rules[lang];
+  }
+
+  // Atualiza botões no idioma
+  document.getElementById("rulesBack").innerText = buttonTexts.back[lang];
+  document.getElementById("rulesPrint").innerText = buttonTexts.print[lang];
+  document.getElementById("rulesShare").innerText = buttonTexts.share[lang];
+}
+
+function showCategories() {
+  document.getElementById("rulesContent").style.display = "none";
+  document.getElementById("categories").style.display = "block";
+}
+
+
   </script>
 </body>
 </html>
