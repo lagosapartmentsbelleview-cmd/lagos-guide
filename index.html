@@ -458,7 +458,15 @@ function setLanguage(lang) {
   };
 
   document.getElementById("title").innerText = titles[lang];
-  document.getElementById("categoriesTitle").innerText = "📂 " + (lang==="pt"?"Categorias":lang==="en"?"Categories":lang==="es"?"Categorías":lang==="fr"?"Catégories":lang==="it"?"Categorie":"Kategorien");
+  document.getElementById("categoriesTitle").innerText =
+    "📂 " + (
+      lang==="pt" ? "Categorias" :
+      lang==="en" ? "Categories" :
+      lang==="es" ? "Categorías" :
+      lang==="fr" ? "Catégories" :
+      lang==="it" ? "Categorie" :
+      "Kategorien"
+    );
 
   const list = document.getElementById("categoriesList");
   list.innerHTML = "";
@@ -467,18 +475,13 @@ function setLanguage(lang) {
     li.innerText = cat;
     li.onclick = () => {
       if (
-  cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") || 
-  cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")
-) {
-  showCategory(lang,"rules",cat);
-} else if (
-  cat.includes("Emerg") || cat.includes("Urgenc") || cat.includes("Notfall")
-) {
-  showCategory(lang,"emergency",cat);
-} else {
-  showCategory(lang,"other",cat);
-}
- {
+        cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") ||
+        cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")
+      ) {
+        showCategory(lang,"rules",cat);
+      } else if (
+        cat.includes("Emerg") || cat.includes("Urgenc") || cat.includes("Notfall")
+      ) {
         showCategory(lang,"emergency",cat);
       } else {
         showCategory(lang,"other",cat);
@@ -492,11 +495,12 @@ function setLanguage(lang) {
   document.getElementById("categories").style.display="block";
 
   // traduz botões
-  document.getElementById("catBackTop").innerText=buttonTexts.back[lang];
-  document.getElementById("catPrintTop").innerText=buttonTexts.print[lang];
-  document.getElementById("catShareTop").innerText=buttonTexts.share[lang];
-  document.getElementById("catBackBottom").innerText=buttonTexts.back[lang];
+  document.getElementById("catBackTop").innerText = buttonTexts.back[lang];
+  document.getElementById("catPrintTop").innerText = buttonTexts.print[lang];
+  document.getElementById("catShareTop").innerText = buttonTexts.share[lang];
+  document.getElementById("catBackBottom").innerText = buttonTexts.back[lang];
 }
+
 
 function showCategory(lang,key,catName) {
   document.getElementById("categories").style.display="none";
