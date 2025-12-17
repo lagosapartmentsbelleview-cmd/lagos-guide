@@ -27,6 +27,43 @@ li { margin: 8px 0; padding: 12px; background: #cce4f7; border-radius: 6px; font
 .back-btn:hover { background: #005fa3; }
 @media (max-width: 600px) { .header h1 { font-size: 20px; } .header p { font-size: 12px; } .menu button { font-size: 14px; padding: 8px 12px; } li { font-size: 14px; } }
 @media print { body { background: white; color: black; } .menu, .bottom-buttons { display: none; } h1, h2 { color: black; } ul { margin-left: 20px; } @page { size: A4; margin: 20mm; } }
+  .category-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.category-card {
+  background: #f1f7ff;
+  border-left: 4px solid #0077cc;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+}
+
+.category-card h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  color: #0077cc;
+}
+
+.category-card p {
+  margin: 4px 0;
+}
+
+.category-card a {
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.category-card a:hover {
+  text-decoration: underline;
+}
+
 </style>
 </head>
 <body>
@@ -71,7 +108,7 @@ li { margin: 8px 0; padding: 12px; background: #cce4f7; border-radius: 6px; font
     <button class="print-btn" id="catPrintContent" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
     <button class="share-btn" id="catShareContent" onclick="shareGuide()">🔗 Partilhar</button>
   </div>
-  <pre id="categoryText" style="white-space:pre-wrap;"></pre>
+ <div id="categoryText" class="category-content"></div>
   <div class="bottom-buttons">
     <button class="back-btn" id="catBackBottomContent" onclick="showCategories()">⬅️ Voltar</button>
   </div>
@@ -80,46 +117,28 @@ li { margin: 8px 0; padding: 12px; background: #cce4f7; border-radius: 6px; font
 <script>
 // --- Conteúdos das categorias ---
 const rules = {
-  pt: `📋 Regras do Alojamento
+  pt: `
+<div class="category-card"><h3>🕐 Check-in / Check-out</h3><p>Check-in: a partir das 15:00<br>Check-out: até às 10:00</p></div>
+<div class="category-card"><h3>❌ Cancelamento / Pré-pagamento</h3><p>As condições variam consoante o tipo de alojamento. Verifique ao efetuar a reserva.</p></div>
+<div class="category-card"><h3>👶 Crianças e camas</h3><p>Todas as crianças são bem-vindas.<br>Berços gratuitos (0-2 anos), sujeitos à disponibilidade.<br>Não existem camas extra.</p></div>
+<div class="category-card"><h3>🚭 Proibido Fumar</h3><p>É proibido fumar no interior do apartamento.</p></div>
+<div class="category-card"><h3>🎉 Festas e Eventos</h3><p>Não são permitidas festas ou eventos.</p></div>
+<div class="category-card"><h3>🐕 Animais de Estimação</h3><p>Animais de estimação não são admitidos.</p></div>
+<div class="category-card"><h3>🔇 Lei do Silêncio</h3><p>Respeite as horas de silêncio.</p></div>
+<div class="category-card"><h3>🧺 Serviços e consumíveis</h3><p>Para estadias de 7 noites ou mais, roupa de cama e toalhas são mudadas a cada 7 dias.<br>Consumíveis devem ser adquiridos pelos hóspedes após utilização dos disponibilizados.</p></div>
+<div class="category-card"><h3>📖 Informações do apartamento</h3><p>No interior encontra um livro de informações com instruções sobre máquinas e equipamentos.</p></div>
+<div class="category-card"><h3>🔑 Perda de chaves</h3><p>A perda de qualquer chave implica um custo de 40,00 € por chave.</p></div>
+<div class="category-card"><h3>🛡️ Saúde e segurança</h3><p>Medidas adicionais de higienização estão em vigor devido à COVID-19.</p></div>
+<div class="category-card"><h3>⚠️ Comunicação de danos</h3><p>Qualquer estrago ou avaria deve ser comunicado de imediato ao anfitrião.</p></div>
+`,
 
-🕐 Check-in / Check-out
-Check-in: a partir das 15:00. Informe antecipadamente a sua hora de chegada.
-Check-out: até às 10:00.
+  en: `... (igual formato em cartões, texto em inglês) ...`,
+  es: `... (igual formato em cartões, texto em espanhol) ...`,
+  fr: `... (igual formato em cartões, texto em francês) ...`,
+  it: `... (igual formato em cartões, texto em italiano) ...`,
+  de: `... (igual formato em cartões, texto em alemão) ...`
+};
 
-❌ Cancelamento / Pré-pagamento
-As condições variam consoante o tipo de alojamento. Verifique ao efetuar a reserva.
-
-👶 Crianças e camas
-Todas as crianças são bem-vindas. Berços disponíveis gratuitamente mediante pedido (0-2 anos), sujeitos à disponibilidade.
-Não existem camas extra disponíveis.
-
-🚭 Proibido Fumar
-É proibido fumar no interior do apartamento.
-
-🎉 Festas e Eventos
-Não são permitidas festas ou eventos, incluindo despedidas de solteiro(a).
-
-🐕 Animais de Estimação
-Animais de estimação não são admitidos.
-
-🔇 Lei do Silêncio
-Respeite a Lei das horas de silêncio.
-
-🧺 Serviços e consumíveis
-Para estadias de 7 noites ou mais, a roupa de cama e toalhas são mudadas a cada 7 dias.
-Consumíveis devem ser adquiridos pelos hóspedes após utilização dos disponibilizados.
-
-📖 Informações do apartamento
-No interior encontra um livro de informações com instruções sobre máquinas e equipamentos.
-
-🔑 Perda de chaves
-A perda de qualquer chave implica um custo de 40,00 € por chave, acrescido de despesas adicionais.
-
-🛡️ Saúde e segurança
-Medidas adicionais de higienização estão em vigor devido à COVID-19.
-
-⚠️ Comunicação de danos
-Qualquer estrago ou avaria deve ser comunicado de imediato ao anfitrião.`,
 
   en: `📋 House Rules
 
@@ -508,12 +527,13 @@ function showCategory(lang,key,catName) {
   document.getElementById("categoryTitle").innerText=catName;
 
   if (key==="rules") {
-    document.getElementById("categoryText").innerText=rules[lang];
-  } else if (key==="emergency") {
-    document.getElementById("categoryText").innerHTML=emergency[lang];
-  } else {
-    document.getElementById("categoryText").innerText="Conteúdo desta categoria ainda em desenvolvimento.";
-  }
+  document.getElementById("categoryText").innerHTML = rules[lang];
+} else if (key==="emergency") {
+  document.getElementById("categoryText").innerHTML = emergency[lang];
+} else {
+  document.getElementById("categoryText").innerHTML = "<p>Conteúdo desta categoria ainda em desenvolvimento.</p>";
+}
+
 
   document.getElementById("catBackTopContent").innerText=buttonTexts.back[lang];
   document.getElementById("catPrintContent").innerText=buttonTexts.print[lang];
