@@ -466,9 +466,19 @@ function setLanguage(lang) {
     const li = document.createElement("li");
     li.innerText = cat;
     li.onclick = () => {
-      if (cat.includes("Regras")||cat.includes("House Rules")||cat.includes("Reglas")||cat.includes("Règles")||cat.includes("Regole")||cat.includes("Hausregeln")) {
-        showCategory(lang,"rules",cat);
-      } else if (cat.includes("Emerg")) {
+      if (
+  cat.includes("Regras") || cat.includes("House Rules") || cat.includes("Reglas") || 
+  cat.includes("Règles") || cat.includes("Regole") || cat.includes("Hausregeln")
+) {
+  showCategory(lang,"rules",cat);
+} else if (
+  cat.includes("Emerg") || cat.includes("Urgenc") || cat.includes("Notfall")
+) {
+  showCategory(lang,"emergency",cat);
+} else {
+  showCategory(lang,"other",cat);
+}
+ {
         showCategory(lang,"emergency",cat);
       } else {
         showCategory(lang,"other",cat);
