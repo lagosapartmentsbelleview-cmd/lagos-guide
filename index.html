@@ -542,13 +542,42 @@ const restaurants = {
 <div class="category-card"><h3>Pizzaria Oliva</h3><p>Informelle Pizzeria mit großzügigen Pizzen, erschwingliche Preise — ideal für Gruppen oder schnelle Mahlzeiten.</p><p>Entfernung: 1.0 km</p><p><a href="https://maps.google.com/?q=Pizzaria+Oliva+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
 `
 };
+    // --- historcalsites (cartões, todos idiomas) ---
+const historicalSites = {
+  pt: `
+<h3>🏛️ Locais Históricos</h3>
+<div class="category-card"><h3>Explorar a Ponta da Piedade</h3><p>Cartão-postal de Lagos, famoso pelas formações rochosas, grutas e arcos naturais. Passadiços no topo das falésias oferecem vistas panorâmicas; escadaria leva ao nível do mar.</p><p>📍 Estr. da Ponta da Piedade, 8600-544 Lagos</p></div>
+<div class="category-card"><h3>Passeio de Barco às Grutas</h3><p>Partindo da Marina de Lagos, permite entrar em grutas inacessíveis por terra. Opções em barcos tradicionais, catamarãs ou caiaques.</p><p>📞 Costa D'oiro Passeios Marítimos (+351 918 718 134)</p></div>
+<div class="category-card"><h3>Relaxar na Praia de Dona Ana ou Praia do Camilo</h3><p>Praias consideradas das mais belas do mundo, cercadas por falésias douradas e águas cristalinas. Acesso ao Camilo por longa escadaria de madeira.</p><p>📍 Estrada da Ponta da Piedade, Lagos</p></div>
+<div class="category-card"><h3>Caminhada pelo Centro Histórico</h3><p>Ruas de calçada portuguesa com muralhas, Igreja de Santo António e Mercado de Escravos. Ideal para jantar e vida noturna.</p><p>📍 Praça Gil Eanes e arredores</p></div>
+<div class="category-card"><h3>Parque Zoológico de Lagos</h3><p>Jardim zoológico focado em conservação e educação, com aves, primatas e répteis.</p><p>📍 Quinta Figueiras - Sítio do Medronhal, Barão de S. João</p></div>
+<div class="category-card"><h3>Parque Aventura Lagos</h3><p>Arborismo e paintball em plena natureza para quem procura adrenalina.</p><p>📍 R. Sophia de Melo Breyner Andresen, 8600-302 Lagos</p></div>
+<div class="category-card"><h3>Mercado Municipal de Lagos</h3><p>Peixe fresco, frutas locais e artesanato. Terraço com vista sobre a Marina.</p><p>📍 Av. dos Descobrimentos, Lagos</p></div>
+<div class="category-card"><h3>Museu Dr. José Formosinho</h3><p>Museu municipal com arqueologia, arte sacra e etnografia.</p><p>📍 Rua General Alberto da Silveira 1, 8600-594 Lagos</p><p>🌐 museu.cm-lagos.pt</p></div>
+<div class="category-card"><h3>Mercado de Escravos</h3><p>Antigo mercado, hoje museu sobre o comércio transatlântico.</p><p>📍 Rua da Senhora da Graça 26, 8600-315 Lagos</p><p>🌐 museu.cm-lagos.pt</p></div>
+<div class="category-card"><h3>Museu de Cera dos Descobrimentos</h3><p>Exposições interativas sobre a Era dos Descobrimentos.</p><p>📍 Urbanização Marina de Lagos, Edifício Astrolábio</p><p>🌐 lagosvivecultura.pt</p></div>
+<div class="category-card"><h3>Centro Ciência Viva de Lagos</h3><p>Exposições interativas sobre ciência, natureza e história local.</p><p>📍 Rua Dr. Faria e Silva 34, 8600-734 Lagos</p></div>
+<div class="category-card"><h3>Forte Ponta da Bandeira</h3><p>Fortificação do século XVII com capela e exposições.</p><p>📍 Cais da Solaria, 8600-563 Lagos</p><p>🌐 museu.cm-lagos.pt</p></div>
+<div class="category-card"><h3>Castelo de Lagos</h3><p>Castelo do século XV ligado à história militar e aos Descobrimentos.</p><p>📍 Rua Bombeiros Voluntários de Lagos 18</p><p>🌐 lagosvivecultura.pt</p></div>
+<div class="category-card"><h3>Muralhas e Torreões</h3><p>Vestígios das muralhas que protegiam a cidade.</p><p>📍 Centro histórico</p><p>🌐 lagosvivecultura.pt</p></div>
+<div class="category-card"><h3>Fortaleza de Nossa Senhora da Luz</h3><p>Arquitetura militar costeira do século XVII.</p><p>📍 Largo de Nossa Senhora da Luz</p><p>🌐 cm-lagos.pt</p></div>
+<div class="category-card"><h3>Igreja de Santo António</h3><p>Monumento nacional com interior ricamente decorado.</p><p>📍 Rua General Alberto da Silveira 1</p></div>
+<div class="category-card"><h3>Igreja de Santa Maria</h3><p>Igreja paroquial do centro histórico.</p><p>📍 Praça Infante Dom Henrique</p></div>
+<div class="category-card"><h3>Igreja São Sebastião</h3><p>Igreja dos séculos XIV–XVI com elementos históricos.</p><p>📍 Rua Conselheiro Joaquim Machado</p></div>
+<div class="category-card"><h3>Igreja de Nossa Senhora da Luz</h3><p>Igreja com elementos góticos, manuelinos e barrocos.</p><p>📍 Rua Luz Bay Club</p></div>
+<div class="category-card"><h3>Ermida de Santo Amaro</h3><p>Ruínas de capela do século XIV, sobrevivente ao terramoto de 1755.</p><p>📍 Rua da Ermida de Santo Amaro</p></div>
+<div class="category-card"><h3>Convento de Nossa Senhora do Loreto</h3><p>Ruínas do convento do século XVI, hoje espaço cultural.</p><p>📍 Zona ribeirinha / Rua Porta de Portugal</p></div>
+<div class="category-card"><h3>Armazém Regimental</h3><p>Edifício histórico do século XVII ligado à vida militar e comercial.</p><p>📍 Praça Infante Dom Henrique 6</p><p>🌐 museu.cm-lagos.pt</p></div>
+<div class="category-card"><h3>Praça Infante Dom Henrique</h3><p>Centro histórico com estátuas e edifícios ligados aos Descobrimentos.</p><p>📍 8600-315 Lagos</p></div>
+`,
+
+};
 
 
 
     // --- Placeholders para restantes categorias ---
    
-    const historicalSites = { pt:"<p>Conteúdo em desenvolvimento</p>", en:"<p>Content under development</p>", es:"<p>Contenido en desarrollo</p>", fr:"<p>Contenu en cours</p>", it:"<p>Contenuto in sviluppo</p>", de:"<p>Inhalt in Entwicklung</p>" };
-        const museums = { pt:"<p>Conteúdo em desenvolvimento</p>", en:"<p>Content under development</p>", es:"<p>Contenido en desarrollo</p>", fr:"<p>Contenu en cours</p>", it:"<p>Contenuto in sviluppo</p>", de:"<p>Inhalt in Entwicklung</p>" };
+    const museums = { pt:"<p>Conteúdo em desenvolvimento</p>", en:"<p>Content under development</p>", es:"<p>Contenido en desarrollo</p>", fr:"<p>Contenu en cours</p>", it:"<p>Contenuto in sviluppo</p>", de:"<p>Inhalt in Entwicklung</p>" };
     const nightlife = { pt:"<p>Conteúdo em desenvolvimento</p>", en:"<p>Content under development</p>", es:"<p>Contenido en desarrollo</p>", fr:"<p>Contenu en cours</p>", it:"<p>Contenuto in sviluppo</p>", de:"<p>Inhalt in Entwicklung</p>" };
     const supermarkets = { pt:"<p>Conteúdo em desenvolvimento</p>", en:"<p>Content under development</p>", es:"<p>Contenido en desarrollo</p>", fr:"<p>Contenu en cours</p>", it:"<p>Contenuto in sviluppo</p>", de:"<p>Inhalt in Entwicklung</p>" };
     const transport = { pt:"<p>Conteúdo em desenvolvimento</p>", en:"<p>Content under development</p>", es:"<p>Contenido en desarrollo</p>", fr:"<p>Contenu en cours</p>", it:"<p>Contenuto in sviluppo</p>", de:"<p>Inhalt in Entwicklung</p>" };
