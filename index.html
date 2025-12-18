@@ -111,15 +111,6 @@
     .category-card p { margin: 4px 0; }
     .category-card a { color: #0077cc; text-decoration: none; font-weight: bold; }
     .category-card a:hover { text-decoration: underline; }
-
-    .card-img {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin: 8px 0;
-}
-
   </style>
 </head>
 <body>
@@ -548,9 +539,9 @@ const restaurants = {
     // --- historcalsites (cartões, todos idiomas) ---
 const historicalSites = {
   pt: `
-<div class="category-card"><h3>Explorar a Ponta da Piedade</h3><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjLaLgw7nP8ls17smnrcNKiBgqIPO9cGiQiA&s" alt="Ponta da Piedade" class="card-img"><p>Cartão-postal de Lagos, famoso pelas formações rochosas, grutas e arcos naturais. Passadiços no topo das falésias oferecem vistas panorâmicas; escadaria leva ao nível do mar.</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-<div class="category-card"><h3>Passeio de Barco às Grutas</h3><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1qFHt6VhFp2qcxNRtJ0zK_C2oW8E8XqAwnw&s" alt="Ponta da Piedade" class="card-img"<p>Partindo da Marina de Lagos, permite entrar em grutas inacessíveis por terra. Opções em barcos tradicionais, catamarãs ou caiaques.</p><p><a href="https://maps.google.com/?q=Marina+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
-<div class="category-card"><h3>Relaxar na Praia de Dona Ana ou Praia do Camilo</h3><img src="https://cdn.visitportugal.com/sites/default/files/styles/encontre_detalhe_poi_destaque/public/mediateca/shutterstock_279519770_PraiaCamiloLagos_AG_PX_Pawel%20Kazmierczak_660x371.jpg?itok=d13l5V-j" alt="Ponta da Piedade" class="card-img"<p>Praias consideradas das mais belas do mundo, cercadas por falésias douradas e águas cristalinas. Acesso ao Camilo por longa escadaria de madeira.</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Dona Ana</a> | <a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Camilo</a></p></div>
+<div class="category-card"><h3>Explorar a Ponta da Piedade</h3><p>Cartão-postal de Lagos, famoso pelas formações rochosas, grutas e arcos naturais. Passadiços no topo das falésias oferecem vistas panorâmicas; escadaria leva ao nível do mar.</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Passeio de Barco às Grutas</h3><p>Partindo da Marina de Lagos, permite entrar em grutas inacessíveis por terra. Opções em barcos tradicionais, catamarãs ou caiaques.</p><p><a href="https://maps.google.com/?q=Marina+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Relaxar na Praia de Dona Ana ou Praia do Camilo</h3><p>Praias consideradas das mais belas do mundo, cercadas por falésias douradas e águas cristalinas. Acesso ao Camilo por longa escadaria de madeira.</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Dona Ana</a> | <a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Camilo</a></p></div>
 <div class="category-card"><h3>Caminhada pelo Centro Histórico</h3><p>Ruas de calçada portuguesa com muralhas, Igreja de Santo António e Mercado de Escravos. Ideal para jantar e vida noturna.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Gil+Eanes+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 <div class="category-card"><h3>Parque Zoológico de Lagos</h3><p>Jardim zoológico focado em conservação e educação, com aves, primatas e répteis.</p><p><a href="https://maps.google.com/?q=Zoo+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 <div class="category-card"><h3>Parque Aventura Lagos</h3><p>Arborismo e paintball em plena natureza para quem procura adrenalina.</p><p><a href="https://maps.google.com/?q=Parque+Aventura+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
@@ -701,9 +692,9 @@ de: `
 
 
 
-
     // --- Placeholders para restantes categorias ---
    
+    const museums = { pt:"<p>Conteúdo em desenvolvimento</p>", en:"<p>Content under development</p>", es:"<p>Contenido en desarrollo</p>", fr:"<p>Contenu en cours</p>", it:"<p>Contenuto in sviluppo</p>", de:"<p>Inhalt in Entwicklung</p>" };
     const nightlife = { pt:"<p>Conteúdo em desenvolvimento</p>", en:"<p>Content under development</p>", es:"<p>Contenido en desarrollo</p>", fr:"<p>Contenu en cours</p>", it:"<p>Contenuto in sviluppo</p>", de:"<p>Inhalt in Entwicklung</p>" };
     const supermarkets = { pt:"<p>Conteúdo em desenvolvimento</p>", en:"<p>Content under development</p>", es:"<p>Contenido en desarrollo</p>", fr:"<p>Contenu en cours</p>", it:"<p>Contenuto in sviluppo</p>", de:"<p>Inhalt in Entwicklung</p>" };
     const transport = { pt:"<p>Conteúdo em desenvolvimento</p>", en:"<p>Content under development</p>", es:"<p>Contenido en desarrollo</p>", fr:"<p>Contenu en cours</p>", it:"<p>Contenuto in sviluppo</p>", de:"<p>Inhalt in Entwicklung</p>" };
