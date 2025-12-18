@@ -100,17 +100,46 @@
       font-size: 15px;
       line-height: 1.6;
     }
-    .category-card {
-      background: #f1f7ff;
-      border-left: 4px solid #0077cc;
-      padding: 12px;
-      margin-bottom: 12px;
-      border-radius: 6px;
-    }
-    .category-card h3 { margin: 0 0 6px; font-size: 16px; color: #0077cc; }
-    .category-card p { margin: 4px 0; }
-    .category-card a { color: #0077cc; text-decoration: none; font-weight: bold; }
-    .category-card a:hover { text-decoration: underline; }
+   .category-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  padding: 15px;
+  margin: 15px 0;
+  max-width: 400px; /* controla largura máxima do card */
+}
+
+.category-card h3 {
+  margin-top: 0;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.category-card img.card-image {
+  width: 100%;          /* ocupa toda a largura do card */
+  height: auto;         /* mantém proporção original */
+  border-radius: 6px;   /* cantos arredondados */
+  margin: 10px 0;       /* espaço entre título e texto */
+  object-fit: cover;    /* corta imagem se for muito alta */
+  max-height: 220px;    /* limita altura máxima */
+}
+
+.category-card p {
+  font-size: 0.95em;
+  color: #555;
+  line-height: 1.4em;
+}
+
+.category-card a {
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.category-card a:hover {
+  text-decoration: underline;
+}
+
   </style>
 </head>
 <body>
