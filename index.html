@@ -5,77 +5,150 @@
   <title>Guia Belleview Apartments</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body { font-family: Arial, sans-serif; background: #f9f9f9; margin:0; padding:20px; text-align:center; }
-   .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(135deg, #0077cc, #005fa3);
-  color: white;
-  padding: 20px 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
 
-.header-left h1 {
-  margin: 0;
-  font-size: 28px;
-  font-weight: bold;
-}
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, #0077cc, #005fa3);
+      color: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
 
-.header-left .subtitle {
-  font-size: 14px;
-  opacity: 0.9;
-}
+    .header-left h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: bold;
+    }
 
-.header-right {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+    .header-left .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+    }
 
-.contact-card, .license-card {
-  background: rgba(255,255,255,0.1);
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-size: 14px;
-}
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-.contact-card a, .license-card a {
-  color: #ffeb3b;
-  text-decoration: none;
-  font-weight: bold;
-}
+    .contact-card, .license-card {
+      background: rgba(255,255,255,0.1);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
 
-.contact-card a:hover {
-  text-decoration: underline;
-}
+    .contact-card a, .license-card a {
+      color: #ffeb3b;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-@media (max-width: 700px) {
-  .header {
-    flex-direction: column;
-    text-align: center;
-  }
-  .header-right {
-    align-items: center;
-  }
-}
+    .contact-card a:hover {
+      text-decoration: underline;
+    }
 
+    .logo {
+      max-height: 70px;
+      margin-right: 20px;
+      border-radius: 8px;
+    }
 
-    .menu { margin: 20px auto; }
-    .menu button { display: inline-flex; align-items: center; gap: 8px; margin: 6px; padding: 10px 16px; background: #0077cc; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; }
-    .menu button:hover { background: #005fa3; }
-    .menu img { width: 24px; height: 16px; }
+    @media (max-width: 700px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .header-right {
+        align-items: center;
+      }
+      .logo {
+        margin: 10px 0;
+      }
+    }
 
-    .categories { margin: 20px auto; max-width: 600px; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 8px 0; padding: 12px; background: #cce4f7; border-radius: 6px; font-size: 15px; text-align: left; cursor:pointer; }
+    .menu {
+      margin: 20px auto;
+    }
 
-    .bottom-buttons { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-    .bottom-buttons button { padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; color: white; }
-    .print-btn { background: #28a745; } .print-btn:hover { background: #1e7e34; }
-    .share-btn { background: #ff9800; } .share-btn:hover { background: #e68900; }
-    .back-btn { background: #0077cc; } .back-btn:hover { background: #005fa3; }
+    .menu button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 6px;
+      padding: 10px 16px;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .menu button:hover {
+      background: #005fa3;
+    }
+
+    .menu img {
+      width: 24px;
+      height: 16px;
+    }
+
+    .categories {
+      margin: 20px auto;
+      max-width: 600px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 8px 0;
+      padding: 12px;
+      background: #cce4f7;
+      border-radius: 6px;
+      font-size: 15px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .bottom-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bottom-buttons button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      color: white;
+    }
+
+    .print-btn { background: #28a745; }
+    .print-btn:hover { background: #1e7e34; }
+
+    .share-btn { background: #ff9800; }
+    .share-btn:hover { background: #e68900; }
+
+    .back-btn { background: #0077cc; }
+    .back-btn:hover { background: #005fa3; }
 
     @media (max-width: 600px) {
       .header h1 { font-size: 20px; }
@@ -100,6 +173,7 @@
       font-size: 15px;
       line-height: 1.6;
     }
+
     .category-card {
       background: #f1f7ff;
       border-left: 4px solid #0077cc;
@@ -107,70 +181,110 @@
       margin-bottom: 12px;
       border-radius: 6px;
     }
-    .category-card h3 { margin: 0 0 6px; font-size: 16px; color: #0077cc; }
-    .category-card p { margin: 4px 0; }
-    .category-card a { color: #0077cc; text-decoration: none; font-weight: bold; }
-    .category-card a:hover { text-decoration: underline; }
+
+    .category-card h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      color: #0077cc;
+    }
+
+    .category-card p {
+      margin: 4px 0;
+    }
+
+    .category-card a {
+      color: #0077cc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .category-card a:hover {
+      text-decoration: underline;
+    }
+
+    .category-card img,
+    .category-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin: 10px 0;
+      object-fit: cover;
+      max-height: 260px;
+      display: block;
+    }
   </style>
 </head>
-<body>
-  <div class="header">
-  <div class="header-left">
-    <h1>🏡 Belleview Apartments</h1>
-    <p class="subtitle">Lagos, Algarve – Portugal</p>
-  </div>
-  <div class="header-right">
-    <div class="contact-card">
-      <p>📍 <a href="https://www.google.com/maps/search/?api=1&query=Rua+Quinta+do+Landeiro,+Lagos" target="_blank">Rua Quinta do Landeiro, Lagos</a></p>
-      <p>📞 <a href="tel:+351910051588">+351 910 051 588</a></p>
-      <p>📱 <a href="https://wa.me/351910051588" target="_blank">WhatsApp</a></p>
-      <p>✉️ <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a></p>
-    </div>
-    <div class="license-card">
-      <p>🏷️ Licenças: 26313/AL, 116670/AL, 116671/AL</p>
-    </div>
-  </div>
-</div>
 
+<body>
+
+  <div class="header">
+    <img src="https://b43888cb0a.cbaul-cdnwnd.com/daf5b39fb5bc21b87998520b36f1c4b4/200000305-0bbbe0bbc1/450/logo.webp?ph=b43888cb0a" 
+         alt="Belleview Apartments" class="logo">
+
+    <div class="header-left">
+      <h1>🏡 Belleview Apartments</h1>
+      <p class="subtitle">Lagos, Algarve – Portugal</p>
+    </div>
+
+    <div class="header-right">
+      <div class="contact-card">
+        <p>📍 <a href="https://www.google.com/maps/search/?api=1&query=Rua+Quinta+do+Landeiro,+Lagos" target="_blank">Rua Quinta do Landeiro, Lagos</a></p>
+        <p>📞 <a href="tel:+351910051588">+351 910 051 588</a></p>
+        <p>📱 <a href="https://wa.me/351910051588" target="_blank">WhatsApp</a></p>
+        <p>✉️ <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a></p>
+      </div>
+
+      <div class="license-card">
+        <p>🏷️ Licenças: 26313/AL, 116670/AL, 116671/AL</p>
+      </div>
+    </div>
+  </div>
 
   <h1 id="title">Guia Belleview Apartments</h1>
   <p id="choose">Escolha o idioma / Choose your language:</p>
 
   <div class="menu" id="languageMenu">
-    <button onclick="setLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png" alt=""> Português</button>
-    <button onclick="setLanguage('en')"><img src="https://flagcdn.com/w20/gb.png" alt=""> English</button>
-    <button onclick="setLanguage('es')"><img src="https://flagcdn.com/w20/es.png" alt=""> Español</button>
-    <button onclick="setLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png" alt=""> Français</button>
-    <button onclick="setLanguage('it')"><img src="https://flagcdn.com/w20/it.png" alt=""> Italiano</button>
-    <button onclick="setLanguage('de')"><img src="https://flagcdn.com/w20/de.png" alt=""> Deutsch</button>
+    <button onclick="setLanguage('pt')"><img src="https://flagcdn.com/w20/pt.png"> Português</button>
+    <button onclick="setLanguage('en')"><img src="https://flagcdn.com/w20/gb.png"> English</button>
+    <button onclick="setLanguage('es')"><img src="https://flagcdn.com/w20/es.png"> Español</button>
+    <button onclick="setLanguage('fr')"><img src="https://flagcdn.com/w20/fr.png"> Français</button>
+    <button onclick="setLanguage('it')"><img src="https://flagcdn.com/w20/it.png"> Italiano</button>
+    <button onclick="setLanguage('de')"><img src="https://flagcdn.com/w20/de.png"> Deutsch</button>
   </div>
 
   <div class="categories" id="categories" style="display:none;">
     <h2 id="categoriesTitle"></h2>
+
     <div class="bottom-buttons">
-      <button class="back-btn" id="catBackTop" onclick="goBack()">⬅️ Voltar</button>
-      <button class="print-btn" id="catPrintTop" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
-      <button class="share-btn" id="catShareTop" onclick="shareGuide()">🔗 Partilhar</button>
+      <button class="back-btn" onclick="goBack()">⬅️ Voltar</button>
+      <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+      <button class="share-btn" onclick="shareGuide()">🔗 Partilhar</button>
     </div>
+
     <ul id="categoriesList"></ul>
+
     <div class="bottom-buttons">
-      <button class="back-btn" id="catBackBottom" onclick="goBack()">⬅️ Voltar</button>
+      <button class="back-btn" onclick="goBack()">⬅️ Voltar</button>
     </div>
   </div>
 
   <div id="categoryContent" style="display:none; text-align:left; max-width:600px; margin:20px auto;">
     <h2 id="categoryTitle"></h2>
+
     <div class="bottom-buttons">
-      <button class="back-btn" id="catBackTopContent" onclick="showCategories()">⬅️ Voltar</button>
-      <button class="print-btn" id="catPrintContent" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
-      <button class="share-btn" id="catShareContent" onclick="shareGuide()">🔗 Partilhar</button>
+      <button class="back-btn" onclick="showCategories()">⬅️ Voltar</button>
+      <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+      <button class="share-btn" onclick="shareGuide()">🔗 Partilhar</button>
     </div>
+
     <div id="categoryText" class="category-content"></div>
+
     <div class="bottom-buttons">
-      <button class="back-btn" id="catBackBottomContent" onclick="showCategories()">⬅️ Voltar</button>
+      <button class="back-btn" onclick="showCategories()">⬅️ Voltar</button>
     </div>
   </div>
 
+<!-- A partir daqui começa o teu script -->
 
   <script>
     // --- Conteúdos multilíngua já prontos ---
