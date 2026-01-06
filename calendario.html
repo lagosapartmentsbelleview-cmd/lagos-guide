@@ -15,6 +15,12 @@
             text-align: center;
         }
 
+        #legenda {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
         #calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -44,17 +50,9 @@
             font-size: 12px;
         }
 
-        .apt1 { background: #003366; }   /* Azul escuro */
-        .apt2 { background: #4da3ff; }   /* Azul claro */
-        .apt3 { background: #66b3ff; }   /* Azul intermédio */
-
-
-        <div id="legenda" style="margin-top:10px; font-weight:bold;">
-        <span style="color:#003366;">■ Apt 1 = 2301</span> &nbsp;&nbsp;
-        <span style="color:#4da3ff;">■ Apt 2 = 2203</span> &nbsp;&nbsp;
-        <span style="color:#66b3ff;">■ Apt 3 = 2204</span>
-        </div>
-
+        .apt1 { background: #003366; }
+        .apt2 { background: #4da3ff; }
+        .apt3 { background: #66b3ff; }
 
         /* Modal */
         .modal {
@@ -105,6 +103,12 @@
 
 <h1>Calendário de Reservas – Marina Park</h1>
 
+<div id="legenda">
+    <span style="color:#003366;">■ Apt 1 = 2301</span> &nbsp;&nbsp;
+    <span style="color:#4da3ff;">■ Apt 2 = 2203</span> &nbsp;&nbsp;
+    <span style="color:#66b3ff;">■ Apt 3 = 2204</span>
+</div>
+
 <button id="btnNovaReserva">Adicionar Reserva</button>
 
 <div id="calendar"></div>
@@ -113,7 +117,7 @@
 <div id="modalReserva" class="modal">
     <div class="modal-content">
         <span class="close" id="closeReserva">&times;</span>
-        <h3>Nova Reserva</h3>
+        <h3 id="tituloModal">Nova Reserva</h3>
 
         <label>Nome do Hóspede</label>
         <input id="cliente">
@@ -133,17 +137,25 @@
             <option value="true">Sim</option>
         </select>
 
-        <label>Preço por Noite (€)</label>
-        <input type="number" id="preco_noite">
-
         <label>Total Bruto (€)</label>
         <input type="number" id="total_bruto">
 
         <label>Comissão OTA (€)</label>
         <input type="number" id="comissao_ota">
 
+        <label>Preço por Noite (€)</label>
+        <input type="number" id="preco_noite" readonly>
+
         <label>Valor Líquido (€)</label>
-        <input type="number" id="liquido">
+        <input type="number" id="liquido" readonly>
+
+        <label>Apartamento</label>
+        <select id="apartamento_manual">
+            <option value="auto">Automático</option>
+            <option value="1">2301 (Apt 1)</option>
+            <option value="2">2203 (Apt 2)</option>
+            <option value="3">2204 (Apt 3)</option>
+        </select>
 
         <button id="guardarReserva">Guardar Reserva</button>
     </div>
