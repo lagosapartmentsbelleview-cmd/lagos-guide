@@ -212,14 +212,19 @@ async function guardarReserva() {
 // -------------------------------
 function escolherApartamento(checkin, checkout) {
     for (let apt = 1; apt <= 3; apt++) {
+
         const conflito = reservas.some(r =>
             r.apartamento === apt &&
-            !(checkout <= r.checkin || checkin >= r.checkout)
+            !(
+                checkout <= r.checkin ||   // checkout antes do checkin da outra
+                checkin >= r.checkout      // checkin depois do checkout da outra
+            )
         );
 
         if (!conflito) return apt;
     }
     return null;
+
 }
 
 // -------------------------------
