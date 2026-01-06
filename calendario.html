@@ -37,6 +37,44 @@
             position: relative;
             cursor: pointer;
         }
+    .day {
+    background: white;
+    padding: 10px;
+    min-height: 80px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* Linha vertical ao meio */
+.day::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: #ccc;
+}
+
+/* Reserva ocupa o dia inteiro */
+.reserva-full {
+    width: 100%;
+}
+
+/* Check-in → metade direita */
+.reserva-start {
+    width: 50%;
+    float: right;
+}
+
+/* Check-out → metade esquerda */
+.reserva-end {
+    width: 50%;
+    float: left;
+}
 
         .day-number {
             font-weight: bold;
