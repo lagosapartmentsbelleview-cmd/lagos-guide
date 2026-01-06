@@ -48,6 +48,56 @@
         .apt3 { background: #ff9800; }
 
         /* Modal */
+        <!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendário de Reservas – Marina Park</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .day {
+            background: white;
+            padding: 10px;
+            min-height: 80px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .day-number {
+            font-weight: bold;
+        }
+
+        .reserva {
+            margin-top: 5px;
+            padding: 3px 5px;
+            border-radius: 4px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .apt1 { background: #007bff; }
+        .apt2 { background: #28a745; }
+        .apt3 { background: #ff9800; }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -70,6 +120,92 @@
             overflow-y: auto;
             border-radius: 8px;
             box-sizing: border-box;
+     
+        }
+
+        .close {
+            float: right;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Calendário de Reservas – Marina Park</h1>
+
+<button id="btnNovaReserva">Adicionar Reserva</button>
+
+<div id="calendar"></div>
+
+<!-- Modal Nova Reserva -->
+<div id="modalReserva" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeReserva">&times;</span>
+        <h3>Nova Reserva</h3>
+
+        <label>Nome do Hóspede</label>
+        <input id="cliente">
+
+        <label>Check-in</label>
+        <input type="date" id="checkin">
+
+        <label>Check-out</label>
+        <input type="date" id="checkout">
+
+        <label>Nº de Hóspedes</label>
+        <input type="number" id="hospedes">
+
+        <label>Berço?</label>
+        <select id="berco">
+            <option value="false">Não</option>
+            <option value="true">Sim</option>
+        </select>
+
+        <label>Preço por Noite (€)</label>
+        <input type="number" id="preco_noite">
+
+        <label>Total Bruto (€)</label>
+        <input type="number" id="total_bruto">
+
+        <label>Comissão OTA (€)</label>
+        <input type="number" id="comissao_ota">
+
+        <label>Valor Líquido (€)</label>
+        <input type="number" id="liquido">
+
+        <button id="guardarReserva">Guardar Reserva</button>
+    </div>
+</div>
+
+<!-- Modal Detalhes -->
+<div id="modalDetalhes" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeDetalhes">&times;</span>
+        <h3>Detalhes da Reserva</h3>
+        <div id="detalhesConteudo"></div>
+    </div>
+</div>
+
+<script type="module" src="js/firebase-config.js"></script>
+<script type="module" src="js/reservas.js"></script>
+
+</body>
+</html>
+
+
      
         }
 
