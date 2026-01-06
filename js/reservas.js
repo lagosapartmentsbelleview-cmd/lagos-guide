@@ -376,16 +376,29 @@ function desenharCalendario() {
 
         // Inserir reservas deste dia
         reservas.forEach(r => {
-            if (dataStr >= r.checkin && dataStr < r.checkout) {
-                const resDiv = document.createElement("div");
-                resDiv.className = `reserva apt${r.apartamento}`;
-                resDiv.textContent = `${r.cliente} – ${mapearApartamento(r.apartamento)}`;
-                resDiv.onclick = (e) => {
-                    e.stopPropagation();
-                    abrirDetalhes(r);
-                };
-                div.appendChild(resDiv);
-            }
+            let tipo = null;
+
+if (dataStr === r.checkin) {
+    tipo = "start"; // check-in → metade direita
+} else if (dataStr === r.checkout) {
+    tipo = "end";   // check-out → metade esquerda
+} else if (dataStr > r.checkin && dataStr < r.checkout) {
+    tipo = "full";  // dias completos
+}
+
+if (tipo) {
+    const resDiv = document.createElement("div");
+    resDiv.className = `reserva reserva-${tipo} apt${r.apartamento}`;
+    resDiv.textContent = `${r.cliente} – ${mapearApartamento(r.apartamento)}`;
+
+    resDiv.onclick = (e) => {
+        e.stopPropagation();
+        abrirDetalhes(r);
+    };
+
+    div.appendChild(resDiv);
+}
+
         });
 
         // Clicar no dia → criar nova reserva
