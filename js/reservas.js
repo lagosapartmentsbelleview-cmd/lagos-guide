@@ -15,6 +15,130 @@ async function carregarReservas() {
 
     desenharCalendario();
 }
+// =======================================
+// IMPORTAR EXCEL BOOKING (.xlsx)
+// =======================================
+
+// Abrir seletor de ficheiro ao clicar no botão
+document.getElementById("btnImportarExcel").onclick = () => {
+    document.getElementById("inputExcel").click();
+};
+
+// Quando o ficheiro é escolhido
+document.getElementById("inputExcel").addEventListener("change", async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = async (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+
+        const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+
+        for (const row of rows) {
+            try {
+                await importarReservaBooking(row);
+            } catch (err) {
+                console.error("Erro ao importar linha:", row, err);
+            }
+        }
+
+        alert("Importação concluída!");
+        carregarReservas();
+    };
+
+    reader.readAsArrayBuffer(file);
+});
+
+
+// =======================================
+// Converter linha do Excel → Reserva Firestore
+// =======================================
+
+async function importarReservaBooking(row) {
+
+    // Extrair campos do Excel
+    const cliente = row["Nome do hóspede"] || "Hóspede Booking";
+    const checkin = formatarData(row["Check-in"]);
+    const checkout = formatarData(row["Check-out"]);
+
+    const hospedes = Number(row["Pessoas"] || 0);
+    const adultos = Number(row["Adultos"] || 0);
+    const criancas = Number(row["Crianças"] || 0);
+
+    // Limpar idades (ex: "3 anos; 7 anos" → "3, 7")
+    const idadesCriancas = (row["Idade da(s) criança(s)"] || "")
+        .toString()
+        .replace(/[^\d,]/g, "")
+        .replace(/,+/g, ",")
+        .replace(/^,|,$/g, "");
+
+    const totalBruto = Number(row["Preço"] || 0);
+    const comissao = Number(row["Valor da comissão"] || 0);
+
+    const quartos = Number(row["Quartos"] || 1); // 1, 2 ou 3 apartamentos
+
+    // Criar 1, 2 ou 3 reservas conforme nº de apartamentos
+    for (let i = 0; i < quartos; i++) {
+
+        const apartamento = escolherApartamento(checkin, checkout);
+        if (!apartamento) {
+            console.warn("Sem apartamento disponível para:", cliente);
+            continue;
+        }
+
+        const noites = calcularNoites(checkin, checkout);
+        const precoNoite = noites > 0 ? totalBruto / quartos / noites : 0;
+        const liquido = (totalBruto / quartos) - (comissao / quartos);
+        const limpeza = calcularLimpeza(checkin);
+        const totalLiquidoFinal = liquido - limpeza;
+
+        const dados = {
+            cliente,
+            hospedes,
+            adultos,
+            criancas,
+            idadesCriancas,
+            checkin,
+            checkout,
+            origem: "Booking",
+            totalBruto: totalBruto / quartos,
+            comissao: comissao / quartos,
+            precoNoite,
+            liquido,
+            noites,
+            limpeza,
+            totalLiquidoFinal,
+            apartamento
+        };
+
+        await db.collection("reservas").add(dados);
+    }
+}
+
+
+// =======================================
+// Funções auxiliares
+// =======================================
+
+function formatarData(d) {
+    if (!d) return "";
+    const date = new Date(d);
+    if (isNaN(date)) return "";
+    return date.toISOString().split("T")[0];
+}
+
+function calcularNoites(ci, co) {
+    const d1 = new Date(ci);
+    const d2 = new Date(co);
+    const diff = (d2 - d1) / (1000 * 60 * 60 * 24);
+    return diff > 0 ? diff : 0;
+}
 
 // =======================================
 // 2) GUARDAR / EDITAR / APAGAR RESERVAS
