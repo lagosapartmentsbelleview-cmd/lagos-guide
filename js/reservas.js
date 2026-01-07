@@ -307,4 +307,45 @@ document.getElementById("checkin").addEventListener("change", calcularValores);
 document.getElementById("checkout").addEventListener("change", calcularValores);
 document.getElementById("total_bruto").addEventListener("input", calcularValores);
 document.getElementById("comissao_ota").addEventListener("input", calcularValores);
+// ===============================
+// ABRIR DETALHES DA RESERVA
+// ===============================
+
+function abrirDetalhes(r) {
+    reservaAtual = r;
+
+    const html = `
+        <p><strong>Hóspede:</strong> ${r.cliente}</p>
+        <p><strong>Check-in:</strong> ${r.checkin}</p>
+        <p><strong>Check-out:</strong> ${r.checkout}</p>
+        <p><strong>Apartamento:</strong> ${r.apartamento}</p>
+        <p><strong>Total Bruto:</strong> €${r.totalBruto}</p>
+        <p><strong>Comissão:</strong> €${r.comissao}</p>
+        <p><strong>Líquido:</strong> €${r.liquido}</p>
+        <button onclick="editarReserva()">Editar</button>
+        <button onclick="apagarReserva()">Apagar</button>
+    `;
+
+    document.getElementById("detalhesConteudo").innerHTML = html;
+    document.getElementById("modalDetalhes").style.display = "flex";
+}
+
+// ===============================
+// EDITAR RESERVA
+// ===============================
+
+function editarReserva() {
+    const r = reservaAtual;
+
+    document.getElementById("cliente").value = r.cliente;
+    document.getElementById("checkin").value = r.checkin;
+    document.getElementById("checkout").value = r.checkout;
+    document.getElementById("total_bruto").value = r.totalBruto;
+    document.getElementById("comissao_ota").value = r.comissao;
+    document.getElementById("preco_noite").value = r.precoNoite;
+    document.getElementById("liquido").value = r.liquido;
+
+    document.getElementById("modalDetalhes").style.display = "none";
+    document.getElementById("modalReserva").style.display = "flex";
+}
 
