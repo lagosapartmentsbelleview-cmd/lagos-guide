@@ -174,10 +174,10 @@ function desenharCalendario() {
         div.appendChild(linha2);
         div.appendChild(linha3);
 
-        // CORRIGIDO: checkout NÃO ocupa o dia
+        // VISUAL: checkout aparece no mapa (mas não conta como noite)
         const reservasDia = reservas.filter(r =>
             new Date(dataStr) >= new Date(r.checkin) &&
-            new Date(dataStr) < new Date(r.checkout)
+            new Date(dataStr) <= new Date(r.checkout)
         );
 
         const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
@@ -188,10 +188,10 @@ function desenharCalendario() {
 
             if (reservasApt.length === 0) return;
 
-            const temCheckin = reservasApt.some(r => r.checkin === dataStr);
-            const temCheckout = reservasApt.some(r => r.checkout === dataStr);
+            const temCheckinHoje = reservasApt.some(r => r.checkin === dataStr);
+            const temCheckoutHoje = reservasApt.some(r => r.checkout === dataStr);
 
-            const dividir = temCheckin && temCheckout;
+            const dividir = temCheckinHoje && temCheckoutHoje;
 
             if (dividir) linha.classList.add("dividido");
 
@@ -199,8 +199,13 @@ function desenharCalendario() {
                 let tipo = "full";
 
                 if (dividir) {
-                    if (r.checkin === dataStr) tipo = "start";
-                    if (r.checkout === dataStr) tipo = "end";
+                    if (r.checkin === dataStr && r.checkout !== dataStr) {
+                        tipo = "start"; // entra hoje → lado direito
+                    } else if (r.checkout === dataStr && r.checkin !== dataStr) {
+                        tipo = "end";   // sai hoje → lado esquerdo
+                    } else {
+                        tipo = "full";  // reservas que atravessam o dia
+                    }
                 }
 
                 const resDiv = document.createElement("div");
@@ -217,23 +222,22 @@ function desenharCalendario() {
             });
         });
 
+        // PREVENIR conflito entre clique no dia e clique na reserva
         div.addEventListener("click", (e) => {
-    // Se clicou numa reserva, NÃO abre nova reserva
-    if (e.target.classList.contains("reserva")) return;
+            if (e.target.classList.contains("reserva")) return;
 
-    reservaAtual = null;
-    document.getElementById("tituloModal").textContent = "Nova Reserva";
-    document.getElementById("cliente").value = "";
-    document.getElementById("checkin").value = dataStr;
-    document.getElementById("checkout").value = "";
-    document.getElementById("total_bruto").value = "";
-    document.getElementById("comissao_ota").value = "";
-    document.getElementById("preco_noite").value = "";
-    document.getElementById("liquido").value = "";
-    document.getElementById("apartamento_manual").value = "auto";
-    document.getElementById("modalReserva").style.display = "flex";
-});
-
+            reservaAtual = null;
+            document.getElementById("tituloModal").textContent = "Nova Reserva";
+            document.getElementById("cliente").value = "";
+            document.getElementById("checkin").value = dataStr;
+            document.getElementById("checkout").value = "";
+            document.getElementById("total_bruto").value = "";
+            document.getElementById("comissao_ota").value = "";
+            document.getElementById("preco_noite").value = "";
+            document.getElementById("liquido").value = "";
+            document.getElementById("apartamento_manual").value = "auto";
+            document.getElementById("modalReserva").style.display = "flex";
+        });
 
         calendar.appendChild(div);
     }
