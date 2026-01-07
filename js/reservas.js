@@ -170,7 +170,7 @@ function desenharCalendario() {
         div.appendChild(linha2);
         div.appendChild(linha3);
 
-        // CORREÇÃO CRÍTICA: checkout NÃO ocupa o dia
+        // checkout NÃO ocupa o dia
         const reservasDia = reservas.filter(r =>
             dataStr >= r.checkin && dataStr < r.checkout
         );
@@ -186,9 +186,8 @@ function desenharCalendario() {
             reservasApt.forEach(r => {
                 let tipo = "full";
 
-                // CORREÇÃO DA DIVISÃO
                 if (r.checkin === dataStr && r.checkout === dataStr) {
-                    tipo = "full"; // reserva de 1 dia
+                    tipo = "full";
                 } else if (r.checkin === dataStr) {
                     tipo = "start";
                 } else if (r.checkout === dataStr) {
@@ -200,7 +199,6 @@ function desenharCalendario() {
 
                 const nomeApt = aptMap[r.apartamento];
 
-                // TOOLTIP COMPLETO
                 resDiv.setAttribute(
                     "data-tooltip",
                     `${r.cliente}\nApt ${nomeApt}\n${r.checkin} → ${r.checkout}\nLíquido: €${r.liquido}`
@@ -213,7 +211,7 @@ function desenharCalendario() {
 
                 linha.appendChild(resDiv);
             });
-        }); // ← ESTE FECHO FALTAVA NO TEU CÓDIGO
+        }); // ← ESTE FECHO É O QUE FALTAVA
 
         div.onclick = () => {
             reservaAtual = null;
