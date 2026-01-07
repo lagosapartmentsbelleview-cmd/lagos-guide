@@ -273,4 +273,38 @@ document.getElementById("checkin").addEventListener("change", calcularValores);
 document.getElementById("checkout").addEventListener("change", calcularValores);
 document.getElementById("total_bruto").addEventListener("input", calcularValores);
 document.getElementById("comissao_ota").addEventListener("input", calcularValores);
+// ===============================
+// CÁLCULOS AUTOMÁTICOS DO FORMULÁRIO
+// ===============================
+
+function calcularValores() {
+    const checkin = document.getElementById("checkin").value;
+    const checkout = document.getElementById("checkout").value;
+    const totalBruto = Number(document.getElementById("total_bruto").value);
+    const comissao = Number(document.getElementById("comissao_ota").value);
+
+    let noites = 0;
+    if (checkin && checkout) {
+        const ci = new Date(checkin);
+        const co = new Date(checkout);
+        noites = (co - ci) / (1000 * 60 * 60 * 24);
+        if (noites < 0) noites = 0;
+    }
+
+    let precoNoite = 0;
+    if (noites > 0 && totalBruto > 0) {
+        precoNoite = totalBruto / noites;
+    }
+
+    const liquido = totalBruto - comissao;
+
+    document.getElementById("preco_noite").value = precoNoite.toFixed(2);
+    document.getElementById("liquido").value = liquido.toFixed(2);
+}
+
+// Ativar cálculos automáticos
+document.getElementById("checkin").addEventListener("change", calcularValores);
+document.getElementById("checkout").addEventListener("change", calcularValores);
+document.getElementById("total_bruto").addEventListener("input", calcularValores);
+document.getElementById("comissao_ota").addEventListener("input", calcularValores);
 
