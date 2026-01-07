@@ -196,21 +196,26 @@ function desenharCalendario() {
                 }
 
                 const resDiv = document.createElement("div");
-                resDiv.className = `reserva reserva-${tipo} apt${apt}`;
+resDiv.className = `reserva reserva-${tipo} apt${apt}`;
 
-                const nomeApt = aptMap[r.apartamento];
+const nomeApt = aptMap[r.apartamento];
 
-                resDiv.setAttribute(
-                    "data-tooltip",
-                    `${r.cliente}\nApt ${nomeApt}\n${r.checkin} → ${r.checkout}\nLíquido: €${r.liquido}`
-                );
+// MOSTRAR O NOME NO BLOCO
+resDiv.textContent = r.cliente;
 
-                resDiv.onclick = (e) => {
-                    e.stopPropagation();
-                    abrirDetalhes(r);
-                };
+// TOOLTIP COMPLETO
+resDiv.setAttribute(
+    "data-tooltip",
+    `${r.cliente}\nApt ${nomeApt}\n${r.checkin} → ${r.checkout}\nLíquido: €${r.liquido}`
+);
 
-                linha.appendChild(resDiv);
+resDiv.onclick = (e) => {
+    e.stopPropagation();
+    abrirDetalhes(r);
+};
+
+linha.appendChild(resDiv);
+
             });
         });
 
