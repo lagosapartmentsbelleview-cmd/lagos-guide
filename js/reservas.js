@@ -240,7 +240,7 @@ function abrirDetalhes(r) {
         <p><strong>Hóspede:</strong> ${r.cliente}</p>
         <p><strong>Check-in:</strong> ${r.checkin}</p>
         <p><strong>Check-out:</strong> ${r.checkout}</p>
-        <p><strong>Apartamento:</strong> ${r.apartamento}</p>
+        const aptMap = { 1: "2301", 2: "2203", 3: "2204" };<p><strong>Apartamento:</strong> ${aptMap[r.apartamento]}</p>
         <p><strong>Total Bruto:</strong> €${r.totalBruto}</p>
         <p><strong>Comissão:</strong> €${r.comissao}</p>
         <p><strong>Preço/noite:</strong> €${r.precoNoite}</p>
