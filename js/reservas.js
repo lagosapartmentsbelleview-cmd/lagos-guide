@@ -200,8 +200,9 @@ resDiv.className = `reserva reserva-${tipo} apt${apt}`;
 
 const nomeApt = aptMap[r.apartamento];
 
-// MOSTRAR O NOME NO BLOCO
-resDiv.textContent = r.cliente;
+// MOSTRAR NOME + APARTAMENTO
+resDiv.textContent = `${r.cliente} – ${nomeApt}`;
+
 
 // TOOLTIP COMPLETO
 resDiv.setAttribute(
