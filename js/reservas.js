@@ -217,19 +217,23 @@ function desenharCalendario() {
             });
         });
 
-        div.onclick = () => {
-            reservaAtual = null;
-            document.getElementById("tituloModal").textContent = "Nova Reserva";
-            document.getElementById("cliente").value = "";
-            document.getElementById("checkin").value = dataStr;
-            document.getElementById("checkout").value = "";
-            document.getElementById("total_bruto").value = "";
-            document.getElementById("comissao_ota").value = "";
-            document.getElementById("preco_noite").value = "";
-            document.getElementById("liquido").value = "";
-            document.getElementById("apartamento_manual").value = "auto";
-            document.getElementById("modalReserva").style.display = "flex";
-        };
+        div.addEventListener("click", (e) => {
+    // Se clicou numa reserva, NÃO abre nova reserva
+    if (e.target.classList.contains("reserva")) return;
+
+    reservaAtual = null;
+    document.getElementById("tituloModal").textContent = "Nova Reserva";
+    document.getElementById("cliente").value = "";
+    document.getElementById("checkin").value = dataStr;
+    document.getElementById("checkout").value = "";
+    document.getElementById("total_bruto").value = "";
+    document.getElementById("comissao_ota").value = "";
+    document.getElementById("preco_noite").value = "";
+    document.getElementById("liquido").value = "";
+    document.getElementById("apartamento_manual").value = "auto";
+    document.getElementById("modalReserva").style.display = "flex";
+});
+
 
         calendar.appendChild(div);
     }
