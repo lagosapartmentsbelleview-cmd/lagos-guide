@@ -36,7 +36,7 @@
         border: 1px solid #ddd;
         position: relative;
         cursor: pointer;
-        overflow: visible; /* ← IMPORTANTE PARA NÃO CORTAR NADA */
+        overflow: visible;
         display: flex;
         flex-direction: column;
         gap: 2px;
@@ -54,29 +54,18 @@
         overflow: hidden;
     }
 
-    .linha-apartamento.dividido::before {
-        content: "";
-        position: absolute;
-        top: 6px;
-        bottom: 6px;
-        left: 50%;
-        width: 3px;
-        background: #999;
-        border-radius: 3px;
-        box-shadow: 0 0 3px rgba(0,0,0,0.3);
-    }
-
     /* CORES DOS APARTAMENTOS */
     .apt1 { background: #003366; color: white; }
     .apt2 { background: #4da3ff; color: black; }
     .apt3 { background: #005f73; color: white; }
 
-    /* RESERVA */
+    /* RESERVAS */
     .reserva {
-        font-size: 12px;
-        font-weight: bold;
+        font-size: 10px;
+        font-weight: 600;
         text-align: center;
-        padding: 2px 4px;
+        padding: 1px 2px;
+        line-height: 1.1;
         box-sizing: border-box;
         display: flex;
         align-items: center;
