@@ -5,139 +5,132 @@
     <title>Calendário de Reservas – Marina Park</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background: #f5f5f5;
-        }
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f5f5f5;
+}
 
-        h1 {
-            text-align: center;
-        }
+h1 {
+    text-align: center;
+}
 
-        #legenda {
-            margin-top: 10px;
-            font-weight: bold;
-            text-align: center;
-        }
+#legenda {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
 
-        #calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            margin-top: 20px;
-        }
-        /* Cada dia tem 3 linhas fixas (uma por apartamento) */
-        .day {
-            background: white;
-            padding: 5px;
-            min-height: 90px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 20px;
+}
 
-        /* Linha de apartamento */
-        .linha-apartamento {
-            flex: 1;
-            position: relative;
-            border-radius: 4px;
-            overflow: hidden;
-        }
+/* NOVO SISTEMA DE 3 LINHAS POR APARTAMENTO */
+.day {
+    background: white;
+    padding: 5px;
+    min-height: 90px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
 
-        /* Linha vertical aparece apenas quando há divisão */
-        .linha-apartamento.dividido::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            width: 1px;
-            background: #ccc;
-        }
+.linha-apartamento {
+    flex: 1;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
 
-        /* Reserva ocupa o dia inteiro */
-        .reserva-full {
-            width: 100%;
-            height: 100%;
-        }
+.linha-apartamento.dividido::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: #ccc;
+}
 
-        /* Check-out → metade esquerda */
-        .reserva-end {
-            width: 50%;
-            height: 100%;
-            float: left;
-        }
+.reserva-full {
+    width: 100%;
+    height: 100%;
+}
 
-        /* Check-in → metade direita */
-        .reserva-start {
-            width: 50%;
-            height: 100%;
-            float: right;
-        }
+.reserva-end {
+    width: 50%;
+    height: 100%;
+    float: left;
+}
 
-        /* Cores dos apartamentos */
-        .apt1 { background: #003366; color: white; }
-        .apt2 { background: #4da3ff; color: black; }
-        .apt3 { background: #005f73; color: white; }
+.reserva-start {
+    width: 50%;
+    height: 100%;
+    float: right;
+}
 
-        /* Nome do hóspede dentro da reserva */
-        .reserva {
-            font-size: 11px;
-            padding: 2px 4px;
-            box-sizing: border-box;
-        }
+.apt1 { background: #003366; color: white; }
+.apt2 { background: #4da3ff; color: black; }
+.apt3 { background: #005f73; color: white; }
 
-      
+.reserva {
+    font-size: 11px;
+    padding: 2px 4px;
+    box-sizing: border-box;
+}
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
-        .modal-content {
-            background: white;
-            padding: 20px;
-            width: 100%;
-            max-width: 400px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
+.modal-content {
+    background: white;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
 
-        .close {
-            float: right;
-            cursor: pointer;
-            font-size: 20px;
-        }
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 20px;
+}
 
-        button {
-            padding: 10px 15px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
+button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
 
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 8px;
-        }
-    </style>
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+}
+</style>
+
 </head>
 
 <body>
