@@ -185,21 +185,14 @@ function desenharCalendario() {
 
             if (reservasApt.length === 0) return;
 
-            const temCheckinHoje = reservasApt.some(r => r.checkin === dataStr);
-            const temCheckoutHoje = reservasApt.some(r => r.checkout === dataStr);
-
-            const dividir = temCheckinHoje || temCheckoutHoje;
-
-            if (dividir) linha.classList.add("dividido");
-
             reservasApt.forEach(r => {
                 let tipo = "full";
 
                 if (r.checkin === dataStr && r.checkout !== dataStr) {
-                    tipo = "start"; // metade direita
+                    tipo = "start"; // metade direita SEMPRE
                 } 
                 else if (r.checkout === dataStr && r.checkin !== dataStr) {
-                    tipo = "end";   // metade esquerda
+                    tipo = "end";   // metade esquerda SEMPRE
                 } 
                 else {
                     tipo = "full";  // atravessa o dia ou 1 dia
