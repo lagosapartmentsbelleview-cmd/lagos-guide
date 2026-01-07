@@ -1,7 +1,7 @@
 // =======================================
 // 1) FIRESTORE – CARREGAR RESERVAS
 // =======================================
-
+let mesOffset = 0;
 let reservas = [];
 let reservaAtual = null;
 
@@ -121,8 +121,13 @@ function desenharCalendario() {
     calendar.innerHTML = "";
 
     const hoje = new Date();
-    const ano = hoje.getFullYear();
-    const mes = hoje.getMonth();
+    const mesData = new Date(hoje.getFullYear(), hoje.getMonth() + mesOffset, 1);
+    const ano = mesData.getFullYear();
+    const mes = mesData.getMonth();
+
+    const nomeMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+    document.getElementById("mesAtual").textContent = `${nomeMeses[mes]} ${ano}`;
+;
 
     const primeiroDia = new Date(ano, mes, 1);
     const ultimoDia = new Date(ano, mes + 1, 0);
@@ -325,5 +330,9 @@ document.getElementById("closeReserva").onclick = () => {
 document.getElementById("closeDetalhes").onclick = () => {
     document.getElementById("modalDetalhes").style.display = "none";
 };
+function mudarMes(delta) {
+    mesOffset += delta;
+    desenharCalendario();
+}
 
 document.getElementById("guardarReserva").onclick = guardarReserva;
