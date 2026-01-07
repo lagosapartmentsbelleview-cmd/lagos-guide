@@ -211,7 +211,7 @@ function desenharCalendario() {
 
                 linha.appendChild(resDiv);
             });
-        }); // ← ESTE FECHO É O QUE FALTAVA
+        }); // ← FECHO CORRETO
 
         div.onclick = () => {
             reservaAtual = null;
