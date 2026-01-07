@@ -170,8 +170,9 @@ function desenharCalendario() {
         div.appendChild(linha2);
         div.appendChild(linha3);
 
+        // CORREÇÃO CRÍTICA: checkout NÃO ocupa o dia
         const reservasDia = reservas.filter(r =>
-        dataStr >= r.checkin && dataStr < r.checkout
+            dataStr >= r.checkin && dataStr < r.checkout
         );
 
         const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
@@ -182,35 +183,28 @@ function desenharCalendario() {
 
             if (reservasApt.length === 0) return;
 
-            const temCheckin = reservasApt.some(r => r.checkin === dataStr);
-            const temCheckout = reservasApt.some(r => r.checkout === dataStr);
-
-            const dividir = temCheckin && temCheckout;
-
-            if (dividir) linha.classList.add("dividido");
-
             reservasApt.forEach(r => {
                 let tipo = "full";
 
-                if (dividir) {
-                   if (r.checkin === dataStr && r.checkout === dataStr) {
+                // CORREÇÃO DA DIVISÃO
+                if (r.checkin === dataStr && r.checkout === dataStr) {
                     tipo = "full"; // reserva de 1 dia
-                    } else if (r.checkin === dataStr) {
+                } else if (r.checkin === dataStr) {
                     tipo = "start";
-                    } else if (r.checkout === dataStr) {
+                } else if (r.checkout === dataStr) {
                     tipo = "end";
-                    }
-
+                }
 
                 const resDiv = document.createElement("div");
                 resDiv.className = `reserva reserva-${tipo} apt${apt}`;
+
                 const nomeApt = aptMap[r.apartamento];
+
+                // TOOLTIP COMPLETO
                 resDiv.setAttribute(
-                "data-tooltip",
-                `${r.cliente}\nApt ${nomeApt}\n${r.checkin} → ${r.checkout}\nLíquido: €${r.liquido}`
+                    "data-tooltip",
+                    `${r.cliente}\nApt ${nomeApt}\n${r.checkin} → ${r.checkout}\nLíquido: €${r.liquido}`
                 );
-
-
 
                 resDiv.onclick = (e) => {
                     e.stopPropagation();
