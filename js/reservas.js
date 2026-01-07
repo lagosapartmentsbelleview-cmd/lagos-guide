@@ -136,7 +136,7 @@ function escolherApartamento(checkin, checkout) {
 
 function desenharCalendario() {
     const calendar = document.getElementById("calendar");
-    calendar.innerHTML = "";
+    calendar.innerinnerHTML = "";
 
     const hoje = new Date();
     const mesData = new Date(hoje.getFullYear(), hoje.getMonth() + mesOffset, 1);
@@ -251,6 +251,8 @@ function desenharCalendario() {
             document.getElementById("apartamento_manual").value = "auto";
 
             document.getElementById("modalReserva").style.display = "flex";
+
+            calcularValores(); // <<< IMPORTANTE
         });
 
         calendar.appendChild(div);
@@ -323,6 +325,8 @@ function editarReserva() {
 
     document.getElementById("modalDetalhes").style.display = "none";
     document.getElementById("modalReserva").style.display = "flex";
+
+    calcularValores(); // <<< IMPORTANTE
 }
 
 // =======================================
@@ -332,11 +336,9 @@ function editarReserva() {
 function calcularLimpeza(checkin) {
     if (!checkin) return 0;
     const data = new Date(checkin);
-    const mes = data.getMonth() + 1; // 1-12
+    const mes = data.getMonth() + 1;
 
-    if ([6,7,8,9].includes(mes)) {
-        return 40;
-    }
+    if ([6,7,8,9].includes(mes)) return 40;
     return 35;
 }
 
@@ -354,11 +356,7 @@ function calcularValores() {
         if (noites < 0) noites = 0;
     }
 
-    let precoNoite = 0;
-    if (noites > 0 && totalBruto > 0) {
-        precoNoite = totalBruto / noites;
-    }
-
+    const precoNoite = noites > 0 ? totalBruto / noites : 0;
     const liquido = totalBruto - comissao;
     const limpeza = calcularLimpeza(checkin);
     const totalLiquidoFinal = liquido - limpeza;
@@ -400,9 +398,9 @@ document.getElementById("btnNovaReserva").onclick = () => {
     document.getElementById("liquido").value = "";
     document.getElementById("limpeza").value = "";
     document.getElementById("total_liquido_final").value = "";
-    document.getElementById("apartamento_manual").value = "auto";
-
     document.getElementById("modalReserva").style.display = "flex";
+
+    calcularValores(); // <<< IMPORTANTE
 };
 
 document.getElementById("closeReserva").onclick = () => {
