@@ -22,12 +22,23 @@ async function carregarReservas() {
 
 async function guardarReserva() {
     const cliente = document.getElementById("cliente").value;
+    const hospedes = Number(document.getElementById("hospedes").value || 0);
+    const berco = document.getElementById("berco").value === "true";
+
     const checkin = document.getElementById("checkin").value;
     const checkout = document.getElementById("checkout").value;
-    const totalBruto = Number(document.getElementById("total_bruto").value);
-    const comissao = Number(document.getElementById("comissao_ota").value);
-    const precoNoite = Number(document.getElementById("preco_noite").value);
-    const liquido = Number(document.getElementById("liquido").value);
+
+    const origemSelect = document.getElementById("origem").value;
+    const origemOutro = document.getElementById("origem_outro").value.trim();
+    const origem = origemSelect === "Outro" ? origemOutro || "Outro" : origemSelect;
+
+    const totalBruto = Number(document.getElementById("total_bruto").value || 0);
+    const comissao = Number(document.getElementById("comissao_ota").value || 0);
+    const precoNoite = Number(document.getElementById("preco_noite").value || 0);
+    const liquido = Number(document.getElementById("liquido").value || 0);
+    const noites = Number(document.getElementById("noites").value || 0);
+    const limpeza = Number(document.getElementById("limpeza").value || 0);
+    const totalLiquidoFinal = Number(document.getElementById("total_liquido_final").value || 0);
 
     const apartamentoManual = document.getElementById("apartamento_manual").value;
 
@@ -45,12 +56,18 @@ async function guardarReserva() {
 
     const dados = {
         cliente,
+        hospedes,
+        berco,
         checkin,
         checkout,
+        origem,
         totalBruto,
         comissao,
         precoNoite,
         liquido,
+        noites,
+        limpeza,
+        totalLiquidoFinal,
         apartamento
     };
 
@@ -171,7 +188,6 @@ function desenharCalendario() {
         div.appendChild(linha2);
         div.appendChild(linha3);
 
-        // VISUAL: checkout aparece no mapa (mas não conta como noite)
         const reservasDia = reservas.filter(r =>
             new Date(dataStr) >= new Date(r.checkin) &&
             new Date(dataStr) <= new Date(r.checkout)
@@ -189,10 +205,10 @@ function desenharCalendario() {
                 let tipo = "full";
 
                 if (r.checkin === dataStr && r.checkout !== dataStr) {
-                    tipo = "start"; // metade direita SEMPRE
+                    tipo = "start"; // metade direita
                 } 
                 else if (r.checkout === dataStr && r.checkin !== dataStr) {
-                    tipo = "end";   // metade esquerda SEMPRE
+                    tipo = "end";   // metade esquerda
                 } 
                 else {
                     tipo = "full";  // atravessa o dia ou 1 dia
@@ -211,20 +227,29 @@ function desenharCalendario() {
             });
         });
 
-        // PREVENIR conflito entre clique no dia e clique na reserva
         div.addEventListener("click", (e) => {
             if (e.target.classList.contains("reserva")) return;
 
             reservaAtual = null;
             document.getElementById("tituloModal").textContent = "Nova Reserva";
             document.getElementById("cliente").value = "";
+            document.getElementById("hospedes").value = "";
+            document.getElementById("berco").value = "false";
+            document.getElementById("origem").value = "Booking";
+            document.getElementById("origem_outro").value = "";
+            document.getElementById("origem_outro").style.display = "none";
+
             document.getElementById("checkin").value = dataStr;
             document.getElementById("checkout").value = "";
+            document.getElementById("noites").value = "";
             document.getElementById("total_bruto").value = "";
             document.getElementById("comissao_ota").value = "";
             document.getElementById("preco_noite").value = "";
             document.getElementById("liquido").value = "";
+            document.getElementById("limpeza").value = "";
+            document.getElementById("total_liquido_final").value = "";
             document.getElementById("apartamento_manual").value = "auto";
+
             document.getElementById("modalReserva").style.display = "flex";
         });
 
@@ -243,13 +268,19 @@ function abrirDetalhes(r) {
 
     const html = `
         <p><strong>Hóspede:</strong> ${r.cliente}</p>
+        <p><strong>Nº Hóspedes:</strong> ${r.hospedes || 0}</p>
+        <p><strong>Berço:</strong> ${r.berco ? "Sim" : "Não"}</p>
+        <p><strong>Origem:</strong> ${r.origem || "-"}</p>
         <p><strong>Check-in:</strong> ${r.checkin}</p>
         <p><strong>Check-out:</strong> ${r.checkout}</p>
+        <p><strong>Noites:</strong> ${r.noites || "-"}</p>
         <p><strong>Apartamento:</strong> ${aptMap[r.apartamento]}</p>
-        <p><strong>Total Bruto:</strong> €${r.totalBruto}</p>
-        <p><strong>Comissão:</strong> €${r.comissao}</p>
-        <p><strong>Preço/noite:</strong> €${r.precoNoite}</p>
-        <p><strong>Líquido:</strong> €${r.liquido}</p>
+        <p><strong>Total Bruto:</strong> €${r.totalBruto?.toFixed ? r.totalBruto.toFixed(2) : r.totalBruto}</p>
+        <p><strong>Comissão:</strong> €${r.comissao?.toFixed ? r.comissao.toFixed(2) : r.comissao}</p>
+        <p><strong>Preço/noite:</strong> €${r.precoNoite?.toFixed ? r.precoNoite.toFixed(2) : r.precoNoite}</p>
+        <p><strong>Líquido:</strong> €${r.liquido?.toFixed ? r.liquido.toFixed(2) : r.liquido}</p>
+        <p><strong>Limpeza (custo interno):</strong> €${r.limpeza?.toFixed ? r.limpeza.toFixed(2) : r.limpeza}</p>
+        <p><strong>Total Líquido Final:</strong> €${r.totalLiquidoFinal?.toFixed ? r.totalLiquidoFinal.toFixed(2) : r.totalLiquidoFinal}</p>
         <button onclick="editarReserva()">Editar</button>
         <button onclick="apagarReserva()">Apagar</button>
     `;
@@ -262,13 +293,33 @@ function editarReserva() {
     const r = reservaAtual;
     if (!r) return;
 
-    document.getElementById("cliente").value = r.cliente;
-    document.getElementById("checkin").value = r.checkin;
-    document.getElementById("checkout").value = r.checkout;
-    document.getElementById("total_bruto").value = r.totalBruto;
-    document.getElementById("comissao_ota").value = r.comissao;
-    document.getElementById("preco_noite").value = r.precoNoite;
-    document.getElementById("liquido").value = r.liquido;
+    document.getElementById("cliente").value = r.cliente || "";
+    document.getElementById("hospedes").value = r.hospedes || "";
+    document.getElementById("berco").value = r.berco ? "true" : "false";
+
+    const origemBase = ["Booking","Airbnb","VRBO","Particular"];
+    if (origemBase.includes(r.origem)) {
+        document.getElementById("origem").value = r.origem;
+        document.getElementById("origem_outro").value = "";
+        document.getElementById("origem_outro").style.display = "none";
+    } else {
+        document.getElementById("origem").value = "Outro";
+        document.getElementById("origem_outro").value = r.origem || "";
+        document.getElementById("origem_outro").style.display = "block";
+    }
+
+    document.getElementById("checkin").value = r.checkin || "";
+    document.getElementById("checkout").value = r.checkout || "";
+    document.getElementById("noites").value = r.noites || "";
+
+    document.getElementById("total_bruto").value = r.totalBruto || "";
+    document.getElementById("comissao_ota").value = r.comissao || "";
+    document.getElementById("preco_noite").value = r.precoNoite || "";
+    document.getElementById("liquido").value = r.liquido || "";
+    document.getElementById("limpeza").value = r.limpeza || "";
+    document.getElementById("total_liquido_final").value = r.totalLiquidoFinal || "";
+
+    document.getElementById("apartamento_manual").value = r.apartamento?.toString() || "auto";
 
     document.getElementById("modalDetalhes").style.display = "none";
     document.getElementById("modalReserva").style.display = "flex";
@@ -278,11 +329,22 @@ function editarReserva() {
 // 6) CÁLCULOS AUTOMÁTICOS
 // =======================================
 
+function calcularLimpeza(checkin) {
+    if (!checkin) return 0;
+    const data = new Date(checkin);
+    const mes = data.getMonth() + 1; // 1-12
+
+    if ([6,7,8,9].includes(mes)) {
+        return 40;
+    }
+    return 35;
+}
+
 function calcularValores() {
     const checkin = document.getElementById("checkin").value;
     const checkout = document.getElementById("checkout").value;
-    const totalBruto = Number(document.getElementById("total_bruto").value);
-    const comissao = Number(document.getElementById("comissao_ota").value);
+    const totalBruto = Number(document.getElementById("total_bruto").value || 0);
+    const comissao = Number(document.getElementById("comissao_ota").value || 0);
 
     let noites = 0;
     if (checkin && checkout) {
@@ -298,9 +360,14 @@ function calcularValores() {
     }
 
     const liquido = totalBruto - comissao;
+    const limpeza = calcularLimpeza(checkin);
+    const totalLiquidoFinal = liquido - limpeza;
 
+    document.getElementById("noites").value = noites || "";
     document.getElementById("preco_noite").value = precoNoite ? precoNoite.toFixed(2) : "";
     document.getElementById("liquido").value = liquido ? liquido.toFixed(2) : "";
+    document.getElementById("limpeza").value = limpeza ? limpeza.toFixed(2) : "";
+    document.getElementById("total_liquido_final").value = totalLiquidoFinal ? totalLiquidoFinal.toFixed(2) : "";
 }
 
 document.getElementById("checkin").addEventListener("change", calcularValores);
@@ -318,13 +385,23 @@ document.getElementById("btnNovaReserva").onclick = () => {
     reservaAtual = null;
     document.getElementById("tituloModal").textContent = "Nova Reserva";
     document.getElementById("cliente").value = "";
+    document.getElementById("hospedes").value = "";
+    document.getElementById("berco").value = "false";
+    document.getElementById("origem").value = "Booking";
+    document.getElementById("origem_outro").value = "";
+    document.getElementById("origem_outro").style.display = "none";
+
     document.getElementById("checkin").value = "";
     document.getElementById("checkout").value = "";
+    document.getElementById("noites").value = "";
     document.getElementById("total_bruto").value = "";
     document.getElementById("comissao_ota").value = "";
     document.getElementById("preco_noite").value = "";
     document.getElementById("liquido").value = "";
+    document.getElementById("limpeza").value = "";
+    document.getElementById("total_liquido_final").value = "";
     document.getElementById("apartamento_manual").value = "auto";
+
     document.getElementById("modalReserva").style.display = "flex";
 };
 
