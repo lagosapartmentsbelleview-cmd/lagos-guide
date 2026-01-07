@@ -200,7 +200,12 @@ function desenharCalendario() {
 
                 const resDiv = document.createElement("div");
                 resDiv.className = `reserva reserva-${tipo} apt${apt}`;
-                resDiv.textContent = `${r.cliente} – ${aptMap[r.apartamento]}`;
+                const nomeApt = aptMap[r.apartamento];
+                resDiv.textContent = `${r.cliente} – ${nomeApt}`;
+                resDiv.setAttribute("data-tooltip",
+                `${r.cliente}\nApt ${nomeApt}\n${r.checkin} → ${r.checkout}\nLíquido: €${r.liquido}`
+);
+
 
                 resDiv.onclick = (e) => {
                     e.stopPropagation();
