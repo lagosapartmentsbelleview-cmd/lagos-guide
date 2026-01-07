@@ -31,7 +31,7 @@
     .day {
         background: white;
         padding: 5px;
-        min-height: 90px;
+        min-height: 110px;
         border-radius: 6px;
         border: 1px solid #ddd;
         position: relative;
@@ -95,7 +95,7 @@
         background: white;
         padding: 20px;
         width: 100%;
-        max-width: 400px;
+        max-width: 420px;
         max-height: 90vh;
         overflow-y: auto;
         border-radius: 8px;
@@ -152,12 +152,6 @@
         <label>Nome do Hóspede</label>
         <input id="cliente">
 
-        <label>Check-in</label>
-        <input type="date" id="checkin">
-
-        <label>Check-out</label>
-        <input type="date" id="checkout">
-
         <label>Nº de Hóspedes</label>
         <input type="number" id="hospedes">
 
@@ -166,6 +160,26 @@
             <option value="false">Não</option>
             <option value="true">Sim</option>
         </select>
+
+        <label>Origem da Reserva</label>
+        <select id="origem">
+            <option value="Booking">Booking</option>
+            <option value="Airbnb">Airbnb</option>
+            <option value="VRBO">VRBO</option>
+            <option value="Particular">Particular</option>
+            <option value="Outro">Outro</option>
+        </select>
+
+        <input id="origem_outro" placeholder="Especificar (se escolher 'Outro')" style="display:none;">
+
+        <label>Check-in</label>
+        <input type="date" id="checkin">
+
+        <label>Check-out</label>
+        <input type="date" id="checkout">
+
+        <label>Nº de Noites</label>
+        <input id="noites" readonly>
 
         <label>Total Bruto (€)</label>
         <input type="number" id="total_bruto">
@@ -178,6 +192,12 @@
 
         <label>Valor Líquido (€)</label>
         <input type="number" id="liquido" readonly>
+
+        <label>Limpeza (€)</label>
+        <input type="number" id="limpeza" readonly>
+
+        <label>Total Líquido Final (€)</label>
+        <input type="number" id="total_liquido_final" readonly>
 
         <label>Apartamento</label>
         <select id="apartamento_manual">
@@ -204,6 +224,13 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script src="js/firebase-config.js"></script>
 <script src="js/reservas.js"></script>
+
+<script>
+document.getElementById("origem").addEventListener("change", () => {
+    const outro = document.getElementById("origem_outro");
+    outro.style.display = (origem.value === "Outro") ? "block" : "none";
+});
+</script>
 
 </body>
 </html>
