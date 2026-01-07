@@ -183,37 +183,39 @@ function desenharCalendario() {
 
             if (reservasApt.length === 0) return;
 
-            reservasApt.forEach(r => {
-                let tipo = "full";
+          reservasApt.forEach(r => {
+    let tipo = "full";
 
-                // CORREÇÃO DA DIVISÃO
-                if (r.checkin === dataStr && r.checkout === dataStr) {
-                    tipo = "full"; // reserva de 1 dia
-                } else if (r.checkin === dataStr) {
-                    tipo = "start";
-                } else if (r.checkout === dataStr) {
-                    tipo = "end";
-                }
+    // CORREÇÃO DA DIVISÃO
+    if (r.checkin === dataStr && r.checkout === dataStr) {
+        tipo = "full"; // reserva de 1 dia
+    } else if (r.checkin === dataStr) {
+        tipo = "start";
+    } else if (r.checkout === dataStr) {
+        tipo = "end";
+    }
 
-               const resDiv = document.createElement("div");
-                resDiv.className = `reserva reserva-${tipo} apt${apt}`;
+    const resDiv = document.createElement("div");
+    resDiv.className = `reserva reserva-${tipo} apt${apt}`;
 
-                const nomeApt = aptMap[r.apartamento];
+    const nomeApt = aptMap[r.apartamento];
 
-                // TOOLTIP COMPLETO
-                resDiv.setAttribute(
-                    "data-tooltip",
-                    `${r.cliente}\nApt ${nomeApt}\n${r.checkin} → ${r.checkout}\nLíquido: €${r.liquido}`
-                );
+    // TOOLTIP COMPLETO
+    resDiv.setAttribute(
+        "data-tooltip",
+        `${r.cliente}\nApt ${nomeApt}\n${r.checkin} → ${r.checkout}\nLíquido: €${r.liquido}`
+    );
 
-                resDiv.onclick = (e) => {
-                    e.stopPropagation();
-                    abrirDetalhes(r);
-                };
+    resDiv.onclick = (e) => {
+        e.stopPropagation();
+        abrirDetalhes(r);
+    };
 
-                linha.appendChild(resDiv);
-            
-        }); 
+    linha.appendChild(resDiv);
+});   // ← FECHA reservasApt.forEach
+
+});   // ← FECHA [1,2,3].forEach
+
 
         div.onclick = () => {
             reservaAtual = null;
