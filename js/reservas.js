@@ -127,7 +127,6 @@ function desenharCalendario() {
 
     const nomeMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
     document.getElementById("mesAtual").textContent = `${nomeMeses[mes]} ${ano}`;
-;
 
     const primeiroDia = new Date(ano, mes, 1);
     const ultimoDia = new Date(ano, mes + 1, 0);
@@ -175,6 +174,8 @@ function desenharCalendario() {
             dataStr >= r.checkin && dataStr <= r.checkout
         );
 
+        const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
+
         [1,2,3].forEach(apt => {
             const linha = div.querySelector(`.apt${apt}-linha`);
             const reservasApt = reservasDia.filter(r => r.apartamento === apt);
@@ -192,15 +193,14 @@ function desenharCalendario() {
                 let tipo = "full";
 
                 if (dividir) {
-                    if (r.checkin === dataStr) tipo = "start";
-                    if (r.checkout === dataStr) tipo = "end";
+                    if (r.checkin === dataStr && r.checkout !== dataStr) tipo = "start";
+                    else if (r.checkout === dataStr && r.checkin !== dataStr) tipo = "end";
+                    else tipo = "full";
                 }
 
                 const resDiv = document.createElement("div");
                 resDiv.className = `reserva reserva-${tipo} apt${apt}`;
-                const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
                 resDiv.textContent = `${r.cliente} – ${aptMap[r.apartamento]}`;
-
 
                 resDiv.onclick = (e) => {
                     e.stopPropagation();
@@ -236,11 +236,13 @@ function desenharCalendario() {
 function abrirDetalhes(r) {
     reservaAtual = r;
 
+    const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
+
     const html = `
         <p><strong>Hóspede:</strong> ${r.cliente}</p>
         <p><strong>Check-in:</strong> ${r.checkin}</p>
         <p><strong>Check-out:</strong> ${r.checkout}</p>
-        const aptMap = { 1: "2301", 2: "2203", 3: "2204" };<p><strong>Apartamento:</strong> ${aptMap[r.apartamento]}</p>
+        <p><strong>Apartamento:</strong> ${aptMap[r.apartamento]}</p>
         <p><strong>Total Bruto:</strong> €${r.totalBruto}</p>
         <p><strong>Comissão:</strong> €${r.comissao}</p>
         <p><strong>Preço/noite:</strong> €${r.precoNoite}</p>
@@ -330,6 +332,7 @@ document.getElementById("closeReserva").onclick = () => {
 document.getElementById("closeDetalhes").onclick = () => {
     document.getElementById("modalDetalhes").style.display = "none";
 };
+
 function mudarMes(delta) {
     mesOffset += delta;
     desenharCalendario();
