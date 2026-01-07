@@ -171,7 +171,7 @@ function desenharCalendario() {
         div.appendChild(linha3);
 
         const reservasDia = reservas.filter(r =>
-            dataStr >= r.checkin && dataStr <= r.checkout
+        dataStr >= r.checkin && dataStr < r.checkout
         );
 
         const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
@@ -193,10 +193,14 @@ function desenharCalendario() {
                 let tipo = "full";
 
                 if (dividir) {
-                    if (r.checkin === dataStr && r.checkout !== dataStr) tipo = "start";
-                    else if (r.checkout === dataStr && r.checkin !== dataStr) tipo = "end";
-                    else tipo = "full";
-                }
+                   if (r.checkin === dataStr && r.checkout === dataStr) {
+                    tipo = "full"; // reserva de 1 dia
+                    } else if (r.checkin === dataStr) {
+                    tipo = "start";
+                    } else if (r.checkout === dataStr) {
+                    tipo = "end";
+                    }
+
 
                 const resDiv = document.createElement("div");
                 resDiv.className = `reserva reserva-${tipo} apt${apt}`;
