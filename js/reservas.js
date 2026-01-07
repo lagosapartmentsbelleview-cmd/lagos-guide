@@ -24,11 +24,10 @@ async function guardarReserva() {
     const cliente = document.getElementById("cliente").value;
     const checkin = document.getElementById("checkin").value;
     const checkout = document.getElementById("checkout").value;
-    const precoNoite = Number(document.getElementById("precoNoite").value);
-    const totalBruto = Number(document.getElementById("totalBruto").value);
-    const comissao = Number(document.getElementById("comissao").value);
+    const precoNoite = Number(document.getElementById("preco_noite").value); 
+    const totalBruto = Number(document.getElementById("total_bruto").value); 
+    const comissao = Number(document.getElementById("comissao_ota").value); 
     const liquido = Number(document.getElementById("liquido").value);
-
     const apartamento = escolherApartamento(checkin, checkout);
 
     if (!apartamento) {
