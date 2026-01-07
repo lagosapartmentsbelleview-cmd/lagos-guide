@@ -78,7 +78,6 @@ async function apagarReserva() {
 // 3) LÓGICA DE ALOCAÇÃO AUTOMÁTICA
 // =======================================
 
-// CORRIGIDO: comparação com datas reais
 function haConflito(ci, co, r) {
     return !(
         new Date(co) <= new Date(r.checkin) ||
@@ -88,16 +87,14 @@ function haConflito(ci, co, r) {
 
 function escolherApartamento(checkin, checkout) {
     const ci = new Date(checkin);
-    const co = new Date(checkout);
 
     // 1) PRIORIDADE: back-to-back no mesmo apartamento
     for (let apt = 1; apt <= 3; apt++) {
         const reservasApt = reservas.filter(r => r.apartamento === apt);
 
-        const temBackToBack = reservasApt.some(r => {
-            const rco = new Date(r.checkout);
-            return rco.getTime() === ci.getTime();
-        });
+        const temBackToBack = reservasApt.some(r =>
+            new Date(r.checkout).getTime() === ci.getTime()
+        );
 
         if (temBackToBack) {
             const conflito = reservasApt.some(r => haConflito(checkin, checkout, r));
@@ -117,7 +114,7 @@ function escolherApartamento(checkin, checkout) {
 }
 
 // =======================================
-// 4) DESENHAR CALENDÁRIO (3 LINHAS POR APARTAMENTO)
+// 4) DESENHAR CALENDÁRIO
 // =======================================
 
 function desenharCalendario() {
@@ -191,26 +188,25 @@ function desenharCalendario() {
             const temCheckinHoje = reservasApt.some(r => r.checkin === dataStr);
             const temCheckoutHoje = reservasApt.some(r => r.checkout === dataStr);
 
-            const dividir = temCheckinHoje && temCheckoutHoje;
+            const dividir = temCheckinHoje || temCheckoutHoje;
 
             if (dividir) linha.classList.add("dividido");
 
             reservasApt.forEach(r => {
                 let tipo = "full";
 
-                if (dividir) {
-                    if (r.checkin === dataStr && r.checkout !== dataStr) {
-                        tipo = "start"; // entra hoje → lado direito
-                    } else if (r.checkout === dataStr && r.checkin !== dataStr) {
-                        tipo = "end";   // sai hoje → lado esquerdo
-                    } else {
-                        tipo = "full";  // reservas que atravessam o dia
-                    }
+                if (r.checkin === dataStr && r.checkout !== dataStr) {
+                    tipo = "start"; // metade direita
+                } 
+                else if (r.checkout === dataStr && r.checkin !== dataStr) {
+                    tipo = "end";   // metade esquerda
+                } 
+                else {
+                    tipo = "full";  // atravessa o dia ou 1 dia
                 }
 
                 const resDiv = document.createElement("div");
                 resDiv.className = `reserva reserva-${tipo} apt${apt}`;
-
                 resDiv.textContent = `${r.cliente} – ${aptMap[r.apartamento]}`;
 
                 resDiv.onclick = (e) => {
