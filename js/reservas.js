@@ -172,7 +172,8 @@ function desenharCalendario() {
 
         // checkout NÃO ocupa o dia
         const reservasDia = reservas.filter(r =>
-            dataStr >= r.checkin && dataStr < r.checkout
+            new Date(dataStr) >= new Date(r.checkin) &&
+            new Date(dataStr) < new Date(r.checkout)
         );
 
         const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
@@ -211,7 +212,7 @@ function desenharCalendario() {
 
                 linha.appendChild(resDiv);
             });
-        }); // ← FECHO CORRETO
+        });
 
         div.onclick = () => {
             reservaAtual = null;
