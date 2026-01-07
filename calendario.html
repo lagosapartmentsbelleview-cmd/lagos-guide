@@ -28,7 +28,6 @@
         margin-top: 20px;
     }
 
-    /* NOVO SISTEMA DE 3 LINHAS POR APARTAMENTO */
     .day {
         background: white;
         padding: 5px;
@@ -37,7 +36,7 @@
         border: 1px solid #ddd;
         position: relative;
         cursor: pointer;
-        overflow: hidden;
+        overflow: visible; /* ← IMPORTANTE PARA NÃO CORTAR NADA */
         display: flex;
         flex-direction: column;
         gap: 2px;
@@ -55,52 +54,40 @@
         overflow: hidden;
     }
 
-   .linha-apartamento.dividido::before {
-    content: "";
-    position: absolute;
-    top: 6px;
-    bottom: 6px;
-    left: 50%;
-    width: 3px;
-    background: #999;
-    border-radius: 3px;
-    box-shadow: 0 0 3px rgba(0,0,0,0.3);
+    .linha-apartamento.dividido::before {
+        content: "";
+        position: absolute;
+        top: 6px;
+        bottom: 6px;
+        left: 50%;
+        width: 3px;
+        background: #999;
+        border-radius: 3px;
+        box-shadow: 0 0 3px rgba(0,0,0,0.3);
     }
 
-    .reserva-full {
-    width: 100%;
-    height: 100%;
-        
-    }
-
-    .reserva-end {
-        width: 50%;
-        height: 100%;
-        float: left;
-    }
-
-    .reserva-start {
-        width: 50%;
-        height: 100%;
-        float: right;
-    }
-
+    /* CORES DOS APARTAMENTOS */
     .apt1 { background: #003366; color: white; }
     .apt2 { background: #4da3ff; color: black; }
     .apt3 { background: #005f73; color: white; }
 
+    /* RESERVA */
     .reserva {
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    padding: 2px 4px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-}
+        font-size: 12px;
+        font-weight: bold;
+        text-align: center;
+        padding: 2px 4px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        height: 100%;
+    }
 
+    .reserva-full { width: 100%; }
+    .reserva-start { width: 50%; float: right; }
+    .reserva-end { width: 50%; float: left; }
 
     /* Modal */
     .modal {
@@ -165,7 +152,6 @@
 <button onclick="mudarMes(1)">▶</button>
 </div>
 
-
 <div id="calendar"></div>
 
 <!-- Modal Nova Reserva -->
@@ -225,13 +211,9 @@
     </div>
 </div>
 
-<!-- Firebase Core -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<!-- Firestore -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<!-- Configuração Firebase -->
 <script src="js/firebase-config.js"></script>
-<!-- Lógica de Reservas -->
 <script src="js/reservas.js"></script>
 
 </body>
