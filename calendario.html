@@ -6,150 +6,144 @@
 
     <style>
     body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background: #f5f5f5;
-}
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f5f5f5;
+    }
 
-h1 {
-    text-align: center;
-}
+    h1 {
+        text-align: center;
+    }
 
-#calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin-top: 20px;
-}
+    #legenda {
+        margin-top: 10px;
+        font-weight: bold;
+        text-align: center;
+    }
 
-/* DIA */
-.day {
-    background: white;
-    padding: 5px;
-    min-height: 90px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    position: relative;
-    cursor: pointer;
-    overflow: visible;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
+    #calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+        margin-top: 20px;
+    }
 
-.day-number {
-    font-weight: bold;
-    margin-bottom: 2px;
-}
+    /* NOVO SISTEMA DE 3 LINHAS POR APARTAMENTO */
+    .day {
+        background: white;
+        padding: 5px;
+        min-height: 90px;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
 
-/* LINHAS DOS APARTAMENTOS */
-.linha-apartamento {
-    flex: 1;
-    position: relative;
-    border-radius: 4px;
-    overflow: hidden;
-}
+    .day-number {
+        font-weight: bold;
+        margin-bottom: 2px;
+    }
 
-/* DIVISÃO ELEGANTE */
-.linha-apartamento.dividido::before {
+    .linha-apartamento {
+        flex: 1;
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+   .linha-apartamento.dividido::before {
     content: "";
     position: absolute;
-    top: 4px;
-    bottom: 4px;
+    top: 6px;
+    bottom: 6px;
     left: 50%;
-    width: 2px;
-    background: rgba(0,0,0,0.35);
-    border-radius: 2px;
-}
+    width: 3px;
+    background: #999;
+    border-radius: 3px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.3);
+    }
 
-/* CORES DOS APARTAMENTOS */
-.apt1 { background: #003366; color: white; }
-.apt2 { background: #4da3ff; color: black; }
-.apt3 { background: #005f73; color: white; }
+    .reserva-full {
+    width: 100%;
+    height: 100%;
+        
+    }
 
-/* RESERVA — ESTILO A4 PREMIUM */
-.reserva {
-    position: relative;
-    z-index: 10;
-    background-color: transparent;
-    color: white;
-    font-size: 11px;
-    font-weight: 600;
+    .reserva-end {
+        width: 50%;
+        height: 100%;
+        float: left;
+    }
+
+    .reserva-start {
+        width: 50%;
+        height: 100%;
+        float: right;
+    }
+
+    .apt1 { background: #003366; color: white; }
+    .apt2 { background: #4da3ff; color: black; }
+    .apt3 { background: #005f73; color: white; }
+
+    .reserva {
+    font-size: 12px;
+    font-weight: bold;
     text-align: center;
     padding: 2px 4px;
     box-sizing: border-box;
-    display: block;          /* ← IMPORTANTE */
-    border-radius: 6px;
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: visible;       /* ← IMPORTANTE */
-    height: auto;            /* ← IMPORTANTE */
-    min-height: 18px;        /* ← IMPORTANTE */
-}
-
-
-
-/* TOOLTIP PREMIUM */
-.reserva:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    background: #222;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 11px;
-    white-space: pre-line;
-    z-index: 999999;     /* ← GARANTE QUE FICA POR CIMA */
-    top: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-
-/* MODAL */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    justify-content: center;
+    display: flex;
     align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
+    justify-content: center;
+    border-radius: 4px;
 }
 
-.modal-content {
-    background: white;
-    padding: 20px;
-    width: 100%;
-    max-width: 400px;
-    max-height: 90vh;
-    overflow-y: auto;
-    border-radius: 8px;
-    box-sizing: border-box;
-}
 
-.close {
-    float: right;
-    cursor: pointer;
-    font-size: 20px;
-}
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
 
-button {
-    padding: 10px 15px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
+    .modal-content {
+        background: white;
+        padding: 20px;
+        width: 100%;
+        max-width: 400px;
+        max-height: 90vh;
+        overflow-y: auto;
+        border-radius: 8px;
+        box-sizing: border-box;
+    }
 
-input, select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 8px;
-}
+    .close {
+        float: right;
+        cursor: pointer;
+        font-size: 20px;
+    }
 
+    button {
+        padding: 10px 15px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 8px;
+    }
     </style>
 </head>
 
@@ -157,18 +151,11 @@ input, select {
 
 <h1>Calendário de Reservas – Marina Park</h1>
 
-<div id="legenda" style="display:flex; justify-content:center; gap:20px; margin-top:15px;">
-    <div style="background:#003366; color:white; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:600;">
-        2301
-    </div>
-    <div style="background:#4da3ff; color:black; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:600;">
-        2203
-    </div>
-    <div style="background:#005f73; color:white; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:600;">
-        2204
-    </div>
+<div id="legenda">
+    <span style="color:#003366;">■ Apt 1 = 2301</span> &nbsp;&nbsp;
+    <span style="color:#4da3ff;">■ Apt 2 = 2203</span> &nbsp;&nbsp;
+    <span style="color:#005f73;">■ Apt 3 = 2204</span>
 </div>
-
 
 <button id="btnNovaReserva">Adicionar Reserva</button>
 
