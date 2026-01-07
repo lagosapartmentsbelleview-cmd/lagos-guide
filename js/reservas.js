@@ -24,11 +24,19 @@ async function guardarReserva() {
     const cliente = document.getElementById("cliente").value;
     const checkin = document.getElementById("checkin").value;
     const checkout = document.getElementById("checkout").value;
-    const precoNoite = Number(document.getElementById("preco_noite").value); 
-    const totalBruto = Number(document.getElementById("total_bruto").value); 
-    const comissao = Number(document.getElementById("comissao_ota").value); 
+    const totalBruto = Number(document.getElementById("total_bruto").value);
+    const comissao = Number(document.getElementById("comissao_ota").value);
+    const precoNoite = Number(document.getElementById("preco_noite").value);
     const liquido = Number(document.getElementById("liquido").value);
-    const apartamento = escolherApartamento(checkin, checkout);
+
+    const apartamentoManual = document.getElementById("apartamento_manual").value;
+
+    let apartamento = null;
+    if (apartamentoManual === "auto") {
+        apartamento = escolherApartamento(checkin, checkout);
+    } else {
+        apartamento = Number(apartamentoManual);
+    }
 
     if (!apartamento) {
         alert("Nenhum apartamento disponível para estas datas.");
@@ -39,14 +47,14 @@ async function guardarReserva() {
         cliente,
         checkin,
         checkout,
-        precoNoite,
         totalBruto,
         comissao,
+        precoNoite,
         liquido,
         apartamento
     };
 
-    if (reservaAtual) {
+    if (reservaAtual && reservaAtual.id) {
         await db.collection("reservas").doc(reservaAtual.id).update(dados);
     } else {
         await db.collection("reservas").add(dados);
@@ -57,7 +65,7 @@ async function guardarReserva() {
 }
 
 async function apagarReserva() {
-    if (!reservaAtual) return;
+    if (!reservaAtual || !reservaAtual.id) return;
 
     if (confirm("Tem a certeza que deseja apagar esta reserva?")) {
         await db.collection("reservas").doc(reservaAtual.id).delete();
@@ -145,7 +153,6 @@ function desenharCalendario() {
 
         const dataStr = `${ano}-${String(mes + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
 
-        // Criar 3 linhas fixas
         const linha1 = document.createElement("div");
         linha1.className = "linha-apartamento apt1-linha";
 
@@ -159,12 +166,10 @@ function desenharCalendario() {
         div.appendChild(linha2);
         div.appendChild(linha3);
 
-        // Reservas deste dia
         const reservasDia = reservas.filter(r =>
             dataStr >= r.checkin && dataStr <= r.checkout
         );
 
-        // Processar por apartamento
         [1,2,3].forEach(apt => {
             const linha = div.querySelector(`.apt${apt}-linha`);
             const reservasApt = reservasDia.filter(r => r.apartamento === apt);
@@ -202,7 +207,14 @@ function desenharCalendario() {
         div.onclick = () => {
             reservaAtual = null;
             document.getElementById("tituloModal").textContent = "Nova Reserva";
+            document.getElementById("cliente").value = "";
             document.getElementById("checkin").value = dataStr;
+            document.getElementById("checkout").value = "";
+            document.getElementById("total_bruto").value = "";
+            document.getElementById("comissao_ota").value = "";
+            document.getElementById("preco_noite").value = "";
+            document.getElementById("liquido").value = "";
+            document.getElementById("apartamento_manual").value = "auto";
             document.getElementById("modalReserva").style.display = "flex";
         };
 
@@ -211,105 +223,8 @@ function desenharCalendario() {
 }
 
 // =======================================
-// INICIAR
+// 5) DETALHES / EDITAR / CRUD
 // =======================================
-
-document.addEventListener("DOMContentLoaded", carregarReservas);
-// Abrir modal ao clicar no botão "Adicionar Reserva"
-document.getElementById("btnNovaReserva").onclick = () => {
-    reservaAtual = null;
-    document.getElementById("tituloModal").textContent = "Nova Reserva";
-    document.getElementById("modalReserva").style.display = "flex";
-};
-
-// Fechar modal de nova reserva
-document.getElementById("closeReserva").onclick = () => {
-    document.getElementById("modalReserva").style.display = "none";
-};
-
-// Fechar modal de detalhes
-document.getElementById("closeDetalhes").onclick = () => {
-    document.getElementById("modalDetalhes").style.display = "none";
-};
-
-// Guardar reserva
-document.getElementById("guardarReserva").onclick = guardarReserva;
-
-// ===============================
-// CÁLCULOS AUTOMÁTICOS DO FORMULÁRIO
-// ===============================
-
-function calcularValores() {
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
-    const totalBruto = Number(document.getElementById("total_bruto").value);
-    const comissao = Number(document.getElementById("comissao_ota").value);
-
-    // Calcular número de noites
-    let noites = 0;
-    if (checkin && checkout) {
-        const ci = new Date(checkin);
-        const co = new Date(checkout);
-        noites = (co - ci) / (1000 * 60 * 60 * 24);
-        if (noites < 0) noites = 0;
-    }
-
-    // Preço por noite
-    let precoNoite = 0;
-    if (noites > 0 && totalBruto > 0) {
-        precoNoite = totalBruto / noites;
-    }
-
-    // Valor líquido
-    const liquido = totalBruto - comissao;
-
-    // Atualizar campos
-    document.getElementById("preco_noite").value = precoNoite.toFixed(2);
-    document.getElementById("liquido").value = liquido.toFixed(2);
-}
-
-// Ativar cálculos automáticos
-document.getElementById("checkin").addEventListener("change", calcularValores);
-document.getElementById("checkout").addEventListener("change", calcularValores);
-document.getElementById("total_bruto").addEventListener("input", calcularValores);
-document.getElementById("comissao_ota").addEventListener("input", calcularValores);
-// ===============================
-// CÁLCULOS AUTOMÁTICOS DO FORMULÁRIO
-// ===============================
-
-function calcularValores() {
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
-    const totalBruto = Number(document.getElementById("total_bruto").value);
-    const comissao = Number(document.getElementById("comissao_ota").value);
-
-    let noites = 0;
-    if (checkin && checkout) {
-        const ci = new Date(checkin);
-        const co = new Date(checkout);
-        noites = (co - ci) / (1000 * 60 * 60 * 24);
-        if (noites < 0) noites = 0;
-    }
-
-    let precoNoite = 0;
-    if (noites > 0 && totalBruto > 0) {
-        precoNoite = totalBruto / noites;
-    }
-
-    const liquido = totalBruto - comissao;
-
-    document.getElementById("preco_noite").value = precoNoite.toFixed(2);
-    document.getElementById("liquido").value = liquido.toFixed(2);
-}
-
-// Ativar cálculos automáticos
-document.getElementById("checkin").addEventListener("change", calcularValores);
-document.getElementById("checkout").addEventListener("change", calcularValores);
-document.getElementById("total_bruto").addEventListener("input", calcularValores);
-document.getElementById("comissao_ota").addEventListener("input", calcularValores);
-// ===============================
-// ABRIR DETALHES DA RESERVA
-// ===============================
 
 function abrirDetalhes(r) {
     reservaAtual = r;
@@ -321,6 +236,7 @@ function abrirDetalhes(r) {
         <p><strong>Apartamento:</strong> ${r.apartamento}</p>
         <p><strong>Total Bruto:</strong> €${r.totalBruto}</p>
         <p><strong>Comissão:</strong> €${r.comissao}</p>
+        <p><strong>Preço/noite:</strong> €${r.precoNoite}</p>
         <p><strong>Líquido:</strong> €${r.liquido}</p>
         <button onclick="editarReserva()">Editar</button>
         <button onclick="apagarReserva()">Apagar</button>
@@ -330,12 +246,9 @@ function abrirDetalhes(r) {
     document.getElementById("modalDetalhes").style.display = "flex";
 }
 
-// ===============================
-// EDITAR RESERVA
-// ===============================
-
 function editarReserva() {
     const r = reservaAtual;
+    if (!r) return;
 
     document.getElementById("cliente").value = r.cliente;
     document.getElementById("checkin").value = r.checkin;
@@ -349,3 +262,66 @@ function editarReserva() {
     document.getElementById("modalReserva").style.display = "flex";
 }
 
+// =======================================
+// 6) CÁLCULOS AUTOMÁTICOS
+// =======================================
+
+function calcularValores() {
+    const checkin = document.getElementById("checkin").value;
+    const checkout = document.getElementById("checkout").value;
+    const totalBruto = Number(document.getElementById("total_bruto").value);
+    const comissao = Number(document.getElementById("comissao_ota").value);
+
+    let noites = 0;
+    if (checkin && checkout) {
+        const ci = new Date(checkin);
+        const co = new Date(checkout);
+        noites = (co - ci) / (1000 * 60 * 60 * 24);
+        if (noites < 0) noites = 0;
+    }
+
+    let precoNoite = 0;
+    if (noites > 0 && totalBruto > 0) {
+        precoNoite = totalBruto / noites;
+    }
+
+    const liquido = totalBruto - comissao;
+
+    document.getElementById("preco_noite").value = precoNoite ? precoNoite.toFixed(2) : "";
+    document.getElementById("liquido").value = liquido ? liquido.toFixed(2) : "";
+}
+
+document.getElementById("checkin").addEventListener("change", calcularValores);
+document.getElementById("checkout").addEventListener("change", calcularValores);
+document.getElementById("total_bruto").addEventListener("input", calcularValores);
+document.getElementById("comissao_ota").addEventListener("input", calcularValores);
+
+// =======================================
+// 7) EVENTOS DE INTERFACE
+// =======================================
+
+document.addEventListener("DOMContentLoaded", carregarReservas);
+
+document.getElementById("btnNovaReserva").onclick = () => {
+    reservaAtual = null;
+    document.getElementById("tituloModal").textContent = "Nova Reserva";
+    document.getElementById("cliente").value = "";
+    document.getElementById("checkin").value = "";
+    document.getElementById("checkout").value = "";
+    document.getElementById("total_bruto").value = "";
+    document.getElementById("comissao_ota").value = "";
+    document.getElementById("preco_noite").value = "";
+    document.getElementById("liquido").value = "";
+    document.getElementById("apartamento_manual").value = "auto";
+    document.getElementById("modalReserva").style.display = "flex";
+};
+
+document.getElementById("closeReserva").onclick = () => {
+    document.getElementById("modalReserva").style.display = "none";
+};
+
+document.getElementById("closeDetalhes").onclick = () => {
+    document.getElementById("modalDetalhes").style.display = "none";
+};
+
+document.getElementById("guardarReserva").onclick = guardarReserva;
