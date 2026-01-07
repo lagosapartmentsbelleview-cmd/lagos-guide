@@ -195,7 +195,7 @@ function desenharCalendario() {
                     tipo = "end";
                 }
 
-                const resDiv = document.createElement("div");
+               const resDiv = document.createElement("div");
                 resDiv.className = `reserva reserva-${tipo} apt${apt}`;
 
                 const nomeApt = aptMap[r.apartamento];
@@ -212,8 +212,8 @@ function desenharCalendario() {
                 };
 
                 linha.appendChild(resDiv);
-            });
-        });
+            
+        }); 
 
         div.onclick = () => {
             reservaAtual = null;
