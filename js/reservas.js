@@ -78,8 +78,12 @@ async function apagarReserva() {
 // 3) LÓGICA DE ALOCAÇÃO AUTOMÁTICA
 // =======================================
 
+// CORRIGIDO: comparação com datas reais
 function haConflito(ci, co, r) {
-    return !(co <= r.checkin || ci >= r.checkout);
+    return !(
+        new Date(co) <= new Date(r.checkin) ||
+        new Date(ci) >= new Date(r.checkout)
+    );
 }
 
 function escolherApartamento(checkin, checkout) {
@@ -127,7 +131,6 @@ function desenharCalendario() {
 
     const nomeMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
     document.getElementById("mesAtual").textContent = `${nomeMeses[mes]} ${ano}`;
-;
 
     const primeiroDia = new Date(ano, mes, 1);
     const ultimoDia = new Date(ano, mes + 1, 0);
@@ -171,9 +174,13 @@ function desenharCalendario() {
         div.appendChild(linha2);
         div.appendChild(linha3);
 
+        // CORRIGIDO: checkout NÃO ocupa o dia
         const reservasDia = reservas.filter(r =>
-            dataStr >= r.checkin && dataStr <= r.checkout
+            new Date(dataStr) >= new Date(r.checkin) &&
+            new Date(dataStr) < new Date(r.checkout)
         );
+
+        const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
 
         [1,2,3].forEach(apt => {
             const linha = div.querySelector(`.apt${apt}-linha`);
@@ -198,9 +205,8 @@ function desenharCalendario() {
 
                 const resDiv = document.createElement("div");
                 resDiv.className = `reserva reserva-${tipo} apt${apt}`;
-                const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
-                resDiv.textContent = `${r.cliente} – ${aptMap[r.apartamento]}`;
 
+                resDiv.textContent = `${r.cliente} – ${aptMap[r.apartamento]}`;
 
                 resDiv.onclick = (e) => {
                     e.stopPropagation();
@@ -236,11 +242,13 @@ function desenharCalendario() {
 function abrirDetalhes(r) {
     reservaAtual = r;
 
+    const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
+
     const html = `
         <p><strong>Hóspede:</strong> ${r.cliente}</p>
         <p><strong>Check-in:</strong> ${r.checkin}</p>
         <p><strong>Check-out:</strong> ${r.checkout}</p>
-        const aptMap = { 1: "2301", 2: "2203", 3: "2204" };<p><strong>Apartamento:</strong> ${aptMap[r.apartamento]}</p>
+        <p><strong>Apartamento:</strong> ${aptMap[r.apartamento]}</p>
         <p><strong>Total Bruto:</strong> €${r.totalBruto}</p>
         <p><strong>Comissão:</strong> €${r.comissao}</p>
         <p><strong>Preço/noite:</strong> €${r.precoNoite}</p>
@@ -330,6 +338,7 @@ document.getElementById("closeReserva").onclick = () => {
 document.getElementById("closeDetalhes").onclick = () => {
     document.getElementById("modalDetalhes").style.display = "none";
 };
+
 function mudarMes(delta) {
     mesOffset += delta;
     desenharCalendario();
