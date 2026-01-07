@@ -82,10 +82,11 @@ h1 {
     line-height: 1.1;
     letter-spacing: 0.2px;
     overflow: hidden;
-    white-space: nowrap;
+    white-space: nowrap;       /* ← CORRETO */
     text-overflow: ellipsis;
     height: 18px;
 }
+
 
 /* TOOLTIP PREMIUM */
 .reserva:hover::after {
@@ -96,7 +97,7 @@ h1 {
     padding: 6px 10px;
     border-radius: 6px;
     font-size: 11px;
-    white-space: pre;
+    white-space: pre-line;     /* ← MOSTRA TODAS AS LINHAS */
     z-index: 9999;
     top: -40px;
     left: 50%;
