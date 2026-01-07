@@ -260,7 +260,7 @@ function escolherApartamento(checkin, checkout) {
 
 function desenharCalendario() {
     const calendar = document.getElementById("calendar");
-    calendar.innerinnerHTML = "";
+    calendar.innerHTML = "";
 
     const hoje = new Date();
     const mesData = new Date(hoje.getFullYear(), hoje.getMonth() + mesOffset, 1);
