@@ -216,3 +216,23 @@ function desenharCalendario() {
 // =======================================
 
 document.addEventListener("DOMContentLoaded", carregarReservas);
+// Abrir modal ao clicar no botão "Adicionar Reserva"
+document.getElementById("btnNovaReserva").onclick = () => {
+    reservaAtual = null;
+    document.getElementById("tituloModal").textContent = "Nova Reserva";
+    document.getElementById("modalReserva").style.display = "flex";
+};
+
+// Fechar modal de nova reserva
+document.getElementById("closeReserva").onclick = () => {
+    document.getElementById("modalReserva").style.display = "none";
+};
+
+// Fechar modal de detalhes
+document.getElementById("closeDetalhes").onclick = () => {
+    document.getElementById("modalDetalhes").style.display = "none";
+};
+
+// Guardar reserva
+document.getElementById("guardarReserva").onclick = guardarReserva;
+
