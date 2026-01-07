@@ -193,7 +193,7 @@ function desenharCalendario() {
 
                 const resDiv = document.createElement("div");
                 resDiv.className = `reserva reserva-${tipo} apt${apt}`;
-                resDiv.textContent = r.cliente;
+                resDiv.textContent = `${r.cliente} – ${r.apartamento}`;
 
                 resDiv.onclick = (e) => {
                     e.stopPropagation();
