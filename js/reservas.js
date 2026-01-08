@@ -83,6 +83,28 @@ function formatarData(d) {
 // Converter linha do Excel → Reserva Firestore
 // =======================================
 
+// =======================================
+// Função para formatar datas do Excel
+// =======================================
+function formatarData(d) {
+    if (!d) return "";
+
+    // Caso seja número (serial do Excel)
+    if (typeof d === "number") {
+        const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+        const jsDate = new Date(excelEpoch.getTime() + d * 86400000);
+        return jsDate.toISOString().split("T")[0];
+    }
+
+    // Caso seja string (YYYY-MM-DD ou YYYY-MM-DDTHH:MM:SSZ)
+    if (typeof d === "string") {
+        return d.split("T")[0];
+    }
+
+    return "";
+}
+
+
 function apartamentosLivres(checkin, checkout) {
     const livres = [];
 
