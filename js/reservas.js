@@ -86,7 +86,7 @@ function formatarData(d) {
 function apartamentosLivres(checkin, checkout) {
     const livres = [];
 
-    for (const apt of [2301, 2203, 2204]) {
+    for (const apt of [1, 2, 3]) {
         const ocupado = reservas.some(r =>
             r.apartamento == apt &&
             !(checkout <= r.checkin || checkin >= r.checkout)
@@ -119,7 +119,6 @@ async function importarReservaBooking(row) {
 
     const quartos = Number(row["Quartos"] || 1);
 
-    // NOVO: escolher apartamentos diferentes
     const livres = apartamentosLivres(checkin, checkout);
 
     if (livres.length < quartos) {
@@ -171,6 +170,81 @@ function calcularNoites(ci, co) {
 }
 
 // =======================================
+// 2) GUARDAR / EDITAR / APAGAR RESERVAS
+// =======================================
+
+async function guardarReserva() {
+    const cliente = document.getElementById("cliente").value;
+    const hospedes = Number(document.getElementById("hospedes").value || 0);
+    const berco = document.getElementById("berco").value === "true";
+
+    const checkin = document.getElementById("checkin").value;
+    const checkout = document.getElementById("checkout").value;
+
+    const origemSelect = document.getElementById("origem").value;
+    const origemOutro = document.getElementById("origem_outro").value.trim();
+    const origem = origemSelect === "Outro" ? origemOutro || "Outro" : origemSelect;
+
+    const totalBruto = Number(document.getElementById("total_bruto").value || 0);
+    const comissao = Number(document.getElementById("comissao_ota").value || 0);
+    const precoNoite = Number(document.getElementById("preco_noite").value || 0);
+    const liquido = Number(document.getElementById("liquido").value || 0);
+    const noites = Number(document.getElementById("noites").value || 0);
+    const limpeza = Number(document.getElementById("limpeza").value || 0);
+    const totalLiquidoFinal = Number(document.getElementById("total_liquido_final").value || 0);
+
+    const apartamentoManual = document.getElementById("apartamento_manual").value;
+
+    let apartamento = null;
+    if (apartamentoManual === "auto") {
+        apartamento = escolherApartamento(checkin, checkout);
+    } else {
+        apartamento = Number(apartamentoManual);
+    }
+
+    if (!apartamento) {
+        alert("Nenhum apartamento disponível para estas datas.");
+        return;
+    }
+
+    const dados = {
+        cliente,
+        hospedes,
+        berco,
+        checkin,
+        checkout,
+        origem,
+        totalBruto,
+        comissao,
+        precoNoite,
+        liquido,
+        noites,
+        limpeza,
+        totalLiquidoFinal,
+        apartamento
+    };
+
+    if (reservaAtual && reservaAtual.id) {
+        await db.collection("reservas").doc(reservaAtual.id).update(dados);
+    } else {
+        await db.collection("reservas").add(dados);
+    }
+
+    document.getElementById("modalReserva").style.display = "none";
+    carregarReservas();
+}
+
+async function apagarReserva() {
+    if (!reservaAtual || !reservaAtual.id) return;
+
+    if (confirm("Tem a certeza que deseja apagar esta reserva?")) {
+        await db.collection("reservas").doc(reservaAtual.id).delete();
+        document.getElementById("modalDetalhes").style.display = "none";
+        carregarReservas();
+    }
+}
+
+// =======================================
 // 3) LÓGICA DE ALOCAÇÃO AUTOMÁTICA
 // =======================================
 
@@ -184,7 +258,8 @@ function haConflito(ci, co, r) {
 function escolherApartamento(checkin, checkout) {
     const ci = new Date(checkin);
 
-    for (let apt of [2301, 2203, 2204]) {
+    // 1) PRIORIDADE: back-to-back
+    for (let apt = 1; apt <= 3; apt++) {
         const reservasApt = reservas.filter(r => r.apartamento === apt);
 
         const temBackToBack = reservasApt.some(r =>
@@ -197,7 +272,8 @@ function escolherApartamento(checkin, checkout) {
         }
     }
 
-    for (let apt of [2301, 2203, 2204]) {
+    // 2) Depois: qualquer livre
+    for (let apt = 1; apt <= 3; apt++) {
         const conflito = reservas.some(r =>
             r.apartamento === apt && haConflito(checkin, checkout, r)
         );
@@ -270,9 +346,9 @@ function desenharCalendario() {
             new Date(dataStr) < new Date(r.checkout)
         );
 
-        const aptMap = { 2301: "2301", 2203: "2203", 2204: "2204" };
+        const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
 
-        [2301,2203,2204].forEach(apt => {
+        [1,2,3].forEach(apt => {
             const linha = div.querySelector(`.apt${apt}-linha`);
             const reservasApt = reservasDia.filter(r => r.apartamento === apt);
 
@@ -340,7 +416,7 @@ function desenharCalendario() {
 function abrirDetalhes(r) {
     reservaAtual = r;
 
-    const aptMap = { 2301: "2301", 2203: "2203", 2204: "2204" };
+    const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
 
     const html = `
         <p><strong>Hóspede:</strong> ${r.cliente}</p>
