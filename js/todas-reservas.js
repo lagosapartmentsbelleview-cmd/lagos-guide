@@ -61,8 +61,9 @@ async function apagarSelecionadas() {
 }
 
 function editar(id) {
-    window.location.href = `index.html?edit=${id}`;
+    window.location.href = `calendario.html?edit=${id}`;
 }
+
 
 carregarReservas();
 
