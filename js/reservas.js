@@ -341,9 +341,14 @@ function desenharCalendario() {
         div.appendChild(linha2);
         div.appendChild(linha3);
 
-        const reservasDia = reservas.filter(r =>
-    dataStr >= r.checkin && dataStr <= r.checkout
-);
+       const reservasDia = reservas.filter(r => {
+    const d = dataStr;
+    const ci = r.checkin;
+    const co = r.checkout;
+
+    return d >= ci && d < co;
+});
+
 
 
         const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
