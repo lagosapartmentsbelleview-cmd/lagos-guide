@@ -111,7 +111,7 @@ function apartamentosLivres(checkin, checkout) {
     for (const apt of [1, 2, 3]) {
         const ocupado = reservas.some(r =>
             r.apartamento == apt &&
-            !(new Date(checkout) <= new Date(r.checkin) || new Date(checkin) >= new Date(r.checkout))
+           !(checkout <= r.checkin || checkin >= r.checkout)
 
         );
 
