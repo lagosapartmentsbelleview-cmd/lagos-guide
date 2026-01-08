@@ -114,43 +114,42 @@ async function importarReservaBooking(row) {
     const totalBruto = Number(row["Preço"] || 0);
     const comissao = Number(row["Valor da comissão"] || 0);
 
+    // escolher apartamento com a mesma lógica das reservas manuais
     const apartamento = escolherApartamento(checkin, checkout);
 
-if (!apartamento) {
-    console.warn("Não há apartamentos disponíveis para:", cliente);
-    return;
-}
-
-        const apartamento = livres[i];
-
-        const noites = calcularNoites(checkin, checkout);
-        const precoNoite = noites > 0 ? totalBruto / quartos / noites : 0;
-        const liquido = (totalBruto / quartos) - (comissao / quartos);
-        const limpeza = calcularLimpeza(checkin);
-        const totalLiquidoFinal = liquido - limpeza;
-
-        const dados = {
-            cliente,
-            hospedes,
-            adultos,
-            criancas,
-            idadesCriancas,
-            checkin,
-            checkout,
-            origem: "Booking",
-            totalBruto: totalBruto / quartos,
-            comissao: comissao / quartos,
-            precoNoite,
-            liquido,
-            noites,
-            limpeza,
-            totalLiquidoFinal,
-            apartamento
-        };
-
-        await db.collection("reservas").add(dados);
+    if (!apartamento) {
+        console.warn("Não há apartamentos disponíveis para:", cliente);
+        return;
     }
+
+    const noites = calcularNoites(checkin, checkout);
+    const precoNoite = noites > 0 ? totalBruto / noites : 0;
+    const liquido = totalBruto - comissao;
+    const limpeza = calcularLimpeza(checkin);
+    const totalLiquidoFinal = liquido - limpeza;
+
+    const dados = {
+        cliente,
+        hospedes,
+        adultos,
+        criancas,
+        idadesCriancas,
+        checkin,
+        checkout,
+        origem: "Booking",
+        totalBruto,
+        comissao,
+        precoNoite,
+        liquido,
+        noites,
+        limpeza,
+        totalLiquidoFinal,
+        apartamento
+    };
+
+    await db.collection("reservas").add(dados);
 }
+
 
 // =======================================
 // Funções auxiliares
