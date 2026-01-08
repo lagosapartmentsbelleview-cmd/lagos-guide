@@ -1,10 +1,12 @@
 // =======================================
-// 1) FIRESTORE – CARREGAR RESERVAS
+// 1) ESTADO GLOBAL E FIRESTORE
 // =======================================
+
 let mesOffset = 0;
 let reservas = [];
 let reservaAtual = null;
 
+// Carrega todas as reservas do Firestore para memória
 async function carregarReservas() {
     reservas = [];
 
@@ -17,7 +19,7 @@ async function carregarReservas() {
 }
 
 // =======================================
-// IMPORTAR EXCEL BOOKING (.xlsx)
+// 2) IMPORTAÇÃO EXCEL – BOTÕES E LEITURA
 // =======================================
 
 document.getElementById("btnImportarExcel").onclick = () => {
@@ -37,15 +39,39 @@ document.getElementById("inputExcel").addEventListener("change", async (event) =
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
 
-        const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+        let rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+
+        // Ordenar por data de check-in (regra: processar por ordem cronológica)
+        rows.sort((a, b) => {
+            const ciA = formatarData(a["Check-in"]);
+            const ciB = formatarData(b["Check-in"]);
+            return ciA.localeCompare(ciB);
+        });
+
+        // Vamos guardar os IDs de reserva que vieram no ficheiro
+        const bookingIdsImportados = new Set();
+
+        const novasReservas = []; // para lógica de alocação incremental
 
         for (const row of rows) {
             try {
-                await importarReservaBooking(row);
+                const bookingId = (row["Número da reserva"] || "").toString().trim();
+                if (!bookingId) {
+                    console.warn("Linha sem Número da reserva, ignorada:", row);
+                    continue;
+                }
+
+                bookingIdsImportados.add(bookingId);
+
+                await importarReservaBooking(row, novasReservas);
             } catch (err) {
                 console.error("Erro ao importar linha:", row, err);
             }
         }
+
+        // Depois da importação, verificar reservas que existem no Firestore
+        // mas não vieram no ficheiro (opção C: perguntar)
+        await verificarReservasDesaparecidas(bookingIdsImportados);
 
         alert("Importação concluída!");
         carregarReservas();
@@ -55,18 +81,21 @@ document.getElementById("inputExcel").addEventListener("change", async (event) =
 });
 
 // =======================================
-// FUNÇÃO ÚNICA DE DATA
+// 3) FUNÇÕES DE DATA E CÁLCULOS BÁSICOS
 // =======================================
 
+// Converte datas do Excel ou string para "YYYY-MM-DD"
 function formatarData(d) {
     if (!d) return "";
 
+    // Número (data Excel)
     if (typeof d === "number") {
         const excelEpoch = new Date(Date.UTC(1899, 11, 30));
         const jsDate = new Date(excelEpoch.getTime() + d * 86400000);
         return jsDate.toISOString().split("T")[0];
     }
 
+    // String tipo "2026-03-01T00:00:00"
     if (typeof d === "string") {
         return d.split("T")[0];
     }
@@ -74,11 +103,44 @@ function formatarData(d) {
     return "";
 }
 
+// Calcula número de noites entre duas datas "YYYY-MM-DD"
+function calcularNoites(ci, co) {
+    if (!ci || !co) return 0;
+
+    const [y1, m1, d1] = ci.split("-").map(Number);
+    const [y2, m2, d2] = co.split("-").map(Number);
+
+    const dt1 = Date.UTC(y1, m1 - 1, d1);
+    const dt2 = Date.UTC(y2, m2 - 1, d2);
+
+    const diff = (dt2 - dt1) / (1000 * 60 * 60 * 24);
+    return diff > 0 ? diff : 0;
+}
+
+// Custo de limpeza em função do mês
+function calcularLimpeza(checkin) {
+    if (!checkin) return 0;
+    const data = new Date(checkin);
+    const mes = data.getMonth() + 1;
+
+    if ([6, 7, 8, 9].includes(mes)) return 40;
+    return 35;
+}
+
+// Verifica se há conflito entre [ci, co] e reserva r
+function haConflito(ci, co, r) {
+    // Aqui consideramos intervalo inclusivo para o calendário,
+    // mas para ocupação é [checkin, checkout) → checkout não conta como noite
+    return !(co <= r.checkin || ci >= r.checkout);
+}
 // =======================================
-// Converter linha do Excel → Reserva Firestore
+// 4) FUNÇÃO PRINCIPAL DE IMPORTAÇÃO
 // =======================================
 
-async function importarReservaBooking(row) {
+async function importarReservaBooking(row, novasReservas) {
+
+    const bookingId = (row["Número da reserva"] || "").toString().trim();
+    if (!bookingId) return;
 
     const cliente = row["Nome do hóspede"] || "Hóspede Booking";
     const checkin = formatarData(row["Check-in"]);
@@ -98,19 +160,31 @@ async function importarReservaBooking(row) {
     const comissao = Number(row["Valor da comissão"] || 0);
     const quartos = Number(row["Quartos"] || 1);
 
-    // Reservas criadas nesta importação
-    const novasReservas = [];
+    // Verificar se esta reserva já existe no Firestore
+    const snap = await db.collection("reservas")
+        .where("bookingId", "==", bookingId)
+        .get();
 
+    let reservasExistentes = [];
+    snap.forEach(doc => reservasExistentes.push({ id: doc.id, ...doc.data() }));
+
+    // Se já existe, vamos APAGAR e recriar (mais simples e seguro)
+    for (const r of reservasExistentes) {
+        await db.collection("reservas").doc(r.id).delete();
+    }
+
+    // Criar as reservas (1 por quarto)
     for (let i = 0; i < quartos; i++) {
 
         // Lista completa de reservas até ao momento
         const reservasAtuais = [...reservas, ...novasReservas];
 
+        // Escolher apartamento com lógica inteligente
         const apartamento = escolherApartamento(checkin, checkout, reservasAtuais);
 
         if (!apartamento) {
             console.warn("Sem apartamento disponível para:", cliente);
-            return;
+            continue;
         }
 
         const noites = calcularNoites(checkin, checkout);
@@ -122,6 +196,7 @@ async function importarReservaBooking(row) {
         const totalLiquidoFinal = liquido - limpeza;
 
         const dados = {
+            bookingId,
             cliente,
             hospedes,
             adultos,
@@ -140,9 +215,11 @@ async function importarReservaBooking(row) {
             apartamento
         };
 
-        await db.collection("reservas").add(dados);
+        const docRef = await db.collection("reservas").add(dados);
 
+        // Adicionar à lista de reservas criadas nesta importação
         novasReservas.push({
+            id: docRef.id,
             apartamento,
             checkin,
             checkout
@@ -151,112 +228,18 @@ async function importarReservaBooking(row) {
 }
 
 // =======================================
-// Funções auxiliares
+// 5) LÓGICA DE ALOCAÇÃO INTELIGENTE
 // =======================================
 
-function calcularNoites(ci, co) {
-    const [y1, m1, d1] = ci.split("-").map(Number);
-    const [y2, m2, d2] = co.split("-").map(Number);
+function escolherApartamento(checkin, checkout, lista) {
 
-    const dt1 = Date.UTC(y1, m1 - 1, d1);
-    const dt2 = Date.UTC(y2, m2 - 1, d2);
-
-    const diff = (dt2 - dt1) / (1000 * 60 * 60 * 24);
-    return diff > 0 ? diff : 0;
-}
-
-// =======================================
-// 2) GUARDAR / EDITAR / APAGAR RESERVAS
-// =======================================
-
-async function guardarReserva() {
-    const cliente = document.getElementById("cliente").value;
-    const hospedes = Number(document.getElementById("hospedes").value || 0);
-    const berco = document.getElementById("berco").value === "true";
-
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
-
-    const origemSelect = document.getElementById("origem").value;
-    const origemOutro = document.getElementById("origem_outro").value.trim();
-    const origem = origemSelect === "Outro" ? origemOutro || "Outro" : origemSelect;
-
-    const totalBruto = Number(document.getElementById("total_bruto").value || 0);
-    const comissao = Number(document.getElementById("comissao_ota").value || 0);
-    const precoNoite = Number(document.getElementById("preco_noite").value || 0);
-    const liquido = Number(document.getElementById("liquido").value || 0);
-    const noites = Number(document.getElementById("noites").value || 0);
-    const limpeza = Number(document.getElementById("limpeza").value || 0);
-    const totalLiquidoFinal = Number(document.getElementById("total_liquido_final").value || 0);
-
-    const apartamentoManual = document.getElementById("apartamento_manual").value;
-
-    let apartamento = null;
-    if (apartamentoManual === "auto") {
-        apartamento = escolherApartamento(checkin, checkout);
-    } else {
-        apartamento = Number(apartamentoManual);
-    }
-
-    if (!apartamento) {
-        alert("Nenhum apartamento disponível para estas datas.");
-        return;
-    }
-
-    const dados = {
-        cliente,
-        hospedes,
-        berco,
-        checkin,
-        checkout,
-        origem,
-        totalBruto,
-        comissao,
-        precoNoite,
-        liquido,
-        noites,
-        limpeza,
-        totalLiquidoFinal,
-        apartamento
-    };
-
-    if (reservaAtual && reservaAtual.id) {
-        await db.collection("reservas").doc(reservaAtual.id).update(dados);
-    } else {
-        await db.collection("reservas").add(dados);
-    }
-
-    document.getElementById("modalReserva").style.display = "none";
-    carregarReservas();
-}
-
-async function apagarReserva() {
-    if (!reservaAtual || !reservaAtual.id) return;
-
-    if (confirm("Tem a certeza que deseja apagar esta reserva?")) {
-        await db.collection("reservas").doc(reservaAtual.id).delete();
-        document.getElementById("modalDetalhes").style.display = "none";
-        carregarReservas();
-    }
-}
-
-// =======================================
-// 3) LÓGICA DE ALOCAÇÃO AUTOMÁTICA
-// =======================================
-
-function haConflito(ci, co, r) {
-    return !(co <= r.checkin || ci >= r.checkout);
-}
-
-function escolherApartamento(checkin, checkout, lista = reservas) {
+    const apartamentos = [2301, 2203, 2204];
 
     // 1) PRIORIDADE: back-to-back
-    for (let apt = 1; apt <= 3; apt++) {
+    for (const apt of apartamentos) {
         const reservasApt = lista.filter(r => r.apartamento === apt);
 
-        const temBackToBack = reservasApt.some(r =>
-            r.checkout === checkin
-        );
+        const temBackToBack = reservasApt.some(r => r.checkout === checkin);
 
         if (temBackToBack) {
             const conflito = reservasApt.some(r => haConflito(checkin, checkout, r));
@@ -264,8 +247,8 @@ function escolherApartamento(checkin, checkout, lista = reservas) {
         }
     }
 
-    // 2) Depois: qualquer livre
-    for (let apt = 1; apt <= 3; apt++) {
+    // 2) Depois: ordem fixa 2301 → 2203 → 2204
+    for (const apt of apartamentos) {
         const conflito = lista.some(r =>
             r.apartamento === apt && haConflito(checkin, checkout, r)
         );
@@ -275,299 +258,219 @@ function escolherApartamento(checkin, checkout, lista = reservas) {
     return null;
 }
 
-
 // =======================================
-// 4) DESENHAR CALENDÁRIO
+// 6) VERIFICAR RESERVAS DESAPARECIDAS (OPÇÃO C)
+// =======================================
+
+async function verificarReservasDesaparecidas(bookingIdsImportados) {
+
+    const snap = await db.collection("reservas").get();
+    const reservasAtuais = [];
+    snap.forEach(doc => reservasAtuais.push({ id: doc.id, ...doc.data() }));
+
+    const desaparecidas = reservasAtuais.filter(r =>
+        r.bookingId && !bookingIdsImportados.has(r.bookingId)
+    );
+
+    if (desaparecidas.length === 0) return;
+
+    let msg = "As seguintes reservas existem no sistema mas não vieram no Excel:\n\n";
+    desaparecidas.forEach(r => {
+        msg += `• ${r.bookingId} — ${r.cliente} (${r.checkin} → ${r.checkout})\n`;
+    });
+    msg += "\nQueres apagá-las?";
+
+    if (confirm(msg)) {
+        for (const r of desaparecidas) {
+            await db.collection("reservas").doc(r.id).delete();
+        }
+    }
+}
+// =======================================
+// 8) REATRIBUIR RESERVAS FUTURAS APÓS EDIÇÃO
+// =======================================
+
+async function reatribuirReservasFuturas(idReservaEditada) {
+
+    const reservaEditada = reservas.find(r => r.id === idReservaEditada);
+    if (!reservaEditada) return;
+
+    const hoje = new Date().toISOString().split("T")[0];
+
+    // Não mexer em reservas que já começaram ou começam hoje
+    const reservasProtegidas = reservas.filter(r =>
+        r.checkin <= hoje
+    );
+
+    // Reservas futuras (apenas depois da reserva editada)
+    let futuras = reservas.filter(r =>
+        r.checkin > reservaEditada.checkin
+    );
+
+    // Ordenar futuras por data de check-in
+    futuras.sort((a, b) => a.checkin.localeCompare(b.checkin));
+
+    // Vamos reconstruir as reservas futuras com base na lógica de alocação
+    const novasAlocacoes = [];
+
+    // Base de comparação: reservas protegidas + reserva editada
+    let base = [...reservasProtegidas, reservaEditada];
+
+    for (const r of futuras) {
+
+        // Usar base + novasAlocacoes para decidir apartamento
+        const lista = [...base, ...novasAlocacoes];
+
+        const novoApt = escolherApartamento(r.checkin, r.checkout, lista);
+
+        if (!novoApt) {
+            console.warn("Sem apartamento disponível ao reatribuir:", r);
+            // Mantém como está se não houver solução melhor
+            novasAlocacoes.push(r);
+            continue;
+        }
+
+        // Se o apartamento mudou, atualiza no Firestore
+        if (novoApt !== r.apartamento) {
+            await db.collection("reservas").doc(r.id).update({
+                apartamento: novoApt
+            });
+            r.apartamento = novoApt;
+        }
+
+        novasAlocacoes.push(r);
+        base.push(r);
+    }
+
+    // Recarregar tudo no fim
+    await carregarReservas();
+}
+// =======================================
+// 9) DESENHAR CALENDÁRIO
 // =======================================
 
 function desenharCalendario() {
-    const calendar = document.getElementById("calendar");
-    calendar.innerHTML = "";
 
     const hoje = new Date();
-    const mesData = new Date(Date.UTC(hoje.getFullYear(), hoje.getMonth() + mesOffset, 1));
-    const ano = mesData.getUTCFullYear();
-    const mes = mesData.getUTCMonth();
+    const ano = hoje.getFullYear();
+    const mesBase = hoje.getMonth() + mesOffset; // permite navegar meses
 
-    const nomeMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-    document.getElementById("mesAtual").textContent = `${nomeMeses[mes]} ${ano}`;
+    const dataRef = new Date(ano, mesBase, 1);
+    const mes = dataRef.getMonth();
+    const anoRef = dataRef.getFullYear();
 
-    const primeiroDia = new Date(ano, mes, 1);
-    const ultimoDia = new Date(ano, mes + 1, 0);
-    const totalDias = ultimoDia.getDate();
+    const primeiroDiaSemana = new Date(anoRef, mes, 1).getDay(); // 0=Dom
+    const diasNoMes = new Date(anoRef, mes + 1, 0).getDate();
 
-    const diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-    diasSemana.forEach(d => {
-        const div = document.createElement("div");
-        div.textContent = d;
-        div.style.fontWeight = "bold";
-        div.style.textAlign = "center";
-        calendar.appendChild(div);
-    });
+    const tabela = document.getElementById("calendario");
+    tabela.innerHTML = "";
 
-    for (let i = 0; i < primeiroDia.getDay(); i++) {
-        const empty = document.createElement("div");
-        calendar.appendChild(empty);
+    // Cabeçalho com nome do mês
+    const nomeMes = dataRef.toLocaleString("pt-PT", { month: "long", year: "numeric" });
+    document.getElementById("tituloMes").textContent = nomeMes.charAt(0).toUpperCase() + nomeMes.slice(1);
+
+    // Linha de cabeçalho: dias
+    const thead = document.createElement("thead");
+    const trHead = document.createElement("tr");
+
+    const thApt = document.createElement("th");
+    thApt.textContent = "Apartamento";
+    trHead.appendChild(thApt);
+
+    for (let d = 1; d <= diasNoMes; d++) {
+        const th = document.createElement("th");
+        th.textContent = d;
+        trHead.appendChild(th);
     }
 
-    for (let dia = 1; dia <= totalDias; dia++) {
-        const div = document.createElement("div");
-        div.className = "day";
+    thead.appendChild(trHead);
+    tabela.appendChild(thead);
 
-        const numero = document.createElement("div");
-        numero.className = "day-number";
-        numero.textContent = dia;
-        div.appendChild(numero);
+    const tbody = document.createElement("tbody");
 
-        const dataStr = `${ano}-${String(mes + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
+    // Ordem fixa dos apartamentos
+    const apartamentos = [2301, 2203, 2204];
 
-        const linha1 = document.createElement("div");
-        linha1.className = "linha-apartamento apt1-linha";
+    for (const apt of apartamentos) {
+        const tr = document.createElement("tr");
 
-        const linha2 = document.createElement("div");
-        linha2.className = "linha-apartamento apt2-linha";
+        const tdApt = document.createElement("td");
+        tdApt.textContent = apt;
+        tr.appendChild(tdApt);
 
-        const linha3 = document.createElement("div");
-        linha3.className = "linha-apartamento apt3-linha";
+        for (let dia = 1; dia <= diasNoMes; dia++) {
+            const td = document.createElement("td");
+            td.classList.add("dia-celula");
 
-        div.appendChild(linha1);
-        div.appendChild(linha2);
-        div.appendChild(linha3);
+            const dataDia = new Date(anoRef, mes, dia);
+            const dataStr = dataDia.toISOString().split("T")[0];
 
-        const reservasDia = reservas.filter(r => {
-            const d = dataStr;
-            const ci = r.checkin;
-            const co = r.checkout;
+            // Encontrar reservas que tocam este dia neste apartamento
+            const reservasAptDia = reservas.filter(r =>
+                r.apartamento === apt &&
+                diaPertenceAReserva(dataStr, r.checkin, r.checkout)
+            );
 
-            return d >= ci && d <= co;
-        });
+            if (reservasAptDia.length > 0) {
+                // Para já assumimos no máximo 1 reserva por dia/apt (porque evitamos conflitos)
+                const r = reservasAptDia[0];
 
-        const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
+                const div = document.createElement("div");
+                div.classList.add("reserva");
 
-        [1,2,3].forEach(apt => {
-            const linha = div.querySelector(`.apt${apt}-linha`);
-            const reservasApt = reservasDia.filter(r => r.apartamento === apt);
+                // Ver se é check-in, check-out ou dia intermédio
+                const isCheckin = dataStr === r.checkin;
+                const isCheckout = dataStr === r.checkout;
 
-            if (reservasApt.length === 0) return;
-
-            reservasApt.forEach(r => {
-                let tipo = "full";
-
-                if (dataStr === r.checkin && dataStr === r.checkout) {
-                    tipo = "full";
-                }
-                else if (dataStr === r.checkin) {
-                    tipo = "start";
-                }
-                else if (dataStr === r.checkout) {
-                    tipo = "end";
-                }
-                else {
-                    tipo = "full";
+                if (isCheckin && isCheckout) {
+                    // Caso raro: 1 noite só
+                    div.classList.add("reserva-unica");
+                } else if (isCheckin) {
+                    div.classList.add("reserva-inicio");
+                } else if (isCheckout) {
+                    div.classList.add("reserva-fim");
+                } else {
+                    div.classList.add("reserva-meio");
                 }
 
-                const resDiv = document.createElement("div");
-                resDiv.className = `reserva reserva-${tipo} apt${apt}`;
-                resDiv.textContent = `${r.cliente} – ${aptMap[r.apartamento]}`;
+                div.textContent = r.cliente || r.bookingId || "Reserva";
 
-                resDiv.onclick = (e) => {
-                    e.stopPropagation();
-                    abrirDetalhes(r);
-                };
+                div.onclick = () => editarReserva(r.id);
 
-                linha.appendChild(resDiv);
-            });
-        });
+                td.appendChild(div);
+            }
 
-        div.addEventListener("click", (e) => {
-            if (e.target.classList.contains("reserva")) return;
+            tr.appendChild(td);
+        }
 
-            reservaAtual = null;
-            document.getElementById("tituloModal").textContent = "Nova Reserva";
-            document.getElementById("cliente").value = "";
-            document.getElementById("hospedes").value = "";
-            document.getElementById("berco").value = "false";
-            document.getElementById("origem").value = "Booking";
-            document.getElementById("origem_outro").value = "";
-            document.getElementById("origem_outro").style.display = "none";
-
-            document.getElementById("checkin").value = dataStr;
-            document.getElementById("checkout").value = "";
-            document.getElementById("noites").value = "";
-            document.getElementById("total_bruto").value = "";
-            document.getElementById("comissao_ota").value = "";
-            document.getElementById("preco_noite").value = "";
-            document.getElementById("liquido").value = "";
-            document.getElementById("limpeza").value = "";
-            document.getElementById("total_liquido_final").value = "";
-            document.getElementById("apartamento_manual").value = "auto";
-
-            document.getElementById("modalReserva").style.display = "flex";
-
-            calcularValores();
-        });
-
-        calendar.appendChild(div);
-    }
-}
-
-// =======================================
-// 5) DETALHES / EDITAR / CRUD
-// =======================================
-
-function abrirDetalhes(r) {
-    reservaAtual = r;
-
-    const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
-
-    const html = `
-        <p><strong>Hóspede:</strong> ${r.cliente}</p>
-        <p><strong>Nº Hóspedes:</strong> ${r.hospedes || 0}</p>
-        <p><strong>Berço:</strong> ${r.berco ? "Sim" : "Não"}</p>
-        <p><strong>Origem:</strong> ${r.origem || "-"}</p>
-        <p><strong>Check-in:</strong> ${r.checkin}</p>
-        <p><strong>Check-out:</strong> ${r.checkout}</p>
-        <p><strong>Noites:</strong> ${r.noites || "-"}</p>
-        <p><strong>Apartamento:</strong> ${aptMap[r.apartamento]}</p>
-        <p><strong>Total Bruto:</strong> €${r.totalBruto?.toFixed ? r.totalBruto.toFixed(2) : r.totalBruto}</p>
-        <p><strong>Comissão:</strong> €${r.comissao?.toFixed ? r.comissao.toFixed(2) : r.comissao}</p>
-        <p><strong>Preço/noite:</strong> €${r.precoNoite?.toFixed ? r.precoNoite.toFixed(2) : r.precoNoite}</p>
-        <p><strong>Líquido:</strong> €${r.liquido?.toFixed ? r.liquido.toFixed(2) : r.liquido}</p>
-        <p><strong>Limpeza (custo interno):</strong> €${r.limpeza?.toFixed ? r.limpeza.toFixed(2) : r.limpeza}</p>
-        <p><strong>Total Líquido Final:</strong> €${r.totalLiquidoFinal?.toFixed ? r.totalLiquidoFinal.toFixed(2) : r.totalLiquidoFinal}</p>
-        <button onclick="editarReserva()">Editar</button>
-        <button onclick="apagarReserva()">Apagar</button>
-    `;
-
-    document.getElementById("detalhesConteudo").innerHTML = html;
-    document.getElementById("modalDetalhes").style.display = "flex";
-}
-
-function editarReserva() {
-    const r = reservaAtual;
-    if (!r) return;
-
-    document.getElementById("cliente").value = r.cliente || "";
-    document.getElementById("hospedes").value = r.hospedes || "";
-    document.getElementById("berco").value = r.berco ? "true" : "false";
-
-    const origemBase = ["Booking","Airbnb","VRBO","Particular"];
-    if (origemBase.includes(r.origem)) {
-        document.getElementById("origem").value = r.origem;
-        document.getElementById("origem_outro").value = "";
-        document.getElementById("origem_outro").style.display = "none";
-    } else {
-        document.getElementById("origem").value = "Outro";
-        document.getElementById("origem_outro").value = r.origem || "";
-        document.getElementById("origem_outro").style.display = "block";
+        tbody.appendChild(tr);
     }
 
-    document.getElementById("checkin").value = r.checkin || "";
-    document.getElementById("checkout").value = r.checkout || "";
-    document.getElementById("noites").value = r.noites || "";
-
-    document.getElementById("total_bruto").value = r.totalBruto || "";
-    document.getElementById("comissao_ota").value = r.comissao || "";
-    document.getElementById("preco_noite").value = r.precoNoite || "";
-    document.getElementById("liquido").value = r.liquido || "";
-    document.getElementById("limpeza").value = r.limpeza || "";
-    document.getElementById("total_liquido_final").value = r.totalLiquidoFinal || "";
-
-    document.getElementById("apartamento_manual").value = r.apartamento?.toString() || "auto";
-
-    document.getElementById("modalDetalhes").style.display = "none";
-    document.getElementById("modalReserva").style.display = "flex";
-
-    calcularValores();
+    tabela.appendChild(tbody);
 }
 
-// =======================================
-// 6) CÁLCULOS AUTOMÁTICOS
-// =======================================
-
-function calcularLimpeza(checkin) {
-    if (!checkin) return 0;
-    const data = new Date(checkin);
-    const mes = data.getMonth() + 1;
-
-    if ([6,7,8,9].includes(mes)) return 40;
-    return 35;
+// Verifica se um dia pertence à reserva para efeitos de calendário
+function diaPertenceAReserva(diaStr, checkin, checkout) {
+    // Aqui queremos incluir o dia de check-in, dias intermédios
+    // e o dia de check-out (para mostrar a meia célula)
+    return diaStr >= checkin && diaStr <= checkout;
 }
-
-function calcularValores() {
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
-    const totalBruto = Number(document.getElementById("total_bruto").value || 0);
-    const comissao = Number(document.getElementById("comissao_ota").value || 0);
-
-    let noites = 0;
-    if (checkin && checkout) {
-        const ci = new Date(checkin);
-        const co = new Date(checkout);
-        noites = (co - ci) / (1000 * 60 * 60 * 24);
-        if (noites < 0) noites = 0;
-    }
-
-    const precoNoite = noites > 0 ? totalBruto / noites : 0;
-    const liquido = totalBruto - comissao;
-    const limpeza = calcularLimpeza(checkin);
-    const totalLiquidoFinal = liquido - limpeza;
-
-    document.getElementById("noites").value = noites || "";
-    document.getElementById("preco_noite").value = precoNoite ? precoNoite.toFixed(2) : "";
-    document.getElementById("liquido").value = liquido ? liquido.toFixed(2) : "";
-    document.getElementById("limpeza").value = limpeza ? limpeza.toFixed(2) : "";
-    document.getElementById("total_liquido_final").value = totalLiquidoFinal ? totalLiquidoFinal.toFixed(2) : "";
-}
-
-document.getElementById("checkin").addEventListener("change", calcularValores);
-document.getElementById("checkout").addEventListener("change", calcularValores);
-document.getElementById("total_bruto").addEventListener("input", calcularValores);
-document.getElementById("comissao_ota").addEventListener("input", calcularValores);
-
 // =======================================
-// 7) EVENTOS DE INTERFACE
+// 10) INICIALIZAÇÃO
 // =======================================
 
-document.addEventListener("DOMContentLoaded", carregarReservas);
+window.addEventListener("load", () => {
+    carregarReservas();
 
-document.getElementById("btnNovaReserva").onclick = () => {
-    reservaAtual = null;
-    document.getElementById("tituloModal").textContent = "Nova Reserva";
-    document.getElementById("cliente").value = "";
-    document.getElementById("hospedes").value = "";
-    document.getElementById("berco").value = "false";
-    document.getElementById("origem").value = "Booking";
-    document.getElementById("origem_outro").value = "";
-    document.getElementById("origem_outro").style.display = "none";
+    document.getElementById("btnMesAnterior").onclick = () => {
+        mesOffset--;
+        desenharCalendario();
+    };
 
-    document.getElementById("checkin").value = "";
-    document.getElementById("checkout").value = "";
-    document.getElementById("noites").value = "";
-    document.getElementById("total_bruto").value = "";
-    document.getElementById("comissao_ota").value = "";
-    document.getElementById("preco_noite").value = "";
-    document.getElementById("liquido").value = "";
-    document.getElementById("limpeza").value = "";
-    document.getElementById("total_liquido_final").value = "";
-    document.getElementById("apartamento_manual").value = "auto";
+    document.getElementById("btnMesSeguinte").onclick = () => {
+        mesOffset++;
+        desenharCalendario();
+    };
 
-    document.getElementById("modalReserva").style.display = "flex";
-
-    calcularValores();
-};
-
-document.getElementById("closeReserva").onclick = () => {
-    document.getElementById("modalReserva").style.display = "none";
-};
-
-document.getElementById("closeDetalhes").onclick = () => {
-    document.getElementById("modalDetalhes").style.display = "none";
-};
-
-function mudarMes(delta) {
-    mesOffset += delta;
-    desenharCalendario();
-}
-
-document.getElementById("guardarReserva").onclick = guardarReserva;
+    document.getElementById("btnNovaReserva").onclick = novaReserva;
+});
