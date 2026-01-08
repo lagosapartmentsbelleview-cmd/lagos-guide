@@ -3,124 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <title>Calendário de Reservas – Marina Park</title>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background: #f5f5f5;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
 
-    h1 {
-        text-align: center;
-    }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
 
-    #legenda {
-        margin-top: 10px;
-        font-weight: bold;
-        text-align: center;
-    }
+        /* Navegação do mês */
+        #navegacaoMes {
+            text-align: center;
+            margin: 20px 0;
+        }
 
-    #calendar {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 5px;
-        margin-top: 20px;
-    }
+        #tituloMes {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 0 15px;
+        }
 
-    .day {
-        background: white;
-        padding: 5px;
-        min-height: 110px;
-        border-radius: 6px;
-        border: 1px solid #ddd;
-        position: relative;
-        cursor: pointer;
-        overflow: visible;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
+        /* Calendário responsivo */
+        #calendarioWrapper {
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
 
-    .day-number {
-        font-weight: bold;
-        margin-bottom: 2px;
-    }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 900px;
+            background: white;
+        }
 
-    .linha-apartamento {
-        flex: 1;
-        position: relative;
-        border-radius: 4px;
-        overflow: hidden;
-    }
+        th, td {
+            border: 1px solid #ccc;
+            text-align: center;
+            padding: 4px;
+            min-width: 28px;
+            height: 26px;
+        }
 
-    /* CORES DOS APARTAMENTOS */
-    .apt1 { background: #003366; color: white; }
-    .apt2 { background: #4da3ff; color: black; }
-    .apt3 { background: #005f73; color: white; }
+        th {
+            background: #eaeaea;
+            font-weight: bold;
+        }
 
-    /* RESERVAS */
-    .reserva {
-        font-size: 10px;
-        font-weight: 600;
-        text-align: center;
-        padding: 1px 2px;
-        line-height: 1.1;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 4px;
-        height: 100%;
-    }
+        /* Células */
+        .dia-celula {
+            position: relative;
+            padding: 0;
+        }
 
-    .reserva-full { width: 100%; }
-    .reserva-start { width: 50%; float: right; }
-    .reserva-end { width: 50%; float: left; }
+        /* Reservas */
+        .reserva {
+            font-size: 10px;
+            line-height: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            height: 100%;
+            background-color: #4caf50;
+            color: #fff;
+        }
 
-    /* Modal */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,0.6);
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        box-sizing: border-box;
-    }
+        .reserva-meio {
+            border-radius: 0;
+        }
 
-    .modal-content {
-        background: white;
-        padding: 20px;
-        width: 100%;
-        max-width: 420px;
-        max-height: 90vh;
-        overflow-y: auto;
-        border-radius: 8px;
-        box-sizing: border-box;
-    }
+        .reserva-inicio {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            clip-path: inset(0 0 0 50%);
+        }
 
-    .close {
-        float: right;
-        cursor: pointer;
-        font-size: 20px;
-    }
+        .reserva-fim {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            clip-path: inset(0 50% 0 0);
+        }
 
-    button {
-        padding: 10px 15px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        cursor: pointer;
-    }
+        .reserva-unica {
+            border-radius: 12px;
+        }
 
-    input, select {
-        width: 100%;
-        padding: 8px;
-        margin-top: 8px;
-    }
+        /* Botões */
+        button {
+            padding: 8px 14px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            width: 100%;
+            max-width: 420px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .close {
+            float: right;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 8px;
+        }
     </style>
 </head>
 
@@ -128,102 +143,70 @@
 
 <h1>Calendário de Reservas – Marina Park</h1>
 
-<div id="legenda">
-    <span style="color:#003366;">■ Apt 1 = 2301</span> &nbsp;&nbsp;
-    <span style="color:#4da3ff;">■ Apt 2 = 2203</span> &nbsp;&nbsp;
-    <span style="color:#005f73;">■ Apt 3 = 2204</span>
-</div>
-
+<!-- Botões principais -->
 <button id="btnNovaReserva">Adicionar Reserva</button>
 <button id="btnImportarExcel">Importar Excel Booking</button>
 <input type="file" id="inputExcel" accept=".xlsx" style="display:none;">
-<button onclick="window.location.href='calendario.html'">Gestão de Reservas</button>
+<button onclick="window.location.href='todas-reservas.html'">Todas as Reservas</button>
 
-
-
-
-<div id="mesNavegacao" style="text-align:center; margin-top:20px;">
-<button onclick="mudarMes(-1)">◀</button>
-<span id="mesAtual" style="font-weight:bold; font-size:18px; margin:0 15px;"></span>
-<button onclick="mudarMes(1)">▶</button>
+<!-- Navegação do mês -->
+<div id="navegacaoMes">
+    <button id="btnMesAnterior">◀</button>
+    <span id="tituloMes"></span>
+    <button id="btnMesSeguinte">▶</button>
 </div>
 
-<div id="calendar"></div>
+<!-- Calendário -->
+<div id="calendarioWrapper">
+    <table id="calendario"></table>
+</div>
 
-<!-- Modal Nova Reserva -->
+<!-- Modal Reserva -->
 <div id="modalReserva" class="modal">
     <div class="modal-content">
-        <span class="close" id="closeReserva">&times;</span>
-        <h3 id="tituloModal">Nova Reserva</h3>
+        <span class="close" onclick="fecharModalReserva()">&times;</span>
+        <h3 id="tituloModal">Reserva</h3>
 
-        <label>Nome do Hóspede</label>
-        <input id="cliente">
+        <form id="formReserva">
+            <label>Número da Reserva (Booking ID)</label>
+            <input id="bookingId">
 
-        <label>Nº de Hóspedes</label>
-        <input type="number" id="hospedes">
+            <label>Nome do Hóspede</label>
+            <input id="cliente">
 
-        <label>Berço?</label>
-        <select id="berco">
-            <option value="false">Não</option>
-            <option value="true">Sim</option>
-        </select>
+            <label>Hóspedes</label>
+            <input type="number" id="hospedes">
 
-        <label>Origem da Reserva</label>
-        <select id="origem">
-            <option value="Booking">Booking</option>
-            <option value="Airbnb">Airbnb</option>
-            <option value="VRBO">VRBO</option>
-            <option value="Particular">Particular</option>
-            <option value="Outro">Outro</option>
-        </select>
+            <label>Adultos</label>
+            <input type="number" id="adultos">
 
-        <input id="origem_outro" placeholder="Especificar (se escolher 'Outro')" style="display:none;">
+            <label>Crianças</label>
+            <input type="number" id="criancas">
 
-        <label>Check-in</label>
-        <input type="date" id="checkin">
+            <label>Idades das Crianças</label>
+            <input id="idadesCriancas">
 
-        <label>Check-out</label>
-        <input type="date" id="checkout">
+            <label>Check-in</label>
+            <input type="date" id="checkin">
 
-        <label>Nº de Noites</label>
-        <input id="noites" readonly>
+            <label>Check-out</label>
+            <input type="date" id="checkout">
 
-        <label>Total Bruto (€)</label>
-        <input type="number" id="total_bruto">
+            <label>Total Bruto (€)</label>
+            <input type="number" id="totalBruto">
 
-        <label>Comissão OTA (€)</label>
-        <input type="number" id="comissao_ota">
+            <label>Comissão (€)</label>
+            <input type="number" id="comissao">
 
-        <label>Preço por Noite (€)</label>
-        <input type="number" id="preco_noite" readonly>
+            <label>Apartamento</label>
+            <select id="apartamento">
+                <option value="2301">2301</option>
+                <option value="2203">2203</option>
+                <option value="2204">2204</option>
+            </select>
 
-        <label>Valor Líquido (€)</label>
-        <input type="number" id="liquido" readonly>
-
-        <label>Limpeza (€)</label>
-        <input type="number" id="limpeza" readonly>
-
-        <label>Total Líquido Final (€)</label>
-        <input type="number" id="total_liquido_final" readonly>
-
-        <label>Apartamento</label>
-        <select id="apartamento_manual">
-            <option value="auto">Automático</option>
-            <option value="1">2301 (Apt 1)</option>
-            <option value="2">2203 (Apt 2)</option>
-            <option value="3">2204 (Apt 3)</option>
-        </select>
-
-        <button id="guardarReserva">Guardar Reserva</button>
-    </div>
-</div>
-
-<!-- Modal Detalhes -->
-<div id="modalDetalhes" class="modal">
-    <div class="modal-content">
-        <span class="close" id="closeDetalhes">&times;</span>
-        <h3>Detalhes da Reserva</h3>
-        <div id="detalhesConteudo"></div>
+            <button type="button" id="btnGuardarReserva" onclick="guardarReserva()">Guardar</button>
+        </form>
     </div>
 </div>
 
@@ -231,13 +214,6 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script src="js/firebase-config.js"></script>
 <script src="js/reservas.js"></script>
-
-<script>
-document.getElementById("origem").addEventListener("change", () => {
-    const outro = document.getElementById("origem_outro");
-    outro.style.display = (origem.value === "Outro") ? "block" : "none";
-});
-</script>
 
 </body>
 </html>
