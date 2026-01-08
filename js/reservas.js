@@ -292,9 +292,10 @@ function desenharCalendario() {
     calendar.innerHTML = "";
 
     const hoje = new Date();
-    const mesData = new Date(hoje.getFullYear(), hoje.getMonth() + mesOffset, 1);
-    const ano = mesData.getFullYear();
-    const mes = mesData.getMonth();
+    const mesData = new Date(Date.UTC(hoje.getFullYear(), hoje.getMonth() + mesOffset, 1));
+    const ano = mesData.getUTCFullYear();
+    const mes = mesData.getUTCMonth();
+
 
     const nomeMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
     document.getElementById("mesAtual").textContent = `${nomeMeses[mes]} ${ano}`;
