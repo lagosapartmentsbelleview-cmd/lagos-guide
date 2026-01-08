@@ -15,16 +15,15 @@ async function carregarReservas() {
 
     desenharCalendario();
 }
+
 // =======================================
 // IMPORTAR EXCEL BOOKING (.xlsx)
 // =======================================
 
-// Abrir seletor de ficheiro ao clicar no botão
 document.getElementById("btnImportarExcel").onclick = () => {
     document.getElementById("inputExcel").click();
 };
 
-// Quando o ficheiro é escolhido
 document.getElementById("inputExcel").addEventListener("change", async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -55,14 +54,52 @@ document.getElementById("inputExcel").addEventListener("change", async (event) =
     reader.readAsArrayBuffer(file);
 });
 
+// =======================================
+// FUNÇÕES DE DATA (CORRIGIDAS)
+// =======================================
+
+function excelDateToJSDate(serial) {
+    const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+    const jsDate = new Date(excelEpoch.getTime() + serial * 86400000);
+    return jsDate.toISOString().split("T")[0];
+}
+
+function fixDateString(d) {
+    if (!d) return "";
+    const [y, m, day] = d.split("-");
+    return `${y}-${m}-${day}`;
+}
+
+function formatarData(d) {
+    if (!d) return "";
+
+    if (typeof d === "number") return excelDateToJSDate(d);
+    if (typeof d === "string") return fixDateString(d);
+
+    return "";
+}
 
 // =======================================
 // Converter linha do Excel → Reserva Firestore
 // =======================================
 
+function apartamentosLivres(checkin, checkout) {
+    const livres = [];
+
+    for (const apt of [2301, 2203, 2204]) {
+        const ocupado = reservas.some(r =>
+            r.apartamento == apt &&
+            !(checkout <= r.checkin || checkin >= r.checkout)
+        );
+
+        if (!ocupado) livres.push(apt);
+    }
+
+    return livres;
+}
+
 async function importarReservaBooking(row) {
 
-    // Extrair campos do Excel
     const cliente = row["Nome do hóspede"] || "Hóspede Booking";
     const checkin = formatarData(row["Check-in"]);
     const checkout = formatarData(row["Check-out"]);
@@ -71,7 +108,6 @@ async function importarReservaBooking(row) {
     const adultos = Number(row["Adultos"] || 0);
     const criancas = Number(row["Crianças"] || 0);
 
-    // Limpar idades (ex: "3 anos; 7 anos" → "3, 7")
     const idadesCriancas = (row["Idade da(s) criança(s)"] || "")
         .toString()
         .replace(/[^\d,]/g, "")
@@ -81,16 +117,18 @@ async function importarReservaBooking(row) {
     const totalBruto = Number(row["Preço"] || 0);
     const comissao = Number(row["Valor da comissão"] || 0);
 
-    const quartos = Number(row["Quartos"] || 1); // 1, 2 ou 3 apartamentos
+    const quartos = Number(row["Quartos"] || 1);
 
-    // Criar 1, 2 ou 3 reservas conforme nº de apartamentos
+    // NOVO: escolher apartamentos diferentes
+    const livres = apartamentosLivres(checkin, checkout);
+
+    if (livres.length < quartos) {
+        console.warn("Não há apartamentos suficientes para:", cliente);
+        return;
+    }
+
     for (let i = 0; i < quartos; i++) {
-
-        const apartamento = escolherApartamento(checkin, checkout);
-        if (!apartamento) {
-            console.warn("Sem apartamento disponível para:", cliente);
-            continue;
-        }
+        const apartamento = livres[i];
 
         const noites = calcularNoites(checkin, checkout);
         const precoNoite = noites > 0 ? totalBruto / quartos / noites : 0;
@@ -121,98 +159,15 @@ async function importarReservaBooking(row) {
     }
 }
 
-
 // =======================================
 // Funções auxiliares
 // =======================================
-
-function formatarData(d) {
-    if (!d) return "";
-    const date = new Date(d);
-    if (isNaN(date)) return "";
-    return date.toISOString().split("T")[0];
-}
 
 function calcularNoites(ci, co) {
     const d1 = new Date(ci);
     const d2 = new Date(co);
     const diff = (d2 - d1) / (1000 * 60 * 60 * 24);
     return diff > 0 ? diff : 0;
-}
-
-// =======================================
-// 2) GUARDAR / EDITAR / APAGAR RESERVAS
-// =======================================
-
-async function guardarReserva() {
-    const cliente = document.getElementById("cliente").value;
-    const hospedes = Number(document.getElementById("hospedes").value || 0);
-    const berco = document.getElementById("berco").value === "true";
-
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
-
-    const origemSelect = document.getElementById("origem").value;
-    const origemOutro = document.getElementById("origem_outro").value.trim();
-    const origem = origemSelect === "Outro" ? origemOutro || "Outro" : origemSelect;
-
-    const totalBruto = Number(document.getElementById("total_bruto").value || 0);
-    const comissao = Number(document.getElementById("comissao_ota").value || 0);
-    const precoNoite = Number(document.getElementById("preco_noite").value || 0);
-    const liquido = Number(document.getElementById("liquido").value || 0);
-    const noites = Number(document.getElementById("noites").value || 0);
-    const limpeza = Number(document.getElementById("limpeza").value || 0);
-    const totalLiquidoFinal = Number(document.getElementById("total_liquido_final").value || 0);
-
-    const apartamentoManual = document.getElementById("apartamento_manual").value;
-
-    let apartamento = null;
-    if (apartamentoManual === "auto") {
-        apartamento = escolherApartamento(checkin, checkout);
-    } else {
-        apartamento = Number(apartamentoManual);
-    }
-
-    if (!apartamento) {
-        alert("Nenhum apartamento disponível para estas datas.");
-        return;
-    }
-
-    const dados = {
-        cliente,
-        hospedes,
-        berco,
-        checkin,
-        checkout,
-        origem,
-        totalBruto,
-        comissao,
-        precoNoite,
-        liquido,
-        noites,
-        limpeza,
-        totalLiquidoFinal,
-        apartamento
-    };
-
-    if (reservaAtual && reservaAtual.id) {
-        await db.collection("reservas").doc(reservaAtual.id).update(dados);
-    } else {
-        await db.collection("reservas").add(dados);
-    }
-
-    document.getElementById("modalReserva").style.display = "none";
-    carregarReservas();
-}
-
-async function apagarReserva() {
-    if (!reservaAtual || !reservaAtual.id) return;
-
-    if (confirm("Tem a certeza que deseja apagar esta reserva?")) {
-        await db.collection("reservas").doc(reservaAtual.id).delete();
-        document.getElementById("modalDetalhes").style.display = "none";
-        carregarReservas();
-    }
 }
 
 // =======================================
@@ -229,8 +184,7 @@ function haConflito(ci, co, r) {
 function escolherApartamento(checkin, checkout) {
     const ci = new Date(checkin);
 
-    // 1) PRIORIDADE: back-to-back no mesmo apartamento
-    for (let apt = 1; apt <= 3; apt++) {
+    for (let apt of [2301, 2203, 2204]) {
         const reservasApt = reservas.filter(r => r.apartamento === apt);
 
         const temBackToBack = reservasApt.some(r =>
@@ -243,8 +197,7 @@ function escolherApartamento(checkin, checkout) {
         }
     }
 
-    // 2) Depois: qualquer apartamento livre
-    for (let apt = 1; apt <= 3; apt++) {
+    for (let apt of [2301, 2203, 2204]) {
         const conflito = reservas.some(r =>
             r.apartamento === apt && haConflito(checkin, checkout, r)
         );
@@ -314,12 +267,12 @@ function desenharCalendario() {
 
         const reservasDia = reservas.filter(r =>
             new Date(dataStr) >= new Date(r.checkin) &&
-            new Date(dataStr) <= new Date(r.checkout)
+            new Date(dataStr) < new Date(r.checkout)
         );
 
-        const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
+        const aptMap = { 2301: "2301", 2203: "2203", 2204: "2204" };
 
-        [1,2,3].forEach(apt => {
+        [2301,2203,2204].forEach(apt => {
             const linha = div.querySelector(`.apt${apt}-linha`);
             const reservasApt = reservasDia.filter(r => r.apartamento === apt);
 
@@ -329,13 +282,10 @@ function desenharCalendario() {
                 let tipo = "full";
 
                 if (r.checkin === dataStr && r.checkout !== dataStr) {
-                    tipo = "start"; // metade direita
+                    tipo = "start";
                 } 
                 else if (r.checkout === dataStr && r.checkin !== dataStr) {
-                    tipo = "end";   // metade esquerda
-                } 
-                else {
-                    tipo = "full";  // atravessa o dia ou 1 dia
+                    tipo = "end";
                 }
 
                 const resDiv = document.createElement("div");
@@ -376,7 +326,7 @@ function desenharCalendario() {
 
             document.getElementById("modalReserva").style.display = "flex";
 
-            calcularValores(); // <<< IMPORTANTE
+            calcularValores();
         });
 
         calendar.appendChild(div);
@@ -390,7 +340,7 @@ function desenharCalendario() {
 function abrirDetalhes(r) {
     reservaAtual = r;
 
-    const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
+    const aptMap = { 2301: "2301", 2203: "2203", 2204: "2204" };
 
     const html = `
         <p><strong>Hóspede:</strong> ${r.cliente}</p>
@@ -450,7 +400,7 @@ function editarReserva() {
     document.getElementById("modalDetalhes").style.display = "none";
     document.getElementById("modalReserva").style.display = "flex";
 
-    calcularValores(); // <<< IMPORTANTE
+    calcularValores();
 }
 
 // =======================================
@@ -522,9 +472,11 @@ document.getElementById("btnNovaReserva").onclick = () => {
     document.getElementById("liquido").value = "";
     document.getElementById("limpeza").value = "";
     document.getElementById("total_liquido_final").value = "";
+    document.getElementById("apartamento_manual").value = "auto";
+
     document.getElementById("modalReserva").style.display = "flex";
 
-    calcularValores(); // <<< IMPORTANTE
+    calcularValores();
 };
 
 document.getElementById("closeReserva").onclick = () => {
