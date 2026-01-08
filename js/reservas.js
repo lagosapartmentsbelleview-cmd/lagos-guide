@@ -55,20 +55,18 @@ document.getElementById("inputExcel").addEventListener("change", async (event) =
 });
 
 // =======================================
-// FUNÇÃO ÚNICA DE DATA (SEGURA)
+// FUNÇÃO ÚNICA DE DATA
 // =======================================
 
 function formatarData(d) {
     if (!d) return "";
 
-    // Caso seja número (serial do Excel)
     if (typeof d === "number") {
         const excelEpoch = new Date(Date.UTC(1899, 11, 30));
         const jsDate = new Date(excelEpoch.getTime() + d * 86400000);
         return jsDate.toISOString().split("T")[0];
     }
 
-    // Caso seja string (YYYY-MM-DD ou YYYY-MM-DDTHH:MM:SSZ)
     if (typeof d === "string") {
         return d.split("T")[0];
     }
@@ -79,21 +77,6 @@ function formatarData(d) {
 // =======================================
 // Converter linha do Excel → Reserva Firestore
 // =======================================
-
-function apartamentosLivres(checkin, checkout) {
-    const livres = [];
-
-    for (const apt of [1, 2, 3]) {
-        const ocupado = reservas.some(r =>
-            r.apartamento == apt &&
-            !(checkout <= r.checkin || checkin >= r.checkout)
-        );
-
-        if (!ocupado) livres.push(apt);
-    }
-
-    return livres;
-}
 
 async function importarReservaBooking(row) {
 
@@ -114,7 +97,6 @@ async function importarReservaBooking(row) {
     const totalBruto = Number(row["Preço"] || 0);
     const comissao = Number(row["Valor da comissão"] || 0);
 
-    // escolher apartamento com a mesma lógica das reservas manuais
     const apartamento = escolherApartamento(checkin, checkout);
 
     if (!apartamento) {
@@ -149,7 +131,6 @@ async function importarReservaBooking(row) {
 
     await db.collection("reservas").add(dados);
 }
-
 
 // =======================================
 // Funções auxiliares
@@ -246,7 +227,6 @@ async function apagarReserva() {
 // =======================================
 
 function haConflito(ci, co, r) {
-    // conflito se os intervalos se sobrepõem
     return !(co <= r.checkin || ci >= r.checkout);
 }
 
@@ -354,16 +334,16 @@ function desenharCalendario() {
                 let tipo = "full";
 
                 if (dataStr === r.checkin && dataStr === r.checkout) {
-                    tipo = "full"; // reserva de 1 dia
+                    tipo = "full";
                 }
                 else if (dataStr === r.checkin) {
-                    tipo = "start"; // metade direita
+                    tipo = "start";
                 }
                 else if (dataStr === r.checkout) {
-                    tipo = "end"; // metade esquerda
+                    tipo = "end";
                 }
                 else {
-                    tipo = "full"; // dias no meio
+                    tipo = "full";
                 }
 
                 const resDiv = document.createElement("div");
