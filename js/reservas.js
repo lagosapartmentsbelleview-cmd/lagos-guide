@@ -89,7 +89,8 @@ function apartamentosLivres(checkin, checkout) {
     for (const apt of [1, 2, 3]) {
         const ocupado = reservas.some(r =>
             r.apartamento == apt &&
-            !(checkout <= r.checkin || checkin >= r.checkout)
+            !(new Date(checkout) <= new Date(r.checkin) || new Date(checkin) >= new Date(r.checkout))
+
         );
 
         if (!ocupado) livres.push(apt);
@@ -168,6 +169,13 @@ function calcularNoites(ci, co) {
     const diff = (d2 - d1) / (1000 * 60 * 60 * 24);
     return diff > 0 ? diff : 0;
 }
+function haConflito(ci, co, r) {
+    return !(new Date(co) <= new Date(r.checkin) || new Date(ci) >= new Date(r.checkout));
+}
+const ocupado = reservas.some(r =>
+    r.apartamento == apt && haConflito(checkin, checkout, r)
+);
+
 
 // =======================================
 // 2) GUARDAR / EDITAR / APAGAR RESERVAS
