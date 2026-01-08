@@ -114,8 +114,6 @@ async function importarReservaBooking(row) {
     const totalBruto = Number(row["Preço"] || 0);
     const comissao = Number(row["Valor da comissão"] || 0);
 
-    const quartos = Number(row["Quartos"] || 1);
-
     const apartamento = escolherApartamento(checkin, checkout);
 
 if (!apartamento) {
@@ -123,8 +121,6 @@ if (!apartamento) {
     return;
 }
 
-
-    for (let i = 0; i < quartos; i++) {
         const apartamento = livres[i];
 
         const noites = calcularNoites(checkin, checkout);
