@@ -55,37 +55,9 @@ document.getElementById("inputExcel").addEventListener("change", async (event) =
 });
 
 // =======================================
-// FUNÇÕES DE DATA (CORRIGIDAS)
+// FUNÇÃO ÚNICA DE DATA (SEGURA)
 // =======================================
 
-function excelDateToJSDate(serial) {
-    const excelEpoch = new Date(Date.UTC(1899, 11, 30));
-    const jsDate = new Date(excelEpoch.getTime() + serial * 86400000);
-    return jsDate.toISOString().split("T")[0];
-}
-
-function fixDateString(d) {
-    if (!d) return "";
-    const [y, m, day] = d.split("-");
-    return `${y}-${m}-${day}`;
-}
-
-function formatarData(d) {
-    if (!d) return "";
-
-    if (typeof d === "number") return excelDateToJSDate(d);
-    if (typeof d === "string") return fixDateString(d);
-
-    return "";
-}
-
-// =======================================
-// Converter linha do Excel → Reserva Firestore
-// =======================================
-
-// =======================================
-// Função para formatar datas do Excel
-// =======================================
 function formatarData(d) {
     if (!d) return "";
 
@@ -104,6 +76,9 @@ function formatarData(d) {
     return "";
 }
 
+// =======================================
+// Converter linha do Excel → Reserva Firestore
+// =======================================
 
 function apartamentosLivres(checkin, checkout) {
     const livres = [];
@@ -111,8 +86,7 @@ function apartamentosLivres(checkin, checkout) {
     for (const apt of [1, 2, 3]) {
         const ocupado = reservas.some(r =>
             r.apartamento == apt &&
-           !(checkout <= r.checkin || checkin >= r.checkout)
-
+            !(checkout <= r.checkin || checkin >= r.checkout)
         );
 
         if (!ocupado) livres.push(apt);
@@ -186,18 +160,15 @@ async function importarReservaBooking(row) {
 // =======================================
 
 function calcularNoites(ci, co) {
-    const d1 = new Date(ci);
-    const d2 = new Date(co);
-    const diff = (d2 - d1) / (1000 * 60 * 60 * 24);
+    const [y1, m1, d1] = ci.split("-").map(Number);
+    const [y2, m2, d2] = co.split("-").map(Number);
+
+    const dt1 = Date.UTC(y1, m1 - 1, d1);
+    const dt2 = Date.UTC(y2, m2 - 1, d2);
+
+    const diff = (dt2 - dt1) / (1000 * 60 * 60 * 24);
     return diff > 0 ? diff : 0;
 }
-function haConflito(ci, co, r) {
-    return !(new Date(co) <= new Date(r.checkin) || new Date(ci) >= new Date(r.checkout));
-}
-const ocupado = reservas.some(r =>
-    r.apartamento == apt && haConflito(checkin, checkout, r)
-);
-
 
 // =======================================
 // 2) GUARDAR / EDITAR / APAGAR RESERVAS
@@ -279,21 +250,17 @@ async function apagarReserva() {
 // =======================================
 
 function haConflito(ci, co, r) {
-    return !(
-        new Date(co) <= new Date(r.checkin) ||
-        new Date(ci) >= new Date(r.checkout)
-    );
+    // conflito se os intervalos se sobrepõem
+    return !(co <= r.checkin || ci >= r.checkout);
 }
 
 function escolherApartamento(checkin, checkout) {
-    const ci = new Date(checkin);
-
     // 1) PRIORIDADE: back-to-back
     for (let apt = 1; apt <= 3; apt++) {
         const reservasApt = reservas.filter(r => r.apartamento === apt);
 
         const temBackToBack = reservasApt.some(r =>
-            new Date(r.checkout).getTime() === ci.getTime()
+            r.checkout === checkin
         );
 
         if (temBackToBack) {
@@ -325,7 +292,6 @@ function desenharCalendario() {
     const mesData = new Date(Date.UTC(hoje.getFullYear(), hoje.getMonth() + mesOffset, 1));
     const ano = mesData.getUTCFullYear();
     const mes = mesData.getUTCMonth();
-
 
     const nomeMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
     document.getElementById("mesAtual").textContent = `${nomeMeses[mes]} ${ano}`;
@@ -372,13 +338,13 @@ function desenharCalendario() {
         div.appendChild(linha2);
         div.appendChild(linha3);
 
-      const reservasDia = reservas.filter(r => {
-    const d = dataStr;
-    const ci = r.checkin;
-    const co = r.checkout;
+        const reservasDia = reservas.filter(r => {
+            const d = dataStr;
+            const ci = r.checkin;
+            const co = r.checkout;
 
-    return d >= ci && d <= co;
-});
+            return d >= ci && d <= co;
+        });
 
         const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
 
@@ -391,19 +357,18 @@ function desenharCalendario() {
             reservasApt.forEach(r => {
                 let tipo = "full";
 
-if (dataStr === r.checkin && dataStr === r.checkout) {
-    tipo = "full"; // reserva de 1 dia
-}
-else if (dataStr === r.checkin) {
-    tipo = "start"; // metade direita
-}
-else if (dataStr === r.checkout) {
-    tipo = "end"; // metade esquerda
-}
-else {
-    tipo = "full"; // dias no meio
-}
-
+                if (dataStr === r.checkin && dataStr === r.checkout) {
+                    tipo = "full"; // reserva de 1 dia
+                }
+                else if (dataStr === r.checkin) {
+                    tipo = "start"; // metade direita
+                }
+                else if (dataStr === r.checkout) {
+                    tipo = "end"; // metade esquerda
+                }
+                else {
+                    tipo = "full"; // dias no meio
+                }
 
                 const resDiv = document.createElement("div");
                 resDiv.className = `reserva reserva-${tipo} apt${apt}`;
