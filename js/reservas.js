@@ -343,7 +343,7 @@ function desenharCalendario() {
 
         const reservasDia = reservas.filter(r =>
             new Date(dataStr) >= new Date(r.checkin) &&
-            new Date(dataStr) < new Date(r.checkout)
+            new Date(dataStr) <= new Date(r.checkout)
         );
 
         const aptMap = { 1: "2301", 2: "2203", 3: "2204" };
