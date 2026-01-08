@@ -96,40 +96,58 @@ async function importarReservaBooking(row) {
 
     const totalBruto = Number(row["Preço"] || 0);
     const comissao = Number(row["Valor da comissão"] || 0);
+    const quartos = Number(row["Quartos"] || 1);
 
-    const apartamento = escolherApartamento(checkin, checkout);
+    // Reservas criadas nesta importação
+    const novasReservas = [];
 
-    if (!apartamento) {
-        console.warn("Não há apartamentos disponíveis para:", cliente);
-        return;
+    for (let i = 0; i < quartos; i++) {
+
+        // Lista completa de reservas até ao momento
+        const reservasAtuais = [...reservas, ...novasReservas];
+
+        const apartamento = escolherApartamento(checkin, checkout, reservasAtuais);
+
+        if (!apartamento) {
+            console.warn("Sem apartamento disponível para:", cliente);
+            return;
+        }
+
+        const noites = calcularNoites(checkin, checkout);
+        const totalBrutoQuarto = totalBruto / quartos;
+        const comissaoQuarto = comissao / quartos;
+        const precoNoite = noites > 0 ? totalBrutoQuarto / noites : 0;
+        const liquido = totalBrutoQuarto - comissaoQuarto;
+        const limpeza = calcularLimpeza(checkin);
+        const totalLiquidoFinal = liquido - limpeza;
+
+        const dados = {
+            cliente,
+            hospedes,
+            adultos,
+            criancas,
+            idadesCriancas,
+            checkin,
+            checkout,
+            origem: "Booking",
+            totalBruto: totalBrutoQuarto,
+            comissao: comissaoQuarto,
+            precoNoite,
+            liquido,
+            noites,
+            limpeza,
+            totalLiquidoFinal,
+            apartamento
+        };
+
+        await db.collection("reservas").add(dados);
+
+        novasReservas.push({
+            apartamento,
+            checkin,
+            checkout
+        });
     }
-
-    const noites = calcularNoites(checkin, checkout);
-    const precoNoite = noites > 0 ? totalBruto / noites : 0;
-    const liquido = totalBruto - comissao;
-    const limpeza = calcularLimpeza(checkin);
-    const totalLiquidoFinal = liquido - limpeza;
-
-    const dados = {
-        cliente,
-        hospedes,
-        adultos,
-        criancas,
-        idadesCriancas,
-        checkin,
-        checkout,
-        origem: "Booking",
-        totalBruto,
-        comissao,
-        precoNoite,
-        liquido,
-        noites,
-        limpeza,
-        totalLiquidoFinal,
-        apartamento
-    };
-
-    await db.collection("reservas").add(dados);
 }
 
 // =======================================
@@ -230,10 +248,11 @@ function haConflito(ci, co, r) {
     return !(co <= r.checkin || ci >= r.checkout);
 }
 
-function escolherApartamento(checkin, checkout) {
+function escolherApartamento(checkin, checkout, lista = reservas) {
+
     // 1) PRIORIDADE: back-to-back
     for (let apt = 1; apt <= 3; apt++) {
-        const reservasApt = reservas.filter(r => r.apartamento === apt);
+        const reservasApt = lista.filter(r => r.apartamento === apt);
 
         const temBackToBack = reservasApt.some(r =>
             r.checkout === checkin
@@ -247,7 +266,7 @@ function escolherApartamento(checkin, checkout) {
 
     // 2) Depois: qualquer livre
     for (let apt = 1; apt <= 3; apt++) {
-        const conflito = reservas.some(r =>
+        const conflito = lista.some(r =>
             r.apartamento === apt && haConflito(checkin, checkout, r)
         );
         if (!conflito) return apt;
@@ -255,6 +274,7 @@ function escolherApartamento(checkin, checkout) {
 
     return null;
 }
+
 
 // =======================================
 // 4) DESENHAR CALENDÁRIO
