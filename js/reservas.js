@@ -116,12 +116,13 @@ async function importarReservaBooking(row) {
 
     const quartos = Number(row["Quartos"] || 1);
 
-    const livres = apartamentosLivres(checkin, checkout);
+    const apartamento = escolherApartamento(checkin, checkout);
 
-    if (livres.length < quartos) {
-        console.warn("Não há apartamentos suficientes para:", cliente);
-        return;
-    }
+if (!apartamento) {
+    console.warn("Não há apartamentos disponíveis para:", cliente);
+    return;
+}
+
 
     for (let i = 0; i < quartos; i++) {
         const apartamento = livres[i];
