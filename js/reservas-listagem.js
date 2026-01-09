@@ -26,6 +26,9 @@ window.addEventListener("load", () => {
     document.getElementById("btnGuardar").onclick = guardarReserva;
     document.getElementById("btnApagar").onclick = apagarReservaConfirmar;
     document.getElementById("fecharModal").onclick = fecharModalReserva;
+
+    document.getElementById("btnEnviarCalendario").onclick = enviarParaCalendario;
+
 });
 
 
@@ -426,3 +429,22 @@ if (btnEnviarCalendario) {
 }
 console.log("JS da listagem carregado mesmo!");
 
+function enviarParaCalendario() {
+    const selecionadas = [...document.querySelectorAll(".selectReserva:checked")];
+
+    if (selecionadas.length === 0) {
+        alert("Nenhuma reserva selecionada.");
+        return;
+    }
+
+    selecionadas.forEach(chk => {
+        const id = chk.dataset.id;
+        const reserva = reservas.find(r => r.id === id);
+
+        if (reserva) {
+            db.collection("calendario").add(reserva);
+        }
+    });
+
+    alert("Reservas enviadas para o calendário!");
+}
