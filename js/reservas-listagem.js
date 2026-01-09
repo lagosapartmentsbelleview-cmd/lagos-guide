@@ -261,43 +261,44 @@ async function importarExcelBooking(event) {
 
     for (const linha of linhas) {
 
-        const bookingId = String(linha["Reservation ID"] || "").trim();
-        if (!bookingId) continue;
+        const bookingId = String(linha["Número da reserva"] || "").trim();
+if (!bookingId) continue;
 
-        bookingIdsImportados.add(bookingId);
+bookingIdsImportados.add(bookingId);
 
-        const checkin = formatarDataExcel(linha["Check-in"]);
-        const checkout = formatarDataExcel(linha["Check-out"]);
+const checkin = formatarDataExcel(linha["Check-in"]);
+const checkout = formatarDataExcel(linha["Check-out"]);
 
-        const totalBruto = Number(linha["Total price"] || 0);
-        const comissao = Number(linha["Commission"] || 0);
+const totalBruto = Number(linha["Preço"] || 0);
+const comissao = Number(linha["Valor da comissão"] || 0);
 
-        const noites = calcularNoites(checkin, checkout);
-        const precoNoite = noites > 0 ? totalBruto / noites : 0;
-        const liquido = totalBruto - comissao;
-        const limpeza = calcularLimpeza(checkin);
-        const totalLiquidoFinal = liquido - limpeza;
+const noites = calcularNoites(checkin, checkout);
+const precoNoite = noites > 0 ? totalBruto / noites : 0;
+const liquido = totalBruto - comissao;
+const limpeza = calcularLimpeza(checkin);
+const totalLiquidoFinal = liquido - limpeza;
 
-        const dados = {
-            origem: "Booking",
-            bookingId,
-            cliente: linha["Guest name"] || "Hóspede",
-            apartamento: linha["Room"] || "2301",
-            checkin,
-            checkout,
-            hospedes: Number(linha["Guests"] || 0),
-            adultos: Number(linha["Adults"] || 0),
-            criancas: Number(linha["Children"] || 0),
-            idadesCriancas: "",
-            totalBruto,
-            comissao,
-            precoNoite,
-            noites,
-            liquido,
-            limpeza,
-            totalLiquidoFinal,
-            berco: false
-        };
+const dados = {
+    origem: "Booking",
+    bookingId,
+    cliente: linha["Nome do hóspede"] || "Hóspede",
+    apartamento: linha["Quartos"] || "2301",
+    checkin,
+    checkout,
+    hospedes: Number(linha["Pessoas"] || 0),
+    adultos: Number(linha["Adultos"] || 0),
+    criancas: Number(linha["Crianças"] || 0),
+    idadesCriancas: linha["Idade da(s) criança(s)"] || "",
+    totalBruto,
+    comissao,
+    precoNoite,
+    noites,
+    liquido,
+    limpeza,
+    totalLiquidoFinal,
+    berco: false
+};
+
 
         // Verificar se já existe
         const existente = reservas.find(r => r.bookingId === bookingId);
