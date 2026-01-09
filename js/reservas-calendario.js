@@ -13,6 +13,11 @@ const apartamentos = ["2301", "2203", "2204"];
 window.addEventListener("load", () => {
     carregarReservas();
 
+    document.getElementById("btnIrListagem").onclick = () => {
+    window.location.href = "listagem-reservas.html";
+};
+
+
     document.getElementById("btnMesAnterior").onclick = () => {
         mesOffset--;
         desenharCalendario();
