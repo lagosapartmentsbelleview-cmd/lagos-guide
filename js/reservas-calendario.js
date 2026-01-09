@@ -34,7 +34,7 @@ window.addEventListener("load", () => {
  * 2) CARREGAR RESERVAS DO FIRESTORE
  ******************************************************/
 function carregarReservas() {
-    db.collection("reservas")
+      db.collection("calendario")
       .orderBy("checkin")
       .onSnapshot(snapshot => {
 
