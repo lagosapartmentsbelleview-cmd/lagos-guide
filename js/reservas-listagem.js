@@ -44,27 +44,29 @@ function desenharTabela() {
     tbody.innerHTML = "";
 
     reservas.forEach(r => {
-        const tr = document.createElement("tr");
+    const tr = document.createElement("tr");
 
-        tr.innerHTML = `
-            <td><span class="origem-badge origem-${r.origem.toLowerCase()}">${r.origem}</span></td>
-            <td>${r.bookingId || ""}</td>
-            <td>${r.cliente}</td>
-            <td>${r.apartamento}</td>
-            <td>${r.checkin}</td>
-            <td>${r.checkout}</td>
-            <td>${r.noites}</td>
-            <td>${r.totalBruto.toFixed(2)}</td>
-            <td>${r.comissao.toFixed(2)}</td>
-            <td>${r.precoNoite.toFixed(2)}</td>
-            <td>${r.berco ? "Sim" : "Não"}</td>
-            <td>
-                <button onclick="editarReserva('${r.id}')">Editar</button>
-            </td>
-        `;
+    tr.innerHTML = `
+        <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
+        <td><span class="origem-badge origem-${r.origem.toLowerCase()}">${r.origem}</span></td>
+        <td>${r.bookingId || ""}</td>
+        <td>${r.cliente}</td>
+        <td>${r.apartamento}</td>
+        <td>${r.checkin}</td>
+        <td>${r.checkout}</td>
+        <td>${r.noites}</td>
+        <td>${r.totalBruto.toFixed(2)}</td>
+        <td>${r.comissao.toFixed(2)}</td>
+        <td>${r.precoNoite.toFixed(2)}</td>
+        <td>${r.berco ? "Sim" : "Não"}</td>
+        <td>
+            <button onclick="editarReserva('${r.id}')">Editar</button>
+        </td>
+    `;
 
-        tbody.appendChild(tr);
-    });
+    tbody.appendChild(tr);
+});
+
 }
 
 
