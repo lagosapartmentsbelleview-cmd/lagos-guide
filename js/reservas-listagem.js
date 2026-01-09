@@ -1,3 +1,5 @@
+console.log("JS DA LISTAGEM ESTÁ A CORRER MESMO!");
+
 /******************************************************
  * 0) ESTADO GLOBAL
  ******************************************************/
@@ -13,7 +15,7 @@ window.addEventListener("load", () => {
 
     document.getElementById("btnNovaReserva").onclick = novaReserva;
     document.getElementById("btnImportarExcel").onclick = () =>
-        document.getElementById("inputExcel").click();
+    document.getElementById("inputExcel").click();
 
     document.getElementById("inputExcel").addEventListener("change", importarExcelBooking);
 
