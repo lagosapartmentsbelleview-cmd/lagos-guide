@@ -43,18 +43,71 @@
             background: white;
         }
 
-        th, td {
-            border: 1px solid #ccc;
-            text-align: center;
-            padding: 4px;
-            min-width: 28px;
-            height: 26px;
-        }
+       
 
         th {
             background: #eaeaea;
             font-weight: bold;
         }
+
+        /* Células do calendário */
+th, td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 0;
+    min-width: 40px;
+    height: 36px;
+    font-size: 12px;
+    position: relative;
+}
+
+/* Cada célula do dia */
+.dia-celula {
+    position: relative;
+    padding: 0;
+}
+
+/* Reserva ocupa 100% da célula e é sempre clicável */
+.reserva {
+    background-color: #4caf50;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Dia intermédio */
+.reserva-meio {
+    border-radius: 0;
+}
+
+/* Check-in (metade direita vazia) */
+.reserva-inicio {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    clip-path: inset(0 0 0 45%);
+}
+
+/* Check-out (metade esquerda vazia) */
+.reserva-fim {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    clip-path: inset(0 45% 0 0);
+}
+
+/* Reserva de 1 noite */
+.reserva-unica {
+    border-radius: 12px;
+}
+
 
         /* Células */
         .dia-celula {
@@ -62,38 +115,7 @@
             padding: 0;
         }
 
-        /* Reservas */
-        .reserva {
-            font-size: 10px;
-            line-height: 10px;
-            overflow: hidden;
-            white-space: nowrap;
-            cursor: pointer;
-            height: 100%;
-            background-color: #4caf50;
-            color: #fff;
-        }
-
-        .reserva-meio {
-            border-radius: 0;
-        }
-
-        .reserva-inicio {
-            border-top-left-radius: 12px;
-            border-bottom-left-radius: 12px;
-            clip-path: inset(0 0 0 50%);
-        }
-
-        .reserva-fim {
-            border-top-right-radius: 12px;
-            border-bottom-right-radius: 12px;
-            clip-path: inset(0 50% 0 0);
-        }
-
-        .reserva-unica {
-            border-radius: 12px;
-        }
-
+       
         /* Botões */
         button {
             padding: 8px 14px;
