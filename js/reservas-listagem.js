@@ -357,3 +357,63 @@ function formatarDataExcel(valor) {
     return `${String(dt.d).padStart(2, "0")}/${String(dt.m).padStart(2, "0")}/${dt.y}`;
 }
 
+const selectAllCheckbox = document.getElementById("selectAll");
+
+if (selectAllCheckbox) {
+    selectAllCheckbox.addEventListener("change", function () {
+        const checkboxes = document.querySelectorAll(".selectReserva");
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+}
+const btnApagarSelecionadas = document.getElementById("btnApagarSelecionadas");
+
+if (btnApagarSelecionadas) {
+    btnApagarSelecionadas.addEventListener("click", async () => {
+        const selecionadas = [...document.querySelectorAll(".selectReserva:checked")];
+
+        if (selecionadas.length === 0) {
+            alert("Nenhuma reserva selecionada.");
+            return;
+        }
+
+        if (!confirm(`Apagar ${selecionadas.length} reservas?`)) return;
+
+        for (const cb of selecionadas) {
+            const id = cb.dataset.id;
+            await db.collection("reservas").doc(id).delete();
+        }
+
+        alert("Reservas apagadas com sucesso.");
+        carregarReservas();
+    });
+}
+const btnEnviarCalendario = document.getElementById("btnEnviarCalendario");
+
+if (btnEnviarCalendario) {
+    btnEnviarCalendario.addEventListener("click", async () => {
+        const selecionadas = [...document.querySelectorAll(".selectReserva:checked")];
+
+        if (selecionadas.length === 0) {
+            alert("Nenhuma reserva selecionada.");
+            return;
+        }
+
+        for (const cb of selecionadas) {
+            const id = cb.dataset.id;
+
+            const doc = await db.collection("reservas").doc(id).get();
+            if (!doc.exists) continue;
+
+            const dados = doc.data();
+
+            await db.collection("calendario").add({
+                ...dados,
+                enviadoParaCalendario: true,
+                criadoEm: new Date()
+            });
+        }
+
+        alert("Reservas enviadas para o calendário.");
+    });
+}
+
