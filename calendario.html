@@ -55,9 +55,9 @@ th, td {
     border: 1px solid #ccc;
     text-align: center;
     padding: 0;
-    min-width: 40px;
-    height: 36px;
-    font-size: 12px;
+    min-width: 48px;      /* maior largura */
+    height: 42px;         /* maior altura */
+    font-size: 13px;      /* texto mais legível */
     position: relative;
 }
 
@@ -71,7 +71,7 @@ th, td {
 .reserva {
     background-color: #4caf50;
     color: #fff;
-    font-size: 11px;
+    font-size: 12px;       /* maior */
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -82,6 +82,7 @@ th, td {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 10;           /* 🔥 AGORA O CLIQUE FUNCIONA */
 }
 
 /* Dia intermédio */
@@ -93,14 +94,14 @@ th, td {
 .reserva-inicio {
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
-    clip-path: inset(0 0 0 45%);
+    clip-path: inset(0 0 0 40%); /* mais espaço para texto */
 }
 
 /* Check-out (metade esquerda vazia) */
 .reserva-fim {
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
-    clip-path: inset(0 45% 0 0);
+    clip-path: inset(0 40% 0 0); /* mais espaço para texto */
 }
 
 /* Reserva de 1 noite */
