@@ -1,1 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão de Reservas</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #acoes {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 18px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background: #1976d2;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #125a9c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        th {
+            background: #eaeaea;
+            font-weight: bold;
+        }
+
+        /* Cores por origem */
+        .origem-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .origem-booking { background: #1E88E5; }
+        .origem-airbnb { background: #EC407A; }
+        .origem-vrbo { background: #8E24AA; }
+        .origem-particular { background: #43A047; }
+        .origem-outro { background: #757575; }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 9999;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .close {
+            float: right;
+            cursor: pointer;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        #btnGuardar {
+            background: #43A047;
+        }
+
+        #btnApagar {
+            background: #d32f2f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Gestão de Reservas</h1>
+
+    <div id="acoes">
+        <button id="btnNovaReserva">Nova Reserva</button>
+        <button id="btnImportarExcel">Importar Booking (XLSX)</button>
+    </div>
+
+    <input type="file" id="inputExcel" accept=".xlsx" style="display:none">
+
+    <table id="tabelaReservas">
+        <thead>
+            <tr>
+                <th>Origem</th>
+                <th>Nº Reserva</th>
+                <th>Hóspede</th>
+                <th>Apartamento</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Noites</th>
+                <th>Total Bruto (€)</th>
+                <th>Comissão (€)</th>
+                <th>Valor/Noite (€)</th>
+                <th>Berço</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Modal -->
+    <div id="modalReserva" class="modal">
+        <div class="modal-content">
+            <span class="close" id="fecharModal">&times;</span>
+            <h2>Reserva</h2>
+
+            <form id="formReserva">
+
+                <label>Origem</label>
+                <select id="origem">
+                    <option value="Booking">Booking</option>
+                    <option value="Airbnb">Airbnb</option>
+                    <option value="VRBO">VRBO</option>
+                    <option value="Particular">Particular</option>
+                    <option value="Outro">Outro</option>
+                </select>
+
+                <label>Número da Reserva (Booking ID)</label>
+                <input type="text" id="bookingId">
+
+                <label>Nome do Hóspede</label>
+                <input type="text" id="cliente">
+
+                <label>Apartamento</label>
+                <select id="apartamento">
+                    <option value="2301">2301</option>
+                    <option value="2203">2203</option>
+                    <option value="2204">2204</option>
+                </select>
+
+                <label>Check-in (dd/mm/aaaa)</label>
+                <input type="text" id="checkin" placeholder="dd/mm/aaaa">
+
+                <label>Check-out (dd/mm/aaaa)</label>
+                <input type="text" id="checkout" placeholder="dd/mm/aaaa">
+
+                <label>Hóspedes</label>
+                <input type="number" id="hospedes">
+
+                <label>Adultos</label>
+                <input type="number" id="adultos">
+
+                <label>Crianças</label>
+                <input type="number" id="criancas">
+
+                <label>Idades das Crianças</label>
+                <input type="text" id="idadesCriancas">
+
+                <label>Total Bruto (€)</label>
+                <input type="number" id="totalBruto" step="0.01">
+
+                <label>Comissão (€)</label>
+                <input type="number" id="comissao" step="0.01">
+
+                <label>Valor por Noite (€)</label>
+                <input type="number" id="precoNoite" step="0.01" readonly>
+
+                <label>Necessidade de Berço</label>
+                <select id="berco">
+                    <option value="false" selected>Não</option>
+                    <option value="true">Sim</option>
+                </select>
+
+                <button type="button" id="btnGuardar">Guardar</button>
+                <button type="button" id="btnApagar">Apagar</button>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/reservas-listagem.js"></script>
+
+</body>
+</html>
 
