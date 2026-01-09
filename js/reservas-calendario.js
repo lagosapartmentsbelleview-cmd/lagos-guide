@@ -33,14 +33,18 @@ window.addEventListener("load", () => {
 /******************************************************
  * 2) CARREGAR RESERVAS DO FIRESTORE
  ******************************************************/
-async function carregarReservas() {
-    const snap = await db.collection("reservas").get();
+function carregarReservas() {
+    db.collection("reservas")
+      .orderBy("checkin")
+      .onSnapshot(snapshot => {
 
-    reservas = [];
-    snap.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
+        reservas = [];
+        snapshot.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
 
-    desenharCalendario();
+        desenharCalendario();
+      });
 }
+
 
 
 /******************************************************
