@@ -2,242 +2,27 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>Calendário de Reservas – Marina Park</title>
+    <title>Calendário de Reservas</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background: #f5f5f5;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        /* Navegação do mês */
-        #navegacaoMes {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        #tituloMes {
-            font-size: 22px;
-            font-weight: bold;
-            margin: 0 15px;
-        }
-
-        /* Calendário responsivo */
-        #calendarioWrapper {
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            min-width: 900px;
-            background: white;
-        }
-
-       
-
-        th {
-            background: #eaeaea;
-            font-weight: bold;
-        }
-
-        /* Células do calendário */
-th, td {
-    border: 1px solid #ccc;
-    text-align: center;
-    padding: 0;
-    min-width: 48px;      /* maior largura */
-    height: 42px;         /* maior altura */
-    font-size: 13px;      /* texto mais legível */
-    position: relative;
-}
-
-/* Cada célula do dia */
-.dia-celula {
-    position: relative;
-    padding: 0;
-}
-
-/* Reserva ocupa 100% da célula e é sempre clicável */
-.reserva {
-    background-color: #4caf50;
-    color: #fff;
-    font-size: 12px;       /* maior */
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;           /* 🔥 AGORA O CLIQUE FUNCIONA */
-}
-
-/* Dia intermédio */
-.reserva-meio {
-    border-radius: 0;
-}
-
-/* Check-in (metade direita vazia) */
-.reserva-inicio {
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-    clip-path: inset(0 0 0 40%); /* mais espaço para texto */
-}
-
-/* Check-out (metade esquerda vazia) */
-.reserva-fim {
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    clip-path: inset(0 40% 0 0); /* mais espaço para texto */
-}
-
-/* Reserva de 1 noite */
-.reserva-unica {
-    border-radius: 12px;
-}
-
-
-        /* Células */
-        .dia-celula {
-            position: relative;
-            padding: 0;
-        }
-
-       
-        /* Botões */
-        button {
-            padding: 8px 14px;
-            margin: 5px;
-            cursor: pointer;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-            z-index: 9999; /* 🔥 modal sempre acima de tudo */
-}
-
-        .modal-content {
-            background: white;
-            padding: 20px;
-            width: 100%;
-            max-width: 420px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-
-        .close {
-            float: right;
-            cursor: pointer;
-            font-size: 20px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 8px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/calendario.css">
 </head>
 
 <body>
 
-<h1>Calendário de Reservas – Marina Park</h1>
+    <h1>Calendário de Reservas</h1>
 
-<!-- Botões principais -->
-<button id="btnNovaReserva">Adicionar Reserva</button>
-<button id="btnImportarExcel">Importar Excel Booking</button>
-<input type="file" id="inputExcel" accept=".xlsx" style="display:none;">
-<button onclick="window.location.href='todas-reservas.html'">Todas as Reservas</button>
-
-<!-- Navegação do mês -->
-<div id="navegacaoMes">
-    <button id="btnMesAnterior">◀</button>
-    <span id="tituloMes"></span>
-    <button id="btnMesSeguinte">▶</button>
-</div>
-
-<!-- Calendário -->
-<div id="calendarioWrapper">
-    <table id="calendario"></table>
-</div>
-
-<!-- Modal Reserva -->
-<div id="modalReserva" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="fecharModalReserva()">&times;</span>
-        <h3 id="tituloModal">Reserva</h3>
-
-        <form id="formReserva">
-            <label>Número da Reserva (Booking ID)</label>
-            <input id="bookingId">
-
-            <label>Nome do Hóspede</label>
-            <input id="cliente">
-
-            <label>Hóspedes</label>
-            <input type="number" id="hospedes">
-
-            <label>Adultos</label>
-            <input type="number" id="adultos">
-
-            <label>Crianças</label>
-            <input type="number" id="criancas">
-
-            <label>Idades das Crianças</label>
-            <input id="idadesCriancas">
-
-            <label>Check-in</label>
-            <input type="date" id="checkin">
-
-            <label>Check-out</label>
-            <input type="date" id="checkout">
-
-            <label>Total Bruto (€)</label>
-            <input type="number" id="totalBruto">
-
-            <label>Comissão (€)</label>
-            <input type="number" id="comissao">
-
-            <label>Apartamento</label>
-            <select id="apartamento">
-                <option value="2301">2301</option>
-                <option value="2203">2203</option>
-                <option value="2204">2204</option>
-            </select>
-
-            <button type="button" id="btnGuardarReserva" onclick="guardarReserva()">Guardar</button>
-        </form>
+    <div id="navegacaoMes">
+        <button id="btnMesAnterior">◀</button>
+        <span id="tituloMes"></span>
+        <button id="btnMesSeguinte">▶</button>
     </div>
-</div>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script src="js/firebase-config.js"></script>
-<script src="js/reservas.js"></script>
+    <div id="calendarioWrapper">
+        <table id="tabelaCalendario"></table>
+    </div>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/reservas-calendario.js"></script>
 
 </body>
 </html>
