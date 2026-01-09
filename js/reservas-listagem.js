@@ -16,6 +16,10 @@ window.addEventListener("load", () => {
     document.getElementById("btnNovaReserva").onclick = novaReserva;
     document.getElementById("btnImportarExcel").onclick = () =>
     document.getElementById("inputExcel").click();
+    document.getElementById("btnIrCalendario").onclick = () => {
+    window.location.href = "calendario.html";
+};
+
 
     document.getElementById("inputExcel").addEventListener("change", importarExcelBooking);
 
