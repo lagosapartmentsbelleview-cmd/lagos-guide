@@ -416,4 +416,5 @@ if (btnEnviarCalendario) {
         alert("Reservas enviadas para o calendário.");
     });
 }
+console.log("JS da listagem carregado mesmo!");
 
