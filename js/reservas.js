@@ -455,6 +455,143 @@ function diaPertenceAReserva(diaStr, checkin, checkout) {
     // e o dia de check-out (para mostrar a meia célula)
     return diaStr >= checkin && diaStr <= checkout;
 }
+
+// =======================================
+// 7) CRUD DE RESERVAS (CRIAR / EDITAR / APAGAR)
+// =======================================
+
+// Abrir modal para nova reserva
+function novaReserva() {
+    reservaAtual = null;
+    limparFormularioReserva();
+    abrirModalReserva();
+}
+
+// Abrir modal para editar reserva existente
+function editarReserva(id) {
+    const r = reservas.find(res => res.id === id);
+    if (!r) return;
+
+    reservaAtual = r;
+    preencherFormularioReserva(r);
+    abrirModalReserva();
+}
+
+// Apagar reserva
+async function apagarReserva(id) {
+    if (!confirm("Tens a certeza que queres apagar esta reserva?")) return;
+
+    await db.collection("reservas").doc(id).delete();
+    await carregarReservas();
+}
+
+// Guardar reserva (nova ou editada)
+async function guardarReserva() {
+
+    const form = document.getElementById("formReserva");
+
+    const bookingId = form.bookingId.value.trim();
+    const cliente = form.cliente.value.trim() || "Hóspede";
+    const checkin = form.checkin.value;
+    const checkout = form.checkout.value;
+    const apartamento = Number(form.apartamento.value);
+
+    const hospedes = Number(form.hospedes.value || 0);
+    const adultos = Number(form.adultos.value || 0);
+    const criancas = Number(form.criancas.value || 0);
+    const idadesCriancas = form.idadesCriancas.value.trim();
+
+    const totalBruto = Number(form.totalBruto.value || 0);
+    const comissao = Number(form.comissao.value || 0);
+
+    const noites = calcularNoites(checkin, checkout);
+    const precoNoite = noites > 0 ? totalBruto / noites : 0;
+    const liquido = totalBruto - comissao;
+    const limpeza = calcularLimpeza(checkin);
+    const totalLiquidoFinal = liquido - limpeza;
+
+    const dados = {
+        bookingId: bookingId || null,
+        cliente,
+        hospedes,
+        adultos,
+        criancas,
+        idadesCriancas,
+        checkin,
+        checkout,
+        origem: "Manual",
+        totalBruto,
+        comissao,
+        precoNoite,
+        liquido,
+        noites,
+        limpeza,
+        totalLiquidoFinal,
+        apartamento
+    };
+
+    // NOVA RESERVA
+    if (!reservaAtual) {
+        const conflito = reservas.some(r =>
+            r.apartamento === apartamento && haConflito(checkin, checkout, r)
+        );
+        if (conflito) {
+            alert("Já existe uma reserva neste apartamento para estas datas.");
+            return;
+        }
+
+        await db.collection("reservas").add(dados);
+        await carregarReservas();
+        fecharModalReserva();
+        return;
+    }
+
+    // EDITAR RESERVA EXISTENTE
+    const id = reservaAtual.id;
+
+    await db.collection("reservas").doc(id).update(dados);
+
+    await carregarReservas();
+
+    await reatribuirReservasFuturas(id);
+
+    fecharModalReserva();
+}
+
+// Limpar formulário
+function limparFormularioReserva() {
+    const form = document.getElementById("formReserva");
+    form.reset();
+}
+
+// Preencher formulário com dados de uma reserva
+function preencherFormularioReserva(r) {
+    const form = document.getElementById("formReserva");
+
+    form.bookingId.value = r.bookingId || "";
+    form.cliente.value = r.cliente || "";
+    form.checkin.value = r.checkin || "";
+    form.checkout.value = r.checkout || "";
+    form.apartamento.value = r.apartamento || "";
+
+    form.hospedes.value = r.hospedes || "";
+    form.adultos.value = r.adultos || "";
+    form.criancas.value = r.criancas || "";
+    form.idadesCriancas.value = r.idadesCriancas || "";
+
+    form.totalBruto.value = r.totalBruto || "";
+    form.comissao.value = r.comissao || "";
+}
+
+// Abrir/fechar modal
+function abrirModalReserva() {
+    document.getElementById("modalReserva").style.display = "flex";
+}
+function fecharModalReserva() {
+    document.getElementById("modalReserva").style.display = "none";
+}
+
+
 // =======================================
 // 10) INICIALIZAÇÃO
 // =======================================
