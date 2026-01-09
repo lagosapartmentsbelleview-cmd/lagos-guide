@@ -596,6 +596,11 @@ function fecharModalReserva() {
 // 10) INICIALIZAÇÃO
 // =======================================
 
+window.novaReserva = novaReserva;
+window.editarReserva = editarReserva;
+window.guardarReserva = guardarReserva;
+
+
 window.addEventListener("load", () => {
     carregarReservas();
 
