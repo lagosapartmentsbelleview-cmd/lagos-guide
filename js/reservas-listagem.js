@@ -251,6 +251,7 @@ function calcularLimpeza(checkin) {
  * 13) IMPORTAÇÃO EXCEL BOOKING
  ******************************************************/
 async function importarExcelBooking(event) {
+    console.log("FUNÇÃO IMPORTAR EXCEL FOI CHAMADA!");
     const file = event.target.files[0];
     if (!file) return;
 
