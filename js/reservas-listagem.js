@@ -601,3 +601,51 @@ if (btnEnviarCalendarioEl) {
 }
 
 console.log("JS DA LISTAGEM — FICHEIRO COMPLETO");
+
+// -------------------------------------------------------------
+// 18) LIGAR EVENTOS DA PÁGINA
+// -------------------------------------------------------------
+function ligarEventos() {
+
+    // Botão Nova Reserva
+    const btnNova = document.getElementById("btnNovaReserva");
+    if (btnNova) btnNova.addEventListener("click", novaReserva);
+
+    // Botão Importar Excel
+    const btnImportar = document.getElementById("btnImportarExcel");
+    const inputExcel = document.getElementById("inputExcel");
+
+    if (btnImportar && inputExcel) {
+        btnImportar.addEventListener("click", () => inputExcel.click());
+        inputExcel.addEventListener("change", importarExcelBooking);
+    }
+
+    // Botão Guardar
+    const btnGuardar = document.getElementById("btnGuardar");
+    if (btnGuardar) btnGuardar.addEventListener("click", guardarReserva);
+
+    // Botão Apagar
+    const btnApagar = document.getElementById("btnApagar");
+    if (btnApagar) btnApagar.addEventListener("click", apagarReservaConfirmar);
+
+    // Fechar modal
+    const fechar = document.getElementById("fecharModal");
+    if (fechar) fechar.addEventListener("click", fecharModalReserva);
+
+    // Ir para calendário
+    const btnIrCalendario = document.getElementById("btnIrCalendario");
+    if (btnIrCalendario) {
+        btnIrCalendario.addEventListener("click", () => {
+            window.location.href = "calendario.html";
+        });
+    }
+}
+
+// -------------------------------------------------------------
+// 19) INICIAR SISTEMA
+// -------------------------------------------------------------
+window.addEventListener("DOMContentLoaded", () => {
+    ligarEventos();
+    carregarReservas();
+});
+
