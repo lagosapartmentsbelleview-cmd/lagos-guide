@@ -635,12 +635,16 @@ if (btnApagarSelecionadas) {
 // 17) ENVIAR PARA O CALENDÁRIO (MANUAL)
 // -------------------------------------------------------------
 
-
 const btnEnviarCalendarioEl = document.getElementById("btnEnviarCalendario");
 
 if (btnEnviarCalendarioEl) {
     btnEnviarCalendarioEl.addEventListener("click", async () => {
+
+        console.log("BOTÃO CLICADO");
+
         const selecionadas = [...document.querySelectorAll(".selectReserva:checked")];
+        console.log("Selecionadas:", selecionadas.length);
+        console.log("IDs selecionados:", selecionadas.map(x => x.dataset.id));
 
         if (selecionadas.length === 0) {
             alert("Nenhuma reserva selecionada.");
@@ -649,21 +653,27 @@ if (btnEnviarCalendarioEl) {
 
         for (const cb of selecionadas) {
             const id = cb.dataset.id;
+            console.log("A processar ID:", id);
 
             const doc = await db.collection("reservas").doc(id).get();
-            if (!doc.exists) continue;
+            if (!doc.exists) {
+                console.log("Documento não existe:", id);
+                continue;
+            }
 
             const dados = doc.data();
+            console.log("Dados da reserva:", dados);
 
             await db.collection("calendario").add({
-    ...dados,
-    checkin: dataPtParaIso(dados.checkin),
-    checkout: dataPtParaIso(dados.checkout),
-    id: id,
-    enviadoParaCalendario: true,
-    criadoEm: new Date()
-});
+                ...dados,
+                checkin: dataPtParaIso(dados.checkin),
+                checkout: dataPtParaIso(dados.checkout),
+                id: id,
+                enviadoParaCalendario: true,
+                criadoEm: new Date()
+            });
 
+            console.log("Reserva enviada para calendário:", id);
         }
 
         alert("Reservas enviadas para o calendário.");
