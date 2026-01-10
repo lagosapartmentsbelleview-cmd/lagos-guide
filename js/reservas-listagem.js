@@ -636,8 +636,19 @@ async function apagarReservasFantasmaDoCalendario() {
     if (!confirm(msg)) return;
 
     for (const f of fantasmas) {
-        await db.collection("calendario").doc(f.idDoc).delete();
+    if (!f.idDoc) {
+        console.warn("Reserva fantasma sem idDoc:", f);
+        continue;
     }
+
+    try {
+        await db.collection("calendario").doc(f.idDoc).delete();
+        console.log("Apagado do calendário:", f.idDoc, f.cliente, f.bookingId);
+    } catch (erro) {
+        console.error("Erro ao apagar:", f.idDoc, erro);
+    }
+}
+
 
     alert("Reservas fantasma apagadas do calendário.");
 }
