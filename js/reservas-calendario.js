@@ -99,8 +99,25 @@ function desenharReservas(mes, ano) {
         const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
 
         // Datas
-        const [d1, m1, a1] = r.checkin.split("/").map(Number);
-        const [d2, m2, a2] = r.checkout.split("/").map(Number);
+function parseData(str) {
+    // yyyy-mm-dd → ISO
+    if (str.includes("-")) {
+        const [a, m, d] = str.split("-").map(Number);
+        return new Date(a, m - 1, d);
+    }
+
+    // dd/mm/yyyy → PT
+    if (str.includes("/")) {
+        const [d, m, a] = str.split("/").map(Number);
+        return new Date(a, m - 1, d);
+    }
+
+    return null;
+}
+
+const inicio = parseData(r.checkin);
+const fim = parseData(r.checkout);
+
 
         const inicio = new Date(a1, m1 - 1, d1);
         const fim = new Date(a2, m2 - 1, d2);
@@ -121,8 +138,12 @@ function desenharReservas(mes, ano) {
 
                 const dataStr = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${ano}`;
 
-                const isCheckin = dataStr === r.checkin;
-                const isCheckout = dataStr === r.checkout;
+                const checkinPt = inicio.toLocaleDateString("pt-PT");
+const checkoutPt = fim.toLocaleDateString("pt-PT");
+
+const isCheckin = dataStr === checkinPt;
+const isCheckout = dataStr === checkoutPt;
+
 
                 if (isCheckin && isCheckout) div.classList.add("reserva-unica");
                 else if (isCheckin) div.classList.add("reserva-inicio");
