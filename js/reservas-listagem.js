@@ -232,7 +232,13 @@ function preencherFormularioReserva(r) {
 // -------------------------------------------------------------
 async function guardarReserva() {
     const origem = document.getElementById("origem").value;
-    const bookingId = document.getElementById("bookingId").value.trim();
+    let bookingId = document.getElementById("bookingId").value.trim();
+
+// Se não for Booking → gerar ID automático
+if (origem !== "Booking") {
+    bookingId = `manual_${Date.now()}`;
+}
+
     const cliente = document.getElementById("cliente").value.trim();
 
     let quartos = Number(document.getElementById("quartos").value || 1);
