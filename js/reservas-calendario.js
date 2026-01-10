@@ -13,6 +13,63 @@ const apartamentos = ["2301", "2203", "2204"];
 window.addEventListener("load", () => {
     carregarReservas();
 
+    // Preencher dropdown de meses
+const meses = [
+    "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+    "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+];
+
+const selectMes = document.getElementById("selectMes");
+meses.forEach((nome, index) => {
+    const opt = document.createElement("option");
+    opt.value = index;
+    opt.textContent = nome;
+    selectMes.appendChild(opt);
+});
+
+// Preencher dropdown de anos
+const selectAno = document.getElementById("selectAno");
+const anoAtual = new Date().getFullYear();
+for (let a = anoAtual - 5; a <= anoAtual + 10; a++) {
+    const opt = document.createElement("option");
+    opt.value = a;
+    opt.textContent = a;
+    if (a === anoAtual) opt.selected = true;
+    selectAno.appendChild(opt);
+}
+
+// Atualizar mês/ano quando o utilizador muda
+selectMes.onchange = () => atualizarMesAno();
+selectAno.onchange = () => atualizarMesAno();
+
+function atualizarMesAno() {
+    const mesEscolhido = Number(selectMes.value);
+    const anoEscolhido = Number(selectAno.value);
+
+    const anoBase = new Date().getFullYear();
+    const mesBase = new Date().getMonth();
+
+    mesOffset = (anoEscolhido - anoBase) * 12 + (mesEscolhido - mesBase);
+    desenharCalendario();
+}
+
+// Botão Hoje
+document.getElementById("btnHoje").onclick = () => {
+    mesOffset = 0;
+    selectMes.value = new Date().getMonth();
+    selectAno.value = new Date().getFullYear();
+    desenharCalendario();
+};
+
+// Botão Mês Atual
+document.getElementById("btnMesAtual").onclick = () => {
+    mesOffset = 0;
+    selectMes.value = new Date().getMonth();
+    selectAno.value = new Date().getFullYear();
+    desenharCalendario();
+};
+
+
     const btnIrListagem = document.getElementById("btnIrListagem");
     const btnMesAnterior = document.getElementById("btnMesAnterior");
     const btnMesSeguinte = document.getElementById("btnMesSeguinte");
@@ -98,6 +155,10 @@ function desenharCalendario() {
     const anoAtual = dataBase.getFullYear();
 
     const nomeMes = dataBase.toLocaleString("pt-PT", { month: "long" });
+    // Sincronizar dropdowns com o calendário
+selectMes.value = mesAtual;
+selectAno.value = anoAtual;
+
     tituloMesEl.textContent = `${nomeMes.toUpperCase()} ${anoAtual}`;
 
     const diasNoMes = new Date(anoAtual, mesAtual + 1, 0).getDate();
