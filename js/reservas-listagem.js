@@ -6,6 +6,121 @@ console.log("JS DA LISTAGEM ESTÁ A CORRER MESMO!");
 let reservas = [];
 let reservaAtual = null; // reserva que está a ser editada
 
+// Apartamentos disponíveis para alocação
+const APARTAMENTOS_FIXOS = ["2301", "2203", "2204"];
+
+// Janela de segurança para realocação automática (em dias)
+const DIAS_SEGURANCA_REALOCA = 5;
+
+/******************************************************
+ * 0.1) HELPERS DE DATAS
+ ******************************************************/
+function parseDataPt(str) {
+    // "dd/mm/aaaa" -> Date
+    if (!str) return null;
+    const [d, m, a] = str.split("/").map(Number);
+    if (!d || !m || !a) return null;
+    return new Date(a, m - 1, d);
+}
+
+function diasEntre(hoje, data) {
+    if (!hoje || !data) return null;
+    const ms = data.setHours(0,0,0,0) - hoje.setHours(0,0,0,0);
+    return ms / (1000 * 60 * 60 * 24);
+}
+
+/******************************************************
+ * 0.2) VERIFICAR CONFLITO DE UMA RESERVA NUM APARTAMENTO
+ * - Back-to-back permitido (checkout == checkin)
+ ******************************************************/
+function temConflitoNoApartamento(reservaNova, apartamento, reservasExistentes) {
+    const iniNova = parseDataPt(reservaNova.checkin);
+    const fimNova = parseDataPt(reservaNova.checkout);
+    if (!iniNova || !fimNova) return false;
+
+    for (const r of reservasExistentes) {
+        if (!Array.isArray(r.apartamentos)) continue;
+        if (!r.apartamentos.includes(apartamento)) continue;
+
+        const iniExist = parseDataPt(r.checkin);
+        const fimExist = parseDataPt(r.checkout);
+        if (!iniExist || !fimExist) continue;
+
+        // Back-to-back permitido:
+        // - fimExist == iniNova (checkout seguido de checkin) → OK
+        // - fimNova == iniExist → OK
+        const backToBack1 = fimExist.getTime() === iniNova.getTime();
+        const backToBack2 = fimNova.getTime() === iniExist.getTime();
+
+        // Sobreposição real (não back-to-back)
+        const sobrepoe = iniNova < fimExist && fimNova > iniExist;
+        if (sobrepoe && !backToBack1 && !backToBack2) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/******************************************************
+ * 0.3) ALOCADOR INTELIGENTE DE APARTAMENTOS
+ ******************************************************/
+function alocarApartamentosInteligente(quartos, checkin, checkout, reservasExistentes) {
+    const resultado = [];
+    const reservaNova = { checkin, checkout };
+
+    if (!quartos || quartos < 1) quartos = 1;
+    if (quartos > APARTAMENTOS_FIXOS.length) quartos = APARTAMENTOS_FIXOS.length;
+
+    // 1) PRIORIDADE: apartamentos com checkout no mesmo dia do checkin (back-to-back)
+    const dataCheckin = parseDataPt(checkin);
+    if (!dataCheckin) return [];
+
+    // Primeiro tentamos back-to-back
+    const candidatosBackToBack = [];
+
+    APARTAMENTOS_FIXOS.forEach(ap => {
+        // Ver se existe reserva que termina nesse apartamento no dia do checkin
+        const existeCheckoutMesmoDia = reservasExistentes.some(r => {
+            if (!Array.isArray(r.apartamentos)) return false;
+            if (!r.apartamentos.includes(ap)) return false;
+            const fim = parseDataPt(r.checkout);
+            if (!fim) return false;
+            return fim.getTime() === dataCheckin.getTime();
+        });
+
+        if (existeCheckoutMesmoDia) {
+            // Mesmo com back-to-back, garantimos que não há sobreposição indevida
+            if (!temConflitoNoApartamento(reservaNova, ap, reservasExistentes)) {
+                candidatosBackToBack.push(ap);
+            }
+        }
+    });
+
+    // Tenta preencher a partir dos back-to-back
+    for (const ap of candidatosBackToBack) {
+        if (resultado.length >= quartos) break;
+        if (!resultado.includes(ap)) {
+            resultado.push(ap);
+        }
+    }
+
+    // 2) SEGUNDA PRIORIDADE: apartamentos totalmente livres (sem conflito)
+    for (const ap of APARTAMENTOS_FIXOS) {
+        if (resultado.length >= quartos) break;
+        if (resultado.includes(ap)) continue;
+
+        const conflito = temConflitoNoApartamento(reservaNova, ap, reservasExistentes);
+        if (!conflito) {
+            resultado.push(ap);
+        }
+    }
+
+    // Se não conseguirmos todos os quartos, devolvemos o que der
+    // Se não conseguirmos nenhum, devolvemos []
+    return resultado;
+}
+
 /******************************************************
  * 1) INICIALIZAÇÃO
  ******************************************************/
@@ -59,7 +174,7 @@ function desenharTabela() {
             <td>${r.bookingId || ""}</td>
             <td>${r.cliente || ""}</td>
             <td>${quartos}</td>
-            <td>${apartamentosTexto}</td>
+            <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocação" : "")}</td>
             <td>${r.checkin || ""}</td>
             <td>${r.checkout || ""}</td>
             <td>${r.noites != null ? r.noites : ""}</td>
@@ -153,9 +268,9 @@ async function guardarReserva() {
     const bookingId = document.getElementById("bookingId").value.trim();
     const cliente = document.getElementById("cliente").value.trim();
 
-    const quartos = Number(document.getElementById("quartos").value || 1);
+    let quartos = Number(document.getElementById("quartos").value || 1);
 
-    const apartamentos = document.getElementById("apartamentos").value
+    let apartamentosDigitados = document.getElementById("apartamentos").value
         .split(",")
         .map(x => x.trim())
         .filter(x => x !== "");
@@ -180,7 +295,35 @@ async function guardarReserva() {
     const limpeza = calcularLimpeza(checkin);
     const totalLiquidoFinal = liquido - limpeza;
 
-    // 3. Dados finais
+    // 3. Determinar apartamentos (manual vs automático)
+    let apartamentos = [];
+    let status = "alocado";
+
+    const hoje = new Date();
+    const dtCheckin = parseDataPt(checkin);
+    const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
+    const diasParaCheckin = dtCheckin ? diasEntre(new Date(), new Date(dtCheckin)) : null;
+
+    if (apartamentosDigitados.length > 0) {
+        // Utilizador escolheu manualmente → respeitar
+        apartamentos = apartamentosDigitados;
+    } else {
+        // Sem escolha manual → alocação automática
+        // Se estamos a editar uma reserva já iniciada com apartamentos existentes, não mexer
+        if (reservaAtual && reservaJaComecou && Array.isArray(reservaAtual.apartamentos) && reservaAtual.apartamentos.length > 0) {
+            apartamentos = reservaAtual.apartamentos;
+        } else {
+            // Reservas existentes que servem de base para evitar conflitos (excluindo a própria, se existir)
+            const reservasBase = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
+            apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
+
+            if (apartamentos.length === 0) {
+                status = "sem_alocacao";
+            }
+        }
+    }
+
+    // 4. Dados finais
     const dados = {
         origem,
         bookingId: bookingId || null,
@@ -200,14 +343,15 @@ async function guardarReserva() {
         liquido,
         limpeza,
         totalLiquidoFinal,
-        berco
+        berco,
+        status
     };
 
-    // 4. NOVA RESERVA
+    // 5. NOVA RESERVA
     if (!reservaAtual) {
         await db.collection("reservas").add(dados);
     }
-    // 5. EDITAR RESERVA
+    // 6. EDITAR RESERVA
     else {
         await db.collection("reservas").doc(reservaAtual.id).update(dados);
     }
@@ -256,7 +400,7 @@ function calcularLimpeza(checkin) {
 }
 
 /******************************************************
- * 13) IMPORTAÇÃO EXCEL BOOKING
+ * 13) IMPORTAÇÃO EXCEL BOOKING (COM ALOCAÇÃO INTELIGENTE)
  ******************************************************/
 async function importarExcelBooking(event) {
     console.log("FUNÇÃO IMPORTAR EXCEL FOI CHAMADA!");
@@ -269,6 +413,11 @@ async function importarExcelBooking(event) {
     const linhas = XLSX.utils.sheet_to_json(sheet);
 
     const bookingIdsImportados = new Set();
+
+    // Vamos usar uma cópia das reservas atuais para simular alocações ao longo da importação
+    let reservasSimulacao = [...reservas];
+
+    const hoje = new Date();
 
     for (const linha of linhas) {
         const bookingId = String(linha["Número da reserva"] || "").trim();
@@ -290,11 +439,35 @@ async function importarExcelBooking(event) {
 
         const quartos = Number(linha["Quartos"] || 1);
 
-        // Regra simples: 2301 → 2203 → 2204
-        const baseApts = ["2301", "2203", "2204"];
-        const apartamentos = [];
-        for (let i = 0; i < quartos && i < baseApts.length; i++) {
-            apartamentos.push(baseApts[i]);
+        const dtCheckin = parseDataPt(checkin);
+        const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
+        const diasParaCheckin = dtCheckin ? diasEntre(new Date(), new Date(dtCheckin)) : null;
+
+        // Verificar se já existe na base
+        const existente = reservasSimulacao.find(r => r.bookingId === bookingId);
+
+        let apartamentos = [];
+        let status = "alocado";
+
+        if (existente && Array.isArray(existente.apartamentos) && existente.apartamentos.length > 0) {
+            // Já existe alocação anterior
+            if (reservaJaComecou || (diasParaCheckin != null && diasParaCheckin <= DIAS_SEGURANCA_REALOCA)) {
+                // Regra: não alterar automaticamente reservas já iniciadas
+                // ou muito próximas do check-in
+                apartamentos = existente.apartamentos;
+            } else {
+                // Podemos realocar com base na situação atual (excluindo a própria)
+                const reservasBase = reservasSimulacao.filter(r => r.id !== existente.id);
+                apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
+                if (apartamentos.length === 0) status = "sem_alocacao";
+            }
+        } else {
+            // Nova reserva ou reserva existente sem apartamentos definidos
+            const reservasBase = existente
+                ? reservasSimulacao.filter(r => r.id !== existente.id)
+                : reservasSimulacao;
+            apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
+            if (apartamentos.length === 0) status = "sem_alocacao";
         }
 
         const dados = {
@@ -316,16 +489,19 @@ async function importarExcelBooking(event) {
             liquido,
             limpeza,
             totalLiquidoFinal,
-            berco: false
+            berco: false,
+            status
         };
 
-        // Verificar se já existe
-        const existente = reservas.find(r => r.bookingId === bookingId);
-
+        // Atualizar Firestore e também a lista de simulação
         if (existente) {
             await db.collection("reservas").doc(existente.id).update(dados);
+            // Atualizar na simulação
+            const idx = reservasSimulacao.findIndex(r => r.id === existente.id);
+            if (idx >= 0) reservasSimulacao[idx] = { ...reservasSimulacao[idx], ...dados };
         } else {
-            await db.collection("reservas").add(dados);
+            const docRef = await db.collection("reservas").add(dados);
+            reservasSimulacao.push({ id: docRef.id, ...dados });
         }
     }
 
