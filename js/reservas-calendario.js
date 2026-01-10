@@ -13,23 +13,54 @@ const apartamentos = ["2301", "2203", "2204"];
 window.addEventListener("load", () => {
     carregarReservas();
 
-    document.getElementById("btnIrListagem").onclick = () => {
-        window.location.href = "listagem-reservas.html";
-    };
+    const btnIrListagem = document.getElementById("btnIrListagem");
+    const btnMesAnterior = document.getElementById("btnMesAnterior");
+    const btnMesSeguinte = document.getElementById("btnMesSeguinte");
 
-    document.getElementById("btnMesAnterior").onclick = () => {
-        mesOffset--;
-        desenharCalendario();
-    };
+    if (btnIrListagem) {
+        btnIrListagem.onclick = () => {
+            window.location.href = "listagem-reservas.html";
+        };
+    }
 
-    document.getElementById("btnMesSeguinte").onclick = () => {
-        mesOffset++;
-        desenharCalendario();
-    };
+    if (btnMesAnterior) {
+        btnMesAnterior.onclick = () => {
+            mesOffset--;
+            desenharCalendario();
+        };
+    }
+
+    if (btnMesSeguinte) {
+        btnMesSeguinte.onclick = () => {
+            mesOffset++;
+            desenharCalendario();
+        };
+    }
 });
 
 /******************************************************
- * 2) CARREGAR RESERVAS DO FIRESTORE
+ * 2) FUNÇÃO AUXILIAR: PARSE DE DATAS
+ ******************************************************/
+function parseDataReserva(str) {
+    if (!str) return null;
+
+    // yyyy-mm-dd (ISO)
+    if (str.includes("-")) {
+        const [a, m, d] = str.split("-").map(Number);
+        return new Date(a, m - 1, d);
+    }
+
+    // dd/mm/yyyy (PT)
+    if (str.includes("/")) {
+        const [d, m, a] = str.split("/").map(Number);
+        return new Date(a, m - 1, d);
+    }
+
+    return null;
+}
+
+/******************************************************
+ * 3) CARREGAR RESERVAS DO FIRESTORE
  ******************************************************/
 function carregarReservas() {
     db.collection("calendario")
@@ -44,11 +75,18 @@ function carregarReservas() {
 }
 
 /******************************************************
- * 3) DESENHAR CALENDÁRIO
+ * 4) DESENHAR CALENDÁRIO
  ******************************************************/
 function desenharCalendario() {
 
     const tabela = document.getElementById("tabelaCalendario");
+    const tituloMesEl = document.getElementById("tituloMes");
+
+    if (!tabela || !tituloMesEl) {
+        console.error("Elementos do calendário em falta (tabelaCalendario ou tituloMes).");
+        return;
+    }
+
     tabela.innerHTML = "";
 
     const hoje = new Date();
@@ -60,8 +98,7 @@ function desenharCalendario() {
     const anoAtual = dataBase.getFullYear();
 
     const nomeMes = dataBase.toLocaleString("pt-PT", { month: "long" });
-    document.getElementById("tituloMes").textContent =
-        `${nomeMes.toUpperCase()} ${anoAtual}`;
+    tituloMesEl.textContent = `${nomeMes.toUpperCase()} ${anoAtual}`;
 
     const diasNoMes = new Date(anoAtual, mesAtual + 1, 0).getDate();
 
@@ -85,32 +122,13 @@ function desenharCalendario() {
         tabela.innerHTML += tr;
     });
 
-    desenharReservas(mesAtual, anoAtual);
+    desenharReservas(mesAtual, anoAtual, anoAtual);
 }
 
 /******************************************************
- * 4) DESENHAR RESERVAS NO CALENDÁRIO
+ * 5) DESENHAR RESERVAS NO CALENDÁRIO
  ******************************************************/
-function desenharReservas(mes, ano) {
-
-    // Função para converter datas ISO ou PT
-    function parseData(str) {
-        if (!str) return null;
-
-        // yyyy-mm-dd (ISO)
-        if (str.includes("-")) {
-            const [a, m, d] = str.split("-").map(Number);
-            return new Date(a, m - 1, d);
-        }
-
-        // dd/mm/yyyy (PT)
-        if (str.includes("/")) {
-            const [d, m, a] = str.split("/").map(Number);
-            return new Date(a, m - 1, d);
-        }
-
-        return null;
-    }
+function desenharReservas(mes, ano, anoAtual) {
 
     reservas.forEach(r => {
 
@@ -118,15 +136,15 @@ function desenharReservas(mes, ano) {
         const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
 
         // Converter datas
-        const inicio = parseData(r.checkin);
-        const fim = parseData(r.checkout);
+        const dataInicio = parseDataReserva(r.checkin);
+        const dataFim = parseDataReserva(r.checkout);
 
-        if (!inicio || !fim) return; // segurança
+        if (!dataInicio || !dataFim) return; // segurança
 
         // Para cada apartamento da reserva
         listaAps.forEach(ap => {
 
-            for (let dt = new Date(inicio); dt <= fim; dt.setDate(dt.getDate() + 1)) {
+            for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
                 if (dt.getMonth() !== mes) continue;
 
@@ -137,10 +155,10 @@ function desenharReservas(mes, ano) {
                 const div = document.createElement("div");
                 div.classList.add("reserva");
 
-                const dataStr = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${ano}`;
+                const dataStr = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${anoAtual}`;
 
-                const checkinPt = inicio.toLocaleDateString("pt-PT");
-                const checkoutPt = fim.toLocaleDateString("pt-PT");
+                const checkinPt = dataInicio.toLocaleDateString("pt-PT");
+                const checkoutPt = dataFim.toLocaleDateString("pt-PT");
 
                 const isCheckin = dataStr === checkinPt;
                 const isCheckout = dataStr === checkoutPt;
@@ -163,9 +181,8 @@ function desenharReservas(mes, ano) {
     });
 }
 
-
 /******************************************************
- * 5) COR POR ORIGEM
+ * 6) COR POR ORIGEM
  ******************************************************/
 function corPorOrigem(origem) {
     switch ((origem || "").toLowerCase()) {
