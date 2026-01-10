@@ -646,6 +646,9 @@ async function apagarReservasFantasmaDoCalendario() {
 // -------------------------------------------------------------
 // 18) LIGAR EVENTOS DA PÁGINA
 // -------------------------------------------------------------
+async function apagarReservasFantasmaDoCalendario() { ... }
+
+
 function ligarEventos() {
 
     // Botão Nova Reserva
@@ -678,6 +681,12 @@ function ligarEventos() {
     if (btnIrCalendario) {
         btnIrCalendario.addEventListener("click", () => {
             window.location.href = "calendario.html";
+
+    // Limpar fatasmas       
+    const btnLimparFantasmas = document.getElementById("btnLimparFantasmas");
+    if (btnLimparFantasmas) {
+        btnLimparFantasmas.addEventListener("click", apagarReservasFantasmaDoCalendario);
+
         });
     }
 }
