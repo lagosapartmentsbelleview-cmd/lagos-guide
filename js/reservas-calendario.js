@@ -4,8 +4,8 @@
 let reservas = [];
 let mesOffset = 0;
 
+// Lista fixa de apartamentos
 const apartamentos = ["2301", "2203", "2204"];
-
 
 /******************************************************
  * 1) INICIALIZAÇÃO
@@ -14,9 +14,8 @@ window.addEventListener("load", () => {
     carregarReservas();
 
     document.getElementById("btnIrListagem").onclick = () => {
-    window.location.href = "listagem-reservas.html";
-};
-
+        window.location.href = "listagem-reservas.html";
+    };
 
     document.getElementById("btnMesAnterior").onclick = () => {
         mesOffset--;
@@ -29,23 +28,20 @@ window.addEventListener("load", () => {
     };
 });
 
-
 /******************************************************
  * 2) CARREGAR RESERVAS DO FIRESTORE
  ******************************************************/
 function carregarReservas() {
-      db.collection("calendario")
-      .orderBy("checkin")
-      .onSnapshot(snapshot => {
+    db.collection("calendario")
+        .orderBy("checkin")
+        .onSnapshot(snapshot => {
 
-        reservas = [];
-        snapshot.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
+            reservas = [];
+            snapshot.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
 
-        desenharCalendario();
-      });
+            desenharCalendario();
+        });
 }
-
-
 
 /******************************************************
  * 3) DESENHAR CALENDÁRIO
@@ -92,7 +88,6 @@ function desenharCalendario() {
     desenharReservas(mesAtual, anoAtual);
 }
 
-
 /******************************************************
  * 4) DESENHAR RESERVAS NO CALENDÁRIO
  ******************************************************/
@@ -100,47 +95,52 @@ function desenharReservas(mes, ano) {
 
     reservas.forEach(r => {
 
+        // Garantir que existe array de apartamentos
+        const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
+
+        // Datas
         const [d1, m1, a1] = r.checkin.split("/").map(Number);
         const [d2, m2, a2] = r.checkout.split("/").map(Number);
-
-        if (m1 - 1 !== mes && m2 - 1 !== mes) return;
 
         const inicio = new Date(a1, m1 - 1, d1);
         const fim = new Date(a2, m2 - 1, d2);
 
-        for (let dt = new Date(inicio); dt <= fim; dt.setDate(dt.getDate() + 1)) {
+        // Para cada apartamento da reserva
+        listaAps.forEach(ap => {
 
-            if (dt.getMonth() !== mes) continue;
+            for (let dt = new Date(inicio); dt <= fim; dt.setDate(dt.getDate() + 1)) {
 
-            const dia = dt.getDate();
-            const cel = document.getElementById(`cel-${r.apartamento}-${dia}`);
-            if (!cel) continue;
+                if (dt.getMonth() !== mes) continue;
 
-            const div = document.createElement("div");
-            div.classList.add("reserva");
+                const dia = dt.getDate();
+                const cel = document.getElementById(`cel-${ap}-${dia}`);
+                if (!cel) continue;
 
-            const dataStr = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${ano}`;
+                const div = document.createElement("div");
+                div.classList.add("reserva");
 
-            const isCheckin = dataStr === r.checkin;
-            const isCheckout = dataStr === r.checkout;
+                const dataStr = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${ano}`;
 
-            if (isCheckin && isCheckout) div.classList.add("reserva-unica");
-            else if (isCheckin) div.classList.add("reserva-inicio");
-            else if (isCheckout) div.classList.add("reserva-fim");
-            else div.classList.add("reserva-meio");
+                const isCheckin = dataStr === r.checkin;
+                const isCheckout = dataStr === r.checkout;
 
-            div.style.backgroundColor = corPorOrigem(r.origem);
-            div.textContent = r.cliente;
+                if (isCheckin && isCheckout) div.classList.add("reserva-unica");
+                else if (isCheckin) div.classList.add("reserva-inicio");
+                else if (isCheckout) div.classList.add("reserva-fim");
+                else div.classList.add("reserva-meio");
 
-            div.onclick = () => {
-                window.location.href = "listagem-reservas.html?id=" + r.id;
-            };
+                div.style.backgroundColor = corPorOrigem(r.origem);
+                div.textContent = r.cliente;
 
-            cel.appendChild(div);
-        }
+                div.onclick = () => {
+                    window.location.href = "listagem-reservas.html?id=" + r.id;
+                };
+
+                cel.appendChild(div);
+            }
+        });
     });
 }
-
 
 /******************************************************
  * 5) COR POR ORIGEM
@@ -154,4 +154,3 @@ function corPorOrigem(origem) {
         default: return "#757575";
     }
 }
-
