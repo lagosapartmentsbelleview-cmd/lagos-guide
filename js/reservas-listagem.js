@@ -268,8 +268,11 @@ async function guardarReserva() {
 
 // Se não for Booking → gerar ID automático
 if (origem !== "Booking") {
-    bookingId = `manual_${Date.now()}`;
+    // Gera um ID manual no formato P + 9 dígitos
+    const random9 = Math.floor(100000000 + Math.random() * 900000000);
+    bookingId = `P${random9}`;
 }
+
 
     const cliente = document.getElementById("cliente").value.trim();
 
