@@ -67,7 +67,19 @@ function calcularLimpeza(checkin) {
     const mes = data.getMonth() + 1; // 1–12
     return [6, 7, 8, 9].includes(mes) ? 40 : 35;
 }
-// 👉 Cola aqui async function limparCalendario() { const snap = await db.collection("calendario").get(); const batch = db.batch(); snap.forEach(doc => batch.delete(doc.ref)); await batch.commit(); console.log("Coleção 'calendario' apagada com sucesso."); }
+
+// -------------------------------------------------------------
+// limpar calendario firebase
+// -------------------------------------------------------------
+async function limparCalendario() {
+    const snap = await db.collection("calendario").get();
+    const batch = db.batch();
+
+    snap.forEach(doc => batch.delete(doc.ref));
+
+    await batch.commit();
+    console.log("Coleção 'calendario' apagada com sucesso.");
+}
 
 // -------------------------------------------------------------
 // 2) VERIFICAR CONFLITO (BACK‑TO‑BACK PERMITIDO)
