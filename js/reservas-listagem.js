@@ -14,9 +14,23 @@ const DIAS_SEGURANCA_REALOCA = 5;
 // -------------------------------------------------------------
 function parseDataPt(str) {
     if (!str) return null;
-    const [d, m, a] = str.split("/").map(Number);
-    return new Date(a, m - 1, d);
+
+    // yyyy-mm-dd (input type="date")
+    if (str.includes("-")) {
+        const [a, m, d] = str.split("-").map(Number);
+        return new Date(a, m - 1, d);
+    }
+
+    // dd/mm/yyyy
+    if (str.includes("/")) {
+        const [d, m, a] = str.split("/").map(Number);
+        return new Date(a, m - 1, d);
+    }
+
+    // Caso venha algo inesperado
+    return null;
 }
+
 
 function diasEntre(hoje, data) {
     const h = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
@@ -33,9 +47,13 @@ function calcularNoites(checkin, checkout) {
 }
 
 function calcularLimpeza(checkin) {
-    const mes = Number(checkin.split("/")[1]);
+    const data = parseDataPt(checkin);
+    if (!data) return 35;
+
+    const mes = data.getMonth() + 1; // 1–12
     return [6, 7, 8, 9].includes(mes) ? 40 : 35;
 }
+
 
 // -------------------------------------------------------------
 // 2) VERIFICAR CONFLITO (BACK‑TO‑BACK PERMITIDO)
