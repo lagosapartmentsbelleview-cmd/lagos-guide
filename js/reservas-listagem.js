@@ -641,14 +641,9 @@ async function apagarReservasFantasmaDoCalendario() {
 
     alert("Reservas fantasma apagadas do calendário.");
 }
-
-
 // -------------------------------------------------------------
 // 18) LIGAR EVENTOS DA PÁGINA
 // -------------------------------------------------------------
-async function apagarReservasFantasmaDoCalendario() { ... }
-
-
 function ligarEventos() {
 
     // Botão Nova Reserva
@@ -681,13 +676,13 @@ function ligarEventos() {
     if (btnIrCalendario) {
         btnIrCalendario.addEventListener("click", () => {
             window.location.href = "calendario.html";
+        });
+    }
 
-    // Limpar fatasmas       
+    // Limpar fantasmas
     const btnLimparFantasmas = document.getElementById("btnLimparFantasmas");
     if (btnLimparFantasmas) {
         btnLimparFantasmas.addEventListener("click", apagarReservasFantasmaDoCalendario);
-
-        });
     }
 }
 
@@ -700,7 +695,6 @@ function iniciarSistema() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Espera um pequeno delay para garantir que firebase-config carregou
     setTimeout(() => {
         if (typeof db !== "undefined") {
             iniciarSistema();
@@ -710,4 +704,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 200);
 });
+
 
