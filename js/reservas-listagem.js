@@ -213,9 +213,23 @@ function editarReserva(id) {
 // 9) LIMPAR FORMULÁRIO
 // -------------------------------------------------------------
 function limparFormularioReserva() {
-    document.getElementById("formReserva").reset();
+    // Limpa manualmente todos os campos do modal
+    document.getElementById("origem").value = "Manual";
+    document.getElementById("bookingId").value = "";
+    document.getElementById("cliente").value = "";
+    document.getElementById("quartos").value = "1";
     document.getElementById("apartamentos").value = "";
+    document.getElementById("checkin").value = "";
+    document.getElementById("checkout").value = "";
+    document.getElementById("hospedes").value = "";
+    document.getElementById("adultos").value = "";
+    document.getElementById("criancas").value = "";
+    document.getElementById("idadesCriancas").value = "";
+    document.getElementById("totalBruto").value = "";
+    document.getElementById("comissao").value = "";
+    document.getElementById("berco").value = "false";
 }
+
 
 // -------------------------------------------------------------
 // 10) PREENCHER FORMULÁRIO
