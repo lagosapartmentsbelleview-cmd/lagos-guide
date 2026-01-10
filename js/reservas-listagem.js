@@ -242,7 +242,11 @@ function preencherFormularioReserva(r) {
     const quartos = r.quartos || (r.apartamentos ? r.apartamentos.length : 1);
     document.getElementById("quartos").value = quartos;
 
-    document.getElementById("apartamentos").value = (r.apartamentos || []).join(", ");
+    document.getElementById("apartamentos").value =
+    Array.isArray(r.apartamentos)
+        ? r.apartamentos.join(", ")
+        : (r.apartamentos || "");
+
 
     document.getElementById("checkin").value = r.checkin
     ? r.checkin.split("/").reverse().join("-")
