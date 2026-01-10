@@ -171,71 +171,68 @@
 
     <!-- Modal -->
     <div id="modalReserva" class="modal">
-        <div class="modal-content">
-            <span class="close" id="fecharModal">&times;</span>
-            <h2>Reserva</h2>
+  <div class="modal-content">
 
-            <form id="formReserva">
+    <h2>Reserva</h2>
 
-                <label>Origem</label>
-                <select id="origem">
-                    <option value="Booking">Booking</option>
-                    <option value="Airbnb">Airbnb</option>
-                    <option value="VRBO">VRBO</option>
-                    <option value="Particular">Particular</option>
-                    <option value="Outro">Outro</option>
-                </select>
+    <label>Origem</label>
+    <select id="origem">
+      <option value="Manual">Manual</option>
+      <option value="Booking">Booking</option>
+      <option value="Airbnb">Airbnb</option>
+      <option value="Particular">Particular</option>
+    </select>
 
-                <label>Número da Reserva (Booking ID)</label>
-                <input type="text" id="bookingId">
+    <label>Número da Reserva (se for Booking)</label>
+    <input type="text" id="bookingId" placeholder="Só preencher se for Booking">
 
-                <label>Nome do Hóspede</label>
-                <input type="text" id="cliente">
+    <label>Cliente</label>
+    <input type="text" id="cliente">
 
-               <label>Quartos</label>
-               <input type="number" id="quartos" min="1" max="3">
-               <label>Apartamentos (ex: 2301, 2203)</label>
-               <input type="text" id="apartamentos" placeholder="2301, 2203">
+    <label>Quartos</label>
+    <select id="quartos">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
 
+    <label>Apartamentos (ex: 2301, 2203 ou 2204)</label>
+    <input type="text" id="apartamentos">
 
-                <label>Check-in (dd/mm/aaaa)</label>
-                <input type="text" id="checkin" placeholder="dd/mm/aaaa">
+    <label>Check-in</label>
+    <input type="date" id="checkin">
 
-                <label>Check-out (dd/mm/aaaa)</label>
-                <input type="text" id="checkout" placeholder="dd/mm/aaaa">
+    <label>Check-out</label>
+    <input type="date" id="checkout">
 
-                <label>Hóspedes</label>
-                <input type="number" id="hospedes">
+    <label>Hóspedes</label>
+    <input type="number" id="hospedes">
 
-                <label>Adultos</label>
-                <input type="number" id="adultos">
+    <label>Adultos</label>
+    <input type="number" id="adultos">
 
-                <label>Crianças</label>
-                <input type="number" id="criancas">
+    <label>Crianças</label>
+    <input type="number" id="criancas">
 
-                <label>Idades das Crianças</label>
-                <input type="text" id="idadesCriancas">
+    <label>Idades das Crianças</label>
+    <input type="text" id="idadesCriancas">
 
-                <label>Total Bruto (€)</label>
-                <input type="number" id="totalBruto" step="0.01">
+    <label>Total Bruto (€)</label>
+    <input type="number" id="totalBruto">
 
-                <label>Comissão (€)</label>
-                <input type="number" id="comissao" step="0.01">
+    <label>Comissão (€)</label>
+    <input type="number" id="comissao">
 
-                <label>Valor por Noite (€)</label>
-                <input type="number" id="precoNoite" step="0.01" readonly>
+    <label>Berço</label>
+    <select id="berco">
+      <option value="false">Não</option>
+      <option value="true">Sim</option>
+    </select>
 
-                <label>Necessidade de Berço</label>
-                <select id="berco">
-                    <option value="false" selected>Não</option>
-                    <option value="true">Sim</option>
-                </select>
+    <button id="btnGuardar">Guardar</button>
+    <button id="fecharModal">Fechar</button>
 
-                <button type="button" id="btnGuardar">Guardar</button>
-                <button type="button" id="btnApagar">Apagar</button>
-
-            </form>
-        </div>
+    </div>
     </div>
 
 <!-- XLSX para importar Excel -->
