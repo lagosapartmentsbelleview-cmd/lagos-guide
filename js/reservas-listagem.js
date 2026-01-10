@@ -603,6 +603,47 @@ if (btnEnviarCalendarioEl) {
 console.log("JS DA LISTAGEM — FICHEIRO COMPLETO");
 
 // -------------------------------------------------------------
+// 20) APAGAR RESERVAS FANTASMA DO CALENDÁRIO
+// -------------------------------------------------------------
+async function apagarReservasFantasmaDoCalendario() {
+    const snapCal = await db.collection("calendario").get();
+    const todasCalendario = [];
+    snapCal.forEach(doc => todasCalendario.push({ idDoc: doc.id, ...doc.data() }));
+
+    const snapRes = await db.collection("reservas").get();
+    const todasReservas = [];
+    snapRes.forEach(doc => todasReservas.push({ id: doc.id, ...doc.data() }));
+
+    const idsReservas = new Set(todasReservas.map(r => r.id));
+    const bookingIdsReservas = new Set(todasReservas.map(r => r.bookingId).filter(x => x));
+
+    const fantasmas = todasCalendario.filter(c =>
+        !idsReservas.has(c.id) &&
+        (!c.bookingId || !bookingIdsReservas.has(c.bookingId))
+    );
+
+    if (fantasmas.length === 0) {
+        alert("Não há reservas fantasma no calendário.");
+        return;
+    }
+
+    let msg = "As seguintes reservas estão no calendário mas não existem na listagem:\n\n";
+    fantasmas.forEach(f => {
+        msg += `• ${f.bookingId || "(sem bookingId)"} — ${f.cliente || "?"} (${f.checkin} → ${f.checkout})\n`;
+    });
+    msg += "\nQueres apagá-las do calendário?";
+
+    if (!confirm(msg)) return;
+
+    for (const f of fantasmas) {
+        await db.collection("calendario").doc(f.idDoc).delete();
+    }
+
+    alert("Reservas fantasma apagadas do calendário.");
+}
+
+
+// -------------------------------------------------------------
 // 18) LIGAR EVENTOS DA PÁGINA
 // -------------------------------------------------------------
 function ligarEventos() {
