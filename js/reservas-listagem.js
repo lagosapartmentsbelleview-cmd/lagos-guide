@@ -254,8 +254,7 @@ function preencherFormularioReserva(r) {
 
     document.getElementById("totalBruto").value = r.totalBruto ?? "";
     document.getElementById("comissao").value = r.comissao ?? "";
-    document.getElementById("precoNoite").value = r.precoNoite ?? "";
-
+  
     document.getElementById("berco").value = r.berco ? "true" : "false";
 }
 
