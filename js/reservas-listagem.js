@@ -6,7 +6,6 @@ console.log("JS DA LISTAGEM ESTÁ A CORRER MESMO!");
 let reservas = [];
 let reservaAtual = null; // reserva que está a ser editada
 
-
 /******************************************************
  * 1) INICIALIZAÇÃO
  ******************************************************/
@@ -15,11 +14,10 @@ window.addEventListener("load", () => {
 
     document.getElementById("btnNovaReserva").onclick = novaReserva;
     document.getElementById("btnImportarExcel").onclick = () =>
-    document.getElementById("inputExcel").click();
+        document.getElementById("inputExcel").click();
     document.getElementById("btnIrCalendario").onclick = () => {
-    window.location.href = "calendario.html";
-};
-
+        window.location.href = "calendario.html";
+    };
 
     document.getElementById("inputExcel").addEventListener("change", importarExcelBooking);
 
@@ -28,9 +26,7 @@ window.addEventListener("load", () => {
     document.getElementById("fecharModal").onclick = fecharModalReserva;
 
     document.getElementById("btnEnviarCalendario").onclick = enviarParaCalendario;
-
 });
-
 
 /******************************************************
  * 2) CARREGAR RESERVAS DO FIRESTORE
@@ -44,7 +40,6 @@ async function carregarReservas() {
     desenharTabela();
 }
 
-
 /******************************************************
  * 3) DESENHAR TABELA DE RESERVAS
  ******************************************************/
@@ -53,31 +48,33 @@ function desenharTabela() {
     tbody.innerHTML = "";
 
     reservas.forEach(r => {
-    const tr = document.createElement("tr");
+        const tr = document.createElement("tr");
 
-    tr.innerHTML = `
-        <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
-        <td><span class="origem-badge origem-${r.origem.toLowerCase()}">${r.origem}</span></td>
-        <td>${r.bookingId || ""}</td>
-        <td>${r.cliente}</td>
-        <td>${r.apartamento}</td>
-        <td>${r.checkin}</td>
-        <td>${r.checkout}</td>
-        <td>${r.noites}</td>
-        <td>${r.totalBruto.toFixed(2)}</td>
-        <td>${r.comissao.toFixed(2)}</td>
-        <td>${r.precoNoite.toFixed(2)}</td>
-        <td>${r.berco ? "Sim" : "Não"}</td>
-        <td>
-            <button onclick="editarReserva('${r.id}')">Editar</button>
-        </td>
-    `;
+        const quartos = r.quartos || (r.apartamentos ? r.apartamentos.length : 1);
+        const apartamentosTexto = (r.apartamentos || []).join(", ");
 
-    tbody.appendChild(tr);
-});
+        tr.innerHTML = `
+            <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
+            <td><span class="origem-badge origem-${(r.origem || "").toLowerCase()}">${r.origem || ""}</span></td>
+            <td>${r.bookingId || ""}</td>
+            <td>${r.cliente || ""}</td>
+            <td>${quartos}</td>
+            <td>${apartamentosTexto}</td>
+            <td>${r.checkin || ""}</td>
+            <td>${r.checkout || ""}</td>
+            <td>${r.noites != null ? r.noites : ""}</td>
+            <td>${r.totalBruto != null ? r.totalBruto.toFixed(2) : ""}</td>
+            <td>${r.comissao != null ? r.comissao.toFixed(2) : ""}</td>
+            <td>${r.precoNoite != null ? r.precoNoite.toFixed(2) : ""}</td>
+            <td>${r.berco ? "Sim" : "Não"}</td>
+            <td>
+                <button onclick="editarReserva('${r.id}')">Editar</button>
+            </td>
+        `;
 
+        tbody.appendChild(tr);
+    });
 }
-
 
 /******************************************************
  * 4) ABRIR / FECHAR MODAL
@@ -90,7 +87,6 @@ function fecharModalReserva() {
     document.getElementById("modalReserva").style.display = "none";
 }
 
-
 /******************************************************
  * 5) NOVA RESERVA
  ******************************************************/
@@ -99,7 +95,6 @@ function novaReserva() {
     limparFormularioReserva();
     abrirModalReserva();
 }
-
 
 /******************************************************
  * 6) EDITAR RESERVA
@@ -113,7 +108,6 @@ function editarReserva(id) {
     abrirModalReserva();
 }
 
-
 /******************************************************
  * 7) LIMPAR FORMULÁRIO
  ******************************************************/
@@ -122,42 +116,49 @@ function limparFormularioReserva() {
     document.getElementById("precoNoite").value = "";
 }
 
-
 /******************************************************
  * 8) PREENCHER FORMULÁRIO
  ******************************************************/
 function preencherFormularioReserva(r) {
-    document.getElementById("origem").value = r.origem;
+    document.getElementById("origem").value = r.origem || "Booking";
     document.getElementById("bookingId").value = r.bookingId || "";
-    document.getElementById("cliente").value = r.cliente;
-    document.getElementById("apartamento").value = r.apartamento;
+    document.getElementById("cliente").value = r.cliente || "";
 
-    document.getElementById("checkin").value = r.checkin;
-    document.getElementById("checkout").value = r.checkout;
+    const quartos = r.quartos || (r.apartamentos ? r.apartamentos.length : 1);
+    document.getElementById("quartos").value = quartos;
 
-    document.getElementById("hospedes").value = r.hospedes;
-    document.getElementById("adultos").value = r.adultos;
-    document.getElementById("criancas").value = r.criancas;
-    document.getElementById("idadesCriancas").value = r.idadesCriancas;
+    document.getElementById("apartamentos").value = (r.apartamentos || []).join(", ");
 
-    document.getElementById("totalBruto").value = r.totalBruto;
-    document.getElementById("comissao").value = r.comissao;
-    document.getElementById("precoNoite").value = r.precoNoite;
+    document.getElementById("checkin").value = r.checkin || "";
+    document.getElementById("checkout").value = r.checkout || "";
+
+    document.getElementById("hospedes").value = r.hospedes != null ? r.hospedes : "";
+    document.getElementById("adultos").value = r.adultos != null ? r.adultos : "";
+    document.getElementById("criancas").value = r.criancas != null ? r.criancas : "";
+    document.getElementById("idadesCriancas").value = r.idadesCriancas || "";
+
+    document.getElementById("totalBruto").value = r.totalBruto != null ? r.totalBruto : "";
+    document.getElementById("comissao").value = r.comissao != null ? r.comissao : "";
+    document.getElementById("precoNoite").value = r.precoNoite != null ? r.precoNoite : "";
 
     document.getElementById("berco").value = r.berco ? "true" : "false";
 }
-
 
 /******************************************************
  * 9) GUARDAR RESERVA (NOVA OU EDITADA)
  ******************************************************/
 async function guardarReserva() {
-
     // 1. Ler campos
     const origem = document.getElementById("origem").value;
     const bookingId = document.getElementById("bookingId").value.trim();
     const cliente = document.getElementById("cliente").value.trim();
-    const apartamento = document.getElementById("apartamento").value;
+
+    const quartos = Number(document.getElementById("quartos").value || 1);
+
+    const apartamentos = document.getElementById("apartamentos").value
+        .split(",")
+        .map(x => x.trim())
+        .filter(x => x !== "");
 
     const checkin = document.getElementById("checkin").value.trim();
     const checkout = document.getElementById("checkout").value.trim();
@@ -184,7 +185,8 @@ async function guardarReserva() {
         origem,
         bookingId: bookingId || null,
         cliente,
-        apartamento,
+        quartos,
+        apartamentos,
         checkin,
         checkout,
         hospedes,
@@ -214,9 +216,8 @@ async function guardarReserva() {
     carregarReservas();
 }
 
-
 /******************************************************
- * 10) APAGAR RESERVA
+ * 10) APAGAR RESERVA (NO MODAL)
  ******************************************************/
 async function apagarReservaConfirmar() {
     if (!reservaAtual) return;
@@ -229,11 +230,12 @@ async function apagarReservaConfirmar() {
     carregarReservas();
 }
 
-
 /******************************************************
  * 11) CÁLCULO DE NOITES
  ******************************************************/
 function calcularNoites(checkin, checkout) {
+    if (!checkin || !checkout) return 0;
+
     const [d1, m1, a1] = checkin.split("/").map(Number);
     const [d2, m2, a2] = checkout.split("/").map(Number);
 
@@ -244,15 +246,14 @@ function calcularNoites(checkin, checkout) {
     return diff > 0 ? diff / (1000 * 60 * 60 * 24) : 0;
 }
 
-
 /******************************************************
  * 12) CÁLCULO DE LIMPEZA
  ******************************************************/
 function calcularLimpeza(checkin) {
+    if (!checkin) return 35;
     const mes = Number(checkin.split("/")[1]);
     return [6, 7, 8, 9].includes(mes) ? 40 : 35;
 }
-
 
 /******************************************************
  * 13) IMPORTAÇÃO EXCEL BOOKING
@@ -270,45 +271,53 @@ async function importarExcelBooking(event) {
     const bookingIdsImportados = new Set();
 
     for (const linha of linhas) {
-
         const bookingId = String(linha["Número da reserva"] || "").trim();
-if (!bookingId) continue;
+        if (!bookingId) continue;
 
-bookingIdsImportados.add(bookingId);
+        bookingIdsImportados.add(bookingId);
 
-const checkin = formatarDataExcel(linha["Check-in"]);
-const checkout = formatarDataExcel(linha["Check-out"]);
+        const checkin = formatarDataExcel(linha["Check-in"]);
+        const checkout = formatarDataExcel(linha["Check-out"]);
 
-const totalBruto = Number(linha["Preço"] || 0);
-const comissao = Number(linha["Valor da comissão"] || 0);
+        const totalBruto = Number(linha["Preço"] || 0);
+        const comissao = Number(linha["Valor da comissão"] || 0);
 
-const noites = calcularNoites(checkin, checkout);
-const precoNoite = noites > 0 ? totalBruto / noites : 0;
-const liquido = totalBruto - comissao;
-const limpeza = calcularLimpeza(checkin);
-const totalLiquidoFinal = liquido - limpeza;
+        const noites = calcularNoites(checkin, checkout);
+        const precoNoite = noites > 0 ? totalBruto / noites : 0;
+        const liquido = totalBruto - comissao;
+        const limpeza = calcularLimpeza(checkin);
+        const totalLiquidoFinal = liquido - limpeza;
 
-const dados = {
-    origem: "Booking",
-    bookingId,
-    cliente: linha["Nome do hóspede"] || "Hóspede",
-    apartamento: linha["Quartos"] || "2301",
-    checkin,
-    checkout,
-    hospedes: Number(linha["Pessoas"] || 0),
-    adultos: Number(linha["Adultos"] || 0),
-    criancas: Number(linha["Crianças"] || 0),
-    idadesCriancas: linha["Idade da(s) criança(s)"] || "",
-    totalBruto,
-    comissao,
-    precoNoite,
-    noites,
-    liquido,
-    limpeza,
-    totalLiquidoFinal,
-    berco: false
-};
+        const quartos = Number(linha["Quartos"] || 1);
 
+        // Regra simples: 2301 → 2203 → 2204
+        const baseApts = ["2301", "2203", "2204"];
+        const apartamentos = [];
+        for (let i = 0; i < quartos && i < baseApts.length; i++) {
+            apartamentos.push(baseApts[i]);
+        }
+
+        const dados = {
+            origem: "Booking",
+            bookingId,
+            cliente: linha["Nome do hóspede"] || "Hóspede",
+            quartos,
+            apartamentos,
+            checkin,
+            checkout,
+            hospedes: Number(linha["Pessoas"] || 0),
+            adultos: Number(linha["Adultos"] || 0),
+            criancas: Number(linha["Crianças"] || 0),
+            idadesCriancas: linha["Idade da(s) criança(s)"] || "",
+            totalBruto,
+            comissao,
+            precoNoite,
+            noites,
+            liquido,
+            limpeza,
+            totalLiquidoFinal,
+            berco: false
+        };
 
         // Verificar se já existe
         const existente = reservas.find(r => r.bookingId === bookingId);
@@ -326,12 +335,10 @@ const dados = {
     carregarReservas();
 }
 
-
 /******************************************************
  * 14) APAGAR RESERVAS BOOKING QUE DESAPARECERAM DO EXCEL
  ******************************************************/
 async function verificarReservasBookingDesaparecidas(bookingIdsImportados) {
-
     const snap = await db.collection("reservas").get();
     const atuais = [];
     snap.forEach(doc => atuais.push({ id: doc.id, ...doc.data() }));
@@ -357,7 +364,6 @@ async function verificarReservasBookingDesaparecidas(bookingIdsImportados) {
     }
 }
 
-
 /******************************************************
  * 15) FORMATAR DATA DO EXCEL PARA dd/mm/aaaa
  ******************************************************/
@@ -368,6 +374,9 @@ function formatarDataExcel(valor) {
     return `${String(dt.d).padStart(2, "0")}/${String(dt.m).padStart(2, "0")}/${dt.y}`;
 }
 
+/******************************************************
+ * 16) SELECIONAR / APAGAR SELECIONADAS
+ ******************************************************/
 const selectAllCheckbox = document.getElementById("selectAll");
 
 if (selectAllCheckbox) {
@@ -376,6 +385,7 @@ if (selectAllCheckbox) {
         checkboxes.forEach(cb => cb.checked = this.checked);
     });
 }
+
 const btnApagarSelecionadas = document.getElementById("btnApagarSelecionadas");
 
 if (btnApagarSelecionadas) {
@@ -398,10 +408,14 @@ if (btnApagarSelecionadas) {
         carregarReservas();
     });
 }
-const btnEnviarCalendario = document.getElementById("btnEnviarCalendario");
 
-if (btnEnviarCalendario) {
-    btnEnviarCalendario.addEventListener("click", async () => {
+/******************************************************
+ * 17) ENVIAR SELECIONADAS PARA O CALENDÁRIO
+ ******************************************************/
+const btnEnviarCalendarioEl = document.getElementById("btnEnviarCalendario");
+
+if (btnEnviarCalendarioEl) {
+    btnEnviarCalendarioEl.addEventListener("click", async () => {
         const selecionadas = [...document.querySelectorAll(".selectReserva:checked")];
 
         if (selecionadas.length === 0) {
@@ -427,6 +441,7 @@ if (btnEnviarCalendario) {
         alert("Reservas enviadas para o calendário.");
     });
 }
+
 console.log("JS da listagem carregado mesmo!");
 
 function enviarParaCalendario() {
