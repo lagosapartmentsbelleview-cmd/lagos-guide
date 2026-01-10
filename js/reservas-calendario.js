@@ -93,34 +93,35 @@ function desenharCalendario() {
  ******************************************************/
 function desenharReservas(mes, ano) {
 
+    // Função para converter datas ISO ou PT
+    function parseData(str) {
+        if (!str) return null;
+
+        // yyyy-mm-dd (ISO)
+        if (str.includes("-")) {
+            const [a, m, d] = str.split("-").map(Number);
+            return new Date(a, m - 1, d);
+        }
+
+        // dd/mm/yyyy (PT)
+        if (str.includes("/")) {
+            const [d, m, a] = str.split("/").map(Number);
+            return new Date(a, m - 1, d);
+        }
+
+        return null;
+    }
+
     reservas.forEach(r => {
 
         // Garantir que existe array de apartamentos
         const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
 
-        // Datas
-function parseData(str) {
-    // yyyy-mm-dd → ISO
-    if (str.includes("-")) {
-        const [a, m, d] = str.split("-").map(Number);
-        return new Date(a, m - 1, d);
-    }
+        // Converter datas
+        const inicio = parseData(r.checkin);
+        const fim = parseData(r.checkout);
 
-    // dd/mm/yyyy → PT
-    if (str.includes("/")) {
-        const [d, m, a] = str.split("/").map(Number);
-        return new Date(a, m - 1, d);
-    }
-
-    return null;
-}
-
-const inicio = parseData(r.checkin);
-const fim = parseData(r.checkout);
-
-
-        const inicio = new Date(a1, m1 - 1, d1);
-        const fim = new Date(a2, m2 - 1, d2);
+        if (!inicio || !fim) return; // segurança
 
         // Para cada apartamento da reserva
         listaAps.forEach(ap => {
@@ -139,11 +140,10 @@ const fim = parseData(r.checkout);
                 const dataStr = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${ano}`;
 
                 const checkinPt = inicio.toLocaleDateString("pt-PT");
-const checkoutPt = fim.toLocaleDateString("pt-PT");
+                const checkoutPt = fim.toLocaleDateString("pt-PT");
 
-const isCheckin = dataStr === checkinPt;
-const isCheckout = dataStr === checkoutPt;
-
+                const isCheckin = dataStr === checkinPt;
+                const isCheckout = dataStr === checkoutPt;
 
                 if (isCheckin && isCheckout) div.classList.add("reserva-unica");
                 else if (isCheckin) div.classList.add("reserva-inicio");
@@ -162,6 +162,7 @@ const isCheckout = dataStr === checkoutPt;
         });
     });
 }
+
 
 /******************************************************
  * 5) COR POR ORIGEM
