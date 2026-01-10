@@ -244,8 +244,14 @@ function preencherFormularioReserva(r) {
 
     document.getElementById("apartamentos").value = (r.apartamentos || []).join(", ");
 
-    document.getElementById("checkin").value = r.checkin || "";
-    document.getElementById("checkout").value = r.checkout || "";
+    document.getElementById("checkin").value = r.checkin
+    ? r.checkin.split("/").reverse().join("-")
+    : "";
+
+    document.getElementById("checkout").value = r.checkout
+    ? r.checkout.split("/").reverse().join("-")
+    : "";
+
 
     document.getElementById("hospedes").value = r.hospedes ?? "";
     document.getElementById("adultos").value = r.adultos ?? "";
