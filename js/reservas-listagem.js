@@ -31,6 +31,13 @@ function parseDataPt(str) {
     return null;
 }
 
+function dataPtParaIso(str) {
+    if (!str) return "";
+    const [d, m, a] = str.split("/");
+    return `${a}-${m}-${d}`;
+}
+
+
 function normalizarDataParaPt(str) {
     if (!str) return "";
     const partes = str.split("-");
@@ -626,6 +633,8 @@ if (btnApagarSelecionadas) {
 // -------------------------------------------------------------
 // 17) ENVIAR PARA O CALENDÁRIO (MANUAL)
 // -------------------------------------------------------------
+
+
 const btnEnviarCalendarioEl = document.getElementById("btnEnviarCalendario");
 
 if (btnEnviarCalendarioEl) {
@@ -646,11 +655,14 @@ if (btnEnviarCalendarioEl) {
             const dados = doc.data();
 
             await db.collection("calendario").add({
-                ...dados,
-                id: id,
-                enviadoParaCalendario: true,
-                criadoEm: new Date()
-            });
+    ...dados,
+    checkin: dataPtParaIso(dados.checkin),
+    checkout: dataPtParaIso(dados.checkout),
+    id: id,
+    enviadoParaCalendario: true,
+    criadoEm: new Date()
+});
+
         }
 
         alert("Reservas enviadas para o calendário.");
