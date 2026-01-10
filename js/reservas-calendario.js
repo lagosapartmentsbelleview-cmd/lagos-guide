@@ -146,7 +146,8 @@ function desenharReservas(mes, ano, anoAtual) {
 
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
-                if (dt.getMonth() !== mes) continue;
+                if (dt.getMonth() !== mes || dt.getFullYear() !== anoAtual) continue;
+
 
                 const dia = dt.getDate();
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
