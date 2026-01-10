@@ -642,10 +642,22 @@ function ligarEventos() {
 }
 
 // -------------------------------------------------------------
-// 19) INICIAR SISTEMA
+// 19) INICIAR SISTEMA (GARANTE QUE FIREBASE ESTÁ PRONTO)
 // -------------------------------------------------------------
-window.addEventListener("DOMContentLoaded", () => {
+function iniciarSistema() {
     ligarEventos();
     carregarReservas();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Espera um pequeno delay para garantir que firebase-config carregou
+    setTimeout(() => {
+        if (typeof db !== "undefined") {
+            iniciarSistema();
+        } else {
+            console.error("Firebase não inicializou a tempo. Tentando novamente...");
+            setTimeout(iniciarSistema, 300);
+        }
+    }, 200);
 });
 
