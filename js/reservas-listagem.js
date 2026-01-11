@@ -203,11 +203,11 @@ async function carregarReservas() {
 // -------------------------------------------------------------
 // 5) DESENHAR TABELA
 // -------------------------------------------------------------
-function desenharTabela() {
+function desenharTabela(lista = reservas) {
     const tbody = document.querySelector("#tabelaReservas tbody");
     tbody.innerHTML = "";
 
-    reservas.forEach(r => {
+    lista.forEach(r => {
         const tr = document.createElement("tr");
 
         const quartos = r.quartos || (r.apartamentos ? r.apartamentos.length : 1);
@@ -236,6 +236,7 @@ function desenharTabela() {
 
 console.log("PARTE 1 carregada.");
 // -------------------------------------------------------------
+
 // 6) ABRIR / FECHAR MODAL
 // -------------------------------------------------------------
 function abrirModalReserva() {
