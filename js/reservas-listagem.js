@@ -113,6 +113,12 @@ function ordenarPorColuna(coluna, ordem) {
         let v1 = a[coluna];
         let v2 = b[coluna];
 
+        // Apartamentos → ordenar pelo texto "2301, 2203, 2204"
+        if (coluna === "apartamentos") {
+            v1 = (a.apartamentos || []).join(", ");
+            v2 = (b.apartamentos || []).join(", ");
+        }
+
         // Datas PT → converter corretamente
         if (coluna === "checkin" || coluna === "checkout") {
             v1 = parseDataPt(v1);
@@ -132,6 +138,7 @@ function ordenarPorColuna(coluna, ordem) {
 
     desenharTabela(lista);
 }
+
 
 // -------------------------------------------------------------
 // 2) VERIFICAR CONFLITO (BACK‑TO‑BACK PERMITIDO)
