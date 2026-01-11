@@ -148,26 +148,32 @@
     <input type="file" id="inputExcel" accept=".xlsx" style="display:none">
 
     <table id="tabelaReservas">
-        <thead>
-            <tr>
-                <th><input type="checkbox" id="selectAll"></th>
-                <th>Origem</th>
-                <th>Nº Reserva</th>
-                <th>Hóspede</th>
-                <th>Quartos</th>
-                <th>Apartamentos</th>
-                <th>Check-in</th>
-                <th>Check-out</th>
-                <th>Noites</th>
-                <th>Total Bruto (€)</th>
-                <th>Comissão (€)</th>
-                <th>Valor/Noite (€)</th>
-                <th>Berço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="selectAll"></th>
+
+            <th data-col="origem">Origem</th>
+            <th data-col="reserva">Nº Reserva</th>
+            <th data-col="cliente">Hóspede</th>
+            <th data-col="quartos">Quartos</th>
+            <th data-col="apartamento">Apartamentos</th>
+
+            <th data-col="checkin">Check-in</th>
+            <th data-col="checkout">Check-out</th>
+            <th data-col="noites">Noites</th>
+
+            <th data-col="totalBruto">Total Bruto (€)</th>
+            <th data-col="comissao">Comissão (€)</th>
+            <th data-col="valorNoite">Valor/Noite (€)</th>
+
+            <th data-col="berco">Berço</th>
+
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
 
     <!-- Modal -->
     <div id="modalReserva" class="modal">
