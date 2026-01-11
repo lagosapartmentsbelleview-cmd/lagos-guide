@@ -127,6 +127,32 @@
         #btnApagar {
             background: #d32f2f;
         }
+
+        th[data-col] {
+    cursor: pointer;
+    position: relative;
+}
+
+th[data-col].ordenar-asc::after,
+th[data-col].ordenar-desc::after {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #000;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+th[data-col].ordenar-asc::after {
+    content: "▲";
+}
+
+th[data-col].ordenar-desc::after {
+    content: "▼";
+}
+
     </style>
 </head>
 
