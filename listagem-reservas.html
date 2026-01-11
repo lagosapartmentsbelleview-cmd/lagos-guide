@@ -169,12 +169,15 @@
       measurementId: "G-14GR64WXHS"
     });
 
-    // Impedir acesso sem login
-    firebase.auth().onAuthStateChanged(user => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
-    });
+    <script>
+// Impedir acesso sem login
+firebase.auth().onAuthStateChanged(user => {
+  if (!user) {
+    window.location.href = "login.html";
+  }
+});
+</script>
+
 
     // Função logout
     function logout() {
