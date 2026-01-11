@@ -75,7 +75,8 @@ function calcularLimpeza(checkin) {
 // -------------------------------------------------------------
 let ordemAtual = {}; // guarda asc/desc por coluna
 
-document.addEventListener("click", (e) => {
+document.querySelector("#tabelaReservas thead").addEventListener("click", (e) => {
+
     const th = e.target.closest("th");
     if (!th || !th.dataset.col) return;
 
