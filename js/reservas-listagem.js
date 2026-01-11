@@ -65,7 +65,8 @@ function diasEntre(hoje, data) {
     const h = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
     const d = new Date(data.getFullYear(), data.getMonth(), data.getDate());
     return (d - h) / (1000 * 60 * 60 * 24);
-}   //  👈 ESTA CHAVETA ESTAVA A FALTAR
+}
+
 
 // -------------------------------------------------------------
 // ORDENAR POR COLUNA (tipo Excel) — COM SETAS NO TEXTO
