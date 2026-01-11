@@ -1,24 +1,51 @@
+/* -----------------------------------------------------------
+   ESTILO GERAL
+----------------------------------------------------------- */
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-    background: #f5f5f5;
+    background: #eef1f5;
+    color: #333;
 }
 
 h1 {
     text-align: center;
     margin-bottom: 10px;
+    font-size: 26px;
+    font-weight: 700;
+    color: #222;
 }
 
+/* -----------------------------------------------------------
+   NAVEGAÇÃO DO MÊS
+----------------------------------------------------------- */
 #navegacaoMes {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
     margin: 20px 0;
 }
 
-#tituloMes {
-    font-size: 24px;
-    font-weight: bold;
+#navegacaoMes select,
+#navegacaoMes button {
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: white;
+    transition: 0.2s ease;
 }
 
+#navegacaoMes select:hover,
+#navegacaoMes button:hover {
+    background: #e6e6e6;
+}
+
+/* -----------------------------------------------------------
+   TABELA DO CALENDÁRIO
+----------------------------------------------------------- */
 #calendarioWrapper {
     overflow-x: auto;
     padding-bottom: 10px;
@@ -29,10 +56,13 @@ table {
     width: 100%;
     min-width: 900px;
     background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
 }
 
 th, td {
-    border: 1px solid #ccc;
+    border: 1px solid #dcdcdc;
     text-align: center;
     padding: 0;
     min-width: 52px;
@@ -41,18 +71,29 @@ th, td {
     position: relative;
 }
 
+th {
+    background: #f7f7f7;
+    font-weight: 700;
+    color: #444;
+}
+
 td:first-child, th:first-child {
-    min-width: 90px;
+    min-width: 110px;
     font-weight: 600;
     background: #fafafa;
 }
 
+/* -----------------------------------------------------------
+   CÉLULAS DO DIA
+----------------------------------------------------------- */
 .dia-celula {
     position: relative;
     padding: 0;
 }
 
-/* Barra da reserva */
+/* -----------------------------------------------------------
+   BARRAS DE RESERVA (cores mantidas como estavam)
+----------------------------------------------------------- */
 .reserva {
     color: #fff;
     font-size: 13px;
@@ -69,6 +110,7 @@ td:first-child, th:first-child {
     border-radius: 12px;
     padding: 0 4px;
     box-sizing: border-box;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 /* Metades */
@@ -92,7 +134,9 @@ td:first-child, th:first-child {
     border-radius: 12px;
 }
 
-/* Responsivo */
+/* -----------------------------------------------------------
+   RESPONSIVO
+----------------------------------------------------------- */
 @media (max-width: 768px) {
     th, td {
         min-width: 44px;
@@ -109,18 +153,3 @@ td:first-child, th:first-child {
         min-width: 70px;
     }
 }
-#navegacaoMes {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-#navegacaoMes select,
-#navegacaoMes button {
-    padding: 6px 10px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
