@@ -77,13 +77,20 @@ let ordemAtual = {}; // guarda asc/desc por coluna
 
 document.querySelector("#tabelaReservas thead").addEventListener("click", (e) => {
     const th = e.target.closest("th");
-    console.log("Clique no TH:", th); // <-- TESTE
     if (!th || !th.dataset.col) return;
 
     const coluna = th.dataset.col;
 
     // Alternar ordem
     ordemAtual[coluna] = ordemAtual[coluna] === "asc" ? "desc" : "asc";
+
+    // Remover setas de todos os th
+    document.querySelectorAll("#tabelaReservas thead th[data-col]").forEach(el => {
+        el.classList.remove("ordenar-asc", "ordenar-desc");
+    });
+
+    // Adicionar seta ao th clicado
+    th.classList.add(ordemAtual[coluna] === "asc" ? "ordenar-asc" : "ordenar-desc");
 
     ordenarPorColuna(coluna, ordemAtual[coluna]);
 
