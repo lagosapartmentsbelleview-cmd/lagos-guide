@@ -316,10 +316,18 @@ function editarReserva(id) {
 }
 
 // -------------------------------------------------------------
+// FUNÇÃO PARA CALCULAR LIMPEZA COM BASE NO CHECK-OUT
+// -------------------------------------------------------------
+function calcularLimpeza(checkout) {
+    const mes = new Date(checkout).getMonth() + 1; // 1–12
+    const mesesAlta = [6, 7, 8, 9]; // junho, julho, agosto, setembro
+    return mesesAlta.includes(mes) ? 40 : 35;
+}
+
+// -------------------------------------------------------------
 // 9) LIMPAR FORMULÁRIO
 // -------------------------------------------------------------
 function limparFormularioReserva() {
-    // Limpa manualmente todos os campos do modal
     document.getElementById("origem").value = "Manual";
     document.getElementById("bookingId").value = "";
     document.getElementById("cliente").value = "";
@@ -334,7 +342,18 @@ function limparFormularioReserva() {
     document.getElementById("totalBruto").value = "";
     document.getElementById("comissao").value = "";
     document.getElementById("berco").value = "false";
+    document.getElementById("limpeza").value = ""; // <-- aqui
 }
+
+// -------------------------------------------------------------
+// 10) EVENTO PARA ATUALIZAR LIMPEZA AUTOMÁTICA
+// -------------------------------------------------------------
+document.getElementById("checkout").addEventListener("change", () => {
+    const checkout = document.getElementById("checkout").value;
+    if (checkout) {
+        document.getElementById("limpeza").value = calcularLimpeza(checkout);
+    }
+});
 
 
 // -------------------------------------------------------------
@@ -415,8 +434,20 @@ if (origem !== "Booking") {
     const noites = calcularNoites(checkin, checkout);
     const precoNoite = noites > 0 ? totalBruto / noites : 0;
     const liquido = totalBruto - comissao;
-    const limpeza = calcularLimpeza(checkin);
+
+    // Limpeza: usa manual se existir, senão calcula pelo CHECK-OUT
+    let limpeza = document.getElementById("limpeza").value.trim();
+
+    if (limpeza === "" || isNaN(limpeza)) {
+    limpeza = calcularLimpeza(checkout); // <-- mês da saída
+    } else {
+    limpeza = Number(limpeza);
+    }
+
     const totalLiquidoFinal = liquido - limpeza;
+
+
+
 
     // ---------------------------------------------------------
     // ALOCAÇÃO INTELIGENTE (RESPEITA 5 DIAS E RESERVAS A DECORRER)
@@ -561,7 +592,7 @@ async function importarExcelBooking(event) {
         const noites = calcularNoites(checkin, checkout);
         const precoNoite = noites > 0 ? totalBruto / noites : 0;
         const liquido = totalBruto - comissao;
-        const limpeza = calcularLimpeza(checkin);
+        const limpeza = calcularLimpeza(checkout);
         const totalLiquidoFinal = liquido - limpeza;
 
         const quartos = Number(linha["Quartos"] || 1);
