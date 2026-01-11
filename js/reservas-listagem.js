@@ -77,6 +77,7 @@ let ordemAtual = {}; // guarda asc/desc por coluna
 
 document.querySelector("#tabelaReservas thead").addEventListener("click", (e) => {
     const th = e.target.closest("th");
+    console.log("Clique no TH:", th); // <-- TESTE
     if (!th || !th.dataset.col) return;
 
     const coluna = th.dataset.col;
