@@ -257,13 +257,13 @@ function desenharTabela(lista = reservas) {
             <td>${r.bookingId || ""}</td>
             <td>${r.cliente || ""}</td>
             <td>${quartos}</td>
-            <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocação" : "")}</td>
-            <td>${r.checkin}</td>
-            <td>${r.checkout}</td>
-            <td>${r.noites ?? ""}</td>
-            <td>${r.totalBruto?.toFixed?.(2) ?? ""}</td>
-            <td>${r.comissao?.toFixed?.(2) ?? ""}</td>
-            <td>${r.precoNoite?.toFixed?.(2) ?? ""}</td>
+            <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
+            <td>${r.checkin || ""}</td>
+            <td>${r.checkout || ""}</td>
+            <td>${r.noites !== undefined ? r.noites : ""}</td>
+            <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
+            <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
+            <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
             <td>${r.berco ? "Sim" : "Não"}</td>
             <td><button onclick="editarReserva('${r.id}')">Editar</button></td>
         `;
