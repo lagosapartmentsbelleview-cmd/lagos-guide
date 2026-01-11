@@ -87,6 +87,32 @@ document.addEventListener("click", (e) => {
     ordenarPorColuna(coluna, ordemAtual[coluna]);
 });
 
+function ordenarPorColuna(coluna, ordem) {
+    let lista = [...reservas]; // cópia para não estragar o original
+
+    lista.sort((a, b) => {
+        let v1 = a[coluna];
+        let v2 = b[coluna];
+
+        // Datas PT → converter corretamente
+        if (coluna === "checkin" || coluna === "checkout") {
+            v1 = parseDataPt(v1);
+            v2 = parseDataPt(v2);
+        }
+
+        // Números → converter
+        if (!isNaN(v1) && !isNaN(v2)) {
+            v1 = Number(v1);
+            v2 = Number(v2);
+        }
+
+        if (v1 < v2) return ordem === "asc" ? -1 : 1;
+        if (v1 > v2) return ordem === "asc" ? 1 : -1;
+        return 0;
+    });
+
+    desenharTabela(lista);
+}
 
 // -------------------------------------------------------------
 // 2) VERIFICAR CONFLITO (BACK‑TO‑BACK PERMITIDO)
