@@ -147,5 +147,3 @@ th[data-col].ordenar-asc::after {
 th[data-col].ordenar-desc::after {
     content: "▼";
 }
-
-
