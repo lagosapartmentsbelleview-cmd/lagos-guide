@@ -6,7 +6,7 @@ const mesesAlta = [6, 7, 8, 9]; // junho, julho, agosto, setembro
 return mesesAlta.includes(mes) ? 40 : 35;
 }
 
-// 👉 FUNÇA~PARA A CONTAGEM DAS NOITES DAREM SEMPRE NUMEROS INTEIROS
+// 👉 FUNÇÃO PARA A CONTAGEM DAS NOITES DAREM SEMPRE NUMEROS INTEIROS
 function calcularNoites(checkin, checkout) {
     const dt1 = new Date(checkin + "T00:00:00");
     const dt2 = new Date(checkout + "T00:00:00");
@@ -65,19 +65,7 @@ function diasEntre(hoje, data) {
     const h = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
     const d = new Date(data.getFullYear(), data.getMonth(), data.getDate());
     return (d - h) / (1000 * 60 * 60 * 24);
-}
 
-function calcularNoites(checkin, checkout) {
-    const ini = parseDataPt(checkin);
-    const fim = parseDataPt(checkout);
-    if (!ini || !fim) return 0;
-
-    ini.setHours(0, 0, 0, 0);
-    fim.setHours(0, 0, 0, 0);
-
-    const diff = fim - ini;
-    return diff > 0 ? diff / (1000 * 60 * 60 * 24) : 0;
-}
 
 function calcularLimpeza(checkin) {
     const data = parseDataPt(checkin);
