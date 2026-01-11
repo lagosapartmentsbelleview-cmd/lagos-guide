@@ -124,4 +124,22 @@ td:first-child, th:first-child {
     cursor: pointer;
 }
 
+th[data-col] {
+    cursor: pointer;
+    position: relative;
+}
+
+th[data-col].ordenar-asc::after {
+    content: "▲";
+    position: absolute;
+    right: 8px;
+    font-size: 12px;
+}
+
+th[data-col].ordenar-desc::after {
+    content: "▼";
+    position: absolute;
+    right: 8px;
+    font-size: 12px;
+}
 
