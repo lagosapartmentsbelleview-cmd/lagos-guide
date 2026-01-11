@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+<body>
+
+<h2>Entrar no Sistema</h2>
+
+<input id="email" type="email" placeholder="Email"><br><br>
+<input id="senha" type="password" placeholder="Senha"><br><br>
+<button id="btnLogin">Entrar</button>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+<script>
+firebase.initializeApp({
+  apiKey: "AQUI",
+  authDomain: "AQUI",
+  projectId: "AQUI"
+});
+
+document.getElementById("btnLogin").addEventListener("click", () => {
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+
+  firebase.auth().signInWithEmailAndPassword(email, senha)
+    .then(() => window.location.href = "listagem-reservas.html")
+    .catch(err => alert("Erro: " + err.message));
+});
+</script>
+
+</body>
+</html>
