@@ -129,17 +129,23 @@ th[data-col] {
     position: relative;
 }
 
-th[data-col].ordenar-asc::after {
-    content: "▲";
+th[data-col].ordenar-asc::after,
+th[data-col].ordenar-desc::after {
     position: absolute;
     right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 12px;
+    color: #333;
+    pointer-events: none;
+}
+
+th[data-col].ordenar-asc::after {
+    content: "▲";
 }
 
 th[data-col].ordenar-desc::after {
     content: "▼";
-    position: absolute;
-    right: 8px;
-    font-size: 12px;
 }
+
 
