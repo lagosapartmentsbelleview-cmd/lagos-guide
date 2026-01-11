@@ -6,6 +6,21 @@ console.log("JS DA LISTAGEM A CORRER — VERSÃO FINAL");
 let reservas = [];
 let reservaAtual = null;
 
+// -------------------------------------------------------------
+// FUNÇÃO CORRETA PARA CALCULAR NOITES
+// -------------------------------------------------------------
+function calcularNoites(checkin, checkout) {
+    const d1 = new Date(checkin);
+    const d2 = new Date(checkout);
+
+    // Normalizar para meia-noite (evita 5.9583333, 6.0416666, etc.)
+    d1.setHours(0, 0, 0, 0);
+    d2.setHours(0, 0, 0, 0);
+
+    return (d2 - d1) / (1000 * 60 * 60 * 24);
+}
+
+
 const APARTAMENTOS_FIXOS = ["2301", "2203", "2204"];
 const DIAS_SEGURANCA_REALOCA = 5;
 
