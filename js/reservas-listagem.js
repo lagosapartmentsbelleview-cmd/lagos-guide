@@ -71,32 +71,40 @@ function calcularLimpeza(checkin) {
 }
 
 // -------------------------------------------------------------
-// ORDENAR POR COLUNA (tipo Excel)
+// ORDENAR POR COLUNA (tipo Excel) — COM SETAS NO TEXTO
 // -------------------------------------------------------------
 let ordemAtual = {}; // guarda asc/desc por coluna
 
-document.querySelector("#tabelaReservas thead").addEventListener("click", (e) => {
-    const th = e.target.closest("th");
-    console.log("CLIQUE NO TH:", th); // TESTE
-    if (!th || !th.dataset.col) return;
+// Guardar o texto original de cada th
+const thsComColuna = document.querySelectorAll("#theadReservas th[data-col]");
+thsComColuna.forEach(th => {
+    th.dataset.labelOriginal = th.textContent.trim();
+});
 
+document.querySelector("#theadReservas").addEventListener("click", (e) => {
+    const th = e.target.closest("th");
+
+    // Ignorar colunas sem data-col
+    if (!th || !th.dataset.col) return;
 
     const coluna = th.dataset.col;
 
     // Alternar ordem
     ordemAtual[coluna] = ordemAtual[coluna] === "asc" ? "desc" : "asc";
 
-    // Remover setas de todos os th
-    document.querySelectorAll("#tabelaReservas thead th[data-col]").forEach(el => {
-        el.classList.remove("ordenar-asc", "ordenar-desc");
+    // Limpar texto de todos os th
+    thsComColuna.forEach(el => {
+        el.textContent = el.dataset.labelOriginal;
     });
 
     // Adicionar seta ao th clicado
-    th.classList.add(ordemAtual[coluna] === "asc" ? "ordenar-asc" : "ordenar-desc");
+    const seta = ordemAtual[coluna] === "asc" ? " ▲" : " ▼";
+    th.textContent = th.dataset.labelOriginal + seta;
 
+    // Ordenar e redesenhar
     ordenarPorColuna(coluna, ordemAtual[coluna]);
-
 });
+
 
 function ordenarPorColuna(coluna, ordem) {
     let lista = [...reservas]; // cópia para não estragar o original
