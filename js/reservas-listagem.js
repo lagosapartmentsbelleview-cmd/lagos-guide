@@ -113,13 +113,13 @@ function ordenarPorColuna(coluna, ordem) {
         let v1 = a[coluna];
         let v2 = b[coluna];
 
-        // Valor/Noite
+        // Valor/Noite (€)
         if (coluna === "precoNoite") {
-            v1 = Number(a.precoNoite) || 0;
-            v2 = Number(b.precoNoite) || 0;
+            v1 = Number(a.precoNoite ?? 0);
+            v2 = Number(b.precoNoite ?? 0);
         }
 
-        // Apartamentos
+        // Apartamentos (array → string)
         if (coluna === "apartamentos") {
             v1 = (a.apartamentos || []).join(", ");
             v2 = (b.apartamentos || []).join(", ");
@@ -132,11 +132,14 @@ function ordenarPorColuna(coluna, ordem) {
         }
 
         // Números genéricos
-        if (!isNaN(v1) && !isNaN(v2)) {
+        if (typeof v1 === "number" && typeof v2 === "number") {
+            // já são números
+        } else if (!isNaN(v1) && !isNaN(v2)) {
             v1 = Number(v1);
             v2 = Number(v2);
         }
 
+        // Comparação final
         if (v1 < v2) return ordem === "asc" ? -1 : 1;
         if (v1 > v2) return ordem === "asc" ? 1 : -1;
         return 0;
@@ -144,6 +147,7 @@ function ordenarPorColuna(coluna, ordem) {
 
     desenharTabela(lista);
 }
+
 
 
 // -------------------------------------------------------------
