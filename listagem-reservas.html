@@ -202,9 +202,9 @@ th[data-col].ordenar-desc::after {
     <input type="file" id="inputExcel" accept=".xlsx" style="display:none">
 
     <table id="tabelaReservas">
-    <thead>
+    <thead id="theadReservas">
         <tr>
-            <th><input type="checkbox" id="selectAll"></th>
+            <th class="no-sort"><input type="checkbox" id="selectAll"></th>
 
             <th data-col="origem">Origem</th>
             <th data-col="reserva">Nº Reserva</th>
@@ -222,11 +222,13 @@ th[data-col].ordenar-desc::after {
 
             <th data-col="berco">Berço</th>
 
-            <th>Ações</th>
+            <th class="no-sort">Ações</th>
         </tr>
     </thead>
-    <tbody></tbody>
+
+    <tbody id="tbodyReservas"></tbody>
 </table>
+
 
 
     <!-- Modal -->
