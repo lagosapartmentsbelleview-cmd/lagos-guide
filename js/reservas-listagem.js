@@ -1,5 +1,12 @@
 console.log("JS DA LISTAGEM A CORRER — VERSÃO FINAL");
 
+function calcularLimpeza(checkout) {
+const mes = new Date(checkout).getMonth() + 1; // 1–12
+const mesesAlta = [6, 7, 8, 9]; // junho, julho, agosto, setembro
+return mesesAlta.includes(mes) ? 40 : 35;
+}
+
+
 // -------------------------------------------------------------
 // 0) ESTADO GLOBAL
 // -------------------------------------------------------------
