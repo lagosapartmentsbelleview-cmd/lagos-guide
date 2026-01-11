@@ -197,8 +197,9 @@ async function carregarReservas() {
     reservas = [];
     snap.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
 
-    desenharTabela();
+    desenharTabela(reservas); // <-- IMPORTANTE
 }
+
 
 // -------------------------------------------------------------
 // 5) DESENHAR TABELA
