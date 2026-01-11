@@ -238,7 +238,7 @@ async function carregarReservas() {
 
     desenharTabela(reservas); // <-- IMPORTANTE
 }
-----------------------------------------------------------------
+// -------------------------------------------------------------
 // 5) DESENHAR TABELA
 // -------------------------------------------------------------
 function desenharTabela(lista = reservas) {
