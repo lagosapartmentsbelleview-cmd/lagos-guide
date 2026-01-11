@@ -190,7 +190,26 @@ th[data-col].ordenar-desc::after {
     position: relative !important;
 }
 
-    </style>
+    </style
+
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+<script>
+firebase.initializeApp({
+  apiKey: "AQUI",
+  authDomain: "AQUI",
+  projectId: "AQUI"
+});
+
+// Impedir acesso sem login
+firebase.auth().onAuthStateChanged(user => {
+  if (!user) {
+    window.location.href = "login.html";
+  }
+});
+</script>
+
 </head>
 
 <body>
