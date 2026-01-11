@@ -272,6 +272,7 @@ function desenharTabela(lista = reservas) {
     });
 }
 
+
 console.log("PARTE 1 carregada.");
 // -------------------------------------------------------------
 
