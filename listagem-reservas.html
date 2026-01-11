@@ -190,9 +190,9 @@ th[data-col].ordenar-desc::after {
     position: relative !important;
 }
 
-    </style
+    </style>
 
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
 <script>
@@ -209,6 +209,15 @@ firebase.auth().onAuthStateChanged(user => {
   }
 });
 </script>
+
+    <!-- Função logout -->
+    <script>
+    function logout() {
+    firebase.auth().signOut().then(() => {
+    window.location.href = "login.html";
+    }); 
+    } 
+    </script>
 
 </head>
 
