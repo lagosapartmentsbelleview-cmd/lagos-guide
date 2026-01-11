@@ -115,8 +115,8 @@ function ordenarPorColuna(coluna, ordem) {
 
         // Valor/Noite (€)
         if (coluna === "precoNoite") {
-            v1 = Number(a.precoNoite ?? 0);
-            v2 = Number(b.precoNoite ?? 0);
+            v1 = a.precoNoite !== undefined ? Number(a.precoNoite) : 0;
+            v2 = b.precoNoite !== undefined ? Number(b.precoNoite) : 0;
         }
 
         // Apartamentos (array → string)
@@ -132,9 +132,7 @@ function ordenarPorColuna(coluna, ordem) {
         }
 
         // Números genéricos
-        if (typeof v1 === "number" && typeof v2 === "number") {
-            // já são números
-        } else if (!isNaN(v1) && !isNaN(v2)) {
+        if (!isNaN(v1) && !isNaN(v2)) {
             v1 = Number(v1);
             v2 = Number(v2);
         }
