@@ -67,15 +67,6 @@ function diasEntre(hoje, data) {
     return (d - h) / (1000 * 60 * 60 * 24);
 }   //  👈 ESTA CHAVETA ESTAVA A FALTAR
 
-
-function calcularLimpeza(checkin) {
-    const data = parseDataPt(checkin);
-    if (!data) return 35;
-
-    const mes = data.getMonth() + 1; // 1–12
-    return [6, 7, 8, 9].includes(mes) ? 40 : 35;
-}
-
 // -------------------------------------------------------------
 // ORDENAR POR COLUNA (tipo Excel) — COM SETAS NO TEXTO
 // -------------------------------------------------------------
