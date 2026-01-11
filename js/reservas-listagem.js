@@ -71,7 +71,24 @@ function calcularLimpeza(checkin) {
 }
 
 // -------------------------------------------------------------
+// ORDENAR POR COLUNA (tipo Excel)
+// -------------------------------------------------------------
+let ordemAtual = {}; // guarda asc/desc por coluna
 
+document.addEventListener("click", (e) => {
+    const th = e.target.closest("th");
+    if (!th || !th.dataset.col) return;
+
+    const coluna = th.dataset.col;
+
+    // Alternar ordem
+    ordemAtual[coluna] = ordemAtual[coluna] === "asc" ? "desc" : "asc";
+
+    ordenarPorColuna(coluna, ordemAtual[coluna]);
+});
+
+
+// -------------------------------------------------------------
 // 2) VERIFICAR CONFLITO (BACK‑TO‑BACK PERMITIDO)
 // -------------------------------------------------------------
 function temConflitoNoApartamento(reservaNova, apartamento, reservasExistentes) {
