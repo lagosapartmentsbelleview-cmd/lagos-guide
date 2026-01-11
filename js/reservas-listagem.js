@@ -107,25 +107,31 @@ document.querySelector("#theadReservas").addEventListener("click", (e) => {
 
 
 function ordenarPorColuna(coluna, ordem) {
-    let lista = [...reservas]; // cópia para não estragar o original
+    let lista = [...reservas];
 
     lista.sort((a, b) => {
         let v1 = a[coluna];
         let v2 = b[coluna];
 
-        // Apartamentos → ordenar pelo texto "2301, 2203, 2204"
+        // Valor/Noite
+        if (coluna === "precoNoite") {
+            v1 = Number(a.precoNoite) || 0;
+            v2 = Number(b.precoNoite) || 0;
+        }
+
+        // Apartamentos
         if (coluna === "apartamentos") {
             v1 = (a.apartamentos || []).join(", ");
             v2 = (b.apartamentos || []).join(", ");
         }
 
-        // Datas PT → converter corretamente
+        // Datas
         if (coluna === "checkin" || coluna === "checkout") {
             v1 = parseDataPt(v1);
             v2 = parseDataPt(v2);
         }
 
-        // Números → converter
+        // Números genéricos
         if (!isNaN(v1) && !isNaN(v2)) {
             v1 = Number(v1);
             v2 = Number(v2);
