@@ -258,22 +258,27 @@ function desenharTabela(lista = reservas) {
         const quartos = r.quartos || (r.apartamentos ? r.apartamentos.length : 1);
         const apartamentosTexto = (r.apartamentos || []).join(", ");
 
-        tr.innerHTML = `
-            <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
-            <td><span class="origem-badge origem-${(r.origem || "").toLowerCase()}">${r.origem || ""}</span></td>
-            <td>${r.bookingId || ""}</td>
-            <td>${r.cliente || ""}</td>
-            <td>${quartos}</td>
-            <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
-            <td>${r.checkin || ""}</td>
-            <td>${r.checkout || ""}</td>
-            <td>${r.noites !== undefined ? r.noites : ""}</td>
-            <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
-            <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
-            <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
-            <td>${r.berco ? "Sim" : "Não"}</td>
-            <td><button onclick="editarReserva('${r.id}')">Editar</button></td>
-        `;
+       tr.innerHTML = `
+    <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
+    <td><span class="origem-badge origem-${(r.origem || "").toLowerCase()}">${r.origem || ""}</span></td>
+    <td>${r.bookingId || ""}</td>
+    <td>${r.cliente || ""}</td>
+    <td>${quartos}</td>
+    <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
+    <td>${r.checkin || ""}</td>
+    <td>${r.checkout || ""}</td>
+    <td>${r.noites !== undefined ? r.noites : ""}</td>
+    <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
+    <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
+    <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
+    <td>${r.berco ? "Sim" : "Não"}</td>
+
+    <!-- AQUI ESTÁ A COLUNA QUE FALTAVA -->
+    <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
+
+    <td><button onclick="editarReserva('${r.id}')">Editar</button></td>
+`;
+
 
         tbody.appendChild(tr);
     });
