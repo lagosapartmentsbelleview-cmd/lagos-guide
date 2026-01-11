@@ -204,7 +204,10 @@ th[data-col].ordenar-desc::after {
     <table id="tabelaReservas">
     <thead id="theadReservas">
         <tr>
-            <th class="no-sort"><input type="checkbox" id="selectAll"></th>
+            <th class="no-sort">
+                <input type="checkbox" id="selectAll">
+            </th>
+
             <th data-col="origem">Origem</th>
             <th data-col="bookingId">Nº Reserva</th>
             <th data-col="cliente">Hóspede</th>
@@ -213,16 +216,20 @@ th[data-col].ordenar-desc::after {
             <th data-col="checkin">Check-in</th>
             <th data-col="checkout">Check-out</th>
             <th data-col="noites">Noites</th>
+
             <th data-col="totalBruto">Total Bruto (€)</th>
             <th data-col="comissao">Comissão (€)</th>
             <th data-col="precoNoite">Valor/Noite (€)</th>
+
             <th data-col="berco">Berço</th>
+
             <th class="no-sort">Ações</th>
         </tr>
     </thead>
 
-    <tbody id="tbodyReservas"></tbody>
+    <tbody></tbody>
 </table>
+
 
 
 
