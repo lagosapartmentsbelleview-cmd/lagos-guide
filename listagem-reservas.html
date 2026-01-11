@@ -240,12 +240,17 @@ th[data-col].ordenar-desc::after {
     <h2>Reserva</h2>
 
     <label>Origem</label>
-    <select id="origem">
-      <option value="Manual">Manual</option>
-      <option value="Booking">Booking</option>
-      <option value="Airbnb">Airbnb</option>
-      <option value="Particular">Particular</option>
-    </select>
+    <selec<select id="origem">
+    <option value="booking">Booking</option>
+    <option value="airbnb">Airbnb</option>
+    <option value="vrbo">VRBO</option>
+    <option value="expedia">Expedia</option>
+    <option value="agoda">Agoda</option>
+    <option value="hotels">Hotels.com</option>
+    <option value="trip">Trip.com</option>
+    <option value="particular">Particular</option>
+</select>
+
 
     <label>Número da Reserva (se for Booking)</label>
     <input type="text" id="bookingId" placeholder="Só preencher se for Booking">
