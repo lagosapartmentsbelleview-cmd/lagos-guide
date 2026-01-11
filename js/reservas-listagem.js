@@ -76,7 +76,6 @@ function calcularLimpeza(checkin) {
 let ordemAtual = {}; // guarda asc/desc por coluna
 
 document.querySelector("#tabelaReservas thead").addEventListener("click", (e) => {
-
     const th = e.target.closest("th");
     if (!th || !th.dataset.col) return;
 
@@ -86,6 +85,7 @@ document.querySelector("#tabelaReservas thead").addEventListener("click", (e) =>
     ordemAtual[coluna] = ordemAtual[coluna] === "asc" ? "desc" : "asc";
 
     ordenarPorColuna(coluna, ordemAtual[coluna]);
+
 });
 
 function ordenarPorColuna(coluna, ordem) {
