@@ -169,4 +169,43 @@ td:first-child, th:first-child {
 #btnVoltarListagem:hover {
     background: #125a9c;
 }
+/* -----------------------------------------------------------
+   CORES POR ORIGEM (AS ORIGINAIS DA LISTAGEM)
+----------------------------------------------------------- */
+
+.reserva.origem-booking {
+    background: #1E88E5;
+}
+
+.reserva.origem-airbnb {
+    background: #EC407A;
+}
+
+.reserva.origem-particular {
+    background: #43A047;
+}
+
+.reserva.origem-manual {
+    background: #757575;
+}
+.reserva.origem-vrbo {
+    background: #8E24AA;
+}
+
+.reserva.origem-expedia {
+    background: #F57C00;
+}
+
+.reserva.origem-agoda {
+    background: #009688;
+}
+
+.reserva.origem-hotels {
+    background: #D32F2F;
+}
+
+.reserva.origem-trip {
+    background: #0277BD;
+}
+
 
