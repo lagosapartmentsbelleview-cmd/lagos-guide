@@ -70,15 +70,11 @@
         .origem-vrbo { background: #8E24AA; }
         .origem-particular { background: #43A047; }
         .origem-outro { background: #757575; }
-        /* Novas OTAs */
         .origem-expedia { background: #F57C00; }
         .origem-agoda { background: #009688; }
         .origem-hotels { background: #D32F2F; }
         .origem-trip { background: #0277BD; }
-
-        /* Caso ainda uses "manual" */
         .origem-manual { background: #757575; }
-
 
         /* Modal */
         .modal {
@@ -129,174 +125,83 @@
             font-size: 14px;
         }
 
-        #btnGuardar {
-            background: #43A047;
-        }
-
-        #btnApagar {
-            background: #d32f2f;
-        }
+        #btnGuardar { background: #43A047; }
+        #btnApagar { background: #d32f2f; }
 
         th[data-col] {
-    cursor: pointer;
-    position: relative;
-}
+            cursor: pointer;
+            position: relative;
+        }
 
-th[data-col].ordenar-asc::after,
-th[data-col].ordenar-desc::after {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 14px;
-    color: #000;
-    z-index: 9999;
-    pointer-events: none;
-}
+        th[data-col].ordenar-asc::after,
+        th[data-col].ordenar-desc::after {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #000;
+            z-index: 9999;
+            pointer-events: none;
+        }
 
-th[data-col].ordenar-asc::after {
-    content: "▲";
-}
+        th[data-col].ordenar-asc::after { content: "▲"; }
+        th[data-col].ordenar-desc::after { content: "▼"; }
 
-th[data-col].ordenar-desc::after {
-    content: "▼";
-}
-        #tabelaReservas thead th[data-col] {
-    position: relative !important;
-    overflow: visible !important;
-}
-
-#tabelaReservas thead th[data-col].ordenar-asc::after,
-#tabelaReservas thead th[data-col].ordenar-desc::after {
-    position: absolute !important;
-    right: 6px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    font-size: 14px !important;
-    color: #000 !important;
-    z-index: 9999 !important;
-    pointer-events: none !important;
-}
-
-#tabelaReservas thead th[data-col].ordenar-asc::after {
-    content: "▲" !important;
-}
-
-#tabelaReservas thead th[data-col].ordenar-desc::after {
-    content: "▼" !important;
-}
-
-#tabelaReservas th {
-    position: relative !important;
-}
-
+        #tabelaReservas th {
+            position: relative !important;
+        }
     </style>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-<script>
-
-firebase.initializeApp({
-  apiKey: "AIzaSyD70hv-PgWJKDbK-tcxeRuB1FE1cVs-FBs",
-  authDomain: "reservas-marina-park.firebaseapp.com",
-  projectId: "reservas-marina-park",
-  storageBucket: "reservas-marina-park.appspot.com",
-  messagingSenderId: "1048056704068",
-  appId: "1:1048056704068:web:a2793d5db5e5e5573c6011",
-  measurementId: "G-14GR64WXHS"
-});
-</script>
-
-
-// Impedir acesso sem login
-firebase.auth().onAuthStateChanged(user => {
-  if (!user) {
-    window.location.href = "login.html";
-  }
-});
-</script>
-
-    <!-- Função logout -->
     <script>
+    // Inicializar Firebase
+    firebase.initializeApp({
+      apiKey: "AIzaSyD70hv-PgWJKDbK-tcxeRuB1FE1cVs-FBs",
+      authDomain: "reservas-marina-park.firebaseapp.com",
+      projectId: "reservas-marina-park",
+      storageBucket: "reservas-marina-park.appspot.com",
+      messagingSenderId: "1048056704068",
+      appId: "1:1048056704068:web:a2793d5db5e5e5573c6011",
+      measurementId: "G-14GR64WXHS"
+    });
+
+    // Impedir acesso sem login
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = "login.html";
+      }
+    });
+
+    // Função logout
     function logout() {
-    firebase.auth().signOut().then(() => {
-    window.location.href = "login.html";
-    }); 
-    } 
+      firebase.auth().signOut().then(() => {
+        window.location.href = "login.html";
+      });
+    }
     </script>
 
 </head>
-
-<body>
-
-    <h1>Gestão de Reservas</h1>
-
-    <div id="acoes">
-        <button id="btnNovaReserva">Nova Reserva</button>
-        <button id="btnImportarExcel">Importar Booking (XLSX)</button>
-        <button id="btnApagarSelecionadas">Apagar Selecionadas</button>
-        <button id="btnEnviarCalendario">Enviar para Calendário</button>
-        <button id="btnIrCalendario">Ir para Calendário</button>
-        <button id="btnLimparFantasmas">Limpar Fantasmas do Calendário</button>
-          <!-- Botão Logout -->
-        <button onclick="logout()">Sair</button>
-
-
-
-    </div>
-
-    <input type="file" id="inputExcel" accept=".xlsx" style="display:none">
-
-    <table id="tabelaReservas">
-    <thead id="theadReservas">
-        <tr>
-            <th class="no-sort">
-                <input type="checkbox" id="selectAll">
-            </th>
-
-            <th data-col="origem">Origem</th>
-            <th data-col="bookingId">Nº Reserva</th>
-            <th data-col="cliente">Hóspede</th>
-            <th data-col="quartos">Quartos</th>
-            <th data-col="apartamentos">Apartamentos</th>
-            <th data-col="checkin">Check-in</th>
-            <th data-col="checkout">Check-out</th>
-            <th data-col="noites">Noites</th>
-            <th data-col="totalBruto">Total Bruto (€)</th>
-            <th data-col="comissao">Comissão (€)</th>
-            <th data-col="precoNoite">Valor/Noite (€)</th>
-            <th data-col="limpeza">Limpeza (€)</th>
-            <th data-col="berco">Berço</th>
-
-            <th class="no-sort">Ações</th>
-        </tr>
-    </thead>
-
-    <tbody></tbody>
-</table>
-
-
-
-
-    <!-- Modal -->
-    <div id="modalReserva" class="modal">
+<!-- Modal -->
+<div id="modalReserva" class="modal">
   <div class="modal-content">
 
     <h2>Reserva</h2>
 
     <label>Origem</label>
     <select id="origem">
-    <option value="booking">Booking</option>
-    <option value="airbnb">Airbnb</option>
-    <option value="vrbo">VRBO</option>
-    <option value="expedia">Expedia</option>
-    <option value="agoda">Agoda</option>
-    <option value="hotels">Hotels.com</option>
-    <option value="trip">Trip.com</option>
-    <option value="particular">Particular</option>
+      <option value="booking">Booking</option>
+      <option value="airbnb">Airbnb</option>
+      <option value="vrbo">VRBO</option>
+      <option value="expedia">Expedia</option>
+      <option value="agoda">Agoda</option>
+      <option value="hotels">Hotels.com</option>
+      <option value="trip">Trip.com</option>
+      <option value="particular">Particular</option>
     </select>
-
 
     <label>Número da Reserva (se for Booking)</label>
     <input type="text" id="bookingId" placeholder="Só preencher se for Booking">
@@ -350,24 +255,17 @@ firebase.auth().onAuthStateChanged(user => {
     <button id="btnGuardar">Guardar</button>
     <button id="fecharModal">Fechar</button>
 
-    </div>
-    </div>
+  </div>
+</div>
 
 <!-- XLSX para importar Excel -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
-<!-- Firebase v8 (CORRETO) -->
-
-
-
-<!-- Configuração Firebase -->
-<script src="js/firebase-config.js"></script>
+<!-- Firestore (faltava isto!) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
 <!-- Lógica da listagem -->
 <script src="js/reservas-listagem.js"></script>
 
-
-
 </body>
 </html>
-
