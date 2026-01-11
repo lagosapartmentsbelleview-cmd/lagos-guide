@@ -6,21 +6,6 @@ console.log("JS DA LISTAGEM A CORRER — VERSÃO FINAL");
 let reservas = [];
 let reservaAtual = null;
 
-// -------------------------------------------------------------
-// FUNÇÃO CORRETA PARA CALCULAR NOITES
-// -------------------------------------------------------------
-function calcularNoites(checkin, checkout) {
-    const d1 = new Date(checkin);
-    const d2 = new Date(checkout);
-
-    // Normalizar para meia-noite (evita 5.9583333, 6.0416666, etc.)
-    d1.setHours(0, 0, 0, 0);
-    d2.setHours(0, 0, 0, 0);
-
-    return (d2 - d1) / (1000 * 60 * 60 * 24);
-}
-
-
 const APARTAMENTOS_FIXOS = ["2301", "2203", "2204"];
 const DIAS_SEGURANCA_REALOCA = 5;
 
@@ -52,14 +37,12 @@ function dataPtParaIso(str) {
     return `${a}-${m}-${d}`;
 }
 
-
 function normalizarDataParaPt(str) {
     if (!str) return "";
     const partes = str.split("-");
     if (partes.length !== 3) return str;
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
-
 
 function diasEntre(hoje, data) {
     const h = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
@@ -71,6 +54,10 @@ function calcularNoites(checkin, checkout) {
     const ini = parseDataPt(checkin);
     const fim = parseDataPt(checkout);
     if (!ini || !fim) return 0;
+
+    ini.setHours(0, 0, 0, 0);
+    fim.setHours(0, 0, 0, 0);
+
     const diff = fim - ini;
     return diff > 0 ? diff / (1000 * 60 * 60 * 24) : 0;
 }
@@ -83,9 +70,8 @@ function calcularLimpeza(checkin) {
     return [6, 7, 8, 9].includes(mes) ? 40 : 35;
 }
 
-
-
 // -------------------------------------------------------------
+
 // 2) VERIFICAR CONFLITO (BACK‑TO‑BACK PERMITIDO)
 // -------------------------------------------------------------
 function temConflitoNoApartamento(reservaNova, apartamento, reservasExistentes) {
