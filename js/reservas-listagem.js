@@ -6,6 +6,16 @@ const mesesAlta = [6, 7, 8, 9]; // junho, julho, agosto, setembro
 return mesesAlta.includes(mes) ? 40 : 35;
 }
 
+// 👉 FUNÇA~PARA A CONTAGEM DAS NOITES DAREM SEMPRE NUMEROS INTEIROS
+function calcularNoites(checkin, checkout) {
+    const dt1 = new Date(checkin + "T00:00:00");
+    const dt2 = new Date(checkout + "T00:00:00");
+
+    const diffMs = dt2 - dt1;
+    const noites = diffMs / (1000 * 60 * 60 * 24);
+
+    return Math.round(noites);
+}
 
 // -------------------------------------------------------------
 // 0) ESTADO GLOBAL
