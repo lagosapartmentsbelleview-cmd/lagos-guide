@@ -886,10 +886,7 @@ function ligarEventos() {
     const btnGuardar = document.getElementById("btnGuardar");
     if (btnGuardar) btnGuardar.addEventListener("click", guardarReserva);
 
-    // Botão Apagar
-    const btnApagar = document.getElementById("btnApagar");
-    if (btnApagar) btnApagar.addEventListener("click", apagarReservaConfirmar);
-
+   
     // Fechar modal
     const fechar = document.getElementById("fecharModal");
     if (fechar) fechar.addEventListener("click", fecharModalReserva);
