@@ -278,6 +278,34 @@ function desenharTabela(lista = reservas) {
 console.log("PARTE 1 carregada.");
 
 // -------------------------------------------------------------
+// FILTRO POR INTERVALO DE MESES/ANOS
+// -------------------------------------------------------------
+function aplicarFiltroIntervalo() {
+    const anoInicio = Number(document.getElementById("filtroAnoInicio").value);
+    const mesInicio = Number(document.getElementById("filtroMesInicio").value);
+    const anoFim = Number(document.getElementById("filtroAnoFim").value);
+    const mesFim = Number(document.getElementById("filtroMesFim").value);
+
+    // Se faltar qualquer campo → mostra tudo
+    if (!anoInicio || !mesInicio || !anoFim || !mesFim) {
+        desenharTabela(reservas);
+        return;
+    }
+
+    const dataInicio = new Date(anoInicio, mesInicio - 1, 1);
+    const dataFim = new Date(anoFim, mesFim, 0); // último dia do mês fim
+
+    const filtradas = reservas.filter(r => {
+        const dt = parseDataPt(r.checkin);
+        if (!dt) return false;
+        return dt >= dataInicio && dt <= dataFim;
+    });
+
+    desenharTabela(filtradas);
+}
+
+
+// -------------------------------------------------------------
 // 6) ABRIR / FECHAR MODAL
 // -------------------------------------------------------------
 function abrirModalReserva() {
