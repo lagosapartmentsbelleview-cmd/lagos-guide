@@ -6,22 +6,6 @@ const mesesAlta = [6, 7, 8, 9]; // junho, julho, agosto, setembro
 return mesesAlta.includes(mes) ? 40 : 35;
 }
 
-// 👉 FUNÇÃO PARA A CONTAGEM DAS NOITES DAREM SEMPRE NÚMEROS INTEIROS
-// Aceita datas no formato "dd/mm/yyyy"
-function calcularNoites(checkin, checkout) {
-    // Converter "dd/mm/yyyy" → "yyyy-mm-dd"
-    const checkinIso = checkin.split("/").reverse().join("-");
-    const checkoutIso = checkout.split("/").reverse().join("-");
-
-    const dt1 = new Date(checkinIso);
-    const dt2 = new Date(checkoutIso);
-
-    const diffMs = dt2 - dt1;
-    const noites = diffMs / (1000 * 60 * 60 * 24);
-
-    return Math.round(noites);
-}
-
 
 // -------------------------------------------------------------
 // 0) ESTADO GLOBAL
@@ -73,6 +57,25 @@ function diasEntre(hoje, data) {
     return (d - h) / (1000 * 60 * 60 * 24);
 }
 
+function calcularNoites(checkin, checkout) {
+    const ini = parseDataPt(checkin);
+    const fim = parseDataPt(checkout);
+    if (!ini || !fim) return 0;
+
+    ini.setHours(0, 0, 0, 0);
+    fim.setHours(0, 0, 0, 0);
+
+    const diff = fim - ini;
+    return diff > 0 ? diff / (1000 * 60 * 60 * 24) : 0;
+}
+
+function calcularLimpeza(checkin) {
+    const data = parseDataPt(checkin);
+    if (!data) return 35;
+
+    const mes = data.getMonth() + 1; // 1–12
+    return [6, 7, 8, 9].includes(mes) ? 40 : 35;
+}
 
 // -------------------------------------------------------------
 // ORDENAR POR COLUNA (tipo Excel) — COM SETAS NO TEXTO
@@ -264,15 +267,7 @@ function desenharTabela(lista = reservas) {
     <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
     <td>${r.checkin || ""}</td>
     <td>${r.checkout || ""}</td>
-   <td>${
-    (r.checkin && r.checkout)
-        ? calcularNoites(
-            r.checkin.replaceAll("-", "/").trim(),
-            r.checkout.replaceAll("-", "/").trim()
-        )
-        : ""
-}</td>
-
+    <td>${r.noites !== undefined ? r.noites : ""}</td>
     <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
     <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
     <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
@@ -328,7 +323,11 @@ function editarReserva(id) {
 // -------------------------------------------------------------
 // FUNÇÃO PARA CALCULAR LIMPEZA COM BASE NO CHECK-OUT
 // -------------------------------------------------------------
-
+function calcularLimpeza(checkout) {
+    const mes = new Date(checkout).getMonth() + 1; // 1–12
+    const mesesAlta = [6, 7, 8, 9]; // junho, julho, agosto, setembro
+    return mesesAlta.includes(mes) ? 40 : 35;
+}
 
 // -------------------------------------------------------------
 // 9) LIMPAR FORMULÁRIO
@@ -353,17 +352,13 @@ function limparFormularioReserva() {
 
 // -------------------------------------------------------------
 // 10) EVENTO PARA ATUALIZAR LIMPEZA AUTOMÁTICA
-const checkoutEl = document.getElementById("checkout");
-
-if (checkoutEl) {
-    checkoutEl.addEventListener("change", () => {
-        const checkout = checkoutEl.value;
-        if (checkout) {
-            document.getElementById("limpeza").value = calcularLimpeza(checkout);
-        }
-    });
-}
-
+// -------------------------------------------------------------
+document.getElementById("checkout").addEventListener("change", () => {
+    const checkout = document.getElementById("checkout").value;
+    if (checkout) {
+        document.getElementById("limpeza").value = calcularLimpeza(checkout);
+    }
+});
 
 
 // -------------------------------------------------------------
@@ -886,7 +881,10 @@ function ligarEventos() {
     const btnGuardar = document.getElementById("btnGuardar");
     if (btnGuardar) btnGuardar.addEventListener("click", guardarReserva);
 
-   
+    // Botão Apagar
+    const btnApagar = document.getElementById("btnApagar");
+    if (btnApagar) btnApagar.addEventListener("click", apagarReservaConfirmar);
+
     // Fechar modal
     const fechar = document.getElementById("fecharModal");
     if (fechar) fechar.addEventListener("click", fecharModalReserva);
