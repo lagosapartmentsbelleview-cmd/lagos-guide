@@ -10,6 +10,13 @@ const apartamentos = ["2301", "2203", "2204"];
 // Guardar referência global aos selects
 let selectMes, selectAno;
 
+// Capturar posição do rato para tooltip flutuante
+document.addEventListener("mousemove", e => {
+    document.documentElement.style.setProperty("--mouse-x", e.clientX + "px");
+    document.documentElement.style.setProperty("--mouse-y", e.clientY + "px");
+});
+
+
 /******************************************************
  * 1) INICIALIZAÇÃO
  ******************************************************/
