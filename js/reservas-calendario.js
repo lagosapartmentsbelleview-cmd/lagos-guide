@@ -187,7 +187,18 @@ function desenharCalendario() {
     });
 
     desenharReservas(mesAtual, anoAtual);
-}
+    }
+
+    /******************************************************
+     * FUNÇÃO AUXILIAR: NOME CURTO
+     ******************************************************/
+    function nomeCurto(nome) {
+    if (!nome) return "";
+    const partes = nome.trim().split(" ");
+    if (partes.length === 1) return partes[0];
+    return partes[0] + " " + partes[partes.length - 1];
+    }
+
 
 /******************************************************
  * 5) DESENHAR RESERVAS NO CALENDÁRIO
@@ -230,10 +241,10 @@ function desenharReservas(mes, anoAtual) {
                 else div.classList.add("reserva-meio");
 
                 div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
-                div.textContent = r.cliente;
+                div.textContent = nomeCurto(r.cliente);
 
                div.setAttribute("data-info",
-               `${r.cliente} | ${r.origem}
+               `${nomeCurto(r.cliente)} | ${r.origem}
                Check-in: ${checkinPt}
                Check-out: ${checkoutPt}
                Total: ${r.totalBruto || 0}€`
