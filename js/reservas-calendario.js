@@ -222,7 +222,7 @@ function desenharReservas(mes, anoAtual) {
                 else if (isCheckout) div.classList.add("reserva-fim");
                 else div.classList.add("reserva-meio");
 
-                div.style.backgroundColor = corPorOrigem(r.origem);
+                div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
                 div.textContent = r.cliente;
 
                 div.onclick = () => {
