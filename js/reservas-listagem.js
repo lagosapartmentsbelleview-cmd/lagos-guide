@@ -854,6 +854,18 @@ async function apagarReservasFantasmaDoCalendario() {
 // -------------------------------------------------------------
 function ligarEventos() {
 
+        // --- LIGAR FILTROS ---
+    const filtroAnoInicio = document.getElementById("filtroAnoInicio");
+    const filtroMesInicio = document.getElementById("filtroMesInicio");
+    const filtroAnoFim = document.getElementById("filtroAnoFim");
+    const filtroMesFim = document.getElementById("filtroMesFim");
+
+    if (filtroAnoInicio) filtroAnoInicio.addEventListener("change", aplicarFiltroIntervalo);
+    if (filtroMesInicio) filtroMesInicio.addEventListener("change", aplicarFiltroIntervalo);
+    if (filtroAnoFim) filtroAnoFim.addEventListener("change", aplicarFiltroIntervalo);
+    if (filtroMesFim) filtroMesFim.addEventListener("change", aplicarFiltroIntervalo);
+
+
     // Botão Nova Reserva
     const btnNova = document.getElementById("btnNovaReserva");
     if (btnNova) btnNova.addEventListener("click", novaReserva);
