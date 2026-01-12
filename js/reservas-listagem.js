@@ -276,7 +276,8 @@ function desenharTabela(lista = reservas) {
     <!-- AQUI ESTÁ A COLUNA QUE FALTAVA -->
     <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
 
-    <td><button onclick="editarReserva('${r.id}')">Editar</button></td>
+    <td><button onclick="editarReserva('${r.id}')" class="btnEditar">Editar</button></td>
+
 `;
 
 
