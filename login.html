@@ -1,41 +1,154 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Sistema de Reservas</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px 35px;
+            width: 100%;
+            max-width: 380px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #1e3c72;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0.6;
+            transition: 0.2s ease;
+        }
+
+        .toggle-password:hover {
+            opacity: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        button:hover {
+            background: #16315d;
+            transform: translateY(-2px);
+        }
+
+        .footer-text {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #666;
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Entrar no Sistema</h2>
+    <div class="login-container">
+        <h2>Área Reservada</h2>
 
-<input id="email" type="email" placeholder="Email"><br><br>
-<input id="senha" type="password" placeholder="Senha"><br><br>
-<button id="btnLogin">Entrar</button>
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Introduza o email">
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+        <label for="password">Password</label>
 
-<script>
-firebase.initializeApp({
-  apiKey: "AIzaSyD70hv-PgWJKDbK-tcxeRuB1FE1cVs-FBs",
-  authDomain: "reservas-marina-park.firebaseapp.com",
-  projectId: "reservas-marina-park",
-  storageBucket: "reservas-marina-park.appspot.com",
-  messagingSenderId: "1048056704068",
-  appId: "1:1048056704068:web:a2793d5db5e5e5573c6011",
-  measurementId: "G-14GR64WXHS"
+        <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Introduza a password">
+            <span id="togglePassword" class="toggle-password">👁️</span>
+        </div>
 
-});
+        <button onclick="login()">Entrar</button>
 
-document.getElementById("btnLogin").addEventListener("click", () => {
-  const email = document.getElementById("email").value;
-  const senha = document.getElementById("senha").value;
+        <div class="footer-text">Sistema de Reservas — Acesso restrito</div>
+    </div>
 
-  firebase.auth().signInWithEmailAndPassword(email, senha)
-    .then(() => window.location.href = "listagem-reservas.html")
-    .catch(err => alert("Erro: " + err.message));
-});
-</script>
+    <script>
+        // Mostrar / esconder password
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("password");
+
+        togglePassword.addEventListener("click", () => {
+            const tipo = passwordInput.type === "password" ? "text" : "password";
+            passwordInput.type = tipo;
+            togglePassword.textContent = tipo === "password" ? "👁️" : "🙈";
+        });
+
+        // Função de login (exemplo)
+        function login() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if (!email || !password) {
+                alert("Preencha todos os campos.");
+                return;
+            }
+
+            // Aqui ligas ao Firebase Auth
+            // firebase.auth().signInWithEmailAndPassword(email, password)
+            //     .then(() => window.location.href = "reservas-listagem.html")
+            //     .catch(err => alert("Login inválido"));
+        }
+    </script>
 
 </body>
 </html>
