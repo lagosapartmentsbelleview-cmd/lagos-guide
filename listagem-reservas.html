@@ -17,24 +17,41 @@
         }
 
         #acoes {
-            text-align: center;
-            margin-bottom: 20px;
+           #acoes {
+           display: flex;
+           justify-content: center;
+           flex-wrap: wrap;
+           gap: 12px;
+           margin-bottom: 25px;
+
         }
 
-        button {
-            padding: 10px 18px;
-            margin: 5px;
-            cursor: pointer;
-            border: none;
-            border-radius: 6px;
-            background: #1976d2;
-            color: white;
-            font-size: 14px;
-            font-weight: 600;
+           #acoes button {
+           padding: 12px 22px;
+           border-radius: 8px;
+           border: none;
+           font-size: 14px;
+           font-weight: 600;
+           cursor: pointer;
+           transition: 0.2s ease;
+           background: #1976d2;
+           color: white;
+           box-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
 
-        button:hover {
-            background: #125a9c;
+           #acoes button:hover {
+           background: #125a9c;
+           transform: translateY(-2px);
+        }
+
+           #btnNovaReserva { background: #2e7d32; }
+           #btnImportarExcel { background: #6a1b9a; }
+           #btnApagarSelecionadas { background: #c62828; }
+           #btnEnviarCalendario { background: #0277bd; }
+           #btnIrCalendario { background: #00897b; }
+           #btnLimparFantasmas { background: #f9a825; color: black; }
+           #btnLogout { background: #424242; }
+
         }
 
         table {
