@@ -36,25 +36,26 @@
         <table id="tabelaCalendario"></table>
     </div>
 
-    <!-- Firebase core -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <!-- Firebase core (compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-    <!-- Configuração Firebase (mesma que na listagem) -->
-    <script src="js/firebase-config.js"></script>
+<!-- Configuração Firebase -->
+<script src="js/firebase-config.js"></script>
 
-    <!-- Proteção por login -->
-    <script>
-      firebase.auth().onAuthStateChanged(user => {
-        if (!user) {
-          window.location.href = "login.html";
-        }
-      });
-    </script>
+<!-- Proteção por login (só funciona se o Firebase já carregou) -->
+<script>
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "login.html";
+    }
+});
+</script>
 
-    <!-- Lógica do calendário -->
-    <script src="js/reservas-calendario.js"></script>
+<!-- Lógica do calendário -->
+<script src="js/reservas-calendario.js"></script>
+
 
 </body>
 </html>
