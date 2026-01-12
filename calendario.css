@@ -208,4 +208,38 @@ td:first-child, th:first-child {
     background: #0277BD;
 }
 
+/* -----------------------------------------------------------
+   TOOLTIP NAS RESERVAS
+----------------------------------------------------------- */
+
+.reserva {
+    position: relative;
+}
+
+.reserva:hover::after {
+    content: attr(data-info);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.reserva:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(0,0,0,0.85);
+    z-index: 9998;
+}
 
