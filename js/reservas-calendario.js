@@ -7,6 +7,9 @@ let mesOffset = 0;
 // Lista fixa de apartamentos
 const apartamentos = ["2301", "2203", "2204"];
 
+// Guardar referência global aos selects
+let selectMes, selectAno;
+
 /******************************************************
  * 1) INICIALIZAÇÃO
  ******************************************************/
@@ -14,71 +17,63 @@ window.addEventListener("load", () => {
     carregarReservas();
 
     // Preencher dropdown de meses
-const meses = [
-    "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-    "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
-];
+    const meses = [
+        "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+        "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+    ];
 
-const selectMes = document.getElementById("selectMes");
-meses.forEach((nome, index) => {
-    const opt = document.createElement("option");
-    opt.value = index;
-    opt.textContent = nome;
-    selectMes.appendChild(opt);
-});
+    selectMes = document.getElementById("selectMes");
+    meses.forEach((nome, index) => {
+        const opt = document.createElement("option");
+        opt.value = index;
+        opt.textContent = nome;
+        selectMes.appendChild(opt);
+    });
 
-// Preencher dropdown de anos
-const selectAno = document.getElementById("selectAno");
-const anoAtual = new Date().getFullYear();
-for (let a = anoAtual - 5; a <= anoAtual + 10; a++) {
-    const opt = document.createElement("option");
-    opt.value = a;
-    opt.textContent = a;
-    if (a === anoAtual) opt.selected = true;
-    selectAno.appendChild(opt);
-}
+    // Preencher dropdown de anos
+    selectAno = document.getElementById("selectAno");
+    const anoAtual = new Date().getFullYear();
+    for (let a = anoAtual - 5; a <= anoAtual + 10; a++) {
+        const opt = document.createElement("option");
+        opt.value = a;
+        opt.textContent = a;
+        if (a === anoAtual) opt.selected = true;
+        selectAno.appendChild(opt);
+    }
 
-// Atualizar mês/ano quando o utilizador muda
-selectMes.onchange = () => atualizarMesAno();
-selectAno.onchange = () => atualizarMesAno();
+    // Atualizar mês/ano quando o utilizador muda
+    selectMes.onchange = () => atualizarMesAno();
+    selectAno.onchange = () => atualizarMesAno();
 
-function atualizarMesAno() {
-    const mesEscolhido = Number(selectMes.value);
-    const anoEscolhido = Number(selectAno.value);
+    function atualizarMesAno() {
+        const mesEscolhido = Number(selectMes.value);
+        const anoEscolhido = Number(selectAno.value);
 
-    const anoBase = new Date().getFullYear();
-    const mesBase = new Date().getMonth();
+        const anoBase = new Date().getFullYear();
+        const mesBase = new Date().getMonth();
 
-    mesOffset = (anoEscolhido - anoBase) * 12 + (mesEscolhido - mesBase);
-    desenharCalendario();
-}
+        mesOffset = (anoEscolhido - anoBase) * 12 + (mesEscolhido - mesBase);
+        desenharCalendario();
+    }
 
-// Botão Hoje
-document.getElementById("btnHoje").onclick = () => {
-    mesOffset = 0;
-    selectMes.value = new Date().getMonth();
-    selectAno.value = new Date().getFullYear();
-    desenharCalendario();
-};
+    // Botão Hoje
+    document.getElementById("btnHoje").onclick = () => {
+        mesOffset = 0;
+        selectMes.value = new Date().getMonth();
+        selectAno.value = new Date().getFullYear();
+        desenharCalendario();
+    };
 
-// Botão Mês Atual
-document.getElementById("btnMesAtual").onclick = () => {
-    mesOffset = 0;
-    selectMes.value = new Date().getMonth();
-    selectAno.value = new Date().getFullYear();
-    desenharCalendario();
-};
+    // Botão Mês Atual
+    document.getElementById("btnMesAtual").onclick = () => {
+        mesOffset = 0;
+        selectMes.value = new Date().getMonth();
+        selectAno.value = new Date().getFullYear();
+        desenharCalendario();
+    };
 
-
-    const btnIrListagem = document.getElementById("btnIrListagem");
     const btnMesAnterior = document.getElementById("btnMesAnterior");
     const btnMesSeguinte = document.getElementById("btnMesSeguinte");
-
-    if (btnIrListagem) {
-        btnIrListagem.onclick = () => {
-            window.location.href = "listagem-reservas.html";
-        };
-    }
 
     if (btnMesAnterior) {
         btnMesAnterior.onclick = () => {
@@ -123,10 +118,8 @@ function carregarReservas() {
     db.collection("calendario")
         .orderBy("checkin")
         .onSnapshot(snapshot => {
-
             reservas = [];
             snapshot.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
-
             desenharCalendario();
         });
 }
@@ -155,9 +148,12 @@ function desenharCalendario() {
     const anoAtual = dataBase.getFullYear();
 
     const nomeMes = dataBase.toLocaleString("pt-PT", { month: "long" });
-    // Sincronizar dropdowns com o calendário
-selectMes.value = mesAtual;
-selectAno.value = anoAtual;
+
+    // Sincronizar dropdowns com o calendário (agora com variáveis globais)
+    if (selectMes && selectAno) {
+        selectMes.value = mesAtual;
+        selectAno.value = anoAtual;
+    }
 
     tituloMesEl.textContent = `${nomeMes.toUpperCase()} ${anoAtual}`;
 
@@ -183,32 +179,28 @@ selectAno.value = anoAtual;
         tabela.innerHTML += tr;
     });
 
-    desenharReservas(mesAtual, anoAtual, anoAtual);
+    desenharReservas(mesAtual, anoAtual);
 }
 
 /******************************************************
  * 5) DESENHAR RESERVAS NO CALENDÁRIO
  ******************************************************/
-function desenharReservas(mes, ano, anoAtual) {
+function desenharReservas(mes, anoAtual) {
 
     reservas.forEach(r => {
 
-        // Garantir que existe array de apartamentos
         const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
 
-        // Converter datas
         const dataInicio = parseDataReserva(r.checkin);
         const dataFim = parseDataReserva(r.checkout);
 
-        if (!dataInicio || !dataFim) return; // segurança
+        if (!dataInicio || !dataFim) return;
 
-        // Para cada apartamento da reserva
         listaAps.forEach(ap => {
 
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
                 if (dt.getMonth() !== mes || dt.getFullYear() !== anoAtual) continue;
-
 
                 const dia = dt.getDate();
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
@@ -248,10 +240,15 @@ function desenharReservas(mes, ano, anoAtual) {
  ******************************************************/
 function corPorOrigem(origem) {
     switch ((origem || "").toLowerCase()) {
-        case "booking": return "#1E88E5";
-        case "airbnb": return "#EC407A";
-        case "vrbo": return "#8E24AA";
-        case "particular": return "#43A047";
-        default: return "#757575";
+        case "booking":     return "#1E88E5";
+        case "airbnb":      return "#EC407A";
+        case "vrbo":        return "#8E24AA";
+        case "particular":  return "#43A047";
+        case "expedia":     return "#F57C00";
+        case "agoda":       return "#009688";
+        case "hotels":      return "#D32F2F";
+        case "trip":        return "#0277BD";
+        case "manual":      return "#757575";
+        default:            return "#757575";
     }
 }
