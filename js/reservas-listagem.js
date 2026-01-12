@@ -353,13 +353,17 @@ function limparFormularioReserva() {
 
 // -------------------------------------------------------------
 // 10) EVENTO PARA ATUALIZAR LIMPEZA AUTOMÁTICA
-// -------------------------------------------------------------
-document.getElementById("checkout").addEventListener("change", () => {
-    const checkout = document.getElementById("checkout").value;
-    if (checkout) {
-        document.getElementById("limpeza").value = calcularLimpeza(checkout);
-    }
-});
+const checkoutEl = document.getElementById("checkout");
+
+if (checkoutEl) {
+    checkoutEl.addEventListener("change", () => {
+        const checkout = checkoutEl.value;
+        if (checkout) {
+            document.getElementById("limpeza").value = calcularLimpeza(checkout);
+        }
+    });
+}
+
 
 
 // -------------------------------------------------------------
