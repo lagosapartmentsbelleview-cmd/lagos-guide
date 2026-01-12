@@ -740,7 +740,7 @@ if (btnEnviarCalendarioEl) {
             return;
         }
 
-        for (const cb ofSelecionadas) {
+        for (const cb of Selecionadas) {
             const id = cb.dataset.id;
             console.log("A processar ID:", id);
 
