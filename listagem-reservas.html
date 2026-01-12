@@ -145,15 +145,18 @@
         display: block;
     }
 
-    input, select {
-        width: 100%;
-        padding: 8px;
-        margin-top: 4px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 14px;
+     /* Inputs e selects normais (modal, formulários) */
+    input:not(#filtros select),
+    select:not(#filtros select) {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
     }
+
 
     #btnGuardar { background: #43A047; }
     #btnApagar { background: #d32f2f; }
