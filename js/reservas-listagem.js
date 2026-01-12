@@ -267,7 +267,7 @@ function desenharTabela(lista = reservas) {
     <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
     <td>${r.checkin || ""}</td>
     <td>${r.checkout || ""}</td>
-    <td>${r.noites !== undefined ? r.noites : ""}</td>
+    <td>${r.noites !== undefined ? Math.round(r.noites) : ""}</td>
     <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
     <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
     <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
