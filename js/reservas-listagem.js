@@ -749,7 +749,7 @@ if (btnApagarSelecionadas) {
     });
 }
 
-// -------------------------------------------------------------
+/// -------------------------------------------------------------
 // 17) ENVIAR PARA O CALENDÁRIO (MANUAL)
 // -------------------------------------------------------------
 const btnEnviarCalendarioEl = document.getElementById("btnEnviarCalendario");
@@ -768,7 +768,8 @@ if (btnEnviarCalendarioEl) {
             return;
         }
 
-        for (const cb of Selecionadas) {
+        // 🔥 CORREÇÃO AQUI — usar 'selecionadas' e não 'Selecionadas'
+        for (const cb of selecionadas) {
             const id = cb.dataset.id;
             console.log("A processar ID:", id);
 
@@ -796,6 +797,7 @@ if (btnEnviarCalendarioEl) {
         alert("Reservas enviadas para o calendário.");
     });
 }
+
 
 console.log("JS DA LISTAGEM — FICHEIRO COMPLETO");
 
