@@ -3,7 +3,8 @@ console.log("JS DA LISTAGEM A CORRER — VERSÃO FINAL");
 // -------------------------------------------------------------
 // 0) ESTADO GLOBAL
 // -------------------------------------------------------------
-let reservas = [];
+let reservas = [];            // todas as reservas
+let reservasFiltradas = [];   // reservas após filtro
 let reservaAtual = null;
 
 const APARTAMENTOS_FIXOS = ["2301", "2203", "2204"];
@@ -111,44 +112,48 @@ document.querySelector("#theadReservas").addEventListener("click", (e) => {
 });
 
 function ordenarPorColuna(coluna, ordem) {
-    let lista = [...reservas];
+
+    let lista = reservasFiltradas.length > 0 
+        ? [...reservasFiltradas] 
+        : [...reservas];
 
     lista.sort((a, b) => {
         let v1 = a[coluna];
         let v2 = b[coluna];
 
-        // Valor/Noite (€)
         if (coluna === "precoNoite") {
             v1 = a.precoNoite !== undefined ? Number(a.precoNoite) : 0;
             v2 = b.precoNoite !== undefined ? Number(b.precoNoite) : 0;
         }
 
-        // Apartamentos (array → string)
         if (coluna === "apartamentos") {
             v1 = (a.apartamentos || []).join(", ");
             v2 = (b.apartamentos || []).join(", ");
         }
 
-        // Datas
         if (coluna === "checkin" || coluna === "checkout") {
             v1 = parseDataPt(v1);
             v2 = parseDataPt(v2);
         }
 
-        // Números genéricos
         if (!isNaN(v1) && !isNaN(v2)) {
             v1 = Number(v1);
             v2 = Number(v2);
         }
 
-        // Comparação final
         if (v1 < v2) return ordem === "asc" ? -1 : 1;
         if (v1 > v2) return ordem === "asc" ? 1 : -1;
         return 0;
     });
 
+    // 🔥 Atualiza o subset filtrado
+    if (reservasFiltradas.length > 0) {
+        reservasFiltradas = lista;
+    }
+
     desenharTabela(lista);
 }
+
 // -------------------------------------------------------------
 // 2) VERIFICAR CONFLITO (BACK‑TO‑BACK PERMITIDO)
 // -------------------------------------------------------------
@@ -301,8 +306,10 @@ function aplicarFiltroIntervalo() {
         return dt >= dataInicio && dt <= dataFim;
     });
 
-    desenharTabela(filtradas);
-}
+    reservasFiltradas = filtradas;
+    desenharTabela(reservasFiltradas);
+
+    }
 
 
 // -------------------------------------------------------------
