@@ -235,20 +235,3 @@ function desenharReservas(mes, anoAtual) {
     });
 }
 
-/******************************************************
- * 6) COR POR ORIGEM
- ******************************************************/
-function corPorOrigem(origem) {
-    switch ((origem || "").toLowerCase()) {
-        case "booking":     return "#1E88E5";
-        case "airbnb":      return "#EC407A";
-        case "vrbo":        return "#8E24AA";
-        case "particular":  return "#43A047";
-        case "expedia":     return "#F57C00";
-        case "agoda":       return "#009688";
-        case "hotels":      return "#D32F2F";
-        case "trip":        return "#0277BD";
-        case "manual":      return "#757575";
-        default:            return "#757575";
-    }
-}
