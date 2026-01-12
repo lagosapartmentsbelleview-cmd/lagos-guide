@@ -225,6 +225,14 @@ function desenharReservas(mes, anoAtual) {
                 div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
                 div.textContent = r.cliente;
 
+               div.setAttribute("data-info",
+               `${r.cliente} | ${r.origem}
+               Check-in: ${checkinPt}
+               Check-out: ${checkoutPt}
+               Total: ${r.totalBruto || 0}€`
+               );
+
+
                 div.onclick = () => {
                     window.location.href = "listagem-reservas.html?id=" + r.id;
                 };
