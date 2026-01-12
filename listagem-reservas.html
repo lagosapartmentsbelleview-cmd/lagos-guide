@@ -100,6 +100,13 @@
             position: relative;
         }
 
+        .close {
+            float: right;
+            cursor: pointer;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
         label {
             font-weight: bold;
             margin-top: 10px;
@@ -118,40 +125,48 @@
 
         #btnGuardar { background: #43A047; }
         #btnApagar { background: #d32f2f; }
+
+        th[data-col] {
+            cursor: pointer;
+            position: relative;
+        }
+
+        th[data-col].ordenar-asc::after,
+        th[data-col].ordenar-desc::after {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #000;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        th[data-col].ordenar-asc::after { content: "▲"; }
+        th[data-col].ordenar-desc::after { content: "▼"; }
+
+        #tabelaReservas thead th[data-col] {
+            position: relative !important;
+            overflow: visible !important;
+        }
+
+        #tabelaReservas thead th[data-col].ordenar-asc::after,
+        #tabelaReservas thead th[data-col].ordenar-desc::after {
+            position: absolute !important;
+            right: 6px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            font-size: 14px !important;
+            color: #000 !important;
+            z-index: 9999 !important;
+            pointer-events: none !important;
+        }
+
+        #tabelaReservas th {
+            position: relative !important;
+        }
     </style>
-
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
-    <script>
-    // Inicializar Firebase
-    firebase.initializeApp({
-      apiKey: "AIzaSyD70hv-PgWJKDbK-tcxeRuB1FE1cVs-FBs",
-      authDomain: "reservas-marina-park.firebaseapp.com",
-      projectId: "reservas-marina-park",
-      storageBucket: "reservas-marina-park.appspot.com",
-      messagingSenderId: "1048056704068",
-      appId: "1:1048056704068:web:a2793d5db5e5e5573c6011",
-      measurementId: "G-14GR64WXHS"
-    });
-
-    // Impedir acesso sem login
-    firebase.auth().onAuthStateChanged(user => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
-    });
-
-    // Logout
-    function logout() {
-      firebase.auth().signOut().then(() => {
-        window.location.href = "login.html";
-      });
-    }
-    </script>
-
 </head>
 
 <body>
@@ -164,8 +179,9 @@
         <button id="btnApagarSelecionadas">Apagar Selecionadas</button>
         <button id="btnEnviarCalendario">Enviar para Calendário</button>
         <button id="btnIrCalendario">Ir para Calendário</button>
-        <button id="btnLimparFantasmas">Limpar Fantasmas</button>
-        <button onclick="logout()">Sair</button>
+        <button id="btnLimparFantasmas">Limpar Fantasmas do Calendário</button>
+        <!-- botão de logout para o login -->
+        <button id="btnLogout">Sair</button>
     </div>
 
     <input type="file" id="inputExcel" accept=".xlsx" style="display:none">
@@ -173,7 +189,9 @@
     <table id="tabelaReservas">
         <thead id="theadReservas">
             <tr>
-                <th><input type="checkbox" id="selectAll"></th>
+                <th class="no-sort">
+                    <input type="checkbox" id="selectAll">
+                </th>
                 <th data-col="origem">Origem</th>
                 <th data-col="bookingId">Nº Reserva</th>
                 <th data-col="cliente">Hóspede</th>
@@ -187,7 +205,7 @@
                 <th data-col="precoNoite">Valor/Noite (€)</th>
                 <th data-col="limpeza">Limpeza (€)</th>
                 <th data-col="berco">Berço</th>
-                <th>Ações</th>
+                <th class="no-sort">Ações</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -196,14 +214,110 @@
     <!-- Modal -->
     <div id="modalReserva" class="modal">
       <div class="modal-content">
-        <!-- (o conteúdo do modal mantém-se igual) -->
+
+        <h2>Reserva</h2>
+
+        <label>Origem</label>
+        <select id="origem">
+          <option value="booking">Booking</option>
+          <option value="airbnb">Airbnb</option>
+          <option value="vrbo">VRBO</option>
+          <option value="expedia">Expedia</option>
+          <option value="agoda">Agoda</option>
+          <option value="hotels">Hotels.com</option>
+          <option value="trip">Trip.com</option>
+          <option value="particular">Particular</option>
+        </select>
+
+        <label>Número da Reserva (se for Booking)</label>
+        <input type="text" id="bookingId" placeholder="Só preencher se for Booking">
+
+        <label>Cliente</label>
+        <input type="text" id="cliente">
+
+        <label>Quartos</label>
+        <select id="quartos">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+
+        <label>Apartamentos (ex: 2301, 2203 ou 2204)</label>
+        <input type="text" id="apartamentos">
+
+        <label>Check-in</label>
+        <input type="date" id="checkin">
+
+        <label>Check-out</label>
+        <input type="date" id="checkout">
+
+        <label>Hóspedes</label>
+        <input type="number" id="hospedes">
+
+        <label>Adultos</label>
+        <input type="number" id="adultos">
+
+        <label>Crianças</label>
+        <input type="number" id="criancas">
+
+        <label>Idades das Crianças</label>
+        <input type="text" id="idadesCriancas">
+
+        <label>Total Bruto (€)</label>
+        <input type="number" id="totalBruto">
+
+        <label>Comissão (€)</label>
+        <input type="number" id="comissao">
+
+        <label>Limpeza (€)</label>
+        <input type="number" id="limpeza">
+
+        <label>Berço</label>
+        <select id="berco">
+          <option value="false">Não</option>
+          <option value="true">Sim</option>
+        </select>
+
+        <button id="btnGuardar">Guardar</button>
+        <button id="fecharModal">Fechar</button>
+
       </div>
     </div>
 
-    <!-- XLSX -->
+    <!-- XLSX para importar Excel -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
-    <!-- Lógica -->
+    <!-- Firebase compat v9 (como tinhas antes) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <!-- Configuração Firebase (tem de criar firebase, db, etc.) -->
+    <script src="js/firebase-config.js"></script>
+
+    <!-- Proteção da página + logout -->
+    <script>
+      // proteger: se não estiver autenticado, manda para login
+      firebase.auth().onAuthStateChanged(user => {
+        if (!user) {
+          window.location.href = "login.html";
+        }
+      });
+
+      // botão Sair
+      document.addEventListener("DOMContentLoaded", () => {
+        const btnLogout = document.getElementById("btnLogout");
+        if (btnLogout) {
+          btnLogout.addEventListener("click", () => {
+            firebase.auth().signOut().then(() => {
+              window.location.href = "login.html";
+            });
+          });
+        }
+      });
+    </script>
+
+    <!-- Lógica da listagem (a tua, a que me enviaste) -->
     <script src="js/reservas-listagem.js"></script>
 
 </body>
