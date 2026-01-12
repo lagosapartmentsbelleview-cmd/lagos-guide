@@ -1,10 +1,14 @@
 console.log("JS DA LISTAGEM A CORRER — VERSÃO FINAL");
 
 function calcularLimpeza(checkout) {
-const mes = new Date(checkout).getMonth() + 1; // 1–12
-const mesesAlta = [6, 7, 8, 9]; // junho, julho, agosto, setembro
-return mesesAlta.includes(mes) ? 40 : 35;
+    // checkout vem como "dd/mm/yyyy"
+    const [dia, mes, ano] = checkout.split("/");
+    const mesNum = parseInt(mes); // 1–12
+
+    const mesesAlta = [6, 7, 8, 9]; // junho, julho, agosto, setembro
+    return mesesAlta.includes(mesNum) ? 40 : 35;
 }
+
 
 
 // -------------------------------------------------------------
