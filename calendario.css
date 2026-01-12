@@ -209,7 +209,7 @@ td:first-child, th:first-child {
 }
 
 /* -----------------------------------------------------------
-   TOOLTIP NAS RESERVAS
+   TOOLTIP NAS RESERVAS (CORRIGIDO)
 ----------------------------------------------------------- */
 
 .reserva {
@@ -218,28 +218,20 @@ td:first-child, th:first-child {
 
 .reserva:hover::after {
     content: attr(data-info);
-    position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed; /* evita que a célula aumente */
+    bottom: auto;
+    top: calc(var(--mouse-y) - 10px);
+    left: calc(var(--mouse-x) + 10px);
     background: rgba(0,0,0,0.85);
     color: white;
     padding: 6px 10px;
     border-radius: 6px;
     font-size: 12px;
-    white-space: nowrap;
+    white-space: pre-line; /* mantém quebras de linha */
     z-index: 9999;
     pointer-events: none;
 }
 
 .reserva:hover::before {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: rgba(0,0,0,0.85);
-    z-index: 9998;
+    display: none; /* seta desnecessária com tooltip flutuante */
 }
-
