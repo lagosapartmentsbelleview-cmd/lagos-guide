@@ -241,7 +241,12 @@ function desenharReservas(mes, anoAtual) {
                 else div.classList.add("reserva-meio");
 
                 div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
+                if (isCheckin) {
                 div.textContent = nomeCurto(r.cliente);
+                } else {
+                div.textContent = "";
+                }
+
 
                div.setAttribute("data-info",
                `${nomeCurto(r.cliente)} | ${r.origem}
