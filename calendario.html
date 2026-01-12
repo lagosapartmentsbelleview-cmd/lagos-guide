@@ -4,39 +4,8 @@
     <meta charset="UTF-8">
     <title>Calendário de Reservas</title>
 
+    <!-- CSS específico do calendário -->
     <link rel="stylesheet" href="calendario.css">
-
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-
-    <script>
-    // Inicializar Firebase
-    firebase.initializeApp({
-      apiKey: "AIzaSyD70hv-PgWJKDbK-tcxeRuB1FE1cVs-FBs",
-      authDomain: "reservas-marina-park.firebaseapp.com",
-      projectId: "reservas-marina-park",
-      storageBucket: "reservas-marina-park.appspot.com",
-      messagingSenderId: "1048056704068",
-      appId: "1:1048056704068:web:a2793d5db5e5e5573c6011",
-      measurementId: "G-14GR64WXHS"
-    });
-
-    // Impedir acesso sem login
-    firebase.auth().onAuthStateChanged(user => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
-    });
-
-    // Função logout
-    function logout() {
-      firebase.auth().signOut().then(() => {
-        window.location.href = "login.html";
-      });
-    }
-    </script>
-
 </head>
 
 <body>
@@ -45,9 +14,6 @@
     <button id="btnVoltarListagem" onclick="window.location.href='listagem-reservas.html'">
         ← Voltar à Listagem
     </button>
-
-    <!-- Botão Logout -->
-    <button onclick="logout()">Sair</button>
 
     <h1>Calendário de Reservas</h1>
 
@@ -69,6 +35,24 @@
         <table id="tabelaCalendario"></table>
     </div>
 
+    <!-- Firebase core -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <!-- Configuração Firebase (mesma que na listagem) -->
+    <script src="js/firebase-config.js"></script>
+
+    <!-- Proteção por login -->
+    <script>
+      firebase.auth().onAuthStateChanged(user => {
+        if (!user) {
+          window.location.href = "login.html";
+        }
+      });
+    </script>
+
+    <!-- Lógica do calendário -->
     <script src="js/reservas-calendario.js"></script>
 
 </body>
