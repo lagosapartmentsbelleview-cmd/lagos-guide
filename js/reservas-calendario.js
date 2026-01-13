@@ -240,12 +240,14 @@ function desenharReservas(mes, anoAtual) {
                 else if (isCheckout) div.classList.add("reserva-fim");
                 else div.classList.add("reserva-meio");
 
-                div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
+               div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
+                // Mostrar nome apenas no dia do check-in
                 if (isCheckin) {
                 div.textContent = nomeCurto(r.cliente);
                 } else {
                 div.textContent = "";
                 }
+
 
 
                div.setAttribute("data-info",
