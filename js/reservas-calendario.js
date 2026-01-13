@@ -225,43 +225,37 @@ function desenharReservas(mes, anoAtual) {
 
             const isPrimeiroApartamento = indexApto === 0;
 
-            // Criar barra MASTER (com nome) — só no check-in do primeiro apartamento
-            if (isPrimeiroApartamento) {
+           // Criar barra MASTER (com nome) — só no check-in do primeiro apartamento
+if (isPrimeiroApartamento && dt.getTime() === dataInicio.getTime()) {
 
-                const celCheckin = document.getElementById(`cel-${ap}-${dataInicio.getDate()}`);
-                if (celCheckin) {
+    const celCheckin = document.getElementById(`cel-${ap}-${dataInicio.getDate()}`);
+    if (celCheckin) {
 
-                    const master = document.createElement("div");
-                    master.classList.add("reserva-master");
-                    master.classList.add("origem-" + (r.origem || "manual").toLowerCase());
+        const master = document.createElement("div");
+        master.classList.add("reserva-master");
+        master.classList.add("origem-" + (r.origem || "manual").toLowerCase());
 
-                    // Nome centrado
-                    master.textContent = nomeCurto(r.cliente);
+        master.textContent = nomeCurto(r.cliente);
 
-                    // Largura total = (totalDias * 100%) - 50% (porque começa na metade direita)
-                    master.style.width = `calc(${totalDias * 100}%)`;
+        master.style.width = `calc(${totalDias * 100}%)`;
+        master.style.left = "0";
 
-                    // Começa na metade direita da célula do check-in
-                    master.style.left = "0";
-                 
+        const checkinPt = dataInicio.toLocaleDateString("pt-PT");
+        const checkoutPt = dataFim.toLocaleDateString("pt-PT");
+        master.setAttribute("data-info",
+            `${nomeCurto(r.cliente)} | ${r.origem}
+             Check-in: ${checkinPt}
+             Check-out: ${checkoutPt}
+             Total: ${r.totalBruto || 0}€`
+        );
 
-                    // Tooltip
-                    const checkinPt = dataInicio.toLocaleDateString("pt-PT");
-                    const checkoutPt = dataFim.toLocaleDateString("pt-PT");
-                    master.setAttribute("data-info",
-                        `${nomeCurto(r.cliente)} | ${r.origem}
-                         Check-in: ${checkinPt}
-                         Check-out: ${checkoutPt}
-                         Total: ${r.totalBruto || 0}€`
-                    );
+        master.onclick = () => {
+            window.location.href = "listagem-reservas.html?id=" + r.id;
+        };
 
-                    master.onclick = () => {
-                        window.location.href = "listagem-reservas.html?id=" + r.id;
-                    };
-
-                    celCheckin.appendChild(master);
-                }
-            }
+        celCheckin.appendChild(master);
+    }
+}
 
             // Criar as metades/dias completos
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
