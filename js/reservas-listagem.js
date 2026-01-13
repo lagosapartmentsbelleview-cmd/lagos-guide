@@ -355,6 +355,7 @@ function desenharTabela(lista = reservas) {
     <button onclick="editarReserva('${r.id}')" class="btnEditar">Editar</button>
     <button onclick="apagarReserva('${r.id}')" class="btnApagar">Apagar</button>
     </td>
+    </tr> 
 
     `;
 
