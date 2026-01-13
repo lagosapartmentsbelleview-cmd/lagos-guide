@@ -216,6 +216,8 @@ function desenharReservas(mes, anoAtual) {
 
         listaAps.forEach(ap => {
 
+            const isPrimeiroApartamento = ap === listaAps[0];
+
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
                 if (dt.getMonth() !== mes || dt.getFullYear() !== anoAtual) continue;
@@ -235,18 +237,34 @@ function desenharReservas(mes, anoAtual) {
                 const isCheckin = dataStr === checkinPt;
                 const isCheckout = dataStr === checkoutPt;
 
-                if (isCheckin && isCheckout) div.classList.add("reserva-unica");
-                else if (isCheckin) div.classList.add("reserva-inicio");
-                else if (isCheckout) div.classList.add("reserva-fim");
-                else div.classList.add("reserva-meio");
+                if (isCheckin && isCheckout) {
+                div.classList.add("reserva-unica");
+                }
+                else if (isCheckin) {
+                if (isPrimeiroApartamento) {
+                div.classList.add("reserva-inicio");
+                } else {
+                div.classList.add("reserva-meio"); // evita 2 inícios
+                }
+                }
+                else if (isCheckout) {
+                div.classList.add("reserva-fim");
+                }
+                else {
+                div.classList.add("reserva-meio");
+                }
+
 
                div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
-                // Mostrar nome apenas no dia do check-in
-                if (isCheckin) {
+
+                // Nome só no check-in do primeiro apartamento
+                if (isCheckin && isPrimeiroApartamento) {
                 div.textContent = nomeCurto(r.cliente);
                 } else {
                 div.textContent = "";
                 }
+
+
 
 
 
