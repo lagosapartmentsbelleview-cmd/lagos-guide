@@ -216,6 +216,29 @@
     background: #1b5e20 !important;
 }
 
+/* TOOLTIP PARA A COLUNA PESSOAS */
+.pessoas {
+    position: relative;
+    cursor: help;
+}
+
+.pessoas:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: pre-line;
+    z-index: 999999;
+    font-size: 12px;
+    width: max-content;
+    max-width: 260px;
+}
+
+
 </style>
 
 </head>
