@@ -4,151 +4,173 @@
     <meta charset="UTF-8">
     <title>Gestão de Reservas</title>
 
-    <style>
-    body {
-       
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background: #f5f5f5;
+   <style>
 
-    }
+/* ========================================================= */
+/*                     VARIÁVEIS DE COR                      */
+/* ========================================================= */
+:root {
+    --cor-verde: #2e7d32;
+    --cor-verde-escuro: #1b5e20;
+    --cor-vermelho: #c62828;
+    --cor-vermelho-escuro: #8e0000;
+    --cor-azul: #0277bd;
+    --cor-azul-escuro: #015a8c;
+    --cor-amarelo: #f9a825;
+    --cor-cinza: #757575;
+    --cor-fundo: #f5f5f5;
+    --cor-texto: #333;
+}
 
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+/* ========================================================= */
+/*                        LAYOUT GERAL                       */
+/* ========================================================= */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: var(--cor-fundo);
+}
 
-    /* --- BARRA DE AÇÕES MODERNA --- */
-    #acoes {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 25px;
-    }
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-    /* --- BOTÕES MODERNOS --- */
-    #acoes button {
-        padding: 12px 22px;
-        border-radius: 8px;
-        border: none;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.2s ease;
-        color: white;
-    }
+/* ========================================================= */
+/*                     BARRA DE AÇÕES                        */
+/* ========================================================= */
+#acoes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 25px;
+}
 
-    #acoes button:hover {
-        background: #125a9c;
-        transform: translateY(-2px);
-    }
+#acoes button {
+    padding: 12px 22px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+    color: white;
+}
 
-    /* --- CORES INDIVIDUAIS POR AÇÃO --- */
-    #btnNovaReserva { background: #2e7d32; }
-    #btnImportarExcel { background: #6a1b9a; }
-    #btnApagarSelecionadas { background: #c62828; }
-    #btnEnviarCalendario { background: #0277bd; }
-    #btnIrCalendario { background: #00897b; }
-    #btnLimparFantasmas { background: #f9a825; color: black; }
-    #btnLogout { background: #424242; }
+#acoes button:hover {
+    background: #125a9c;
+    transform: translateY(-2px);
+}
 
-    /* 🔽🔽🔽 AQUI — CSS DOS FILTROS 🔽🔽🔽 */
-    #filtros {
-        display: flex;
-        gap: 10px;
-        margin: 15px 0;
-    }
+/* Cores individuais */
+#btnNovaReserva { background: var(--cor-verde); }
+#btnImportarExcel { background: #6a1b9a; }
+#btnApagarSelecionadas { background: var(--cor-vermelho); }
+#btnEnviarCalendario { background: var(--cor-azul); }
+#btnIrCalendario { background: #00897b; }
+#btnLimparFantasmas { background: var(--cor-amarelo); color: black; }
+#btnLogout { background: #424242; }
 
-    #filtros select {
-        width: auto; /* evita ocupar 100% */
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 14px;
-    }
-    /* 🔼🔼🔼 AQUI — CSS DOS FILTROS 🔼🔼🔼 */
+/* ========================================================= */
+/*                           FILTROS                         */
+/* ========================================================= */
+#filtros {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
 
+#filtros select {
+    width: auto;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background: white;
-    }
+/* ========================================================= */
+/*                           TABELA                          */
+/* ========================================================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
 
-    th, td {
-        border: 1px solid #ccc;
-        padding: 8px;
-        font-size: 14px;
-        text-align: center;
-    }
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 14px;
+    text-align: center;
+}
 
-    th {
-        background: #eaeaea;
-        font-weight: bold;
-    }
+th {
+    background: #eaeaea;
+    font-weight: bold;
+}
 
-    .origem-badge {
-        display: inline-block;
-        padding: 4px 8px;
-        border-radius: 6px;
-        color: white;
-        font-size: 12px;
-        font-weight: 600;
-    }
+/* ========================================================= */
+/*                     BADGES DE ORIGEM                      */
+/* ========================================================= */
+.origem-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
 
-    .origem-booking { background: #1E88E5; }
-    .origem-airbnb { background: #EC407A; }
-    .origem-vrbo { background: #8E24AA; }
-    .origem-particular { background: #43A047; }
-    .origem-outro { background: #757575; }
-    .origem-expedia { background: #F57C00; }
-    .origem-agoda { background: #009688; }
-    .origem-hotels { background: #D32F2F; }
-    .origem-trip { background: #0277BD; }
-    .origem-manual { background: #757575; }
+.origem-booking { background: #1E88E5; }
+.origem-airbnb { background: #EC407A; }
+.origem-vrbo { background: #8E24AA; }
+.origem-particular { background: var(--cor-verde); }
+.origem-outro { background: var(--cor-cinza); }
+.origem-expedia { background: #F57C00; }
+.origem-agoda { background: #009688; }
+.origem-hotels { background: #D32F2F; }
+.origem-trip { background: #0277BD; }
+.origem-manual { background: var(--cor-cinza); }
 
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,0.6);
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        box-sizing: border-box;
-        z-index: 9999;
-    }
+/* ========================================================= */
+/*                            MODAL                          */
+/* ========================================================= */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 9999;
+}
 
-    .modal-content {
-        background: white;
-        padding: 20px;
-        width: 100%;
-        max-width: 480px;
-        max-height: 90vh;
-        overflow-y: auto;
-        border-radius: 8px;
-        box-sizing: border-box;
-        position: relative;
-    }
+.modal-content {
+    background: white;
+    padding: 20px;
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-sizing: border-box;
+    position: relative;
+}
 
-    .close {
-        float: right;
-        cursor: pointer;
-        font-size: 22px;
-        font-weight: bold;
-    }
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: bold;
+}
 
-    label {
-        font-weight: bold;
-        margin-top: 10px;
-        display: block;
-    }
-
-     /* Inputs e selects normais (modal, formulários) */
-    input:not(#filtros select),
-    select:not(#filtros select) {
+/* Inputs */
+input:not(#filtros select),
+select:not(#filtros select) {
     width: 100%;
     padding: 8px;
     margin-top: 4px;
@@ -156,69 +178,37 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 14px;
-    }
+}
 
+#btnGuardar { background: var(--cor-verde); }
+#btnApagar { background: var(--cor-vermelho); }
 
-    #btnGuardar { background: #43A047; }
-    #btnApagar { background: #d32f2f; }
-
-    th[data-col] {
-        cursor: pointer;
-        position: relative;
-    }
-
-    th[data-col].ordenar-asc::after,
-    th[data-col].ordenar-desc::after {
-        position: absolute;
-        right: 8px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 14px;
-        color: #000;
-        z-index: 9999;
-        pointer-events: none;
-    }
-
-    th[data-col].ordenar-asc::after { content: "▲"; }
-    th[data-col].ordenar-desc::after { content: "▼"; }
-
-    #tabelaReservas thead th[data-col] {
-        position: relative !important;
-        overflow: visible !important;
-    }
-
-    #tabelaReservas thead th[data-col].ordenar-asc::after,
-    #tabelaReservas thead th[data-col].ordenar-desc::after {
-        position: absolute !important;
-        right: 6px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        font-size: 14px !important;
-        color: #000 !important;
-        z-index: 9999 !important;
-        pointer-events: none !important;
-    }
-
-    #tabelaReservas th {
-        position: relative !important;
-    }
-    
-    .btnEditar {
-    background: #2e7d32 !important;
-    color: white !important;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 600;
+/* ========================================================= */
+/*                     ORDENAR COLUNAS                       */
+/* ========================================================= */
+th[data-col] {
     cursor: pointer;
-    }
+    position: relative;
+}
 
-    .btnEditar:hover {
-    background: #1b5e20 !important;
-    }
+th[data-col].ordenar-asc::after,
+th[data-col].ordenar-desc::after {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #000;
+    z-index: 9999;
+    pointer-events: none;
+}
 
-/* TOOLTIP PARA A COLUNA PESSOAS */
+th[data-col].ordenar-asc::after { content: "▲"; }
+th[data-col].ordenar-desc::after { content: "▼"; }
+
+/* ========================================================= */
+/*                           TOOLTIP                         */
+/* ========================================================= */
 .pessoas {
     position: relative;
     cursor: help;
@@ -229,8 +219,8 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background: #333;
-    color: #fff;
+    background: var(--cor-texto);
+    color: white;
     padding: 6px 10px;
     border-radius: 6px;
     white-space: pre-line;
@@ -240,7 +230,7 @@
     max-width: 260px;
 }
 
-/* Permitir que o tooltip apareça fora da célula */
+/* Permitir tooltip fora da célula */
 #tabelaReservas td,
 #tabelaReservas th,
 #tabelaReservas tr {
@@ -248,43 +238,52 @@
     position: relative !important;
 }
 
-        
-/* Permitir que o tooltip apareça fora da TABELA inteira */
+/* Permitir tooltip fora da tabela */
 #tabelaReservas {
     overflow: visible !important;
     position: relative !important;
     z-index: 1;
 }
 
-    /* --- BOTÕES DA COLUNA AÇÕES --- */
-    td button {
-        margin: 2px;
-        padding: 6px 10px;
-        border: none;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-    }
+/* ========================================================= */
+/*                     BOTÕES DA TABELA                      */
+/* ========================================================= */
+td button {
+    margin: 2px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
 
-    /* Detalhe */
-    .btnDetalhe {
-        background: #0277bd;
-        color: white;
-    }
-    .btnDetalhe:hover {
-        background: #015a8c;
-    }
+/* Detalhe */
+.btnDetalhe {
+    background: var(--cor-azul);
+    color: white;
+}
+.btnDetalhe:hover {
+    background: var(--cor-azul-escuro);
+}
 
- 
-    /* Apagar */
-    .btnApagar {
-        background: #c62828;
-        color: white;
-    }
-    .btnApagar:hover {
-        background: #8e0000;
-    }
+/* Editar */
+.btnEditar {
+    background: var(--cor-verde) !important;
+    color: white !important;
+}
+.btnEditar:hover {
+    background: var(--cor-verde-escuro) !important;
+}
+
+/* Apagar */
+.btnApagar {
+    background: var(--cor-vermelho);
+    color: white;
+}
+.btnApagar:hover {
+    background: var(--cor-vermelho-escuro);
+}
 
 </style>
 
