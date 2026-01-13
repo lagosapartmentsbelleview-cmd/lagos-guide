@@ -285,6 +285,57 @@ td button {
     background: var(--cor-vermelho-escuro);
 }
 
+/* ========================================================= */
+/*                COLUNA AÇÕES — BOTÕES ÍCONES               */
+/* ========================================================= */
+
+/* Força os botões a ficarem lado a lado */
+#tabelaReservas td:last-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;              /* espaço entre botões */
+    white-space: nowrap;   /* impede quebra de linha */
+}
+
+/* Estilo base dos botões */
+#tabelaReservas td:last-child button {
+    padding: 4px 8px;
+    font-size: 16px;       /* tamanho ideal para emojis */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Detalhe */
+.btnDetalhe {
+    background: var(--cor-azul);
+    color: white;
+}
+.btnDetalhe:hover {
+    background: var(--cor-azul-escuro);
+}
+
+/* Editar */
+.btnEditar {
+    background: var(--cor-verde);
+    color: white;
+}
+.btnEditar:hover {
+    background: var(--cor-verde-escuro);
+}
+
+/* Apagar */
+.btnApagar {
+    background: var(--cor-vermelho);
+    color: white;
+}
+.btnApagar:hover {
+    background: var(--cor-vermelho-escuro);
+}
+
+
 </style>
 
 </head>
