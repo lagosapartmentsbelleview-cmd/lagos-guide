@@ -351,11 +351,8 @@ function desenharTabela(lista = reservas) {
     <td>${r.berco ? "Sim" : "Não"}</td>
     <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
     
-    <td>
-    <button class="btnDetalhe" onclick="abrirDetalheReserva('${r.id}')">🔍</button>
-    <button class="btnEditar" onclick="editarReserva('${r.id}')">✏️</button>
-    <button class="btnApagar" onclick="apagarReserva('${r.id}')">🗑️</button>
-    </td>
+    <td><button class="btnDetalhe" onclick="abrirDetalheReserva('${r.id}')">🔍</button><button class="btnEditar" onclick="editarReserva('${r.id}')">✏️</button><button class="btnApagar" onclick="apagarReserva('${r.id}')">🗑️</button></td>
+
 
     </tr> 
 
