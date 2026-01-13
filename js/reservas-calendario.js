@@ -124,7 +124,7 @@ function parseDataReserva(str) {
 let listenerAtivo = false;
 
 function carregarReservas() {
-    if (listenerAtivo) return;   // 🔥 impede múltiplos listeners
+    if (listenerAtivo) return;   // impede múltiplos listeners
     listenerAtivo = true;
 
     db.collection("calendario")
@@ -135,6 +135,7 @@ function carregarReservas() {
             desenharCalendario();
         });
 }
+
 
 
 /******************************************************
