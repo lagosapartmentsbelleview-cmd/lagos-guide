@@ -239,11 +239,11 @@ function desenharReservas(mes, anoAtual) {
                     master.textContent = nomeCurto(r.cliente);
 
                     // Largura total = (totalDias * 100%) - 50% (porque começa na metade direita)
-                    master.style.width = `calc(${totalDias * 100}% - 50%)`;
+                    master.style.width = `calc(${totalDias * 100}%)`;
 
                     // Começa na metade direita da célula do check-in
-                    master.style.left = "50%";
-                    master.style.transform = "translateX(-50%)";
+                    master.style.left = "0";
+                 
 
                     // Tooltip
                     const checkinPt = dataInicio.toLocaleDateString("pt-PT");
