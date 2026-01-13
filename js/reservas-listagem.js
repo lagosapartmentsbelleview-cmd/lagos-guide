@@ -249,18 +249,32 @@ async function carregarReservas() {
 // FUNÇÕES AUXILIARES PARA MOSTRAR ADULTOS / CRIANÇAS / IDADES
 // -------------------------------------------------------------
 function parseIdades(str) {
+    // Nada → devolve vazio
     if (!str) return [];
 
-    // Se já for array → devolve diretamente
-    if (Array.isArray(str)) return str.map(n => Number(n)).filter(n => !isNaN(n));
+    // Array → converte para números
+    if (Array.isArray(str)) {
+        return str
+            .map(v => Number(v))
+            .filter(v => !isNaN(v));
+    }
 
-    // Se for número → devolve como array
-    if (typeof str === "number") return [str];
+    // Número → devolve como array
+    if (typeof str === "number") {
+        return [str];
+    }
 
-    // Se não for string → devolve vazio
+    // Objeto → tenta extrair valores
+    if (typeof str === "object") {
+        return Object.values(str)
+            .map(v => Number(v))
+            .filter(v => !isNaN(v));
+    }
+
+    // Qualquer coisa que não seja string → vazio
     if (typeof str !== "string") return [];
 
-    // Agora sim, tratar string "3, 5, 0"
+    // String → dividir por vírgulas
     return str
         .split(",")
         .map(s => Number(s.trim()))
