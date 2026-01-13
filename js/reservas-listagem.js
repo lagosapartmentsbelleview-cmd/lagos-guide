@@ -338,7 +338,7 @@ function desenharTabela(lista = reservas) {
     <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
 
     <!-- 🔥 NOVA COLUNA PESSOAS -->
-    <td class="pessoas" data-info="${tooltipPessoas(r)}">
+    <td class="pessoas" data-tooltip="${tooltipPessoas(r)}">
         ${textoPessoas(r)}
     </td>
 
