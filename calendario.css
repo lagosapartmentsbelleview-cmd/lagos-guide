@@ -89,7 +89,9 @@ td:first-child, th:first-child {
 .dia-celula {
     position: relative;
     padding: 0;
+    overflow: visible; /* 🔥 permite que a barra se cole visualmente */
 }
+
 
 /* -----------------------------------------------------------
    BARRAS DE RESERVA
