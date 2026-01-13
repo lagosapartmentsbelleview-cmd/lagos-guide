@@ -380,6 +380,29 @@ function apagarReserva(id) {
         .catch(err => console.error("Erro ao apagar:", err));
 }
 
+// -------------------------------------------------------------
+// FUNÇÃO: DETALHE DA RESERVA
+// -------------------------------------------------------------
+function abrirDetalheReserva(id) {
+    console.log("Abrir detalhe da reserva:", id);
+
+    const modal = document.getElementById("modalReserva");
+    const content = modal.querySelector(".modal-content");
+
+    content.innerHTML = `
+        <span class="close" id="fecharDetalhe">&times;</span>
+        <h2>Detalhes da Reserva</h2>
+        <p>ID da reserva: ${id}</p>
+        <p>(Aqui vamos colocar os detalhes reais)</p>
+    `;
+
+    modal.style.display = "flex";
+
+    document.getElementById("fecharDetalhe").onclick = () => {
+        modal.style.display = "none";
+    };
+}
+
 
 // -------------------------------------------------------------
 // FILTRO POR INTERVALO DE MESES/ANOS
