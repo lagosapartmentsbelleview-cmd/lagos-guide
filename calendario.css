@@ -252,7 +252,7 @@ td:first-child, th:first-child {
 /* -----------------------------------------------------------
    TOOLTIP FLUTUANTE (NÃO ALTERA O LAYOUT)
 ----------------------------------------------------------- */
-.reserva:hover::after {
+.reserva-master:hover::after {
     content: attr(data-info);
     position: fixed;
     top: calc(var(--mouse-y) + 12px);
@@ -267,6 +267,7 @@ td:first-child, th:first-child {
     pointer-events: none;
 }
 
-.reserva:hover::before {
+
+.reserva-master:hover::before {
     display: none;
 }
