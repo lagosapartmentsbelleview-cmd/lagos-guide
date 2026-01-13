@@ -215,16 +215,55 @@ function desenharReservas(mes, anoAtual) {
     reservas.forEach(r => {
 
         const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
-
         const dataInicio = parseDataReserva(r.checkin);
         const dataFim = parseDataReserva(r.checkout);
-
         if (!dataInicio || !dataFim) return;
 
-        listaAps.forEach(ap => {
+        const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
 
-            const isPrimeiroApartamento = ap === listaAps[0];
+        listaAps.forEach((ap, indexApto) => {
 
+            const isPrimeiroApartamento = indexApto === 0;
+
+            // Criar barra MASTER (com nome) — só no check-in do primeiro apartamento
+            if (isPrimeiroApartamento) {
+
+                const celCheckin = document.getElementById(`cel-${ap}-${dataInicio.getDate()}`);
+                if (celCheckin) {
+
+                    const master = document.createElement("div");
+                    master.classList.add("reserva-master");
+                    master.classList.add("origem-" + (r.origem || "manual").toLowerCase());
+
+                    // Nome centrado
+                    master.textContent = nomeCurto(r.cliente);
+
+                    // Largura total = (totalDias * 100%) - 50% (porque começa na metade direita)
+                    master.style.width = `calc(${totalDias * 100}% - 50%)`;
+
+                    // Começa na metade direita da célula do check-in
+                    master.style.left = "50%";
+                    master.style.transform = "translateX(-50%)";
+
+                    // Tooltip
+                    const checkinPt = dataInicio.toLocaleDateString("pt-PT");
+                    const checkoutPt = dataFim.toLocaleDateString("pt-PT");
+                    master.setAttribute("data-info",
+                        `${nomeCurto(r.cliente)} | ${r.origem}
+                         Check-in: ${checkinPt}
+                         Check-out: ${checkoutPt}
+                         Total: ${r.totalBruto || 0}€`
+                    );
+
+                    master.onclick = () => {
+                        window.location.href = "listagem-reservas.html?id=" + r.id;
+                    };
+
+                    celCheckin.appendChild(master);
+                }
+            }
+
+            // Criar as metades/dias completos
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
                 if (dt.getMonth() !== mes || dt.getFullYear() !== anoAtual) continue;
@@ -235,61 +274,28 @@ function desenharReservas(mes, anoAtual) {
 
                 const div = document.createElement("div");
                 div.classList.add("reserva");
+                div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
 
-                const dataStr = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${anoAtual}`;
-
-                const checkinPt = dataInicio.toLocaleDateString("pt-PT");
-                const checkoutPt = dataFim.toLocaleDateString("pt-PT");
-
-                const isCheckin = dataStr === checkinPt;
-                const isCheckout = dataStr === checkoutPt;
+                const isCheckin = dt.getTime() === dataInicio.getTime();
+                const isCheckout = dt.getTime() === dataFim.getTime();
 
                 if (isCheckin && isCheckout) {
-                div.classList.add("reserva-unica");
+                    div.classList.add("reserva-unica");
                 }
                 else if (isCheckin) {
-                if (isPrimeiroApartamento) {
-                div.classList.add("reserva-inicio");
-                } else {
-                div.classList.add("reserva-meio"); // evita 2 inícios
-                }
+                    div.classList.add("reserva-inicio-metade");
                 }
                 else if (isCheckout) {
-                div.classList.add("reserva-fim");
+                    div.classList.add("reserva-fim-metade");
                 }
                 else {
-                div.classList.add("reserva-meio");
+                    div.classList.add("reserva-meio");
                 }
-
-
-               div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
-
-                // Nome só no check-in do primeiro apartamento
-                if (isCheckin && isPrimeiroApartamento) {
-                div.textContent = nomeCurto(r.cliente);
-                } else {
-                div.textContent = "";
-                }
-
-
-
-
-
-               div.setAttribute("data-info",
-               `${nomeCurto(r.cliente)} | ${r.origem}
-               Check-in: ${checkinPt}
-               Check-out: ${checkoutPt}
-               Total: ${r.totalBruto || 0}€`
-               );
-
-
-                div.onclick = () => {
-                    window.location.href = "listagem-reservas.html?id=" + r.id;
-                };
 
                 cel.appendChild(div);
             }
         });
     });
 }
+
 
