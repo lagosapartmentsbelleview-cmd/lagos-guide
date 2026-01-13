@@ -279,18 +279,24 @@ function desenharReservas(mes, anoAtual) {
                 const isCheckin = dt.getTime() === dataInicio.getTime();
                 const isCheckout = dt.getTime() === dataFim.getTime();
 
+                // Caso especial: reserva de 1 dia → só a barra master, não criar metades
                 if (isCheckin && isCheckout) {
-                    div.classList.add("reserva-unica");
+                continue;
                 }
-                else if (isCheckin) {
-                    div.classList.add("reserva-inicio-metade");
+
+                // Check-in → metade direita
+                if (isCheckin) {
+                div.classList.add("reserva-inicio-metade");
                 }
+                // Check-out → metade esquerda
                 else if (isCheckout) {
-                    div.classList.add("reserva-fim-metade");
+                div.classList.add("reserva-fim-metade");
                 }
+                // Dias intermédios → 100%
                 else {
-                    div.classList.add("reserva-meio");
-                }
+                div.classList.add("reserva-meio");
+}
+
 
                 cel.appendChild(div);
             }
