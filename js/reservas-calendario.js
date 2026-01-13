@@ -121,7 +121,12 @@ function parseDataReserva(str) {
 /******************************************************
  * 3) CARREGAR RESERVAS DO FIRESTORE
  ******************************************************/
+let listenerAtivo = false;
+
 function carregarReservas() {
+    if (listenerAtivo) return;   // 🔥 impede múltiplos listeners
+    listenerAtivo = true;
+
     db.collection("calendario")
         .orderBy("checkin")
         .onSnapshot(snapshot => {
@@ -130,6 +135,7 @@ function carregarReservas() {
             desenharCalendario();
         });
 }
+
 
 /******************************************************
  * 4) DESENHAR CALENDÁRIO
