@@ -194,17 +194,17 @@ function desenharCalendario() {
     });
 
     desenharReservas(mesAtual, anoAtual);
-    }
+}
 
-    /******************************************************
-     * FUNÇÃO AUXILIAR: NOME CURTO
-     ******************************************************/
-    function nomeCurto(nome) {
+/******************************************************
+ * FUNÇÃO AUXILIAR: NOME CURTO
+ ******************************************************/
+function nomeCurto(nome) {
     if (!nome) return "";
     const partes = nome.trim().split(" ");
     if (partes.length === 1) return partes[0];
     return partes[0] + " " + partes[partes.length - 1];
-    }
+}
 
 
 /******************************************************
@@ -225,39 +225,7 @@ function desenharReservas(mes, anoAtual) {
 
             const isPrimeiroApartamento = indexApto === 0;
 
-           // Criar barra MASTER (com nome) — só no check-in do primeiro apartamento
-if (isPrimeiroApartamento && dt.getTime() === dataInicio.getTime()) {
-
-    const celCheckin = document.getElementById(`cel-${ap}-${dataInicio.getDate()}`);
-    if (celCheckin) {
-
-        const master = document.createElement("div");
-        master.classList.add("reserva-master");
-        master.classList.add("origem-" + (r.origem || "manual").toLowerCase());
-
-        master.textContent = nomeCurto(r.cliente);
-
-        master.style.width = `calc(${totalDias * 100}%)`;
-        master.style.left = "0";
-
-        const checkinPt = dataInicio.toLocaleDateString("pt-PT");
-        const checkoutPt = dataFim.toLocaleDateString("pt-PT");
-        master.setAttribute("data-info",
-            `${nomeCurto(r.cliente)} | ${r.origem}
-             Check-in: ${checkinPt}
-             Check-out: ${checkoutPt}
-             Total: ${r.totalBruto || 0}€`
-        );
-
-        master.onclick = () => {
-            window.location.href = "listagem-reservas.html?id=" + r.id;
-        };
-
-        celCheckin.appendChild(master);
-    }
-}
-
-            // Criar as metades/dias completos
+            // Loop pelos dias da reserva
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
                 if (dt.getMonth() !== mes || dt.getFullYear() !== anoAtual) continue;
@@ -266,36 +234,59 @@ if (isPrimeiroApartamento && dt.getTime() === dataInicio.getTime()) {
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) continue;
 
+                const isCheckin = dt.getTime() === dataInicio.getTime();
+                const isCheckout = dt.getTime() === dataFim.getTime();
+
+                // 🔹 Criar barra MASTER (única, com nome centrado)
+                if (isPrimeiroApartamento && isCheckin) {
+
+                    const master = document.createElement("div");
+                    master.classList.add("reserva-master");
+                    master.classList.add("origem-" + (r.origem || "manual").toLowerCase());
+
+                    // Nome centrado no total da barra
+                    master.textContent = nomeCurto(r.cliente);
+
+                    // Largura: cobre todas as células da reserva
+                    master.style.width = `calc(${totalDias * 100}%)`;
+                    master.style.left = "0";
+
+                    const checkinPt = dataInicio.toLocaleDateString("pt-PT");
+                    const checkoutPt = dataFim.toLocaleDateString("pt-PT");
+                    master.setAttribute("data-info",
+                        `${nomeCurto(r.cliente)} | ${r.origem}
+                         Check-in: ${checkinPt}
+                         Check-out: ${checkoutPt}
+                         Total: ${r.totalBruto || 0}€`
+                    );
+
+                    master.onclick = () => {
+                        window.location.href = "listagem-reservas.html?id=" + r.id;
+                    };
+
+                    cel.appendChild(master);
+                }
+
+                // 🔹 Reserva de 1 dia → só a master, não criamos metades
+                if (isCheckin && isCheckout) {
+                    continue;
+                }
+
+                // 🔹 Criar metades/dias completos (sem texto)
                 const div = document.createElement("div");
                 div.classList.add("reserva");
                 div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
 
-                const isCheckin = dt.getTime() === dataInicio.getTime();
-                const isCheckout = dt.getTime() === dataFim.getTime();
-
-                // Caso especial: reserva de 1 dia → só a barra master, não criar metades
-                if (isCheckin && isCheckout) {
-                continue;
-                }
-
-                // Check-in → metade direita
                 if (isCheckin) {
-                div.classList.add("reserva-inicio-metade");
+                    div.classList.add("reserva-inicio-metade");
+                } else if (isCheckout) {
+                    div.classList.add("reserva-fim-metade");
+                } else {
+                    div.classList.add("reserva-meio");
                 }
-                // Check-out → metade esquerda
-                else if (isCheckout) {
-                div.classList.add("reserva-fim-metade");
-                }
-                // Dias intermédios → 100%
-                else {
-                div.classList.add("reserva-meio");
-}
-
 
                 cel.appendChild(div);
             }
         });
     });
 }
-
-
