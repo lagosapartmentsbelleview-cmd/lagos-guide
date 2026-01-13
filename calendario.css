@@ -152,6 +152,7 @@ td:first-child, th:first-child {
 
 /* Barra principal com nome centrado no total */
 .reserva-master {
+    line-height: 1.2;
     position: absolute;
     top: 0;
     height: 100%;
