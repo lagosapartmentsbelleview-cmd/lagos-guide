@@ -250,10 +250,23 @@ async function carregarReservas() {
 // -------------------------------------------------------------
 function parseIdades(str) {
     if (!str) return [];
-    return str.split(",")
+
+    // Se já for array → devolve diretamente
+    if (Array.isArray(str)) return str.map(n => Number(n)).filter(n => !isNaN(n));
+
+    // Se for número → devolve como array
+    if (typeof str === "number") return [str];
+
+    // Se não for string → devolve vazio
+    if (typeof str !== "string") return [];
+
+    // Agora sim, tratar string "3, 5, 0"
+    return str
+        .split(",")
         .map(s => Number(s.trim()))
         .filter(n => !isNaN(n));
 }
+
 
 function textoPessoas(r) {
     const adultos = r.adultos || 0;
