@@ -225,7 +225,7 @@ function desenharReservas(mes, anoAtual) {
 
             const isPrimeiroApartamento = indexApto === 0;
 
-            // Loop pelos dias da reserva
+            // 🔥 Loop pelos dias da reserva
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
                 if (dt.getMonth() !== mes || dt.getFullYear() !== anoAtual) continue;
@@ -237,17 +237,16 @@ function desenharReservas(mes, anoAtual) {
                 const isCheckin = dt.getTime() === dataInicio.getTime();
                 const isCheckout = dt.getTime() === dataFim.getTime();
 
-                // 🔹 Criar barra MASTER (única, com nome centrado)
+                // 🔥 Criar barra MASTER apenas 1 vez (no check-in do primeiro apartamento)
                 if (isPrimeiroApartamento && isCheckin) {
 
                     const master = document.createElement("div");
                     master.classList.add("reserva-master");
                     master.classList.add("origem-" + (r.origem || "manual").toLowerCase());
 
-                    // Nome centrado no total da barra
                     master.textContent = nomeCurto(r.cliente);
 
-                    // Largura: cobre todas as células da reserva
+                    // Barra cobre todas as células da reserva
                     master.style.width = `calc(${totalDias * 100}%)`;
                     master.style.left = "0";
 
@@ -267,12 +266,10 @@ function desenharReservas(mes, anoAtual) {
                     cel.appendChild(master);
                 }
 
-                // 🔹 Reserva de 1 dia → só a master, não criamos metades
-                if (isCheckin && isCheckout) {
-                    continue;
-                }
+                // 🔥 Reserva de 1 dia → só a master, não criar metades
+                if (isCheckin && isCheckout) continue;
 
-                // 🔹 Criar metades/dias completos (sem texto)
+                // 🔥 Criar metades e dias completos
                 const div = document.createElement("div");
                 div.classList.add("reserva");
                 div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
