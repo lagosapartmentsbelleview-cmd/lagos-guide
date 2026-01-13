@@ -238,7 +238,8 @@ function desenharReservas(mes, anoAtual) {
                 const isCheckout = dt.getTime() === dataFim.getTime();
 
                 // 🔥 Criar barra MASTER apenas 1 vez (no check-in do primeiro apartamento)
-                if (isPrimeiroApartamento && isCheckin) {
+               if (isCheckin)
+ {
 
                     const master = document.createElement("div");
                     master.classList.add("reserva-master");
