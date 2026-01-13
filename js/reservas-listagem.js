@@ -10,6 +10,21 @@ let reservaAtual = null;
 const APARTAMENTOS_FIXOS = ["2301", "2203", "2204"];
 const DIAS_SEGURANCA_REALOCA = 5;
 
+// ------------------------------------------------------------- 
+//  FUNÇÃO PARA FORMATAR NOMES (primeira maiúscula) 
+// -------------------------------------------------------------
+
+function formatarNome(nome) {
+    if (!nome) return "";
+
+    return nome
+        .toLowerCase()
+        .split(" ")
+        .filter(p => p.trim() !== "")
+        .map(p => p.charAt(0).toUpperCase() + p.slice(1))
+        .join(" ");
+}
+
 // -------------------------------------------------------------
 // 1) HELPERS DE DATAS
 // -------------------------------------------------------------
@@ -543,7 +558,7 @@ async function guardarReserva() {
         bookingId = `P${random9}`;
     }
 
-    const cliente = document.getElementById("cliente").value.trim();
+    const cliente = formatarNome(document.getElementById("cliente").value.trim());
     let quartos = Number(document.getElementById("quartos").value || 1);
 
     let apartamentosDigitados = document.getElementById("apartamentos").value
@@ -754,7 +769,7 @@ async function importarExcelBooking(event) {
         const dados = {
             origem: "Booking",
             bookingId,
-            cliente: linha["Nome do hóspede"] || "Hóspede",
+            cliente: formatarNome(linha["Nome do hóspede"] || "Hóspede"),
             quartos,
             apartamentos,
             checkin,
