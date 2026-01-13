@@ -367,6 +367,21 @@ function desenharTabela(lista = reservas) {
 console.log("PARTE 1 carregada.");
 
 // -------------------------------------------------------------
+// FUNÇÃO: APAGAR RESERVA
+// -------------------------------------------------------------
+function apagarReserva(id) {
+    if (!confirm("Tem a certeza que deseja apagar esta reserva?")) return;
+
+    db.collection("reservas").doc(id).delete()
+        .then(() => {
+            alert("Reserva apagada com sucesso!");
+            carregarReservas();
+        })
+        .catch(err => console.error("Erro ao apagar:", err));
+}
+
+
+// -------------------------------------------------------------
 // FILTRO POR INTERVALO DE MESES/ANOS
 // -------------------------------------------------------------
 function aplicarFiltroIntervalo() {
