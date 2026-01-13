@@ -120,21 +120,23 @@ td:first-child, th:first-child {
 .reserva-inicio-metade {
     width: 50%;
     right: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
+    border-top-left-radius: 12px;      /* 🔥 arredonda o início */
+    border-bottom-left-radius: 12px;   /* 🔥 arredonda o início */
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
+
 
 /* Metade esquerda — CHECK-OUT */
 .reserva-fim-metade {
     width: 50%;
     left: 0;
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 12px;     /* 🔥 arredonda o fim */
+    border-bottom-right-radius: 12px;  /* 🔥 arredonda o fim */
 }
+
 
 /* Dia intermédio — 100% */
 .reserva-meio {
