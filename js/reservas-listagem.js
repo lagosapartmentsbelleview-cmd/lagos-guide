@@ -246,6 +246,50 @@ async function carregarReservas() {
 }
 
 // -------------------------------------------------------------
+// FUNÇÕES AUXILIARES PARA MOSTRAR ADULTOS / CRIANÇAS / IDADES
+// -------------------------------------------------------------
+function parseIdades(str) {
+    if (!str) return [];
+    return str.split(",")
+        .map(s => Number(s.trim()))
+        .filter(n => !isNaN(n));
+}
+
+function textoPessoas(r) {
+    const adultos = r.adultos || 0;
+    const criancas = r.criancas || 0;
+    const idades = parseIdades(r.idadesCriancas);
+
+    let txt = `👤 ${adultos}`;
+
+    if (criancas > 0) {
+        txt += `   👶 ${criancas}`;
+        if (idades.length > 0) {
+            txt += ` (${idades.join(", ")})`;
+        }
+    }
+
+    return txt;
+}
+
+function tooltipPessoas(r) {
+    const adultos = r.adultos || 0;
+    const criancas = r.criancas || 0;
+    const idades = parseIdades(r.idadesCriancas);
+    const berco = r.berco ? "Sim" : "Não";
+    const total = r.hospedes || (adultos + criancas);
+
+    return `
+${adultos} adulto(s)
+${criancas} criança(s)
+Idades: ${idades.length ? idades.join(", ") : "—"}
+Berço: ${berco}
+Total hóspedes: ${total}
+`.trim();
+}
+
+
+// -------------------------------------------------------------
 // 5) DESENHAR TABELA
 // -------------------------------------------------------------
 function desenharTabela(lista = reservas) {
@@ -259,22 +303,29 @@ function desenharTabela(lista = reservas) {
         const apartamentosTexto = (r.apartamentos || []).join(", ");
 
         tr.innerHTML = `
-            <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
-            <td><span class="origem-badge origem-${(r.origem || "").toLowerCase()}">${r.origem || ""}</span></td>
-            <td>${r.bookingId || ""}</td>
-            <td>${r.cliente || ""}</td>
-            <td>${quartos}</td>
-            <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
-            <td>${r.checkin || ""}</td>
-            <td>${r.checkout || ""}</td>
-            <td>${r.noites !== undefined ? Math.round(r.noites) : ""}</td>
-            <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
-            <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
-            <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
-            <td>${r.berco ? "Sim" : "Não"}</td>
-            <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
-            <td><button onclick="editarReserva('${r.id}')" class="btnEditar">Editar</button></td>
-        `;
+    <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
+    <td><span class="origem-badge origem-${(r.origem || "").toLowerCase()}">${r.origem || ""}</span></td>
+    <td>${r.bookingId || ""}</td>
+    <td>${r.cliente || ""}</td>
+    <td>${quartos}</td>
+    <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
+
+    <!-- 🔥 NOVA COLUNA PESSOAS -->
+    <td class="pessoas" data-info="${tooltipPessoas(r)}">
+        ${textoPessoas(r)}
+    </td>
+
+    <td>${r.checkin || ""}</td>
+    <td>${r.checkout || ""}</td>
+    <td>${r.noites !== undefined ? Math.round(r.noites) : ""}</td>
+    <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
+    <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
+    <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
+    <td>${r.berco ? "Sim" : "Não"}</td>
+    <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
+    <td><button onclick="editarReserva('${r.id}')" class="btnEditar">Editar</button></td>
+
+    `;
 
         tbody.appendChild(tr);
     });
