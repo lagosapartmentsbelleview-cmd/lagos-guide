@@ -134,54 +134,97 @@ th {
 .origem-manual { background: var(--cor-cinza); }
 
 /* ========================================================= */
-/*                            MODAL                          */
+/*                     MODAL MODERNO                         */
 /* ========================================================= */
+
 .modal {
     display: none;
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(3px);
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
     z-index: 9999;
 }
 
 .modal-content {
-    background: white;
-    padding: 20px;
-    width: 100%;
-    max-width: 480px;
-    max-height: 90vh;
-    overflow-y: auto;
-    border-radius: 8px;
-    box-sizing: border-box;
-    position: relative;
+    background: #fff;
+    width: 480px;
+    max-width: 90%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+    animation: fadeIn 0.25s ease-out;
 }
 
-.close {
-    float: right;
+.modal-header {
+    background: var(--cor-azul);
+    color: white;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
     cursor: pointer;
-    font-size: 22px;
+}
+
+.modal-body {
+    padding: 20px;
+    font-size: 15px;
+}
+
+.modal-footer {
+    padding: 14px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background: #f5f5f5;
+}
+
+.btnPrimario {
+    background: var(--cor-verde);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
     font-weight: bold;
 }
 
-/* Inputs */
-input:not(#filtros select),
-select:not(#filtros select) {
-    width: 100%;
-    padding: 8px;
-    margin-top: 4px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
+.btnPrimario:hover {
+    background: var(--cor-verde-escuro);
 }
 
-#btnGuardar { background: var(--cor-verde); }
-#btnApagar { background: var(--cor-vermelho); }
+.btnSecundario {
+    background: #ddd;
+    color: #333;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btnSecundario:hover {
+    background: #ccc;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ========================================================= */
 /*                     ORDENAR COLUNAS                       */
@@ -452,75 +495,81 @@ td button {
     <div id="modalReserva" class="modal">
       <div class="modal-content">
 
-        <h2>Reserva</h2>
+        <div class="modal-header">
+    <h2>Reserva</h2>
+    <button class="modal-close" onclick="fecharModal()">✖</button>
+</div>
 
-        <label>Origem</label>
-        <select id="origem">
-          <option value="Booking">Booking</option>
-          <option value="Airbnb">Airbnb</option>
-          <option value="VRBO">VRBO</option>
-          <option value="Expedia">Expedia</option>
-          <option value="Agoda">Agoda</option>
-          <option value="Hotels">Hotels.com</option>
-          <option value="Trip">Trip.com</option>
-          <option value="Particular">Particular</option>
+<div class="modal-body">
 
-        </select>
+    <label>Origem</label>
+    <select id="origem">
+        <option value="Booking">Booking</option>
+        <option value="Airbnb">Airbnb</option>
+        <option value="VRBO">VRBO</option>
+        <option value="Expedia">Expedia</option>
+        <option value="Agoda">Agoda</option>
+        <option value="Hotels">Hotels.com</option>
+        <option value="Trip">Trip.com</option>
+        <option value="Particular">Particular</option>
+    </select>
 
-        <label>Número da Reserva (se for Booking)</label>
-        <input type="text" id="bookingId" placeholder="Só preencher se for Booking">
+    <label>Número da Reserva (se for Booking)</label>
+    <input type="text" id="bookingId" placeholder="Só preencher se for Booking">
 
-        <label>Cliente</label>
-        <input type="text" id="cliente">
+    <label>Cliente</label>
+    <input type="text" id="cliente">
 
-        <label>Quartos</label>
-        <select id="quartos">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
+    <label>Quartos</label>
+    <select id="quartos">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
 
-        <label>Apartamentos (ex: 2301, 2203 ou 2204)</label>
-        <input type="text" id="apartamentos">
+    <label>Apartamentos</label>
+    <input type="text" id="apartamentos">
 
-        <label>Check-in</label>
-        <input type="date" id="checkin">
+    <label>Check-in</label>
+    <input type="date" id="checkin">
 
-        <label>Check-out</label>
-        <input type="date" id="checkout">
+    <label>Check-out</label>
+    <input type="date" id="checkout">
 
-        <label>Hóspedes</label>
-        <input type="number" id="hospedes">
+    <label>Hóspedes</label>
+    <input type="number" id="hospedes">
 
-        <label>Adultos</label>
-        <input type="number" id="adultos">
+    <label>Adultos</label>
+    <input type="number" id="adultos">
 
-        <label>Crianças</label>
-        <input type="number" id="criancas">
+    <label>Crianças</label>
+    <input type="number" id="criancas">
 
-        <label>Idades das Crianças</label>
-        <input type="text" id="idadesCriancas">
+    <label>Idades das Crianças</label>
+    <input type="text" id="idadesCriancas">
 
-        <label>Total Bruto (€)</label>
-        <input type="number" id="totalBruto">
+    <label>Total Bruto (€)</label>
+    <input type="number" id="totalBruto">
 
-        <label>Comissão (€)</label>
-        <input type="number" id="comissao">
+    <label>Comissão (€)</label>
+    <input type="number" id="comissao">
 
-        <label>Limpeza (€)</label>
-        <input type="number" id="limpeza">
+    <label>Limpeza (€)</label>
+    <input type="number" id="limpeza">
 
-        <label>Berço</label>
-        <select id="berco">
-          <option value="false">Não</option>
-          <option value="true">Sim</option>
-        </select>
+    <label>Berço</label>
+    <select id="berco">
+        <option value="false">Não</option>
+        <option value="true">Sim</option>
+    </select>
 
-        <button id="btnGuardar">Guardar</button>
-        <button id="fecharModal">Fechar</button>
+</div>
 
-      </div>
-    </div>
+<div class="modal-footer">
+    <button class="btnSecundario" onclick="fecharModal()">Cancelar</button>
+    <button class="btnPrimario" id="btnGuardar">Guardar</button>
+</div>
+</div>
 
     <!-- XLSX para importar Excel -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
