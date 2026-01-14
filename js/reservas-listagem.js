@@ -341,45 +341,48 @@ function desenharTabela(lista = reservas) {
     lista.forEach(r => {
         const tr = document.createElement("tr");
 
-        const quartos = r.quartos || (r.apartamentos ? r.apartamentos.length : 1);
+        // Número de quartos da reserva (apenas para mostrar na tabela)
+        const quartos = r.quartos || 1;
+
+        // Texto dos apartamentos
         const apartamentosTexto = (r.apartamentos || []).join(", ");
 
         tr.innerHTML = `
-    <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
-    <td><span class="origem-badge origem-${(r.origem || "").toLowerCase()}">${r.origem || ""}</span></td>
-    <td>${r.bookingId || ""}</td>
-    <td>${r.cliente || ""}</td>
-    <td>${quartos}</td>
-    <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
+            <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
+            <td><span class="origem-badge origem-${(r.origem || "").toLowerCase()}">${r.origem || ""}</span></td>
+            <td>${r.bookingId || ""}</td>
+            <td>${r.cliente || ""}</td>
+            <td>${quartos}</td>
+            <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
 
-    <!-- 🔥 NOVA COLUNA PESSOAS -->
-    <td class="pessoas" data-tooltip="${tooltipPessoas(r)}">
-        ${textoPessoas(r)}
-    </td>
+            <!-- 🔥 NOVA COLUNA PESSOAS -->
+            <td class="pessoas" data-tooltip="${tooltipPessoas(r)}">
+                ${textoPessoas(r)}
+            </td>
 
-    <td>${r.checkin || ""}</td>
-    <td>${r.checkout || ""}</td>
-    <td>${r.noites !== undefined ? Math.round(r.noites) : ""}</td>
-    <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
-    <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
-    <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
-    <td>${r.berco ? "Sim" : "Não"}</td>
-    <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
-    
-    <td><button class="btnDetalhe" onclick="abrirDetalheReserva('${r.id}')">🔍</button><button class="btnEditar" onclick="editarReserva('${r.id}')">✏️</button><button class="btnApagar" onclick="apagarReserva('${r.id}')">🗑️</button></td>
+            <td>${r.checkin || ""}</td>
+            <td>${r.checkout || ""}</td>
+            <td>${r.noites !== undefined ? Math.round(r.noites) : ""}</td>
+            <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
+            <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
+            <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
+            <td>${r.berco ? "Sim" : "Não"}</td>
+            <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
 
-
-    </tr> 
-
-    `;
+            <td>
+                <button class="btnDetalhe" onclick="abrirDetalheReserva('${r.id}')">🔍</button>
+                <button class="btnEditar" onclick="editarReserva('${r.id}')">✏️</button>
+                <button class="btnApagar" onclick="apagarReserva('${r.id}')">🗑️</button>
+            </td>
+        `;
 
         tbody.appendChild(tr);
     });
 }
 
 console.log("PARTE 1 carregada.");
-
 // -------------------------------------------------------------
+
 // FUNÇÃO: APAGAR RESERVA
 // -------------------------------------------------------------
 function apagarReserva(id) {
