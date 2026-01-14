@@ -454,7 +454,7 @@ function abrirModalReserva() {
     document.getElementById("modalReserva").style.display = "flex";
 }
 
-function fecharModalReserva() {
+function fecharModal() {
     document.getElementById("modalReserva").style.display = "none";
     reservaAtual = null;
 }
