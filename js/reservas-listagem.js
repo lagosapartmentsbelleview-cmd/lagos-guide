@@ -697,6 +697,7 @@ if (!reservaAtual) {
 
 fecharModal();
 carregarReservas();
+}
 
 // -------------------------------------------------------------
 // 12) APAGAR RESERVA (E APAGAR DO CALENDÁRIO TAMBÉM)
