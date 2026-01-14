@@ -185,6 +185,34 @@ th {
 .modal-body {
     padding: 20px;
     font-size: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* DUAS COLUNAS */
+    gap: 16px 20px;                 /* espaçamento entre campos */
+}
+
+.modal-body label {
+    grid-column: span 2;            /* label ocupa as duas colunas */
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+.modal-body input,
+.modal-body select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.modal-section-title {
+    grid-column: span 2;            /* ocupa as duas colunas */
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #e0e0e0;
 }
 
 .modal-footer {
@@ -503,6 +531,9 @@ td button {
 
 <div class="modal-body">
 
+    <!-- SECÇÃO: Origem -->
+    <div class="modal-section-title">Origem</div>
+
     <label>Origem</label>
     <select id="origem">
         <option value="Booking">Booking</option>
@@ -515,27 +546,14 @@ td button {
         <option value="Particular">Particular</option>
     </select>
 
-    <label>Número da Reserva (se for Booking)</label>
-    <input type="text" id="bookingId" placeholder="Só preencher se for Booking">
+    <label>Número da Reserva (Booking)</label>
+    <input type="text" id="bookingId" placeholder="Só se for Booking">
+
+    <!-- SECÇÃO: Hóspede -->
+    <div class="modal-section-title">Hóspede</div>
 
     <label>Cliente</label>
     <input type="text" id="cliente">
-
-    <label>Quartos</label>
-    <select id="quartos">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-    </select>
-
-    <label>Apartamentos</label>
-    <input type="text" id="apartamentos">
-
-    <label>Check-in</label>
-    <input type="date" id="checkin">
-
-    <label>Check-out</label>
-    <input type="date" id="checkout">
 
     <label>Hóspedes</label>
     <input type="number" id="hospedes">
@@ -548,6 +566,28 @@ td button {
 
     <label>Idades das Crianças</label>
     <input type="text" id="idadesCriancas">
+
+    <!-- SECÇÃO: Alojamento -->
+    <div class="modal-section-title">Alojamento</div>
+
+    <label>Quartos</label>
+    <select id="quartos">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+
+    <label>Apartamentos (ex: 2301, 2203)</label>
+    <input type="text" id="apartamentos">
+
+    <label>Check-in</label>
+    <input type="date" id="checkin">
+
+    <label>Check-out</label>
+    <input type="date" id="checkout">
+
+    <!-- SECÇÃO: Valores -->
+    <div class="modal-section-title">Valores</div>
 
     <label>Total Bruto (€)</label>
     <input type="number" id="totalBruto">
