@@ -634,9 +634,32 @@ if (apartamentosDigitados.length > 0) {
         );
 
         if (conflito) {
-            alert(`O apartamento ${ap} já está ocupado nestas datas.`);
-            return;
+
+    // Identificar a reserva que ocupa este apartamento
+    const reservaQueOcupa = reservasSemAtual.find(r =>
+        r.apartamentos?.includes(ap) &&
+        datasSobrepoem(r.checkin, r.checkout, checkin, checkout)
+    );
+
+    // Se existir uma reserva que ocupa este apartamento
+    if (reservaQueOcupa) {
+
+        const confirmarTroca = confirm(
+            `O apartamento ${ap} está ocupado pela reserva de ${reservaQueOcupa.cliente}.\n\n` +
+            `Deseja trocar os apartamentos entre as reservas?`
+        );
+
+        if (confirmarTroca) {
+            // Permitir a troca manual
+            continue;
         }
+    }
+
+    // Se não for troca → bloquear
+    alert(`O apartamento ${ap} já está ocupado nestas datas.`);
+    return;
+}
+
     }
 
 } else {
