@@ -917,13 +917,15 @@ if (btnEnviarCalendarioEl) {
             console.log("Dados da reserva:", dados);
 
             await db.collection("calendario").add({
-                ...dados,
-                checkin: dataPtParaIso(dados.checkin),
-                checkout: dataPtParaIso(dados.checkout),
-                id: id,
-                enviadoParaCalendario: true,
-                criadoEm: new Date()
-            });
+            ...dados,
+            origem: dados.origem.toLowerCase(),   // 🔥 normaliza a origem
+            checkin: dataPtParaIso(dados.checkin),
+            checkout: dataPtParaIso(dados.checkout),
+            id: id,
+            enviadoParaCalendario: true,
+            criadoEm: new Date()
+        });
+
 
             console.log("Reserva enviada para calendário:", id);
         }
