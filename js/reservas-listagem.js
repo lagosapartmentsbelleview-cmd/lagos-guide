@@ -552,7 +552,6 @@ async function guardarReserva() {
     const origem = document.getElementById("origem").value;
     let bookingId = document.getElementById("bookingId").value.trim();
 
-    // Se não for Booking → gerar ID automático
     if (origem !== "Booking") {
         const random9 = Math.floor(100000000 + Math.random() * 900000000);
         bookingId = `P${random9}`;
@@ -561,13 +560,15 @@ async function guardarReserva() {
     const cliente = document.getElementById("cliente").value.trim();
     let quartos = Number(document.getElementById("quartos").value || 1);
 
-    let apartamentosDigitados = document.getElementById("apartamentos").value
-        .split(",")
-        .map(x => x.trim())
-        .filter(x => x !== "");
+    let apartamentosDigitados = [...new Set(
+        document.getElementById("apartamentos").value
+            .split(",")
+            .map(x => x.trim())
+            .filter(x => x !== "")
+    )];
 
-    const checkin = document.getElementById("checkin").value.trim();   // yyyy-mm-dd
-    const checkout = document.getElementById("checkout").value.trim(); // yyyy-mm-dd
+    const checkin = document.getElementById("checkin").value.trim();
+    const checkout = document.getElementById("checkout").value.trim();
 
     const hospedes = Number(document.getElementById("hospedes").value || 0);
     const adultos = Number(document.getElementById("adultos").value || 0);
@@ -583,8 +584,6 @@ async function guardarReserva() {
     const liquido = totalBruto - comissao;
 
     let limpeza = document.getElementById("limpeza").value.trim();
-
-    // Se estiver vazio ou inválido → calcula pela regra (CHECK-IN)
     if (limpeza === "" || isNaN(limpeza)) {
         limpeza = calcularLimpeza(checkin);
     } else {
@@ -594,7 +593,7 @@ async function guardarReserva() {
     const totalLiquidoFinal = liquido - limpeza;
 
     // ---------------------------------------------------------
-    // ALOCAÇÃO INTELIGENTE (RESPEITA 5 DIAS E RESERVAS A DECORRER)
+    // ALOCAÇÃO INTELIGENTE
     // ---------------------------------------------------------
     let apartamentos = [];
     let status = "alocado";
@@ -605,32 +604,22 @@ async function guardarReserva() {
     const diasParaCheckin = dtCheckin ? diasEntre(new Date(), dtCheckin) : null;
 
     if (apartamentosDigitados.length > 0) {
-        // Utilizador escolheu manualmente
         apartamentos = apartamentosDigitados;
     } else {
-        // Sem escolha manual → alocação automática
-        if (reservaAtual && reservaJaComecou && reservaAtual.apartamentos?.length > 0) {
-            // Não mexer em reservas já iniciadas
-            apartamentos = reservaAtual.apartamentos;
-        } else if (diasParaCheckin !== null && diasParaCheckin <= DIAS_SEGURANCA_REALOCA) {
-            // Dentro da janela de segurança → perguntar
-            const confirmar = confirm(
-                `Faltam ${diasParaCheckin} dias para o check-in.\n` +
-                `Queres tentar realocar automaticamente?`
-            );
+        const reservasBase = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
+        apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
+        if (apartamentos.length === 0) status = "sem_alocacao";
+    }
 
-            if (confirmar) {
-                const reservasBase = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
-                apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
-                if (apartamentos.length === 0) status = "sem_alocacao";
-            } else {
-                apartamentos = reservaAtual?.apartamentos || [];
-            }
-        } else {
-            // Reserva futura → alocação normal
-            const reservasBase = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
-            apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
-            if (apartamentos.length === 0) status = "sem_alocacao";
+    // ---------------------------------------------------------
+    // VALIDAÇÃO DE CONFLITOS (MESMO EM MANUAL)
+    // ---------------------------------------------------------
+    for (const ap of apartamentos) {
+        const reservaNova = { checkin, checkout };
+        const conflito = temConflitoNoApartamento(reservaNova, ap, reservas);
+        if (conflito) {
+            alert(`Já existe reserva no apartamento ${ap} para estas datas.`);
+            return;
         }
     }
 
@@ -643,8 +632,8 @@ async function guardarReserva() {
         cliente,
         quartos,
         apartamentos,
-        checkin: normalizarDataParaPt(checkin),   // dd/mm/yyyy
-        checkout: normalizarDataParaPt(checkout), // dd/mm/yyyy
+        checkin: normalizarDataParaPt(checkin),
+        checkout: normalizarDataParaPt(checkout),
         hospedes,
         adultos,
         criancas,
@@ -660,18 +649,16 @@ async function guardarReserva() {
         status
     };
 
-    // ---------------------------------------------------------
-    // GUARDAR NO FIRESTORE
-    // ---------------------------------------------------------
     if (!reservaAtual) {
         await db.collection("reservas").add(dados);
     } else {
         await db.collection("reservas").doc(reservaAtual.id).update(dados);
     }
 
-    fecharModal();      
+    fecharModal();
     carregarReservas();
 }
+
 
 // -------------------------------------------------------------
 // 12) APAGAR RESERVA (E APAGAR DO CALENDÁRIO TAMBÉM)
