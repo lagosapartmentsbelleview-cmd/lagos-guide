@@ -692,6 +692,7 @@ for (const ap of apartamentos) {
     alert(`O apartamento ${ap} já está ocupado nestas datas.`);
     return;
 }
+}
 
     // ---------------------------------------------------------
     // 2) RESERVA AUTOMÁTICA (alocação inteligente)
