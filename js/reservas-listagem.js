@@ -619,7 +619,9 @@ async function guardarReserva() {
     // ---------------------------------------------------------
     for (const ap of apartamentos) {
         const reservaNova = { checkin, checkout };
-        const conflito = temConflitoNoApartamento(reservaNova, ap, reservas);
+        const reservasSemAtual = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
+        const conflito = temConflitoNoApartamento(reservaNova, ap, reservasSemAtual);
+
         if (conflito) {
             alert(`Já existe reserva no apartamento ${ap} para estas datas.`);
             return;
