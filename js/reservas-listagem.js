@@ -595,74 +595,107 @@ async function guardarReserva() {
 
     const totalLiquidoFinal = liquido - limpeza;
 
-    // ---------------------------------------------------------
-    // ALOCAÇÃO INTELIGENTE
-    // ---------------------------------------------------------
-    let apartamentos = [];
-    let status = "alocado";
+   // ---------------------------------------------------------
+// ALOCAÇÃO INTELIGENTE + VALIDAÇÃO MANUAL
+// ---------------------------------------------------------
+let apartamentos = [];
+let status = "alocado";
 
-    const hoje = new Date();
-    const dtCheckin = parseDataPt(checkin);
-    const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
-    const diasParaCheckin = dtCheckin ? diasEntre(new Date(), dtCheckin) : null;
+const hoje = new Date();
+const dtCheckin = parseDataPt(checkin);
+const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
+const diasParaCheckin = dtCheckin ? diasEntre(new Date(), dtCheckin) : null;
 
-    if (apartamentosDigitados.length > 0) {
-        apartamentos = apartamentosDigitados;
-    } else {
-        const reservasBase = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
-        apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
-        if (apartamentos.length === 0) status = "sem_alocacao";
+// Remover a própria reserva da lista de validação
+const reservasSemAtual = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
+
+// ---------------------------------------------------------
+// 1) RESERVA MANUAL (utilizador escreveu apartamentos)
+// ---------------------------------------------------------
+if (apartamentosDigitados.length > 0) {
+
+    apartamentos = apartamentosDigitados;
+
+    // Validar número de apartamentos
+    if (apartamentos.length < quartos) {
+        alert(
+            `Foram indicados ${apartamentos.length} apartamento(s), ` +
+            `mas a reserva exige ${quartos}.`
+        );
+        return;
     }
 
-    // ---------------------------------------------------------
-    // VALIDAÇÃO DE CONFLITOS (MESMO EM MANUAL)
-    // ---------------------------------------------------------
+    // Validar conflitos reais (ignora a própria reserva)
     for (const ap of apartamentos) {
-        const reservaNova = { checkin, checkout };
-        const reservasSemAtual = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
-        const conflito = temConflitoNoApartamento(reservaNova, ap, reservasSemAtual);
+        const conflito = temConflitoNoApartamento(
+            { checkin, checkout },
+            ap,
+            reservasSemAtual
+        );
 
         if (conflito) {
-            alert(`Já existe reserva no apartamento ${ap} para estas datas.`);
+            alert(`O apartamento ${ap} já está ocupado nestas datas.`);
             return;
         }
     }
 
-    // ---------------------------------------------------------
-    // DADOS FINAIS
-    // ---------------------------------------------------------
-    const dados = {
-        origem,
-        bookingId: bookingId || null,
-        cliente,
-        quartos,
-        apartamentos,
-        checkin: normalizarDataParaPt(checkin),
-        checkout: normalizarDataParaPt(checkout),
-        hospedes,
-        adultos,
-        criancas,
-        idadesCriancas,
-        totalBruto,
-        comissao,
-        precoNoite,
-        noites,
-        liquido,
-        limpeza,
-        totalLiquidoFinal,
-        berco,
-        status
-    };
+} else {
 
-    if (!reservaAtual) {
-        await db.collection("reservas").add(dados);
-    } else {
-        await db.collection("reservas").doc(reservaAtual.id).update(dados);
+    // ---------------------------------------------------------
+    // 2) RESERVA AUTOMÁTICA (alocação inteligente)
+    // ---------------------------------------------------------
+    apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasSemAtual);
+
+    // Nenhum apartamento disponível
+    if (apartamentos.length === 0) {
+        alert(`Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.`);
+        return;
     }
 
-    fecharModal();
-    carregarReservas();
+    // Encontrou menos do que o necessário
+    if (apartamentos.length < quartos) {
+        alert(
+            `Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.\n` +
+            `Disponíveis: ${apartamentos.length}`
+        );
+        return;
+    }
 }
+
+   // ---------------------------------------------------------
+// DADOS FINAIS
+// ---------------------------------------------------------
+const dados = {
+    origem,
+    bookingId: bookingId || null,
+    cliente,
+    quartos,
+    apartamentos,
+    checkin: normalizarDataParaPt(checkin),
+    checkout: normalizarDataParaPt(checkout),
+    hospedes,
+    adultos,
+    criancas,
+    idadesCriancas,
+    totalBruto,
+    comissao,
+    precoNoite,
+    noites,
+    liquido,
+    limpeza,
+    totalLiquidoFinal,
+    berco,
+    status
+};
+
+if (!reservaAtual) {
+    await db.collection("reservas").add(dados);
+} else {
+    await db.collection("reservas").doc(reservaAtual.id).update(dados);
+}
+
+fecharModal();
+carregarReservas();
 
 
 // -------------------------------------------------------------
