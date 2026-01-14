@@ -643,44 +643,6 @@ async function guardarReserva() {
     }
 }
    
-    // ---------------------------------------------------------
-    // DADOS FINAIS
-    // ---------------------------------------------------------
-    const dados = {
-        origem,
-        bookingId: bookingId || null,
-        cliente,
-        quartos,
-        apartamentos,
-        checkin: normalizarDataParaPt(checkin),   // dd/mm/yyyy
-        checkout: normalizarDataParaPt(checkout), // dd/mm/yyyy
-        hospedes,
-        adultos,
-        criancas,
-        idadesCriancas,
-        totalBruto,
-        comissao,
-        precoNoite,
-        noites,
-        liquido,
-        limpeza,
-        totalLiquidoFinal,
-        berco,
-        status
-    };
-
-    // ---------------------------------------------------------
-    // GUARDAR NO FIRESTORE
-    // ---------------------------------------------------------
-    if (!reservaAtual) {
-        await db.collection("reservas").add(dados);
-    } else {
-        await db.collection("reservas").doc(reservaAtual.id).update(dados);
-    }
-
-    fecharModalReserva();
-    carregarReservas();
-}
 
 // -------------------------------------------------------------
 // 12) APAGAR RESERVA (E APAGAR DO CALENDÁRIO TAMBÉM)
@@ -1042,7 +1004,8 @@ function ligarEventos() {
 
     // Fechar modal
     const fechar = document.getElementById("fecharModal");
-    if (fechar) fechar.addEventListener("click", fecharModalReserva);
+    if (fechar) fechar.addEventListener("click", fecharModal);
+
 
     // Ir para calendário
     const btnIrCalendario = document.getElementById("btnIrCalendario");
