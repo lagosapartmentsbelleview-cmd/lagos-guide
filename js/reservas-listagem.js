@@ -549,100 +549,129 @@ function preencherFormularioReserva(r) {
 // 11) GUARDAR RESERVA (NOVA OU EDITADA)
 // -------------------------------------------------------------
 async function guardarReserva() {
-    try {
-        const origem = document.getElementById("origem").value;
-        let bookingId = document.getElementById("bookingId").value.trim();
+    const origem = document.getElementById("origem").value;
+    let bookingId = document.getElementById("bookingId").value.trim();
 
-        // Se não for Booking → gerar ID automático
-        if (origem !== "Booking") {
-            const random9 = Math.floor(100000000 + Math.random() * 900000000);
-            bookingId = `P${random9}`;
-        }
-
-        const cliente = formatarNome(document.getElementById("cliente").value.trim());
-        let quartos = Number(document.getElementById("quartos").value || 1);
-
-        let apartamentosDigitados = document.getElementById("apartamentos").value
-            .split(",")
-            .map(x => x.trim())
-            .filter(x => x !== "");
-
-        const checkin = document.getElementById("checkin").value.trim();
-        const checkout = document.getElementById("checkout").value.trim();
-
-        const hospedes = Number(document.getElementById("hospedes").value || 0);
-        const adultos = Number(document.getElementById("adultos").value || 0);
-        const criancas = Number(document.getElementById("criancas").value || 0);
-        const idadesCriancas = document.getElementById("idadesCriancas").value.trim();
-
-        const totalBruto = Number(document.getElementById("totalBruto").value || 0);
-        const comissao = Number(document.getElementById("comissao").value || 0);
-        const berco = document.getElementById("berco").value === "true";
-
-        const noites = calcularNoites(checkin, checkout);
-        const precoNoite = noites > 0 ? totalBruto / noites : 0;
-        const liquido = totalBruto - comissao;
-
-        let limpeza = document.getElementById("limpeza").value.trim();
-        if (limpeza === "" || isNaN(limpeza)) {
-            limpeza = calcularLimpeza(checkin);
-        } else {
-            limpeza = Number(limpeza);
-        }
-
-        const totalLiquidoFinal = liquido - limpeza;
-
-        // ---------------------------------------------------------
-        // OBJETO FINAL DA RESERVA
-        // ---------------------------------------------------------
-        const reservaObj = {
-            origem,
-            bookingId,
-            cliente,
-            quartos,
-            apartamentos: apartamentosDigitados,
-            checkin,
-            checkout,
-            hospedes,
-            adultos,
-            criancas,
-            idadesCriancas,
-            totalBruto,
-            comissao,
-            liquido,
-            limpeza,
-            totalLiquidoFinal,
-            berco,
-            noites,
-            precoNoite,
-            timestamp: Date.now()
-        };
-
-        // ---------------------------------------------------------
-        // EDITAR RESERVA EXISTENTE
-        // ---------------------------------------------------------
-        if (window.reservaAtual && window.reservaAtual.id) {
-            await db.collection("reservas").doc(window.reservaAtual.id).update(reservaObj);
-            alert("Reserva atualizada com sucesso!");
-        } 
-        
-        // ---------------------------------------------------------
-        // NOVA RESERVA
-        // ---------------------------------------------------------
-        else {
-            await db.collection("reservas").add(reservaObj);
-            alert("Reserva criada com sucesso!");
-        }
-
-        fecharModal();
-        carregarReservas();
-
-    } catch (erro) {
-        console.error("Erro ao guardar reserva:", erro);
-        alert("Ocorreu um erro ao guardar a reserva.");
+    // Se não for Booking → gerar ID automático
+    if (origem !== "Booking") {
+        const random9 = Math.floor(100000000 + Math.random() * 900000000);
+        bookingId = `P${random9}`;
     }
+
+    const cliente = document.getElementById("cliente").value.trim();
+    let quartos = Number(document.getElementById("quartos").value || 1);
+
+    let apartamentosDigitados = document.getElementById("apartamentos").value
+        .split(",")
+        .map(x => x.trim())
+        .filter(x => x !== "");
+
+    const checkin = document.getElementById("checkin").value.trim();   // yyyy-mm-dd
+    const checkout = document.getElementById("checkout").value.trim(); // yyyy-mm-dd
+
+    const hospedes = Number(document.getElementById("hospedes").value || 0);
+    const adultos = Number(document.getElementById("adultos").value || 0);
+    const criancas = Number(document.getElementById("criancas").value || 0);
+    const idadesCriancas = document.getElementById("idadesCriancas").value.trim();
+
+    const totalBruto = Number(document.getElementById("totalBruto").value || 0);
+    const comissao = Number(document.getElementById("comissao").value || 0);
+    const berco = document.getElementById("berco").value === "true";
+
+    const noites = calcularNoites(checkin, checkout);
+    const precoNoite = noites > 0 ? totalBruto / noites : 0;
+    const liquido = totalBruto - comissao;
+
+    let limpeza = document.getElementById("limpeza").value.trim();
+
+    // Se estiver vazio ou inválido → calcula pela regra (CHECK-IN)
+    if (limpeza === "" || isNaN(limpeza)) {
+        limpeza = calcularLimpeza(checkin);
+    } else {
+        limpeza = Number(limpeza);
+    }
+
+    const totalLiquidoFinal = liquido - limpeza;
+
+    // ---------------------------------------------------------
+    // ALOCAÇÃO INTELIGENTE (RESPEITA 5 DIAS E RESERVAS A DECORRER)
+    // ---------------------------------------------------------
+    let apartamentos = [];
+    let status = "alocado";
+
+    const hoje = new Date();
+    const dtCheckin = parseDataPt(checkin);
+    const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
+    const diasParaCheckin = dtCheckin ? diasEntre(new Date(), dtCheckin) : null;
+
+    if (apartamentosDigitados.length > 0) {
+        // Utilizador escolheu manualmente
+        apartamentos = apartamentosDigitados;
+    } else {
+        // Sem escolha manual → alocação automática
+        if (reservaAtual && reservaJaComecou && reservaAtual.apartamentos?.length > 0) {
+            // Não mexer em reservas já iniciadas
+            apartamentos = reservaAtual.apartamentos;
+        } else if (diasParaCheckin !== null && diasParaCheckin <= DIAS_SEGURANCA_REALOCA) {
+            // Dentro da janela de segurança → perguntar
+            const confirmar = confirm(
+                `Faltam ${diasParaCheckin} dias para o check-in.\n` +
+                `Queres tentar realocar automaticamente?`
+            );
+
+            if (confirmar) {
+                const reservasBase = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
+                apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
+                if (apartamentos.length === 0) status = "sem_alocacao";
+            } else {
+                apartamentos = reservaAtual?.apartamentos || [];
+            }
+        } else {
+            // Reserva futura → alocação normal
+            const reservasBase = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
+            apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
+            if (apartamentos.length === 0) status = "sem_alocacao";
+        }
+    }
+
+    // ---------------------------------------------------------
+    // DADOS FINAIS
+    // ---------------------------------------------------------
+    const dados = {
+        origem,
+        bookingId: bookingId || null,
+        cliente,
+        quartos,
+        apartamentos,
+        checkin: normalizarDataParaPt(checkin),   // dd/mm/yyyy
+        checkout: normalizarDataParaPt(checkout), // dd/mm/yyyy
+        hospedes,
+        adultos,
+        criancas,
+        idadesCriancas,
+        totalBruto,
+        comissao,
+        precoNoite,
+        noites,
+        liquido,
+        limpeza,
+        totalLiquidoFinal,
+        berco,
+        status
+    };
+
+    // ---------------------------------------------------------
+    // GUARDAR NO FIRESTORE
+    // ---------------------------------------------------------
+    if (!reservaAtual) {
+        await db.collection("reservas").add(dados);
+    } else {
+        await db.collection("reservas").doc(reservaAtual.id).update(dados);
+    }
+
+    fecharModal();      
+    carregarReservas();
 }
-   
 
 // -------------------------------------------------------------
 // 12) APAGAR RESERVA (E APAGAR DO CALENDÁRIO TAMBÉM)
