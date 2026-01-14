@@ -975,7 +975,7 @@ if (btnApagarSelecionadas) {
     });
 }
 
-/// -------------------------------------------------------------
+// -------------------------------------------------------------
 // 17) ENVIAR PARA O CALENDÁRIO (MANUAL)
 // -------------------------------------------------------------
 const btnEnviarCalendarioEl = document.getElementById("btnEnviarCalendario");
@@ -994,7 +994,6 @@ if (btnEnviarCalendarioEl) {
             return;
         }
 
-        // 🔥 CORREÇÃO AQUI — usar 'selecionadas' e não 'Selecionadas'
         for (const cb of selecionadas) {
             const id = cb.dataset.id;
             console.log("A processar ID:", id);
@@ -1009,39 +1008,51 @@ if (btnEnviarCalendarioEl) {
             console.log("Dados da reserva:", dados);
 
             // Verificar se já existe no calendário
-const existenteCal = await db.collection("calendario")
-    .where("id", "==", id)
-    .get();
+            const existenteCal = await db.collection("calendario")
+                .where("id", "==", id)
+                .get();
 
-if (!existenteCal.empty) {
-    console.log("Já está no calendário, ignorado:", id);
-    continue; // passa para a próxima reserva
-}
+            if (!existenteCal.empty) {
+                // Atualizar o documento existente
+                const docRef = existenteCal.docs[0].ref;
 
-    // Se não existir, adiciona
-    await db.collection("calendario").add({
-    ...dados,
-    origem: dados.origem.toLowerCase(), // normalizar origem
-    checkin: dataPtParaIso(dados.checkin),
-    checkout: dataPtParaIso(dados.checkout),
-    id: id,
-    enviadoParaCalendario: true,
-    criadoEm: new Date()
-});
+                await docRef.update({
+                    ...dados,
+                    origem: dados.origem?.toLowerCase() || "",
+                    checkin: dataPtParaIso(dados.checkin),
+                    checkout: dataPtParaIso(dados.checkout),
+                    enviadoParaCalendario: true,
+                    atualizadoEm: new Date()
+                });
 
-     console.log("Reserva enviada para calendário:", id);
+                console.log("Reserva atualizada no calendário:", id);
+                continue;
+            }
+
+            // Se não existir → adicionar
+            await db.collection("calendario").add({
+                ...dados,
+                origem: dados.origem?.toLowerCase() || "",
+                checkin: dataPtParaIso(dados.checkin),
+                checkout: dataPtParaIso(dados.checkout),
+                id: id,
+                enviadoParaCalendario: true,
+                criadoEm: new Date()
+            });
+
+            console.log("Reserva enviada para calendário:", id);
         }
 
         alert("Reservas enviadas para o calendário.");
     });
 }
 
-
 console.log("JS DA LISTAGEM — FICHEIRO COMPLETO");
 
 // -------------------------------------------------------------
 // 20) APAGAR RESERVAS FANTASMA DO CALENDÁRIO
 // -------------------------------------------------------------
+
 async function apagarReservasFantasmaDoCalendario() {
     const snapCal = await db.collection("calendario").get();
     const todasCalendario = [];
