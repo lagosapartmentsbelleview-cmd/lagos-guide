@@ -460,19 +460,6 @@ function fecharModal() {
 }
 
 // -------------------------------------------------------------
-// 6.1) GUARDAR (INTELIGENTE) — NOVA OU EDIÇÃO
-// -------------------------------------------------------------
-
-function guardarReserva() {
-    if (reservaAtual) {
-        guardarEdicaoReserva();
-    } else {
-        guardarNovaReserva();
-    }
-}
-
-
-// -------------------------------------------------------------
 // 7) NOVA RESERVA
 // -------------------------------------------------------------
 function novaReserva() {
@@ -655,49 +642,7 @@ async function guardarReserva() {
         alert("Ocorreu um erro ao guardar a reserva.");
     }
 }
-
-
-    // ---------------------------------------------------------
-    // ALOCAÇÃO INTELIGENTE (RESPEITA 5 DIAS E RESERVAS A DECORRER)
-    // ---------------------------------------------------------
-    let apartamentos = [];
-    let status = "alocado";
-
-    const hoje = new Date();
-    const dtCheckin = parseDataPt(checkin);
-    const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
-    const diasParaCheckin = dtCheckin ? diasEntre(new Date(), dtCheckin) : null;
-
-    if (apartamentosDigitados.length > 0) {
-        // Utilizador escolheu manualmente
-        apartamentos = apartamentosDigitados;
-    } else {
-        // Sem escolha manual → alocação automática
-        if (reservaAtual && reservaJaComecou && reservaAtual.apartamentos?.length > 0) {
-            // Não mexer em reservas já iniciadas
-            apartamentos = reservaAtual.apartamentos;
-        } else if (diasParaCheckin !== null && diasParaCheckin <= DIAS_SEGURANCA_REALOCA) {
-            // Dentro da janela de segurança → perguntar
-            const confirmar = confirm(
-                `Faltam ${diasParaCheckin} dias para o check-in.\n` +
-                `Queres tentar realocar automaticamente?`
-            );
-
-            if (confirmar) {
-                const reservasBase = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
-                apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
-                if (apartamentos.length === 0) status = "sem_alocacao";
-            } else {
-                apartamentos = reservaAtual?.apartamentos || [];
-            }
-        } else {
-            // Reserva futura → alocação normal
-            const reservasBase = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
-            apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
-            if (apartamentos.length === 0) status = "sem_alocacao";
-        }
-    }
-
+   
     // ---------------------------------------------------------
     // DADOS FINAIS
     // ---------------------------------------------------------
