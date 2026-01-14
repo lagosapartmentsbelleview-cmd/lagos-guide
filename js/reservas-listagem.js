@@ -560,7 +560,7 @@ async function guardarReserva() {
         bookingId = `P${random9}`;
     }
 
-    const cliente = document.getElementById("cliente").value.trim();
+    const cliente = formatarNome(document.getElementById("cliente").value.trim());
     let quartos = Number(document.getElementById("quartos").value || 1);
 
     let apartamentosDigitados = [...new Set(
