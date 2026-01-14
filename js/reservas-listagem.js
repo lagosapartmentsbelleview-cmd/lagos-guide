@@ -916,18 +916,28 @@ if (btnEnviarCalendarioEl) {
             const dados = doc.data();
             console.log("Dados da reserva:", dados);
 
-            await db.collection("calendario").add({
-            ...dados,
-            origem: dados.origem.toLowerCase(),   // 🔥 normaliza a origem
-            checkin: dataPtParaIso(dados.checkin),
-            checkout: dataPtParaIso(dados.checkout),
-            id: id,
-            enviadoParaCalendario: true,
-            criadoEm: new Date()
-        });
+            // Verificar se já existe no calendário
+const existenteCal = await db.collection("calendario")
+    .where("id", "==", id)
+    .get();
 
+if (!existenteCal.empty) {
+    console.log("Já está no calendário, ignorado:", id);
+    continue; // passa para a próxima reserva
+}
 
-            console.log("Reserva enviada para calendário:", id);
+    // Se não existir, adiciona
+    await db.collection("calendario").add({
+    ...dados,
+    origem: dados.origem.toLowerCase(), // normalizar origem
+    checkin: dataPtParaIso(dados.checkin),
+    checkout: dataPtParaIso(dados.checkout),
+    id: id,
+    enviadoParaCalendario: true,
+    criadoEm: new Date()
+});
+
+     console.log("Reserva enviada para calendário:", id);
         }
 
         alert("Reservas enviadas para o calendário.");
