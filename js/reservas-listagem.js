@@ -758,7 +758,7 @@ async function apagarReservaConfirmar() {
 
     snap.forEach(doc => doc.ref.delete());
 
-    fecharModalReserva();
+    fecharModal();
     carregarReservas();
 }
 
