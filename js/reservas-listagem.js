@@ -460,6 +460,19 @@ function fecharModal() {
 }
 
 // -------------------------------------------------------------
+// 6.1) GUARDAR (INTELIGENTE) — NOVA OU EDIÇÃO
+// -------------------------------------------------------------
+
+function guardarReserva() {
+    if (reservaAtual) {
+        guardarEdicaoReserva();
+    } else {
+        guardarNovaReserva();
+    }
+}
+
+
+// -------------------------------------------------------------
 // 7) NOVA RESERVA
 // -------------------------------------------------------------
 function novaReserva() {
