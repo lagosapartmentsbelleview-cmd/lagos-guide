@@ -595,7 +595,7 @@ async function guardarReserva() {
 
     const totalLiquidoFinal = liquido - limpeza;
 
-   // ---------------------------------------------------------
+// ---------------------------------------------------------
 // ALOCAÇÃO INTELIGENTE + VALIDAÇÃO MANUAL
 // ---------------------------------------------------------
 let apartamentos = [];
@@ -662,7 +662,8 @@ if (apartamentosDigitados.length > 0) {
     }
 }
 
-   // ---------------------------------------------------------
+
+// ---------------------------------------------------------
 // DADOS FINAIS
 // ---------------------------------------------------------
 const dados = {
@@ -696,7 +697,6 @@ if (!reservaAtual) {
 
 fecharModal();
 carregarReservas();
-
 
 // -------------------------------------------------------------
 // 12) APAGAR RESERVA (E APAGAR DO CALENDÁRIO TAMBÉM)
