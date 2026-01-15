@@ -800,6 +800,7 @@ async function apagarReservaConfirmar() {
     carregarReservas();
 }
 
+-------
 console.log("PARTE 2 carregada.");
 
 // -------------------------------------------------------------
@@ -869,11 +870,28 @@ const ICON_FALLBACK = ICON_PLANETA;
 // Se não houver país ou não estiver no mapa → usamos um ícone genérico
 // (por agora vamos só deixar isto preparado; o HTML vem no passo seguinte)
 
+// -------------------------------------------------------------
+// FUNÇÃO: GERAR HTML DA BANDEIRA A PARTIR DO PAÍS
+// -------------------------------------------------------------
+function gerarIconePais(paisCliente) {
+    if (!paisCliente) {
+        return `<img src="${ICON_FALLBACK}" class="flag" title="País desconhecido">`;
+    }
+
+    const codigo = BANDEIRAS_POR_PAIS[paisCliente.trim()] || null;
+
+    if (!codigo) {
+        return `<img src="${ICON_FALLBACK}" class="flag" title="${paisCliente}">`;
+    }
+
+    const url = `${URL_BANDEIRA_BASE}${codigo}.png`;
+    return `<img src="${url}" class="flag" title="${paisCliente}">`;
+}
+
 
 // -------------------------------------------------------------
 // FUNÇÕES DE NORMALIZAÇÃO (DATAS, VALORES, COMISSÕES)
-// -------------------------------------------------------------
-
+// ------------------------------------------------------
 function normalizarDataBooking(valor) {
     if (!valor) return "";
 
