@@ -969,9 +969,17 @@ async function verificarReservasBookingDesaparecidas(bookingIdsImportados) {
     desaparecidas.forEach(r => {
         msg += `• ${r.bookingId} — ${r.cliente} (${r.checkin} → ${r.checkout})\n`;
     });
-    msg += "\nQueres apagá-las?";
+    msg += "\n\nEscolhe uma opção:\n";
+    msg += "1 - Apagar estas reservas da base de dados\n";
+    msg += "2 - Manter tudo como está\n\n";
+    msg += "Escreve 1 ou 2 e carrega em OK.";
 
-    if (!confirm(msg)) return;
+    const escolha = prompt(msg, "2");
+    if (!escolha || escolha.trim() !== "1") {
+    // Qualquer coisa diferente de "1" → não apaga nada
+    return;
+}
+
 
     for (const r of desaparecidas) {
         await db.collection("reservas").doc(r.id).delete();
