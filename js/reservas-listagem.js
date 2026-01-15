@@ -802,6 +802,57 @@ async function apagarReservaConfirmar() {
 
 console.log("PARTE 2 carregada.");
 
+// -------------------------------------------------------------
+// MAPA DE BANDEIRAS POR PAÍS (Booking → código ISO)
+// -------------------------------------------------------------
+const BANDEIRAS_POR_PAIS = {
+    "Portugal": "pt",
+    "Spain": "es",
+    "France": "fr",
+    "Germany": "de",
+    "Belgium": "be",
+    "Netherlands": "nl",
+    "Switzerland": "ch",
+    "Austria": "at",
+    "Italy": "it",
+    "United Kingdom": "gb",
+    "Ireland": "ie",
+    "Denmark": "dk",
+    "Sweden": "se",
+    "Norway": "no",
+    "Finland": "fi",
+    "Poland": "pl",
+    "Czech Republic": "cz",
+    "Hungary": "hu",
+    "Greece": "gr",
+
+    "United States": "us",
+    "Canada": "ca",
+    "Brazil": "br",
+    "Argentina": "ar",
+    "Mexico": "mx",
+    "Chile": "cl",
+    "Colombia": "co",
+    "Peru": "pe",
+
+    "Australia": "au",
+    "New Zealand": "nz",
+
+    "China": "cn",
+    "Japan": "jp",
+    "South Korea": "kr",
+    "India": "in",
+    "United Arab Emirates": "ae",
+    "Saudi Arabia": "sa",
+    "Israel": "il",
+};
+
+// URL base das bandeiras (flagcdn)
+const URL_BANDEIRA_BASE = "https://flagcdn.com/24x18/";
+
+// Se não houver país ou não estiver no mapa → usamos um ícone genérico
+// (por agora vamos só deixar isto preparado; o HTML vem no passo seguinte)
+
 
 // -------------------------------------------------------------
 // FUNÇÕES DE NORMALIZAÇÃO (DATAS, VALORES, COMISSÕES)
