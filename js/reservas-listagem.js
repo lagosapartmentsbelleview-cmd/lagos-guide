@@ -882,7 +882,17 @@ function gerarIconePais(paisCliente) {
         return `<img src="${ICON_FALLBACK}" class="flag" title="País desconhecido">`;
     }
 
-    const codigo = BANDEIRAS_POR_PAIS[paisCliente.trim()] || null;
+    let pais = paisCliente.trim();
+
+// Se vier "pt", "PT", "Pt", etc.
+if (pais.length === 2) {
+    pais = pais.toLowerCase();
+    return `<img src="${URL_BANDEIRA_BASE}${pais}.svg" class="flag" title="${paisCliente}">`;
+}
+
+// Caso contrário, usa o mapa normal
+const codigo = BANDEIRAS_POR_PAIS[pais] || null;
+
 
     if (!codigo) {
         return `<img src="${ICON_FALLBACK}" class="flag" title="${paisCliente}">`;
