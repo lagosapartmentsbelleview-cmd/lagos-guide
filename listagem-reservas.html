@@ -673,5 +673,22 @@ td button {
     <!-- Lógica da listagem (a tua, a que me enviaste) -->
     <script src="js/reservas-listagem.js"></script>
 
+    <script>
+document.getElementById("statusPagamento").addEventListener("change", function () {
+    const status = this.value;
+
+    const totalBruto = Number(document.getElementById("totalBruto").value || 0);
+    const comissao = Number(document.getElementById("comissao").value || 0);
+
+    if (status === "total") {
+        const valor = totalBruto - comissao;
+        document.getElementById("valorPago").value = valor.toFixed(2);
+    }
+});
+</script>
+</body>
+</html>
+
+
 </body>
 </html>
