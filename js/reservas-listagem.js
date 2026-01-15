@@ -965,33 +965,10 @@ async function verificarReservasBookingDesaparecidas(bookingIdsImportados) {
 
     if (desaparecidas.length === 0) return;
 
-    let msg = "As seguintes reservas Booking não vieram no Excel:\n\n";
-    desaparecidas.forEach(r => {
-        msg += `• ${r.bookingId} — ${r.cliente} (${r.checkin} → ${r.checkout})\n`;
-    });
-    msg += "\n\nEscolhe uma opção:\n";
-    msg += "1 - Apagar estas reservas da base de dados\n";
-    msg += "2 - Manter tudo como está\n\n";
-    msg += "Escreve 1 ou 2 e carrega em OK.";
-
-    const escolha = prompt(msg, "2");
-    if (!escolha || escolha.trim() !== "1") {
-    // Qualquer coisa diferente de "1" → não apaga nada
-    return;
+    // 👉 Agora usamos o modal personalizado
+    abrirModalDesaparecidas(desaparecidas);
 }
 
-
-    for (const r of desaparecidas) {
-        await db.collection("reservas").doc(r.id).delete();
-
-        // Também apagar do calendário
-        const snapCal = await db.collection("calendario")
-            .where("id", "==", r.id)
-            .get();
-
-        snapCal.forEach(doc => doc.ref.delete());
-    }
-}
 
 // -------------------------------------------------------------
 // 15) FORMATAR DATA DO EXCEL
@@ -1349,5 +1326,44 @@ document.getElementById("btnMarcarPagas").addEventListener("click", async () => 
     alert("Reservas atualizadas com sucesso.");
     carregarReservas();
 });
+
+let reservasDesaparecidasTemp = [];
+
+function abrirModalDesaparecidas(lista) {
+    reservasDesaparecidasTemp = lista;
+
+    const div = document.getElementById("listaDesaparecidas");
+    div.innerHTML = "";
+
+    lista.forEach(r => {
+        const p = document.createElement("p");
+        p.textContent = `${r.bookingId} — ${r.cliente} (${r.checkin} → ${r.checkout})`;
+        div.appendChild(p);
+    });
+
+    document.getElementById("modalDesaparecidas").style.display = "flex";
+}
+
+function fecharModalDesaparecidas() {
+    document.getElementById("modalDesaparecidas").style.display = "none";
+    reservasDesaparecidasTemp = [];
+}
+
+async function confirmarApagarDesaparecidas() {
+    for (const r of reservasDesaparecidasTemp) {
+        await db.collection("reservas").doc(r.id).delete();
+
+        const snapCal = await db.collection("calendario")
+            .where("id", "==", r.id)
+            .get();
+
+        snapCal.forEach(doc => doc.ref.delete());
+    }
+
+    fecharModalDesaparecidas();
+    carregarReservas();
+    alert("Reservas apagadas.");
+}
+
 
 
