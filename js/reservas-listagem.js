@@ -850,6 +850,22 @@ const BANDEIRAS_POR_PAIS = {
 // URL base das bandeiras (flagcdn)
 const URL_BANDEIRA_BASE = "https://flagcdn.com/24x18/";
 
+// -------------------------------------------------------------
+// FALLBACK PARA PAÍS DESCONHECIDO
+// -------------------------------------------------------------
+
+// Ícone do planeta (universal)
+const ICON_PLANETA = "https://cdn-icons-png.flaticon.com/512/44/44948.png";
+
+// Bandeira da cidade de Lagos (personalizada)
+const ICON_LAGOS = "https://upload.wikimedia.org/wikipedia/commons/6/6a/LGS.png";
+
+// Escolha do fallback (por agora usamos o planeta)
+const ICON_FALLBACK = ICON_PLANETA;
+
+
+
+
 // Se não houver país ou não estiver no mapa → usamos um ícone genérico
 // (por agora vamos só deixar isto preparado; o HTML vem no passo seguinte)
 
