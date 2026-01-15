@@ -23,6 +23,16 @@
 }
 
 /* ========================================================= */
+/*            MODAL DESAPARECIDAS (PERSONALIZADO)            */
+/* ========================================================= */
+
+#modalDesaparecidas .modal-body p {
+    margin: 6px 0;
+    font-size: 14px;
+}
+
+
+/* ========================================================= */
 /*                        LAYOUT GERAL                       */
 /* ========================================================= */
 body {
@@ -427,6 +437,26 @@ td button {
 </style>
 
 </head>
+
+<!-- MODAL PERSONALIZADO PARA RESERVAS DESAPARECIDAS -->
+<div id="modalDesaparecidas" class="modal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header" style="background: #c62828;">
+            <h2>Reservas não encontradas</h2>
+            <button class="modal-close" onclick="fecharModalDesaparecidas()">✖</button>
+        </div>
+
+        <div class="modal-body" id="listaDesaparecidas">
+            <!-- Lista gerada dinamicamente -->
+        </div>
+
+        <div class="modal-footer">
+            <button class="btnSecundario" onclick="fecharModalDesaparecidas()">Manter</button>
+            <button class="btnPrimario" style="background:#c62828;" onclick="confirmarApagarDesaparecidas()">Apagar</button>
+        </div>
+    </div>
+</div>
+
 
 <body>
 
