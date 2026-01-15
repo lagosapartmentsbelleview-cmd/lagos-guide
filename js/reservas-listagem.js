@@ -759,8 +759,9 @@ const dados = {
     status,
 
     // 🔥 CAMPOS NOVOS
-    statusPagamento,
-    valorPago
+    statusPagamento: String(statusPagamento).trim(),
+    valorPago: Number(valorPago)
+
 };
 
 
