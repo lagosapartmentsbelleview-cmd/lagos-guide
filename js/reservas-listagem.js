@@ -800,7 +800,6 @@ async function apagarReservaConfirmar() {
     carregarReservas();
 }
 
--------
 console.log("PARTE 2 carregada.");
 
 // -------------------------------------------------------------
