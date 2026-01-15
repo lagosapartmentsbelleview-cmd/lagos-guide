@@ -370,7 +370,7 @@ function desenharTabela(lista = reservas) {
             <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
             <td><span class="origem-badge origem-${(r.origem || "").toLowerCase()}">${r.origem || ""}</span></td>
             <td>${r.bookingId || ""}</td>
-            <td>${r.cliente || ""}</td>
+            <td>${gerarIconePais(r.paisCliente)} ${r.cliente || ""}</td>
             <td>${quartos}</td>
             <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
 
