@@ -358,6 +358,14 @@ function desenharTabela(lista = reservas) {
         // Texto dos apartamentos
         const apartamentosTexto = (r.apartamentos || []).join(", ");
 
+        // 🔥 COR DA LINHA CONSOANTE O PAGAMENTO
+        if (r.statusPagamento === "total") {
+        tr.classList.add("pago-total");
+        } else if (r.statusPagamento === "parcial") {
+        tr.classList.add("pago-parcial");
+    }
+
+
         tr.innerHTML = `
             <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
             <td><span class="origem-badge origem-${(r.origem || "").toLowerCase()}">${r.origem || ""}</span></td>
@@ -558,6 +566,10 @@ function preencherFormularioReserva(r) {
     document.getElementById("comissao").value = r.comissao ?? "";
     document.getElementById("berco").value = r.berco ? "true" : "false";
     document.getElementById("limpeza").value = r.limpeza ?? "";
+        // 🔥 CAMPOS DE PAGAMENTO
+    document.getElementById("statusPagamento").value = r.statusPagamento || "aguardar";
+    document.getElementById("valorPago").value = r.valorPago ?? 0;
+
 }
 // -------------------------------------------------------------
 // 11) GUARDAR RESERVA (NOVA OU EDITADA)
