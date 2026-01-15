@@ -606,6 +606,11 @@ async function guardarReserva() {
 
     const totalLiquidoFinal = liquido - limpeza;
 
+    // 🔥 CAMPOS DE PAGAMENTO
+const statusPagamento = document.getElementById("statusPagamento").value;
+const valorPago = Number(document.getElementById("valorPago").value || 0);
+
+
 // ---------------------------------------------------------
 // ALOCAÇÃO INTELIGENTE + VALIDAÇÃO MANUAL
 // ---------------------------------------------------------
