@@ -1194,3 +1194,38 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }, 200);
 });
+
+// -------------------------------------------------------------
+// MARCAR VÁRIAS RESERVAS COMO PAGAS TOTALMENTE
+// -------------------------------------------------------------
+document.getElementById("btnMarcarPagas").addEventListener("click", async () => {
+    const selecionadas = [...document.querySelectorAll(".selectReserva:checked")];
+
+    if (selecionadas.length === 0) {
+        alert("Nenhuma reserva selecionada.");
+        return;
+    }
+
+    if (!confirm(`Marcar ${selecionadas.length} reserva(s) como pagas totalmente?`)) {
+        return;
+    }
+
+    for (const checkbox of selecionadas) {
+        const id = checkbox.dataset.id;
+        const r = reservas.find(x => x.id === id);
+        if (!r) continue;
+
+        const totalBruto = Number(r.totalBruto || 0);
+        const comissao = Number(r.comissao || 0);
+        const valorPago = totalBruto - comissao;
+
+        await db.collection("reservas").doc(id).update({
+            statusPagamento: "total",
+            valorPago: valorPago
+        });
+    }
+
+    alert("Reservas atualizadas com sucesso.");
+    carregarReservas();
+});
+
