@@ -952,6 +952,77 @@ function formatarDataExcel(valor) {
     return `${String(dt.d).padStart(2, "0")}/${String(dt.m).padStart(2, "0")}/${dt.y}`;
 }
 // -------------------------------------------------------------
+// HELPER: Normalizar valor vindo do Excel Booking ("225,57 EUR", "225.57", etc.)
+// -------------------------------------------------------------
+function normalizarValorBooking(raw) {
+    if (raw === undefined || raw === null) return 0;
+
+    let txt = String(raw).trim();
+
+    // Remove "EUR", "€" e espaços
+    txt = txt.replace(/EUR/gi, "")
+             .replace(/€/g, "")
+             .replace(/\s+/g, "");
+
+    // Troca vírgula por ponto
+    txt = txt.replace(",", ".");
+
+    const num = parseFloat(txt);
+    return isNaN(num) ? 0 : num;
+}
+
+// -------------------------------------------------------------
+// HELPER: Normalizar data Booking (aceita número Excel ou string)
+// devolve sempre dd/mm/yyyy (compatível com o resto do sistema)
+// -------------------------------------------------------------
+function normalizarDataBooking(valor) {
+    if (!valor) return "";
+
+    // Se vier como número (serial Excel)
+    if (typeof valor === "number") {
+        const dt = XLSX.SSF.parse_date_code(valor);
+        if (!dt) return "";
+        const dia = String(dt.d).padStart(2, "0");
+        const mes = String(dt.m).padStart(2, "0");
+        const ano = dt.y;
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    // Se vier como string
+    const txt = String(valor).trim();
+
+    // Tentar formatos comuns
+    // 2023-08-01
+    if (/^\d{4}-\d{2}-\d{2}$/.test(txt)) {
+        const [ano, mes, dia] = txt.split("-");
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    // 01/08/2023 ou 1/8/23
+    if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(txt)) {
+        const [d, m, a] = txt.split("/");
+        const dia = String(d).padStart(2, "0");
+        const mes = String(m).padStart(2, "0");
+        const ano = a.length === 2 ? `20${a}` : a;
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    // Se nada bater certo, devolve vazio para não estragar
+    return "";
+}
+
+// -------------------------------------------------------------
+// HELPER: Calcular comissões Booking (base + 1,4% extra)
+// -------------------------------------------------------------
+function calcularComissoesBooking(totalBruto, comissaoOriginal) {
+    const comissaoExtra = totalBruto * 0.014; // 1,4%
+    const comissaoTotal = comissaoOriginal + comissaoExtra;
+    const liquidoReal = totalBruto - comissaoTotal;
+
+    return { comissaoExtra, comissaoTotal, liquidoReal };
+}
+
+// -------------------------------------------------------------
 // 16) SELECIONAR / APAGAR SELECIONADAS
 // -------------------------------------------------------------
 const selectAllCheckbox = document.getElementById("selectAll");
