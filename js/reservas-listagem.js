@@ -802,10 +802,62 @@ async function apagarReservaConfirmar() {
 
 console.log("PARTE 2 carregada.");
 
+
+// -------------------------------------------------------------
+// FUNÇÕES DE NORMALIZAÇÃO (DATAS, VALORES, COMISSÕES)
+// -------------------------------------------------------------
+
+function normalizarDataBooking(valor) {
+    if (!valor) return "";
+
+    if (typeof valor === "number") {
+        const dt = XLSX.SSF.parse_date_code(valor);
+        return `${String(dt.d).padStart(2, "0")}/${String(dt.m).padStart(2, "0")}/${dt.y}`;
+    }
+
+    valor = String(valor).trim();
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+        const [y, m, d] = valor.split("-");
+        return `${d}/${m}/${y}`;
+    }
+
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(valor)) return valor;
+
+    if (/^\d{2}\.\d{2}\.\d{4}$/.test(valor)) {
+        const [d, m, y] = valor.split(".");
+        return `${d}/${m}/${y}`;
+    }
+
+    return "";
+}
+
+function normalizarValorBooking(valor) {
+    if (!valor) return 0;
+
+    valor = String(valor)
+        .replace("EUR", "")
+        .replace("€", "")
+        .replace(/\s+/g, "")
+        .replace(/\./g, "")
+        .replace(",", ".");
+
+    return Number(valor) || 0;
+}
+
+function calcularComissoesBooking(totalBruto, comissaoOriginal) {
+    const comissaoExtra = totalBruto * 0.014;
+    const comissaoTotal = comissaoOriginal + comissaoExtra;
+    const liquidoReal = totalBruto - comissaoTotal;
+
+    return { comissaoExtra, comissaoTotal, liquidoReal };
+}
+
+
 // -------------------------------------------------------------
 // 13) IMPORTAÇÃO EXCEL BOOKING (COM ALOCAÇÃO INTELIGENTE + CAMPOS EXTRA)
 // -------------------------------------------------------------
-async function importarExcelBooking(event) {
+    async function importarExcelBooking(event) {
     console.log("IMPORTAR EXCEL BOOKING — INÍCIO");
 
     const file = event.target.files[0];
@@ -893,45 +945,55 @@ async function importarExcelBooking(event) {
         const dispositivo = String(linha["Dispositivo"] || linha["Canal"] || "").trim();
 
         const dados = {
-            origem: "Booking",
-            bookingId,
-            cliente: formatarNome(linha["Nome do hóspede"] || "Hóspede"),
-            quartos,
-            apartamentos,
-            checkin,
-            checkout,
-            hospedes: Number(linha["Pessoas"] || 0),
-            adultos: Number(linha["Adultos"] || 0),
-            criancas: Number(linha["Crianças"] || 0),
-            idadesCriancas: linha["Idade da(s) criança(s)"] || "",
+    origem: "Booking",
+    bookingId,
 
-            // 🔹 Valores originais
-            totalBruto,
-            comissao: comissaoOriginal,
-            precoNoite,
-            noites,
-            liquido,
-            limpeza,
-            totalLiquidoFinal,
+    // 🔹 Identificação do cliente
+    cliente: formatarNome(linha["Nome do hóspede"] || "Hóspede"),
+    reservadoPor: linha["Reservado por"] || "",
+    estadoReservaOrigem: linha["Estado"] || "",
+    tipoUnidade: linha["Tipo de unidade"] || "",
+    morada: linha["Morada"] || "",
+    telefone: linha["Telefone"] || "",
 
-            // 🔹 Campos novos financeiros
-            comissaoExtra,        // 1,4% extra
-            comissaoTotal,        // comissão original + extra
-            liquidoReal,          // o que realmente recebes
+    // 🔹 Alojamento
+    quartos,
+    apartamentos,
+    checkin,
+    checkout,
+    hospedes: Number(linha["Pessoas"] || 0),
+    adultos: Number(linha["Adultos"] || 0),
+    criancas: Number(linha["Crianças"] || 0),
+    idadesCriancas: linha["Idade da(s) criança(s)"] || "",
 
-            // 🔹 Campos novos de contexto
-            dataReserva,
-            dataCancelamento: dataCancelamento || null,
-            paisCliente,
-            modoViagem,
-            metodoPagamento,
-            estadoPagamentoOrigem,
-            comentarios,
-            dispositivo,
+    // 🔹 Valores originais
+    totalBruto,
+    comissao: comissaoOriginal,
+    precoNoite,
+    noites,
+    liquido,
+    limpeza,
+    totalLiquidoFinal,
 
-            berco: false,
-            status
-        };
+    // 🔹 Financeiro (com a tua comissão extra automática de 1,4%)
+    comissaoExtra,
+    comissaoTotal,
+    liquidoReal,
+
+    // 🔹 Datas e contexto
+    dataReserva,
+    dataCancelamento: dataCancelamento || null,
+    paisCliente,
+    modoViagem,
+    metodoPagamento,
+    estadoPagamentoOrigem,
+    comentarios,
+    dispositivo,
+
+    // 🔹 Outros
+    berco: false,
+    status
+};
 
         if (existente) {
             await db.collection("reservas").doc(existente.id).update(dados);
