@@ -950,7 +950,7 @@ async function importarExcelBooking(event) {
 }
 
 // -------------------------------------------------------------
-// 14) APAGAR RESERVAS BOOKING QUE DESAPARECERAM DO EXCEL (VERSÃO SEGURA)
+// 14) APAGAR RESERVAS BOOKING QUE DESAPARECERAM DO EXCEL
 // -------------------------------------------------------------
 async function verificarReservasBookingDesaparecidas(bookingIdsImportados) {
     const snap = await db.collection("reservas").get();
@@ -965,36 +965,23 @@ async function verificarReservasBookingDesaparecidas(bookingIdsImportados) {
 
     if (desaparecidas.length === 0) return;
 
-    let msg = "⚠️ Estás a importar um ficheiro que NÃO contém as seguintes reservas já existentes:\n\n";
+    let msg = "As seguintes reservas Booking não vieram no Excel:\n\n";
     desaparecidas.forEach(r => {
         msg += `• ${r.bookingId} — ${r.cliente} (${r.checkin} → ${r.checkout})\n`;
     });
-    msg += "\nO que queres fazer?\n\n";
-    msg += "1) Manter estas reservas antigas (recomendado)\n";
-    msg += "2) Remover estas reservas e ficar só com as do Excel\n\n";
-    msg += "Escreve 1 ou 2:";
+    msg += "\nQueres apagá-las?";
 
-    const escolha = prompt(msg);
+    if (!confirm(msg)) return;
 
-    // Se cancelar ou escrever 1 → manter reservas antigas
-    if (!escolha || escolha.trim() === "1") {
-        console.log("Mantidas reservas antigas Booking.");
-        return;
-    }
+    for (const r of desaparecidas) {
+        await db.collection("reservas").doc(r.id).delete();
 
-    // Se escrever 2 → apagar reservas antigas
-    if (escolha.trim() === "2") {
-        for (const r of desaparecidas) {
-            await db.collection("reservas").doc(r.id).delete();
+        // Também apagar do calendário
+        const snapCal = await db.collection("calendario")
+            .where("id", "==", r.id)
+            .get();
 
-            // Também apagar do calendário
-            const snapCal = await db.collection("calendario")
-                .where("id", "==", r.id)
-                .get();
-
-            snapCal.forEach(doc => doc.ref.delete());
-        }
-        console.log("Reservas antigas Booking removidas.");
+        snapCal.forEach(doc => doc.ref.delete());
     }
 }
 
@@ -1354,4 +1341,5 @@ document.getElementById("btnMarcarPagas").addEventListener("click", async () => 
     alert("Reservas atualizadas com sucesso.");
     carregarReservas();
 });
+
 
