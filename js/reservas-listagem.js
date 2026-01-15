@@ -876,6 +876,8 @@ const ICON_FALLBACK = ICON_PLANETA;
 // (por agora vamos só deixar isto preparado; o HTML vem no passo seguinte)
 
 function gerarIconePais(paisCliente) {
+    console.log("PAÍS RECEBIDO:", JSON.stringify(paisCliente));
+
     if (!paisCliente) {
         return `<img src="${ICON_FALLBACK}" class="flag" title="País desconhecido">`;
     }
