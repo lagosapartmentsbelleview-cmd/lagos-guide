@@ -847,8 +847,9 @@ const BANDEIRAS_POR_PAIS = {
     "Israel": "il",
 };
 
-// URL base das bandeiras (flagcdn)
-const URL_BANDEIRA_BASE = "https://flagcdn.com/24x18/";
+// URL base das bandeiras locais
+const URL_BANDEIRA_BASE = "./flags/";
+
 
 // -------------------------------------------------------------
 // FALLBACK PARA PAÍS DESCONHECIDO
@@ -883,9 +884,10 @@ function gerarIconePais(paisCliente) {
         return `<img src="${ICON_FALLBACK}" class="flag" title="${paisCliente}">`;
     }
 
-    const url = `${URL_BANDEIRA_BASE}${codigo}.png`;
-    return `<img src="${url}" class="flag" title="${paisCliente}">`;
+    const url = `${URL_BANDEIRA_BASE}${codigo}.svg`;
+return `<img src="${url}" class="flag" title="${paisCliente}">`;
 }
+
 
 
 // -------------------------------------------------------------
