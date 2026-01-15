@@ -744,8 +744,13 @@ const dados = {
     limpeza,
     totalLiquidoFinal,
     berco,
-    status
+    status,
+
+    // 🔥 CAMPOS NOVOS
+    statusPagamento,
+    valorPago
 };
+
 
 if (!reservaAtual) {
     await db.collection("reservas").add(dados);
