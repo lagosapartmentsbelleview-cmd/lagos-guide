@@ -848,7 +848,8 @@ const BANDEIRAS_POR_PAIS = {
 };
 
 // URL base das bandeiras locais
-const URL_BANDEIRA_BASE = "../flags/";
+const URL_BANDEIRA_BASE = "flags/";
+
 
 
 
