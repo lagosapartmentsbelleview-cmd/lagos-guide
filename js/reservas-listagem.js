@@ -803,7 +803,7 @@ async function apagarReservaConfirmar() {
 console.log("PARTE 2 carregada.");
 
 // -------------------------------------------------------------
-// 13) IMPORTAÇÃO EXCEL BOOKING (COM ALOCAÇÃO INTELIGENTE)
+// 13) IMPORTAÇÃO EXCEL BOOKING (COM ALOCAÇÃO INTELIGENTE + CAMPOS EXTRA)
 // -------------------------------------------------------------
 async function importarExcelBooking(event) {
     console.log("IMPORTAR EXCEL BOOKING — INÍCIO");
@@ -826,15 +826,29 @@ async function importarExcelBooking(event) {
 
         bookingIdsImportados.add(bookingId);
 
-        const checkin = formatarDataExcel(linha["Check-in"]);   // dd/mm/yyyy
-        const checkout = formatarDataExcel(linha["Check-out"]); // dd/mm/yyyy
+        // 🔹 Datas principais
+        const checkin = normalizarDataBooking(linha["Check-in"]);
+        const checkout = normalizarDataBooking(linha["Check-out"]);
 
-        const totalBruto = Number(linha["Preço"] || 0);
-        const comissao = Number(linha["Valor da comissão"] || 0);
+        // 🔹 Data em que a reserva foi feita (para estatísticas por mês/ano de reserva)
+        const dataReserva = normalizarDataBooking(linha["Reservado em"]);
+
+        // 🔹 Data de cancelamento (se existir)
+        const dataCancelamento = normalizarDataBooking(linha["Data de cancelamento"]);
+
+        // 🔹 Valores (tratados, mesmo que venham com EUR, vírgulas, etc.)
+        const totalBruto = normalizarValorBooking(linha["Preço"]);
+        const comissaoOriginal = normalizarValorBooking(linha["Comissão"] || linha["Valor da comissão"]);
+
+        // 🔹 Cálculo de comissões (inclui 1,4% extra)
+        const { comissaoExtra, comissaoTotal, liquidoReal } =
+            calcularComissoesBooking(totalBruto, comissaoOriginal);
 
         const noites = calcularNoites(checkin, checkout);
         const precoNoite = noites > 0 ? totalBruto / noites : 0;
-        const liquido = totalBruto - comissao;
+
+        // 🔹 Liquido antigo (mantido por compatibilidade)
+        const liquido = totalBruto - comissaoOriginal;
 
         // Limpeza calculada pelo CHECK-IN (regra correta)
         const limpeza = calcularLimpeza(checkin);
@@ -868,6 +882,16 @@ async function importarExcelBooking(event) {
             if (apartamentos.length === 0) status = "sem_alocacao";
         }
 
+        // 🔹 Campos extra da Booking para estatísticas
+        const paisCliente = String(linha["Booker country"] || "").trim();
+        const modoViagem = String(linha["Modo de viagem"] || "").trim(); // Lazer / Negócios
+        const metodoPagamento = String(linha["Método de pagamento (provedor de pagamento)"] || "").trim();
+        const estadoPagamentoOrigem = String(linha["Estado do pagamento"] || "").trim();
+        const comentarios = String(linha["Comentários"] || "").trim();
+
+        // Se tiveres uma coluna que indica PC / Telemóvel, mapeia aqui:
+        const dispositivo = String(linha["Dispositivo"] || linha["Canal"] || "").trim();
+
         const dados = {
             origem: "Booking",
             bookingId,
@@ -880,13 +904,31 @@ async function importarExcelBooking(event) {
             adultos: Number(linha["Adultos"] || 0),
             criancas: Number(linha["Crianças"] || 0),
             idadesCriancas: linha["Idade da(s) criança(s)"] || "",
+
+            // 🔹 Valores originais
             totalBruto,
-            comissao,
+            comissao: comissaoOriginal,
             precoNoite,
             noites,
             liquido,
             limpeza,
             totalLiquidoFinal,
+
+            // 🔹 Campos novos financeiros
+            comissaoExtra,        // 1,4% extra
+            comissaoTotal,        // comissão original + extra
+            liquidoReal,          // o que realmente recebes
+
+            // 🔹 Campos novos de contexto
+            dataReserva,
+            dataCancelamento: dataCancelamento || null,
+            paisCliente,
+            modoViagem,
+            metodoPagamento,
+            estadoPagamentoOrigem,
+            comentarios,
+            dispositivo,
+
             berco: false,
             status
         };
