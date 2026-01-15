@@ -870,9 +870,6 @@ const ICON_FALLBACK = ICON_PLANETA;
 // Se não houver país ou não estiver no mapa → usamos um ícone genérico
 // (por agora vamos só deixar isto preparado; o HTML vem no passo seguinte)
 
-// -------------------------------------------------------------
-// FUNÇÃO: GERAR HTML DA BANDEIRA A PARTIR DO PAÍS
-// -------------------------------------------------------------
 function gerarIconePais(paisCliente) {
     if (!paisCliente) {
         return `<img src="${ICON_FALLBACK}" class="flag" title="País desconhecido">`;
@@ -885,10 +882,8 @@ function gerarIconePais(paisCliente) {
     }
 
     const url = `${URL_BANDEIRA_BASE}${codigo}.svg`;
-return `<img src="${url}" class="flag" title="${paisCliente}">`;
+    return `<img src="${url}" class="flag" title="${paisCliente}">`;
 }
-
-
 
 // -------------------------------------------------------------
 // FUNÇÕES DE NORMALIZAÇÃO (DATAS, VALORES, COMISSÕES)
