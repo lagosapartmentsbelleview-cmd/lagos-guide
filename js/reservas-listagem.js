@@ -862,7 +862,18 @@ if (statusPagamento === "parcial" && Number(valorEmFalta) === 0) {
     statusPagamento = "total";
 }
 
+// -------------------------------------------------------------
+// CALCULAR VALOR PAGO TOTAL (1ª + 2ª prestação)
+// -------------------------------------------------------------
+const valorPagoParcialNumero = Number(valorPagoParcial || 0);
+const valorPagoFinalNumero = Number(document.getElementById("valorPagoFinal").value || 0);
 
+const valorPagoCalculado = valorPagoParcialNumero + valorPagoFinalNumero;
+
+// Atualizar o campo visual no modal (apenas informativo)
+document.getElementById("valorPago").value = valorPagoCalculado.toFixed(2);
+
+    
 // ---------------------------------------------------------
 // DADOS FINAIS
 // ---------------------------------------------------------
@@ -898,7 +909,7 @@ const dados = {
 
      // 🔥 CAMPOS NOVOS
     statusPagamento,
-    valorPago: Number(valorPago),
+    valorPago: valorPagoCalculado,
 
     // 🔥 PAGAMENTO PARCIAL
     valorPagoParcial: valorPagoParcial || 0,
