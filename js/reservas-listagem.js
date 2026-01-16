@@ -433,15 +433,21 @@ function desenharTabela(lista = reservas) {
             <td>${r.noites !== undefined ? Math.round(r.noites) : ""}</td>
             <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
 
-            <!-- NOVAS COMISSÕES -->
-            <td>${r.comissaoServico !== undefined ? Number(r.comissaoServico).toFixed(2) : ""}</td>
-            <td>${r.comissaoPagamento !== undefined ? Number(r.comissaoPagamento).toFixed(2) : ""}</td>
+            <!-- COMISSÕES DO FIREBASE -->
+            <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
+            <td>${r.comissaoExtra !== undefined ? Number(r.comissaoExtra).toFixed(2) : ""}</td>
+            <td>${r.comissaoTotal !== undefined ? Number(r.comissaoTotal).toFixed(2) : ""}</td>
+
+            <!-- PREÇO POR NOITE -->
             <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
+
+            <!-- BERÇO E LIMPEZA -->
             <td>${r.berco ? "Sim" : "Não"}</td>
             <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
 
-            <!-- LÍQUIDO FINAL -->
+            <!-- LÍQUIDO -->
             <td>${r.liquido !== undefined ? Number(r.liquido).toFixed(2) : ""}</td>
+
 
 
             <td>
