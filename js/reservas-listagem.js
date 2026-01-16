@@ -845,6 +845,13 @@ if (statusPagamento === "parcial") {
     dataVencimento = document.getElementById("dataVencimento").value || null;
 }
 
+// -------------------------------------------------------------
+// B4 — Converter automaticamente parcial → total quando pago
+// -------------------------------------------------------------
+if (statusPagamento === "parcial" && Number(valorEmFalta) === 0) {
+    statusPagamento = "total";
+}
+
 
 // ---------------------------------------------------------
 // DADOS FINAIS
