@@ -856,13 +856,6 @@ if (statusPagamento === "parcial") {
 }
 
 // -------------------------------------------------------------
-// B4 — Converter automaticamente parcial → total quando pago
-// -------------------------------------------------------------
-if (statusPagamento === "parcial" && Number(valorEmFalta) === 0) {
-    statusPagamento = "total";
-}
-
-// -------------------------------------------------------------
 // CALCULAR VALOR PAGO TOTAL (1ª + 2ª prestação)
 // -------------------------------------------------------------
 const valorPagoParcialNumero = Number(valorPagoParcial || 0);
@@ -873,7 +866,20 @@ const valorPagoCalculado = valorPagoParcialNumero + valorPagoFinalNumero;
 // Atualizar o campo visual no modal (apenas informativo)
 document.getElementById("valorPago").value = valorPagoCalculado.toFixed(2);
 
-    
+// -------------------------------------------------------------
+// RECALCULAR VALOR EM FALTA COM BASE NO TOTAL PAGO
+// -------------------------------------------------------------
+const totalBrutoNumero = Number(totalBruto || 0);
+valorEmFalta = totalBrutoNumero - valorPagoCalculado;
+
+// -------------------------------------------------------------
+// B4 — Converter automaticamente parcial → total quando pago
+// -------------------------------------------------------------
+if (valorEmFalta <= 0) {
+    valorEmFalta = 0;
+    statusPagamento = "total";
+}
+
 // ---------------------------------------------------------
 // DADOS FINAIS
 // ---------------------------------------------------------
