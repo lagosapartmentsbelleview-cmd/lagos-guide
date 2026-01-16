@@ -1374,6 +1374,17 @@ if (btnEnviarCalendarioEl) {
 document.getElementById("totalBruto").addEventListener("input", atualizarComissaoEuro);
 document.getElementById("comissaoPercentagem").addEventListener("input", atualizarComissaoEuro);
 
+// -------------------------------------------------------------
+// MOSTRAR / ESCONDER CAMPOS DE PAGAMENTO PARCIAL
+// -------------------------------------------------------------
+document.getElementById("statusPagamento").addEventListener("change", () => {
+    const status = document.getElementById("statusPagamento").value;
+    const campos = document.getElementById("pagamentoParcialCampos");
+
+    campos.style.display = status === "parcial" ? "block" : "none";
+});
+
+
 console.log("JS DA LISTAGEM — FICHEIRO COMPLETO");
 
 // -------------------------------------------------------------
