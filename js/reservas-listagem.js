@@ -1504,15 +1504,15 @@ document.getElementById("statusPagamento").addEventListener("change", () => {
     campos.style.display = status === "parcial" ? "block" : "none";
 });
 
-// -------------------------------------------------------------
-// CÁLCULO AUTOMÁTICO DO VALOR EM FALTA (PAGAMENTO PARCIAL)
-// -------------------------------------------------------------
+ AUTOMÁTICO DO VALOR EM FALTA (PAGAMENTO PARCIAL)
+// ------------// -------------------------------------------------------------
+// CÁLCULO-------------------------------------------------
 document.getElementById("valorPagoParcial").addEventListener("input", () => {
     const total = Number(document.getElementById("totalBruto").value || 0);
     const comissao = Number(document.getElementById("comissao").value || 0);
     const pago = Number(document.getElementById("valorPagoParcial").value || 0);
 
-    const falta = total - comissao - pago;
+    const falta = total - pago;
     document.getElementById("valorEmFalta").value = falta.toFixed(2);
 });
 
