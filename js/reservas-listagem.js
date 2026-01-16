@@ -867,13 +867,29 @@ const valorPagoCalculado = valorPagoParcialNumero + valorPagoFinalNumero;
 document.getElementById("valorPago").value = valorPagoCalculado.toFixed(2);
 
 // -------------------------------------------------------------
-// RECALCULAR VALOR EM FALTA COM BASE NO TOTAL PAGO
+// CÁLCULO DAS COMISSÕES E DO LÍQUIDO
 // -------------------------------------------------------------
 const totalBrutoNumero = Number(totalBruto || 0);
+
+// Comissão de serviço (€)
+const comissaoServico = Number(document.getElementById("comissaoServico").value || 0);
+
+// Percentagem de pagamento (%)
+const percentagemPagamento = Number(document.getElementById("percentagemPagamento").value || 0);
+
+// Comissão de pagamento (€)
+const comissaoPagamento = totalBrutoNumero * (percentagemPagamento / 100);
+
+// Valor líquido (para ti)
+const liquido = totalBrutoNumero - comissaoServico - comissaoPagamento;
+
+// -------------------------------------------------------------
+// RECALCULAR VALOR EM FALTA COM BASE NO TOTAL PAGO
+// -------------------------------------------------------------
 valorEmFalta = totalBrutoNumero - valorPagoCalculado;
 
 // -------------------------------------------------------------
-// B4 — Converter automaticamente parcial → total quando pago
+// Converter automaticamente parcial → total quando pago
 // -------------------------------------------------------------
 if (valorEmFalta <= 0) {
     valorEmFalta = 0;
@@ -883,6 +899,7 @@ if (valorEmFalta <= 0) {
 // ---------------------------------------------------------
 // DADOS FINAIS
 // ---------------------------------------------------------
+
 const dados = {
     origem,
     bookingId: bookingId || null,
@@ -890,30 +907,36 @@ const dados = {
     pais,
     telefone,
     morada,
-    comissaoPercentagem,
+
+    // 🔥 NOVAS COMISSÕES
+    comissaoServico,            // valor em €
+    percentagemPagamento,       // percentagem (%)
+    comissaoPagamento,          // valor em €
+
     metodoPagamento,
     motivo,
     dispositivo,
     estadoReserva,
     quartos,
     apartamentos,
+
     checkin: normalizarDataParaPt(checkin),
     checkout: normalizarDataParaPt(checkout),
+
     hospedes,
     adultos,
     criancas,
     idadesCriancas,
+
     totalBruto,
-    comissao,
     precoNoite,
     noites,
-    liquido,
+    liquido,                    // bruto - comissões
     limpeza,
-    totalLiquidoFinal,
     berco,
     status,
 
-     // 🔥 CAMPOS NOVOS
+    // 🔥 STATUS DO PAGAMENTO
     statusPagamento,
     valorPago: valorPagoCalculado,
 
@@ -923,13 +946,12 @@ const dados = {
     valorEmFalta: valorEmFalta || 0,
     dataVencimento: dataVencimento || null,
 
-    // 🔥 NOVOS CAMPOS DA 2ª PRESTAÇÃO
+    // 🔥 2ª PRESTAÇÃO
     valorPagoFinal: Number(document.getElementById("valorPagoFinal").value || 0),
     dataPagamentoFinal: document.getElementById("dataPagamentoFinal").value || null,
-
 };
 
-
+// Guardar no Firestore
 if (!reservaAtual) {
     await db.collection("reservas").add(dados);
 } else {
