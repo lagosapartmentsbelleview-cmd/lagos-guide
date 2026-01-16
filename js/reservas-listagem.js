@@ -558,7 +558,6 @@ function preencherFormularioReserva(r) {
     document.getElementById("dispositivo").value = r.dispositivo || "telemovel";
     document.getElementById("estadoReserva").value = r.estadoReserva || "ok";
 
-
     const quartos = r.quartos || (r.apartamentos ? r.apartamentos.length : 1);
     document.getElementById("quartos").value = quartos;
 
@@ -584,10 +583,29 @@ function preencherFormularioReserva(r) {
     document.getElementById("comissao").value = r.comissao ?? "";
     document.getElementById("berco").value = r.berco ? "true" : "false";
     document.getElementById("limpeza").value = r.limpeza ?? "";
-        // 🔥 CAMPOS DE PAGAMENTO
+
+    // 🔥 CAMPOS DE PAGAMENTO
     document.getElementById("statusPagamento").value = r.statusPagamento || "aguardar";
     document.getElementById("valorPago").value = r.valorPago ?? 0;
 
+    // -------------------------------------------------------------
+    // PAGAMENTO PARCIAL — preencher ao editar
+    // -------------------------------------------------------------
+    if (r.statusPagamento === "parcial") {
+        document.getElementById("pagamentoParcialCampos").style.display = "block";
+
+        document.getElementById("valorPagoParcial").value = r.valorPagoParcial ?? "";
+        document.getElementById("dataPagamentoParcial").value = r.dataPagamentoParcial ?? "";
+        document.getElementById("valorEmFalta").value = r.valorEmFalta ?? "";
+        document.getElementById("dataVencimento").value = r.dataVencimento ?? "";
+    } else {
+        document.getElementById("pagamentoParcialCampos").style.display = "none";
+
+        document.getElementById("valorPagoParcial").value = "";
+        document.getElementById("dataPagamentoParcial").value = "";
+        document.getElementById("valorEmFalta").value = "";
+        document.getElementById("dataVencimento").value = "";
+    }
 }
 
 function atualizarComissaoEuro() {
@@ -595,9 +613,9 @@ function atualizarComissaoEuro() {
     const percent = Number(document.getElementById("comissaoPercentagem").value || 0);
 
     const valor = total * percent;
-
     document.getElementById("comissao").value = valor.toFixed(2);
 }
+
 
 // -------------------------------------------------------------
 // 11) GUARDAR RESERVA (NOVA OU EDITADA)
