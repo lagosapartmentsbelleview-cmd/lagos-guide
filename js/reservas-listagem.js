@@ -407,12 +407,12 @@ function desenharTabela(lista = reservas) {
         // Texto dos apartamentos
         const apartamentosTexto = (r.apartamentos || []).join(", ");
 
-        // 🔥 COR DA LINHA CONSOANTE O PAGAMENTO
-        if (r.statusPagamento === "total") {
-        tr.classList.add("pago-total");
-        } else if (r.statusPagamento === "parcial") {
-        tr.classList.add("pago-parcial");
-    }
+        // 🔥 COR DA LINHA CONSOANTE O PAGAMENTO (usando a função inteligente)
+        const classePagamento = obterClassePagamento(r);
+        if (classePagamento) {
+        tr.classList.add(classePagamento);
+        }
+
 
 
         tr.innerHTML = `
