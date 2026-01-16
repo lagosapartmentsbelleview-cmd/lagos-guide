@@ -432,10 +432,17 @@ function desenharTabela(lista = reservas) {
             <td>${r.checkout || ""}</td>
             <td>${r.noites !== undefined ? Math.round(r.noites) : ""}</td>
             <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
-            <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
+
+            <!-- NOVAS COMISSÕES -->
+            <td>${r.comissaoServico !== undefined ? Number(r.comissaoServico).toFixed(2) : ""}</td>
+            <td>${r.comissaoPagamento !== undefined ? Number(r.comissaoPagamento).toFixed(2) : ""}</td>
             <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
             <td>${r.berco ? "Sim" : "Não"}</td>
             <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
+
+            <!-- LÍQUIDO FINAL -->
+            <td>${r.liquido !== undefined ? Number(r.liquido).toFixed(2) : ""}</td>
+
 
             <td>
                 <button class="btnDetalhe" onclick="abrirDetalheReserva('${r.id}')">🔍</button>
@@ -566,19 +573,33 @@ function limparFormularioReserva() {
     document.getElementById("adultos").value = "";
     document.getElementById("criancas").value = "";
     document.getElementById("idadesCriancas").value = "";
+
+    // Valores financeiros
     document.getElementById("totalBruto").value = "";
-    document.getElementById("comissao").value = "";
+    document.getElementById("comissaoServico").value = "";
+    document.getElementById("percentagemPagamento").value = "";
+    document.getElementById("valorPago").value = "";
+    document.getElementById("valorPagoParcial").value = "";
+    document.getElementById("valorPagoFinal").value = "";
+    document.getElementById("valorEmFalta").value = "";
+    document.getElementById("dataPagamentoParcial").value = "";
+    document.getElementById("dataPagamentoFinal").value = "";
+    document.getElementById("dataVencimento").value = "";
+
+    // Outros
     document.getElementById("berco").value = "false";
     document.getElementById("limpeza").value = "";
     document.getElementById("pais").value = "pt";
     document.getElementById("telefone").value = "";
     document.getElementById("morada").value = "";
-    document.getElementById("comissaoPercentagem").value = "";
     document.getElementById("metodoPagamento").value = "booking";
     document.getElementById("motivo").value = "lazer";
     document.getElementById("dispositivo").value = "telemovel";
     document.getElementById("estadoReserva").value = "ok";
 
+    // Status do pagamento
+    document.getElementById("statusPagamento").value = "aguardar";
+    document.getElementById("pagamentoParcialCampos").style.display = "none";
 }
 
 // -------------------------------------------------------------
@@ -595,18 +616,20 @@ document.getElementById("checkin").addEventListener("change", () => {
 // 10) PREENCHER FORMULÁRIO
 // -------------------------------------------------------------
 function preencherFormularioReserva(r) {
+
     document.getElementById("origem").value = r.origem || "Manual";
     document.getElementById("bookingId").value = r.bookingId || "";
     document.getElementById("cliente").value = r.cliente || "";
     document.getElementById("pais").value = r.pais || "pt";
     document.getElementById("telefone").value = r.telefone || "";
     document.getElementById("morada").value = r.morada || "";
-    document.getElementById("comissaoPercentagem").value = r.comissaoPercentagem ?? "";
+
     document.getElementById("metodoPagamento").value = r.metodoPagamento || "booking";
     document.getElementById("motivo").value = r.motivo || "lazer";
     document.getElementById("dispositivo").value = r.dispositivo || "telemovel";
     document.getElementById("estadoReserva").value = r.estadoReserva || "ok";
 
+    // Quartos e apartamentos
     const quartos = r.quartos || (r.apartamentos ? r.apartamentos.length : 1);
     document.getElementById("quartos").value = quartos;
 
@@ -615,6 +638,7 @@ function preencherFormularioReserva(r) {
             ? r.apartamentos.join(", ")
             : (r.apartamentos || "");
 
+    // Datas
     document.getElementById("checkin").value = r.checkin
         ? r.checkin.split("/").reverse().join("-")
         : "";
@@ -623,58 +647,54 @@ function preencherFormularioReserva(r) {
         ? r.checkout.split("/").reverse().join("-")
         : "";
 
+    // Pessoas
     document.getElementById("hospedes").value = r.hospedes ?? "";
     document.getElementById("adultos").value = r.adultos ?? "";
     document.getElementById("criancas").value = r.criancas ?? "";
     document.getElementById("idadesCriancas").value = r.idadesCriancas ?? "";
 
+    // Valores financeiros
     document.getElementById("totalBruto").value = r.totalBruto ?? "";
-    document.getElementById("comissao").value = r.comissao ?? "";
+    document.getElementById("comissaoServico").value = r.comissaoServico ?? "";
+    document.getElementById("percentagemPagamento").value = r.percentagemPagamento ?? "";
+    document.getElementById("valorPago").value = r.valorPago ?? 0;
+
+    // Limpeza e berço
     document.getElementById("berco").value = r.berco ? "true" : "false";
     document.getElementById("limpeza").value = r.limpeza ?? "";
 
-    // 🔥 CAMPOS DE PAGAMENTO
+    // Status do pagamento
     document.getElementById("statusPagamento").value = r.statusPagamento || "aguardar";
-    document.getElementById("valorPago").value = r.valorPago ?? 0;
 
     // -------------------------------------------------------------
     // PAGAMENTO PARCIAL — preencher ao editar
     // -------------------------------------------------------------
     if (r.statusPagamento === "parcial") {
-    document.getElementById("pagamentoParcialCampos").style.display = "block";
 
-    document.getElementById("valorPagoParcial").value = r.valorPagoParcial ?? "";
-    document.getElementById("dataPagamentoParcial").value = r.dataPagamentoParcial ?? "";
-    document.getElementById("valorEmFalta").value = r.valorEmFalta ?? "";
-    document.getElementById("dataVencimento").value = r.dataVencimento ?? "";
+        document.getElementById("pagamentoParcialCampos").style.display = "block";
 
-    // 🔥 NOVOS CAMPOS — preencher ao editar
-    document.getElementById("valorPagoFinal").value = r.valorPagoFinal ?? "";
-    document.getElementById("dataPagamentoFinal").value = r.dataPagamentoFinal ?? "";
+        document.getElementById("valorPagoParcial").value = r.valorPagoParcial ?? "";
+        document.getElementById("dataPagamentoParcial").value = r.dataPagamentoParcial ?? "";
+        document.getElementById("valorEmFalta").value = r.valorEmFalta ?? "";
+        document.getElementById("dataVencimento").value = r.dataVencimento ?? "";
 
-} else {
-    document.getElementById("pagamentoParcialCampos").style.display = "none";
+        // 2ª prestação
+        document.getElementById("valorPagoFinal").value = r.valorPagoFinal ?? "";
+        document.getElementById("dataPagamentoFinal").value = r.dataPagamentoFinal ?? "";
 
-    document.getElementById("valorPagoParcial").value = "";
-    document.getElementById("dataPagamentoParcial").value = "";
-    document.getElementById("valorEmFalta").value = "";
-    document.getElementById("dataVencimento").value = "";
+    } else {
 
-    // 🔥 NOVOS CAMPOS — limpar quando não é parcial
-    document.getElementById("valorPagoFinal").value = "";
-    document.getElementById("dataPagamentoFinal").value = "";
+        document.getElementById("pagamentoParcialCampos").style.display = "none";
+
+        document.getElementById("valorPagoParcial").value = "";
+        document.getElementById("dataPagamentoParcial").value = "";
+        document.getElementById("valorEmFalta").value = "";
+        document.getElementById("dataVencimento").value = "";
+
+        document.getElementById("valorPagoFinal").value = "";
+        document.getElementById("dataPagamentoFinal").value = "";
+    }
 }
-
-}
-
-function atualizarComissaoEuro() {
-    const total = Number(document.getElementById("totalBruto").value || 0);
-    const percent = Number(document.getElementById("comissaoPercentagem").value || 0);
-
-    const valor = total * percent;
-    document.getElementById("comissao").value = valor.toFixed(2);
-}
-
 
 // -------------------------------------------------------------
 // 11) GUARDAR RESERVA (NOVA OU EDITADA)
@@ -747,7 +767,7 @@ async function guardarReserva() {
     let valorEmFalta = null;
     let dataVencimento = null;
 
-    const statusPagamento = document.getElementById("statusPagamento").value;
+    let statusPagamento = document.getElementById("statusPagamento").value;
 
     if (statusPagamento === "parcial") {
         valorPagoParcial = Number(document.getElementById("valorPagoParcial").value || 0);
@@ -766,7 +786,7 @@ async function guardarReserva() {
 
     document.getElementById("valorPago").value = valorPagoCalculado.toFixed(2);
 
-    // -------------------------------------------------------------
+       // -------------------------------------------------------------
     // RECALCULAR VALOR EM FALTA
     // -------------------------------------------------------------
     valorEmFalta = totalBrutoNumero - valorPagoCalculado;
@@ -857,118 +877,102 @@ async function guardarReserva() {
     // ---------------------------------------------------------
     // 2) RESERVA AUTOMÁTICA
     // ---------------------------------------------------------
+    apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasSemAtual);
 
-apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasSemAtual);
+    if (apartamentos.length === 0) {
+        alert(`Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.`);
+        return;
+    }
 
-// Nenhum apartamento disponível
-if (apartamentos.length === 0) {
-    alert(`Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.`);
-    return;
-}
+    if (apartamentos.length < quartos) {
+        alert(
+            `Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.\n` +
+            `Disponíveis: ${apartamentos.length}`
+        );
+        return;
+    }
 
-// Encontrou menos do que o necessário
-if (apartamentos.length < quartos) {
-    alert(
-        `Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.\n` +
-        `Disponíveis: ${apartamentos.length}`
-    );
-    return;
-}
+    // -------------------------------------------------------------
+    // CÁLCULO FINAL DAS COMISSÕES E DO LÍQUIDO
+    // (já tínhamos calculado antes — aqui apenas garantimos consistência)
+    // -------------------------------------------------------------
+    const totalBruto = totalBrutoNumero; // manter nome usado no objeto final
 
-// -------------------------------------------------------------
-// CÁLCULO DAS COMISSÕES E DO LÍQUIDO
-// -------------------------------------------------------------
-const totalBrutoNumero = Number(totalBruto || 0);
+    // -------------------------------------------------------------
+    // RECALCULAR VALOR EM FALTA COM BASE NO TOTAL PAGO
+    // -------------------------------------------------------------
+    valorEmFalta = totalBrutoNumero - valorPagoCalculado;
 
-// Comissão de serviço (€)
-const comissaoServico = Number(document.getElementById("comissaoServico").value || 0);
+    if (valorEmFalta <= 0) {
+        valorEmFalta = 0;
+        statusPagamento = "total";
+    }
 
-// Percentagem de pagamento (%)
-const percentagemPagamento = Number(document.getElementById("percentagemPagamento").value || 0);
+    // ---------------------------------------------------------
+    // DADOS FINAIS DA RESERVA
+    // ---------------------------------------------------------
+    const dados = {
+        origem,
+        bookingId: bookingId || null,
+        cliente,
+        pais,
+        telefone,
+        morada,
 
-// Comissão de pagamento (€)
-const comissaoPagamento = totalBrutoNumero * (percentagemPagamento / 100);
+        // 🔥 NOVAS COMISSÕES
+        comissaoServico,            // valor em €
+        percentagemPagamento,       // percentagem (%)
+        comissaoPagamento,          // valor em €
 
-// Valor líquido (para ti)
-const liquido = totalBrutoNumero - comissaoServico - comissaoPagamento;
+        metodoPagamento,
+        motivo,
+        dispositivo,
+        estadoReserva,
+        quartos,
+        apartamentos,
 
-// -------------------------------------------------------------
-// RECALCULAR VALOR EM FALTA COM BASE NO TOTAL PAGO
-// -------------------------------------------------------------
-valorEmFalta = totalBrutoNumero - valorPagoCalculado;
+        checkin: normalizarDataParaPt(checkin),
+        checkout: normalizarDataParaPt(checkout),
 
-// -------------------------------------------------------------
-// Converter automaticamente parcial → total quando pago
-// -------------------------------------------------------------
-if (valorEmFalta <= 0) {
-    valorEmFalta = 0;
-    statusPagamento = "total";
-}
+        hospedes,
+        adultos,
+        criancas,
+        idadesCriancas,
 
-// ---------------------------------------------------------
-// DADOS FINAIS
-// ---------------------------------------------------------
+        totalBruto,
+        precoNoite,
+        noites,
+        liquido,                    // bruto - comissões
+        limpeza,
+        berco,
+        status,
 
-const dados = {
-    origem,
-    bookingId: bookingId || null,
-    cliente,
-    pais,
-    telefone,
-    morada,
+        // 🔥 STATUS DO PAGAMENTO
+        statusPagamento,
+        valorPago: valorPagoCalculado,
 
-    // 🔥 NOVAS COMISSÕES
-    comissaoServico,            // valor em €
-    percentagemPagamento,       // percentagem (%)
-    comissaoPagamento,          // valor em €
+        // 🔥 PAGAMENTO PARCIAL
+        valorPagoParcial: valorPagoParcial || 0,
+        dataPagamentoParcial: dataPagamentoParcial || null,
+        valorEmFalta: valorEmFalta || 0,
+        dataVencimento: dataVencimento || null,
 
-    metodoPagamento,
-    motivo,
-    dispositivo,
-    estadoReserva,
-    quartos,
-    apartamentos,
+        // 🔥 2ª PRESTAÇÃO
+        valorPagoFinal: valorPagoFinalNumero,
+        dataPagamentoFinal: document.getElementById("dataPagamentoFinal").value || null,
+    };
 
-    checkin: normalizarDataParaPt(checkin),
-    checkout: normalizarDataParaPt(checkout),
+    // ---------------------------------------------------------
+    // GUARDAR NO FIRESTORE
+    // ---------------------------------------------------------
+    if (!reservaAtual) {
+        await db.collection("reservas").add(dados);
+    } else {
+        await db.collection("reservas").doc(reservaAtual.id).update(dados);
+    }
 
-    hospedes,
-    adultos,
-    criancas,
-    idadesCriancas,
-
-    totalBruto,
-    precoNoite,
-    noites,
-    liquido,                    // bruto - comissões
-    limpeza,
-    berco,
-    status,
-
-    // 🔥 STATUS DO PAGAMENTO
-    statusPagamento,
-    valorPago: valorPagoCalculado,
-
-    // 🔥 PAGAMENTO PARCIAL
-    valorPagoParcial: valorPagoParcial || 0,
-    dataPagamentoParcial: dataPagamentoParcial || null,
-    valorEmFalta: valorEmFalta || 0,
-    dataVencimento: dataVencimento || null,
-
-    // 🔥 2ª PRESTAÇÃO
-    valorPagoFinal: Number(document.getElementById("valorPagoFinal").value || 0),
-    dataPagamentoFinal: document.getElementById("dataPagamentoFinal").value || null,
-};
-
-// Guardar no Firestore
-if (!reservaAtual) {
-    await db.collection("reservas").add(dados);
-} else {
-    await db.collection("reservas").doc(reservaAtual.id).update(dados);
-}
-
-fecharModal();
-carregarReservas();
+    fecharModal();
+    carregarReservas();
 }
 
 // -------------------------------------------------------------
@@ -1520,12 +1524,6 @@ if (btnEnviarCalendarioEl) {
 }
 
 // -------------------------------------------------------------
-// EVENTOS PARA ATUALIZAR COMISSÃO AUTOMÁTICA
-// -------------------------------------------------------------
-document.getElementById("totalBruto").addEventListener("input", atualizarComissaoEuro);
-document.getElementById("comissaoPercentagem").addEventListener("input", atualizarComissaoEuro);
-
-// -------------------------------------------------------------
 // MOSTRAR / ESCONDER CAMPOS DE PAGAMENTO PARCIAL
 // -------------------------------------------------------------
 document.getElementById("statusPagamento").addEventListener("change", () => {
@@ -1538,18 +1536,27 @@ document.getElementById("statusPagamento").addEventListener("change", () => {
 // -------------------------------------------------------------
 // AUTOMÁTICO DO VALOR EM FALTA (PAGAMENTO PARCIAL)
 // -------------------------------------------------------------
-
 document.getElementById("valorPagoParcial").addEventListener("input", () => {
     const total = Number(document.getElementById("totalBruto").value || 0);
-    const comissao = Number(document.getElementById("comissao").value || 0);
-    const pago = Number(document.getElementById("valorPagoParcial").value || 0);
+    const pagoParcial = Number(document.getElementById("valorPagoParcial").value || 0);
+    const pagoFinal = Number(document.getElementById("valorPagoFinal").value || 0);
 
-    const falta = total - pago;
-    document.getElementById("valorEmFalta").value = falta.toFixed(2);
+    const totalPago = pagoParcial + pagoFinal;
+    const falta = total - totalPago;
+
+    document.getElementById("valorEmFalta").value = falta > 0 ? falta.toFixed(2) : "0.00";
 });
 
+document.getElementById("valorPagoFinal").addEventListener("input", () => {
+    const total = Number(document.getElementById("totalBruto").value || 0);
+    const pagoParcial = Number(document.getElementById("valorPagoParcial").value || 0);
+    const pagoFinal = Number(document.getElementById("valorPagoFinal").value || 0);
 
-console.log("JS DA LISTAGEM — FICHEIRO COMPLETO");
+    const totalPago = pagoParcial + pagoFinal;
+    const falta = total - totalPago;
+
+    document.getElementById("valorEmFalta").value = falta > 0 ? falta.toFixed(2) : "0.00";
+});
 
 // -------------------------------------------------------------
 // 20) APAGAR RESERVAS FANTASMA DO CALENDÁRIO
