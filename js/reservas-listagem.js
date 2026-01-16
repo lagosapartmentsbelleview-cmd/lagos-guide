@@ -876,22 +876,6 @@ if (apartamentos.length < quartos) {
 }
 
 // -------------------------------------------------------------
-// PAGAMENTO PARCIAL
-// -------------------------------------------------------------
-
-let valorPagoParcial = null;
-let dataPagamentoParcial = null;
-let valorEmFalta = null;
-let dataVencimento = null;
-
-if (statusPagamento === "parcial") {
-    valorPagoParcial = Number(document.getElementById("valorPagoParcial").value || 0);
-    dataPagamentoParcial = document.getElementById("dataPagamentoParcial").value || null;
-    valorEmFalta = Number(document.getElementById("valorEmFalta").value || 0);
-    dataVencimento = document.getElementById("dataVencimento").value || null;
-}
-
-// -------------------------------------------------------------
 // CALCULAR VALOR PAGO TOTAL (1ª + 2ª prestação)
 // -------------------------------------------------------------
 const valorPagoParcialNumero = Number(valorPagoParcial || 0);
