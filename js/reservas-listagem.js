@@ -789,7 +789,6 @@ for (const ap of apartamentos) {
 // -------------------------------------------------------------
 // PAGAMENTO PARCIAL
 // -------------------------------------------------------------
-const statusPagamento = document.getElementById("statusPagamento").value;
 
 let valorPagoParcial = null;
 let dataPagamentoParcial = null;
