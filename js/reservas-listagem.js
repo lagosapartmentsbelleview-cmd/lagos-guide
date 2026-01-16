@@ -641,20 +641,30 @@ function preencherFormularioReserva(r) {
     // PAGAMENTO PARCIAL — preencher ao editar
     // -------------------------------------------------------------
     if (r.statusPagamento === "parcial") {
-        document.getElementById("pagamentoParcialCampos").style.display = "block";
+    document.getElementById("pagamentoParcialCampos").style.display = "block";
 
-        document.getElementById("valorPagoParcial").value = r.valorPagoParcial ?? "";
-        document.getElementById("dataPagamentoParcial").value = r.dataPagamentoParcial ?? "";
-        document.getElementById("valorEmFalta").value = r.valorEmFalta ?? "";
-        document.getElementById("dataVencimento").value = r.dataVencimento ?? "";
-    } else {
-        document.getElementById("pagamentoParcialCampos").style.display = "none";
+    document.getElementById("valorPagoParcial").value = r.valorPagoParcial ?? "";
+    document.getElementById("dataPagamentoParcial").value = r.dataPagamentoParcial ?? "";
+    document.getElementById("valorEmFalta").value = r.valorEmFalta ?? "";
+    document.getElementById("dataVencimento").value = r.dataVencimento ?? "";
 
-        document.getElementById("valorPagoParcial").value = "";
-        document.getElementById("dataPagamentoParcial").value = "";
-        document.getElementById("valorEmFalta").value = "";
-        document.getElementById("dataVencimento").value = "";
-    }
+    // 🔥 NOVOS CAMPOS — preencher ao editar
+    document.getElementById("valorPagoFinal").value = r.valorPagoFinal ?? "";
+    document.getElementById("dataPagamentoFinal").value = r.dataPagamentoFinal ?? "";
+
+} else {
+    document.getElementById("pagamentoParcialCampos").style.display = "none";
+
+    document.getElementById("valorPagoParcial").value = "";
+    document.getElementById("dataPagamentoParcial").value = "";
+    document.getElementById("valorEmFalta").value = "";
+    document.getElementById("dataVencimento").value = "";
+
+    // 🔥 NOVOS CAMPOS — limpar quando não é parcial
+    document.getElementById("valorPagoFinal").value = "";
+    document.getElementById("dataPagamentoFinal").value = "";
+}
+
 }
 
 function atualizarComissaoEuro() {
