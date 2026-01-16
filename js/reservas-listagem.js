@@ -521,6 +521,15 @@ function limparFormularioReserva() {
     document.getElementById("comissao").value = "";
     document.getElementById("berco").value = "false";
     document.getElementById("limpeza").value = "";
+    document.getElementById("pais").value = "pt";
+    document.getElementById("telefone").value = "";
+    document.getElementById("morada").value = "";
+    document.getElementById("comissaoPercentagem").value = "";
+    document.getElementById("metodoPagamento").value = "booking";
+    document.getElementById("motivo").value = "lazer";
+    document.getElementById("dispositivo").value = "telemovel";
+    document.getElementById("estadoReserva").value = "ok";
+
 }
 
 // -------------------------------------------------------------
@@ -540,6 +549,15 @@ function preencherFormularioReserva(r) {
     document.getElementById("origem").value = r.origem || "Manual";
     document.getElementById("bookingId").value = r.bookingId || "";
     document.getElementById("cliente").value = r.cliente || "";
+    document.getElementById("pais").value = r.pais || "pt";
+    document.getElementById("telefone").value = r.telefone || "";
+    document.getElementById("morada").value = r.morada || "";
+    document.getElementById("comissaoPercentagem").value = r.comissaoPercentagem ?? "";
+    document.getElementById("metodoPagamento").value = r.metodoPagamento || "booking";
+    document.getElementById("motivo").value = r.motivo || "lazer";
+    document.getElementById("dispositivo").value = r.dispositivo || "telemovel";
+    document.getElementById("estadoReserva").value = r.estadoReserva || "ok";
+
 
     const quartos = r.quartos || (r.apartamentos ? r.apartamentos.length : 1);
     document.getElementById("quartos").value = quartos;
@@ -600,6 +618,15 @@ async function guardarReserva() {
     const adultos = Number(document.getElementById("adultos").value || 0);
     const criancas = Number(document.getElementById("criancas").value || 0);
     const idadesCriancas = document.getElementById("idadesCriancas").value.trim();
+    const pais = document.getElementById("pais").value;
+    const telefone = document.getElementById("telefone").value.trim();
+    const morada = document.getElementById("morada").value.trim();
+    const comissaoPercentagem = Number(document.getElementById("comissaoPercentagem").value || 0);
+    const metodoPagamento = document.getElementById("metodoPagamento").value;
+    const motivo = document.getElementById("motivo").value;
+    const dispositivo = document.getElementById("dispositivo").value;
+    const estadoReserva = document.getElementById("estadoReserva").value;
+
 
     const totalBruto = Number(document.getElementById("totalBruto").value || 0);
     const comissao = Number(document.getElementById("comissao").value || 0);
@@ -740,6 +767,14 @@ const dados = {
     origem,
     bookingId: bookingId || null,
     cliente,
+    pais,
+    telefone,
+    morada,
+    comissaoPercentagem,
+    metodoPagamento,
+    motivo,
+    dispositivo,
+    estadoReserva,
     quartos,
     apartamentos,
     checkin: normalizarDataParaPt(checkin),
