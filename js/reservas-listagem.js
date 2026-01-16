@@ -1707,8 +1707,7 @@ document.getElementById("btnMarcarPagas").addEventListener("click", async () => 
         if (!r) continue;
 
         const totalBruto = Number(r.totalBruto || 0);
-        const comissao = Number(r.comissao || 0);
-        const valorPago = totalBruto - comissao;
+        const valorPago = Number(r.totalBruto || 0);
 
         await db.collection("reservas").doc(id).update({
             statusPagamento: "total",
@@ -1791,8 +1790,8 @@ document.getElementById("origem").addEventListener("change", () => {
             break;
     }
 
-    document.getElementById("comissaoPercentagem").value = percentagem;
-    atualizarComissaoEuro();
+    document.getElementById("percentagemPagamento").value = percentagem;
+
 });
 
 // -------------------------------------------------------------
