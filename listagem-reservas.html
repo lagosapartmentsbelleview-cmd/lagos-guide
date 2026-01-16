@@ -561,35 +561,42 @@ td button {
     </select>
 </div>
    
-    <table id="tabelaReservas">
+<table id="tabelaReservas">
     <thead id="theadReservas">
-    <tr>
-        <th class="no-sort">
-            <input type="checkbox" id="selectAll">
-        </th>
-        <th data-col="origem">Origem</th>
-        <th data-col="bookingId">Nº Reserva</th>
-        <th data-col="cliente">Hóspede</th>
-        <th data-col="quartos">Quartos</th>
-        <th data-col="apartamentos">Apartamentos</th>
+        <tr>
+            <th class="no-sort">
+                <input type="checkbox" id="selectAll">
+            </th>
 
-        <!-- 🔥 NOVA COLUNA PESSOAS -->
-        <th data-col="pessoas">Pessoas</th>
+            <th data-col="origem">Origem</th>
+            <th data-col="bookingId">Nº Reserva</th>
+            <th data-col="cliente">Hóspede</th>
+            <th data-col="quartos">Quartos</th>
+            <th data-col="apartamentos">Apartamentos</th>
 
-        <th data-col="checkin">Check-in</th>
-        <th data-col="checkout">Check-out</th>
-        <th data-col="noites">Noites</th>
-        <th data-col="totalBruto">Total Bruto (€)</th>
-        <th data-col="comissao">Comissão (€)</th>
-        <th data-col="precoNoite">Valor/Noite (€)</th>
-        <th data-col="berco">Berço</th>
-        <th data-col="limpeza">Limpeza (€)</th>
-        <th class="no-sort">Ações</th>
-    </tr>
-</thead>
+            <!-- Pessoas -->
+            <th data-col="pessoas">Pessoas</th>
 
-        <tbody></tbody>
-    </table>
+            <th data-col="checkin">Check-in</th>
+            <th data-col="checkout">Check-out</th>
+            <th data-col="noites">Noites</th>
+
+            <!-- FINANCEIRO NOVO -->
+            <th data-col="totalBruto">Total Bruto (€)</th>
+            <th data-col="comissaoServico">Comissão Serviço (€)</th>
+            <th data-col="comissaoPagamento">Comissão Pagamento (€)</th>
+            <th data-col="precoNoite">Valor/Noite (€)</th>
+            <th data-col="berco">Berço</th>
+            <th data-col="limpeza">Limpeza (€)</th>
+            <th data-col="liquido">Líquido (€)</th>
+
+            <th class="no-sort">Ações</th>
+        </tr>
+    </thead>
+
+    <tbody></tbody>
+</table>
+
 
     <!-- Modal -->
     <div id="modalReserva" class="modal">
