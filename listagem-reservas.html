@@ -767,6 +767,21 @@ td button {
         <option value="parcial">Pago parcialmente</option>
         <option value="total">Pago totalmente</option>
     </select>
+    <div id="pagamentoParcialCampos" style="display:none;">
+    <label>Valor já pago (€)</label>
+    <input type="number" id="valorPagoParcial" step="0.01">
+
+    <label>Data do pagamento</label>
+    <input type="date" id="dataPagamentoParcial">
+
+    <label>Valor em falta (€)</label>
+    <input type="number" id="valorEmFalta" step="0.01">
+
+    <label>Data de vencimento</label>
+    <input type="date" id="dataVencimento">
+</div>
+
+        
 
     <!-- VALOR PAGO -->
     <label for="valorPago">Valor pago (€):</label>
