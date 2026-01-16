@@ -837,9 +837,10 @@ const dados = {
     berco,
     status,
 
-    // 🔥 CAMPOS NOVOS
-    statusPagamento: String(statusPagamento).trim(),
-    valorPago: Number(valorPago)
+     // 🔥 CAMPOS NOVOS
+    statusPagamento,
+    valorPago: Number(valorPago),
+
     // 🔥 PAGAMENTO PARCIAL
     valorPagoParcial,
     dataPagamentoParcial,
