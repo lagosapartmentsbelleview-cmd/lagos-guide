@@ -102,6 +102,55 @@ function calcularLimpeza(dataStr) {
     return [6, 7, 8, 9].includes(mes) ? 40 : 35;
 }
 
+function obterClassePagamento(reserva) {
+    const hoje = new Date();
+
+    // Garantir que temos estes campos
+    const statusPagamento = reserva.statusPagamento || null;
+    const valorEmFalta = Number(reserva.valorEmFalta || 0);
+    const dataVencimentoStr = reserva.dataVencimento || null;
+
+    let dataVencimento = null;
+    if (dataVencimentoStr) {
+        // Se estiver em formato YYYY-MM-DD
+        dataVencimento = new Date(dataVencimentoStr);
+    }
+
+    // 1) Pago total → verde
+    if (statusPagamento === "total" || valorEmFalta === 0) {
+        return "pago-total"; // verde
+    }
+
+    // 2) Pagamento parcial
+    if (statusPagamento === "parcial") {
+
+        // Se não há data de vencimento → amarelo simples
+        if (!dataVencimento) {
+            return "pago-parcial"; // amarelo
+        }
+
+        const diffMs = dataVencimento.getTime() - hoje.getTime();
+        const diffDias = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+        // Já passou da data → vermelho
+        if (diffDias < 0) {
+            return "pago-atrasado"; // vermelho
+        }
+
+        // Faltam 10 dias ou menos → laranja
+        if (diffDias <= 10) {
+            return "pago-a-vencer"; // laranja
+        }
+
+        // Ainda longe do vencimento → amarelo
+        return "pago-parcial"; // amarelo
+    }
+
+    // 3) Qualquer outro caso → sem classe
+    return "";
+}
+
+
 // -------------------------------------------------------------
 // ORDENAR POR COLUNA (tipo Excel) — COM SETAS NO TEXTO
 // -------------------------------------------------------------
