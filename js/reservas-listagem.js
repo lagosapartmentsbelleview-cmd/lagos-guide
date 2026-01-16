@@ -876,17 +876,6 @@ if (apartamentos.length < quartos) {
 }
 
 // -------------------------------------------------------------
-// CALCULAR VALOR PAGO TOTAL (1ª + 2ª prestação)
-// -------------------------------------------------------------
-const valorPagoParcialNumero = Number(valorPagoParcial || 0);
-const valorPagoFinalNumero = Number(document.getElementById("valorPagoFinal").value || 0);
-
-const valorPagoCalculado = valorPagoParcialNumero + valorPagoFinalNumero;
-
-// Atualizar o campo visual no modal (apenas informativo)
-document.getElementById("valorPago").value = valorPagoCalculado.toFixed(2);
-
-// -------------------------------------------------------------
 // CÁLCULO DAS COMISSÕES E DO LÍQUIDO
 // -------------------------------------------------------------
 const totalBrutoNumero = Number(totalBruto || 0);
