@@ -708,20 +708,20 @@ async function guardarReserva() {
     const pais = document.getElementById("pais").value;
     const telefone = document.getElementById("telefone").value.trim();
     const morada = document.getElementById("morada").value.trim();
-    const comissaoPercentagem = Number(document.getElementById("comissaoPercentagem").value || 0);
+
     const metodoPagamento = document.getElementById("metodoPagamento").value;
     const motivo = document.getElementById("motivo").value;
     const dispositivo = document.getElementById("dispositivo").value;
     const estadoReserva = document.getElementById("estadoReserva").value;
 
-
-    const totalBruto = Number(document.getElementById("totalBruto").value || 0);
-    const comissao = Number(document.getElementById("comissao").value || 0);
+    // -------------------------------------------------------------
+    // VALORES BASE
+    // -------------------------------------------------------------
+    const totalBrutoNumero = Number(document.getElementById("totalBruto").value || 0);
     const berco = document.getElementById("berco").value === "true";
 
     const noites = calcularNoites(checkin, checkout);
-    const precoNoite = noites > 0 ? totalBruto / noites : 0;
-    const liquido = totalBruto - comissao;
+    const precoNoite = noites > 0 ? totalBrutoNumero / noites : 0;
 
     let limpeza = document.getElementById("limpeza").value.trim();
     if (limpeza === "" || isNaN(limpeza)) {
@@ -730,98 +730,134 @@ async function guardarReserva() {
         limpeza = Number(limpeza);
     }
 
-    const totalLiquidoFinal = liquido - limpeza;
+    // -------------------------------------------------------------
+    // NOVAS COMISSÕES
+    // -------------------------------------------------------------
+    const comissaoServico = Number(document.getElementById("comissaoServico").value || 0);
+    const percentagemPagamento = Number(document.getElementById("percentagemPagamento").value || 0);
+    const comissaoPagamento = totalBrutoNumero * (percentagemPagamento / 100);
 
-    // 🔥 CAMPOS DE PAGAMENTO
-const statusPagamento = document.getElementById("statusPagamento").value;
-const valorPago = Number(document.getElementById("valorPago").value || 0);
+    const liquido = totalBrutoNumero - comissaoServico - comissaoPagamento;
 
+    // -------------------------------------------------------------
+    // PAGAMENTO PARCIAL
+    // -------------------------------------------------------------
+    let valorPagoParcial = null;
+    let dataPagamentoParcial = null;
+    let valorEmFalta = null;
+    let dataVencimento = null;
 
-// ---------------------------------------------------------
-// ALOCAÇÃO INTELIGENTE + VALIDAÇÃO MANUAL
-// ---------------------------------------------------------
-let apartamentos = [];
-let status = "alocado";
+    const statusPagamento = document.getElementById("statusPagamento").value;
 
-const hoje = new Date();
-const dtCheckin = parseDataPt(checkin);
-const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
-const diasParaCheckin = dtCheckin ? diasEntre(new Date(), dtCheckin) : null;
-
-// Remover a própria reserva da lista de validação
-const reservasSemAtual = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
-
-// ---------------------------------------------------------
-// 1) RESERVA MANUAL (utilizador escreveu apartamentos)
-// ---------------------------------------------------------
-if (apartamentosDigitados.length > 0) {
-
-    apartamentos = apartamentosDigitados;
-
-    // Validar número de apartamentos
-    if (apartamentos.length < quartos) {
-        alert(
-            `Foram indicados ${apartamentos.length} apartamento(s), ` +
-            `mas a reserva exige ${quartos}.`
-        );
-        return;
+    if (statusPagamento === "parcial") {
+        valorPagoParcial = Number(document.getElementById("valorPagoParcial").value || 0);
+        dataPagamentoParcial = document.getElementById("dataPagamentoParcial").value || null;
+        valorEmFalta = Number(document.getElementById("valorEmFalta").value || 0);
+        dataVencimento = document.getElementById("dataVencimento").value || null;
     }
 
-    // Validar conflitos reais (ignora a própria reserva)
-    for (const ap of apartamentos) {
-        const conflito = temConflitoNoApartamento(
-            { checkin, checkout },
-            ap,
-            reservasSemAtual
-        );
+    // -------------------------------------------------------------
+    // CALCULAR VALOR PAGO TOTAL (1ª + 2ª prestação)
+    // -------------------------------------------------------------
+    const valorPagoParcialNumero = Number(valorPagoParcial || 0);
+    const valorPagoFinalNumero = Number(document.getElementById("valorPagoFinal").value || 0);
 
-        if (conflito) {
+    const valorPagoCalculado = valorPagoParcialNumero + valorPagoFinalNumero;
 
-            const reservaQueOcupa = reservasSemAtual.find(r =>
-                r.apartamentos?.includes(ap) &&
-                datasSobrepoem(r.checkin, r.checkout, checkin, checkout)
+    document.getElementById("valorPago").value = valorPagoCalculado.toFixed(2);
+
+    // -------------------------------------------------------------
+    // RECALCULAR VALOR EM FALTA
+    // -------------------------------------------------------------
+    valorEmFalta = totalBrutoNumero - valorPagoCalculado;
+
+    if (valorEmFalta <= 0) {
+        valorEmFalta = 0;
+        statusPagamento = "total";
+    }
+
+    // ---------------------------------------------------------
+    // ALOCAÇÃO INTELIGENTE + VALIDAÇÃO MANUAL
+    // ---------------------------------------------------------
+    let apartamentos = [];
+    let status = "alocado";
+
+    const hoje = new Date();
+    const dtCheckin = parseDataPt(checkin);
+    const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
+    const diasParaCheckin = dtCheckin ? diasEntre(new Date(), dtCheckin) : null;
+
+    const reservasSemAtual = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
+
+    // ---------------------------------------------------------
+    // 1) RESERVA MANUAL
+    // ---------------------------------------------------------
+    if (apartamentosDigitados.length > 0) {
+
+        apartamentos = apartamentosDigitados;
+
+        if (apartamentos.length < quartos) {
+            alert(
+                `Foram indicados ${apartamentos.length} apartamento(s), ` +
+                `mas a reserva exige ${quartos}.`
             );
-
-            if (reservaQueOcupa) {
-
-                const dtCheckinAtual = parseDataPt(checkin);
-                const diasParaCheckinAtual = diasEntre(new Date(), dtCheckinAtual);
-
-                const dtCheckinOutra = parseDataPt(reservaQueOcupa.checkin);
-                const diasParaCheckinOutra = diasEntre(new Date(), dtCheckinOutra);
-
-                const reservaAtualJaComecou = dtCheckinAtual <= new Date();
-                const outraJaComecou = dtCheckinOutra <= new Date();
-
-                let mensagem = `O apartamento ${ap} está ocupado pela reserva de ${reservaQueOcupa.cliente}.`;
-
-                if (diasParaCheckinAtual <= 5 || diasParaCheckinOutra <= 5) {
-                    mensagem += `\n\n⚠ Atenção: falta(m) menos de 5 dia(s) para o check-in de uma das reservas.`;
-                }
-
-                if (reservaAtualJaComecou || outraJaComecou) {
-                    mensagem += `\n\n⚠ Uma das reservas já começou. Só avance se for mesmo necessário (ex.: avaria).`;
-                }
-
-                mensagem += `\n\nDeseja avançar com a troca manual?`;
-
-                const confirmarTroca = confirm(mensagem);
-
-                if (confirmarTroca) {
-                    continue;
-                }
-            }
-
-            alert(`O apartamento ${ap} já está ocupado nestas datas.`);
             return;
         }
+
+        for (const ap of apartamentos) {
+            const conflito = temConflitoNoApartamento(
+                { checkin, checkout },
+                ap,
+                reservasSemAtual
+            );
+
+            if (conflito) {
+
+                const reservaQueOcupa = reservasSemAtual.find(r =>
+                    r.apartamentos?.includes(ap) &&
+                    datasSobrepoem(r.checkin, r.checkout, checkin, checkout)
+                );
+
+                if (reservaQueOcupa) {
+
+                    const dtCheckinAtual = parseDataPt(checkin);
+                    const diasParaCheckinAtual = diasEntre(new Date(), dtCheckinAtual);
+
+                    const dtCheckinOutra = parseDataPt(reservaQueOcupa.checkin);
+                    const diasParaCheckinOutra = diasEntre(new Date(), dtCheckinOutra);
+
+                    const reservaAtualJaComecou = dtCheckinAtual <= new Date();
+                    const outraJaComecou = dtCheckinOutra <= new Date();
+
+                    let mensagem = `O apartamento ${ap} está ocupado pela reserva de ${reservaQueOcupa.cliente}.`;
+
+                    if (diasParaCheckinAtual <= 5 || diasParaCheckinOutra <= 5) {
+                        mensagem += `\n\n⚠ Atenção: falta(m) menos de 5 dia(s) para o check-in de uma das reservas.`;
+                    }
+
+                    if (reservaAtualJaComecou || outraJaComecou) {
+                        mensagem += `\n\n⚠ Uma das reservas já começou. Só avance se for mesmo necessário (ex.: avaria).`;
+                    }
+
+                    mensagem += `\n\nDeseja avançar com a troca manual?`;
+
+                    const confirmarTroca = confirm(mensagem);
+
+                    if (confirmarTroca) {
+                        continue;
+                    }
+                }
+
+                alert(`O apartamento ${ap} já está ocupado nestas datas.`);
+                return;
+            }
+        }
     }
-}   // ← ESTA CHAVE ESTAVA NO SÍTIO ERRADO E AGORA ESTÁ CORRETA
 
+    // ---------------------------------------------------------
+    // 2) RESERVA AUTOMÁTICA
+    // ---------------------------------------------------------
 
-// ---------------------------------------------------------
-// 2) RESERVA AUTOMÁTICA (alocação inteligente)
-// ---------------------------------------------------------
 apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasSemAtual);
 
 // Nenhum apartamento disponível
