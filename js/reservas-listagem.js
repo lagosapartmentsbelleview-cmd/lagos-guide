@@ -768,6 +768,22 @@ for (const ap of apartamentos) {
         return;
     }
 }
+// -------------------------------------------------------------
+// PAGAMENTO PARCIAL
+// -------------------------------------------------------------
+const statusPagamento = document.getElementById("statusPagamento").value;
+
+let valorPagoParcial = null;
+let dataPagamentoParcial = null;
+let valorEmFalta = null;
+let dataVencimento = null;
+
+if (statusPagamento === "parcial") {
+    valorPagoParcial = Number(document.getElementById("valorPagoParcial").value || 0);
+    dataPagamentoParcial = document.getElementById("dataPagamentoParcial").value || null;
+    valorEmFalta = Number(document.getElementById("valorEmFalta").value || 0);
+    dataVencimento = document.getElementById("dataVencimento").value || null;
+}
 
 
 // ---------------------------------------------------------
@@ -806,6 +822,11 @@ const dados = {
     // 🔥 CAMPOS NOVOS
     statusPagamento: String(statusPagamento).trim(),
     valorPago: Number(valorPago)
+    // 🔥 PAGAMENTO PARCIAL
+    valorPagoParcial,
+    dataPagamentoParcial,
+    valorEmFalta,
+    dataVencimento
 
 };
 
