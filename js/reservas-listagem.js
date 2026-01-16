@@ -1613,6 +1613,15 @@ document.getElementById("origem").addEventListener("change", () => {
     atualizarComissaoEuro();
 });
 
+// -------------------------------------------------------------
+// MOSTRAR / ESCONDER CAMPOS DE PAGAMENTO PARCIAL
+// -------------------------------------------------------------
+document.getElementById("statusPagamento").addEventListener("change", () => {
+    const status = document.getElementById("statusPagamento").value;
+    const campos = document.getElementById("pagamentoParcialCampos");
+
+    campos.style.display = status === "parcial" ? "block" : "none";
+});
 
 
 
