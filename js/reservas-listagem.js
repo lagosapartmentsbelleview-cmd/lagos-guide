@@ -901,10 +901,14 @@ const dados = {
     valorPago: Number(valorPago),
 
     // 🔥 PAGAMENTO PARCIAL
-    valorPagoParcial,
-    dataPagamentoParcial,
-    valorEmFalta,
-    dataVencimento
+    valorPagoParcial: valorPagoParcial || 0,
+    dataPagamentoParcial: dataPagamentoParcial || null,
+    valorEmFalta: valorEmFalta || 0,
+    dataVencimento: dataVencimento || null,
+
+    // 🔥 NOVOS CAMPOS DA 2ª PRESTAÇÃO
+    valorPagoFinal: Number(document.getElementById("valorPagoFinal").value || 0),
+    dataPagamentoFinal: document.getElementById("dataPagamentoFinal").value || null,
 
 };
 
