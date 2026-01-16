@@ -589,6 +589,16 @@ function preencherFormularioReserva(r) {
     document.getElementById("valorPago").value = r.valorPago ?? 0;
 
 }
+
+function atualizarComissaoEuro() {
+    const total = Number(document.getElementById("totalBruto").value || 0);
+    const percent = Number(document.getElementById("comissaoPercentagem").value || 0);
+
+    const valor = total * percent;
+
+    document.getElementById("comissao").value = valor.toFixed(2);
+}
+
 // -------------------------------------------------------------
 // 11) GUARDAR RESERVA (NOVA OU EDITADA)
 // -------------------------------------------------------------
@@ -1354,9 +1364,15 @@ if (btnEnviarCalendarioEl) {
             console.log("Reserva enviada para calendário:", id);
         }
 
-        alert("Reservas enviadas para o calendário.");
+           alert("Reservas enviadas para o calendário.");
     });
 }
+
+// -------------------------------------------------------------
+// EVENTOS PARA ATUALIZAR COMISSÃO AUTOMÁTICA
+// -------------------------------------------------------------
+document.getElementById("totalBruto").addEventListener("input", atualizarComissaoEuro);
+document.getElementById("comissaoPercentagem").addEventListener("input", atualizarComissaoEuro);
 
 console.log("JS DA LISTAGEM — FICHEIRO COMPLETO");
 
@@ -1559,6 +1575,44 @@ async function confirmarApagarDesaparecidas() {
     carregarReservas();
     alert("Reservas apagadas.");
 }
+
+document.getElementById("origem").addEventListener("change", () => {
+    const origem = document.getElementById("origem").value;
+
+    // Percentagem automática
+    let percentagem = 0;
+
+    switch (origem.toLowerCase()) {
+        case "booking":
+            percentagem = 0.014;
+            break;
+        case "airbnb":
+            percentagem = 0.03;
+            break;
+        case "vrbo":
+            percentagem = 0.03;
+            break;
+        case "expedia":
+            percentagem = 0.02;
+            break;
+        case "agoda":
+            percentagem = 0.02;
+            break;
+        case "hotels":
+            percentagem = 0.02;
+            break;
+        case "trip":
+            percentagem = 0.02;
+            break;
+        case "particular":
+            percentagem = 0;
+            break;
+    }
+
+    document.getElementById("comissaoPercentagem").value = percentagem;
+    atualizarComissaoEuro();
+});
+
 
 
 
