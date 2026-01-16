@@ -452,13 +452,6 @@ td button {
     vertical-align: middle;
 }
 
-#tabelaReservas thead th {
-    position: sticky;
-    top: 0;
-    background: white;
-    z-index: 5;
-}
-       
 /* ========================================================= */
 /*                 TABELA COMPACTA + STICKY HEADER           */
 /* ========================================================= */
@@ -471,23 +464,20 @@ td button {
     z-index: 5;
 }
 
-/* Reduzir largura das colunas mais largas */
+/* Reduzir um pouco, mas sem exageros */
 #tabelaReservas th[data-col="cliente"] {
-    max-width: 140px;
-    width: 140px;
+    max-width: 180px;
 }
 
 #tabelaReservas th[data-col="apartamentos"] {
-    max-width: 90px;
-    width: 90px;
+    max-width: 70px;
 }
 
 #tabelaReservas th[data-col="pessoas"] {
-    max-width: 80px;
-    width: 80px;
+    max-width: 90px;
 }
 
-/* Colunas financeiras mais compactas */
+/* Colunas financeiras mais estreitas, mas sem quebrar layout */
 #tabelaReservas th[data-col="precoNoite"],
 #tabelaReservas th[data-col="totalBruto"],
 #tabelaReservas th[data-col="comissaoServico"],
@@ -495,27 +485,24 @@ td button {
 #tabelaReservas th[data-col="comissaoTotal"],
 #tabelaReservas th[data-col="limpeza"],
 #tabelaReservas th[data-col="liquido"] {
-    max-width: 90px;
-    width: 90px;
+    max-width: 100px;
     text-align: right;
 }
 
-/* Coluna Ações mais estreita */
+/* Coluna Ações */
 #tabelaReservas th.no-sort {
-    width: 60px;
-    max-width: 60px;
+    width: 70px;
 }
 
-/* Evitar quebras de linha */
+/* Permitir quebra de linha para evitar scroll */
 #tabelaReservas td {
-    white-space: nowrap;
+    white-space: normal;
 }
 
-/* Alinhar números à direita nas colunas financeiras */
+/* Alinhar números à direita */
 #tabelaReservas td:nth-child(n+11):nth-child(-n+18) {
     text-align: right;
 }
-
 
 </style>
 
