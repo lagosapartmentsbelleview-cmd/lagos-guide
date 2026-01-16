@@ -613,6 +613,66 @@ td button {
     <label>Cliente</label>
     <input type="text" id="cliente">
 
+    <label>País</label>
+<select id="pais">
+    <option value="ad">Andorra</option>
+    <option value="al">Albânia</option>
+    <option value="am">Arménia</option>
+    <option value="ar">Argentina</option>
+    <option value="at">Áustria</option>
+    <option value="au">Austrália</option>
+    <option value="az">Azerbaijão</option>
+    <option value="be">Bélgica</option>
+    <option value="bg">Bulgária</option>
+    <option value="br">Brasil</option>
+    <option value="by">Bielorrússia</option>
+    <option value="ca">Canadá</option>
+    <option value="ch">Suíça</option>
+    <option value="cy">Chipre</option>
+    <option value="cz">Chéquia</option>
+    <option value="de">Alemanha</option>
+    <option value="dk">Dinamarca</option>
+    <option value="ee">Estónia</option>
+    <option value="es">Espanha</option>
+    <option value="fi">Finlândia</option>
+    <option value="fo">Ilhas Faroé</option>
+    <option value="fr">França</option>
+    <option value="gb">Reino Unido</option>
+    <option value="ge">Geórgia</option>
+    <option value="gr">Grécia</option>
+    <option value="hr">Croácia</option>
+    <option value="hu">Hungria</option>
+    <option value="ie">Irlanda</option>
+    <option value="im">Ilha de Man</option>
+    <option value="is">Islândia</option>
+    <option value="it">Itália</option>
+    <option value="kz">Cazaquistão</option>
+    <option value="kg">Quirguistão</option>
+    <option value="lt">Lituânia</option>
+    <option value="lu">Luxemburgo</option>
+    <option value="lv">Letónia</option>
+    <option value="ma">Marrocos</option>
+    <option value="md">Moldávia</option>
+    <option value="me">Montenegro</option>
+    <option value="mk">Macedónia do Norte</option>
+    <option value="mt">Malta</option>
+    <option value="nl">Holanda</option>
+    <option value="no">Noruega</option>
+    <option value="pl">Polónia</option>
+    <option value="pt" selected>Portugal</option>
+    <option value="ro">Roménia</option>
+    <option value="rs">Sérvia</option>
+    <option value="se">Suécia</option>
+    <option value="si">Eslovénia</option>
+    <option value="sk">Eslováquia</option>
+    <option value="tm">Turquemenistão</option>
+    <option value="tr">Turquia</option>
+    <option value="tj">Tajiquistão</option>
+    <option value="ua">Ucrânia</option>
+    <option value="us">Estados Unidos</option>
+    <option value="uz">Uzbequistão</option>
+</select>
+
     <label>Hóspedes</label>
     <input type="number" id="hospedes">
 
@@ -624,6 +684,13 @@ td button {
 
     <label>Idades das Crianças</label>
     <input type="text" id="idadesCriancas">
+
+    <label>Telefone</label>
+    <input type="text" id="telefone">
+
+    <label>Morada</label>
+    <input type="text" id="morada">
+
 
     <!-- SECÇÃO: Alojamento -->
     <div class="modal-section-title">Alojamento</div>
@@ -650,11 +717,43 @@ td button {
     <label>Total Bruto (€)</label>
     <input type="number" id="totalBruto">
 
+    <label>Comissão (%)</label>
+    <input type="number" id="comissaoPercentagem" step="0.01">
+
     <label>Comissão (€)</label>
-    <input type="number" id="comissao">
+    <input type="number" id="comissao" step="0.01">
 
     <label>Limpeza (€)</label>
     <input type="number" id="limpeza">
+
+    <label>Método de Pagamento</label>
+    <select id="metodoPagamento">
+    <option value="booking">Pagamento via Booking</option>
+    <option value="cartao">Cartão</option>
+    <option value="transferencia">Transferência</option>
+    <option value="dinheiro">Dinheiro</option>
+    </select>
+
+    <label>Motivo da Viagem</label>
+    <select id="motivo">
+    <option value="lazer">Lazer</option>
+    <option value="trabalho">Trabalho</option>
+    <option value="outro">Outro</option>
+    </select>
+
+    <label>Dispositivo</label>
+    <select id="dispositivo">
+    <option value="telemovel">Telemóvel</option>
+    <option value="computador">Computador</option>
+    <option value="tablet">Tablet</option>
+    </select>
+
+    <label>Estado da Reserva</label>
+    <select id="estadoReserva">
+    <option value="ok">OK</option>
+    <option value="pendente">Pendente</option>
+    <option value="cancelada">Cancelada</option>
+    </select>
 
     <label>Berço</label>
     <select id="berco">
