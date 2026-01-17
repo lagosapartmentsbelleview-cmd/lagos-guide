@@ -1,0 +1,236 @@
+/* -----------------------------------------------------------
+   LAYOUT PRINCIPAL DA PÁGINA DE RESERVAS
+----------------------------------------------------------- */
+#topoReservas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+#topoReservas h1 {
+    margin: 0;
+}
+
+/* -----------------------------------------------------------
+   FILTROS AVANÇADOS
+----------------------------------------------------------- */
+#filtrosWrapper {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.filtros-linha {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.filtro {
+    flex: 1;
+    min-width: 180px;
+}
+
+.filtro label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.filtro input,
+.filtro select {
+    width: 100%;
+}
+
+/* Botão limpar filtros */
+#btnLimparFiltros {
+    background: #9e9e9e;
+    color: white;
+}
+#btnLimparFiltros:hover {
+    background: #7e7e7e;
+}
+
+/* -----------------------------------------------------------
+   TABELA DE RESERVAS — ESTILO PREMIUM
+----------------------------------------------------------- */
+#tabelaReservas {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+/* Cabeçalho sticky */
+#tabelaReservas thead th {
+    position: sticky;
+    top: 0;
+    background: #f5f7fa;
+    z-index: 5;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #444;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* Linhas horizontais suaves */
+#tabelaReservas tbody tr {
+    border-bottom: 1px solid #eaeaea;
+}
+
+/* Hover */
+#tabelaReservas tbody tr:hover {
+    background: #f9fbff;
+}
+
+/* Células */
+#tabelaReservas td {
+    padding: 8px 10px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/* Colunas importantes destacadas */
+#tabelaReservas td:nth-child(4),   /* Cliente */
+#tabelaReservas td:nth-child(8),   /* Check-in */
+#tabelaReservas td:nth-child(9) {  /* Check-out */
+    font-weight: 600;
+    color: #222;
+}
+
+/* Checkbox */
+.selectReserva {
+    transform: scale(1.2);
+}
+
+/* -----------------------------------------------------------
+   BADGES DE ORIGEM
+----------------------------------------------------------- */
+.origem-badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+}
+
+/* -----------------------------------------------------------
+   ESTADOS DE PAGAMENTO (cores da linha)
+----------------------------------------------------------- */
+.pago-total {
+    background: #e8f5e9 !important;
+}
+.pago-parcial {
+    background: #fff8e1 !important;
+}
+.pago-a-vencer {
+    background: #ffe0b2 !important;
+}
+.pago-atrasado {
+    background: #ffebee !important;
+}
+
+/* -----------------------------------------------------------
+   BOTÕES DE AÇÃO NA TABELA
+----------------------------------------------------------- */
+.btnDetalhe,
+.btnEditar,
+.btnApagar {
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 4px;
+    transition: 0.2s ease;
+}
+
+.btnDetalhe { background: #1976d2; color: white; }
+.btnEditar { background: #ffa726; color: white; }
+.btnApagar { background: #e53935; color: white; }
+
+.btnDetalhe:hover { background: #125a9c; }
+.btnEditar:hover { background: #fb8c00; }
+.btnApagar:hover { background: #c62828; }
+
+/* -----------------------------------------------------------
+   TOOLTIP DE PESSOAS
+----------------------------------------------------------- */
+.pessoas {
+    position: relative;
+}
+
+.pessoas:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    top: 110%;
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: pre-line;
+    z-index: 20;
+    width: max-content;
+    max-width: 250px;
+}
+
+/* -----------------------------------------------------------
+   MODAL DE RESERVA (ESPECÍFICO)
+----------------------------------------------------------- */
+#modalReserva .modal-content {
+    max-width: 750px;
+}
+
+#modalReserva h2 {
+    margin-bottom: 15px;
+}
+
+/* Grid do formulário */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+/* Secções do formulário */
+.form-section {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+/* -----------------------------------------------------------
+   RESPONSIVIDADE
+----------------------------------------------------------- */
+@media (max-width: 768px) {
+
+    #topoReservas {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #tabelaReservas td,
+    #tabelaReservas th {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .btnDetalhe,
+    .btnEditar,
+    .btnApagar {
+        padding: 4px 6px;
+        font-size: 12px;
+    }
+}
