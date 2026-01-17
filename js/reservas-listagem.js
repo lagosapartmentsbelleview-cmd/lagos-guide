@@ -914,7 +914,12 @@ async function guardarReserva() {
         statusPagamento = "total";
     }
 
-    // ---------------------------------------------------------
+// ------------------------------------------------------------- 
+// OBTER COMISSÃO DE SERVIÇO MANUAL (€) 
+// ------------------------------------------------------------- 
+const comissaoServico = parseFloat(document.getElementById("comissaoServico").value) || 0;
+
+// ---------------------------------------------------------
 // CALCULAR COMISSÕES
 // ---------------------------------------------------------
 
@@ -945,10 +950,11 @@ const comissaoTotal = comissaoServico + comissaoExtra;
         morada,
 
         // 🔥 NOVAS COMISSÕES
-        comissaoServico,            // valor em €
-        percentagemPagamento: percentagem, // percentagem final (manual ou automática)
-        comissaoExtra: comissaoExtra,      // comissão de pagamento (€)
-        comissaoTotal: comissaoTotal,      // soma das comissões
+        comissao: comissaoServico,               // comissão de serviço (€)
+        percentagemPagamento: percentagem,       // percentagem final usada
+        comissaoExtra: comissaoExtra,            // comissão de pagamento (€)
+        comissaoTotal: comissaoTotal,            // soma das comissões
+
 
 
         metodoPagamento,
