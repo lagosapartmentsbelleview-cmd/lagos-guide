@@ -915,6 +915,25 @@ async function guardarReserva() {
     }
 
     // ---------------------------------------------------------
+// CALCULAR COMISSÕES
+// ---------------------------------------------------------
+
+// 1. Percentagem manual (campo do formulário)
+let percentagem = parseFloat(percentagemPagamento);
+
+// 2. Se estiver vazio → usar valor automático do config
+if (isNaN(percentagem)) {
+    percentagem = configComissoes.pagamento; 
+}
+
+// 3. Calcular comissão de pagamento (€)
+const comissaoExtra = totalBruto * (percentagem / 100);
+
+// 4. Calcular total de comissão
+const comissaoTotal = comissaoServico + comissaoExtra;
+
+
+    // ---------------------------------------------------------
     // DADOS FINAIS DA RESERVA
     // ---------------------------------------------------------
     const dados = {
@@ -927,8 +946,10 @@ async function guardarReserva() {
 
         // 🔥 NOVAS COMISSÕES
         comissaoServico,            // valor em €
-        percentagemPagamento,       // percentagem (%)
-        comissaoPagamento,          // valor em €
+        percentagemPagamento: percentagem, // percentagem final (manual ou automática)
+        comissaoExtra: comissaoExtra,      // comissão de pagamento (€)
+        comissaoTotal: comissaoTotal,      // soma das comissões
+
 
         metodoPagamento,
         motivo,
