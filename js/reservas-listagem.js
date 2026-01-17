@@ -582,7 +582,6 @@ function limparFormularioReserva() {
 
     // Valores financeiros
     document.getElementById("totalBruto").value = "";
-    document.getElementById("comissaoServico").value = "";
     document.getElementById("percentagemPagamento").value = "";
     document.getElementById("valorPago").value = "";
     document.getElementById("valorPagoParcial").value = "";
@@ -755,15 +754,6 @@ async function guardarReserva() {
     } else {
         limpeza = Number(limpeza);
     }
-
-    // -------------------------------------------------------------
-    // NOVAS COMISSÕES
-    // -------------------------------------------------------------
-    const comissaoServico = Number(document.getElementById("comissaoServico").value || 0);
-    const percentagemPagamento = Number(document.getElementById("percentagemPagamento").value || 0);
-    const comissaoPagamento = totalBrutoNumero * (percentagemPagamento / 100);
-
-    const liquido = totalBrutoNumero - comissaoServico - comissaoPagamento;
 
     // -------------------------------------------------------------
     // PAGAMENTO PARCIAL
