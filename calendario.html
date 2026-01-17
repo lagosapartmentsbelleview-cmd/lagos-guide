@@ -4,20 +4,25 @@
     <meta charset="UTF-8">
     <title>Calendário de Reservas</title>
 
-    <!-- CSS específico do calendário -->
-    <link rel="stylesheet" href="calendario.css">
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="css/base.css">
+
+    <!-- CSS Específico do Calendário -->
+    <link rel="stylesheet" href="css/calendario.css">
 </head>
 
 <body>
 
-    <!-- Botão Voltar à Listagem -->
-    <button id="btnVoltarListagem" class="btn-primario" onclick="window.location.href='listagem-reservas.html'">
-    ← Voltar à Listagem
-    </button>
+<div class="container">
 
+    <!-- Botão Voltar -->
+    <button id="btnVoltarListagem" class="btn btn-secundario" onclick="window.location.href='reservas.html'">
+        ← Voltar à Listagem
+    </button>
 
     <h1>Calendário de Reservas</h1>
 
+    <!-- Navegação do Mês -->
     <div id="navegacaoMes">
         <button id="btnMesAnterior">◀</button>
 
@@ -32,30 +37,28 @@
 
     <h2 id="tituloMes"></h2>
 
+    <!-- Calendário -->
     <div id="calendarioWrapper">
         <table id="tabelaCalendario"></table>
     </div>
 
-    <!-- Firebase core (compat) -->
+</div>
+
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-<!-- Configuração Firebase -->
 <script src="js/firebase-config.js"></script>
 
-<!-- Proteção por login (só funciona se o Firebase já carregou) -->
 <script>
 firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-        window.location.href = "login.html";
-    }
+    if (!user) window.location.href = "login.html";
 });
 </script>
 
-<!-- Lógica do calendário -->
+<!-- JS do Calendário -->
 <script src="js/reservas-calendario.js"></script>
-
 
 </body>
 </html>
