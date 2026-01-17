@@ -234,3 +234,15 @@
         font-size: 12px;
     }
 }
+
+/* -----------------------------------------------------------
+   CARACTERISTICAS DAS BANDEIRAS A COLOCAR DOS PSISES
+----------------------------------------------------------- */
+.flag {
+    width: 20px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+
