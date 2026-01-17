@@ -399,23 +399,25 @@ td button {
 /* ========================================================= */
 
 /* Força os botões a ficarem lado a lado */
+/* Coluna Ações compacta */
 #tabelaReservas td:last-child {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 6px;              /* espaço entre botões */
-    white-space: nowrap;   /* impede quebra de linha */
+    gap: 4px;              /* espaço reduzido */
+    white-space: normal;   /* permite quebrar linha se necessário */
 }
 
-/* Estilo base dos botões */
+/* Botões pequenos */
 #tabelaReservas td:last-child button {
-    padding: 4px 8px;
-    font-size: 16px;       /* tamanho ideal para emojis */
+    padding: 2px 4px;      /* muito mais compacto */
+    font-size: 12px;       /* reduzido */
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
 }
+
 
 /* Detalhe */
 .btnDetalhe {
@@ -505,12 +507,13 @@ td button {
 }
 
 .tabela-wrapper {
-    max-height: 70vh;     /* altura visível da tabela */
-    overflow-y: auto;     /* scroll vertical */
-    overflow-x: auto;     /* scroll horizontal se necessário */
-    position: relative;   /* necessário para sticky */
-    background: white;
+    height: 70vh;        /* altura fixa */
+    overflow-y: auto;    /* scroll interno */
+    overflow-x: auto;
+    position: relative;
+    background: white;   /* fica DENTRO da classe */
 }
+
 
 /* Botões de ação compactos */
 .botao-acao {
@@ -529,6 +532,35 @@ td button {
     margin-right: 2px;
 }
 
+<style>
+
+/* … todo o teu CSS atual … */
+
+/* Cola AQUI no final */
+#tabelaReservas th[data-col="totalBruto"],
+#tabelaReservas th[data-col="comissaoServico"],
+#tabelaReservas th[data-col="comissaoPagamento"],
+#tabelaReservas th[data-col="comissaoTotal"],
+#tabelaReservas th[data-col="precoNoite"],
+#tabelaReservas th[data-col="limpeza"],
+#tabelaReservas th[data-col="liquido"] {
+    width: 90px;
+    max-width: 90px;
+    text-align: right;
+}
+
+#tabelaReservas td[data-col="totalBruto"],
+#tabelaReservas td[data-col="comissaoServico"],
+#tabelaReservas td[data-col="comissaoPagamento"],
+#tabelaReservas td[data-col="comissaoTotal"],
+#tabelaReservas td[data-col="precoNoite"],
+#tabelaReservas td[data-col="limpeza"],
+#tabelaReservas td[data-col="liquido"] {
+    text-align: right;
+    white-space: nowrap;
+}
+
+</style>
 
 
 </style>
