@@ -1,1836 +1,997 @@
-console.log("JS DA LISTAGEM A CORRER — VERSÃO FINAL");
+/******************************************************
+ * 0) ESTADO GLOBAL E CONFIGURAÇÃO INICIAL
+ ******************************************************/
 
-// -------------------------------------------------------------
-// 0) ESTADO GLOBAL
-// -------------------------------------------------------------
-let reservas = [];            // todas as reservas
-let reservasFiltradas = [];   // reservas após filtro
-let reservaAtual = null;
+// Array principal onde todas as reservas serão armazenadas
+let reservas = [];
 
-const APARTAMENTOS_FIXOS = ["2301", "2203", "2204"];
-const DIAS_SEGURANCA_REALOCA = 5;
+// Guarda reservas filtradas (para renderização)
+let reservasFiltradas = [];
 
-// ------------------------------------------------------------- 
-//  FUNÇÃO PARA FORMATAR NOMES (primeira maiúscula) 
-// -------------------------------------------------------------
+// Guarda reservas desaparecidas após importação Excel
+let reservasDesaparecidas = [];
 
-function formatarNome(nome) {
-    if (!nome) return "";
+// Referências globais a elementos do DOM
+let listaReservasEl = null;
+let selectAllEl = null;
 
-    return nome
-        .toLowerCase()
-        .split(" ")
-        .filter(p => p.trim() !== "")
-        .map(p => p.charAt(0).toUpperCase() + p.slice(1))
-        .join(" ");
+// Flags de controlo
+let listenerAtivo = false;   // evita múltiplos listeners Firestore
+let modoEdicao = false;      // controla se modal está a editar ou criar
+let reservaAtual = null;     // reserva selecionada no modal
+
+// Datas úteis
+const hoje = new Date();
+const anoAtual = hoje.getFullYear();
+const mesAtual = hoje.getMonth() + 1;
+
+
+/******************************************************
+ * 1) INICIALIZAÇÃO DA PÁGINA
+ ******************************************************/
+window.addEventListener("load", () => {
+
+    // Capturar elementos essenciais
+    listaReservasEl = document.getElementById("listaReservas");
+    selectAllEl = document.getElementById("selectAll");
+
+    // Preencher selects de ano/mês dos filtros
+    preencherFiltrosAnoMes();
+
+    // Ligar eventos dos filtros
+    ligarEventosFiltros();
+
+    // Ligar eventos dos botões principais
+    ligarEventosPrincipais();
+
+    // Ligar eventos do modal
+    ligarEventosModal();
+
+    // Carregar reservas do Firestore
+    carregarReservas();
+
+    console.log("✔ Sistema de reservas inicializado");
+});
+
+
+/******************************************************
+ * 2) HELPERS BASE (FUNÇÕES UTILITÁRIAS)
+ ******************************************************/
+
+// Normaliza strings para comparação (remove acentos, espaços, lowercase)
+function normalizar(str) {
+    if (!str) return "";
+    return str
+        .toString()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim()
+        .toLowerCase();
 }
 
-// -------------------------------------------------------------
-// 1) HELPERS DE DATAS
-// -------------------------------------------------------------
-function parseDataPt(str) {
+// Converte "dd/mm/yyyy" ou "yyyy-mm-dd" para Date
+function parseData(str) {
     if (!str) return null;
 
-    // yyyy-mm-dd (input type="date")
     if (str.includes("-")) {
         const [a, m, d] = str.split("-").map(Number);
         return new Date(a, m - 1, d);
     }
 
-    // dd/mm/yyyy
     if (str.includes("/")) {
         const [d, m, a] = str.split("/").map(Number);
         return new Date(a, m - 1, d);
     }
 
-    // Caso venha algo inesperado
     return null;
 }
 
-function dataPtParaIso(str) {
-    if (!str) return "";
-    const [d, m, a] = str.split("/");
-    return `${a}-${m}-${d}`;
+// Formata Date → "dd/mm/yyyy"
+function formatarData(date) {
+    if (!(date instanceof Date)) return "";
+    return date.toLocaleDateString("pt-PT");
 }
 
-function normalizarDataParaPt(str) {
-    if (!str) return "";
-    const partes = str.split("-");
-    if (partes.length !== 3) return str;
-    return `${partes[2]}/${partes[1]}/${partes[0]}`;
-}
-
-function diasEntre(hoje, data) {
-    const h = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-    const d = new Date(data.getFullYear(), data.getMonth(), data.getDate());
-    return (d - h) / (1000 * 60 * 60 * 24);
-}
-
+// Calcula número de noites entre check-in e check-out
 function calcularNoites(checkin, checkout) {
-    const ini = parseDataPt(checkin);
-    const fim = parseDataPt(checkout);
-    if (!ini || !fim) return 0;
+    const d1 = parseData(checkin);
+    const d2 = parseData(checkout);
+    if (!d1 || !d2) return 0;
 
-    ini.setHours(0, 0, 0, 0);
-    fim.setHours(0, 0, 0, 0);
-
-    const diff = fim - ini;
-    return diff > 0 ? diff / (1000 * 60 * 60 * 24) : 0;
+    const diff = d2 - d1;
+    return Math.max(1, Math.round(diff / (1000 * 60 * 60 * 24)));
 }
 
-function datasSobrepoem(checkin1, checkout1, checkin2, checkout2) {
-    const c1 = parseDataPt(checkin1);
-    const o1 = parseDataPt(checkout1);
-    const c2 = parseDataPt(checkin2);
-    const o2 = parseDataPt(checkout2);
-
-    // Sobrepõem se uma começa antes da outra terminar
-    return c1 < o2 && c2 < o1;
+// Soma valores numéricos com segurança
+function toNumber(v) {
+    if (!v) return 0;
+    return Number(v.toString().replace(",", ".").replace("€", "").trim()) || 0;
 }
 
+// Gera ID único local (usado antes de enviar ao Firestore)
+function gerarIdLocal() {
+    return "local_" + Math.random().toString(36).substring(2, 10);
+}
+/******************************************************
+ * 3) HELPERS DE DATAS, VALORES E COMISSÕES
+ ******************************************************/
 
-// -------------------------------------------------------------
-// FUNÇÃO ÚNICA E CORRETA PARA LIMPEZA
-// Aceita "yyyy-mm-dd" (inputs) e "dd/mm/yyyy" (Firestore/Excel)
-// Regra: meses 6,7,8,9 → 40€ | resto → 35€
-// -------------------------------------------------------------
-function calcularLimpeza(dataStr) {
-    const data = parseDataPt(dataStr);
-    if (!data) return 35;
-
-    const mes = data.getMonth() + 1; // 1–12
-    return [6, 7, 8, 9].includes(mes) ? 40 : 35;
+/* ----------------------------------------------------
+   Normaliza origem (Booking, Airbnb, etc.)
+---------------------------------------------------- */
+function normalizarOrigem(origem) {
+    if (!origem) return "manual";
+    return origem.toString().trim();
 }
 
-function obterClassePagamento(reserva) {
-    const hoje = new Date();
-
-    // Garantir que temos estes campos
-    const statusPagamento = reserva.statusPagamento || null;
-    const valorEmFalta = Number(reserva.valorEmFalta || 0);
-    const dataVencimentoStr = reserva.dataVencimento || null;
-
-    let dataVencimento = null;
-    if (dataVencimentoStr) {
-        // Se estiver em formato YYYY-MM-DD
-        dataVencimento = new Date(dataVencimentoStr);
-    }
-
-    // 1) Pago total → verde
-    if (statusPagamento === "total" || valorEmFalta === 0) {
-        return "pago-total"; // verde
-    }
-
-    // 2) Pagamento parcial
-    if (statusPagamento === "parcial") {
-
-        // Se não há data de vencimento → amarelo simples
-        if (!dataVencimento) {
-            return "pago-parcial"; // amarelo
-        }
-
-        const diffMs = dataVencimento.getTime() - hoje.getTime();
-        const diffDias = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-
-        // Já passou da data → vermelho
-        if (diffDias < 0) {
-            return "pago-atrasado"; // vermelho
-        }
-
-        // Faltam 10 dias ou menos → laranja
-        if (diffDias <= 10) {
-            return "pago-a-vencer"; // laranja
-        }
-
-        // Ainda longe do vencimento → amarelo
-        return "pago-parcial"; // amarelo
-    }
-
-    // 3) Qualquer outro caso → sem classe
-    return "";
+/* ----------------------------------------------------
+   Converte string para número seguro
+---------------------------------------------------- */
+function numeroSeguro(v) {
+    if (!v) return 0;
+    return Number(v.toString().replace(",", ".").replace("€", "").trim()) || 0;
 }
 
-
-// -------------------------------------------------------------
-// ORDENAR POR COLUNA (tipo Excel) — COM SETAS NO TEXTO
-// -------------------------------------------------------------
-let ordemAtual = {}; // guarda asc/desc por coluna
-
-// Guardar o texto original de cada th
-const thsComColuna = document.querySelectorAll("#theadReservas th[data-col]");
-thsComColuna.forEach(th => {
-    th.dataset.labelOriginal = th.textContent.trim();
-});
-
-document.querySelector("#theadReservas").addEventListener("click", (e) => {
-    const th = e.target.closest("th");
-
-    // Ignorar colunas sem data-col
-    if (!th || !th.dataset.col) return;
-
-    const coluna = th.dataset.col;
-
-    // Alternar ordem
-    ordemAtual[coluna] = ordemAtual[coluna] === "asc" ? "desc" : "asc";
-
-    // Limpar texto de todos os th
-    thsComColuna.forEach(el => {
-        el.textContent = el.dataset.labelOriginal;
-    });
-
-    // Adicionar seta ao th clicado
-    const seta = ordemAtual[coluna] === "asc" ? " ▲" : " ▼";
-    th.textContent = th.dataset.labelOriginal + seta;
-
-    // Ordenar e redesenhar
-    ordenarPorColuna(coluna, ordemAtual[coluna]);
-});
-
-function ordenarPorColuna(coluna, ordem) {
-
-    let lista = reservasFiltradas.length > 0 
-        ? [...reservasFiltradas] 
-        : [...reservas];
-
-    lista.sort((a, b) => {
-        let v1 = a[coluna];
-        let v2 = b[coluna];
-
-        if (coluna === "precoNoite") {
-            v1 = a.precoNoite !== undefined ? Number(a.precoNoite) : 0;
-            v2 = b.precoNoite !== undefined ? Number(b.precoNoite) : 0;
-        }
-
-        if (coluna === "apartamentos") {
-            v1 = (a.apartamentos || []).join(", ");
-            v2 = (b.apartamentos || []).join(", ");
-        }
-
-        if (coluna === "checkin" || coluna === "checkout") {
-            v1 = parseDataPt(v1);
-            v2 = parseDataPt(v2);
-        }
-
-        if (!isNaN(v1) && !isNaN(v2)) {
-            v1 = Number(v1);
-            v2 = Number(v2);
-        }
-
-        if (v1 < v2) return ordem === "asc" ? -1 : 1;
-        if (v1 > v2) return ordem === "asc" ? 1 : -1;
-        return 0;
-    });
-
-    // 🔥 Atualiza o subset filtrado
-    if (reservasFiltradas.length > 0) {
-        reservasFiltradas = lista;
-    }
-
-    desenharTabela(lista);
+/* ----------------------------------------------------
+   Calcula total pago (somatório de pagamentos parciais)
+---------------------------------------------------- */
+function calcularTotalPago(r) {
+    if (!r.pagamentos || !Array.isArray(r.pagamentos)) return 0;
+    return r.pagamentos.reduce((acc, p) => acc + numeroSeguro(p.valor), 0);
 }
 
-// -------------------------------------------------------------
-// 2) VERIFICAR CONFLITO (BACK‑TO‑BACK PERMITIDO)
-// -------------------------------------------------------------
-function temConflitoNoApartamento(reservaNova, apartamento, reservasExistentes) {
-    const iniNova = parseDataPt(reservaNova.checkin);
-    const fimNova = parseDataPt(reservaNova.checkout);
+/* ----------------------------------------------------
+   Determina estado de pagamento
+   - total
+   - parcial
+   - pendente
+---------------------------------------------------- */
+function estadoPagamento(r) {
+    const total = numeroSeguro(r.totalBruto);
+    const pago = calcularTotalPago(r);
 
-    for (const r of reservasExistentes) {
-        if (!Array.isArray(r.apartamentos)) continue;
-        if (!r.apartamentos.includes(apartamento)) continue;
-
-        const iniExist = parseDataPt(r.checkin);
-        const fimExist = parseDataPt(r.checkout);
-
-        const backToBack1 = fimExist.getTime() === iniNova.getTime();
-        const backToBack2 = fimNova.getTime() === iniExist.getTime();
-
-        const sobrepoe = iniNova < fimExist && fimNova > iniExist;
-
-        if (sobrepoe && !backToBack1 && !backToBack2) {
-            return true;
-        }
-    }
-
-    return false;
+    if (pago >= total) return "total";
+    if (pago > 0) return "parcial";
+    return "pendente";
 }
 
-// -------------------------------------------------------------
-// 3) ALOCADOR INTELIGENTE
-// -------------------------------------------------------------
-function alocarApartamentosInteligente(quartos, checkin, checkout, reservasExistentes) {
-    const resultado = [];
-    const reservaNova = { checkin, checkout };
+/* ----------------------------------------------------
+   Calcula comissão da origem (se existir)
+---------------------------------------------------- */
+function calcularComissao(r) {
+    const origem = normalizarOrigem(r.origem).toLowerCase();
+    const total = numeroSeguro(r.totalBruto);
 
-    if (!quartos || quartos < 1) quartos = 1;
-    if (quartos > APARTAMENTOS_FIXOS.length) quartos = APARTAMENTOS_FIXOS.length;
-
-    const dataCheckin = parseDataPt(checkin);
-
-    // PRIORIDADE 1 — BACK‑TO‑BACK
-    const candidatosBackToBack = [];
-
-    APARTAMENTOS_FIXOS.forEach(ap => {
-        const existeCheckoutMesmoDia = reservasExistentes.some(r => {
-            if (!Array.isArray(r.apartamentos)) return false;
-            if (!r.apartamentos.includes(ap)) return false;
-            const fim = parseDataPt(r.checkout);
-            return fim.getTime() === dataCheckin.getTime();
-        });
-
-        if (existeCheckoutMesmoDia) {
-            if (!temConflitoNoApartamento(reservaNova, ap, reservasExistentes)) {
-                candidatosBackToBack.push(ap);
-            }
-        }
-    });
-
-    for (const ap of candidatosBackToBack) {
-        if (resultado.length >= quartos) break;
-        resultado.push(ap);
-    }
-
-    // PRIORIDADE 2 — APARTAMENTOS LIVRES
-    for (const ap of APARTAMENTOS_FIXOS) {
-        if (resultado.length >= quartos) break;
-        if (resultado.includes(ap)) continue;
-
-        const conflito = temConflitoNoApartamento(reservaNova, ap, reservasExistentes);
-        if (!conflito) resultado.push(ap);
-    }
-
-    return resultado;
-}
-
-// -------------------------------------------------------------
-// 4) CARREGAR RESERVAS DO FIRESTORE
-// -------------------------------------------------------------
-async function carregarReservas() {
-    const snap = await db.collection("reservas").orderBy("checkin").get();
-
-    reservas = [];
-    snap.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
-
-    // garantir que todas as reservas têm bookingId
-    reservas.forEach(r => {
-        if (!r.bookingId) r.bookingId = "";
-    });
-
-    desenharTabela(reservas);
-}
-
-// -------------------------------------------------------------
-// FUNÇÕES AUXILIARES PARA MOSTRAR ADULTOS / CRIANÇAS / IDADES
-// -------------------------------------------------------------
-function parseIdades(str) {
-    // Nada → devolve vazio
-    if (!str) return [];
-
-    // Array → converte para números
-    if (Array.isArray(str)) {
-        return str
-            .map(v => Number(v))
-            .filter(v => !isNaN(v));
-    }
-
-    // Número → devolve como array
-    if (typeof str === "number") {
-        return [str];
-    }
-
-    // Objeto → tenta extrair valores
-    if (typeof str === "object") {
-        return Object.values(str)
-            .map(v => Number(v))
-            .filter(v => !isNaN(v));
-    }
-
-    // Qualquer coisa que não seja string → vazio
-    if (typeof str !== "string") return [];
-
-    // String → dividir por vírgulas
-    return str
-        .split(",")
-        .map(s => Number(s.trim()))
-        .filter(n => !isNaN(n));
-}
-
-
-function textoPessoas(r) {
-    const adultos = r.adultos || 0;
-    const criancas = r.criancas || 0;
-    const idades = parseIdades(r.idadesCriancas);
-
-    let txt = `👤 ${adultos}`;
-
-    if (criancas > 0) {
-        txt += `   👶 ${criancas}`;
-        if (idades.length > 0) {
-            txt += ` (${idades.join(", ")})`;
-        }
-    }
-
-    return txt;
-}
-
-function tooltipPessoas(r) {
-    const adultos = r.adultos || 0;
-    const criancas = r.criancas || 0;
-    const idades = parseIdades(r.idadesCriancas);
-    const berco = r.berco ? "Sim" : "Não";
-    const total = r.hospedes || (adultos + criancas);
-
-    return `
-${adultos} adulto(s)
-${criancas} criança(s)
-Idades: ${idades.length ? idades.join(", ") : "—"}
-Berço: ${berco}
-Total hóspedes: ${total}
-`.trim();
-}
-
-
-// -------------------------------------------------------------
-// 5) DESENHAR TABELA
-// -------------------------------------------------------------
-function desenharTabela(lista = reservas) {
-    const tbody = document.querySelector("#tabelaReservas tbody");
-    tbody.innerHTML = "";
-
-    lista.forEach(r => {
-        const tr = document.createElement("tr");
-
-        // Número de quartos da reserva (apenas para mostrar na tabela)
-        const quartos = r.quartos || 1;
-
-        // Texto dos apartamentos
-        const apartamentosTexto = (r.apartamentos || []).join(", ");
-
-        // 🔥 COR DA LINHA CONSOANTE O PAGAMENTO (usando a função inteligente)
-        const classePagamento = obterClassePagamento(r);
-        if (classePagamento) {
-        tr.classList.add(classePagamento);
-        }
-
-
-
-        tr.innerHTML = `
-            <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
-            <td><span class="origem-badge origem-${(r.origem || "").toLowerCase()}">${r.origem || ""}</span></td>
-            <td>${r.bookingId || ""}</td>
-            <td>${gerarIconePais(r.paisCliente)} ${r.cliente || ""}</td>
-            <td>${quartos}</td>
-            <td>${apartamentosTexto || (r.status === "sem_alocacao" ? "Sem alocacao" : "")}</td>
-
-            
-            <td class="pessoas" data-tooltip="${tooltipPessoas(r)}">
-                ${textoPessoas(r)}
-            </td>
-
-            <td>${r.checkin || ""}</td>
-            <td>${r.checkout || ""}</td>
-            <td>${r.noites !== undefined ? Math.round(r.noites) : ""}</td>
-            <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
-
-            <!-- COMISSÕES DO FIREBASE -->
-            <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
-            <td>${r.comissaoExtra !== undefined ? Number(r.comissaoExtra).toFixed(2) : ""}</td>
-            <td>${r.comissaoTotal !== undefined ? Number(r.comissaoTotal).toFixed(2) : ""}</td>
-
-            <!-- PREÇO POR NOITE -->
-            <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
-
-            <!-- BERÇO E LIMPEZA -->
-            <td>${r.berco ? "Sim" : "Não"}</td>
-            <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
-
-            <!-- LÍQUIDO -->
-            <td>${r.liquido !== undefined ? Number(r.liquido).toFixed(2) : ""}</td>
-
-
-
-            <td>
-                <button class="btnDetalhe" onclick="abrirDetalheReserva('${r.id}')">🔍</button>
-                <button class="btnEditar" onclick="editarReserva('${r.id}')">✏️</button>
-                <button class="btnApagar" onclick="apagarReserva('${r.id}')">🗑️</button>
-            </td>
-        `;
-
-        tbody.appendChild(tr);
-    });
-}
-
-console.log("PARTE 1 carregada.");
-
-// -------------------------------------------------------------
-// FUNÇÃO: APAGAR RESERVA
-// -------------------------------------------------------------
-function apagarReserva(id) {
-    if (!confirm("Tem a certeza que deseja apagar esta reserva?")) return;
-
-    db.collection("reservas").doc(id).delete()
-        .then(() => {
-            alert("Reserva apagada com sucesso!");
-            carregarReservas();
-        })
-        .catch(err => console.error("Erro ao apagar:", err));
-}
-
-// -------------------------------------------------------------
-// FUNÇÃO: DETALHE DA RESERVA
-// -------------------------------------------------------------
-function abrirDetalheReserva(id) {
-    console.log("Abrir detalhe da reserva:", id);
-
-    const modal = document.getElementById("modalReserva");
-    const content = modal.querySelector(".modal-content");
-
-    content.innerHTML = `
-        <span class="close" id="fecharDetalhe">&times;</span>
-        <h2>Detalhes da Reserva</h2>
-        <p>ID da reserva: ${id}</p>
-        <p>(Aqui vamos colocar os detalhes reais)</p>
-    `;
-
-    modal.style.display = "flex";
-
-    document.getElementById("fecharDetalhe").onclick = () => {
-        modal.style.display = "none";
+    const taxas = {
+        booking: 0.15,
+        airbnb: 0.14,
+        vrbo: 0.10,
+        expedia: 0.15,
+        agoda: 0.15,
+        hotels: 0.15,
+        trip: 0.12
     };
+
+    if (!taxas[origem]) return 0;
+
+    return total * taxas[origem];
+}
+
+/* ----------------------------------------------------
+   Calcula total líquido (total - comissão)
+---------------------------------------------------- */
+function calcularLiquido(r) {
+    const total = numeroSeguro(r.totalBruto);
+    const comissao = calcularComissao(r);
+    return total - comissao;
+}
+
+/* ----------------------------------------------------
+   Calcula número de noites
+---------------------------------------------------- */
+function calcularNoitesReserva(r) {
+    return calcularNoites(r.checkin, r.checkout);
+}
+
+/* ----------------------------------------------------
+   Verifica se reserva está dentro de um intervalo
+---------------------------------------------------- */
+function reservaDentroIntervalo(r, anoInicio, mesInicio, anoFim, mesFim) {
+    const d1 = parseData(r.checkin);
+    const d2 = parseData(r.checkout);
+    if (!d1 || !d2) return false;
+
+    const inicio = new Date(anoInicio, mesInicio - 1, 1);
+    const fim = new Date(anoFim, mesFim, 0);
+
+    return d1 <= fim && d2 >= inicio;
+}
+
+/* ----------------------------------------------------
+   Formata país com bandeira
+---------------------------------------------------- */
+function formatarPais(pais) {
+    if (!pais) return "";
+    return `<img src="flags/${pais.toLowerCase()}.svg" class="flag"> ${pais}`;
+}
+/******************************************************
+ * 4) CARREGAR RESERVAS DO FIRESTORE (TEMPO REAL)
+ ******************************************************/
+function carregarReservas() {
+    if (listenerAtivo) return; // evita múltiplos listeners
+    listenerAtivo = true;
+
+    db.collection("reservas")
+        .orderBy("checkin")
+        .onSnapshot(snapshot => {
+            reservas = [];
+            snapshot.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
+
+            aplicarFiltros();
+        });
 }
 
 
-// -------------------------------------------------------------
-// FILTRO POR INTERVALO DE MESES/ANOS
-// -------------------------------------------------------------
-function aplicarFiltroIntervalo() {
+/******************************************************
+ * 5) FILTROS AVANÇADOS
+ ******************************************************/
+
+// Preenche selects de ano/mês dos filtros
+function preencherFiltrosAnoMes() {
+    const anos = document.querySelectorAll("#filtroAnoInicio, #filtroAnoFim");
+    const meses = document.querySelectorAll("#filtroMesInicio, #filtroMesFim");
+
+    const anoAtual = new Date().getFullYear();
+
+    anos.forEach(sel => {
+        sel.innerHTML = `<option value="">Ano</option>`;
+        for (let a = anoAtual - 3; a <= anoAtual + 3; a++) {
+            sel.innerHTML += `<option value="${a}">${a}</option>`;
+        }
+    });
+
+    meses.forEach(sel => {
+        sel.innerHTML = `<option value="">Mês</option>`;
+        for (let m = 1; m <= 12; m++) {
+            sel.innerHTML += `<option value="${m}">${m}</option>`;
+        }
+    });
+}
+
+// Liga eventos dos filtros
+function ligarEventosFiltros() {
+    const filtros = document.querySelectorAll(
+        "#filtroOrigem, #filtroEstado, #filtroPagamento, #filtroApartamento, #filtroHospede, #filtroAnoInicio, #filtroMesInicio, #filtroAnoFim, #filtroMesFim"
+    );
+
+    filtros.forEach(f => f.addEventListener("change", aplicarFiltros));
+    document.getElementById("filtroHospede").addEventListener("input", aplicarFiltros);
+
+    document.getElementById("btnLimparFiltros").onclick = limparFiltros;
+}
+
+// Limpa todos os filtros
+function limparFiltros() {
+    document.querySelectorAll("#filtrosWrapper select, #filtrosWrapper input")
+        .forEach(el => el.value = "");
+
+    aplicarFiltros();
+}
+
+// Aplica filtros à lista de reservas
+function aplicarFiltros() {
+    const origem = document.getElementById("filtroOrigem").value;
+    const estado = document.getElementById("filtroEstado").value;
+    const pagamento = document.getElementById("filtroPagamento").value;
+    const apartamento = document.getElementById("filtroApartamento").value;
+    const hospede = normalizar(document.getElementById("filtroHospede").value);
+
     const anoInicio = Number(document.getElementById("filtroAnoInicio").value);
     const mesInicio = Number(document.getElementById("filtroMesInicio").value);
     const anoFim = Number(document.getElementById("filtroAnoFim").value);
     const mesFim = Number(document.getElementById("filtroMesFim").value);
 
-    // Se faltar qualquer campo → mostra tudo
-    if (!anoInicio || !mesInicio || !anoFim || !mesFim) {
-        desenharTabela(reservas);
-        return;
-    }
+    reservasFiltradas = reservas.filter(r => {
 
-    const dataInicio = new Date(anoInicio, mesInicio - 1, 1);
-    const dataFim = new Date(anoFim, mesFim, 0); // último dia do mês fim
+        // Origem
+        if (origem && r.origem !== origem) return false;
 
-    const filtradas = reservas.filter(r => {
-        const dt = parseDataPt(r.checkin);
-        if (!dt) return false;
-        return dt >= dataInicio && dt <= dataFim;
+        // Estado (alocado / sem alocação)
+        if (estado === "alocado" && (!r.apartamentos || r.apartamentos.length === 0)) return false;
+        if (estado === "sem_alocacao" && r.apartamentos && r.apartamentos.length > 0) return false;
+
+        // Pagamento
+        if (pagamento && estadoPagamento(r) !== pagamento) return false;
+
+        // Apartamento
+        if (apartamento && (!r.apartamentos || !r.apartamentos.includes(apartamento))) return false;
+
+        // Hóspede
+        if (hospede && !normalizar(r.cliente).includes(hospede)) return false;
+
+        // Intervalo de datas
+        if (anoInicio && mesInicio && anoFim && mesFim) {
+            if (!reservaDentroIntervalo(r, anoInicio, mesInicio, anoFim, mesFim)) return false;
+        }
+
+        return true;
     });
 
-    reservasFiltradas = filtradas;
-    desenharTabela(reservasFiltradas);
+    ordenarReservas();
+    renderizarTabela();
+}
 
+
+/******************************************************
+ * 6) ORDENAÇÃO DAS RESERVAS
+ ******************************************************/
+function ordenarReservas() {
+    reservasFiltradas.sort((a, b) => {
+        const d1 = parseData(a.checkin);
+        const d2 = parseData(b.checkin);
+        return d1 - d2;
+    });
+}
+/******************************************************
+ * 7) RENDERIZAÇÃO DA TABELA DE RESERVAS
+ ******************************************************/
+function renderizarTabela() {
+    if (!listaReservasEl) return;
+
+    listaReservasEl.innerHTML = "";
+
+    reservasFiltradas.forEach(r => {
+        const tr = document.createElement("tr");
+
+        // Estado de pagamento → cor da linha
+        const estado = estadoPagamento(r);
+        if (estado === "total") tr.classList.add("pago-total");
+        if (estado === "parcial") tr.classList.add("pago-parcial");
+        if (estado === "pendente") tr.classList.add("pago-a-vencer");
+
+        tr.innerHTML = `
+            <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
+
+            <td>
+                <span class="origem-badge origem-${normalizarOrigem(r.origem).toLowerCase()}">
+                    ${r.origem || "Manual"}
+                </span>
+            </td>
+
+            <td>${r.id}</td>
+
+            <td>${r.cliente}</td>
+
+            <td>${formatarPais(r.pais || "")}</td>
+
+            <td>${(r.apartamentos || []).join(", ")}</td>
+
+            <td>${calcularNoitesReserva(r)}</td>
+
+            <td>${r.checkin}</td>
+            <td>${r.checkout}</td>
+
+            <td>${r.totalBruto || 0}€</td>
+
+            <td>${calcularTotalPago(r)}€</td>
+
+            <td>${estado.toUpperCase()}</td>
+
+            <td>
+                <button class="btnDetalhe" data-id="${r.id}">Detalhe</button>
+                <button class="btnEditar" data-id="${r.id}">Editar</button>
+                <button class="btnApagar" data-id="${r.id}">Apagar</button>
+            </td>
+        `;
+
+        listaReservasEl.appendChild(tr);
+    });
+
+    ligarEventosTabela();
+}
+
+
+/******************************************************
+ * 8) EVENTOS DA TABELA (DETALHE, EDITAR, APAGAR)
+ ******************************************************/
+function ligarEventosTabela() {
+
+    // Botão Detalhe
+    document.querySelectorAll(".btnDetalhe").forEach(btn => {
+        btn.onclick = () => abrirModalDetalhe(btn.dataset.id);
+    });
+
+    // Botão Editar
+    document.querySelectorAll(".btnEditar").forEach(btn => {
+        btn.onclick = () => abrirModalEditar(btn.dataset.id);
+    });
+
+    // Botão Apagar
+    document.querySelectorAll(".btnApagar").forEach(btn => {
+        btn.onclick = () => apagarReserva(btn.dataset.id);
+    });
+
+    // Selecionar todas
+    if (selectAllEl) {
+        selectAllEl.onclick = () => {
+            const marcado = selectAllEl.checked;
+            document.querySelectorAll(".selectReserva").forEach(chk => chk.checked = marcado);
+        };
     }
+}
 
 
-// -------------------------------------------------------------
-// 6) ABRIR / FECHAR MODAL
-// -------------------------------------------------------------
-function abrirModalReserva() {
+/******************************************************
+ * 9) ABRIR MODAL — DETALHE
+ ******************************************************/
+function abrirModalDetalhe(id) {
+    const r = reservas.find(x => x.id === id);
+    if (!r) return;
+
+    modoEdicao = false;
+    reservaAtual = r;
+
+    preencherModal(r);
+    abrirModal();
+}
+
+
+/******************************************************
+ * 10) ABRIR MODAL — EDITAR
+ ******************************************************/
+function abrirModalEditar(id) {
+    const r = reservas.find(x => x.id === id);
+    if (!r) return;
+
+    modoEdicao = true;
+    reservaAtual = r;
+
+    preencherModal(r);
+    abrirModal();
+}
+
+
+/******************************************************
+ * 11) APAGAR RESERVA (INDIVIDUAL)
+ ******************************************************/
+function apagarReserva(id) {
+    if (!confirm("Tem a certeza que deseja apagar esta reserva?")) return;
+
+    db.collection("reservas").doc(id).delete()
+        .then(() => console.log("✔ Reserva apagada:", id))
+        .catch(err => console.error("Erro ao apagar:", err));
+}
+/******************************************************
+ * 12) MODAL — ABRIR E FECHAR
+ ******************************************************/
+function abrirModal() {
     document.getElementById("modalReserva").style.display = "flex";
 }
 
 function fecharModal() {
     document.getElementById("modalReserva").style.display = "none";
     reservaAtual = null;
+    modoEdicao = false;
 }
 
-// -------------------------------------------------------------
-// 7) NOVA RESERVA
-// -------------------------------------------------------------
-function novaReserva() {
-    reservaAtual = null;
-    limparFormularioReserva();
-    abrirModalReserva();
+document.getElementById("fecharModal").onclick = fecharModal;
+
+
+/******************************************************
+ * 13) PREENCHER MODAL COM DADOS DA RESERVA
+ ******************************************************/
+function preencherModal(r) {
+    const form = document.getElementById("formReserva");
+
+    form.innerHTML = `
+        <label>Cliente</label>
+        <input id="modalCliente" value="${r.cliente || ""}">
+
+        <label>País</label>
+        <input id="modalPais" value="${r.pais || ""}">
+
+        <label>Origem</label>
+        <select id="modalOrigem">
+            <option ${r.origem==="Booking"?"selected":""}>Booking</option>
+            <option ${r.origem==="Airbnb"?"selected":""}>Airbnb</option>
+            <option ${r.origem==="Particular"?"selected":""}>Particular</option>
+            <option ${r.origem==="VRBO"?"selected":""}>VRBO</option>
+            <option ${r.origem==="Expedia"?"selected":""}>Expedia</option>
+            <option ${r.origem==="Agoda"?"selected":""}>Agoda</option>
+            <option ${r.origem==="Hotels"?"selected":""}>Hotels</option>
+            <option ${r.origem==="Trip"?"selected":""}>Trip</option>
+        </select>
+
+        <label>Apartamentos (separar por vírgula)</label>
+        <input id="modalAps" value="${(r.apartamentos || []).join(", ")}">
+
+        <label>Check-in</label>
+        <input id="modalCheckin" type="date" value="${converterParaISO(r.checkin)}">
+
+        <label>Check-out</label>
+        <input id="modalCheckout" type="date" value="${converterParaISO(r.checkout)}">
+
+        <label>Total Bruto (€)</label>
+        <input id="modalTotal" value="${r.totalBruto || 0}">
+
+        <label>Pagamentos (valor por linha)</label>
+        <textarea id="modalPagamentos">${formatarPagamentosTextarea(r.pagamentos)}</textarea>
+    `;
 }
 
-// -------------------------------------------------------------
-// 8) EDITAR RESERVA EXISTENTE
-// -------------------------------------------------------------
-function editarReserva(id) {
-    const r = reservas.find(x => x.id === id);
-    if (!r) return;
 
-    reservaAtual = r;
-    preencherFormularioReserva(r);
-    abrirModalReserva();
+/******************************************************
+ * 14) CONVERTER DATA PARA ISO (para inputs type="date")
+ ******************************************************/
+function converterParaISO(str) {
+    const d = parseData(str);
+    if (!d) return "";
+    return d.toISOString().split("T")[0];
 }
 
-// -------------------------------------------------------------
-// 9) LIMPAR FORMULÁRIO
-// -------------------------------------------------------------
-function limparFormularioReserva() {
-    document.getElementById("origem").value = "Manual";
-    document.getElementById("bookingId").value = "";
-    document.getElementById("cliente").value = "";
-    document.getElementById("quartos").value = "1";
-    document.getElementById("apartamentos").value = "";
-    document.getElementById("checkin").value = "";
-    document.getElementById("checkout").value = "";
-    document.getElementById("hospedes").value = "";
-    document.getElementById("adultos").value = "";
-    document.getElementById("criancas").value = "";
-    document.getElementById("idadesCriancas").value = "";
 
-    // Valores financeiros
-    document.getElementById("totalBruto").value = "";
-    document.getElementById("percentagemPagamento").value = "";
-    document.getElementById("valorPago").value = "";
-    document.getElementById("valorPagoParcial").value = "";
-    document.getElementById("valorPagoFinal").value = "";
-    document.getElementById("valorEmFalta").value = "";
-    document.getElementById("dataPagamentoParcial").value = "";
-    document.getElementById("dataPagamentoFinal").value = "";
-    document.getElementById("dataVencimento").value = "";
-
-    // Outros
-    document.getElementById("berco").value = "false";
-    document.getElementById("limpeza").value = "";
-    document.getElementById("pais").value = "pt";
-    document.getElementById("telefone").value = "";
-    document.getElementById("morada").value = "";
-    document.getElementById("metodoPagamento").value = "booking";
-    document.getElementById("motivo").value = "lazer";
-    document.getElementById("dispositivo").value = "telemovel";
-    document.getElementById("estadoReserva").value = "ok";
-
-    // Status do pagamento
-    document.getElementById("statusPagamento").value = "aguardar";
-    document.getElementById("pagamentoParcialCampos").style.display = "none";
+/******************************************************
+ * 15) FORMATAR PAGAMENTOS PARA TEXTAREA
+ ******************************************************/
+function formatarPagamentosTextarea(lista) {
+    if (!lista || !Array.isArray(lista)) return "";
+    return lista.map(p => p.valor + "€").join("\n");
 }
 
-// -------------------------------------------------------------
-// 10) EVENTO PARA ATUALIZAR LIMPEZA AUTOMÁTICA (CHECK-IN)
-// -------------------------------------------------------------
-document.getElementById("checkin").addEventListener("change", () => {
-    const checkin = document.getElementById("checkin").value; // yyyy-mm-dd
-    if (checkin) {
-        document.getElementById("limpeza").value = calcularLimpeza(checkin);
-    }
-});
 
-// -------------------------------------------------------------
-// 10) PREENCHER FORMULÁRIO
-// -------------------------------------------------------------
-function preencherFormularioReserva(r) {
-
-    document.getElementById("origem").value = r.origem || "Manual";
-    document.getElementById("bookingId").value = r.bookingId || "";
-    document.getElementById("cliente").value = r.cliente || "";
-    document.getElementById("pais").value = r.pais || "pt";
-    document.getElementById("telefone").value = r.telefone || "";
-    document.getElementById("morada").value = r.morada || "";
-
-    document.getElementById("metodoPagamento").value = r.metodoPagamento || "booking";
-    document.getElementById("motivo").value = r.motivo || "lazer";
-    document.getElementById("dispositivo").value = r.dispositivo || "telemovel";
-    document.getElementById("estadoReserva").value = r.estadoReserva || "ok";
-
-    // Quartos e apartamentos
-    const quartos = r.quartos || (r.apartamentos ? r.apartamentos.length : 1);
-    document.getElementById("quartos").value = quartos;
-
-    document.getElementById("apartamentos").value =
-        Array.isArray(r.apartamentos)
-            ? r.apartamentos.join(", ")
-            : (r.apartamentos || "");
-
-    // Datas
-    document.getElementById("checkin").value = r.checkin
-        ? r.checkin.split("/").reverse().join("-")
-        : "";
-
-    document.getElementById("checkout").value = r.checkout
-        ? r.checkout.split("/").reverse().join("-")
-        : "";
-
-    // Pessoas
-    document.getElementById("hospedes").value = r.hospedes ?? "";
-    document.getElementById("adultos").value = r.adultos ?? "";
-    document.getElementById("criancas").value = r.criancas ?? "";
-    document.getElementById("idadesCriancas").value = r.idadesCriancas ?? "";
-
-    // Valores financeiros
-    document.getElementById("totalBruto").value = r.totalBruto ?? "";
-    document.getElementById("comissaoServico").value = r.comissaoServico ?? "";
-    document.getElementById("percentagemPagamento").value = r.percentagemPagamento ?? "";
-    document.getElementById("valorPago").value = r.valorPago ?? 0;
-
-    // Limpeza e berço
-    document.getElementById("berco").value = r.berco ? "true" : "false";
-    document.getElementById("limpeza").value = r.limpeza ?? "";
-
-    // Status do pagamento
-    document.getElementById("statusPagamento").value = r.statusPagamento || "aguardar";
-
-    // -------------------------------------------------------------
-    // PAGAMENTO PARCIAL — preencher ao editar
-    // -------------------------------------------------------------
-    if (r.statusPagamento === "parcial") {
-
-        document.getElementById("pagamentoParcialCampos").style.display = "block";
-
-        document.getElementById("valorPagoParcial").value = r.valorPagoParcial ?? "";
-        document.getElementById("dataPagamentoParcial").value = r.dataPagamentoParcial ?? "";
-        document.getElementById("valorEmFalta").value = r.valorEmFalta ?? "";
-        document.getElementById("dataVencimento").value = r.dataVencimento ?? "";
-
-        // 2ª prestação
-        document.getElementById("valorPagoFinal").value = r.valorPagoFinal ?? "";
-        document.getElementById("dataPagamentoFinal").value = r.dataPagamentoFinal ?? "";
-
-    } else {
-
-        document.getElementById("pagamentoParcialCampos").style.display = "none";
-
-        document.getElementById("valorPagoParcial").value = "";
-        document.getElementById("dataPagamentoParcial").value = "";
-        document.getElementById("valorEmFalta").value = "";
-        document.getElementById("dataVencimento").value = "";
-
-        document.getElementById("valorPagoFinal").value = "";
-        document.getElementById("dataPagamentoFinal").value = "";
-    }
-}
-
-// -------------------------------------------------------------
-// 11) GUARDAR RESERVA (NOVA OU EDITADA)
-// -------------------------------------------------------------
-async function guardarReserva() {
-    const origem = document.getElementById("origem").value;
-    let bookingId = document.getElementById("bookingId").value.trim();
-
-    if (origem !== "Booking") {
-        const random9 = Math.floor(100000000 + Math.random() * 900000000);
-        bookingId = `P${random9}`;
-    }
-
-    const cliente = formatarNome(document.getElementById("cliente").value.trim());
-    let quartos = Number(document.getElementById("quartos").value || 1);
-
-    let apartamentosDigitados = [...new Set(
-        document.getElementById("apartamentos").value
-            .split(",")
-            .map(x => x.trim())
-            .filter(x => x !== "")
-    )];
-
-    const checkin = document.getElementById("checkin").value.trim();
-    const checkout = document.getElementById("checkout").value.trim();
-
-    const hospedes = Number(document.getElementById("hospedes").value || 0);
-    const adultos = Number(document.getElementById("adultos").value || 0);
-    const criancas = Number(document.getElementById("criancas").value || 0);
-    const idadesCriancas = document.getElementById("idadesCriancas").value.trim();
-    const pais = document.getElementById("pais").value;
-    const telefone = document.getElementById("telefone").value.trim();
-    const morada = document.getElementById("morada").value.trim();
-
-    const metodoPagamento = document.getElementById("metodoPagamento").value;
-    const motivo = document.getElementById("motivo").value;
-    const dispositivo = document.getElementById("dispositivo").value;
-    const estadoReserva = document.getElementById("estadoReserva").value;
-
-    // -------------------------------------------------------------
-    // VALORES BASE
-    // -------------------------------------------------------------
-    const totalBrutoNumero = Number(document.getElementById("totalBruto").value || 0);
-    const berco = document.getElementById("berco").value === "true";
-
-    const noites = calcularNoites(checkin, checkout);
-    const precoNoite = noites > 0 ? totalBrutoNumero / noites : 0;
-
-    let limpeza = document.getElementById("limpeza").value.trim();
-    if (limpeza === "" || isNaN(limpeza)) {
-        limpeza = calcularLimpeza(checkin);
-    } else {
-        limpeza = Number(limpeza);
-    }
-
-    // -------------------------------------------------------------
-    // PAGAMENTO PARCIAL
-    // -------------------------------------------------------------
-    let valorPagoParcial = null;
-    let dataPagamentoParcial = null;
-    let valorEmFalta = null;
-    let dataVencimento = null;
-
-    let statusPagamento = document.getElementById("statusPagamento").value;
-
-    if (statusPagamento === "parcial") {
-        valorPagoParcial = Number(document.getElementById("valorPagoParcial").value || 0);
-        dataPagamentoParcial = document.getElementById("dataPagamentoParcial").value || null;
-        valorEmFalta = Number(document.getElementById("valorEmFalta").value || 0);
-        dataVencimento = document.getElementById("dataVencimento").value || null;
-    }
-
-    // -------------------------------------------------------------
-    // CALCULAR VALOR PAGO TOTAL (1ª + 2ª prestação)
-    // -------------------------------------------------------------
-    const valorPagoParcialNumero = Number(valorPagoParcial || 0);
-    const valorPagoFinalNumero = Number(document.getElementById("valorPagoFinal").value || 0);
-
-    const valorPagoCalculado = valorPagoParcialNumero + valorPagoFinalNumero;
-
-    document.getElementById("valorPago").value = valorPagoCalculado.toFixed(2);
-
-       // -------------------------------------------------------------
-    // RECALCULAR VALOR EM FALTA
-    // -------------------------------------------------------------
-    valorEmFalta = totalBrutoNumero - valorPagoCalculado;
-
-    if (valorEmFalta <= 0) {
-        valorEmFalta = 0;
-        statusPagamento = "total";
-    }
-
-    // ---------------------------------------------------------
-    // ALOCAÇÃO INTELIGENTE + VALIDAÇÃO MANUAL
-    // ---------------------------------------------------------
-    let apartamentos = [];
-    let status = "alocado";
-
-    const hoje = new Date();
-    const dtCheckin = parseDataPt(checkin);
-    const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
-    const diasParaCheckin = dtCheckin ? diasEntre(new Date(), dtCheckin) : null;
-
-    const reservasSemAtual = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
-
-    // ---------------------------------------------------------
-    // 1) RESERVA MANUAL
-    // ---------------------------------------------------------
-    if (apartamentosDigitados.length > 0) {
-
-        apartamentos = apartamentosDigitados;
-
-        if (apartamentos.length < quartos) {
-            alert(
-                `Foram indicados ${apartamentos.length} apartamento(s), ` +
-                `mas a reserva exige ${quartos}.`
-            );
-            return;
-        }
-
-        for (const ap of apartamentos) {
-            const conflito = temConflitoNoApartamento(
-                { checkin, checkout },
-                ap,
-                reservasSemAtual
-            );
-
-            if (conflito) {
-
-                const reservaQueOcupa = reservasSemAtual.find(r =>
-                    r.apartamentos?.includes(ap) &&
-                    datasSobrepoem(r.checkin, r.checkout, checkin, checkout)
-                );
-
-                if (reservaQueOcupa) {
-
-                    const dtCheckinAtual = parseDataPt(checkin);
-                    const diasParaCheckinAtual = diasEntre(new Date(), dtCheckinAtual);
-
-                    const dtCheckinOutra = parseDataPt(reservaQueOcupa.checkin);
-                    const diasParaCheckinOutra = diasEntre(new Date(), dtCheckinOutra);
-
-                    const reservaAtualJaComecou = dtCheckinAtual <= new Date();
-                    const outraJaComecou = dtCheckinOutra <= new Date();
-
-                    let mensagem = `O apartamento ${ap} está ocupado pela reserva de ${reservaQueOcupa.cliente}.`;
-
-                    if (diasParaCheckinAtual <= 5 || diasParaCheckinOutra <= 5) {
-                        mensagem += `\n\n⚠ Atenção: falta(m) menos de 5 dia(s) para o check-in de uma das reservas.`;
-                    }
-
-                    if (reservaAtualJaComecou || outraJaComecou) {
-                        mensagem += `\n\n⚠ Uma das reservas já começou. Só avance se for mesmo necessário (ex.: avaria).`;
-                    }
-
-                    mensagem += `\n\nDeseja avançar com a troca manual?`;
-
-                    const confirmarTroca = confirm(mensagem);
-
-                    if (confirmarTroca) {
-                        continue;
-                    }
-                }
-
-                alert(`O apartamento ${ap} já está ocupado nestas datas.`);
-                return;
-            }
-        }
-    }
-
-    // ---------------------------------------------------------
-    // 2) RESERVA AUTOMÁTICA
-    // ---------------------------------------------------------
-    apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasSemAtual);
-
-    if (apartamentos.length === 0) {
-        alert(`Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.`);
-        return;
-    }
-
-    if (apartamentos.length < quartos) {
-        alert(
-            `Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.\n` +
-            `Disponíveis: ${apartamentos.length}`
-        );
-        return;
-    }
-
-    // -------------------------------------------------------------
-    // CÁLCULO FINAL DAS COMISSÕES E DO LÍQUIDO
-    // (já tínhamos calculado antes — aqui apenas garantimos consistência)
-    // -------------------------------------------------------------
-    const totalBruto = totalBrutoNumero; // manter nome usado no objeto final
-
-    // -------------------------------------------------------------
-    // RECALCULAR VALOR EM FALTA COM BASE NO TOTAL PAGO
-    // -------------------------------------------------------------
-    valorEmFalta = totalBrutoNumero - valorPagoCalculado;
-
-    if (valorEmFalta <= 0) {
-        valorEmFalta = 0;
-        statusPagamento = "total";
-    }
-
-// ------------------------------------------------------------- 
-// OBTER COMISSÃO DE SERVIÇO MANUAL (€) 
-// ------------------------------------------------------------- 
-const comissaoServico = parseFloat(document.getElementById("comissaoServico").value) || 0;
-
-// ---------------------------------------------------------
-// CALCULAR COMISSÕES
-// ---------------------------------------------------------
-
-// 1. Percentagem manual (campo do formulário)
-let percentagemPagamento = document.getElementById("percentagemPagamento").value;
-let percentagem = parseFloat(percentagemPagamento);
-
-// 2. Se estiver vazio → usar valor automático do config
-if (isNaN(percentagem)) {
-    percentagem = configComissoes.pagamento; 
-}
-
-// 3. Calcular comissão de pagamento (€)
-const comissaoExtra = totalBruto * (percentagem / 100);
-
-// 4. Calcular total de comissão
-const comissaoTotal = comissaoServico + comissaoExtra;
-
-// -------------------------------------------------------------
-// CALCULAR LÍQUIDO
-// -------------------------------------------------------------
-const liquido = totalBruto - comissaoTotal;
-
-    // ---------------------------------------------------------
-    // DADOS FINAIS DA RESERVA
-    // ---------------------------------------------------------
-    const dados = {
-        origem,
-        bookingId: bookingId || null,
+/******************************************************
+ * 16) LER DADOS DO MODAL → OBJETO RESERVA
+ ******************************************************/
+function lerDadosModal() {
+    const cliente = document.getElementById("modalCliente").value.trim();
+    const pais = document.getElementById("modalPais").value.trim();
+    const origem = document.getElementById("modalOrigem").value.trim();
+    const aps = document.getElementById("modalAps").value.split(",").map(a => a.trim()).filter(a => a);
+    const checkin = document.getElementById("modalCheckin").value;
+    const checkout = document.getElementById("modalCheckout").value;
+    const total = numeroSeguro(document.getElementById("modalTotal").value);
+
+    const pagamentosRaw = document.getElementById("modalPagamentos").value.trim().split("\n");
+    const pagamentos = pagamentosRaw
+        .filter(l => l.trim() !== "")
+        .map(l => ({ valor: numeroSeguro(l) }));
+
+    return {
         cliente,
         pais,
-        telefone,
-        morada,
-
-        // 🔥 NOVAS COMISSÕES
-        comissao: comissaoServico,               // comissão de serviço (€)
-        percentagemPagamento: percentagem,       // percentagem final usada
-        comissaoExtra: comissaoExtra,            // comissão de pagamento (€)
-        comissaoTotal: comissaoTotal,            // soma das comissões
-
-
-
-        metodoPagamento,
-        motivo,
-        dispositivo,
-        estadoReserva,
-        quartos,
-        apartamentos,
-
-        checkin: normalizarDataParaPt(checkin),
-        checkout: normalizarDataParaPt(checkout),
-
-        hospedes,
-        adultos,
-        criancas,
-        idadesCriancas,
-
-        totalBruto,
-        precoNoite,
-        noites,
-        liquido,                    // bruto - comissões
-        limpeza,
-        berco,
-        status,
-
-        // 🔥 STATUS DO PAGAMENTO
-        statusPagamento,
-        valorPago: valorPagoCalculado,
-
-        // 🔥 PAGAMENTO PARCIAL
-        valorPagoParcial: valorPagoParcial || 0,
-        dataPagamentoParcial: dataPagamentoParcial || null,
-        valorEmFalta: valorEmFalta || 0,
-        dataVencimento: dataVencimento || null,
-
-        // 🔥 2ª PRESTAÇÃO
-        valorPagoFinal: valorPagoFinalNumero,
-        dataPagamentoFinal: document.getElementById("dataPagamentoFinal").value || null,
+        origem,
+        apartamentos: aps,
+        checkin,
+        checkout,
+        totalBruto: total,
+        pagamentos
     };
+}
 
-    // ---------------------------------------------------------
-    // GUARDAR NO FIRESTORE
-    // ---------------------------------------------------------
-    if (!reservaAtual) {
-        await db.collection("reservas").add(dados);
-    } else {
-        await db.collection("reservas").doc(reservaAtual.id).update(dados);
+
+/******************************************************
+ * 17) VALIDAR RESERVA
+ ******************************************************/
+function validarReserva(r) {
+    if (!r.cliente) return "Cliente é obrigatório.";
+    if (!r.checkin) return "Check-in é obrigatório.";
+    if (!r.checkout) return "Check-out é obrigatório.";
+
+    const d1 = parseData(r.checkin);
+    const d2 = parseData(r.checkout);
+
+    if (d2 < d1) return "Check-out não pode ser antes do check-in.";
+
+    return null;
+}
+
+
+/******************************************************
+ * 18) GUARDAR RESERVA (CRIAR OU EDITAR)
+ ******************************************************/
+document.getElementById("btnGuardar").onclick = () => {
+    const dados = lerDadosModal();
+    const erro = validarReserva(dados);
+
+    if (erro) {
+        alert(erro);
+        return;
     }
 
-    fecharModal();
-    carregarReservas();
-}
-
-// -------------------------------------------------------------
-// 12) APAGAR RESERVA (E APAGAR DO CALENDÁRIO TAMBÉM)
-// -------------------------------------------------------------
-async function apagarReservaConfirmar() {
-    if (!reservaAtual) return;
-
-    const confirmar = confirm("Tens a certeza que queres apagar esta reserva?");
-    if (!confirmar) return;
-
-    const id = reservaAtual.id;
-
-    // 1) Apagar da coleção reservas
-    await db.collection("reservas").doc(id).delete();
-
-    // 2) Apagar entradas no calendário com o mesmo id
-    const snap = await db.collection("calendario")
-        .where("id", "==", id)
-        .get();
-
-    snap.forEach(doc => doc.ref.delete());
-
-    fecharModal();
-    carregarReservas();
-}
-
-console.log("PARTE 2 carregada.");
-
-// -------------------------------------------------------------
-// MAPA DE BANDEIRAS POR PAÍS (Booking → código ISO)
-// -------------------------------------------------------------
-const BANDEIRAS_POR_PAIS = {
-    "Portugal": "pt",
-    "Spain": "es",
-    "France": "fr",
-    "Germany": "de",
-    "Belgium": "be",
-    "Netherlands": "nl",
-    "Switzerland": "ch",
-    "Austria": "at",
-    "Italy": "it",
-    "United Kingdom": "gb",
-    "Ireland": "ie",
-    "Denmark": "dk",
-    "Sweden": "se",
-    "Norway": "no",
-    "Finland": "fi",
-    "Poland": "pl",
-    "Czech Republic": "cz",
-    "Hungary": "hu",
-    "Greece": "gr",
-
-    "United States": "us",
-    "Canada": "ca",
-    "Brazil": "br",
-    "Argentina": "ar",
-    "Mexico": "mx",
-    "Chile": "cl",
-    "Colombia": "co",
-    "Peru": "pe",
-
-    "Australia": "au",
-    "New Zealand": "nz",
-
-    "China": "cn",
-    "Japan": "jp",
-    "South Korea": "kr",
-    "India": "in",
-    "United Arab Emirates": "ae",
-    "Saudi Arabia": "sa",
-    "Israel": "il",
+    if (modoEdicao && reservaAtual) {
+        atualizarReserva(reservaAtual.id, dados);
+    } else {
+        criarReserva(dados);
+    }
 };
 
-// URL base das bandeiras locais
-const URL_BANDEIRA_BASE = "flags/";
 
-
-
-
-
-
-
-// -------------------------------------------------------------
-// FALLBACK PARA PAÍS DESCONHECIDO
-// -------------------------------------------------------------
-
-// Ícone do planeta (universal)
-const ICON_PLANETA = "https://cdn-icons-png.flaticon.com/512/44/44948.png";
-
-// Bandeira da cidade de Lagos (personalizada)
-const ICON_LAGOS = "https://upload.wikimedia.org/wikipedia/commons/6/6a/LGS.png";
-
-// Escolha do fallback (por agora usamos o planeta)
-const ICON_FALLBACK = ICON_PLANETA;
-
-
-
-
-// Se não houver país ou não estiver no mapa → usamos um ícone genérico
-// (por agora vamos só deixar isto preparado; o HTML vem no passo seguinte)
-
-function gerarIconePais(paisCliente) {
-    console.log("PAÍS RECEBIDO:", JSON.stringify(paisCliente));
-
-    if (!paisCliente) {
-        return `<img src="${ICON_FALLBACK}" class="flag" title="País desconhecido">`;
-    }
-
-    let pais = paisCliente.trim();
-
-// Se vier "pt", "PT", "Pt", etc.
-if (pais.length === 2) {
-    pais = pais.toLowerCase();
-    return `<img src="${URL_BANDEIRA_BASE}${pais}.svg" class="flag" title="${paisCliente}">`;
-}
-
-// Caso contrário, usa o mapa normal
-const codigo = BANDEIRAS_POR_PAIS[pais] || null;
-
-
-    if (!codigo) {
-        return `<img src="${ICON_FALLBACK}" class="flag" title="${paisCliente}">`;
-    }
-
-    const url = `${URL_BANDEIRA_BASE}${codigo}.svg`;
-    return `<img src="${url}" class="flag" title="${paisCliente}">`;
-}
-
-// -------------------------------------------------------------
-// FUNÇÕES DE NORMALIZAÇÃO (DATAS, VALORES, COMISSÕES)
-// ------------------------------------------------------
-function normalizarDataBooking(valor) {
-    if (!valor) return "";
-
-    if (typeof valor === "number") {
-        const dt = XLSX.SSF.parse_date_code(valor);
-        return `${String(dt.d).padStart(2, "0")}/${String(dt.m).padStart(2, "0")}/${dt.y}`;
-    }
-
-    valor = String(valor).trim();
-
-    if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
-        const [y, m, d] = valor.split("-");
-        return `${d}/${m}/${y}`;
-    }
-
-    if (/^\d{2}\/\d{2}\/\d{4}$/.test(valor)) return valor;
-
-    if (/^\d{2}\.\d{2}\.\d{4}$/.test(valor)) {
-        const [d, m, y] = valor.split(".");
-        return `${d}/${m}/${y}`;
-    }
-
-    return "";
-}
-
-function normalizarValorBooking(valor) {
-    if (!valor) return 0;
-
-    valor = String(valor)
-        .replace("EUR", "")
-        .replace("€", "")
-        .replace(/\s+/g, "")
-        .replace(/\./g, "")
-        .replace(",", ".");
-
-    return Number(valor) || 0;
-}
-
-function calcularComissoesBooking(totalBruto, comissaoOriginal) {
-    const comissaoExtra = totalBruto * 0.014;
-    const comissaoTotal = comissaoOriginal + comissaoExtra;
-    const liquidoReal = totalBruto - comissaoTotal;
-
-    return { comissaoExtra, comissaoTotal, liquidoReal };
+/******************************************************
+ * 19) CRIAR RESERVA NO FIRESTORE
+ ******************************************************/
+function criarReserva(r) {
+    db.collection("reservas")
+        .add(r)
+        .then(() => {
+            fecharModal();
+            console.log("✔ Reserva criada");
+        })
+        .catch(err => console.error("Erro ao criar:", err));
 }
 
 
-// -------------------------------------------------------------
-// 13) IMPORTAÇÃO EXCEL BOOKING (COM ALOCAÇÃO INTELIGENTE + CAMPOS EXTRA)
-// -------------------------------------------------------------
-    async function importarExcelBooking(event) {
-    console.log("IMPORTAR EXCEL BOOKING — INÍCIO");
+/******************************************************
+ * 20) ATUALIZAR RESERVA NO FIRESTORE
+ ******************************************************/
+function atualizarReserva(id, r) {
+    db.collection("reservas").doc(id)
+        .update(r)
+        .then(() => {
+            fecharModal();
+            console.log("✔ Reserva atualizada");
+        })
+        .catch(err => console.error("Erro ao atualizar:", err));
+}
 
+
+/******************************************************
+ * 21) APAGAR RESERVA A PARTIR DO MODAL
+ ******************************************************/
+document.getElementById("btnApagar").onclick = () => {
+    if (!reservaAtual) return;
+
+    if (!confirm("Tem a certeza que deseja apagar esta reserva?")) return;
+
+    db.collection("reservas").doc(reservaAtual.id)
+        .delete()
+        .then(() => {
+            fecharModal();
+            console.log("✔ Reserva apagada");
+        })
+        .catch(err => console.error("Erro ao apagar:", err));
+};
+/******************************************************
+ * 22) EVENTOS PRINCIPAIS (IMPORTAR EXCEL, NOVA RESERVA)
+ ******************************************************/
+function ligarEventosPrincipais() {
+
+    // Botão Nova Reserva
+    document.getElementById("btnNovaReserva").onclick = () => {
+        modoEdicao = false;
+        reservaAtual = null;
+
+        preencherModal({
+            cliente: "",
+            pais: "",
+            origem: "Particular",
+            apartamentos: [],
+            checkin: "",
+            checkout: "",
+            totalBruto: 0,
+            pagamentos: []
+        });
+
+        abrirModal();
+    };
+
+    // Botão Importar Excel
+    document.getElementById("btnImportarExcel").onclick = () => {
+        document.getElementById("inputExcel").click();
+    };
+
+    // Input Excel
+    document.getElementById("inputExcel").onchange = importarExcel;
+
+    // Ir para calendário
+    document.getElementById("btnIrCalendario").onclick = () => {
+        window.location.href = "calendario.html";
+    };
+}
+
+
+/******************************************************
+ * 23) IMPORTAR EXCEL
+ ******************************************************/
+async function importarExcel(event) {
     const file = event.target.files[0];
     if (!file) return;
 
     const data = await file.arrayBuffer();
     const workbook = XLSX.read(data);
+
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     const linhas = XLSX.utils.sheet_to_json(sheet);
 
-    const bookingIdsImportados = new Set();
-    let reservasSimulacao = [...reservas];
-    const hoje = new Date();
+    processarExcel(linhas);
+}
 
-    for (const linha of linhas) {
-        const bookingId = String(linha["Número da reserva"] || "").trim();
-        if (!bookingId) continue;
 
-        bookingIdsImportados.add(bookingId);
+/******************************************************
+ * 24) PROCESSAR DADOS DO EXCEL
+ ******************************************************/
+function processarExcel(linhas) {
+    const novas = [];
+    const idsExcel = new Set();
 
-        // 🔹 Datas principais
-        const checkin = normalizarDataBooking(linha["Check-in"]);
-        const checkout = normalizarDataBooking(linha["Check-out"]);
+    linhas.forEach(l => {
+        const id = l["ID"] || gerarIdLocal();
+        idsExcel.add(id);
 
-        // 🔹 Data em que a reserva foi feita (para estatísticas por mês/ano de reserva)
-        const dataReserva = normalizarDataBooking(linha["Reservado em"]);
+        const reserva = {
+            id,
+            cliente: l["Cliente"] || "",
+            pais: l["País"] || "",
+            origem: l["Origem"] || "Particular",
+            apartamentos: (l["Apartamento"] || "").toString().split(",").map(a => a.trim()).filter(a => a),
+            checkin: l["Check-in"] || "",
+            checkout: l["Check-out"] || "",
+            totalBruto: numeroSeguro(l["Total"]),
+            pagamentos: extrairPagamentosExcel(l)
+        };
 
-        // 🔹 Data de cancelamento (se existir)
-        const dataCancelamento = normalizarDataBooking(linha["Data de cancelamento"]);
+        novas.push(reserva);
+    });
 
-        // 🔹 Valores (tratados, mesmo que venham com EUR, vírgulas, etc.)
-        const totalBruto = normalizarValorBooking(linha["Preço"]);
-        const comissaoOriginal = normalizarValorBooking(linha["Comissão"] || linha["Valor da comissão"]);
+    sincronizarExcelFirestore(novas, idsExcel);
+}
 
-        // 🔹 Cálculo de comissões (inclui 1,4% extra)
-        const { comissaoExtra, comissaoTotal, liquidoReal } =
-            calcularComissoesBooking(totalBruto, comissaoOriginal);
 
-        const noites = calcularNoites(checkin, checkout);
-        const precoNoite = noites > 0 ? totalBruto / noites : 0;
+/******************************************************
+ * 25) EXTRAIR PAGAMENTOS DO EXCEL
+ ******************************************************/
+function extrairPagamentosExcel(linha) {
+    const pagamentos = [];
 
-        // 🔹 Liquido antigo (mantido por compatibilidade)
-        const liquido = totalBruto - comissaoOriginal;
+    Object.keys(linha).forEach(k => {
+        if (k.toLowerCase().includes("pagamento")) {
+            const valor = numeroSeguro(linha[k]);
+            if (valor > 0) pagamentos.push({ valor });
+        }
+    });
 
-        // Limpeza calculada pelo CHECK-IN (regra correta)
-        const limpeza = calcularLimpeza(checkin);
-        const totalLiquidoFinal = liquido - limpeza;
+    return pagamentos;
+}
 
-        const quartos = Number(linha["Quartos"] || 1);
 
-        const dtCheckin = parseDataPt(checkin);
-        const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
-        const diasParaCheckin = dtCheckin ? diasEntre(new Date(), dtCheckin) : null;
+/******************************************************
+ * 26) SINCRONIZAR EXCEL ↔ FIRESTORE
+ ******************************************************/
+function sincronizarExcelFirestore(novas, idsExcel) {
 
-        const existente = reservasSimulacao.find(r => r.bookingId === bookingId);
+    const existentes = [...reservas];
+    const desaparecidas = [];
 
-        let apartamentos = [];
-        let status = "alocado";
+    // Identificar reservas removidas do Excel
+    existentes.forEach(r => {
+        if (!idsExcel.has(r.id)) {
+            desaparecidas.push(r);
+        }
+    });
 
-        if (existente && existente.apartamentos?.length > 0) {
-            if (reservaJaComecou || (diasParaCheckin !== null && diasParaCheckin <= DIAS_SEGURANCA_REALOCA)) {
-                apartamentos = existente.apartamentos;
-            } else {
-                const reservasBase = reservasSimulacao.filter(r => r.id !== existente.id);
-                apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
-                if (apartamentos.length === 0) status = "sem_alocacao";
-            }
+    reservasDesaparecidas = desaparecidas;
+
+    if (desaparecidas.length > 0) {
+        abrirModalDesaparecidas();
+    }
+
+    // Criar ou atualizar reservas
+    novas.forEach(r => {
+        const existente = existentes.find(x => x.id === r.id);
+
+        if (!existente) {
+            // Criar nova
+            db.collection("reservas").doc(r.id).set(r);
         } else {
-            const reservasBase = existente
-                ? reservasSimulacao.filter(r => r.id !== existente.id)
-                : reservasSimulacao;
-
-            apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasBase);
-            if (apartamentos.length === 0) status = "sem_alocacao";
+            // Atualizar existente
+            db.collection("reservas").doc(r.id).update(r);
         }
+    });
 
-        // 🔹 Campos extra da Booking para estatísticas
-        const paisCliente = String(linha["Booker country"] || "").trim();
-        const modoViagem = String(linha["Modo de viagem"] || "").trim(); // Lazer / Negócios
-        const metodoPagamento = String(linha["Método de pagamento (provedor de pagamento)"] || "").trim();
-        const estadoPagamentoOrigem = String(linha["Estado do pagamento"] || "").trim();
-        const comentarios = String(linha["Comentários"] || "").trim();
+    console.log("✔ Sincronização Excel concluída");
+}
 
-        // Se tiveres uma coluna que indica PC / Telemóvel, mapeia aqui:
-        const dispositivo = String(linha["Dispositivo"] || linha["Canal"] || "").trim();
 
-        const dados = {
-    origem: "Booking",
-    bookingId,
+/******************************************************
+ * 27) MODAL DE RESERVAS DESAPARECIDAS
+ ******************************************************/
+function abrirModalDesaparecidas() {
+    const modal = document.getElementById("modalDesaparecidas");
+    const lista = document.getElementById("listaDesaparecidas");
 
-    // 🔹 Identificação do cliente
-    cliente: formatarNome(linha["Nome do hóspede"] || "Hóspede"),
-    reservadoPor: linha["Reservado por"] || "",
-    estadoReservaOrigem: linha["Estado"] || "",
-    tipoUnidade: linha["Tipo de unidade"] || "",
-    morada: linha["Morada"] || "",
-    telefone: linha["Telefone"] || "",
+    lista.innerHTML = reservasDesaparecidas.map(r => `
+        <label>
+            <input type="checkbox" class="chkDesaparecida" data-id="${r.id}">
+            ${r.cliente} (${r.checkin} → ${r.checkout})
+        </label><br>
+    `).join("");
 
-    // 🔹 Alojamento
-    quartos,
-    apartamentos,
-    checkin,
-    checkout,
-    hospedes: Number(linha["Pessoas"] || 0),
-    adultos: Number(linha["Adultos"] || 0),
-    criancas: Number(linha["Crianças"] || 0),
-    idadesCriancas: linha["Idade da(s) criança(s)"] || "",
+    modal.style.display = "flex";
+}
 
-    // 🔹 Valores originais
-    totalBruto,
-    comissao: comissaoOriginal,
-    precoNoite,
-    noites,
-    liquido,
-    limpeza,
-    totalLiquidoFinal,
+function fecharModalDesaparecidas() {
+    document.getElementById("modalDesaparecidas").style.display = "none";
+}
 
-    // 🔹 Financeiro (com a tua comissão extra automática de 1,4%)
-    comissaoExtra,
-    comissaoTotal,
-    liquidoReal,
+function confirmarApagarDesaparecidas() {
+    const selecionadas = [...document.querySelectorAll(".chkDesaparecida:checked")]
+        .map(chk => chk.dataset.id);
 
-    // 🔹 Datas e contexto
-    dataReserva,
-    dataCancelamento: dataCancelamento || null,
-    paisCliente,
-    modoViagem,
-    metodoPagamento,
-    estadoPagamentoOrigem,
-    comentarios,
-    dispositivo,
+    selecionadas.forEach(id => {
+        db.collection("reservas").doc(id).delete();
+    });
 
-    // 🔹 Outros
-    berco: false,
-    status
-};
+    fecharModalDesaparecidas();
+}
 
-        if (existente) {
-            await db.collection("reservas").doc(existente.id).update(dados);
-            const idx = reservasSimulacao.findIndex(r => r.id === existente.id);
-            reservasSimulacao[idx] = { ...reservasSimulacao[idx], ...dados };
-        } else {
-            const docRef = await db.collection("reservas").add(dados);
-            reservasSimulacao.push({ id: docRef.id, ...dados });
+
+/******************************************************
+ * 28) ALOCAÇÃO INTELIGENTE DE APARTAMENTOS
+ ******************************************************/
+function alocarAutomaticamente(r) {
+    const aps = ["2301", "2203", "2204"];
+
+    for (const ap of aps) {
+        if (!existeConflito(r, ap)) {
+            return [ap];
         }
     }
 
-    // Apagar reservas Booking que desapareceram
-    await verificarReservasBookingDesaparecidas(bookingIdsImportados);
-
-    carregarReservas();
+    return []; // sem alocação possível
 }
 
-// -------------------------------------------------------------
-// 14) APAGAR RESERVAS BOOKING QUE DESAPARECERAM DO EXCEL
-// -------------------------------------------------------------
-async function verificarReservasBookingDesaparecidas(bookingIdsImportados) {
-    const snap = await db.collection("reservas").get();
-    const atuais = [];
-    snap.forEach(doc => atuais.push({ id: doc.id, ...doc.data() }));
+function existeConflito(r, ap) {
+    const d1 = parseData(r.checkin);
+    const d2 = parseData(r.checkout);
 
-    const desaparecidas = atuais.filter(r =>
-        r.origem === "Booking" &&
-        r.bookingId &&
-        !bookingIdsImportados.has(r.bookingId)
-    );
+    return reservas.some(x => {
+        if (!x.apartamentos || !x.apartamentos.includes(ap)) return false;
 
-    if (desaparecidas.length === 0) return;
+        const x1 = parseData(x.checkin);
+        const x2 = parseData(x.checkout);
 
-    // 👉 Agora usamos o modal personalizado
-    abrirModalDesaparecidas(desaparecidas);
-}
-
-
-// -------------------------------------------------------------
-// 15) FORMATAR DATA DO EXCEL
-// -------------------------------------------------------------
-function formatarDataExcel(valor) {
-    if (!valor) return "";
-    const dt = XLSX.SSF.parse_date_code(valor);
-    return `${String(dt.d).padStart(2, "0")}/${String(dt.m).padStart(2, "0")}/${dt.y}`;
-}
-// -------------------------------------------------------------
-// HELPER: Normalizar valor vindo do Excel Booking ("225,57 EUR", "225.57", etc.)
-// -------------------------------------------------------------
-function normalizarValorBooking(raw) {
-    if (raw === undefined || raw === null) return 0;
-
-    let txt = String(raw).trim();
-
-    // Remove "EUR", "€" e espaços
-    txt = txt.replace(/EUR/gi, "")
-             .replace(/€/g, "")
-             .replace(/\s+/g, "");
-
-    // Troca vírgula por ponto
-    txt = txt.replace(",", ".");
-
-    const num = parseFloat(txt);
-    return isNaN(num) ? 0 : num;
-}
-
-// -------------------------------------------------------------
-// HELPER: Normalizar data Booking (aceita número Excel ou string)
-// devolve sempre dd/mm/yyyy (compatível com o resto do sistema)
-// -------------------------------------------------------------
-function normalizarDataBooking(valor) {
-    if (!valor) return "";
-
-    // Se vier como número (serial Excel)
-    if (typeof valor === "number") {
-        const dt = XLSX.SSF.parse_date_code(valor);
-        if (!dt) return "";
-        const dia = String(dt.d).padStart(2, "0");
-        const mes = String(dt.m).padStart(2, "0");
-        const ano = dt.y;
-        return `${dia}/${mes}/${ano}`;
-    }
-
-    // Se vier como string
-    const txt = String(valor).trim();
-
-    // Tentar formatos comuns
-    // 2023-08-01
-    if (/^\d{4}-\d{2}-\d{2}$/.test(txt)) {
-        const [ano, mes, dia] = txt.split("-");
-        return `${dia}/${mes}/${ano}`;
-    }
-
-    // 01/08/2023 ou 1/8/23
-    if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(txt)) {
-        const [d, m, a] = txt.split("/");
-        const dia = String(d).padStart(2, "0");
-        const mes = String(m).padStart(2, "0");
-        const ano = a.length === 2 ? `20${a}` : a;
-        return `${dia}/${mes}/${ano}`;
-    }
-
-    // Se nada bater certo, devolve vazio para não estragar
-    return "";
-}
-
-// -------------------------------------------------------------
-// HELPER: Calcular comissões Booking (base + 1,4% extra)
-// -------------------------------------------------------------
-function calcularComissoesBooking(totalBruto, comissaoOriginal) {
-    const comissaoExtra = totalBruto * 0.014; // 1,4%
-    const comissaoTotal = comissaoOriginal + comissaoExtra;
-    const liquidoReal = totalBruto - comissaoTotal;
-
-    return { comissaoExtra, comissaoTotal, liquidoReal };
-}
-
-// -------------------------------------------------------------
-// 16) SELECIONAR / APAGAR SELECIONADAS
-// -------------------------------------------------------------
-const selectAllCheckbox = document.getElementById("selectAll");
-
-if (selectAllCheckbox) {
-    selectAllCheckbox.addEventListener("change", function () {
-        const checkboxes = document.querySelectorAll(".selectReserva");
-        checkboxes.forEach(cb => cb.checked = this.checked);
+        return d1 <= x2 && d2 >= x1;
     });
 }
-
-const btnApagarSelecionadas = document.getElementById("btnApagarSelecionadas");
-
-if (btnApagarSelecionadas) {
-    btnApagarSelecionadas.addEventListener("click", async () => {
-        const selecionadas = [...document.querySelectorAll(".selectReserva:checked")];
-
-        if (selecionadas.length === 0) {
-            alert("Nenhuma reserva selecionada.");
-            return;
-        }
-
-        if (!confirm(`Apagar ${selecionadas.length} reservas?`)) return;
-
-        for (const cb of selecionadas) {
-            const id = cb.dataset.id;
-
-            await db.collection("reservas").doc(id).delete();
-
-            const snapCal = await db.collection("calendario")
-                .where("id", "==", id)
-                .get();
-
-            snapCal.forEach(doc => doc.ref.delete());
-        }
-
-        alert("Reservas apagadas.");
-        carregarReservas();
-    });
-}
-
-// -------------------------------------------------------------
-// 17) ENVIAR PARA O CALENDÁRIO (MANUAL)
-// -------------------------------------------------------------
-const btnEnviarCalendarioEl = document.getElementById("btnEnviarCalendario");
-
-if (btnEnviarCalendarioEl) {
-    btnEnviarCalendarioEl.addEventListener("click", async () => {
-
-        console.log("BOTÃO CLICADO");
-
-        const selecionadas = [...document.querySelectorAll(".selectReserva:checked")];
-        console.log("Selecionadas:", selecionadas.length);
-        console.log("IDs selecionados:", selecionadas.map(x => x.dataset.id));
-
-        if (selecionadas.length === 0) {
-            alert("Nenhuma reserva selecionada.");
-            return;
-        }
-
-        for (const cb of selecionadas) {
-            const id = cb.dataset.id;
-            console.log("A processar ID:", id);
-
-            const doc = await db.collection("reservas").doc(id).get();
-            if (!doc.exists) {
-                console.log("Documento não existe:", id);
-                continue;
-            }
-
-            const dados = doc.data();
-            console.log("Dados da reserva:", dados);
-
-            // Verificar se já existe no calendário
-            const existenteCal = await db.collection("calendario")
-                .where("id", "==", id)
-                .get();
-
-            if (!existenteCal.empty) {
-                // Atualizar o documento existente
-                const docRef = existenteCal.docs[0].ref;
-
-                await docRef.update({
-                    ...dados,
-                    origem: dados.origem?.toLowerCase() || "",
-                    checkin: dataPtParaIso(dados.checkin),
-                    checkout: dataPtParaIso(dados.checkout),
-                    enviadoParaCalendario: true,
-                    atualizadoEm: new Date()
-                });
-
-                console.log("Reserva atualizada no calendário:", id);
-                continue;
-            }
-
-            // Se não existir → adicionar
-            await db.collection("calendario").add({
-                ...dados,
-                origem: dados.origem?.toLowerCase() || "",
-                checkin: dataPtParaIso(dados.checkin),
-                checkout: dataPtParaIso(dados.checkout),
-                id: id,
-                enviadoParaCalendario: true,
-                criadoEm: new Date()
-            });
-
-            console.log("Reserva enviada para calendário:", id);
-        }
-
-           alert("Reservas enviadas para o calendário.");
-    });
-}
-
-// -------------------------------------------------------------
-// MOSTRAR / ESCONDER CAMPOS DE PAGAMENTO PARCIAL
-// -------------------------------------------------------------
-document.getElementById("statusPagamento").addEventListener("change", () => {
-    const status = document.getElementById("statusPagamento").value;
-    const campos = document.getElementById("pagamentoParcialCampos");
-
-    campos.style.display = status === "parcial" ? "block" : "none";
-});
-
-// -------------------------------------------------------------
-// AUTOMÁTICO DO VALOR EM FALTA (PAGAMENTO PARCIAL)
-// -------------------------------------------------------------
-document.getElementById("valorPagoParcial").addEventListener("input", () => {
-    const total = Number(document.getElementById("totalBruto").value || 0);
-    const pagoParcial = Number(document.getElementById("valorPagoParcial").value || 0);
-    const pagoFinal = Number(document.getElementById("valorPagoFinal").value || 0);
-
-    const totalPago = pagoParcial + pagoFinal;
-    const falta = total - totalPago;
-
-    document.getElementById("valorEmFalta").value = falta > 0 ? falta.toFixed(2) : "0.00";
-});
-
-document.getElementById("valorPagoFinal").addEventListener("input", () => {
-    const total = Number(document.getElementById("totalBruto").value || 0);
-    const pagoParcial = Number(document.getElementById("valorPagoParcial").value || 0);
-    const pagoFinal = Number(document.getElementById("valorPagoFinal").value || 0);
-
-    const totalPago = pagoParcial + pagoFinal;
-    const falta = total - totalPago;
-
-    document.getElementById("valorEmFalta").value = falta > 0 ? falta.toFixed(2) : "0.00";
-});
-
-// -------------------------------------------------------------
-// 20) APAGAR RESERVAS FANTASMA DO CALENDÁRIO
-// -------------------------------------------------------------
-
-async function apagarReservasFantasmaDoCalendario() {
-    const snapCal = await db.collection("calendario").get();
-    const todasCalendario = [];
-    snapCal.forEach(doc => todasCalendario.push({ idDoc: doc.id, ...doc.data() }));
-
-    const snapRes = await db.collection("reservas").get();
-    const todasReservas = [];
-    snapRes.forEach(doc => todasReservas.push({ id: doc.id, ...doc.data() }));
-
-    const idsReservas = new Set(todasReservas.map(r => r.id));
-    const bookingIdsReservas = new Set(todasReservas.map(r => r.bookingId).filter(x => x));
-
-    const fantasmas = todasCalendario.filter(c =>
-        !idsReservas.has(c.id) &&
-        (!c.bookingId || !bookingIdsReservas.has(c.bookingId))
-    );
-
-    if (fantasmas.length === 0) {
-        alert("Não há reservas fantasma no calendário.");
-        return;
-    }
-
-    let msg = "As seguintes reservas estão no calendário mas não existem na listagem:\n\n";
-    fantasmas.forEach(f => {
-        msg += `• ${f.bookingId || "(sem bookingId)"} — ${f.cliente || "?"} (${f.checkin} → ${f.checkout})\n`;
-    });
-    msg += "\nQueres apagá-las do calendário?";
-
-    if (!confirm(msg)) return;
-
-    for (const f of fantasmas) {
-        if (!f.idDoc) {
-            console.warn("Reserva fantasma sem idDoc:", f);
-            continue;
-        }
-
-        try {
-            await db.collection("calendario").doc(f.idDoc).delete();
-            console.log("Apagado do calendário:", f.idDoc, f.cliente, f.bookingId);
-        } catch (erro) {
-            console.error("Erro ao apagar:", f.idDoc, erro);
-        }
-    }
-
-    alert("Reservas fantasma apagadas do calendário.");
-}
-
-// -------------------------------------------------------------
-// 18) LIGAR EVENTOS DA PÁGINA
-// -------------------------------------------------------------
-function ligarEventos() {
-
-        // --- LIGAR FILTROS ---
-    const filtroAnoInicio = document.getElementById("filtroAnoInicio");
-    const filtroMesInicio = document.getElementById("filtroMesInicio");
-    const filtroAnoFim = document.getElementById("filtroAnoFim");
-    const filtroMesFim = document.getElementById("filtroMesFim");
-
-    if (filtroAnoInicio) filtroAnoInicio.addEventListener("change", aplicarFiltroIntervalo);
-    if (filtroMesInicio) filtroMesInicio.addEventListener("change", aplicarFiltroIntervalo);
-    if (filtroAnoFim) filtroAnoFim.addEventListener("change", aplicarFiltroIntervalo);
-    if (filtroMesFim) filtroMesFim.addEventListener("change", aplicarFiltroIntervalo);
-
-
-    // Botão Nova Reserva
-    const btnNova = document.getElementById("btnNovaReserva");
-    if (btnNova) btnNova.addEventListener("click", novaReserva);
-
-    // Botão Importar Excel
-    const btnImportar = document.getElementById("btnImportarExcel");
-    const inputExcel = document.getElementById("inputExcel");
-
-    if (btnImportar && inputExcel) {
-        btnImportar.addEventListener("click", () => inputExcel.click());
-        inputExcel.addEventListener("change", importarExcelBooking);
-    }
-
-    // Botão Guardar
-    const btnGuardar = document.getElementById("btnGuardar");
-    if (btnGuardar) btnGuardar.addEventListener("click", guardarReserva);
-
-    // Botão Apagar
-    const btnApagar = document.getElementById("btnApagar");
-    if (btnApagar) btnApagar.addEventListener("click", apagarReservaConfirmar);
-
-    // Fechar modal
-    const fechar = document.getElementById("fecharModal");
-    if (fechar) fechar.addEventListener("click", fecharModal);
-
-
-    // Ir para calendário
-    const btnIrCalendario = document.getElementById("btnIrCalendario");
-    if (btnIrCalendario) {
-        btnIrCalendario.addEventListener("click", () => {
-            window.location.href = "calendario.html";
-        });
-    }
-
-    // Limpar fantasmas
-    const btnLimparFantasmas = document.getElementById("btnLimparFantasmas");
-    if (btnLimparFantasmas) {
-        btnLimparFantasmas.addEventListener("click", apagarReservasFantasmaDoCalendario);
-    }
-}
-
-// -------------------------------------------------------------
-// 19) INICIAR SISTEMA (GARANTE QUE FIREBASE ESTÁ PRONTO)
-// -------------------------------------------------------------
-function iniciarSistema() {
-    ligarEventos();
-    carregarReservas();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    setTimeout(() => {
-        if (typeof db !== "undefined") {
-            iniciarSistema();
-        } else {
-            console.error("Firebase não inicializou a tempo. Tentando novamente...");
-            setTimeout(iniciarSistema, 300);
-        }
-    }, 200);
-});
-
-// -------------------------------------------------------------
-// MARCAR VÁRIAS RESERVAS COMO PAGAS TOTALMENTE
-// -------------------------------------------------------------
-document.getElementById("btnMarcarPagas").addEventListener("click", async () => {
-    const selecionadas = [...document.querySelectorAll(".selectReserva:checked")];
+/******************************************************
+ * 29) ENVIAR RESERVAS SELECIONADAS PARA O CALENDÁRIO
+ ******************************************************/
+document.getElementById("btnEnviarCalendario").onclick = () => {
+    const selecionadas = obterSelecionadas();
 
     if (selecionadas.length === 0) {
         alert("Nenhuma reserva selecionada.");
         return;
     }
 
-    if (!confirm(`Marcar ${selecionadas.length} reserva(s) como pagas totalmente?`)) {
+    if (!confirm("Enviar reservas selecionadas para o calendário?")) return;
+
+    selecionadas.forEach(id => {
+        const r = reservas.find(x => x.id === id);
+        if (!r) return;
+
+        const dadosCalendario = {
+            cliente: r.cliente,
+            origem: r.origem,
+            apartamentos: r.apartamentos || [],
+            checkin: r.checkin,
+            checkout: r.checkout,
+            totalBruto: r.totalBruto || 0
+        };
+
+        db.collection("calendario").doc(id).set(dadosCalendario)
+            .then(() => console.log("✔ Enviado para calendário:", id))
+            .catch(err => console.error("Erro ao enviar:", err));
+    });
+
+    alert("Reservas enviadas para o calendário.");
+};
+
+
+/******************************************************
+ * 30) APAGAR RESERVAS SELECIONADAS
+ ******************************************************/
+document.getElementById("btnApagarSelecionadas").onclick = () => {
+    const selecionadas = obterSelecionadas();
+
+    if (selecionadas.length === 0) {
+        alert("Nenhuma reserva selecionada.");
         return;
     }
 
-    for (const checkbox of selecionadas) {
-        const id = checkbox.dataset.id;
-        const r = reservas.find(x => x.id === id);
-        if (!r) continue;
+    if (!confirm("Tem a certeza que deseja apagar as reservas selecionadas?")) return;
 
-        const totalBruto = Number(r.totalBruto || 0);
-        const valorPago = Number(r.totalBruto || 0);
+    selecionadas.forEach(id => {
+        db.collection("reservas").doc(id).delete()
+            .then(() => console.log("✔ Reserva apagada:", id))
+            .catch(err => console.error("Erro ao apagar:", err));
+    });
+};
 
-        await db.collection("reservas").doc(id).update({
-            statusPagamento: "total",
-            valorPago: valorPago
-        });
+
+/******************************************************
+ * 31) MARCAR RESERVAS SELECIONADAS COMO PAGAS
+ ******************************************************/
+document.getElementById("btnMarcarPagas").onclick = () => {
+    const selecionadas = obterSelecionadas();
+
+    if (selecionadas.length === 0) {
+        alert("Nenhuma reserva selecionada.");
+        return;
     }
 
-    alert("Reservas atualizadas com sucesso.");
-    carregarReservas();
-});
+    if (!confirm("Marcar reservas selecionadas como pagas?")) return;
 
-let reservasDesaparecidasTemp = [];
+    selecionadas.forEach(id => {
+        const r = reservas.find(x => x.id === id);
+        if (!r) return;
 
-function abrirModalDesaparecidas(lista) {
-    reservasDesaparecidasTemp = lista;
+        const total = numeroSeguro(r.totalBruto);
 
-    const div = document.getElementById("listaDesaparecidas");
-    div.innerHTML = "";
-
-    lista.forEach(r => {
-        const p = document.createElement("p");
-        p.textContent = `${r.bookingId} — ${r.cliente} (${r.checkin} → ${r.checkout})`;
-        div.appendChild(p);
+        db.collection("reservas").doc(id).update({
+            pagamentos: [{ valor: total }]
+        });
     });
 
-    document.getElementById("modalDesaparecidas").style.display = "flex";
+    alert("Reservas marcadas como pagas.");
+};
+
+
+/******************************************************
+ * 32) OBTER IDS DAS RESERVAS SELECIONADAS
+ ******************************************************/
+function obterSelecionadas() {
+    return [...document.querySelectorAll(".selectReserva:checked")]
+        .map(chk => chk.dataset.id);
 }
+/******************************************************
+ * 33) EVENTOS DO MODAL (FECHAR AO CLICAR FORA)
+ ******************************************************/
+window.addEventListener("click", e => {
+    const modal = document.getElementById("modalReserva");
+    if (e.target === modal) fecharModal();
 
-function fecharModalDesaparecidas() {
-    document.getElementById("modalDesaparecidas").style.display = "none";
-    reservasDesaparecidasTemp = [];
-}
-
-async function confirmarApagarDesaparecidas() {
-    for (const r of reservasDesaparecidasTemp) {
-        await db.collection("reservas").doc(r.id).delete();
-
-        const snapCal = await db.collection("calendario")
-            .where("id", "==", r.id)
-            .get();
-
-        snapCal.forEach(doc => doc.ref.delete());
-    }
-
-    fecharModalDesaparecidas();
-    carregarReservas();
-    alert("Reservas apagadas.");
-}
-
-document.getElementById("origem").addEventListener("change", () => {
-    const origem = document.getElementById("origem").value;
-
-    // Percentagem automática
-    let percentagem = 0;
-
-    switch (origem.toLowerCase()) {
-        case "booking":
-            percentagem = 0.014;
-            break;
-        case "airbnb":
-            percentagem = 0.03;
-            break;
-        case "vrbo":
-            percentagem = 0.03;
-            break;
-        case "expedia":
-            percentagem = 0.02;
-            break;
-        case "agoda":
-            percentagem = 0.02;
-            break;
-        case "hotels":
-            percentagem = 0.02;
-            break;
-        case "trip":
-            percentagem = 0.02;
-            break;
-        case "particular":
-            percentagem = 0;
-            break;
-    }
-
-    document.getElementById("percentagemPagamento").value = percentagem;
-
-});
-
-// -------------------------------------------------------------
-// MOSTRAR / ESCONDER CAMPOS DE PAGAMENTO PARCIAL
-// -------------------------------------------------------------
-document.getElementById("statusPagamento").addEventListener("change", () => {
-    const status = document.getElementById("statusPagamento").value;
-    const campos = document.getElementById("pagamentoParcialCampos");
-
-    campos.style.display = status === "parcial" ? "block" : "none";
+    const modal2 = document.getElementById("modalDesaparecidas");
+    if (e.target === modal2) fecharModalDesaparecidas();
 });
 
 
+/******************************************************
+ * 34) PREVENIR ERROS DE INPUT (NÚMEROS)
+ ******************************************************/
+document.addEventListener("input", e => {
+    if (e.target.id === "modalTotal") {
+        e.target.value = e.target.value.replace(/[^\d.,]/g, "");
+    }
+});
+
+
+/******************************************************
+ * 35) LOGS DE DIAGNÓSTICO (APENAS PARA DESENVOLVIMENTO)
+ ******************************************************/
+function debugReserva(r) {
+    console.log("------ DEBUG RESERVA ------");
+    console.log("Cliente:", r.cliente);
+    console.log("Origem:", r.origem);
+    console.log("Check-in:", r.checkin);
+    console.log("Check-out:", r.checkout);
+    console.log("Aps:", r.apartamentos);
+    console.log("Total:", r.totalBruto);
+    console.log("Pagamentos:", r.pagamentos);
+    console.log("---------------------------");
+}
+
+
+/******************************************************
+ * 36) FUNÇÃO EXTRA — EXPORTAR RESERVAS (FUTURO)
+ * (Mantida para compatibilidade, mas vazia)
+ ******************************************************/
+function exportarReservas() {
+    console.log("Função exportarReservas() reservada para futuro.");
+}
+
+
+/******************************************************
+ * 37) INICIALIZAÇÃO FINAL
+ ******************************************************/
+console.log("✔ reservas-listagem.js carregado com sucesso");
 
