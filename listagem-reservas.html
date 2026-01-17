@@ -452,57 +452,7 @@ td button {
     vertical-align: middle;
 }
 
-/* ========================================================= */
-/*                 TABELA COMPACTA + STICKY HEADER           */
-/* ========================================================= */
 
-/* Cabeçalho fixo */
-#tabelaReservas thead th {
-    position: sticky;
-    top: 0;
-    background: white;
-    z-index: 5;
-}
-
-/* Reduzir um pouco, mas sem exageros */
-#tabelaReservas th[data-col="cliente"] {
-    max-width: 180px;
-}
-
-#tabelaReservas th[data-col="apartamentos"] {
-    max-width: 70px;
-}
-
-#tabelaReservas th[data-col="pessoas"] {
-    max-width: 90px;
-}
-
-/* Colunas financeiras mais estreitas, mas sem quebrar layout */
-#tabelaReservas th[data-col="precoNoite"],
-#tabelaReservas th[data-col="totalBruto"],
-#tabelaReservas th[data-col="comissaoServico"],
-#tabelaReservas th[data-col="comissaoPagamento"],
-#tabelaReservas th[data-col="comissaoTotal"],
-#tabelaReservas th[data-col="limpeza"],
-#tabelaReservas th[data-col="liquido"] {
-    max-width: 100px;
-    text-align: right;
-}
-
-/* Coluna Ações */
-#tabelaReservas th.no-sort {
-    width: 70px;
-}
-
-/* Permitir quebra de linha para evitar scroll */
-#tabelaReservas td {
-    white-space: normal;
-}
-
-/* Alinhar números à direita */
-#tabelaReservas td:nth-child(n+11):nth-child(-n+18) {
-    text-align: right;
-}
 
 </style>
 
