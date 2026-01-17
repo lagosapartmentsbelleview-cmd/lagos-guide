@@ -928,6 +928,10 @@ const comissaoExtra = totalBruto * (percentagem / 100);
 // 4. Calcular total de comissão
 const comissaoTotal = comissaoServico + comissaoExtra;
 
+// -------------------------------------------------------------
+// CALCULAR LÍQUIDO
+// -------------------------------------------------------------
+const liquido = totalBruto - comissaoTotal;
 
     // ---------------------------------------------------------
     // DADOS FINAIS DA RESERVA
