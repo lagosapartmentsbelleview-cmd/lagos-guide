@@ -914,6 +914,7 @@ const comissaoServico = parseFloat(document.getElementById("comissaoServico").va
 // ---------------------------------------------------------
 
 // 1. Percentagem manual (campo do formulário)
+let percentagemPagamento = document.getElementById("percentagemPagamento").value;
 let percentagem = parseFloat(percentagemPagamento);
 
 // 2. Se estiver vazio → usar valor automático do config
