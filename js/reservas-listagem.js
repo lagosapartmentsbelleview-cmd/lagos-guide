@@ -44,9 +44,6 @@ window.addEventListener("load", () => {
     // Ligar eventos dos botões principais
     ligarEventosPrincipais();
 
-    // Ligar eventos do modal
-    ligarEventosModal();
-
     // Carregar reservas do Firestore
     carregarReservas();
 
