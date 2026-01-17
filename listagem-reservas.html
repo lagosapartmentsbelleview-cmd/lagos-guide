@@ -36,10 +36,12 @@
 /*                        LAYOUT GERAL                       */
 /* ========================================================= */
 body {
+    margin: 0;                 /* remove margem padrão */
+    padding: 20px;             /* mantém espaço visual */
     font-family: Arial, sans-serif;
-    margin: 20px;
     background: var(--cor-fundo);
 }
+
 
 h1 {
     text-align: center;
@@ -507,12 +509,17 @@ td button {
 }
 
 .tabela-wrapper {
-    height: 70vh;        /* altura fixa */
-    overflow-y: auto;    /* scroll interno */
+    width: 100%;
+    max-width: 1400px;     /* ou 100% se quiseres tela total */
+    margin: 0 auto;         /* centra no ecrã */
+    height: 70vh;
+    overflow-y: auto;
     overflow-x: auto;
     position: relative;
-    background: white;   /* fica DENTRO da classe */
+    background: white;
+    box-sizing: border-box;
 }
+
 
 
 /* Botões de ação compactos */
