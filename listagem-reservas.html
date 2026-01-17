@@ -36,11 +36,11 @@
 /*                        LAYOUT GERAL                       */
 /* ========================================================= */
 body {
-    margin: 0;                 /* remove margem padrão */
-    padding: 20px;             /* mantém espaço visual */
     font-family: Arial, sans-serif;
+    margin: 20px;
     background: var(--cor-fundo);
 }
+
 
 
 h1 {
@@ -509,16 +509,13 @@ td button {
 }
 
 .tabela-wrapper {
-    width: 100%;
-    max-width: 1400px;     /* ou 100% se quiseres tela total */
-    margin: 0 auto;         /* centra no ecrã */
-    height: 70vh;
-    overflow-y: auto;
-    overflow-x: auto;
-    position: relative;
+    max-height: 70vh;     /* altura visível da tabela */
+    overflow-y: auto;     /* scroll vertical */
+    overflow-x: auto;     /* scroll horizontal se necessário */
+    position: relative;   /* necessário para sticky */
     background: white;
-    box-sizing: border-box;
 }
+
 
 
 
