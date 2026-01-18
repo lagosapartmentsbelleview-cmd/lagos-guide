@@ -49,3 +49,16 @@ th, td {
 th {
     background: #eee;
 }
+/* Botão Limpar Dados */
+.btn-limpar {
+    background-color: #e6e6e6;
+    color: #333;
+}
+
+/* Data de atualização */
+#infoAtualizacao {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #666;
+}
+
