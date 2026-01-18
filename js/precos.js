@@ -112,3 +112,30 @@ function guardarConcorrencia(dados) {
     // TODO: guardar em JSON local ou Firestore
     console.log("Dados prontos para guardar:", dados);
 }
+// Botão Limpar Dados
+document.getElementById("btnLimpar").addEventListener("click", function () {
+    const confirmar = confirm("Tem a certeza que deseja limpar todos os dados?\nEsta ação não pode ser anulada.");
+
+    if (!confirmar) {
+        return; // se cancelar, não faz nada
+    }
+
+    // 1. Limpar o array global
+    if (typeof dadosConcorrencia !== "undefined") {
+        dadosConcorrencia = [];
+    }
+
+    // 2. Limpar a tabela
+    const tabela = document.getElementById("tabelaPrecos");
+    if (tabela) {
+        tabela.innerHTML = "";
+    }
+
+    // 3. Limpar a data de atualização
+    const info = document.getElementById("infoAtualizacao");
+    if (info) {
+        info.textContent = "Última atualização: —";
+    }
+
+    alert("Dados limpos com sucesso.");
+});
