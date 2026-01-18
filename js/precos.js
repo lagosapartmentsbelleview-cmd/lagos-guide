@@ -31,14 +31,58 @@ btnExportar.addEventListener("click", () => {
 // ===============================
 
 function parseTextoConcorrencia(texto) {
-    // TODO: lógica real de parsing
-    // Por agora devolve um exemplo estático
+    const linhas = texto.split(/\r?\n/);
+    const meses = {
+        "janeiro": "01", "fevereiro": "02", "março": "03", "abril": "04",
+        "maio": "05", "junho": "06", "julho": "07", "agosto": "08",
+        "setembro": "09", "outubro": "10", "novembro": "11", "dezembro": "12"
+    };
 
-    return [
-        { data: "2026-01-19", dia: "Domingo", preco: 63 },
-        { data: "2026-01-20", dia: "Segunda", preco: 63 }
-    ];
+    let anoAtual = "";
+    let mesAtual = "";
+    let diaAtual = "";
+    const resultados = [];
+
+    for (let i = 0; i < linhas.length; i++) {
+        const linha = linhas[i].trim().toLowerCase();
+
+        // Detectar mês e ano
+        for (const nomeMes in meses) {
+            if (linha.includes(nomeMes)) {
+                mesAtual = meses[nomeMes];
+                const matchAno = linha.match(/\d{4}/);
+                if (matchAno) anoAtual = matchAno[0];
+                break;
+            }
+        }
+
+        // Detectar dia (número)
+        if (/^\d{1,2}$/.test(linha)) {
+            diaAtual = linha.padStart(2, "0");
+        }
+
+        // Detectar preço
+        if (linha.startsWith("€")) {
+            const preco = parseFloat(linha.replace(/[^\d,]/g, "").replace(",", "."));
+            if (diaAtual && mesAtual && anoAtual) {
+                const data = `${anoAtual}-${mesAtual}-${diaAtual}`;
+                const diaSemana = calcularDiaSemana(data);
+                resultados.push({ data, dia: diaSemana, preco });
+                diaAtual = ""; // reset para evitar duplicações
+            }
+        }
+    }
+
+    return resultados;
 }
+
+function calcularDiaSemana(dataStr) {
+    const dias = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+    const [ano, mes, dia] = dataStr.split("-");
+    const date = new Date(`${ano}-${mes}-${dia}`);
+    return dias[date.getDay()];
+}
+
 
 // ===============================
 // RENDERIZAÇÃO DA TABELA
