@@ -992,7 +992,20 @@ document.getElementById("statusPagamento").addEventListener("change", function (
         document.getElementById("valorPago").value = "0.00";
     }
 });
+
 </script>
+<script src="js/models/ReservaModel.js"></script>
+<script src="js/utils/ReservaUtils.js"></script>
+<script src="js/utils/ReservaFinanceiro.js"></script>
+<script src="js/utils/AlocacaoEngine.js"></script>
+<script src="js/importadores/BookingImportEngine.js"></script>
+
+<!-- ESTE TEM DE VIR ANTES -->
+<script src="js/services/ReservaService.js"></script>
+
+<!-- ESTE É O ÚLTIMO -->
+<script src="js/reservas-listagem.js"></script>
+
 
 </body>
 </html>
