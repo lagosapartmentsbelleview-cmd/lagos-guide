@@ -4,26 +4,21 @@
     <meta charset="UTF-8">
     <title>Calendário de Reservas</title>
 
-    <!-- CSS Global -->
-    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="calendario.css">
 
-    <!-- CSS Específico do Calendário -->
-    <link rel="stylesheet" href="css/calendario.css">
 </head>
 
 <body>
 
-<div class="container">
-
-    <!-- Botão Voltar -->
-    <button id="btnVoltarListagem" class="btn btn-secundario" onclick="window.location.href='reservas.html'">
+    <!-- Botão Voltar à Listagem -->
+    <button id="btnVoltarListagem" onclick="window.location.href='listagem-reservas.html'">
         ← Voltar à Listagem
     </button>
 
     <h1>Calendário de Reservas</h1>
 
-    <!-- Navegação do Mês -->
     <div id="navegacaoMes">
+
         <button id="btnMesAnterior">◀</button>
 
         <select id="selectMes"></select>
@@ -33,32 +28,19 @@
 
         <button id="btnHoje">Hoje</button>
         <button id="btnMesAtual">Mês Atual</button>
+
     </div>
 
     <h2 id="tituloMes"></h2>
 
-    <!-- Calendário -->
     <div id="calendarioWrapper">
         <table id="tabelaCalendario"></table>
     </div>
 
-</div>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-
-<script src="js/firebase-config.js"></script>
-
-<script>
-firebase.auth().onAuthStateChanged(user => {
-    if (!user) window.location.href = "login.html";
-});
-</script>
-
-<!-- JS do Calendário -->
-<script src="js/reservas-calendario.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/reservas-calendario.js"></script>
 
 </body>
 </html>
