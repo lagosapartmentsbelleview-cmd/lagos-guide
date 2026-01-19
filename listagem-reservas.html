@@ -491,64 +491,53 @@ td button {
     <input type="file" id="inputExcel" accept=".xlsx" style="display:none">
 
    
-<!-- 🔽🔽🔽 COLAR OS FILTROS AQUI 🔽🔽🔽 -->
-<div id="filtros" style="margin: 15px 0;">
-   <select id="filtroAnoInicio" onchange="aplicarFiltroIntervalo()">
-    <option value="">Ano início</option>
-    <option value="2020">2020</option>
-    <option value="2021">2021</option>
-    <option value="2022">2022</option>
-    <option value="2023">2023</option>
-    <option value="2024">2024</option>
-    <option value="2025">2025</option>
-    <option value="2026">2026</option>
-    <option value="2027">2027</option>
+<div id="filtros" class="filtros-container">
+
+    <input type="text" id="filtroTexto" placeholder="Pesquisar..." class="filtro-input">
+
+    <select id="filtroOrigem" class="filtro-select">
+        <option value="">Origem (todas)</option>
+        <option value="Booking">Booking</option>
+        <option value="Manual">Manual</option>
     </select>
 
-    <select id="filtroMesInicio" onchange="aplicarFiltroIntervalo()">
-        <option value="">Mês início</option>
-        <option value="1">Janeiro</option>
-        <option value="2">Fevereiro</option>
-        <option value="3">Março</option>
-        <option value="4">Abril</option>
-        <option value="5">Maio</option>
-        <option value="6">Junho</option>
-        <option value="7">Julho</option>
-        <option value="8">Agosto</option>
-        <option value="9">Setembro</option>
-        <option value="10">Outubro</option>
-        <option value="11">Novembro</option>
-        <option value="12">Dezembro</option>
+    <select id="filtroApartamento" class="filtro-select">
+        <option value="">Apartamento (todos)</option>
+        <option value="2301">2301</option>
+        <option value="2203">2203</option>
+        <option value="2204">2204</option>
     </select>
 
-    <select id="filtroAnoFim" onchange="aplicarFiltroIntervalo()">
-    <option value="">Ano fim</option>
-    <option value="2020">2020</option>
-    <option value="2021">2021</option>
-    <option value="2022">2022</option>
-    <option value="2023">2023</option>
-    <option value="2024">2024</option>
-    <option value="2025">2025</option>
-    <option value="2026">2026</option>
-    <option value="2027">2027</option>
-</select>
-
-    <select id="filtroMesFim" onchange="aplicarFiltroIntervalo()">
-        <option value="">Mês fim</option>
-        <option value="1">Janeiro</option>
-        <option value="2">Fevereiro</option>
-        <option value="3">Março</option>
-        <option value="4">Abril</option>
-        <option value="5">Maio</option>
-        <option value="6">Junho</option>
-        <option value="7">Julho</option>
-        <option value="8">Agosto</option>
-        <option value="9">Setembro</option>
-        <option value="10">Outubro</option>
-        <option value="11">Novembro</option>
-        <option value="12">Dezembro</option>
+    <select id="filtroEstado" class="filtro-select">
+        <option value="">Estado (todos)</option>
+        <option value="alocado">Alocado</option>
+        <option value="sem_alocacao">Sem alocação</option>
     </select>
+
+    <select id="filtroPagamento" class="filtro-select">
+        <option value="">Pagamento (todos)</option>
+        <option value="total">Pago total</option>
+        <option value="parcial">Parcial</option>
+        <option value="pendente">Pendente</option>
+        <option value="nao_pago">Não pago</option>
+    </select>
+
+    <input type="text" id="filtroPais" placeholder="País" class="filtro-input">
+
+    <input type="number" id="filtroNoitesMin" placeholder="Noites min" class="filtro-num">
+    <input type="number" id="filtroNoitesMax" placeholder="Noites max" class="filtro-num">
+
+    <input type="number" id="filtroValorMin" placeholder="Valor min" class="filtro-num">
+    <input type="number" id="filtroValorMax" placeholder="Valor max" class="filtro-num">
+
+    <input type="number" id="filtroHospedesMin" placeholder="Hósp. min" class="filtro-num">
+    <input type="number" id="filtroHospedesMax" placeholder="Hósp. max" class="filtro-num">
+
+    <input type="date" id="filtroDataInicio" class="filtro-date">
+    <input type="date" id="filtroDataFim" class="filtro-date">
+
 </div>
+
    
     <table id="tabelaReservas">
     <thead id="theadReservas">
