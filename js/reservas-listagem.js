@@ -1,5 +1,5 @@
 // ---------------------------------------------------------
-// IMPORTS (ajusta paths se necessário)
+// IMPORTS (se um dia usares módulos ES6)
 // ---------------------------------------------------------
 // import { ReservaModel } from "./models/ReservaModel.js";
 // import { ReservaUtils } from "./utils/ReservaUtils.js";
@@ -83,6 +83,11 @@ async function carregarReservas() {
     reservasFiltradas = [...reservas];
 }
 
+
+// ---------------------------------------------------------
+// RENDERIZAR TABELA (VERSÃO PROFISSIONAL)
+// ---------------------------------------------------------
+
 function renderTabela() {
     const tbody = document.querySelector("#tabelaReservas tbody");
     if (!tbody) return;
@@ -154,46 +159,6 @@ function renderTabela() {
             <td>
                 <button class="btn-icon btnEditar" data-id="${r.id}">✏️</button>
                 <button class="btn-icon btnApagar" data-id="${r.id}">🗑️</button>
-            </td>
-        `;
-
-        tbody.appendChild(tr);
-    });
-
-    ligarEventosTabela();
-}
-
-// ---------------------------------------------------------
-// RENDERIZAR TABELA
-// ---------------------------------------------------------
-
-function renderTabela() {
-    const tbody = document.querySelector("#tabelaReservas tbody");
-    if (!tbody) return;
-
-    tbody.innerHTML = "";
-
-    reservasFiltradas.forEach(r => {
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-            <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
-            <td>${r.origem ?? ""}</td>
-            <td>${r.bookingId ?? ""}</td>
-            <td>${r.cliente ?? ""}</td>
-            <td>${r.paisCliente ? `<img src="flags/${r.paisCliente}.svg" class="flag">` : ""}</td>
-            <td>${r.checkin}</td>
-            <td>${r.checkout}</td>
-            <td>${r.hospedes}</td>
-            <td>${r.apartamentos?.length > 0 
-                    ? r.apartamentos.join(", ") 
-                    : "<span style='color:#c62828;font-weight:bold'>Não alocado</span>"
-                }
-            </td>
-            <td>${r.totalBruto} €</td>
-            <td>
-                <button class="btnEditar" data-id="${r.id}">Editar</button>
-                <button class="btnApagar" data-id="${r.id}">Apagar</button>
             </td>
         `;
 
