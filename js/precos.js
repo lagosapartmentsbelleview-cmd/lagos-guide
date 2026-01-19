@@ -2,6 +2,17 @@
 // FIREBASE – CARREGAR DADOS AO INICIAR
 // ===============================
 
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        alert("Sessão expirada. Por favor faça login novamente.");
+        window.location.href = "login.html"; // ajusta para o teu login
+        return;
+    }
+
+    console.log("Utilizador autenticado:", user.email);
+});
+
+
 const tabelaBody = document.querySelector("#tabelaResultados tbody");
 
 // Carregar dados guardados no Firebase ao abrir a página
