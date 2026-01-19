@@ -1,10 +1,3 @@
-import { ReservaModel } from "./models/ReservaModel.js";
-import { ReservaUtils } from "./utils/ReservaUtils.js";
-import { ReservaFinanceiro } from "./utils/ReservaFinanceiro.js";
-import { AlocacaoEngine } from "./utils/AlocacaoEngine.js";
-import { BookingImportEngine } from "./importadores/BookingImportEngine.js";
-import { ReservaService } from "./services/ReservaService.js";
-
 /******************************************************
  * 0) ESTADO GLOBAL
  ******************************************************/
@@ -14,64 +7,40 @@ let mesOffset = 0;
 // Lista fixa de apartamentos
 const apartamentos = ["2301", "2203", "2204"];
 
-// Referências globais
-let selectMes, selectAno;
-
-// Capturar posição do rato para tooltip flutuante
-document.addEventListener("mousemove", e => {
-    document.documentElement.style.setProperty("--mouse-x", e.clientX + "px");
-    document.documentElement.style.setProperty("--mouse-y", e.clientY + "px");
-});
-
-
 /******************************************************
  * 1) INICIALIZAÇÃO
  ******************************************************/
 window.addEventListener("load", () => {
-
     carregarReservas();
-    inicializarDropdowns();
-    ligarEventosNavegacao();
 
-    console.log("✔ Calendário inicializado");
+    // Preencher dropdown de meses
+const meses = [
+    "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+    "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+];
+
+const selectMes = document.getElementById("selectMes");
+meses.forEach((nome, index) => {
+    const opt = document.createElement("option");
+    opt.value = index;
+    opt.textContent = nome;
+    selectMes.appendChild(opt);
 });
 
-
-/******************************************************
- * 2) DROPDOWNS DE MÊS E ANO
- ******************************************************/
-function inicializarDropdowns() {
-
-    const meses = [
-        "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-        "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
-    ];
-
-    selectMes = document.getElementById("selectMes");
-    selectAno = document.getElementById("selectAno");
-
-    // Preencher meses
-    meses.forEach((nome, index) => {
-        const opt = document.createElement("option");
-        opt.value = index;
-        opt.textContent = nome;
-        selectMes.appendChild(opt);
-    });
-
-    // Preencher anos
-    const anoAtual = new Date().getFullYear();
-    for (let a = anoAtual - 5; a <= anoAtual + 10; a++) {
-        const opt = document.createElement("option");
-        opt.value = a;
-        opt.textContent = a;
-        if (a === anoAtual) opt.selected = true;
-        selectAno.appendChild(opt);
-    }
-
-    // Eventos
-    selectMes.onchange = atualizarMesAno;
-    selectAno.onchange = atualizarMesAno;
+// Preencher dropdown de anos
+const selectAno = document.getElementById("selectAno");
+const anoAtual = new Date().getFullYear();
+for (let a = anoAtual - 5; a <= anoAtual + 10; a++) {
+    const opt = document.createElement("option");
+    opt.value = a;
+    opt.textContent = a;
+    if (a === anoAtual) opt.selected = true;
+    selectAno.appendChild(opt);
 }
+
+// Atualizar mês/ano quando o utilizador muda
+selectMes.onchange = () => atualizarMesAno();
+selectAno.onchange = () => atualizarMesAno();
 
 function atualizarMesAno() {
     const mesEscolhido = Number(selectMes.value);
@@ -84,52 +53,61 @@ function atualizarMesAno() {
     desenharCalendario();
 }
 
+// Botão Hoje
+document.getElementById("btnHoje").onclick = () => {
+    mesOffset = 0;
+    selectMes.value = new Date().getMonth();
+    selectAno.value = new Date().getFullYear();
+    desenharCalendario();
+};
 
-/******************************************************
- * 3) EVENTOS DE NAVEGAÇÃO
- ******************************************************/
-function ligarEventosNavegacao() {
+// Botão Mês Atual
+document.getElementById("btnMesAtual").onclick = () => {
+    mesOffset = 0;
+    selectMes.value = new Date().getMonth();
+    selectAno.value = new Date().getFullYear();
+    desenharCalendario();
+};
 
-    document.getElementById("btnHoje").onclick = () => {
-        mesOffset = 0;
-        selectMes.value = new Date().getMonth();
-        selectAno.value = new Date().getFullYear();
-        desenharCalendario();
-    };
 
-    document.getElementById("btnMesAtual").onclick = () => {
-        mesOffset = 0;
-        selectMes.value = new Date().getMonth();
-        selectAno.value = new Date().getFullYear();
-        desenharCalendario();
-    };
-
+    const btnIrListagem = document.getElementById("btnIrListagem");
     const btnMesAnterior = document.getElementById("btnMesAnterior");
     const btnMesSeguinte = document.getElementById("btnMesSeguinte");
 
-    btnMesAnterior.onclick = () => {
-        mesOffset--;
-        desenharCalendario();
-    };
+    if (btnIrListagem) {
+        btnIrListagem.onclick = () => {
+            window.location.href = "listagem-reservas.html";
+        };
+    }
 
-    btnMesSeguinte.onclick = () => {
-        mesOffset++;
-        desenharCalendario();
-    };
-}
+    if (btnMesAnterior) {
+        btnMesAnterior.onclick = () => {
+            mesOffset--;
+            desenharCalendario();
+        };
+    }
 
+    if (btnMesSeguinte) {
+        btnMesSeguinte.onclick = () => {
+            mesOffset++;
+            desenharCalendario();
+        };
+    }
+});
 
 /******************************************************
- * 4) PARSE DE DATAS
+ * 2) FUNÇÃO AUXILIAR: PARSE DE DATAS
  ******************************************************/
 function parseDataReserva(str) {
     if (!str) return null;
 
+    // yyyy-mm-dd (ISO)
     if (str.includes("-")) {
         const [a, m, d] = str.split("-").map(Number);
         return new Date(a, m - 1, d);
     }
 
+    // dd/mm/yyyy (PT)
     if (str.includes("/")) {
         const [d, m, a] = str.split("/").map(Number);
         return new Date(a, m - 1, d);
@@ -138,33 +116,33 @@ function parseDataReserva(str) {
     return null;
 }
 
-
 /******************************************************
- * 5) CARREGAR RESERVAS DO FIRESTORE
+ * 3) CARREGAR RESERVAS DO FIRESTORE
  ******************************************************/
-let listenerAtivo = false;
-
 function carregarReservas() {
-    if (listenerAtivo) return;
-    listenerAtivo = true;
-
     db.collection("calendario")
         .orderBy("checkin")
         .onSnapshot(snapshot => {
+
             reservas = [];
             snapshot.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
+
             desenharCalendario();
         });
 }
 
-
 /******************************************************
- * 6) DESENHAR CALENDÁRIO
+ * 4) DESENHAR CALENDÁRIO
  ******************************************************/
 function desenharCalendario() {
 
     const tabela = document.getElementById("tabelaCalendario");
     const tituloMesEl = document.getElementById("tituloMes");
+
+    if (!tabela || !tituloMesEl) {
+        console.error("Elementos do calendário em falta (tabelaCalendario ou tituloMes).");
+        return;
+    }
 
     tabela.innerHTML = "";
 
@@ -177,10 +155,9 @@ function desenharCalendario() {
     const anoAtual = dataBase.getFullYear();
 
     const nomeMes = dataBase.toLocaleString("pt-PT", { month: "long" });
-
-    // Sincronizar dropdowns
-    selectMes.value = mesAtual;
-    selectAno.value = anoAtual;
+    // Sincronizar dropdowns com o calendário
+selectMes.value = mesAtual;
+selectAno.value = anoAtual;
 
     tituloMesEl.textContent = `${nomeMes.toUpperCase()} ${anoAtual}`;
 
@@ -206,97 +183,75 @@ function desenharCalendario() {
         tabela.innerHTML += tr;
     });
 
-    desenharReservas(mesAtual, anoAtual);
+    desenharReservas(mesAtual, anoAtual, anoAtual);
 }
 
-
 /******************************************************
- * 7) NOME CURTO DO CLIENTE
+ * 5) DESENHAR RESERVAS NO CALENDÁRIO
  ******************************************************/
-function nomeCurto(nome) {
-    if (!nome) return "";
-    const partes = nome.trim().split(" ");
-    if (partes.length === 1) return partes[0];
-    return partes[0] + " " + partes[partes.length - 1];
-}
-
-
-/******************************************************
- * 8) DESENHAR RESERVAS NO CALENDÁRIO
- ******************************************************/
-function desenharReservas(mes, anoAtual) {
+function desenharReservas(mes, ano, anoAtual) {
 
     reservas.forEach(r => {
 
+        // Garantir que existe array de apartamentos
         const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
+
+        // Converter datas
         const dataInicio = parseDataReserva(r.checkin);
         const dataFim = parseDataReserva(r.checkout);
-        if (!dataInicio || !dataFim) return;
 
-        const totalDias = Math.floor((dataFim - dataInicio) / 86400000) + 1;
+        if (!dataInicio || !dataFim) return; // segurança
 
-        listaAps.forEach((ap, indexApto) => {
-
-            const isPrimeiroApartamento = indexApto === 0;
+        // Para cada apartamento da reserva
+        listaAps.forEach(ap => {
 
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
                 if (dt.getMonth() !== mes || dt.getFullYear() !== anoAtual) continue;
 
+
                 const dia = dt.getDate();
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) continue;
 
-                const isCheckin = dt.getTime() === dataInicio.getTime();
-                const isCheckout = dt.getTime() === dataFim.getTime();
-
-                // Barra MASTER (apenas no check-in do primeiro apartamento)
-                if (isCheckin && isPrimeiroApartamento) {
-
-                    const master = document.createElement("div");
-                    master.classList.add("reserva-master");
-                    master.classList.add("origem-" + (r.origem || "manual").toLowerCase());
-
-                    master.textContent = nomeCurto(r.cliente);
-
-                    master.style.width = `calc(${totalDias * 100}%)`;
-                    master.style.left = "0";
-
-                    const checkinPt = dataInicio.toLocaleDateString("pt-PT");
-                    const checkoutPt = dataFim.toLocaleDateString("pt-PT");
-
-                    master.setAttribute("data-info",
-                        `${nomeCurto(r.cliente)} | ${r.origem}
-Check-in: ${checkinPt}
-Check-out: ${checkoutPt}
-Total: ${r.totalBruto || 0}€`
-                    );
-
-                    master.onclick = () => {
-                        window.location.href = "reservas.html?id=" + r.id;
-                    };
-
-                    cel.appendChild(master);
-                }
-
-                // Reserva de 1 dia → só master
-                if (isCheckin && isCheckout) continue;
-
-                // Metades e dias completos
                 const div = document.createElement("div");
                 div.classList.add("reserva");
-                div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
 
-                if (isCheckin) {
-                    div.classList.add("reserva-inicio-metade");
-                } else if (isCheckout) {
-                    div.classList.add("reserva-fim-metade");
-                } else {
-                    div.classList.add("reserva-meio");
-                }
+                const dataStr = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${anoAtual}`;
+
+                const checkinPt = dataInicio.toLocaleDateString("pt-PT");
+                const checkoutPt = dataFim.toLocaleDateString("pt-PT");
+
+                const isCheckin = dataStr === checkinPt;
+                const isCheckout = dataStr === checkoutPt;
+
+                if (isCheckin && isCheckout) div.classList.add("reserva-unica");
+                else if (isCheckin) div.classList.add("reserva-inicio");
+                else if (isCheckout) div.classList.add("reserva-fim");
+                else div.classList.add("reserva-meio");
+
+                div.style.backgroundColor = corPorOrigem(r.origem);
+                div.textContent = r.cliente;
+
+                div.onclick = () => {
+                    window.location.href = "listagem-reservas.html?id=" + r.id;
+                };
 
                 cel.appendChild(div);
             }
         });
     });
+}
+
+/******************************************************
+ * 6) COR POR ORIGEM
+ ******************************************************/
+function corPorOrigem(origem) {
+    switch ((origem || "").toLowerCase()) {
+        case "booking": return "#1E88E5";
+        case "airbnb": return "#EC407A";
+        case "vrbo": return "#8E24AA";
+        case "particular": return "#43A047";
+        default: return "#757575";
+    }
 }
