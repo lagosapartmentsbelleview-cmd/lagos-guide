@@ -587,11 +587,16 @@ async function guardarReserva() {
     let quartos = Number(document.getElementById("quartos").value || 1);
 
     let apartamentosDigitados = [...new Set(
-        document.getElementById("apartamentos").value
-            .split(",")
-            .map(x => x.trim())
-            .filter(x => x !== "")
-    )];
+    document.getElementById("apartamentos").value
+        .split(",")
+        .map(x => x.trim())
+        .filter(x => x.trim().length > 0)
+)];
+
+// Se o campo estiver vazio ou só tiver lixo → modo automático
+if (apartamentosDigitados.length === 0) {
+    apartamentosDigitados = [];
+}
 
     const checkin = document.getElementById("checkin").value.trim();
     const checkout = document.getElementById("checkout").value.trim();
