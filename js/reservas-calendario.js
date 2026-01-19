@@ -1,3 +1,10 @@
+import { ReservaModel } from "./models/ReservaModel.js";
+import { ReservaUtils } from "./utils/ReservaUtils.js";
+import { ReservaFinanceiro } from "./utils/ReservaFinanceiro.js";
+import { AlocacaoEngine } from "./utils/AlocacaoEngine.js";
+import { BookingImportEngine } from "./importadores/BookingImportEngine.js";
+import { ReservaService } from "./services/ReservaService.js";
+
 /******************************************************
  * 0) ESTADO GLOBAL
  ******************************************************/
