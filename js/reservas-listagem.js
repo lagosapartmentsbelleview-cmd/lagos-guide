@@ -593,8 +593,11 @@ async function guardarReserva() {
         .filter(x => x.trim().length > 0)
 )];
 
-// Se o campo estiver vazio ou só tiver lixo → modo automático
-if (apartamentosDigitados.length === 0) {
+// Se o campo estiver realmente vazio → força modo automático
+const campoApartamentos = document.getElementById("apartamentos").value.trim();
+const modoAutomatico = campoApartamentos.length === 0;
+
+if (modoAutomatico) {
     apartamentosDigitados = [];
 }
 
