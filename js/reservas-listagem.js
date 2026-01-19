@@ -1,12 +1,13 @@
 // ---------------------------------------------------------
-// IMPORTS (se um dia usares módulos ES6)
+// IMPORTS (ES6 Modules)
 // ---------------------------------------------------------
-// import { ReservaModel } from "./models/ReservaModel.js";
-// import { ReservaUtils } from "./utils/ReservaUtils.js";
-// import { ReservaFinanceiro } from "./utils/ReservaFinanceiro.js";
-// import { AlocacaoEngine } from "./utils/AlocacaoEngine.js";
-// import { BookingImportEngine } from "./importadores/BookingImportEngine.js";
-// import { ReservaService } from "./services/ReservaService.js";
+import { ReservaModel } from "./models/ReservaModel.js";
+import { ReservaUtils } from "./utils/ReservaUtils.js";
+import { ReservaFinanceiro } from "./utils/ReservaFinanceiro.js";
+import { AlocacaoEngine } from "./utils/AlocacaoEngine.js";
+import { BookingImportEngine } from "./importadores/BookingImportEngine.js";
+import { ReservaService } from "./services/ReservaService.js";
+
 
 
 // ---------------------------------------------------------
