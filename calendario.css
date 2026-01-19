@@ -89,50 +89,91 @@ td:first-child, th:first-child {
 .dia-celula {
     position: relative;
     padding: 0;
+    overflow: visible; /* 🔥 permite que a barra se cole visualmente */
 }
 
+
 /* -----------------------------------------------------------
-   BARRAS DE RESERVA (cores mantidas como estavam)
+   BARRAS DE RESERVA — NOVO SISTEMA (50% + 100% + 50%)
 ----------------------------------------------------------- */
+
 .reserva {
-    color: #fff;
-    font-size: 13px;
-    font-weight: 600;
+    position: absolute;
+    top: 0;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 12px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding: 0 4px;
     box-sizing: border-box;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    cursor: pointer;
+    z-index: 5;
 }
 
-/* Metades */
-.reserva-inicio {
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-    clip-path: inset(0 0 0 40%);
+/* Metade direita — CHECK-IN */
+.reserva-inicio-metade {
+    width: 50%;
+    right: 0;
+    border-top-left-radius: 12px;      /* 🔥 arredonda o início */
+    border-bottom-left-radius: 12px;   /* 🔥 arredonda o início */
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
+
+/* Metade esquerda — CHECK-OUT */
+.reserva-fim-metade {
+    width: 50%;
+    left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 12px;     /* 🔥 arredonda o fim */
+    border-bottom-right-radius: 12px;  /* 🔥 arredonda o fim */
+}
+
+
+/* Dia intermédio — 100% */
 .reserva-meio {
+    width: 100%;
+    left: 0;
     border-radius: 0;
 }
 
-.reserva-fim {
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    clip-path: inset(0 40% 0 0);
-}
-
+/* Reserva de 1 dia */
 .reserva-unica {
+    width: 100%;
+    left: 0;
     border-radius: 12px;
 }
+
+/* Barra principal com nome centrado no total */
+.reserva-master {
+    line-height: 1.2;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    z-index: 10; /* acima das metades */
+    border-radius: 12px;
+}
+
 
 /* -----------------------------------------------------------
    RESPONSIVO
@@ -153,6 +194,10 @@ td:first-child, th:first-child {
         min-width: 70px;
     }
 }
+
+/* -----------------------------------------------------------
+   BOTÃO VOLTAR
+----------------------------------------------------------- */
 #btnVoltarListagem {
     display: inline-block;
     padding: 10px 18px;
@@ -169,43 +214,62 @@ td:first-child, th:first-child {
 #btnVoltarListagem:hover {
     background: #125a9c;
 }
+
 /* -----------------------------------------------------------
-   CORES POR ORIGEM (AS ORIGINAIS DA LISTAGEM)
+   CORES POR ORIGEM
+----------------------------------------------------------- */
+.reserva.origem-booking { background: #1E88E5; }
+.reserva.origem-airbnb { background: #EC407A; }
+.reserva.origem-particular { background: #43A047; }
+.reserva.origem-manual { background: #757575; }
+.reserva.origem-vrbo { background: #8E24AA; }
+.reserva.origem-expedia { background: #F57C00; }
+.reserva.origem-agoda { background: #009688; }
+.reserva.origem-hotels { background: #D32F2F; }
+.reserva.origem-trip { background: #0277BD; }
+
+/* -----------------------------------------------------------
+   BOTÕES PRINCIPAIS (MESMO ESTILO DA LISTAGEM)
 ----------------------------------------------------------- */
 
-.reserva.origem-booking {
-    background: #1E88E5;
+.btn-primario {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #1976d2; /* mesma cor do botão Ir para Calendário */
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: 0.2s ease;
+    text-decoration: none;
 }
 
-.reserva.origem-airbnb {
-    background: #EC407A;
-}
-
-.reserva.origem-particular {
-    background: #43A047;
-}
-
-.reserva.origem-manual {
-    background: #757575;
-}
-.reserva.origem-vrbo {
-    background: #8E24AA;
-}
-
-.reserva.origem-expedia {
-    background: #F57C00;
-}
-
-.reserva.origem-agoda {
-    background: #009688;
-}
-
-.reserva.origem-hotels {
-    background: #D32F2F;
-}
-
-.reserva.origem-trip {
-    background: #0277BD;
+.btn-primario:hover {
+    background: #125a9c;
 }
 
 
+/* -----------------------------------------------------------
+   TOOLTIP FLUTUANTE (NÃO ALTERA O LAYOUT)
+----------------------------------------------------------- */
+.reserva-master:hover::after {
+    content: attr(data-info);
+    position: fixed;
+    top: calc(var(--mouse-y) + 12px);
+    left: calc(var(--mouse-x) + 12px);
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: pre-line;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+
+.reserva-master:hover::before {
+    display: none;
+}
