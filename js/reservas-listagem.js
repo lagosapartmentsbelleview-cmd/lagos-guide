@@ -269,6 +269,8 @@ async function carregarReservas() {
     });
 
     desenharTabela(reservas);
+    aplicarFiltrosAvancados();
+
 }
 
 // -------------------------------------------------------------
@@ -1350,15 +1352,16 @@ async function apagarReservasFantasmaDoCalendario() {
 function ligarEventos() {
 
         // --- LIGAR FILTROS ---
-    const filtroAnoInicio = document.getElementById("filtroAnoInicio");
-    const filtroMesInicio = document.getElementById("filtroMesInicio");
-    const filtroAnoFim = document.getElementById("filtroAnoFim");
-    const filtroMesFim = document.getElementById("filtroMesFim");
+ [
+    "filtroTexto", "filtroOrigem", "filtroApartamento", "filtroEstado",
+    "filtroPagamento", "filtroPais", "filtroNoitesMin", "filtroNoitesMax",
+    "filtroValorMin", "filtroValorMax", "filtroHospedesMin", "filtroHospedesMax",
+    "filtroDataInicio", "filtroDataFim"
+].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", aplicarFiltrosAvancados);
+});
 
-    if (filtroAnoInicio) filtroAnoInicio.addEventListener("change", aplicarFiltroIntervalo);
-    if (filtroMesInicio) filtroMesInicio.addEventListener("change", aplicarFiltroIntervalo);
-    if (filtroAnoFim) filtroAnoFim.addEventListener("change", aplicarFiltroIntervalo);
-    if (filtroMesFim) filtroMesFim.addEventListener("change", aplicarFiltroIntervalo);
 
 
     // Botão Nova Reserva
