@@ -1,34 +1,52 @@
 // ===============================
-// PARTE 1 – ESTRUTURA DO PARSER
+// FIREBASE – CARREGAR DADOS AO INICIAR
 // ===============================
 
-// Botões
+const tabelaBody = document.querySelector("#tabelaResultados tbody");
+
+// Carregar dados guardados no Firebase ao abrir a página
+db.collection("concorrencia").doc("dados").get().then(doc => {
+    if (doc.exists) {
+        const dados = doc.data().lista;
+        renderTabela(dados);
+
+        const data = doc.data().atualizadoEm;
+        document.getElementById("infoAtualizacao").textContent =
+            "Última atualização: " + new Date(data).toLocaleString("pt-PT");
+    }
+});
+
+// ===============================
+// BOTÕES
+// ===============================
+
 const btnImportar = document.getElementById("btnImportar");
 const btnExportar = document.getElementById("btnExportar");
 
-// Tabela
-const tabelaBody = document.querySelector("#tabelaResultados tbody");
+// ===============================
+// IMPORTAR DADOS
+// ===============================
 
-// Evento: Importar texto colado
 btnImportar.addEventListener("click", () => {
     const texto = document.getElementById("inputConcorrencia").value;
 
-    // TODO: implementar parser real
     const dados = parseTextoConcorrencia(texto);
 
     renderTabela(dados);
     guardarConcorrencia(dados);
-    atualizarDataAtualizacao(); // <-- ESTA LINHA FAZ A DATA APARECER
+    atualizarDataAtualizacao();
 });
 
-// Evento: Exportar Excel
+// ===============================
+// EXPORTAR (Fase 2)
+// ===============================
+
 btnExportar.addEventListener("click", () => {
-    // TODO: implementar exportação Excel
     alert("Exportação Excel será implementada na fase 2.");
 });
 
 // ===============================
-// FUNÇÃO PRINCIPAL DO PARSER
+// PARSER PRINCIPAL
 // ===============================
 
 function parseTextoConcorrencia(texto) {
@@ -57,7 +75,7 @@ function parseTextoConcorrencia(texto) {
             }
         }
 
-        // Detectar dia (número)
+        // Detectar dia
         if (/^\d{1,2}$/.test(linha)) {
             diaAtual = linha.padStart(2, "0");
         }
@@ -69,7 +87,7 @@ function parseTextoConcorrencia(texto) {
                 const data = `${anoAtual}-${mesAtual}-${diaAtual}`;
                 const diaSemana = calcularDiaSemana(data);
                 resultados.push({ data, dia: diaSemana, preco });
-                diaAtual = ""; // reset para evitar duplicações
+                diaAtual = "";
             }
         }
     }
@@ -83,7 +101,6 @@ function calcularDiaSemana(dataStr) {
     const date = new Date(`${ano}-${mes}-${dia}`);
     return dias[date.getDay()];
 }
-
 
 // ===============================
 // RENDERIZAÇÃO DA TABELA
@@ -106,48 +123,50 @@ function renderTabela(lista) {
 }
 
 // ===============================
-// GUARDAR DADOS (JSON / FIRESTORE)
+// GUARDAR NO FIREBASE
 // ===============================
 
 function guardarConcorrencia(dados) {
-    // TODO: guardar em JSON local ou Firestore
-    console.log("Dados prontos para guardar:", dados);
+    db.collection("concorrencia").doc("dados").set({
+        lista: dados,
+        atualizadoEm: new Date().toISOString()
+    })
+    .then(() => console.log("✔ Dados guardados no Firebase"))
+    .catch(err => console.error("Erro ao guardar no Firebase:", err));
 }
+
+// ===============================
+// ATUALIZAR DATA
+// ===============================
 
 function atualizarDataAtualizacao() {
-const info = document.getElementById("infoAtualizacao");
-if (!info) return;
+    const agora = new Date();
+    const dataFormatada = agora.toLocaleString("pt-PT");
 
-const agora = new Date();
-const dataFormatada = agora.toLocaleString("pt-PT");
-
-info.textContent = "Última atualização: " + dataFormatada;
+    document.getElementById("infoAtualizacao").textContent =
+        "Última atualização: " + dataFormatada;
 }
 
-// Botão Limpar Dados
+// ===============================
+// LIMPAR DADOS
+// ===============================
+
 document.getElementById("btnLimpar").addEventListener("click", function () {
     const confirmar = confirm("Tem a certeza que deseja limpar todos os dados?\nEsta ação não pode ser anulada.");
 
-    if (!confirmar) {
-        return; // se cancelar, não faz nada
-    }
+    if (!confirmar) return;
 
-    // 1. Limpar o array global
-    if (typeof dadosConcorrencia !== "undefined") {
-        dadosConcorrencia = [];
-    }
+    // 1. Apagar do Firebase
+    db.collection("concorrencia").doc("dados").delete();
 
-    // 2. Limpar a tabela
-    const tabela = document.getElementById("tabelaPrecos");
-    if (tabela) {
-        tabela.innerHTML = "";
-    }
+    // 2. Limpar tabela
+    tabelaBody.innerHTML = "";
 
-    // 3. Limpar a data de atualização
-    const info = document.getElementById("infoAtualizacao");
-    if (info) {
-        info.textContent = "Última atualização: —";
-    }
+    // 3. Limpar textarea
+    document.getElementById("inputConcorrencia").value = "";
+
+    // 4. Limpar data
+    document.getElementById("infoAtualizacao").textContent = "Última atualização: —";
 
     alert("Dados limpos com sucesso.");
 });
