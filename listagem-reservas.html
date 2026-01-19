@@ -4,140 +4,287 @@
     <meta charset="UTF-8">
     <title>Gestão de Reservas</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background: #f5f5f5;
-        }
+   <style>
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+/* ========================================================= */
+/*                     VARIÁVEIS DE COR                      */
+/* ========================================================= */
+:root {
+    --cor-verde: #2e7d32;
+    --cor-verde-escuro: #1b5e20;
+    --cor-vermelho: #c62828;
+    --cor-vermelho-escuro: #8e0000;
+    --cor-azul: #0277bd;
+    --cor-azul-escuro: #015a8c;
+    --cor-amarelo: #f9a825;
+    --cor-cinza: #757575;
+    --cor-fundo: #f5f5f5;
+    --cor-texto: #333;
+}
 
-        #acoes {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+/* ========================================================= */
+/*            MODAL DESAPARECIDAS (PERSONALIZADO)            */
+/* ========================================================= */
 
-        button {
-            padding: 10px 18px;
-            margin: 5px;
-            cursor: pointer;
-            border: none;
-            border-radius: 6px;
-            background: #1976d2;
-            color: white;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        button:hover {
-            background: #125a9c;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            font-size: 14px;
-            text-align: center;
-        }
-
-        th {
-            background: #eaeaea;
-            font-weight: bold;
-        }
-
-        /* Cores por origem */
-        .origem-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 6px;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .origem-booking { background: #1E88E5; }
-        .origem-airbnb { background: #EC407A; }
-        .origem-vrbo { background: #8E24AA; }
-        .origem-particular { background: #43A047; }
-        .origem-outro { background: #757575; }
-        /* Novas OTAs */
-        .origem-expedia { background: #F57C00; }
-        .origem-agoda { background: #009688; }
-        .origem-hotels { background: #D32F2F; }
-        .origem-trip { background: #0277BD; }
-
-        /* Caso ainda uses "manual" */
-        .origem-manual { background: #757575; }
+#modalDesaparecidas .modal-body p {
+    margin: 6px 0;
+    font-size: 14px;
+}
 
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-            z-index: 9999;
-        }
+/* ========================================================= */
+/*                        LAYOUT GERAL                       */
+/* ========================================================= */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: var(--cor-fundo);
+}
 
-        .modal-content {
-            background: white;
-            padding: 20px;
-            width: 100%;
-            max-width: 480px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 8px;
-            box-sizing: border-box;
-            position: relative;
-        }
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        .close {
-            float: right;
-            cursor: pointer;
-            font-size: 22px;
-            font-weight: bold;
-        }
+/* ========================================================= */
+/*                     BARRA DE AÇÕES                        */
+/* ========================================================= */
+#acoes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 25px;
+}
 
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
+#acoes button {
+    padding: 12px 22px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+    color: white;
+}
 
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 4px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-        }
+#acoes button:hover {
+    background: #125a9c;
+    transform: translateY(-2px);
+}
 
-        #btnGuardar {
-            background: #43A047;
-        }
+/* Cores individuais */
+#btnNovaReserva { background: var(--cor-verde); }
+#btnImportarExcel { background: #6a1b9a; }
+#btnApagarSelecionadas { background: var(--cor-vermelho); }
+#btnEnviarCalendario { background: var(--cor-azul); }
+#btnIrCalendario { background: #00897b; }
+#btnLimparFantasmas { background: var(--cor-amarelo); color: black; }
+#btnLogout { background: #424242; }
+#btnMarcarPagas { background: var(--cor-verde); }
 
-        #btnApagar {
-            background: #d32f2f;
-        }
 
-        th[data-col] {
+/* ========================================================= */
+/*                           FILTROS                         */
+/* ========================================================= */
+#filtros {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+#filtros select {
+    width: auto;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* ========================================================= */
+/*                           TABELA                          */
+/* ========================================================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
+th {
+    background: #eaeaea;
+    font-weight: bold;
+}
+
+.pago-total {
+    background-color: #c8f7c5 !important;
+}
+
+.pago-parcial {
+    background-color: #fff3b0 !important;
+}
+
+
+/* ========================================================= */
+/*                     BADGES DE ORIGEM                      */
+/* ========================================================= */
+.origem-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.origem-booking { background: #1E88E5; }
+.origem-airbnb { background: #EC407A; }
+.origem-vrbo { background: #8E24AA; }
+.origem-particular { background: var(--cor-verde); }
+.origem-outro { background: var(--cor-cinza); }
+.origem-expedia { background: #F57C00; }
+.origem-agoda { background: #009688; }
+.origem-hotels { background: #D32F2F; }
+.origem-trip { background: #0277BD; }
+.origem-manual { background: var(--cor-cinza); }
+
+/* ========================================================= */
+/*                     MODAL MODERNO                         */
+/* ========================================================= */
+
+.modal {
+    display: none;          /* escondido por padrão */
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #fff;
+    width: 700px;          /* AUMENTADO */
+    max-width: 95%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+    animation: fadeIn 0.25s ease-out;
+    max-height: 90vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+
+}
+
+.modal-header {
+    background: var(--cor-azul);
+    color: white;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 20px;
+    font-size: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* DUAS COLUNAS */
+    gap: 16px 20px;                 /* espaçamento entre campos */
+}
+
+.modal-body label {
+    grid-column: span 2;            /* label ocupa as duas colunas */
+    font-weight: bold;
+    margin-top: 6px;
+}
+
+.modal-body input,
+.modal-body select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.modal-section-title {
+    grid-column: span 2;            /* ocupa as duas colunas */
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.modal-footer {
+    padding: 14px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background: #f5f5f5;
+}
+
+.btnPrimario {
+    background: var(--cor-verde);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btnPrimario:hover {
+    background: var(--cor-verde-escuro);
+}
+
+.btnSecundario {
+    background: #ddd;
+    color: #333;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btnSecundario:hover {
+    background: #ccc;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================= */
+/*                     ORDENAR COLUNAS                       */
+/* ========================================================= */
+th[data-col] {
     cursor: pointer;
     position: relative;
 }
@@ -154,133 +301,317 @@ th[data-col].ordenar-desc::after {
     pointer-events: none;
 }
 
-th[data-col].ordenar-asc::after {
-    content: "▲";
+th[data-col].ordenar-asc::after { content: "▲"; }
+th[data-col].ordenar-desc::after { content: "▼"; }
+
+/* ========================================================= */
+/*                           TOOLTIP                         */
+/* ========================================================= */
+.pessoas {
+    position: relative;
+    cursor: help;
 }
 
-th[data-col].ordenar-desc::after {
-    content: "▼";
+.pessoas:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--cor-texto);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: pre-line;
+    z-index: 999999;
+    font-size: 12px;
+    width: max-content;
+    max-width: 260px;
 }
-        #tabelaReservas thead th[data-col] {
-    position: relative !important;
+
+/* Permitir tooltip fora da célula */
+#tabelaReservas td,
+#tabelaReservas th,
+#tabelaReservas tr {
     overflow: visible !important;
-}
-
-#tabelaReservas thead th[data-col].ordenar-asc::after,
-#tabelaReservas thead th[data-col].ordenar-desc::after {
-    position: absolute !important;
-    right: 6px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    font-size: 14px !important;
-    color: #000 !important;
-    z-index: 9999 !important;
-    pointer-events: none !important;
-}
-
-#tabelaReservas thead th[data-col].ordenar-asc::after {
-    content: "▲" !important;
-}
-
-#tabelaReservas thead th[data-col].ordenar-desc::after {
-    content: "▼" !important;
-}
-
-#tabelaReservas th {
     position: relative !important;
 }
 
-    </style>
+/* Permitir tooltip fora da tabela */
+#tabelaReservas {
+    overflow: visible !important;
+    position: relative !important;
+    z-index: 1;
+}
+
+/* ========================================================= */
+/*                     BOTÕES DA TABELA                      */
+/* ========================================================= */
+td button {
+    margin: 2px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Detalhe */
+.btnDetalhe {
+    background: var(--cor-azul);
+    color: white;
+}
+.btnDetalhe:hover {
+    background: var(--cor-azul-escuro);
+}
+
+/* Editar */
+.btnEditar {
+    background: var(--cor-verde) !important;
+    color: white !important;
+}
+.btnEditar:hover {
+    background: var(--cor-verde-escuro) !important;
+}
+
+/* Apagar */
+.btnApagar {
+    background: var(--cor-vermelho);
+    color: white;
+}
+.btnApagar:hover {
+    background: var(--cor-vermelho-escuro);
+}
+
+/* ========================================================= */
+/*                COLUNA AÇÕES — BOTÕES ÍCONES               */
+/* ========================================================= */
+
+/* Força os botões a ficarem lado a lado */
+#tabelaReservas td:last-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;              /* espaço entre botões */
+    white-space: nowrap;   /* impede quebra de linha */
+}
+
+/* Estilo base dos botões */
+#tabelaReservas td:last-child button {
+    padding: 4px 8px;
+    font-size: 16px;       /* tamanho ideal para emojis */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Detalhe */
+.btnDetalhe {
+    background: var(--cor-azul);
+    color: white;
+}
+.btnDetalhe:hover {
+    background: var(--cor-azul-escuro);
+}
+
+/* Editar */
+.btnEditar {
+    background: var(--cor-verde);
+    color: white;
+}
+.btnEditar:hover {
+    background: var(--cor-verde-escuro);
+}
+
+/* Apagar */
+.btnApagar {
+    background: var(--cor-vermelho);
+    color: white;
+}
+.btnApagar:hover {
+    background: var(--cor-vermelho-escuro);
+}
+
+.flag {
+    width: 20px;
+    height: 15px;
+    margin-right: 6px;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+</style>
+
 </head>
+
+<!-- MODAL PERSONALIZADO PARA RESERVAS DESAPARECIDAS -->
+<div id="modalDesaparecidas" class="modal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header" style="background: #c62828;">
+            <h2>Reservas não encontradas</h2>
+            <button class="modal-close" onclick="fecharModalDesaparecidas()">✖</button>
+        </div>
+
+        <div class="modal-body" id="listaDesaparecidas">
+            <!-- Lista gerada dinamicamente -->
+        </div>
+
+        <div class="modal-footer">
+            <button class="btnSecundario" onclick="fecharModalDesaparecidas()">Manter</button>
+            <button class="btnPrimario" style="background:#c62828;" onclick="confirmarApagarDesaparecidas()">Apagar</button>
+        </div>
+    </div>
+</div>
+
 
 <body>
 
     <h1>Gestão de Reservas</h1>
 
     <div id="acoes">
-        <button id="btnNovaReserva">Nova Reserva</button>
-        <button id="btnImportarExcel">Importar Booking (XLSX)</button>
-        <button id="btnApagarSelecionadas">Apagar Selecionadas</button>
-        <button id="btnEnviarCalendario">Enviar para Calendário</button>
-        <button id="btnIrCalendario">Ir para Calendário</button>
-        <button id="btnLimparFantasmas">Limpar Fantasmas do Calendário</button>
+    <button id="btnNovaReserva">Nova Reserva</button>
+    <button id="btnImportarExcel">Importar Booking</button>
+    <button id="btnApagarSelecionadas">Apagar Selecionadas</button>
+    <button id="btnEnviarCalendario">Enviar Calendário</button>
+    <button id="btnIrCalendario">Calendário</button>
+    <button id="btnLimparFantasmas">Limpar Calendário</button>
+
+    <!-- 🔥 NOVO BOTÃO EM MASSA -->
+    <button id="btnMarcarPagas" class="btn-acao-massa">
+    Marcar Pagas
+    </button>
 
 
-    </div>
+    <!-- botão de logout para o login -->
+    <button id="btnLogout">Sair</button>
+</div>
+
 
     <input type="file" id="inputExcel" accept=".xlsx" style="display:none">
 
+   
+<!-- 🔽🔽🔽 COLAR OS FILTROS AQUI 🔽🔽🔽 -->
+<div id="filtros" style="margin: 15px 0;">
+   <select id="filtroAnoInicio" onchange="aplicarFiltroIntervalo()">
+    <option value="">Ano início</option>
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+    <option value="2023">2023</option>
+    <option value="2024">2024</option>
+    <option value="2025">2025</option>
+    <option value="2026">2026</option>
+    <option value="2027">2027</option>
+    </select>
+
+    <select id="filtroMesInicio" onchange="aplicarFiltroIntervalo()">
+        <option value="">Mês início</option>
+        <option value="1">Janeiro</option>
+        <option value="2">Fevereiro</option>
+        <option value="3">Março</option>
+        <option value="4">Abril</option>
+        <option value="5">Maio</option>
+        <option value="6">Junho</option>
+        <option value="7">Julho</option>
+        <option value="8">Agosto</option>
+        <option value="9">Setembro</option>
+        <option value="10">Outubro</option>
+        <option value="11">Novembro</option>
+        <option value="12">Dezembro</option>
+    </select>
+
+    <select id="filtroAnoFim" onchange="aplicarFiltroIntervalo()">
+    <option value="">Ano fim</option>
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+    <option value="2023">2023</option>
+    <option value="2024">2024</option>
+    <option value="2025">2025</option>
+    <option value="2026">2026</option>
+    <option value="2027">2027</option>
+</select>
+
+    <select id="filtroMesFim" onchange="aplicarFiltroIntervalo()">
+        <option value="">Mês fim</option>
+        <option value="1">Janeiro</option>
+        <option value="2">Fevereiro</option>
+        <option value="3">Março</option>
+        <option value="4">Abril</option>
+        <option value="5">Maio</option>
+        <option value="6">Junho</option>
+        <option value="7">Julho</option>
+        <option value="8">Agosto</option>
+        <option value="9">Setembro</option>
+        <option value="10">Outubro</option>
+        <option value="11">Novembro</option>
+        <option value="12">Dezembro</option>
+    </select>
+</div>
+   
     <table id="tabelaReservas">
     <thead id="theadReservas">
-        <tr>
-            <th class="no-sort">
-                <input type="checkbox" id="selectAll">
-            </th>
+    <tr>
+        <th class="no-sort">
+            <input type="checkbox" id="selectAll">
+        </th>
+        <th data-col="origem">Origem</th>
+        <th data-col="bookingId">Nº Reserva</th>
+        <th data-col="cliente">Hóspede</th>
+        <th data-col="quartos">Quartos</th>
+        <th data-col="apartamentos">Apartamentos</th>
 
-            <th data-col="origem">Origem</th>
-            <th data-col="bookingId">Nº Reserva</th>
-            <th data-col="cliente">Hóspede</th>
-            <th data-col="quartos">Quartos</th>
-            <th data-col="apartamentos">Apartamentos</th>
-            <th data-col="checkin">Check-in</th>
-            <th data-col="checkout">Check-out</th>
-            <th data-col="noites">Noites</th>
-            <th data-col="totalBruto">Total Bruto (€)</th>
-            <th data-col="comissao">Comissão (€)</th>
-            <th data-col="precoNoite">Valor/Noite (€)</th>
-            <th data-col="limpeza">Limpeza (€)</th>
-            <th data-col="berco">Berço</th>
+        <!-- 🔥 NOVA COLUNA PESSOAS -->
+        <th data-col="pessoas">Pessoas</th>
 
-            <th class="no-sort">Ações</th>
-        </tr>
-    </thead>
+        <th data-col="checkin">Check-in</th>
+        <th data-col="checkout">Check-out</th>
+        <th data-col="noites">Noites</th>
+        <th data-col="totalBruto">Total Bruto (€)</th>
+        <th data-col="comissao">Comissão (€)</th>
+        <th data-col="precoNoite">Valor/Noite (€)</th>
+        <th data-col="berco">Berço</th>
+        <th data-col="limpeza">Limpeza (€)</th>
+        <th class="no-sort">Ações</th>
+    </tr>
+</thead>
 
-    <tbody></tbody>
-</table>
-
-
-
+        <tbody></tbody>
+    </table>
 
     <!-- Modal -->
     <div id="modalReserva" class="modal">
-  <div class="modal-content">
+      <div class="modal-content">
 
+        <div class="modal-header">
     <h2>Reserva</h2>
+    <button class="modal-close" onclick="fecharModal()">✖</button>
+</div>
 
-    <label>Origem</label>
-    <select id="origem">
-    <option value="booking">Booking</option>
-    <option value="airbnb">Airbnb</option>
-    <option value="vrbo">VRBO</option>
-    <option value="expedia">Expedia</option>
-    <option value="agoda">Agoda</option>
-    <option value="hotels">Hotels.com</option>
-    <option value="trip">Trip.com</option>
-    <option value="particular">Particular</option>
+<div class="modal-body">
+
+    <!-- SECÇÃO: Origem -->
+    <div class="modal-section-title">Origem</div>
+        <select id="origem">
+        <option value="Booking">Booking</option>
+        <option value="Airbnb">Airbnb</option>
+        <option value="VRBO">VRBO</option>
+        <option value="Expedia">Expedia</option>
+        <option value="Agoda">Agoda</option>
+        <option value="Hotels">Hotels.com</option>
+        <option value="Trip">Trip.com</option>
+        <option value="Particular">Particular</option>
     </select>
 
+    <label>Número da Reserva (Booking)</label>
+    <input type="text" id="bookingId" placeholder="Só se for Booking">
 
-    <label>Número da Reserva (se for Booking)</label>
-    <input type="text" id="bookingId" placeholder="Só preencher se for Booking">
+    <!-- SECÇÃO: Hóspede -->
+    <div class="modal-section-title">Hóspede</div>
 
     <label>Cliente</label>
     <input type="text" id="cliente">
-
-    <label>Quartos</label>
-    <select id="quartos">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-    </select>
-
-    <label>Apartamentos (ex: 2301, 2203 ou 2204)</label>
-    <input type="text" id="apartamentos">
-
-    <label>Check-in</label>
-    <input type="date" id="checkin">
-
-    <label>Check-out</label>
-    <input type="date" id="checkout">
 
     <label>Hóspedes</label>
     <input type="number" id="hospedes">
@@ -294,6 +625,28 @@ th[data-col].ordenar-desc::after {
     <label>Idades das Crianças</label>
     <input type="text" id="idadesCriancas">
 
+    <!-- SECÇÃO: Alojamento -->
+    <div class="modal-section-title">Alojamento</div>
+
+    <label>Quartos</label>
+    <select id="quartos">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+
+    <label>Apartamentos (ex: 2301, 2203, 2204)</label>
+    <input type="text" id="apartamentos">
+
+    <label>Check-in</label>
+    <input type="date" id="checkin">
+
+    <label>Check-out</label>
+    <input type="date" id="checkout">
+
+    <!-- SECÇÃO: Valores -->
+    <div class="modal-section-title">Valores</div>
+
     <label>Total Bruto (€)</label>
     <input type="number" id="totalBruto">
 
@@ -305,31 +658,79 @@ th[data-col].ordenar-desc::after {
 
     <label>Berço</label>
     <select id="berco">
-      <option value="false">Não</option>
-      <option value="true">Sim</option>
+        <option value="false">Não</option>
+        <option value="true">Sim</option>
+    </select>
+        <!-- ESTADO DO PAGAMENTO -->
+    <label for="statusPagamento">Estado do pagamento:</label>
+    <select id="statusPagamento">
+        <option value="aguardar">Por receber</option>
+        <option value="parcial">Pago parcialmente</option>
+        <option value="total">Pago totalmente</option>
     </select>
 
-    <button id="btnGuardar">Guardar</button>
-    <button id="fecharModal">Fechar</button>
-
-    </div>
-    </div>
-
-<!-- XLSX para importar Excel -->
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
-<!-- Firebase v8 (CORRETO) -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <!-- VALOR PAGO -->
+    <label for="valorPago">Valor pago (€):</label>
+    <input type="number" id="valorPago" min="0" step="0.01">
 
 
-<!-- Configuração Firebase -->
-<script src="js/firebase-config.js"></script>
+</div>
 
-<!-- Lógica da listagem -->
-<script src="js/reservas-listagem.js"></script>
+<div class="modal-footer">
+    <button class="btnSecundario" onclick="fecharModal()">Cancelar</button>
+    <button class="btnPrimario" id="btnGuardar">Guardar</button>
 
+</div>
+</div>
 
+    <!-- XLSX para importar Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
+    <!-- Firebase compat v9 (como tinhas antes) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <!-- Configuração Firebase (tem de criar firebase, db, etc.) -->
+    <script src="js/firebase-config.js"></script>
+
+    <!-- Proteção da página + logout -->
+    <script>
+      // proteger: se não estiver autenticado, manda para login
+      firebase.auth().onAuthStateChanged(user => {
+        if (!user) {
+          window.location.href = "login.html";
+        }
+      });
+
+      // botão Sair
+      document.addEventListener("DOMContentLoaded", () => {
+        const btnLogout = document.getElementById("btnLogout");
+        if (btnLogout) {
+          btnLogout.addEventListener("click", () => {
+            firebase.auth().signOut().then(() => {
+              window.location.href = "login.html";
+            });
+          });
+        }
+      });
+    </script>
+
+    <!-- Lógica da listagem (a tua, a que me enviaste) -->
+    <script src="js/reservas-listagem.js"></script>
+
+    <script>
+document.getElementById("statusPagamento").addEventListener("change", function () {
+    const status = this.value;
+
+    const totalBruto = Number(document.getElementById("totalBruto").value || 0);
+    const comissao = Number(document.getElementById("comissao").value || 0);
+
+    if (status === "total") {
+        const valor = totalBruto - comissao;
+        document.getElementById("valorPago").value = valor.toFixed(2);
+    }
+});
+</script>
 </body>
 </html>
