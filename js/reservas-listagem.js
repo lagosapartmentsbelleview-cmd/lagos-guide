@@ -1,4 +1,15 @@
 // ---------------------------------------------------------
+// IMPORTS (ajusta paths se necessário)
+// ---------------------------------------------------------
+// import { ReservaModel } from "./models/ReservaModel.js";
+// import { ReservaUtils } from "./utils/ReservaUtils.js";
+// import { ReservaFinanceiro } from "./utils/ReservaFinanceiro.js";
+// import { AlocacaoEngine } from "./utils/AlocacaoEngine.js";
+// import { BookingImportEngine } from "./importadores/BookingImportEngine.js";
+// import { ReservaService } from "./services/ReservaService.js";
+
+
+// ---------------------------------------------------------
 // ESTADO GLOBAL
 // ---------------------------------------------------------
 
@@ -13,6 +24,8 @@ const LISTA_APARTAMENTOS = [
     "2201", "2202", "2203", "2204",
     "2101", "2102", "2103"
 ];
+
+
 // ---------------------------------------------------------
 // INICIALIZAÇÃO DA PÁGINA
 // ---------------------------------------------------------
@@ -34,8 +47,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 5) Ligar eventos da importação Booking
     ligarEventosImportacao();
 
+    // 6) Ligar botão Nova Reserva (se existir)
+    const btnNova = document.querySelector("#btnNovaReserva");
+    if (btnNova) {
+        btnNova.addEventListener("click", abrirModalCriar);
+    }
+
+    // 7) Ligar botões de calendário (se existirem)
+    const btnSync = document.querySelector("#btnSincronizarCalendario");
+    if (btnSync) {
+        btnSync.addEventListener("click", sincronizarCalendarioUI);
+    }
+
+    const btnFantasmas = document.querySelector("#btnLimparFantasmas");
+    if (btnFantasmas) {
+        btnFantasmas.addEventListener("click", limparFantasmasUI);
+    }
+
+    // 8) Botão alocação automática (se existir)
+    const btnAlocar = document.querySelector("#btnAlocarAuto");
+    if (btnAlocar) {
+        btnAlocar.addEventListener("click", alocarAutomaticamenteModal);
+    }
+
     console.log("Sistema de reservas carregado com sucesso.");
 });
+
+
 // ---------------------------------------------------------
 // CARREGAR RESERVAS DO FIRESTORE
 // ---------------------------------------------------------
@@ -44,12 +82,16 @@ async function carregarReservas() {
     reservas = await ReservaService.getAll();
     reservasFiltradas = [...reservas];
 }
+
+
 // ---------------------------------------------------------
 // RENDERIZAR TABELA
 // ---------------------------------------------------------
 
 function renderTabela() {
     const tbody = document.querySelector("#tabelaReservas tbody");
+    if (!tbody) return;
+
     tbody.innerHTML = "";
 
     reservasFiltradas.forEach(r => {
@@ -64,6 +106,11 @@ function renderTabela() {
             <td>${r.checkin}</td>
             <td>${r.checkout}</td>
             <td>${r.hospedes}</td>
+            <td>${r.apartamentos?.length > 0 
+                    ? r.apartamentos.join(", ") 
+                    : "<span style='color:#c62828;font-weight:bold'>Não alocado</span>"
+                }
+            </td>
             <td>${r.totalBruto} €</td>
             <td>
                 <button class="btnEditar" data-id="${r.id}">Editar</button>
@@ -76,6 +123,8 @@ function renderTabela() {
 
     ligarEventosTabela();
 }
+
+
 // ---------------------------------------------------------
 // EVENTOS DA TABELA
 // ---------------------------------------------------------
@@ -92,16 +141,13 @@ function ligarEventosTabela() {
 
     // Botões Apagar
     document.querySelectorAll(".btnApagar").forEach(btn => {
-        btn.addEventListener("click", async () => {
-            const id = btn.dataset.id;
-            if (confirm("Tem a certeza que quer apagar esta reserva")) {
-                await ReservaService.delete(id);
-                await carregarReservas();
-                renderTabela();
-            }
+        btn.addEventListener("click", () => {
+            apagarReserva(btn.dataset.id);
         });
     });
 }
+
+
 // ---------------------------------------------------------
 // ABRIR MODAL PARA CRIAR NOVA RESERVA
 // ---------------------------------------------------------
@@ -111,11 +157,17 @@ function abrirModalCriar() {
     reservaAtual = null;
 
     limparModal();
-    document.querySelector("#modalReservaTitulo").textContent = "Nova Reserva";
+    const titulo = document.querySelector("#modalReservaTitulo");
+    if (titulo) titulo.textContent = "Nova Reserva";
 
     const modal = document.querySelector("#modalReserva");
-    modal.style.display = "block";
+    if (modal) modal.style.display = "block";
+
+    const aviso = document.querySelector("#avisoConflitos");
+    if (aviso) aviso.style.display = "none";
 }
+
+
 // ---------------------------------------------------------
 // ABRIR MODAL PARA EDITAR RESERVA
 // ---------------------------------------------------------
@@ -124,49 +176,75 @@ async function abrirModalEdicao(id) {
     modoEdicao = true;
 
     const dados = await ReservaService.getById(id);
+    if (!dados) return;
+
     reservaAtual = new ReservaModel(dados);
 
     preencherModal(reservaAtual);
 
-    document.querySelector("#modalReservaTitulo").textContent = "Editar Reserva";
+    const titulo = document.querySelector("#modalReservaTitulo");
+    if (titulo) titulo.textContent = "Editar Reserva";
 
     const modal = document.querySelector("#modalReserva");
-    modal.style.display = "block";
+    if (modal) modal.style.display = "block";
 }
+
+
 // ---------------------------------------------------------
 // LIMPAR MODAL
 // ---------------------------------------------------------
 
 function limparModal() {
-    document.querySelector("#formReserva").reset();
-    document.querySelector("#apartamentos").value = "";
+    const form = document.querySelector("#formReserva");
+    if (form) form.reset();
+
+    const apt = document.querySelector("#apartamentos");
+    if (apt) apt.value = "";
+
+    const camposCalc = ["#valorEmFalta", "#statusPagamento", "#precoNoite", "#liquido"];
+    camposCalc.forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) el.value = "";
+    });
 }
+
+
 // ---------------------------------------------------------
 // PREENCHER MODAL
 // ---------------------------------------------------------
 
 function preencherModal(r) {
 
-    document.querySelector("#cliente").value = r.cliente;
-    document.querySelector("#paisCliente").value = r.paisCliente;
-    document.querySelector("#telefone").value = r.telefone;
-    document.querySelector("#morada").value = r.morada;
+    document.querySelector("#cliente").value = r.cliente ?? "";
+    document.querySelector("#paisCliente").value = r.paisCliente ?? "";
+    document.querySelector("#telefone").value = r.telefone ?? "";
+    document.querySelector("#morada").value = r.morada ?? "";
 
-    document.querySelector("#adultos").value = r.adultos;
-    document.querySelector("#criancas").value = r.criancas;
-    document.querySelector("#idadesCriancas").value = r.idadesCriancas;
+    document.querySelector("#adultos").value = r.adultos ?? 0;
+    document.querySelector("#criancas").value = r.criancas ?? 0;
+    document.querySelector("#idadesCriancas").value = r.idadesCriancas ?? "";
 
-    document.querySelector("#checkin").value = r.checkin;
-    document.querySelector("#checkout").value = r.checkout;
+    document.querySelector("#checkin").value = r.checkin ?? "";
+    document.querySelector("#checkout").value = r.checkout ?? "";
 
-    document.querySelector("#totalBruto").value = r.totalBruto;
-    document.querySelector("#limpeza").value = r.limpeza;
+    document.querySelector("#totalBruto").value = r.totalBruto ?? 0;
+    document.querySelector("#limpeza").value = r.limpeza ?? 0;
 
-    document.querySelector("#valorPagoParcial").value = r.valorPagoParcial;
-    document.querySelector("#valorPagoFinal").value = r.valorPagoFinal;
+    document.querySelector("#valorPagoParcial").value = r.valorPagoParcial ?? 0;
+    document.querySelector("#valorPagoFinal").value = r.valorPagoFinal ?? 0;
 
-    document.querySelector("#apartamentos").value = r.apartamentos.join(", ");
+    document.querySelector("#apartamentos").value = Array.isArray(r.apartamentos)
+        ? r.apartamentos.join(", ")
+        : "";
+
+    // Atualizar financeiro no modal
+    atualizarFinanceiroModal();
+
+    // Verificar conflitos
+    verificarConflitosEdicao(r);
 }
+
+
 // ---------------------------------------------------------
 // GUARDAR RESERVA (CRIAR OU EDITAR)
 // ---------------------------------------------------------
@@ -184,8 +262,8 @@ async function guardarReserva() {
     // Calcular financeiro
     const financeiro = ReservaFinanceiro.calcularTudo({
         totalBruto: reserva.totalBruto,
-        percentagemServico: reserva.comissaoServico,
-        percentagemPagamento: reserva.percentagemPagamento,
+        percentagemServico: 0,        // Booking já traz comissão
+        percentagemPagamento: 0.014,  // 1.4%
         limpeza: reserva.limpeza,
         noites: reserva.noites,
         valorPagoParcial: reserva.valorPagoParcial,
@@ -206,8 +284,16 @@ async function guardarReserva() {
         return;
     }
 
+    // Verificar conflitos
+    const conflitos = AlocacaoEngine.encontrarConflitos(reserva, reservas);
+    if (conflitos.length > 0) {
+        if (!confirm("Existem conflitos com outras reservas. Deseja continuar?")) {
+            return;
+        }
+    }
+
     // Criar ou editar
-    if (modoEdicao) {
+    if (modoEdicao && reservaAtual?.id) {
         await ReservaService.update(reservaAtual.id, reserva);
     } else {
         await ReservaService.add(reserva);
@@ -220,6 +306,8 @@ async function guardarReserva() {
     await carregarReservas();
     renderTabela();
 }
+
+
 // ---------------------------------------------------------
 // OBTER DADOS DO FORMULÁRIO
 // ---------------------------------------------------------
@@ -232,27 +320,40 @@ function obterDadosFormulario() {
         telefone: document.querySelector("#telefone").value,
         morada: document.querySelector("#morada").value,
 
-        adultos: Number(document.querySelector("#adultos").value),
-        criancas: Number(document.querySelector("#criancas").value),
+        adultos: Number(document.querySelector("#adultos").value || 0),
+        criancas: Number(document.querySelector("#criancas").value || 0),
         idadesCriancas: document.querySelector("#idadesCriancas").value,
 
         checkin: document.querySelector("#checkin").value,
         checkout: document.querySelector("#checkout").value,
 
-        totalBruto: Number(document.querySelector("#totalBruto").value),
-        limpeza: Number(document.querySelector("#limpeza").value),
+        totalBruto: Number(document.querySelector("#totalBruto").value || 0),
+        limpeza: Number(document.querySelector("#limpeza").value || 0),
 
-        valorPagoParcial: Number(document.querySelector("#valorPagoParcial").value),
-        valorPagoFinal: Number(document.querySelector("#valorPagoFinal").value),
+        valorPagoParcial: Number(document.querySelector("#valorPagoParcial").value || 0),
+        valorPagoFinal: Number(document.querySelector("#valorPagoFinal").value || 0),
 
         apartamentos: ReservaUtils.parseApartamentos(
             document.querySelector("#apartamentos").value
         )
     };
 }
+
+
+// ---------------------------------------------------------
+// FECHAR MODAL
+// ---------------------------------------------------------
+
 function fecharModal() {
-    document.querySelector("#modalReserva").style.display = "none";
+    const modal = document.querySelector("#modalReserva");
+    if (modal) modal.style.display = "none";
 }
+
+
+// ---------------------------------------------------------
+// LIGAR EVENTOS DO MODAL
+// ---------------------------------------------------------
+
 function ligarEventosModal() {
 
     // Recalcular financeiro quando valores mudam
@@ -266,15 +367,26 @@ function ligarEventosModal() {
     ];
 
     camposFinanceiros.forEach(sel => {
-        document.querySelector(sel).addEventListener("input", atualizarFinanceiroModal);
+        const el = document.querySelector(sel);
+        if (el) {
+            el.addEventListener("input", atualizarFinanceiroModal);
+        }
     });
 
     // Botão guardar
-    document.querySelector("#btnGuardarReserva").addEventListener("click", guardarReserva);
+    const btnGuardar = document.querySelector("#btnGuardarReserva");
+    if (btnGuardar) {
+        btnGuardar.addEventListener("click", guardarReserva);
+    }
 
     // Botão fechar
-    document.querySelector("#btnFecharModal").addEventListener("click", fecharModal);
+    const btnFechar = document.querySelector("#btnFecharModal");
+    if (btnFechar) {
+        btnFechar.addEventListener("click", fecharModal);
+    }
 }
+
+
 // ---------------------------------------------------------
 // ATUALIZAR FINANCEIRO EM TEMPO REAL NO MODAL
 // ---------------------------------------------------------
@@ -292,8 +404,8 @@ function atualizarFinanceiroModal() {
     // Calcular financeiro
     const financeiro = ReservaFinanceiro.calcularTudo({
         totalBruto: reservaTemp.totalBruto,
-        percentagemServico: reservaTemp.comissaoServico,
-        percentagemPagamento: reservaTemp.percentagemPagamento,
+        percentagemServico: 0,
+        percentagemPagamento: 0.014,
         limpeza: reservaTemp.limpeza,
         noites: reservaTemp.noites,
         valorPagoParcial: reservaTemp.valorPagoParcial,
@@ -301,23 +413,33 @@ function atualizarFinanceiroModal() {
     });
 
     // Atualizar campos no modal
-    document.querySelector("#valorEmFalta").value = financeiro.valorEmFalta.toFixed(2);
-    document.querySelector("#statusPagamento").value = financeiro.statusPagamento;
-    document.querySelector("#precoNoite").value = financeiro.precoNoite.toFixed(2);
-    document.querySelector("#liquido").value = financeiro.liquido.toFixed(2);
+    const campoFalta = document.querySelector("#valorEmFalta");
+    if (campoFalta) campoFalta.value = financeiro.valorEmFalta.toFixed(2);
+
+    const campoStatus = document.querySelector("#statusPagamento");
+    if (campoStatus) campoStatus.value = financeiro.statusPagamento;
+
+    const campoPrecoNoite = document.querySelector("#precoNoite");
+    if (campoPrecoNoite) campoPrecoNoite.value = financeiro.precoNoite.toFixed(2);
+
+    const campoLiquido = document.querySelector("#liquido");
+    if (campoLiquido) campoLiquido.value = financeiro.liquido.toFixed(2);
 }
-<input id="valorEmFalta" readonly>
-<input id="statusPagamento" readonly>
-<input id="precoNoite" readonly>
-<input id="liquido" readonly>
-function ligarEventosImportacao() {
-    document.querySelector("#inputExcelBooking")
-        .addEventListener("change", importarExcelBooking);
-}
+
+
 // ---------------------------------------------------------
-// IMPORTAR EXCEL BOOKING
+// IMPORTAÇÃO BOOKING
 // ---------------------------------------------------------
 
+function ligarEventosImportacao() {
+    const input = document.querySelector("#inputExcelBooking");
+    if (!input) return;
+
+    input.addEventListener("change", importarExcelBooking);
+}
+
+
+// IMPORTAR EXCEL BOOKING
 async function importarExcelBooking(event) {
 
     const ficheiro = event.target.files[0];
@@ -369,10 +491,8 @@ async function importarExcelBooking(event) {
 
     reader.readAsBinaryString(ficheiro);
 }
-<input type="file" id="inputExcelBooking" accept=".xlsx,.xls">
-<button id="btnAlocarAuto" type="button">Alocar Automaticamente</button>
-document.querySelector("#btnAlocarAuto")
-    .addEventListener("click", alocarAutomaticamenteModal);
+
+
 // ---------------------------------------------------------
 // ALOCAR AUTOMATICAMENTE NO MODAL
 // ---------------------------------------------------------
@@ -404,48 +524,38 @@ function alocarAutomaticamenteModal() {
     }
 
     // Atualizar campo no modal
-    document.querySelector("#apartamentos").value = apt.join(", ");
+    const campoApt = document.querySelector("#apartamentos");
+    if (campoApt) campoApt.value = apt.join(", ");
 
     alert("Apartamento alocado automaticamente.");
 }
+
+
+// ---------------------------------------------------------
+// VERIFICAR CONFLITOS EM EDIÇÃO
+// ---------------------------------------------------------
+
 function verificarConflitosEdicao(reserva) {
 
     const conflitos = AlocacaoEngine.encontrarConflitos(reserva, reservas);
 
     const aviso = document.querySelector("#avisoConflitos");
 
+    if (!aviso) return;
+
     if (conflitos.length === 0) {
         aviso.style.display = "none";
+        aviso.textContent = "";
         return;
     }
 
     aviso.style.display = "block";
     aviso.textContent = `⚠ Conflito com ${conflitos.length} reserva(s).`;
 }
-<div id="avisoConflitos" style="display:none; color:#c62828; font-weight:bold;"></div>
-verificarConflitosEdicao(r);
-const conflitos = AlocacaoEngine.encontrarConflitos(reserva, reservas);
 
-if (conflitos.length > 0) {
-    if (!confirm("Existem conflitos com outras reservas. Deseja continuar?")) {
-        return;
-    }
-}
-<td>
-    ${r.apartamentos?.length > 0 
-        ? r.apartamentos.join(", ") 
-        : "<span style='color:#c62828;font-weight:bold'>Não alocado</span>"
-    }
-</td>
-<button id="btnSincronizarCalendario">Sincronizar Calendário</button>
-<button id="btnLimparFantasmas">Limpar Fantasmas</button>
-document.querySelector("#btnSincronizarCalendario")
-    .addEventListener("click", sincronizarCalendarioUI);
 
-document.querySelector("#btnLimparFantasmas")
-    .addEventListener("click", limparFantasmasUI);
 // ---------------------------------------------------------
-// ENVIAR RESERVAS PARA O CALENDÁRIO
+// SINCRONIZAÇÃO COM CALENDÁRIO
 // ---------------------------------------------------------
 
 async function sincronizarCalendarioUI() {
@@ -462,10 +572,9 @@ async function sincronizarCalendarioUI() {
 
     alert("Calendário sincronizado com sucesso.");
 }
-// ---------------------------------------------------------
-// LIMPAR RESERVAS FANTASMA DO CALENDÁRIO
-// ---------------------------------------------------------
 
+
+// LIMPAR RESERVAS FANTASMA DO CALENDÁRIO
 async function limparFantasmasUI() {
 
     if (!confirm("Deseja remover reservas que estão no calendário mas não existem no sistema")) {
@@ -476,6 +585,8 @@ async function limparFantasmasUI() {
 
     alert("Fantasmas removidos com sucesso.");
 }
+
+
 // ---------------------------------------------------------
 // APAGAR RESERVA (FIRESTORE + CALENDÁRIO)
 // ---------------------------------------------------------
@@ -498,14 +609,27 @@ async function apagarReserva(id) {
 
     alert("Reserva apagada com sucesso.");
 }
-btn.addEventListener("click", async () => {
-    const id = btn.dataset.id;
-    if (confirm("Tem a certeza que quer apagar esta reserva")) {
-        await ReservaService.delete(id);
-        await carregarReservas();
+
+
+// ---------------------------------------------------------
+// FILTROS (VERSÃO BÁSICA — PODES EVOLUIR DEPOIS)
+// ---------------------------------------------------------
+
+function ligarEventosFiltros() {
+    const inputBusca = document.querySelector("#filtroTexto");
+    if (!inputBusca) return;
+
+    inputBusca.addEventListener("input", () => {
+        const termo = inputBusca.value.toLowerCase();
+
+        reservasFiltradas = reservas.filter(r => {
+            return (
+                (r.cliente ?? "").toLowerCase().includes(termo) ||
+                (r.bookingId ?? "").toLowerCase().includes(termo) ||
+                (r.telefone ?? "").toLowerCase().includes(termo)
+            );
+        });
+
         renderTabela();
-    }
-});
-btn.addEventListener("click", () => {
-    apagarReserva(btn.dataset.id);
-});
+    });
+}
