@@ -244,5 +244,139 @@
     vertical-align: middle;
     margin-right: 4px;
 }
+/* ---------------------------------------------------------
+   TABELA BASE
+--------------------------------------------------------- */
+
+#tabelaReservas {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: white;
+}
+
+#tabelaReservas th {
+    background: #f5f5f5;
+    padding: 10px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+#tabelaReservas td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: middle;
+}
+
+/* Wrapper para scroll horizontal */
+.tabela-wrapper {
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+/* ---------------------------------------------------------
+   BANDEIRAS
+--------------------------------------------------------- */
+
+.flag {
+    width: 22px;
+    height: 16px;
+    border-radius: 2px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+}
+
+/* ---------------------------------------------------------
+   BADGES
+--------------------------------------------------------- */
+
+.badge {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: white;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* ORIGEM */
+.origem-booking { background: #003580; }
+.origem-airbnb { background: #ff5a5f; }
+.origem-particular { background: #4caf50; }
+.origem-outro { background: #757575; }
+
+/* PAGAMENTO */
+.pagamento-total { background: #4caf50; }
+.pagamento-parcial { background: #ff9800; }
+.pagamento-aguardar { background: #f44336; }
+
+/* NÃO ALOCADO */
+.badge-nao-alocado {
+    background: #d32f2f;
+}
+
+/* ---------------------------------------------------------
+   LINHAS ESPECIAIS
+--------------------------------------------------------- */
+
+.linha-nao-alocada {
+    background: #ffebee !important;
+}
+
+.linha-pagamento-pendente {
+    background: #fff3e0 !important;
+}
+
+.linha-pagamento-parcial {
+    background: #fff8e1 !important;
+}
+
+/* ---------------------------------------------------------
+   BOTÕES DE AÇÃO
+--------------------------------------------------------- */
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px;
+    transition: transform 0.15s ease;
+}
+
+.btn-icon:hover {
+    transform: scale(1.2);
+}
+
+/* Botão editar */
+.btnEditar {
+    color: #1976d2;
+}
+
+/* Botão apagar */
+.btnApagar {
+    color: #d32f2f;
+}
+
+/* ---------------------------------------------------------
+   HOVER NAS LINHAS
+--------------------------------------------------------- */
+
+#tabelaReservas tbody tr:hover {
+    background: #f0f7ff;
+}
+
+/* ---------------------------------------------------------
+   CHECKBOXES
+--------------------------------------------------------- */
+
+#selectAll {
+    cursor: pointer;
+}
+
+.selectReserva {
+    cursor: pointer;
+}
 
 
