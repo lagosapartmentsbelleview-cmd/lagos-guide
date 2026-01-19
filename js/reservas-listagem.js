@@ -586,20 +586,21 @@ async function guardarReserva() {
     const cliente = formatarNome(document.getElementById("cliente").value.trim());
     let quartos = Number(document.getElementById("quartos").value || 1);
 
-    let apartamentosDigitados = [...new Set(
-    document.getElementById("apartamentos").value
-        .split(",")
-        .map(x => x.trim())
-        .filter(x => x.trim().length > 0)
-)];
+   let campoApartamentos = document.getElementById("apartamentos").value.trim();
 
-// Se o campo estiver realmente vazio → força modo automático
-const campoApartamentos = document.getElementById("apartamentos").value.trim();
-const modoAutomatico = campoApartamentos.length === 0;
+// Se o campo estiver vazio → modo automático
+let modoAutomatico = campoApartamentos.length === 0;
 
-if (modoAutomatico) {
-    apartamentosDigitados = [];
-}
+let apartamentosDigitados = modoAutomatico
+    ? []
+    : [...new Set(
+        campoApartamentos
+            .split(",")
+            .map(x => x.trim())
+            .filter(x => x.length > 0)
+    )];
+
+
 
     const checkin = document.getElementById("checkin").value.trim();
     const checkout = document.getElementById("checkout").value.trim();
@@ -648,7 +649,8 @@ const reservasSemAtual = reservas.filter(r => !reservaAtual || r.id !== reservaA
 // ---------------------------------------------------------
 // 1) RESERVA MANUAL (utilizador escreveu apartamentos)
 // ---------------------------------------------------------
-if (apartamentosDigitados.length > 0) {
+if (!modoAutomatico) {
+
 
     apartamentos = apartamentosDigitados;
 
