@@ -18,6 +18,7 @@ btnImportar.addEventListener("click", () => {
 
     renderTabela(dados);
     guardarConcorrencia(dados);
+    atualizarDataAtualizacao(); // <-- ESTA LINHA FAZ A DATA APARECER
 });
 
 // Evento: Exportar Excel
@@ -112,6 +113,17 @@ function guardarConcorrencia(dados) {
     // TODO: guardar em JSON local ou Firestore
     console.log("Dados prontos para guardar:", dados);
 }
+
+function atualizarDataAtualizacao() {
+const info = document.getElementById("infoAtualizacao");
+if (!info) return;
+
+const agora = new Date();
+const dataFormatada = agora.toLocaleString("pt-PT");
+
+info.textContent = "Última atualização: " + dataFormatada;
+}
+
 // Botão Limpar Dados
 document.getElementById("btnLimpar").addEventListener("click", function () {
     const confirmar = confirm("Tem a certeza que deseja limpar todos os dados?\nEsta ação não pode ser anulada.");
