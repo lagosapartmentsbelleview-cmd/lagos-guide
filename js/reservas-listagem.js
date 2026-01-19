@@ -83,6 +83,85 @@ async function carregarReservas() {
     reservasFiltradas = [...reservas];
 }
 
+function renderTabela() {
+    const tbody = document.querySelector("#tabelaReservas tbody");
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+
+    reservasFiltradas.forEach(r => {
+
+        const tr = document.createElement("tr");
+
+        // Highlight se não está alocada
+        if (!r.apartamentos || r.apartamentos.length === 0) {
+            tr.classList.add("linha-nao-alocada");
+        }
+
+        // Highlight pagamento
+        if (r.statusPagamento === "aguardar") {
+            tr.classList.add("linha-pagamento-pendente");
+        }
+        if (r.statusPagamento === "parcial") {
+            tr.classList.add("linha-pagamento-parcial");
+        }
+
+        // Badge de origem
+        const origemBadge = `
+            <span class="badge origem-${(r.origem || "outro").toLowerCase()}">
+                ${r.origem || "Outro"}
+            </span>
+        `;
+
+        // Bandeira
+        const flag = r.paisCliente
+            ? `<img src="flags/${r.paisCliente}.svg" class="flag">`
+            : "";
+
+        // Apartamentos
+        const apt = r.apartamentos?.length
+            ? r.apartamentos.join(", ")
+            : `<span class="badge badge-nao-alocado">Não alocado</span>`;
+
+        // Pessoas
+        const pessoas = `${r.adultos}A + ${r.criancas}C`;
+
+        tr.innerHTML = `
+            <td><input type="checkbox" class="selectReserva" data-id="${r.id}"></td>
+
+            <td>${origemBadge}</td>
+            <td>${r.bookingId ?? ""}</td>
+            <td>${r.cliente ?? ""}</td>
+
+            <td>${r.quartos ?? ""}</td>
+            <td>${apt}</td>
+
+            <td>${pessoas}</td>
+
+            <td>${r.checkin}</td>
+            <td>${r.checkout}</td>
+            <td>${r.noites}</td>
+
+            <td>${r.totalBruto} €</td>
+            <td>${r.comissaoServico} €</td>
+            <td>${r.comissaoPagamento} €</td>
+            <td>${r.comissaoTotal} €</td>
+            <td>${r.precoNoite} €</td>
+            <td>${r.berco ? "Sim" : "Não"}</td>
+            <td>${r.limpeza} €</td>
+            <td>${r.liquido} €</td>
+
+            <td>
+                <button class="btn-icon btnEditar" data-id="${r.id}">✏️</button>
+                <button class="btn-icon btnApagar" data-id="${r.id}">🗑️</button>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+
+    ligarEventosTabela();
+}
 
 // ---------------------------------------------------------
 // RENDERIZAR TABELA
