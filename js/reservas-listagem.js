@@ -1401,12 +1401,16 @@ function ligarEventos() {
     // Limpar fantasmas
     const btnLimparFantasmas = document.getElementById("btnLimparFantasmas");
     if (btnLimparFantasmas) {
-        btnLimparFantasmas.addEventListener("click", apagarReservasFantasmaDoCalendario);
+    btnLimparFantasmas.addEventListener("click", apagarReservasFantasmaDoCalendario);
     }
-// -------------------------------------------------------------
-//   Filtros
-// -------------------------------------------------------------
-function aplicarFiltrosAvancados() {
+
+    }   // <-- FECHA A FUNÇÃO ligarEventos() AQUI MESMO
+
+    // -------------------------------------------------------------
+    //   Filtros
+    // -------------------------------------------------------------
+    function aplicarFiltrosAvancados() {
+
 
     let lista = [...reservas];
 
