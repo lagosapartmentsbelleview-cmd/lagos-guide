@@ -7,6 +7,16 @@ let mesOffset = 0;
 // Lista fixa de apartamentos
 const apartamentos = ["2301", "2203", "2204"];
 
+// Guardar referência global aos selects
+let selectMes, selectAno;
+
+// Capturar posição do rato para tooltip flutuante
+document.addEventListener("mousemove", e => {
+    document.documentElement.style.setProperty("--mouse-x", e.clientX + "px");
+    document.documentElement.style.setProperty("--mouse-y", e.clientY + "px");
+});
+
+
 /******************************************************
  * 1) INICIALIZAÇÃO
  ******************************************************/
@@ -14,71 +24,63 @@ window.addEventListener("load", () => {
     carregarReservas();
 
     // Preencher dropdown de meses
-const meses = [
-    "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-    "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
-];
+    const meses = [
+        "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+        "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+    ];
 
-const selectMes = document.getElementById("selectMes");
-meses.forEach((nome, index) => {
-    const opt = document.createElement("option");
-    opt.value = index;
-    opt.textContent = nome;
-    selectMes.appendChild(opt);
-});
+    selectMes = document.getElementById("selectMes");
+    meses.forEach((nome, index) => {
+        const opt = document.createElement("option");
+        opt.value = index;
+        opt.textContent = nome;
+        selectMes.appendChild(opt);
+    });
 
-// Preencher dropdown de anos
-const selectAno = document.getElementById("selectAno");
-const anoAtual = new Date().getFullYear();
-for (let a = anoAtual - 5; a <= anoAtual + 10; a++) {
-    const opt = document.createElement("option");
-    opt.value = a;
-    opt.textContent = a;
-    if (a === anoAtual) opt.selected = true;
-    selectAno.appendChild(opt);
-}
+    // Preencher dropdown de anos
+    selectAno = document.getElementById("selectAno");
+    const anoAtual = new Date().getFullYear();
+    for (let a = anoAtual - 5; a <= anoAtual + 10; a++) {
+        const opt = document.createElement("option");
+        opt.value = a;
+        opt.textContent = a;
+        if (a === anoAtual) opt.selected = true;
+        selectAno.appendChild(opt);
+    }
 
-// Atualizar mês/ano quando o utilizador muda
-selectMes.onchange = () => atualizarMesAno();
-selectAno.onchange = () => atualizarMesAno();
+    // Atualizar mês/ano quando o utilizador muda
+    selectMes.onchange = () => atualizarMesAno();
+    selectAno.onchange = () => atualizarMesAno();
 
-function atualizarMesAno() {
-    const mesEscolhido = Number(selectMes.value);
-    const anoEscolhido = Number(selectAno.value);
+    function atualizarMesAno() {
+        const mesEscolhido = Number(selectMes.value);
+        const anoEscolhido = Number(selectAno.value);
 
-    const anoBase = new Date().getFullYear();
-    const mesBase = new Date().getMonth();
+        const anoBase = new Date().getFullYear();
+        const mesBase = new Date().getMonth();
 
-    mesOffset = (anoEscolhido - anoBase) * 12 + (mesEscolhido - mesBase);
-    desenharCalendario();
-}
+        mesOffset = (anoEscolhido - anoBase) * 12 + (mesEscolhido - mesBase);
+        desenharCalendario();
+    }
 
-// Botão Hoje
-document.getElementById("btnHoje").onclick = () => {
-    mesOffset = 0;
-    selectMes.value = new Date().getMonth();
-    selectAno.value = new Date().getFullYear();
-    desenharCalendario();
-};
+    // Botão Hoje
+    document.getElementById("btnHoje").onclick = () => {
+        mesOffset = 0;
+        selectMes.value = new Date().getMonth();
+        selectAno.value = new Date().getFullYear();
+        desenharCalendario();
+    };
 
-// Botão Mês Atual
-document.getElementById("btnMesAtual").onclick = () => {
-    mesOffset = 0;
-    selectMes.value = new Date().getMonth();
-    selectAno.value = new Date().getFullYear();
-    desenharCalendario();
-};
+    // Botão Mês Atual
+    document.getElementById("btnMesAtual").onclick = () => {
+        mesOffset = 0;
+        selectMes.value = new Date().getMonth();
+        selectAno.value = new Date().getFullYear();
+        desenharCalendario();
+    };
 
-
-    const btnIrListagem = document.getElementById("btnIrListagem");
     const btnMesAnterior = document.getElementById("btnMesAnterior");
     const btnMesSeguinte = document.getElementById("btnMesSeguinte");
-
-    if (btnIrListagem) {
-        btnIrListagem.onclick = () => {
-            window.location.href = "listagem-reservas.html";
-        };
-    }
 
     if (btnMesAnterior) {
         btnMesAnterior.onclick = () => {
@@ -119,17 +121,22 @@ function parseDataReserva(str) {
 /******************************************************
  * 3) CARREGAR RESERVAS DO FIRESTORE
  ******************************************************/
+let listenerAtivo = false;
+
 function carregarReservas() {
+    if (listenerAtivo) return;   // impede múltiplos listeners
+    listenerAtivo = true;
+
     db.collection("calendario")
         .orderBy("checkin")
         .onSnapshot(snapshot => {
-
             reservas = [];
             snapshot.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
-
             desenharCalendario();
         });
 }
+
+
 
 /******************************************************
  * 4) DESENHAR CALENDÁRIO
@@ -155,9 +162,12 @@ function desenharCalendario() {
     const anoAtual = dataBase.getFullYear();
 
     const nomeMes = dataBase.toLocaleString("pt-PT", { month: "long" });
-    // Sincronizar dropdowns com o calendário
-selectMes.value = mesAtual;
-selectAno.value = anoAtual;
+
+    // Sincronizar dropdowns com o calendário (agora com variáveis globais)
+    if (selectMes && selectAno) {
+        selectMes.value = mesAtual;
+        selectAno.value = anoAtual;
+    }
 
     tituloMesEl.textContent = `${nomeMes.toUpperCase()} ${anoAtual}`;
 
@@ -183,75 +193,98 @@ selectAno.value = anoAtual;
         tabela.innerHTML += tr;
     });
 
-    desenharReservas(mesAtual, anoAtual, anoAtual);
+    desenharReservas(mesAtual, anoAtual);
 }
+
+/******************************************************
+ * FUNÇÃO AUXILIAR: NOME CURTO
+ ******************************************************/
+function nomeCurto(nome) {
+    if (!nome) return "";
+    const partes = nome.trim().split(" ");
+    if (partes.length === 1) return partes[0];
+    return partes[0] + " " + partes[partes.length - 1];
+}
+
 
 /******************************************************
  * 5) DESENHAR RESERVAS NO CALENDÁRIO
  ******************************************************/
-function desenharReservas(mes, ano, anoAtual) {
+function desenharReservas(mes, anoAtual) {
 
     reservas.forEach(r => {
 
-        // Garantir que existe array de apartamentos
         const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
-
-        // Converter datas
         const dataInicio = parseDataReserva(r.checkin);
         const dataFim = parseDataReserva(r.checkout);
+        if (!dataInicio || !dataFim) return;
 
-        if (!dataInicio || !dataFim) return; // segurança
+        const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
 
-        // Para cada apartamento da reserva
-        listaAps.forEach(ap => {
+        listaAps.forEach((ap, indexApto) => {
 
+            const isPrimeiroApartamento = indexApto === 0;
+
+            // 🔥 Loop pelos dias da reserva
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
                 if (dt.getMonth() !== mes || dt.getFullYear() !== anoAtual) continue;
-
 
                 const dia = dt.getDate();
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) continue;
 
+                const isCheckin = dt.getTime() === dataInicio.getTime();
+                const isCheckout = dt.getTime() === dataFim.getTime();
+
+                // 🔥 Criar barra MASTER apenas 1 vez (no check-in do primeiro apartamento)
+               if (isCheckin)
+ {
+
+                    const master = document.createElement("div");
+                    master.classList.add("reserva-master");
+                    master.classList.add("origem-" + (r.origem || "manual").toLowerCase());
+
+                    master.textContent = nomeCurto(r.cliente);
+
+                    // Barra cobre todas as células da reserva
+                    master.style.width = `calc(${totalDias * 100}%)`;
+                    master.style.left = "0";
+
+                    const checkinPt = dataInicio.toLocaleDateString("pt-PT");
+                    const checkoutPt = dataFim.toLocaleDateString("pt-PT");
+                    master.setAttribute("data-info",
+                        `${nomeCurto(r.cliente)} | ${r.origem}
+                         Check-in: ${checkinPt}
+                         Check-out: ${checkoutPt}
+                         Total: ${r.totalBruto || 0}€`
+                    );
+
+                    master.onclick = () => {
+                        window.location.href = "listagem-reservas.html?id=" + r.id;
+                    };
+
+                    cel.appendChild(master);
+                }
+
+                // 🔥 Reserva de 1 dia → só a master, não criar metades
+                if (isCheckin && isCheckout) continue;
+
+                // 🔥 Criar metades e dias completos
                 const div = document.createElement("div");
                 div.classList.add("reserva");
+                div.classList.add("origem-" + (r.origem || "manual").toLowerCase());
 
-                const dataStr = `${String(dia).padStart(2, "0")}/${String(mes + 1).padStart(2, "0")}/${anoAtual}`;
-
-                const checkinPt = dataInicio.toLocaleDateString("pt-PT");
-                const checkoutPt = dataFim.toLocaleDateString("pt-PT");
-
-                const isCheckin = dataStr === checkinPt;
-                const isCheckout = dataStr === checkoutPt;
-
-                if (isCheckin && isCheckout) div.classList.add("reserva-unica");
-                else if (isCheckin) div.classList.add("reserva-inicio");
-                else if (isCheckout) div.classList.add("reserva-fim");
-                else div.classList.add("reserva-meio");
-
-                div.style.backgroundColor = corPorOrigem(r.origem);
-                div.textContent = r.cliente;
-
-                div.onclick = () => {
-                    window.location.href = "listagem-reservas.html?id=" + r.id;
-                };
+                if (isCheckin) {
+                    div.classList.add("reserva-inicio-metade");
+                } else if (isCheckout) {
+                    div.classList.add("reserva-fim-metade");
+                } else {
+                    div.classList.add("reserva-meio");
+                }
 
                 cel.appendChild(div);
             }
         });
     });
-}
-
-/******************************************************
- * 6) COR POR ORIGEM
- ******************************************************/
-function corPorOrigem(origem) {
-    switch ((origem || "").toLowerCase()) {
-        case "booking": return "#1E88E5";
-        case "airbnb": return "#EC407A";
-        case "vrbo": return "#8E24AA";
-        case "particular": return "#43A047";
-        default: return "#757575";
-    }
 }
