@@ -575,6 +575,10 @@ function preencherFormularioReserva(r) {
 // 11) GUARDAR RESERVA (NOVA OU EDITADA)
 // -------------------------------------------------------------
 async function guardarReserva() {
+
+    // -----------------------------
+    // CAMPOS BÁSICOS
+    // -----------------------------
     const origem = document.getElementById("origem").value;
     let bookingId = document.getElementById("bookingId").value.trim();
 
@@ -584,24 +588,26 @@ async function guardarReserva() {
     }
 
     const cliente = formatarNome(document.getElementById("cliente").value.trim());
-    let quartos = Number(document.getElementById("quartos").value || 1);
+    const quartos = Number(document.getElementById("quartos").value || 1);
 
-   let campoApartamentos = document.getElementById("apartamentos").value.trim();
+    // -----------------------------
+    // APARTAMENTOS: MANUAL vs AUTOMÁTICO
+    // -----------------------------
+    const campoApartamentos = document.getElementById("apartamentos").value.trim();
+    const modoAutomatico = campoApartamentos.length === 0;
 
-// Se o campo estiver vazio → modo automático
-let modoAutomatico = campoApartamentos.length === 0;
+    const apartamentosDigitados = modoAutomatico
+        ? []
+        : [...new Set(
+            campoApartamentos
+                .split(",")
+                .map(x => x.trim())
+                .filter(x => x.length > 0)
+        )];
 
-let apartamentosDigitados = modoAutomatico
-    ? []
-    : [...new Set(
-        campoApartamentos
-            .split(",")
-            .map(x => x.trim())
-            .filter(x => x.length > 0)
-    )];
-
-
-
+    // -----------------------------
+    // OUTROS CAMPOS
+    // -----------------------------
     const checkin = document.getElementById("checkin").value.trim();
     const checkout = document.getElementById("checkout").value.trim();
 
@@ -619,171 +625,123 @@ let apartamentosDigitados = modoAutomatico
     const liquido = totalBruto - comissao;
 
     let limpeza = document.getElementById("limpeza").value.trim();
-    if (limpeza === "" || isNaN(limpeza)) {
-        limpeza = calcularLimpeza(checkin);
-    } else {
-        limpeza = Number(limpeza);
-    }
+    limpeza = limpeza === "" || isNaN(limpeza) ? calcularLimpeza(checkin) : Number(limpeza);
 
     const totalLiquidoFinal = liquido - limpeza;
 
-    // 🔥 CAMPOS DE PAGAMENTO
-const statusPagamento = document.getElementById("statusPagamento").value;
-const valorPago = Number(document.getElementById("valorPago").value || 0);
+    const statusPagamento = document.getElementById("statusPagamento").value;
+    const valorPago = Number(document.getElementById("valorPago").value || 0);
 
+    // -----------------------------
+    // PREPARAÇÃO PARA ALOCAÇÃO
+    // -----------------------------
+    let apartamentos = [];
+    let status = "alocado";
 
-// ---------------------------------------------------------
-// ALOCAÇÃO INTELIGENTE + VALIDAÇÃO MANUAL
-// ---------------------------------------------------------
-let apartamentos = [];
-let status = "alocado";
+    const hoje = new Date();
+    const dtCheckin = parseDataPt(checkin);
+    const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
 
-const hoje = new Date();
-const dtCheckin = parseDataPt(checkin);
-const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
-const diasParaCheckin = dtCheckin ? diasEntre(new Date(), dtCheckin) : null;
+    const reservasSemAtual = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
 
-// Remover a própria reserva da lista de validação
-const reservasSemAtual = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
+    // -----------------------------
+    // 1) MODO MANUAL
+    // -----------------------------
+    if (!modoAutomatico) {
 
-// ---------------------------------------------------------
-// 1) RESERVA MANUAL (utilizador escreveu apartamentos)
-// ---------------------------------------------------------
-if (!modoAutomatico) {
+        apartamentos = apartamentosDigitados;
 
+        // Validar número
+        if (apartamentos.length < quartos) {
+            alert(`Foram indicados ${apartamentos.length} apartamento(s), mas a reserva exige ${quartos}.`);
+            return;
+        }
 
-    apartamentos = apartamentosDigitados;
+        // Validar conflitos
+        for (const ap of apartamentos) {
+            const conflito = temConflitoNoApartamento({ checkin, checkout }, ap, reservasSemAtual);
 
-    // Validar número de apartamentos
-    if (apartamentos.length < quartos) {
-        alert(
-            `Foram indicados ${apartamentos.length} apartamento(s), ` +
-            `mas a reserva exige ${quartos}.`
-        );
-        return;
+            if (conflito) {
+                const reservaQueOcupa = reservasSemAtual.find(r =>
+                    r.apartamentos?.includes(ap) &&
+                    datasSobrepoem(r.checkin, r.checkout, checkin, checkout)
+                );
+
+                let mensagem = `O apartamento ${ap} está ocupado pela reserva de ${reservaQueOcupa.cliente}.`;
+                mensagem += `\n\nDeseja avançar com a troca manual?`;
+
+                if (!confirm(mensagem)) {
+                    alert(`O apartamento ${ap} já está ocupado nestas datas.`);
+                    return;
+                }
+            }
+        }
+
+        // Se passou todas as validações → grava manual
     }
 
-  // Validar conflitos reais (ignora a própria reserva)
-for (const ap of apartamentos) {
-    const conflito = temConflitoNoApartamento(
-        { checkin, checkout },
-        ap,
-        reservasSemAtual
-    );
+    // -----------------------------
+    // 2) MODO AUTOMÁTICO
+    // -----------------------------
+    if (modoAutomatico) {
 
-  if (conflito) {
+        apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasSemAtual);
 
-    // Identificar a reserva que ocupa este apartamento
-    const reservaQueOcupa = reservasSemAtual.find(r =>
-        r.apartamentos?.includes(ap) &&
-        datasSobrepoem(r.checkin, r.checkout, checkin, checkout)
-    );
-
-    if (reservaQueOcupa) {
-
-        // Calcular dias para check-in da reserva atual
-        const dtCheckinAtual = parseDataPt(checkin);
-        const diasParaCheckinAtual = diasEntre(new Date(), dtCheckinAtual);
-
-        // Calcular dias para check-in da reserva que ocupa
-        const dtCheckinOutra = parseDataPt(reservaQueOcupa.checkin);
-        const diasParaCheckinOutra = diasEntre(new Date(), dtCheckinOutra);
-
-        // Verificar se alguma já começou
-        const reservaAtualJaComecou = dtCheckinAtual <= new Date();
-        const outraJaComecou = dtCheckinOutra <= new Date();
-
-        // Construir mensagem inteligente
-        let mensagem = `O apartamento ${ap} está ocupado pela reserva de ${reservaQueOcupa.cliente}.`;
-
-        // Caso especial: faltam 5 dias ou menos
-        if (diasParaCheckinAtual <= 5 || diasParaCheckinOutra <= 5) {
-            mensagem += `\n\n⚠ Atenção: falta(m) menos de 5 dia(s) para o check-in de uma das reservas.`;
+        if (apartamentos.length === 0) {
+            alert(`Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.`);
+            return;
         }
 
-        // Caso especial: reserva já começou
-        if (reservaAtualJaComecou || outraJaComecou) {
-            mensagem += `\n\n⚠ Uma das reservas já começou. Só avance se for mesmo necessário (ex.: avaria).`;
-        }
-
-        mensagem += `\n\nDeseja avançar com a troca manual?`;
-
-        const confirmarTroca = confirm(mensagem);
-
-        if (confirmarTroca) {
-            continue; // permitir troca manual
+        if (apartamentos.length < quartos) {
+            alert(
+                `Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.\n` +
+                `Disponíveis: ${apartamentos.length}`
+            );
+            return;
         }
     }
 
-    // Se não for troca → bloquear
-    alert(`O apartamento ${ap} já está ocupado nestas datas.`);
-    return;
-}
-}
+    // -----------------------------
+    // DADOS FINAIS
+    // -----------------------------
+    const dados = {
+        origem,
+        bookingId,
+        cliente,
+        quartos,
+        apartamentos,
+        checkin: normalizarDataParaPt(checkin),
+        checkout: normalizarDataParaPt(checkout),
+        hospedes,
+        adultos,
+        criancas,
+        idadesCriancas,
+        totalBruto,
+        comissao,
+        precoNoite,
+        noites,
+        liquido,
+        limpeza,
+        totalLiquidoFinal,
+        berco,
+        status,
+        statusPagamento,
+        valorPago
+    };
 
-    // ---------------------------------------------------------
-    // 2) RESERVA AUTOMÁTICA (alocação inteligente)
-    // ---------------------------------------------------------
-    apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasSemAtual);
-
-    // Nenhum apartamento disponível
-    if (apartamentos.length === 0) {
-        alert(`Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.`);
-        return;
+    // -----------------------------
+    // GRAVAR
+    // -----------------------------
+    if (!reservaAtual) {
+        await db.collection("reservas").add(dados);
+    } else {
+        await db.collection("reservas").doc(reservaAtual.id).update(dados);
     }
 
-    // Encontrou menos do que o necessário
-    if (apartamentos.length < quartos) {
-        alert(
-            `Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.\n` +
-            `Disponíveis: ${apartamentos.length}`
-        );
-        return;
-    }
+    fecharModal();
+    carregarReservas();
 }
 
-
-// ---------------------------------------------------------
-// DADOS FINAIS
-// ---------------------------------------------------------
-const dados = {
-    origem,
-    bookingId: bookingId || null,
-    cliente,
-    quartos,
-    apartamentos,
-    checkin: normalizarDataParaPt(checkin),
-    checkout: normalizarDataParaPt(checkout),
-    hospedes,
-    adultos,
-    criancas,
-    idadesCriancas,
-    totalBruto,
-    comissao,
-    precoNoite,
-    noites,
-    liquido,
-    limpeza,
-    totalLiquidoFinal,
-    berco,
-    status,
-
-    // 🔥 CAMPOS NOVOS
-    statusPagamento: String(statusPagamento).trim(),
-    valorPago: Number(valorPago)
-
-};
-
-
-if (!reservaAtual) {
-    await db.collection("reservas").add(dados);
-} else {
-    await db.collection("reservas").doc(reservaAtual.id).update(dados);
-}
-
-fecharModal();
-carregarReservas();
-}
 
 // -------------------------------------------------------------
 // 12) APAGAR RESERVA (E APAGAR DO CALENDÁRIO TAMBÉM)
