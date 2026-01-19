@@ -1400,6 +1400,72 @@ function ligarEventos() {
     if (btnLimparFantasmas) {
         btnLimparFantasmas.addEventListener("click", apagarReservasFantasmaDoCalendario);
     }
+// -------------------------------------------------------------
+//   Filtros
+// -------------------------------------------------------------
+function aplicarFiltrosAvancados() {
+
+    let lista = [...reservas];
+
+    const txt = document.getElementById("filtroTexto").value.toLowerCase();
+    const origem = document.getElementById("filtroOrigem").value;
+    const ap = document.getElementById("filtroApartamento").value;
+    const estado = document.getElementById("filtroEstado").value;
+    const pagamento = document.getElementById("filtroPagamento").value;
+    const pais = document.getElementById("filtroPais").value.toLowerCase();
+
+    const noitesMin = Number(document.getElementById("filtroNoitesMin").value || 0);
+    const noitesMax = Number(document.getElementById("filtroNoitesMax").value || 9999);
+
+    const valorMin = Number(document.getElementById("filtroValorMin").value || 0);
+    const valorMax = Number(document.getElementById("filtroValorMax").value || 999999);
+
+    const hospMin = Number(document.getElementById("filtroHospedesMin").value || 0);
+    const hospMax = Number(document.getElementById("filtroHospedesMax").value || 999);
+
+    const dtInicio = document.getElementById("filtroDataInicio").value;
+    const dtFim = document.getElementById("filtroDataFim").value;
+
+    lista = lista.filter(r => {
+
+        if (txt && !(
+            r.cliente.toLowerCase().includes(txt) ||
+            r.bookingId?.toLowerCase().includes(txt) ||
+            r.apartamentos?.join(", ").includes(txt) ||
+            (r.paisCliente || "").toLowerCase().includes(txt) ||
+            (r.comentarios || "").toLowerCase().includes(txt)
+        )) return false;
+
+        if (origem && r.origem !== origem) return false;
+
+        if (ap && !r.apartamentos?.includes(ap)) return false;
+
+        if (estado && r.status !== estado) return false;
+
+        if (pagamento && r.statusPagamento !== pagamento) return false;
+
+        if (pais && !(r.paisCliente || "").toLowerCase().includes(pais)) return false;
+
+        if (r.noites < noitesMin || r.noites > noitesMax) return false;
+
+        if (r.totalBruto < valorMin || r.totalBruto > valorMax) return false;
+
+        if (r.hospedes < hospMin || r.hospedes > hospMax) return false;
+
+        if (dtInicio) {
+            const d1 = parseDataPt(r.checkin);
+            if (d1 < new Date(dtInicio)) return false;
+        }
+
+        if (dtFim) {
+            const d2 = parseDataPt(r.checkin);
+            if (d2 > new Date(dtFim)) return false;
+        }
+
+        return true;
+    });
+
+    desenharTabela(lista);
 }
 
 // -------------------------------------------------------------
