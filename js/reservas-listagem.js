@@ -422,27 +422,44 @@ function apagarReserva(id) {
         .catch(err => console.error("Erro ao apagar:", err));
 }
 
-// -------------------------------------------------------------
-// FUNÇÃO: DETALHE DA RESERVA
-// -------------------------------------------------------------
-function abrirDetalheReserva(id) {
+function detalheReserva(id) {
     console.log("Abrir detalhe da reserva:", id);
 
-    const modal = document.getElementById("modalReserva");
-    const content = modal.querySelector(".modal-content");
+    const reserva = reservas.find(r => r.id === id);
+    if (!reserva) {
+        alert("Reserva não encontrada.");
+        return;
+    }
 
-    content.innerHTML = `
-        <span class="close" id="fecharDetalhe">&times;</span>
-        <h2>Detalhes da Reserva</h2>
-        <p>ID da reserva: ${id}</p>
-        <p>(Aqui vamos colocar os detalhes reais)</p>
+    const html = `
+        <div class="modal-section-title">Origem</div>
+        <p><strong>${reserva.origem}</strong></p>
+
+        <div class="modal-section-title">Hóspede</div>
+        <p><strong>Cliente:</strong> ${reserva.cliente}</p>
+        <p><strong>Hóspedes:</strong> ${reserva.hospedes}</p>
+        <p><strong>Adultos:</strong> ${reserva.adultos}</p>
+        <p><strong>Crianças:</strong> ${reserva.criancas}</p>
+        <p><strong>Idades:</strong> ${reserva.idadesCriancas || "-"}</p>
+
+        <div class="modal-section-title">Alojamento</div>
+        <p><strong>Quartos:</strong> ${reserva.quartos}</p>
+        <p><strong>Apartamentos:</strong> ${reserva.apartamentos.join(", ")}</p>
+        <p><strong>Check-in:</strong> ${reserva.checkin}</p>
+        <p><strong>Check-out:</strong> ${reserva.checkout}</p>
+
+        <div class="modal-section-title">Valores</div>
+        <p><strong>Total Bruto:</strong> €${reserva.totalBruto}</p>
+        <p><strong>Comissão:</strong> €${reserva.comissao}</p>
+        <p><strong>Limpeza:</strong> €${reserva.limpeza}</p>
+        <p><strong>Berço:</strong> ${reserva.berco ? "Sim" : "Não"}</p>
+        <p><strong>Status Pagamento:</strong> ${reserva.statusPagamento}</p>
+        <p><strong>Valor Pago:</strong> €${reserva.valorPago}</p>
     `;
 
-    modal.style.display = "flex";
+    document.getElementById("conteudoDetalhes").innerHTML = html;
 
-    document.getElementById("fecharDetalhe").onclick = () => {
-        modal.style.display = "none";
-    };
+    abrirModalDetalhes();
 }
 
 
@@ -477,16 +494,26 @@ function aplicarFiltroIntervalo() {
 
 
 // -------------------------------------------------------------
-// 6) ABRIR / FECHAR MODAL
+// 6) ABRIR / FECHAR MODAIS
 // -------------------------------------------------------------
+
 function abrirModalNovaReserva() {
     document.getElementById("modalNovaReserva").style.display = "flex";
 }
 
-
 function fecharModalNovaReserva() {
     document.getElementById("modalNovaReserva").style.display = "none";
     reservaAtual = null;
+}
+
+// 🔵 AQUI COLOCAS AS NOVAS FUNÇÕES 🔵
+
+function abrirModalDetalhes() {
+    document.getElementById("modalDetalhes").style.display = "flex";
+}
+
+function fecharModalDetalhes() {
+    document.getElementById("modalDetalhes").style.display = "none";
 }
 
 
