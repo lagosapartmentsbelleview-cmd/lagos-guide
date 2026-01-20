@@ -87,6 +87,10 @@ function datasSobrepoem(checkin1, checkout1, checkin2, checkout2) {
     // Sobrepõem se uma começa antes da outra terminar
     return c1 < o2 && c2 < o1;
 }
+    // Arredonda para casas decimais
+function formatarEuro(valor) {
+    return Number(valor).toFixed(2);
+}
 
 
 // -------------------------------------------------------------
