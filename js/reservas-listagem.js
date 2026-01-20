@@ -1416,7 +1416,6 @@ function ligarEventos() {
     // -------------------------------------------------------------
     function aplicarFiltrosAvancados() {
 
-
     let lista = [...reservas];
 
     const txt = document.getElementById("filtroTexto").value.toLowerCase();
@@ -1477,7 +1476,10 @@ function ligarEventos() {
         return true;
     });
 
-    desenharTabela(lista);
+    // 🔥 ESTA LINHA É O QUE FALTAVA
+    reservasFiltradas = lista;
+
+    desenharTabela(reservasFiltradas);
 }
 
 // -------------------------------------------------------------
