@@ -479,14 +479,16 @@ function aplicarFiltroIntervalo() {
 // -------------------------------------------------------------
 // 6) ABRIR / FECHAR MODAL
 // -------------------------------------------------------------
-function abrirModalReserva() {
-    document.getElementById("modalReserva").style.display = "flex";
+function abrirModalNovaReserva() {
+    document.getElementById("modalNovaReserva").style.display = "flex";
 }
 
-function fecharModal() {
-    document.getElementById("modalReserva").style.display = "none";
+
+function fecharModalNovaReserva() {
+    document.getElementById("modalNovaReserva").style.display = "none";
     reservaAtual = null;
 }
+
 
 // -------------------------------------------------------------
 // 7) NOVA RESERVA
@@ -494,7 +496,7 @@ function fecharModal() {
 function novaReserva() {
     reservaAtual = null;
     limparFormularioReserva();
-    abrirModalReserva();
+    abrirModalNovaReserva();
 }
 
 // -------------------------------------------------------------
@@ -506,7 +508,7 @@ function editarReserva(id) {
 
     reservaAtual = r;
     preencherFormularioReserva(r);
-    abrirModalReserva();
+    abrirModalNovaReserva();
 }
 
 // -------------------------------------------------------------
