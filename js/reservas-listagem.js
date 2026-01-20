@@ -747,7 +747,7 @@ async function guardarReserva() {
         await db.collection("reservas").doc(reservaAtual.id).update(dados);
     }
 
-    fecharModal();
+    fecharModalNovaReserva()
     carregarReservas();
 }
 
