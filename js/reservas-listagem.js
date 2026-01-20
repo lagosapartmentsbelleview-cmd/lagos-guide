@@ -139,9 +139,12 @@ document.querySelector("#theadReservas").addEventListener("click", (e) => {
 
 function ordenarPorColuna(coluna, ordem) {
 
+    // Se houver filtros aplicados, ordenamos o subset filtrado
     let lista = reservasFiltradas.length > 0 
-        ? [...reservasFiltradas] 
-        : [...reservas];
+        ? reservasFiltradas 
+        : reservas;
+
+    lista = [...lista]; // criar cópia para não mexer no original
 
     lista.sort((a, b) => {
         let v1 = a[coluna];
@@ -172,12 +175,14 @@ function ordenarPorColuna(coluna, ordem) {
         return 0;
     });
 
-    // 🔥 Atualiza o subset filtrado
+    // Atualiza o subset filtrado ou o array completo
     if (reservasFiltradas.length > 0) {
         reservasFiltradas = lista;
+        desenharTabela(reservasFiltradas);
+    } else {
+        reservas = lista;
+        desenharTabela(reservas);
     }
-
-    desenharTabela(lista);
 }
 
 // -------------------------------------------------------------
