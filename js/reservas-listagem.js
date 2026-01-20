@@ -436,6 +436,11 @@ function detalheReserva(id) {
         return;
     }
 
+    mostrarDetalhesReserva(reserva);
+}
+
+function mostrarDetalhesReserva(reserva) {
+
     const html = `
         <div class="modal-section-title">Origem</div>
         <p><strong>${reserva.origem}</strong></p>
@@ -446,11 +451,13 @@ function detalheReserva(id) {
         <p><strong>Adultos:</strong> ${reserva.adultos}</p>
         <p><strong>Crianças:</strong> ${reserva.criancas}</p>
         <p><strong>Idades:</strong> ${reserva.idadesCriancas || "-"}</p>
+
         <div class="modal-section-title">Alojamento</div>
         <p><strong>Quartos:</strong> ${reserva.quartos}</p>
         <p><strong>Apartamentos:</strong> ${reserva.apartamentos.join(", ")}</p>
         <p><strong>Check-in:</strong> ${reserva.checkin}</p>
         <p><strong>Check-out:</strong> ${reserva.checkout}</p>
+
         <div class="modal-section-title">Valores</div>
         <p><strong>Total Bruto:</strong> €${formatarEuro(reserva.totalBruto)}</p>
         <p><strong>Comissão:</strong> €${formatarEuro(reserva.comissao)}</p>
@@ -459,13 +466,25 @@ function detalheReserva(id) {
         <p><strong>Status Pagamento:</strong> ${reserva.statusPagamento}</p>
         <p><strong>Valor Pago:</strong> €${formatarEuro(reserva.valorPago)}</p>
         <p><strong>Total Líquido Final:</strong> €${formatarEuro(reserva.totalLiquidoFinal)}</p>
-
     `;
 
     document.getElementById("conteudoDetalhes").innerHTML = html;
 
+    // BOTÃO EDITAR
+    document.getElementById("btnEditarDetalhe").onclick = () => {
+        fecharModalDetalhes();
+        editarReserva(reserva.id);
+    };
+
+    // BOTÃO APAGAR
+    document.getElementById("btnApagarDetalhe").onclick = () => {
+        fecharModalDetalhes();
+        apagarReserva(reserva.id);
+    };
+
     abrirModalDetalhes();
 }
+
 
 
 // -------------------------------------------------------------
