@@ -442,41 +442,80 @@ function detalheReserva(id) {
 function mostrarDetalhesReserva(reserva) {
 
     const html = `
-        <div class="modal-section-title">Origem</div>
-        <p><strong>${reserva.origem}</strong></p>
+        <!-- SECÇÃO ORIGEM / IDENTIFICAÇÃO -->
+        <div class="modal-section-title">Origem & Identificação</div>
+        <p><strong>Origem:</strong> ${reserva.origem || "-"}</p>
+        <p><strong>Canal:</strong> ${reserva.canal || reserva.origem || "-"}</p>
+        <p><strong>ID Origem:</strong> ${reserva.idOrigem || "-"}</p>
+        <p><strong>Estado Reserva:</strong> ${reserva.estado || "OK"}</p>
 
+        <!-- SECÇÃO HÓSPEDE -->
         <div class="modal-section-title">Hóspede</div>
-        <p><strong>Cliente:</strong> ${reserva.cliente}</p>
-        <p><strong>Hóspedes:</strong> ${reserva.hospedes}</p>
-        <p><strong>Adultos:</strong> ${reserva.adultos}</p>
-        <p><strong>Crianças:</strong> ${reserva.criancas}</p>
-        <p><strong>Idades:</strong> ${reserva.idadesCriancas || "-"}</p>
+        <p><strong>Nome:</strong> ${reserva.cliente || "-"}</p>
+        <p><strong>Hóspedes:</strong> ${reserva.hospedes || "-"}</p>
+        <p><strong>Adultos:</strong> ${reserva.adultos || "-"}</p>
+        <p><strong>Crianças:</strong> ${reserva.criancas || "-"}</p>
+        <p><strong>Idades Crianças:</strong> ${reserva.idadesCriancas || "-"}</p>
+        <p><strong>Telefone:</strong> ${reserva.telefone || "-"}</p>
+        <p><strong>Email:</strong> ${reserva.email || "-"}</p>
+        <p><strong>País:</strong> ${reserva.pais || "-"}</p>
 
+        <!-- SECÇÃO ALOJAMENTO -->
         <div class="modal-section-title">Alojamento</div>
-        <p><strong>Quartos:</strong> ${reserva.quartos}</p>
-        <p><strong>Apartamentos:</strong> ${reserva.apartamentos.join(", ")}</p>
-        <p><strong>Check-in:</strong> ${reserva.checkin}</p>
-        <p><strong>Check-out:</strong> ${reserva.checkout}</p>
+        <p><strong>Apartamentos:</strong> ${reserva.apartamentos ? reserva.apartamentos.join(", ") : "-"}</p>
+        <p><strong>Quartos:</strong> ${reserva.quartos || "-"}</p>
+        <p><strong>Check-in:</strong> ${reserva.checkin || "-"}</p>
+        <p><strong>Check-out:</strong> ${reserva.checkout || "-"}</p>
+        <p><strong>Noites:</strong> ${reserva.noites || "-"}</p>
 
-        <div class="modal-section-title">Valores</div>
+        <!-- SECÇÃO FINANCEIRA -->
+        <div class="modal-section-title">Financeiro</div>
         <p><strong>Total Bruto:</strong> €${formatarEuro(reserva.totalBruto)}</p>
-        <p><strong>Comissão:</strong> €${formatarEuro(reserva.comissao)}</p>
-        <p><strong>Limpeza:</strong> €${formatarEuro(reserva.limpeza)}</p>
-        <p><strong>Berço:</strong> ${reserva.berco ? "Sim" : "Não"}</p>
-        <p><strong>Status Pagamento:</strong> ${reserva.statusPagamento}</p>
-        <p><strong>Valor Pago:</strong> €${formatarEuro(reserva.valorPago)}</p>
-        <p><strong>Total Líquido Final:</strong> €${formatarEuro(reserva.totalLiquidoFinal)}</p>
+        <p><strong>Comissão Base:</strong> €${formatarEuro(reserva.comissao || 0)}</p>
+        <p><strong>Limpeza:</strong> €${formatarEuro(reserva.limpeza || 0)}</p>
+        <p><strong>Taxa Turística:</strong> €${formatarEuro(reserva.taxaTuristica || 0)}</p>
+        <p><strong>Desconto:</strong> €${formatarEuro(reserva.desconto || 0)}</p>
+
+        <!-- SECÇÃO COMISSÃO EXTRA -->
+        <div class="modal-section-title">Comissão Extra</div>
+        <p><strong>Aplicar comissão extra:</strong> 
+            <input type="checkbox" id="chkComissaoExtra">
+        </p>
+        <p>
+            <strong>Percentagem extra (%):</strong>
+            <input type="number" id="percentagemExtra" step="0.1" style="width:80px;">
+        </p>
+        <p><strong>Valor Comissão Extra:</strong> €<span id="valorComissaoExtraTexto">${formatarEuro(reserva.valorComissaoExtra || 0)}</span></p>
+        <p><strong>Comissão Total:</strong> €<span id="comissaoTotalTexto">${formatarEuro(reserva.comissaoTotal || (reserva.comissao || 0))}</span></p>
+        <p><strong>Total Líquido Final:</strong> €<span id="totalLiquidoTexto">${formatarEuro(reserva.totalLiquidoFinal || 0)}</span></p>
+
+        <!-- SECÇÃO PAGAMENTO -->
+        <div class="modal-section-title">Pagamento</div>
+        <p><strong>Status Pagamento:</strong> ${reserva.statusPagamento || "-"}</p>
+        <p><strong>Valor Pago:</strong> €${formatarEuro(reserva.valorPago || 0)}</p>
+        <p><strong>Valor em Falta:</strong> €${formatarEuro((reserva.totalLiquidoFinal || 0) - (reserva.valorPago || 0))}</p>
+        <p><strong>Método Pagamento:</strong> ${reserva.metodoPagamento || "-"}</p>
+
+        <!-- SECÇÃO COMENTÁRIOS INTERNOS -->
+        <div class="modal-section-title">Comentários Internos</div>
+        <textarea id="comentariosInternos" rows="3" style="width:100%;">${reserva.comentariosInternos || ""}</textarea>
+
+        <!-- SECÇÃO AUDITORIA -->
+        <div class="modal-section-title">Auditoria</div>
+        <p><strong>Criado em:</strong> ${reserva.criadoEm || "-"}</p>
+        <p><strong>Editado em:</strong> ${reserva.editadoEm || "-"}</p>
+        <p><strong>Criado por:</strong> ${reserva.criadoPor || "-"}</p>
+        <p><strong>Editado por:</strong> ${reserva.editadoPor || "-"}</p>
     `;
 
     document.getElementById("conteudoDetalhes").innerHTML = html;
 
-    // BOTÃO EDITAR
+    // LIGAR BOTÕES EDITAR / APAGAR (como já tinhas)
     document.getElementById("btnEditarDetalhe").onclick = () => {
         fecharModalDetalhes();
         editarReserva(reserva.id);
     };
 
-    // BOTÃO APAGAR
     document.getElementById("btnApagarDetalhe").onclick = () => {
         fecharModalDetalhes();
         apagarReserva(reserva.id);
