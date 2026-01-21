@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel de Limpeza</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/limpeza.css">
+</head>
+
+<body>
+
+    <h1>Painel de Limpeza</h1>
+
+    <!-- SELECTOR DE DATAS -->
+    <div id="filtros">
+        <label>Data início:</label>
+        <input type="date" id="dataInicio">
+
+        <label>Data fim:</label>
+        <input type="date" id="dataFim">
+
+        <button id="btnGerar">Gerar</button>
+    </div>
+
+    <!-- PAINEL ADMIN (apenas para ti) -->
+    <div id="painelAdmin" class="admin-panel aberto">
+        <div class="admin-header">
+            <span>Controlo Interno — Apenas Administrador</span>
+            <span id="toggleAdmin">▼</span>
+        </div>
+
+        <div class="admin-content">
+            <p><strong>Check-outs no período:</strong> <span id="totalCheckouts">0</span></p>
+            <p><strong>Total limpeza base:</strong> € <span id="totalBase">0</span></p>
+            <p><strong>Total extras:</strong> € <span id="totalExtras">0</span></p>
+            <hr>
+            <p><strong>TOTAL A PAGAR:</strong> € <span id="totalGeral">0</span></p>
+            <p><strong>Pagamento previsto:</strong> <span id="dataPagamento"></span></p>
+        </div>
+    </div>
+
+    <!-- LEGENDA -->
+    <div id="legenda">
+        <div><span class="cor amarelo"></span> A decorrer</div>
+        <div><span class="cor verde"></span> Nova / Atualizada</div>
+        <div><span class="cor branco"></span> Normal</div>
+    </div>
+
+    <!-- LISTA DE LIMPEZA -->
+    <h2>Lista de Limpeza</h2>
+    <table id="tabelaLimpeza">
+        <thead>
+            <tr>
+                <th>Hóspede</th>
+                <th>Apartamento</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Pessoas</th>
+                <th>Adultos</th>
+                <th>Crianças</th>
+                <th>Idades</th>
+                <th>Berço</th>
+                <th>Observações</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- CALENDÁRIO -->
+    <h2>Calendário de Limpeza</h2>
+    <div id="calendarioContainer"></div>
+
+    <!-- JS -->
+    <script src="js/limpeza.js"></script>
+
+</body>
+</html>
