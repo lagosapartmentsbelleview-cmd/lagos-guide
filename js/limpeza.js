@@ -176,8 +176,6 @@ Obs: ${reserva.observacoes || "-"}
     container.innerHTML = html;
 }
 
-}
-
 function calcularTotais(reservas, inicio, fim) {
     let totalBase = 0;
     let totalExtras = 0;
