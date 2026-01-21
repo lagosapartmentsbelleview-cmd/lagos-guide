@@ -451,6 +451,9 @@ function apagarReserva(id) {
         .catch(err => console.error("Erro ao apagar:", err));
 }
 
+// -------------------------------------------------------------
+// ABRIR DETALHE DA RESERVA (MODAL DETALHES)
+// -------------------------------------------------------------
 function detalheReserva(id) {
     console.log("Abrir detalhe da reserva:", id);
 
@@ -460,71 +463,58 @@ function detalheReserva(id) {
         return;
     }
 
-    mostrarDetalhesReserva(reserva);
+    mostrarModalDetalhes(reserva);
 }
 
-function mostrarDetalhesReserva(reserva) {
+// -------------------------------------------------------------
+// MODAL DETALHES (COMISSÃO EXTRA, NOTA INTERNA, ETC.)
+// -------------------------------------------------------------
+function mostrarModalDetalhes(reserva) {
 
-  
+    // ===============================
+    // 1. LER VALORES DO FIRESTORE
+    // ===============================
+    const comissaoBase = reserva.comissao || 0;
+    const comissaoExtra = reserva.comissaoExtra || 0;
+    const comissaoTotal = reserva.comissaoTotal || (comissaoBase + comissaoExtra);
+    const totalLiquidoFinal = reserva.totalLiquidoFinal || (reserva.totalBruto - comissaoTotal);
 
-// ===============================
-// 1. LER VALORES DO FIRESTORE
-// ===============================
+    let percentagemExtraDecimal = reserva.percentagemComissaoExtra ?? null;
 
-const comissaoBase = reserva.comissao || 0;
-const comissaoExtra = reserva.comissaoExtra || 0;
-const comissaoTotal = reserva.comissaoTotal || (comissaoBase + comissaoExtra);
-const totalLiquidoFinal = reserva.totalLiquidoFinal || (reserva.totalBruto - comissaoTotal);
+    if (percentagemExtraDecimal === null && comissaoExtra > 0 && reserva.totalBruto > 0) {
+        percentagemExtraDecimal = comissaoExtra / reserva.totalBruto;
+    }
 
-// Percentagem gravada ou 0
-let percentagemExtraDecimal = reserva.percentagemComissaoExtra ?? null;
+    if (percentagemExtraDecimal === null) {
+        percentagemExtraDecimal = 0;
+    }
 
-// Se não existe percentagem mas existe comissão extra → calcular automaticamente
-if (percentagemExtraDecimal === null && comissaoExtra > 0 && reserva.totalBruto > 0) {
-    percentagemExtraDecimal = comissaoExtra / reserva.totalBruto;
-}
+    function parseData(d) {
+        const [dia, mes, ano] = d.split("/");
+        return new Date(`${ano}-${mes}-${dia}`);
+    }
 
-// Se ainda assim for null, então é 0
-if (percentagemExtraDecimal === null) {
-    percentagemExtraDecimal = 0;
-}
+    const dataCorte = new Date("2025-01-01");
+    const dataReserva = reserva.checkin ? parseData(reserva.checkin) : null;
+    const isAntiga = dataReserva && dataReserva < dataCorte;
 
+    let temComissaoExtra = reserva.temComissaoExtra ?? (comissaoExtra > 0);
 
-// -------------------------------------------------------
-// REGRA: Reservas antes de 01-01-2025 NÃO têm comissão extra
-// -------------------------------------------------------
-function parseData(d) {
-    const [dia, mes, ano] = d.split("/");
-    return new Date(`${ano}-${mes}-${dia}`);
-}
-
-const dataCorte = new Date("2025-01-01");
-const dataReserva = reserva.checkin ? parseData(reserva.checkin) : null;
-const isAntiga = dataReserva && dataReserva < dataCorte;
-
-// Lógica original
-let temComissaoExtra = reserva.temComissaoExtra ?? (comissaoExtra > 0);
-
-// Forçar reservas antigas a NÃO terem comissão extra
-if (isAntiga) {
-    temComissaoExtra = false;
-    percentagemExtraDecimal = 0;
-}
-
+    if (isAntiga) {
+        temComissaoExtra = false;
+        percentagemExtraDecimal = 0;
+    }
 
     // ===============================
     // 2. HTML DO DETALHE
     // ===============================
-
     const html = `
-        <!-- SECÇÃO ORIGEM / IDENTIFICAÇÃO -->
         <div class="modal-section-title">Origem & Identificação</div>
         <p><strong>Origem:</strong> ${reserva.origem || "-"}</p>
         <p><strong>Canal:</strong> ${reserva.canal || reserva.origem || "-"}</p>
         <p><strong>ID Origem:</strong> ${reserva.bookingId || "-"}</p>
         <p><strong>Estado Reserva:</strong> ${reserva.status || "OK"}</p>
 
-        <!-- SECÇÃO HÓSPEDE -->
         <div class="modal-section-title">Hóspede</div>
         <p><strong>Nome:</strong> ${reserva.cliente || "-"}</p>
         <p><strong>Hóspedes:</strong> ${reserva.hospedes || "-"}</p>
@@ -532,7 +522,6 @@ if (isAntiga) {
         <p><strong>Crianças:</strong> ${reserva.criancas || "-"}</p>
         <p><strong>Idades Crianças:</strong> ${reserva.idadesCriancas || "-"}</p>
 
-        <!-- SECÇÃO ALOJAMENTO -->
         <div class="modal-section-title">Alojamento</div>
         <p><strong>Apartamentos:</strong> ${reserva.apartamentos ? reserva.apartamentos.join(", ") : "-"}</p>
         <p><strong>Quartos:</strong> ${reserva.quartos || "-"}</p>
@@ -540,18 +529,14 @@ if (isAntiga) {
         <p><strong>Check-out:</strong> ${reserva.checkout || "-"}</p>
         <p><strong>Noites:</strong> ${reserva.noites || "-"}</p>
 
-        <!-- SECÇÃO FINANCEIRA -->
         <div class="modal-section-title">Financeiro</div>
-
         <p><strong>Total Bruto:</strong> €${formatarEuro(reserva.totalBruto)}</p>
         <p><strong>Comissão Base:</strong> €${formatarEuro(comissaoBase)}</p>
         <p><strong>Comissão Extra:</strong> €<span id="valorComissaoExtraTexto">${formatarEuro(comissaoExtra)}</span></p>
         <p><strong>Comissão Total:</strong> €<span id="comissaoTotalTexto">${formatarEuro(comissaoTotal)}</span></p>
         <p><strong>Total Líquido Final:</strong> €<span id="totalLiquidoTexto">${formatarEuro(totalLiquidoFinal)}</span></p>
 
-        <!-- SECÇÃO COMISSÃO EXTRA -->
         <div class="modal-section-title">Comissão Extra</div>
-
         <p><strong>Aplicar comissão extra:</strong>
             <input type="checkbox" id="chkComissaoExtra" ${temComissaoExtra ? "checked" : ""} disabled>
         </p>
@@ -560,12 +545,10 @@ if (isAntiga) {
             <input type="number" id="percentagemExtra" step="0.1" value="${(percentagemExtraDecimal * 100).toFixed(1)}" disabled style="width:80px;">
         </p>
 
-        <!-- SECÇÃO PAGAMENTO -->
         <div class="modal-section-title">Pagamento</div>
         <p><strong>Status Pagamento:</strong> ${reserva.statusPagamento || "-"}</p>
         <p><strong>Valor Pago:</strong> €${formatarEuro(reserva.valorPago || 0)}</p>
 
-        <!-- SECÇÃO COMENTÁRIOS -->
         <div class="modal-section-title">Comentários Importados</div>
         <textarea id="comentariosImportados" rows="3" style="width:100%;" disabled>${reserva.comentarios || ""}</textarea>
 
@@ -575,47 +558,40 @@ if (isAntiga) {
 
     document.getElementById("conteudoDetalhes").innerHTML = html;
 
-   // ===============================
-// 3. LÓGICA DE EDIÇÃO
-// ===============================
-
-const chk = document.getElementById("chkComissaoExtra");
-const inpPercentagem = document.getElementById("percentagemExtra");
-const spanValorExtra = document.getElementById("valorComissaoExtraTexto");
-const spanComissaoTotal = document.getElementById("comissaoTotalTexto");
-const spanTotalLiquido = document.getElementById("totalLiquidoTexto");
-const notaInterna = document.getElementById("notaInterna");
-
-// Se a reserva é anterior a 01-01-2025, bloquear comissão extra
-if (isAntiga) {
-    chk.checked = false;
-    chk.disabled = true;
-
-    inpPercentagem.value = "0.0";
-    inpPercentagem.disabled = true;
-
-    spanValorExtra.textContent = formatarEuro(0);
-    spanComissaoTotal.textContent = formatarEuro(comissaoBase);
-    spanTotalLiquido.textContent = formatarEuro(reserva.totalBruto - comissaoBase);
-}
-
-// Função de atualização (apenas para reservas novas)
-function atualizarComissaoExtra() {
-    const aplicar = chk.checked;
-    const percentagem = Number(inpPercentagem.value.replace(",", ".")) / 100;
-
-    const valorExtra = aplicar ? reserva.totalBruto * percentagem : 0;
-    const novaComissaoTotal = comissaoBase + valorExtra;
-    const novoTotalLiquido = reserva.totalBruto - novaComissaoTotal;
-
-    spanValorExtra.textContent = formatarEuro(valorExtra);
-    spanComissaoTotal.textContent = formatarEuro(novaComissaoTotal);
-    spanTotalLiquido.textContent = formatarEuro(novoTotalLiquido);
-}
-
     // ===============================
-    // 4. BOTÃO EDITAR
+    // 3. LÓGICA DE EDIÇÃO
     // ===============================
+    const chk = document.getElementById("chkComissaoExtra");
+    const inpPercentagem = document.getElementById("percentagemExtra");
+    const spanValorExtra = document.getElementById("valorComissaoExtraTexto");
+    const spanComissaoTotal = document.getElementById("comissaoTotalTexto");
+    const spanTotalLiquido = document.getElementById("totalLiquidoTexto");
+    const notaInterna = document.getElementById("notaInterna");
+
+    if (isAntiga) {
+        chk.checked = false;
+        chk.disabled = true;
+
+        inpPercentagem.value = "0.0";
+        inpPercentagem.disabled = true;
+
+        spanValorExtra.textContent = formatarEuro(0);
+        spanComissaoTotal.textContent = formatarEuro(comissaoBase);
+        spanTotalLiquido.textContent = formatarEuro(reserva.totalBruto - comissaoBase);
+    }
+
+    function atualizarComissaoExtra() {
+        const aplicar = chk.checked;
+        const percentagem = Number(inpPercentagem.value.replace(",", ".")) / 100;
+
+        const valorExtra = aplicar ? reserva.totalBruto * percentagem : 0;
+        const novaComissaoTotal = comissaoBase + valorExtra;
+        const novoTotalLiquido = reserva.totalBruto - novaComissaoTotal;
+
+        spanValorExtra.textContent = formatarEuro(valorExtra);
+        spanComissaoTotal.textContent = formatarEuro(novaComissaoTotal);
+        spanTotalLiquido.textContent = formatarEuro(novoTotalLiquido);
+    }
 
     document.getElementById("btnEditarDetalhe").onclick = () => {
         chk.disabled = false;
@@ -629,12 +605,7 @@ function atualizarComissaoExtra() {
         inpPercentagem.addEventListener("input", atualizarComissaoExtra);
     };
 
-    // ===============================
-    // 5. BOTÃO GUARDAR
-    // ===============================
-
     document.getElementById("btnGuardarDetalhe").onclick = async () => {
-
         const aplicar = chk.checked;
         const percentagem = Number(inpPercentagem.value.replace(",", ".")) / 100;
 
@@ -659,8 +630,54 @@ function atualizarComissaoExtra() {
     abrirModalDetalhes();
 }
 
+// -------------------------------------------------------------
+// MODAL EDITAR (NOVA RESERVA)
+// -------------------------------------------------------------
+function mostrarDetalhesReserva(reserva) {
 
-    
+    reservaAtual = reserva;
+
+    document.getElementById("modalNovaReserva").style.display = "flex";
+    document.querySelector("#modalNovaReserva .modal-header h2").textContent = "Editar Reserva";
+
+    document.getElementById("origem").value = reserva.origem || "";
+    document.getElementById("bookingId").value = reserva.bookingId || "";
+    document.getElementById("reservadoPor").value = reserva.reservadoPor || reserva.cliente || "";
+
+    document.getElementById("cliente").value = reserva.cliente || "";
+    document.getElementById("paisCliente").value = reserva.paisCliente || "";
+    document.getElementById("morada").value = reserva.morada || "";
+    document.getElementById("telefone").value = reserva.telefone || "";
+    document.getElementById("email").value = reserva.email || "";
+
+    document.getElementById("adultos").value = reserva.adultos || 0;
+    document.getElementById("criancas").value = reserva.criancas || 0;
+    document.getElementById("idadesCriancas").value = reserva.idadesCriancas || "";
+    document.getElementById("hospedes").value = reserva.hospedes || (reserva.adultos + reserva.criancas);
+
+    document.getElementById("modoViagem").value = reserva.modoViagem || "";
+
+    document.getElementById("quartos").value = reserva.quartos || 1;
+    document.getElementById("apartamentos").value = reserva.apartamentos ? reserva.apartamentos.join(", ") : "";
+
+    document.getElementById("checkin").value = reserva.checkin ? reserva.checkin.split("/").reverse().join("-") : "";
+    document.getElementById("checkout").value = reserva.checkout ? reserva.checkout.split("/").reverse().join("-") : "";
+
+    document.getElementById("totalBruto").value = reserva.totalBruto || 0;
+    document.getElementById("comissao").value = reserva.comissao || 0;
+    document.getElementById("limpeza").value = reserva.limpeza || 0;
+    document.getElementById("valorPago").value = reserva.valorPago || 0;
+
+    document.getElementById("statusPagamento").value = reserva.statusPagamento || "aguardar";
+    document.getElementById("berco").value = reserva.berco ? "true" : "false";
+
+    document.getElementById("status").value = reserva.status || "alocado";
+    document.getElementById("estadoPagamentoOrigem").value = reserva.estadoPagamentoOrigem || "";
+    document.getElementById("dataCancelamento").value = reserva.dataCancelamento || "";
+
+    document.getElementById("btnGuardar").onclick = guardarReserva;
+}
+
 
 // -------------------------------------------------------------
 // FILTRO POR INTERVALO DE MESES/ANOS
