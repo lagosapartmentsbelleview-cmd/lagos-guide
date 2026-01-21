@@ -543,8 +543,8 @@ function mostrarDetalhesReserva(reserva) {
 
     // Percentagem por defeito
     let percentagemExtraDecimal =
-        reserva.percentagemComissaoExtra ??
-        obterPercentagemComissao((reserva.origem || "").toLowerCase());
+    reserva.percentagemComissaoExtra ?? 0;
+
 
     if ((reserva.origem || "").toLowerCase() === "manual" && reserva.percentagemComissaoExtra == null) {
         percentagemExtraDecimal = 0;
