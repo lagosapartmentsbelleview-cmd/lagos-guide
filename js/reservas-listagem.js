@@ -826,6 +826,25 @@ async function guardarReserva() {
     const quartos = Number(document.getElementById("quartos").value || 1);
 
     // -----------------------------
+    // VALIDAR DATAS
+    // -----------------------------
+    const checkin = document.getElementById("checkin").value.trim();
+    const checkout = document.getElementById("checkout").value.trim();
+
+    if (!checkin || !checkout) {
+        alert("Por favor preencha as datas de check-in e check-out.");
+        return;
+    }
+
+    if (!validarDatasCheckinCheckout(checkin, checkout)) {
+        alert("A data de check-out deve ser posterior à data de check-in.");
+        return;
+    }
+
+    // Se chegou aqui → datas válidas → continuar com o resto da função
+
+
+    // -----------------------------
     // APARTAMENTOS: MANUAL vs AUTOMÁTICO
     // -----------------------------
     const campoApartamentos = document.getElementById("apartamentos").value.trim();
