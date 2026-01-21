@@ -593,9 +593,23 @@ function mostrarDetalhesReserva(reserva) {
 
     // BOTÕES EDITAR / APAGAR
 document.getElementById("btnEditarDetalhe").onclick = () => {
-    // Por agora não faz nada — só deixamos de abrir o modal nova reserva
-    console.log("Editar detalhe clicado (ainda sem lógica de edição).");
+
+    // Ativar campos editáveis
+    const chk = document.getElementById("chkComissaoExtra");
+    const inpPercentagem = document.getElementById("percentagemExtra");
+    const comentarios = document.getElementById("comentariosInternos");
+
+    if (chk) chk.disabled = false;
+    if (inpPercentagem) inpPercentagem.disabled = false;
+    if (comentarios) comentarios.disabled = false;
+
+    // Mostrar botão Guardar
+    document.getElementById("btnGuardarDetalhe").style.display = "inline-block";
+
+    // Esconder botão Editar
+    document.getElementById("btnEditarDetalhe").style.display = "none";
 };
+
 
 document.getElementById("btnApagarDetalhe").onclick = () => {
     fecharModalDetalhes();
