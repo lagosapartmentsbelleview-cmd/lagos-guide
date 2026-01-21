@@ -587,11 +587,18 @@ td button {
             <!-- O JS vai preencher aqui -->
         </div>
 
-        <div class="modal-footer">
-        <button class="btnPrimario" id="btnEditarDetalhe">Editar</button>
-        <button class="btnApagar" id="btnApagarDetalhe">Apagar</button>
-        <button class="btnSecundario" onclick="fecharModalDetalhes()">Fechar</button>
-    </div>
+       <div class="modal-footer">
+    <button class="btnPrimario" id="btnEditarDetalhe">Editar</button>
+
+    <!-- Botão Guardar (inicialmente escondido) -->
+    <button class="btnPrimario" id="btnGuardarDetalhe" style="display:none;">
+        Guardar
+    </button>
+
+    <button class="btnApagar" id="btnApagarDetalhe">Apagar</button>
+    <button class="btnSecundario" onclick="fecharModalDetalhes()">Fechar</button>
+</div>
+
 
 
     </div>
