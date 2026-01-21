@@ -465,7 +465,18 @@ const comissaoTotal = reserva.comissaoTotal || (comissaoBase + comissaoExtra);
 const totalLiquidoFinal = reserva.totalLiquidoFinal || (reserva.totalBruto - comissaoTotal);
 
 // Percentagem gravada ou 0
-let percentagemExtraDecimal = reserva.percentagemComissaoExtra ?? 0;
+let percentagemExtraDecimal = reserva.percentagemComissaoExtra ?? null;
+
+// Se não existe percentagem mas existe comissão extra → calcular automaticamente
+if (percentagemExtraDecimal === null && comissaoExtra > 0 && reserva.totalBruto > 0) {
+    percentagemExtraDecimal = comissaoExtra / reserva.totalBruto;
+}
+
+// Se ainda assim for null, então é 0
+if (percentagemExtraDecimal === null) {
+    percentagemExtraDecimal = 0;
+}
+
 
 // -------------------------------------------------------
 // REGRA: Reservas antes de 01-01-2025 NÃO têm comissão extra
