@@ -482,8 +482,10 @@ td button {
 
         <div class="modal-body">
 
-            <!-- SECÇÃO: Origem -->
-            <div class="modal-section-title">Origem</div>
+            <!-- ============================
+                 SECÇÃO: Identificação
+            ============================= -->
+            <div class="modal-section-title">Identificação</div>
 
             <label>Origem</label>
             <select id="origem">
@@ -500,25 +502,47 @@ td button {
             <label>Número da Reserva (Booking)</label>
             <input type="text" id="bookingId" placeholder="Só se for Booking">
 
-            <!-- SECÇÃO: Hóspede -->
+            <label>Reservado Por</label>
+            <input type="text" id="reservadoPor" placeholder="Nome de quem fez a reserva">
+
+            <!-- ============================
+                 SECÇÃO: Hóspede
+            ============================= -->
             <div class="modal-section-title">Hóspede</div>
 
             <label>Cliente</label>
             <input type="text" id="cliente">
 
-            <label>Hóspedes</label>
-            <input type="number" id="hospedes">
+            <label>País</label>
+            <input type="text" id="paisCliente" placeholder="ex: PT">
+
+            <label>Morada</label>
+            <input type="text" id="morada">
+
+            <label>Telefone</label>
+            <input type="text" id="telefone">
+
+            <label>Email</label>
+            <input type="email" id="email">
 
             <label>Adultos</label>
-            <input type="number" id="adultos">
+            <input type="number" id="adultos" min="0">
 
             <label>Crianças</label>
-            <input type="number" id="criancas">
+            <input type="number" id="criancas" min="0">
 
             <label>Idades das Crianças</label>
-            <input type="text" id="idadesCriancas">
+            <input type="text" id="idadesCriancas" placeholder="ex: 3, 7">
 
-            <!-- SECÇÃO: Alojamento -->
+            <label>Hóspedes</label>
+            <input type="number" id="hospedes" placeholder="Se vazio, sistema calcula">
+
+            <label>Modo de Viagem</label>
+            <input type="text" id="modoViagem">
+
+            <!-- ============================
+                 SECÇÃO: Alojamento
+            ============================= -->
             <div class="modal-section-title">Alojamento</div>
 
             <label>Quartos</label>
@@ -529,7 +553,7 @@ td button {
             </select>
 
             <label>Apartamentos (ex: 2301, 2203, 2204)</label>
-            <input type="text" id="apartamentos">
+            <input type="text" id="apartamentos" placeholder="Deixar vazio para alocação automática">
 
             <label>Check-in</label>
             <input type="date" id="checkin">
@@ -537,17 +561,29 @@ td button {
             <label>Check-out</label>
             <input type="date" id="checkout">
 
-            <!-- SECÇÃO: Valores -->
-            <div class="modal-section-title">Valores</div>
+            <!-- ============================
+                 SECÇÃO: Financeiro
+            ============================= -->
+            <div class="modal-section-title">Financeiro</div>
 
             <label>Total Bruto (€)</label>
-            <input type="number" id="totalBruto">
+            <input type="number" id="totalBruto" min="0" step="0.01">
 
-            <label>Comissão (€)</label>
-            <input type="number" id="comissao">
+            <label>Comissão Base (€)</label>
+            <input type="number" id="comissao" min="0" step="0.01">
 
             <label>Limpeza (€)</label>
-            <input type="number" id="limpeza">
+            <input type="number" id="limpeza" min="0" step="0.01">
+
+            <label>Valor Pago (€)</label>
+            <input type="number" id="valorPago" min="0" step="0.01">
+
+            <label>Status Pagamento</label>
+            <select id="statusPagamento">
+                <option value="aguardar">Por receber</option>
+                <option value="parcial">Pago parcialmente</option>
+                <option value="total">Pago totalmente</option>
+            </select>
 
             <label>Berço</label>
             <select id="berco">
@@ -555,15 +591,23 @@ td button {
                 <option value="true">Sim</option>
             </select>
 
-            <label for="statusPagamento">Estado do pagamento:</label>
-            <select id="statusPagamento">
-                <option value="aguardar">Por receber</option>
-                <option value="parcial">Pago parcialmente</option>
-                <option value="total">Pago totalmente</option>
+            <!-- ============================
+                 SECÇÃO: Sistema
+            ============================= -->
+            <div class="modal-section-title">Sistema</div>
+
+            <label>Estado da Reserva</label>
+            <select id="status">
+                <option value="alocado">Alocado</option>
+                <option value="pendente">Pendente</option>
+                <option value="cancelado">Cancelado</option>
             </select>
 
-            <label for="valorPago">Valor pago (€):</label>
-            <input type="number" id="valorPago" min="0" step="0.01">
+            <label>Estado Pagamento Origem</label>
+            <input type="text" id="estadoPagamentoOrigem">
+
+            <label>Data Cancelamento</label>
+            <input type="text" id="dataCancelamento" placeholder="Só se aplicável">
 
         </div>
 
@@ -574,6 +618,7 @@ td button {
 
     </div>
 </div>
+
 <!-- MODAL DE DETALHES DA RESERVA -->
 <div id="modalDetalhes" class="modal">
     <div class="modal-content">
