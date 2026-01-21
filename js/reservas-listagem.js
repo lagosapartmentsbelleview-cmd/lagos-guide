@@ -592,18 +592,19 @@ function mostrarDetalhesReserva(reserva) {
     }
 
     // BOTÕES EDITAR / APAGAR
-    document.getElementById("btnEditarDetalhe").onclick = () => {
-        fecharModalDetalhes();
-        editarReserva(reserva.id);
-    };
+document.getElementById("btnEditarDetalhe").onclick = () => {
+    // Por agora não faz nada — só deixamos de abrir o modal nova reserva
+    console.log("Editar detalhe clicado (ainda sem lógica de edição).");
+};
 
-    document.getElementById("btnApagarDetalhe").onclick = () => {
-        fecharModalDetalhes();
-        apagarReserva(reserva.id);
-    };
+document.getElementById("btnApagarDetalhe").onclick = () => {
+    fecharModalDetalhes();
+    apagarReserva(reserva.id);
+};
 
-    abrirModalDetalhes();
+abrirModalDetalhes();
 }
+
 
 // -------------------------------------------------------------
 // FILTRO POR INTERVALO DE MESES/ANOS
