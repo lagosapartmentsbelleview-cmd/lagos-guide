@@ -954,32 +954,51 @@ async function guardarReserva() {
     }
 
     // -----------------------------
-    // DADOS FINAIS
-    // -----------------------------
-    const dados = {
-        origem,
-        bookingId,
-        cliente,
-        quartos,
-        apartamentos,
-        checkin: normalizarDataParaPt(checkin),
-        checkout: normalizarDataParaPt(checkout),
-        hospedes,
-        adultos,
-        criancas,
-        idadesCriancas,
-        totalBruto,
-        comissao,
-        precoNoite,
-        noites,
-        liquido,
-        limpeza,
-        totalLiquidoFinal,
-        berco,
-        status,
-        statusPagamento,
-        valorPago
-    };
+// DADOS FINAIS (OPÇÃO B COMPLETA)
+// -----------------------------
+const dados = {
+    // Essenciais
+    origem,
+    bookingId,
+    cliente,
+    quartos,
+    apartamentos,
+    checkin: normalizarDataParaPt(checkin),
+    checkout: normalizarDataParaPt(checkout),
+    hospedes,
+    adultos,
+    criancas,
+    idadesCriancas,
+
+    // Financeiro
+    totalBruto,
+    comissao,
+    comissaoExtra: 0, // sempre 0 na criação (só editável no detalhe)
+    comissaoTotal: comissao, // base + extra
+    precoNoite,
+    noites,
+    liquido,
+    liquidoReal: liquido - limpeza,
+    limpeza,
+    totalLiquidoFinal,
+
+    // Outros
+    berco,
+    status,
+    statusPagamento,
+    valorPago,
+
+    // Automáticos
+    dataReserva: new Date().toLocaleDateString("pt-PT"),
+    estadoReservaOrigem: "ok",
+    estadoPagamentoOrigem: "",
+    reservadoPor: cliente,
+    tipoUnidade: apartamentos.length > 0 ? `Apartamento ${apartamentos[0]}` : "",
+    dispositivo: "Web",
+    comentarios: "",
+    notaInterna: "",
+    dataCancelamento: null
+};
 
     // -----------------------------
     // GRAVAR
