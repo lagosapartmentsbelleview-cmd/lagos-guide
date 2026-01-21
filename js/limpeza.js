@@ -25,17 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btnGerar").addEventListener("click", gerarLimpeza);
 });
 
-function parsePtDate(str) {
-    if (!str) return null;
-    const partes = str.split("/");
-    if (partes.length !== 3) return null;
-    const dia = parseInt(partes[0], 10);
-    const mes = parseInt(partes[1], 10) - 1;
-    const ano = parseInt(partes[2], 10);
-    return new Date(ano, mes, dia);
-}
-
-
 async function gerarLimpeza() {
 
     const inicio = document.getElementById("dataInicio").value;
