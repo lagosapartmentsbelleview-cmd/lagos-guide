@@ -812,22 +812,53 @@ function preencherFormularioReserva(r) {
 async function guardarReserva() {
 
     // -----------------------------
-    // CAMPOS BÁSICOS
+    // 1) IDENTIFICAÇÃO
     // -----------------------------
     const origem = document.getElementById("origem").value;
     let bookingId = document.getElementById("bookingId").value.trim();
+    const reservadoPor = document.getElementById("reservadoPor").value.trim();
 
+    // Se não for Booking → gerar ID automático
     if (origem !== "Booking") {
         const random9 = Math.floor(100000000 + Math.random() * 900000000);
         bookingId = `P${random9}`;
     }
 
+    // -----------------------------
+    // 2) HÓSPEDE
+    // -----------------------------
     const cliente = formatarNome(document.getElementById("cliente").value.trim());
-    const quartos = Number(document.getElementById("quartos").value || 1);
+    const paisCliente = document.getElementById("paisCliente").value.trim();
+    const morada = document.getElementById("morada").value.trim();
+    const telefone = document.getElementById("telefone").value.trim();
+    const email = document.getElementById("email").value.trim();
+
+    const adultos = Number(document.getElementById("adultos").value || 0);
+    const criancas = Number(document.getElementById("criancas").value || 0);
+    const idadesCriancas = document.getElementById("idadesCriancas").value.trim();
+
+    let hospedes = Number(document.getElementById("hospedes").value || 0);
+    if (!hospedes) hospedes = adultos + criancas;
+
+    const modoViagem = document.getElementById("modoViagem").value.trim();
 
     // -----------------------------
-    // VALIDAR DATAS
+    // 3) ALOJAMENTO
     // -----------------------------
+    const quartos = Number(document.getElementById("quartos").value || 1);
+
+    const campoApartamentos = document.getElementById("apartamentos").value.trim();
+    const modoAutomatico = campoApartamentos.length === 0;
+
+    const apartamentosDigitados = modoAutomatico
+        ? []
+        : [...new Set(
+            campoApartamentos
+                .split(",")
+                .map(x => x.trim())
+                .filter(x => x.length > 0)
+        )];
+
     const checkin = document.getElementById("checkin").value.trim();
     const checkout = document.getElementById("checkout").value.trim();
 
@@ -841,167 +872,129 @@ async function guardarReserva() {
         return;
     }
 
-    // Se chegou aqui → datas válidas → continuar com o resto da função
-
-
     // -----------------------------
-    // APARTAMENTOS: MANUAL vs AUTOMÁTICO
+    // 4) FINANCEIRO
     // -----------------------------
-    const campoApartamentos = document.getElementById("apartamentos").value.trim();
-    const modoAutomatico = campoApartamentos.length === 0;
-
-    const apartamentosDigitados = modoAutomatico
-        ? []
-        : [...new Set(
-            campoApartamentos
-                .split(",")
-                .map(x => x.trim())
-                .filter(x => x.length > 0)
-        )];
-
-    // -----------------------------
-    // OUTROS CAMPOS
-    // -----------------------------
-    
-    const hospedes = Number(document.getElementById("hospedes").value || 0);
-    const adultos = Number(document.getElementById("adultos").value || 0);
-    const criancas = Number(document.getElementById("criancas").value || 0);
-    const idadesCriancas = document.getElementById("idadesCriancas").value.trim();
-
     const totalBruto = Number(document.getElementById("totalBruto").value || 0);
-    const comissao = Number(document.getElementById("comissao").value || 0);
+    const comissao = Number(document.getElementById("comissao").value || 0); // comissão base (editável)
+    const limpeza = Number(document.getElementById("limpeza").value || calcularLimpeza(checkin));
+    const valorPago = Number(document.getElementById("valorPago").value || 0);
+    const statusPagamento = document.getElementById("statusPagamento").value;
     const berco = document.getElementById("berco").value === "true";
 
+    // -----------------------------
+    // 5) SISTEMA
+    // -----------------------------
+    const status = document.getElementById("status").value;
+    const estadoPagamentoOrigem = document.getElementById("estadoPagamentoOrigem").value.trim();
+    const dataCancelamento = document.getElementById("dataCancelamento").value.trim() || null;
+
+    // -----------------------------
+    // 6) CÁLCULOS AUTOMÁTICOS
+    // -----------------------------
     const noites = calcularNoites(checkin, checkout);
     const precoNoite = noites > 0 ? totalBruto / noites : 0;
-    const liquido = totalBruto - comissao;
 
-    let limpeza = document.getElementById("limpeza").value.trim();
-    limpeza = limpeza === "" || isNaN(limpeza) ? calcularLimpeza(checkin) : Number(limpeza);
+    const comissaoExtra = 0; // só editável no modal detalhe
+    const comissaoTotal = comissao + comissaoExtra;
 
-    const totalLiquidoFinal = liquido - limpeza;
+    const liquido = totalBruto - comissaoTotal;
+    const liquidoReal = liquido - limpeza;
+    const totalLiquidoFinal = liquidoReal;
 
-    const statusPagamento = document.getElementById("statusPagamento").value;
-    const valorPago = Number(document.getElementById("valorPago").value || 0);
+    const dataReserva = new Date().toLocaleDateString("pt-PT");
+    const tipoUnidade = apartamentosDigitados.length > 0 ? `Apartamento ${apartamentosDigitados[0]}` : "";
+    const dispositivo = "Web";
 
     // -----------------------------
-    // PREPARAÇÃO PARA ALOCAÇÃO
+    // 7) ALOCAÇÃO INTELIGENTE
     // -----------------------------
-    let apartamentos = [];
-    let status = "alocado";
-
-    const hoje = new Date();
-    const dtCheckin = parseDataPt(checkin);
-    const reservaJaComecou = dtCheckin && dtCheckin <= hoje;
-
     const reservasSemAtual = reservas.filter(r => !reservaAtual || r.id !== reservaAtual.id);
+    let apartamentos = [];
 
-    // -----------------------------
-    // 1) MODO MANUAL
-    // -----------------------------
+    // Modo manual
     if (!modoAutomatico) {
-
         apartamentos = apartamentosDigitados;
 
-        // Validar número
         if (apartamentos.length < quartos) {
             alert(`Foram indicados ${apartamentos.length} apartamento(s), mas a reserva exige ${quartos}.`);
             return;
         }
 
-        // Validar conflitos
         for (const ap of apartamentos) {
             const conflito = temConflitoNoApartamento({ checkin, checkout }, ap, reservasSemAtual);
-
             if (conflito) {
                 const reservaQueOcupa = reservasSemAtual.find(r =>
                     r.apartamentos?.includes(ap) &&
                     datasSobrepoem(r.checkin, r.checkout, checkin, checkout)
                 );
 
-                let mensagem = `O apartamento ${ap} está ocupado pela reserva de ${reservaQueOcupa.cliente}.`;
-                mensagem += `\n\nDeseja avançar com a troca manual?`;
-
-                if (!confirm(mensagem)) {
-                    alert(`O apartamento ${ap} já está ocupado nestas datas.`);
+                if (!confirm(`O apartamento ${ap} está ocupado pela reserva de ${reservaQueOcupa.cliente}.\n\nDeseja avançar?`)) {
                     return;
                 }
             }
         }
-
-        // Se passou todas as validações → grava manual
     }
 
-    // -----------------------------
-    // 2) MODO AUTOMÁTICO
-    // -----------------------------
+    // Modo automático
     if (modoAutomatico) {
-
         apartamentos = alocarApartamentosInteligente(quartos, checkin, checkout, reservasSemAtual);
 
-        if (apartamentos.length === 0) {
+        if (apartamentos.length < quartos) {
             alert(`Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.`);
             return;
         }
-
-        if (apartamentos.length < quartos) {
-            alert(
-                `Não existe disponibilidade para ${quartos} apartamento(s) nestas datas.\n` +
-                `Disponíveis: ${apartamentos.length}`
-            );
-            return;
-        }
     }
 
     // -----------------------------
-// DADOS FINAIS (OPÇÃO B COMPLETA)
-// -----------------------------
-const dados = {
-    // Essenciais
-    origem,
-    bookingId,
-    cliente,
-    quartos,
-    apartamentos,
-    checkin: normalizarDataParaPt(checkin),
-    checkout: normalizarDataParaPt(checkout),
-    hospedes,
-    adultos,
-    criancas,
-    idadesCriancas,
+    // 8) OBJETO FINAL PARA FIRESTORE
+    // -----------------------------
+    const dados = {
+        origem,
+        bookingId,
+        reservadoPor,
 
-    // Financeiro
-    totalBruto,
-    comissao,
-    comissaoExtra: 0, // sempre 0 na criação (só editável no detalhe)
-    comissaoTotal: comissao, // base + extra
-    precoNoite,
-    noites,
-    liquido,
-    liquidoReal: liquido - limpeza,
-    limpeza,
-    totalLiquidoFinal,
+        cliente,
+        paisCliente,
+        morada,
+        telefone,
+        email,
+        adultos,
+        criancas,
+        idadesCriancas,
+        hospedes,
+        modoViagem,
 
-    // Outros
-    berco,
-    status,
-    statusPagamento,
-    valorPago,
+        quartos,
+        apartamentos,
+        checkin: normalizarDataParaPt(checkin),
+        checkout: normalizarDataParaPt(checkout),
 
-    // Automáticos
-    dataReserva: new Date().toLocaleDateString("pt-PT"),
-    estadoReservaOrigem: "ok",
-    estadoPagamentoOrigem: "",
-    reservadoPor: cliente,
-    tipoUnidade: apartamentos.length > 0 ? `Apartamento ${apartamentos[0]}` : "",
-    dispositivo: "Web",
-    comentarios: "",
-    notaInterna: "",
-    dataCancelamento: null
-};
+        totalBruto,
+        comissao,
+        comissaoExtra,
+        comissaoTotal,
+        precoNoite,
+        noites,
+        liquido,
+        liquidoReal,
+        totalLiquidoFinal,
+        limpeza,
+        valorPago,
+        statusPagamento,
+        berco,
+
+        status,
+        estadoPagamentoOrigem,
+        dataCancelamento,
+
+        dataReserva,
+        tipoUnidade,
+        dispositivo
+    };
 
     // -----------------------------
-    // GRAVAR
+    // 9) GRAVAR NO FIRESTORE
     // -----------------------------
     if (!reservaAtual) {
         await db.collection("reservas").add(dados);
@@ -1009,7 +1002,7 @@ const dados = {
         await db.collection("reservas").doc(reservaAtual.id).update(dados);
     }
 
-    fecharModalNovaReserva()
+    fecharModalNovaReserva();
     carregarReservas();
 }
 
