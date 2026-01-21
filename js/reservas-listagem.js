@@ -862,9 +862,7 @@ async function guardarReserva() {
     // -----------------------------
     // OUTROS CAMPOS
     // -----------------------------
-    const checkin = document.getElementById("checkin").value.trim();
-    const checkout = document.getElementById("checkout").value.trim();
-
+    
     const hospedes = Number(document.getElementById("hospedes").value || 0);
     const adultos = Number(document.getElementById("adultos").value || 0);
     const criancas = Number(document.getElementById("criancas").value || 0);
