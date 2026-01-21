@@ -462,8 +462,39 @@ function mostrarDetalhesReserva(reserva) {
     const comissaoTotal = reserva.comissaoTotal || (comissaoBase + comissaoExtra);
     const totalLiquidoFinal = reserva.totalLiquidoFinal || (reserva.totalBruto - comissaoTotal);
 
-    const percentagemExtraDecimal = reserva.percentagemComissaoExtra ?? 0;
-    const temComissaoExtra = reserva.temComissaoExtra ?? (comissaoExtra > 0);
+   // ===============================
+// 1. LER VALORES DO FIRESTORE
+// ===============================
+
+const comissaoBase = reserva.comissao || 0;
+const comissaoExtra = reserva.comissaoExtra || 0;
+const comissaoTotal = reserva.comissaoTotal || (comissaoBase + comissaoExtra);
+const totalLiquidoFinal = reserva.totalLiquidoFinal || (reserva.totalBruto - comissaoTotal);
+
+// Percentagem gravada ou 0
+let percentagemExtraDecimal = reserva.percentagemComissaoExtra ?? 0;
+
+// -------------------------------------------------------
+// REGRA: Reservas antes de 01-01-2025 NÃO têm comissão extra
+// -------------------------------------------------------
+function parseData(d) {
+    const [dia, mes, ano] = d.split("/");
+    return new Date(`${ano}-${mes}-${dia}`);
+}
+
+const dataCorte = new Date("2025-01-01");
+const dataReserva = reserva.checkin ? parseData(reserva.checkin) : null;
+const isAntiga = dataReserva && dataReserva < dataCorte;
+
+// Lógica original
+let temComissaoExtra = reserva.temComissaoExtra ?? (comissaoExtra > 0);
+
+// Forçar reservas antigas a NÃO terem comissão extra
+if (isAntiga) {
+    temComissaoExtra = false;
+    percentagemExtraDecimal = 0;
+}
+
 
     // ===============================
     // 2. HTML DO DETALHE
