@@ -453,13 +453,29 @@ function detalheReserva(id) {
 
 function mostrarDetalhesReserva(reserva) {
 
+    // ===============================
+    // 1. LER VALORES DO FIRESTORE
+    // ===============================
+
+    const comissaoBase = reserva.comissao || 0;
+    const comissaoExtra = reserva.comissaoExtra || 0;
+    const comissaoTotal = reserva.comissaoTotal || (comissaoBase + comissaoExtra);
+    const totalLiquidoFinal = reserva.totalLiquidoFinal || (reserva.totalBruto - comissaoTotal);
+
+    const percentagemExtraDecimal = reserva.percentagemComissaoExtra ?? 0;
+    const temComissaoExtra = reserva.temComissaoExtra ?? (comissaoExtra > 0);
+
+    // ===============================
+    // 2. HTML DO DETALHE
+    // ===============================
+
     const html = `
         <!-- SECÇÃO ORIGEM / IDENTIFICAÇÃO -->
         <div class="modal-section-title">Origem & Identificação</div>
         <p><strong>Origem:</strong> ${reserva.origem || "-"}</p>
         <p><strong>Canal:</strong> ${reserva.canal || reserva.origem || "-"}</p>
-        <p><strong>ID Origem:</strong> ${reserva.idOrigem || "-"}</p>
-        <p><strong>Estado Reserva:</strong> ${reserva.estado || "OK"}</p>
+        <p><strong>ID Origem:</strong> ${reserva.bookingId || "-"}</p>
+        <p><strong>Estado Reserva:</strong> ${reserva.status || "OK"}</p>
 
         <!-- SECÇÃO HÓSPEDE -->
         <div class="modal-section-title">Hóspede</div>
@@ -468,9 +484,6 @@ function mostrarDetalhesReserva(reserva) {
         <p><strong>Adultos:</strong> ${reserva.adultos || "-"}</p>
         <p><strong>Crianças:</strong> ${reserva.criancas || "-"}</p>
         <p><strong>Idades Crianças:</strong> ${reserva.idadesCriancas || "-"}</p>
-        <p><strong>Telefone:</strong> ${reserva.telefone || "-"}</p>
-        <p><strong>Email:</strong> ${reserva.email || "-"}</p>
-        <p><strong>País:</strong> ${reserva.pais || "-"}</p>
 
         <!-- SECÇÃO ALOJAMENTO -->
         <div class="modal-section-title">Alojamento</div>
@@ -484,56 +497,107 @@ function mostrarDetalhesReserva(reserva) {
         <div class="modal-section-title">Financeiro</div>
 
         <p><strong>Total Bruto:</strong> €${formatarEuro(reserva.totalBruto)}</p>
-
-        <p><strong>Valor por Noite (Bruto):</strong> 
-            €${formatarEuro(reserva.noites ? reserva.totalBruto / reserva.noites : 0)}
-        </p>
-
-        <p><strong>Comissão Base:</strong> €${formatarEuro(reserva.comissao || 0)}</p>
-
-        <p><strong>Limpeza:</strong> €${formatarEuro(reserva.limpeza || 0)}</p>
-        <p><strong>Taxa Turística:</strong> €${formatarEuro(reserva.taxaTuristica || 0)}</p>
-        <p><strong>Desconto:</strong> €${formatarEuro(reserva.desconto || 0)}</p>
-
-        <p><strong>Valor por Noite (Líquido):</strong> 
-            €${formatarEuro(
-                reserva.noites ? (reserva.totalLiquidoFinal || 0) / reserva.noites : 0
-            )}
-        </p>
+        <p><strong>Comissão Base:</strong> €${formatarEuro(comissaoBase)}</p>
+        <p><strong>Comissão Extra:</strong> €<span id="valorComissaoExtraTexto">${formatarEuro(comissaoExtra)}</span></p>
+        <p><strong>Comissão Total:</strong> €<span id="comissaoTotalTexto">${formatarEuro(comissaoTotal)}</span></p>
+        <p><strong>Total Líquido Final:</strong> €<span id="totalLiquidoTexto">${formatarEuro(totalLiquidoFinal)}</span></p>
 
         <!-- SECÇÃO COMISSÃO EXTRA -->
         <div class="modal-section-title">Comissão Extra</div>
-        <p><strong>Aplicar comissão extra:</strong> 
-            <input type="checkbox" id="chkComissaoExtra">
+
+        <p><strong>Aplicar comissão extra:</strong>
+            <input type="checkbox" id="chkComissaoExtra" ${temComissaoExtra ? "checked" : ""} disabled>
         </p>
-        <p>
-            <strong>Percentagem extra (%):</strong>
-            <input type="number" id="percentagemExtra" step="0.1" style="width:80px;">
+
+        <p><strong>Percentagem extra (%):</strong>
+            <input type="number" id="percentagemExtra" step="0.1" value="${(percentagemExtraDecimal * 100).toFixed(1)}" disabled style="width:80px;">
         </p>
-        <p><strong>Valor Comissão Extra:</strong> €<span id="valorComissaoExtraTexto">${formatarEuro(reserva.valorComissaoExtra || 0)}</span></p>
-        <p><strong>Comissão Total:</strong> €<span id="comissaoTotalTexto">${formatarEuro(reserva.comissaoTotal || (reserva.comissao || 0))}</span></p>
-        <p><strong>Total Líquido Final:</strong> €<span id="totalLiquidoTexto">${formatarEuro(reserva.totalLiquidoFinal || 0)}</span></p>
 
         <!-- SECÇÃO PAGAMENTO -->
         <div class="modal-section-title">Pagamento</div>
         <p><strong>Status Pagamento:</strong> ${reserva.statusPagamento || "-"}</p>
         <p><strong>Valor Pago:</strong> €${formatarEuro(reserva.valorPago || 0)}</p>
-        <p><strong>Valor em Falta:</strong> €${formatarEuro((reserva.totalLiquidoFinal || 0) - (reserva.valorPago || 0))}</p>
-        <p><strong>Método Pagamento:</strong> ${reserva.metodoPagamento || "-"}</p>
 
-        <!-- SECÇÃO COMENTÁRIOS INTERNOS -->
-        <div class="modal-section-title">Comentários Internos</div>
-        <textarea id="comentariosInternos" rows="3" style="width:100%;">${reserva.comentariosInternos || ""}</textarea>
+        <!-- SECÇÃO COMENTÁRIOS -->
+        <div class="modal-section-title">Comentários Importados</div>
+        <textarea id="comentariosImportados" rows="3" style="width:100%;" disabled>${reserva.comentarios || ""}</textarea>
 
-        <!-- SECÇÃO AUDITORIA -->
-        <div class="modal-section-title">Auditoria</div>
-        <p><strong>Criado em:</strong> ${reserva.criadoEm || "-"}</p>
-        <p><strong>Editado em:</strong> ${reserva.editadoEm || "-"}</p>
-        <p><strong>Criado por:</strong> ${reserva.criadoPor || "-"}</p>
-        <p><strong>Editado por:</strong> ${reserva.editadoPor || "-"}</p>
+        <div class="modal-section-title">Nota Interna</div>
+        <textarea id="notaInterna" rows="3" style="width:100%;" disabled>${reserva.notaInterna || ""}</textarea>
     `;
 
     document.getElementById("conteudoDetalhes").innerHTML = html;
+
+    // ===============================
+    // 3. LÓGICA DE EDIÇÃO
+    // ===============================
+
+    const chk = document.getElementById("chkComissaoExtra");
+    const inpPercentagem = document.getElementById("percentagemExtra");
+    const spanValorExtra = document.getElementById("valorComissaoExtraTexto");
+    const spanComissaoTotal = document.getElementById("comissaoTotalTexto");
+    const spanTotalLiquido = document.getElementById("totalLiquidoTexto");
+    const notaInterna = document.getElementById("notaInterna");
+
+    function atualizarComissaoExtra() {
+        const aplicar = chk.checked;
+        const percentagem = Number(inpPercentagem.value.replace(",", ".")) / 100;
+
+        const valorExtra = aplicar ? reserva.totalBruto * percentagem : 0;
+        const novaComissaoTotal = comissaoBase + valorExtra;
+        const novoTotalLiquido = reserva.totalBruto - novaComissaoTotal;
+
+        spanValorExtra.textContent = formatarEuro(valorExtra);
+        spanComissaoTotal.textContent = formatarEuro(novaComissaoTotal);
+        spanTotalLiquido.textContent = formatarEuro(novoTotalLiquido);
+    }
+
+    // ===============================
+    // 4. BOTÃO EDITAR
+    // ===============================
+
+    document.getElementById("btnEditarDetalhe").onclick = () => {
+        chk.disabled = false;
+        inpPercentagem.disabled = false;
+        notaInterna.disabled = false;
+
+        document.getElementById("btnGuardarDetalhe").style.display = "inline-block";
+        document.getElementById("btnEditarDetalhe").style.display = "none";
+
+        chk.addEventListener("change", atualizarComissaoExtra);
+        inpPercentagem.addEventListener("input", atualizarComissaoExtra);
+    };
+
+    // ===============================
+    // 5. BOTÃO GUARDAR
+    // ===============================
+
+    document.getElementById("btnGuardarDetalhe").onclick = async () => {
+
+        const aplicar = chk.checked;
+        const percentagem = Number(inpPercentagem.value.replace(",", ".")) / 100;
+
+        const valorExtra = aplicar ? reserva.totalBruto * percentagem : 0;
+        const novaComissaoTotal = comissaoBase + valorExtra;
+        const novoTotalLiquido = reserva.totalBruto - novaComissaoTotal;
+
+        await db.collection("reservas").doc(reserva.id).update({
+            comissaoExtra: valorExtra,
+            comissaoTotal: novaComissaoTotal,
+            totalLiquidoFinal: novoTotalLiquido,
+            percentagemComissaoExtra: percentagem,
+            temComissaoExtra: aplicar,
+            notaInterna: notaInterna.value,
+            editadoEm: new Date().toISOString(),
+            editadoPor: firebase.auth().currentUser.email
+        });
+
+        fecharModalDetalhes();
+    };
+
+    abrirModalDetalhes();
+}
+
 
     // ===============================
     // LÓGICA DA COMISSÃO EXTRA
