@@ -559,29 +559,43 @@ if (isAntiga) {
 
     document.getElementById("conteudoDetalhes").innerHTML = html;
 
-    // ===============================
-    // 3. LÓGICA DE EDIÇÃO
-    // ===============================
+   // ===============================
+// 3. LÓGICA DE EDIÇÃO
+// ===============================
 
-    const chk = document.getElementById("chkComissaoExtra");
-    const inpPercentagem = document.getElementById("percentagemExtra");
-    const spanValorExtra = document.getElementById("valorComissaoExtraTexto");
-    const spanComissaoTotal = document.getElementById("comissaoTotalTexto");
-    const spanTotalLiquido = document.getElementById("totalLiquidoTexto");
-    const notaInterna = document.getElementById("notaInterna");
+const chk = document.getElementById("chkComissaoExtra");
+const inpPercentagem = document.getElementById("percentagemExtra");
+const spanValorExtra = document.getElementById("valorComissaoExtraTexto");
+const spanComissaoTotal = document.getElementById("comissaoTotalTexto");
+const spanTotalLiquido = document.getElementById("totalLiquidoTexto");
+const notaInterna = document.getElementById("notaInterna");
 
-    function atualizarComissaoExtra() {
-        const aplicar = chk.checked;
-        const percentagem = Number(inpPercentagem.value.replace(",", ".")) / 100;
+// Se a reserva é anterior a 01-01-2025, bloquear comissão extra
+if (isAntiga) {
+    chk.checked = false;
+    chk.disabled = true;
 
-        const valorExtra = aplicar ? reserva.totalBruto * percentagem : 0;
-        const novaComissaoTotal = comissaoBase + valorExtra;
-        const novoTotalLiquido = reserva.totalBruto - novaComissaoTotal;
+    inpPercentagem.value = "0.0";
+    inpPercentagem.disabled = true;
 
-        spanValorExtra.textContent = formatarEuro(valorExtra);
-        spanComissaoTotal.textContent = formatarEuro(novaComissaoTotal);
-        spanTotalLiquido.textContent = formatarEuro(novoTotalLiquido);
-    }
+    spanValorExtra.textContent = formatarEuro(0);
+    spanComissaoTotal.textContent = formatarEuro(comissaoBase);
+    spanTotalLiquido.textContent = formatarEuro(reserva.totalBruto - comissaoBase);
+}
+
+// Função de atualização (apenas para reservas novas)
+function atualizarComissaoExtra() {
+    const aplicar = chk.checked;
+    const percentagem = Number(inpPercentagem.value.replace(",", ".")) / 100;
+
+    const valorExtra = aplicar ? reserva.totalBruto * percentagem : 0;
+    const novaComissaoTotal = comissaoBase + valorExtra;
+    const novoTotalLiquido = reserva.totalBruto - novaComissaoTotal;
+
+    spanValorExtra.textContent = formatarEuro(valorExtra);
+    spanComissaoTotal.textContent = formatarEuro(novaComissaoTotal);
+    spanTotalLiquido.textContent = formatarEuro(novoTotalLiquido);
+}
 
     // ===============================
     // 4. BOTÃO EDITAR
