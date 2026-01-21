@@ -92,7 +92,7 @@ function preencherLista(reservas) {
 
         tr.innerHTML = `
             <td>${r.hospede || ""}</td>
-            <td>${r.apartamento || ""}</td>
+            <td>${r.apartamentos?.[0] || ""}</td>
             <td>${r.checkin || ""}</td>
             <td>${r.checkout || ""}</td>
             <td>${r.pessoas || ""}</td>
