@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+/* PAINEL ADMIN */
+.admin-panel {
+    border: 1px solid #ccc;
+    background: #f7f7f7;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.admin-content {
+    margin-top: 10px;
+}
+
+.admin-panel.fechado .admin-content {
+    display: none;
+}
+
+/* LEGENDA */
+#legenda {
+    display: flex;
+    gap: 20px;
+    margin: 15px 0;
+}
+
+.cor {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+}
+
+.amarelo { background: #fff3b0; }
+.verde { background: #c8f7c5; }
+.branco { background: #ffffff; }
+
+/* TABELA */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    font-size: 14px;
+}
+
+/* CALENDÁRIO */
+#calendarioContainer {
+    margin-top: 20px;
+}
+
+.calendario {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.calendario th, .calendario td {
+    border: 1px solid #ccc;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    font-size: 11px;
+}
+
+.ocupado {
+    background: #fff3b0;
+}
+
+.ocupado.nova {
+    background: #c8f7c5;
+}
+
+.ocupado.normal {
+    background: #ffffff;
+}
