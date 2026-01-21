@@ -103,6 +103,18 @@ function calcularComissaoExtra(totalBruto, percentagemDecimal) {
     if (!totalBruto || !percentagemDecimal || percentagemDecimal <= 0) return 0;
     return Number((totalBruto * percentagemDecimal).toFixed(2));
 }
+function validarDatasCheckinCheckout(checkin, checkout) {
+    // checkin e checkout no formato "dd/mm/aaaa"
+    const [d1, m1, a1] = checkin.split("/");
+    const [d2, m2, a2] = checkout.split("/");
+
+    const dataCheckin = new Date(`${a1}-${m1}-${d1}`);
+    const dataCheckout = new Date(`${a2}-${m2}-${d2}`);
+
+    // checkout tem de ser estritamente maior que checkin
+    return dataCheckout > dataCheckin;
+}
+
 
 
 // -------------------------------------------------------------
