@@ -25,6 +25,17 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btnGerar").addEventListener("click", gerarLimpeza);
 });
 
+function parsePtDate(str) {
+    if (!str) return null;
+    const partes = str.split("/");
+    if (partes.length !== 3) return null;
+    const dia = parseInt(partes[0], 10);
+    const mes = parseInt(partes[1], 10) - 1;
+    const ano = parseInt(partes[2], 10);
+    return new Date(ano, mes, dia);
+}
+
+
 async function gerarLimpeza() {
 
     const inicio = document.getElementById("dataInicio").value;
@@ -58,11 +69,19 @@ async function carregarReservas() {
 
 function filtrarPorDatas(reservas, inicio, fim) {
     return reservas.filter(r => {
-        if (!r.checkout) return false;
-        const co = new Date(r.checkout);
-        return co >= inicio && co <= fim && r.status !== "cancelada";
+        const ci = parsePtDate(r.checkin);
+        const co = parsePtDate(r.checkout);
+        if (!ci || !co) return false;
+        if (r.status === "cancelada") return false;
+
+        // Reserva que toca no intervalo (mesmo que entre antes e saia depois)
+        const intersecta =
+            (ci <= fim) && (co >= inicio);
+
+        return intersecta;
     });
 }
+
 
 function preencherLista(reservas) {
     const tbody = document.querySelector("#tabelaLimpeza tbody");
@@ -93,15 +112,25 @@ function preencherCalendario(reservas, inicio, fim) {
     const container = document.getElementById("calendarioContainer");
     container.innerHTML = "";
 
+    // Gerar array de dias
     const dias = [];
     let d = new Date(inicio);
-
     while (d <= fim) {
         dias.push(new Date(d));
         d.setDate(d.getDate() + 1);
     }
 
-    const apartamentos = ["2301", "2203", "2204"];
+    // Apartamentos dinâmicos a partir das reservas filtradas
+    const apartamentosSet = new Set();
+    reservas.forEach(r => {
+        if (r.apartamento) apartamentosSet.add(String(r.apartamento));
+    });
+    const apartamentos = Array.from(apartamentosSet).sort();
+
+    if (apartamentos.length === 0) {
+        container.innerHTML = "<p>Sem reservas neste período.</p>";
+        return;
+    }
 
     let html = `<table class="calendario"><thead><tr><th>Apt</th>`;
 
@@ -115,24 +144,25 @@ function preencherCalendario(reservas, inicio, fim) {
         html += `<tr><td><strong>${ap}</strong></td>`;
 
         dias.forEach(dia => {
-            const reserva = reservas.find(r =>
-                r.apartamento == ap &&
-                new Date(r.checkin) <= dia &&
-                new Date(r.checkout) >= dia
-            );
+            const reserva = reservas.find(r => {
+                if (String(r.apartamento) !== ap) return false;
+                const ci = parsePtDate(r.checkin);
+                const co = parsePtDate(r.checkout);
+                if (!ci || !co) return false;
+                return ci <= dia && co >= dia;
+            });
 
             if (reserva) {
-
                 const tooltip = `
 Apt ${ap}
-${reserva.hospede}
-${reserva.pessoas} pessoas (${reserva.adultos}A + ${reserva.criancas}C)
+${reserva.hospede || ""}
+${reserva.pessoas || ""} pessoas (${reserva.adultos || 0}A + ${reserva.criancas || 0}C)
 Idades: ${reserva.idades || "-"}
 Berço: ${reserva.berco ? "Sim" : "Não"}
 Obs: ${reserva.observacoes || "-"}
                 `.trim();
 
-                html += `<td class="ocupado normal" title="${tooltip}">${reserva.hospede}</td>`;
+                html += `<td class="ocupado normal" title="${tooltip}">${reserva.hospede || ""}</td>`;
             } else {
                 html += `<td></td>`;
             }
@@ -144,6 +174,8 @@ Obs: ${reserva.observacoes || "-"}
     html += `</tbody></table>`;
 
     container.innerHTML = html;
+}
+
 }
 
 function calcularTotais(reservas, inicio, fim) {
