@@ -58,19 +58,21 @@ async function carregarReservas() {
 
 function filtrarPorDatas(reservas, inicio, fim) {
     return reservas.filter(r => {
+        if (!r.checkin || !r.checkout) return false;
+
         const ci = new Date(r.checkin);
         const co = new Date(r.checkout);
 
-        if (!ci || !co) return false;
-        if (r.status === "cancelada") return false;
+        // Reserva que intersecta o intervalo
+        const intersecta = ci <= fim && co >= inicio;
 
-        // Reserva que toca no intervalo (mesmo que entre antes e saia depois)
-        const intersecta =
-            (ci <= fim) && (co >= inicio);
+        // Excluir canceladas
+        const ativa = r.status !== "cancelada";
 
-        return intersecta;
+        return intersecta && ativa;
     });
 }
+
 
 
 function preencherLista(reservas) {
