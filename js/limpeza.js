@@ -69,8 +69,9 @@ async function carregarReservas() {
 
 function filtrarPorDatas(reservas, inicio, fim) {
     return reservas.filter(r => {
-        const ci = parsePtDate(r.checkin);
-        const co = parsePtDate(r.checkout);
+        const ci = new Date(r.checkin);
+        const co = new Date(r.checkout);
+
         if (!ci || !co) return false;
         if (r.status === "cancelada") return false;
 
