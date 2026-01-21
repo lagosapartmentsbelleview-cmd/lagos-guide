@@ -469,12 +469,26 @@ function mostrarDetalhesReserva(reserva) {
         <p><strong>Noites:</strong> ${reserva.noites || "-"}</p>
 
         <!-- SECÇÃO FINANCEIRA -->
-        <div class="modal-section-title">Financeiro</div>
-        <p><strong>Total Bruto:</strong> €${formatarEuro(reserva.totalBruto)}</p>
-        <p><strong>Comissão Base:</strong> €${formatarEuro(reserva.comissao || 0)}</p>
-        <p><strong>Limpeza:</strong> €${formatarEuro(reserva.limpeza || 0)}</p>
-        <p><strong>Taxa Turística:</strong> €${formatarEuro(reserva.taxaTuristica || 0)}</p>
-        <p><strong>Desconto:</strong> €${formatarEuro(reserva.desconto || 0)}</p>
+<div class="modal-section-title">Financeiro</div>
+
+<p><strong>Total Bruto:</strong> €${formatarEuro(reserva.totalBruto)}</p>
+
+<p><strong>Valor por Noite (Bruto):</strong> 
+    €${formatarEuro(reserva.noites ? reserva.totalBruto / reserva.noites : 0)}
+</p>
+
+<p><strong>Comissão Base:</strong> €${formatarEuro(reserva.comissao || 0)}</p>
+
+<p><strong>Limpeza:</strong> €${formatarEuro(reserva.limpeza || 0)}</p>
+<p><strong>Taxa Turística:</strong> €${formatarEuro(reserva.taxaTuristica || 0)}</p>
+<p><strong>Desconto:</strong> €${formatarEuro(reserva.desconto || 0)}</p>
+
+<p><strong>Valor por Noite (Líquido):</strong> 
+    €${formatarEuro(
+        reserva.noites ? (reserva.totalLiquidoFinal || 0) / reserva.noites : 0
+    )}
+</p>
+
 
         <!-- SECÇÃO COMISSÃO EXTRA -->
         <div class="modal-section-title">Comissão Extra</div>
