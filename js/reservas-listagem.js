@@ -453,16 +453,9 @@ function detalheReserva(id) {
 
 function mostrarDetalhesReserva(reserva) {
 
-    // ===============================
-    // 1. LER VALORES DO FIRESTORE
-    // ===============================
+  
 
-    const comissaoBase = reserva.comissao || 0;
-    const comissaoExtra = reserva.comissaoExtra || 0;
-    const comissaoTotal = reserva.comissaoTotal || (comissaoBase + comissaoExtra);
-    const totalLiquidoFinal = reserva.totalLiquidoFinal || (reserva.totalBruto - comissaoTotal);
-
-   // ===============================
+// ===============================
 // 1. LER VALORES DO FIRESTORE
 // ===============================
 
