@@ -92,6 +92,18 @@ function formatarEuro(valor) {
     return Number(valor).toFixed(2);
 }
 
+const DATA_CORTE_COMISSAO_EXTRA = "2025-01-01";
+
+function podeAlterarComissaoExtra(reserva) {
+    if (!reserva.checkin) return false;
+    return new Date(reserva.checkin) >= new Date(DATA_CORTE_COMISSAO_EXTRA);
+}
+
+function calcularComissaoExtra(totalBruto, percentagemDecimal) {
+    if (!totalBruto || !percentagemDecimal || percentagemDecimal <= 0) return 0;
+    return Number((totalBruto * percentagemDecimal).toFixed(2));
+}
+
 
 // -------------------------------------------------------------
 // FUNÇÃO ÚNICA E CORRETA PARA LIMPEZA
@@ -469,26 +481,25 @@ function mostrarDetalhesReserva(reserva) {
         <p><strong>Noites:</strong> ${reserva.noites || "-"}</p>
 
         <!-- SECÇÃO FINANCEIRA -->
-<div class="modal-section-title">Financeiro</div>
+        <div class="modal-section-title">Financeiro</div>
 
-<p><strong>Total Bruto:</strong> €${formatarEuro(reserva.totalBruto)}</p>
+        <p><strong>Total Bruto:</strong> €${formatarEuro(reserva.totalBruto)}</p>
 
-<p><strong>Valor por Noite (Bruto):</strong> 
-    €${formatarEuro(reserva.noites ? reserva.totalBruto / reserva.noites : 0)}
-</p>
+        <p><strong>Valor por Noite (Bruto):</strong> 
+            €${formatarEuro(reserva.noites ? reserva.totalBruto / reserva.noites : 0)}
+        </p>
 
-<p><strong>Comissão Base:</strong> €${formatarEuro(reserva.comissao || 0)}</p>
+        <p><strong>Comissão Base:</strong> €${formatarEuro(reserva.comissao || 0)}</p>
 
-<p><strong>Limpeza:</strong> €${formatarEuro(reserva.limpeza || 0)}</p>
-<p><strong>Taxa Turística:</strong> €${formatarEuro(reserva.taxaTuristica || 0)}</p>
-<p><strong>Desconto:</strong> €${formatarEuro(reserva.desconto || 0)}</p>
+        <p><strong>Limpeza:</strong> €${formatarEuro(reserva.limpeza || 0)}</p>
+        <p><strong>Taxa Turística:</strong> €${formatarEuro(reserva.taxaTuristica || 0)}</p>
+        <p><strong>Desconto:</strong> €${formatarEuro(reserva.desconto || 0)}</p>
 
-<p><strong>Valor por Noite (Líquido):</strong> 
-    €${formatarEuro(
-        reserva.noites ? (reserva.totalLiquidoFinal || 0) / reserva.noites : 0
-    )}
-</p>
-
+        <p><strong>Valor por Noite (Líquido):</strong> 
+            €${formatarEuro(
+                reserva.noites ? (reserva.totalLiquidoFinal || 0) / reserva.noites : 0
+            )}
+        </p>
 
         <!-- SECÇÃO COMISSÃO EXTRA -->
         <div class="modal-section-title">Comissão Extra</div>
@@ -524,7 +535,63 @@ function mostrarDetalhesReserva(reserva) {
 
     document.getElementById("conteudoDetalhes").innerHTML = html;
 
-    // LIGAR BOTÕES EDITAR / APAGAR (como já tinhas)
+    // ===============================
+    // LÓGICA DA COMISSÃO EXTRA
+    // ===============================
+
+    const podeAlterar = podeAlterarComissaoExtra(reserva);
+
+    // Percentagem por defeito
+    let percentagemExtraDecimal =
+        reserva.percentagemComissaoExtra ??
+        obterPercentagemComissao((reserva.origem || "").toLowerCase());
+
+    if ((reserva.origem || "").toLowerCase() === "manual" && reserva.percentagemComissaoExtra == null) {
+        percentagemExtraDecimal = 0;
+    }
+
+    const aplicarComissaoExtraPorDefeito =
+        reserva.temComissaoExtra ??
+        (["booking", "airbnb"].includes((reserva.origem || "").toLowerCase()) && podeAlterar);
+
+    const chk = document.getElementById("chkComissaoExtra");
+    const inpPercentagem = document.getElementById("percentagemExtra");
+    const spanValorExtra = document.getElementById("valorComissaoExtraTexto");
+    const spanComissaoTotal = document.getElementById("comissaoTotalTexto");
+    const spanTotalLiquido = document.getElementById("totalLiquidoTexto");
+
+    chk.checked = aplicarComissaoExtraPorDefeito;
+    inpPercentagem.value = (percentagemExtraDecimal * 100).toFixed(1);
+
+    if (!podeAlterar) {
+        chk.disabled = true;
+        inpPercentagem.disabled = true;
+    }
+
+    const comissaoBase = reserva.comissao || 0;
+    const limpeza = reserva.limpeza || 0;
+    const taxaTuristica = reserva.taxaTuristica || 0;
+    const totalBruto = reserva.totalBruto || 0;
+
+    function atualizarComissaoExtra() {
+        const aplicar = chk.checked;
+        const percentagem = Number(inpPercentagem.value.replace(",", ".")) / 100;
+
+        const valorExtra = aplicar ? calcularComissaoExtra(totalBruto, percentagem) : 0;
+        const novaComissaoTotal = comissaoBase + valorExtra;
+        const novoTotalLiquido = Number((totalBruto - novaComissaoTotal - limpeza - taxaTuristica).toFixed(2));
+
+        spanValorExtra.textContent = formatarEuro(valorExtra);
+        spanComissaoTotal.textContent = formatarEuro(novaComissaoTotal);
+        spanTotalLiquido.textContent = formatarEuro(novoTotalLiquido);
+    }
+
+    if (podeAlterar) {
+        chk.addEventListener("change", atualizarComissaoExtra);
+        inpPercentagem.addEventListener("input", atualizarComissaoExtra);
+    }
+
+    // BOTÕES EDITAR / APAGAR
     document.getElementById("btnEditarDetalhe").onclick = () => {
         fecharModalDetalhes();
         editarReserva(reserva.id);
@@ -537,8 +604,6 @@ function mostrarDetalhesReserva(reserva) {
 
     abrirModalDetalhes();
 }
-
-
 
 // -------------------------------------------------------------
 // FILTRO POR INTERVALO DE MESES/ANOS
