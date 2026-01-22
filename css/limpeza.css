@@ -124,7 +124,7 @@ h2 {
     color: #fff;
     font-size: 10px;
     border-radius: 12px;
-    z-index: 2;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
