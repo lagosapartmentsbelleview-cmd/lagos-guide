@@ -15,9 +15,7 @@
     <!-- Verificar login -->
     <script>
         firebase.auth().onAuthStateChanged(user => {
-            if (!user) {
-                window.location.href = "login.html";
-            }
+            if (!user) window.location.href = "login.html";
         });
     </script>
 
@@ -26,68 +24,70 @@
 
 <body>
 
-    <h1>Painel de Limpeza</h1>
+    <!-- TOPO -->
+    <header class="topo">
+        <h1>Painel de Limpeza</h1>
 
-    <!-- SELECTOR DE DATAS -->
-    <div id="filtros">
-        <label>Data início:</label>
-        <input type="date" id="dataInicio">
+        <div class="filtros">
+            <label>Início:
+                <input type="date" id="dataInicio">
+            </label>
 
-        <label>Data fim:</label>
-        <input type="date" id="dataFim">
+            <label>Fim:
+                <input type="date" id="dataFim">
+            </label>
 
-        <button id="btnGerar">Gerar</button>
-    </div>
+            <button id="btnGerar" class="btn-primario">Gerar</button>
+        </div>
+    </header>
 
     <!-- PAINEL ADMIN -->
-    <div id="painelAdmin" class="admin-panel aberto">
-        <div class="admin-header">
-            <span>Controlo Interno — Apenas Administrador</span>
-            <span id="toggleAdmin">▼</span>
+    <section id="painelAdmin" class="painel-admin fechado">
+        <div class="painel-admin-header">
+            <span id="toggleAdmin">▶</span>
+            <h2>Administração</h2>
         </div>
 
-        <div class="admin-content">
-            <p><strong>Check-outs no período:</strong> <span id="totalCheckouts">0</span></p>
-            <p><strong>Total limpeza base:</strong> € <span id="totalBase">0</span></p>
-            <p><strong>Total extras:</strong> € <span id="totalExtras">0</span></p>
-            <hr>
-            <p><strong>TOTAL A PAGAR:</strong> € <span id="totalGeral">0</span></p>
-            <p><strong>Pagamento previsto:</strong> <span id="dataPagamento"></span></p>
+        <div class="painel-admin-body">
+            <p><strong>Total Check-outs:</strong> <span id="totalCheckouts">0</span></p>
+            <p><strong>Total Base:</strong> €<span id="totalBase">0.00</span></p>
+            <p><strong>Total Extras:</strong> €<span id="totalExtras">0.00</span></p>
+            <p><strong>Total Geral:</strong> €<span id="totalGeral">0.00</span></p>
+            <p><strong>Pagamento Previsto:</strong> <span id="dataPagamento">—</span></p>
         </div>
-    </div>
-
-    <!-- LEGENDA -->
-    <div id="legenda">
-        <div><span class="cor amarelo"></span> A decorrer</div>
-        <div><span class="cor verde"></span> Nova / Atualizada</div>
-        <div><span class="cor branco"></span> Normal</div>
-    </div>
+    </section>
 
     <!-- LISTA -->
-    <h2>Lista de Limpeza</h2>
-    <table id="tabelaLimpeza">
-        <thead>
-            <tr>
-                <th>Hóspede</th>
-                <th>Apartamento</th>
-                <th>Check-in</th>
-                <th>Check-out</th>
-                <th>Pessoas</th>
-                <th>Adultos</th>
-                <th>Crianças</th>
-                <th>Idades</th>
-                <th>Berço</th>
-                <th>Observações</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <section class="secao">
+        <h2>Lista de Limpeza</h2>
+
+        <table id="tabelaLimpeza" class="tabela">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Apt</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Hósp.</th>
+                    <th>Ad.</th>
+                    <th>Cr.</th>
+                    <th>Idades</th>
+                    <th>Berço</th>
+                    <th>Comentários</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
 
     <!-- CALENDÁRIO -->
-    <h2>Calendário de Limpeza</h2>
-    <div id="calendarioContainer"></div>
+    <section class="secao">
+        <h2>Calendário</h2>
+        <div id="calendarioContainer"></div>
+    </section>
 
     <!-- JS -->
+    <script src="js/reservas-listagem.js"></script>
     <script src="js/limpeza.js"></script>
 
 </body>
