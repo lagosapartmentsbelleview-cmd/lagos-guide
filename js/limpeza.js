@@ -126,26 +126,53 @@ function preencherCalendario(reservas, inicio, fim) {
     const container = document.getElementById("calendarioContainer");
     container.innerHTML = "";
 
-    // 1) Gerar a grelha base do calendário (função do calendario.js)
-    const dias = gerarDiasIntervalo(inicio, fim); 
-    const apartamentos = obterApartamentosOrdenados(reservas);
+    // Criar intervalo de dias
+    const dias = [];
+    let d = new Date(inicio);
+    while (d <= fim) {
+        dias.push(new Date(d));
+        d.setDate(d.getDate() + 1);
+    }
 
-    let html = gerarTabelaCalendario(dias, apartamentos); 
+    // Ordem fixa igual ao calendário principal
+    const apartamentos = ["2301", "2203", "2204"];
+
+    // Criar tabela com o mesmo layout do calendário principal
+    let html = `<div id="calendarioWrapper"><table><thead><tr><th>Apt</th>`;
+
+    dias.forEach(dia => {
+        html += `<th>${dia.getDate()}</th>`;
+    });
+
+    html += `</tr></thead><tbody>`;
+
+    apartamentos.forEach(ap => {
+        html += `<tr><td>${ap}</td>`;
+
+        dias.forEach(dia => {
+            const id = `cel-${ap}-${dia.getDate()}`;
+            html += `<td class="dia-celula" id="${id}"></td>`;
+        });
+
+        html += `</tr>`;
+    });
+
+    html += `</tbody></table></div>`;
     container.innerHTML = html;
 
-    // 2) Preencher com reservas (tooltip específico da limpeza)
+    // Preencher com reservas (tooltip de limpeza)
     reservas.forEach(r => {
         const ap = r.apartamentos?.[0];
         if (!ap) return;
 
         const ci = parseDataPt(r.checkin);
         const co = parseDataPt(r.checkout);
+        if (!ci || !co) return;
 
         dias.forEach(dia => {
             if (ci <= dia && co >= dia) {
-                const cellId = `cell-${ap}-${dia.toISOString().slice(0,10)}`;
-                const cell = document.getElementById(cellId);
-                if (!cell) return;
+                const cel = document.getElementById(`cel-${ap}-${dia.getDate()}`);
+                if (!cel) return;
 
                 const tooltip = `
 ${r.cliente}
@@ -155,9 +182,9 @@ Berço: ${r.berco ? "Sim" : "Não"}
 Obs: ${r.comentarios || "-"}
                 `.trim();
 
-                cell.classList.add("ocupado");
-                cell.title = tooltip;
-                cell.textContent = r.cliente;
+                cel.classList.add("ocupado");
+                cel.title = tooltip;
+                cel.textContent = r.cliente;
             }
         });
     });
