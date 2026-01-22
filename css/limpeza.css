@@ -111,7 +111,7 @@ h2 {
 .dia-celula {
     position: relative;
     padding: 0;
-    overflow: hidden;
+    overflow: visible;  /* igual ao calendario.css */
 }
 
 /* Barra MASTER (nome do cliente) */
