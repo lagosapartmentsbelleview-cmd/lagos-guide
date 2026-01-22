@@ -215,7 +215,8 @@ Obs: ${r.comentarios || "-"}
                 const isCheckout = dtN.getTime() === fimN.getTime();
 
                 // MASTER (nome) – igual ao calendário principal: 1 por apartamento, no dia de check-in
-                if (isCheckin) {
+                if (isCheckin && isPrimeiroApartamento) {
+
                     const master = document.createElement("div");
                     master.classList.add("reserva-master");
                     master.textContent = nomeCurto(r.cliente);
