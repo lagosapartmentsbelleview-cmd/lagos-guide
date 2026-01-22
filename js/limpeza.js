@@ -140,7 +140,7 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
     const apartamentos = ["2301", "2203", "2204"];
 
     // Cabeçalho
-    let html = `<div id="calendarioWrapper"><table><thead><tr><th>Apt</th>`;
+    let html = `<div id="calendarioWrapper"><table class="calendario"><thead><tr><th>Apt</th>`;
     dias.forEach(dia => html += `<th>${dia.getDate()}</th>`);
     html += `</tr></thead><tbody>`;
 
