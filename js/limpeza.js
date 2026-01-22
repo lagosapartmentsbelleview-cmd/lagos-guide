@@ -14,6 +14,14 @@ firebase.auth().onAuthStateChanged(user => {
         document.getElementById("painelAdmin").style.display = "none";
     }
 });
+// -------------------------------------------------------------
+//  Tooltip
+// -------------------------------------------------------------
+
+document.addEventListener("mousemove", e => {
+    document.documentElement.style.setProperty("--mouse-x", e.clientX + "px");
+    document.documentElement.style.setProperty("--mouse-y", e.clientY + "px");
+});
 
 // -------------------------------------------------------------
 // 2) INICIAR INTERFACE
