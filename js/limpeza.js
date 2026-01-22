@@ -195,7 +195,7 @@ Idades: ${r.idadesCriancas || "-"}
 Berço: ${r.berco ? "Sim" : "Não"}
 Obs: ${r.comentarios || "-"}
                     `.trim());
-
+                    cel.style.position = "relative";
                     cel.appendChild(barra);
                 }
             }
