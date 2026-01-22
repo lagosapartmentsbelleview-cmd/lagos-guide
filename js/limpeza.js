@@ -120,7 +120,6 @@ function preencherLista(reservas) {
 }
 
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
-
     inicio = new Date(inicio);
     fim = new Date(fim);
 
@@ -153,35 +152,59 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
     container.innerHTML = html;
 
     reservas.forEach(r => {
-        const apartamentosReserva = r.apartamentos;
-        if (!Array.isArray(apartamentosReserva) || apartamentosReserva.length === 0) return;
+        const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
+        const dataInicio = parseDataPt(r.checkin);
+        const dataFim = parseDataPt(r.checkout);
+        if (!dataInicio || !dataFim) return;
 
-        const ci = parseDataPt(r.checkin);
-        const co = parseDataPt(r.checkout);
-        if (!ci || !co) return;
+        const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
 
-        apartamentosReserva.forEach(ap => {
-            for (let dt = new Date(ci); dt <= co; dt.setDate(dt.getDate() + 1)) {
+        listaAps.forEach((ap, indexApto) => {
+            const isPrimeiroApartamento = indexApto === 0;
+
+            for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
                 if (dt < inicio || dt > fim) continue;
 
                 const dia = dt.getDate();
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) continue;
 
-                const fragmento = document.createElement("div");
-                fragmento.classList.add("reserva-fragmento");
+                const isCheckin = dt.getTime() === dataInicio.getTime();
+                const isCheckout = dt.getTime() === dataFim.getTime();
 
-                if (dt.getTime() === ci.getTime()) {
-                    fragmento.classList.add("checkin");
-                } else if (dt.getTime() === co.getTime()) {
-                    fragmento.classList.add("checkout");
-                } else {
-                    fragmento.classList.add("intermedio");
+                if (isCheckin && isPrimeiroApartamento) {
+                    const master = document.createElement("div");
+                    master.classList.add("reserva-master");
+                    master.textContent = r.cliente;
+                    master.style.width = `calc(${totalDias * 100}%)`;
+                    master.style.left = "0";
+                    master.setAttribute("data-info", `
+${r.cliente}
+Check-in: ${dataInicio.toLocaleDateString("pt-PT")}
+Check-out: ${dataFim.toLocaleDateString("pt-PT")}
+${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
+Idades: ${r.idadesCriancas || "-"}
+Berço: ${r.berco ? "Sim" : "Não"}
+Obs: ${r.comentarios || "-"}
+                    `.trim());
+                    cel.style.position = "relative";
+                    cel.appendChild(master);
                 }
 
-                fragmento.setAttribute("title", r.cliente);
-                cel.style.position = "relative";
-                cel.appendChild(fragmento);
+                if (isCheckin && isCheckout) continue;
+
+                const div = document.createElement("div");
+                div.classList.add("reserva");
+
+                if (isCheckin) {
+                    div.classList.add("reserva-inicio-metade");
+                } else if (isCheckout) {
+                    div.classList.add("reserva-fim-metade");
+                } else {
+                    div.classList.add("reserva-meio");
+                }
+
+                cel.appendChild(div);
             }
         });
     });
