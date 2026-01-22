@@ -199,9 +199,7 @@ Obs: ${r.comentarios || "-"}
 
         listaAps.forEach((ap, indexApto) => {
 
-        const isPrimeiroApartamento = indexApto === 0;
-
-
+            const isPrimeiroApartamento = indexApto === 0;
 
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
@@ -210,8 +208,6 @@ Obs: ${r.comentarios || "-"}
                 const dia = dt.getDate();
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) continue;
-                cel.innerHTML = "";   // 🔥 limpa fragmentos antigos antes de desenhar
-
 
                 const dtN = normalizar(dt);
                 const iniN = normalizar(dataInicio);
@@ -220,36 +216,42 @@ Obs: ${r.comentarios || "-"}
                 const isCheckin = dtN.getTime() === iniN.getTime();
                 const isCheckout = dtN.getTime() === fimN.getTime();
 
-                // MASTER (nome) – igual ao calendário principal: 1 por apartamento, no dia de check-in
-                if (isCheckin && isPrimeiroApartamento) {
+                // Criar MASTER mas só adicionar no fim
+                let master = null;
 
-                    const master = document.createElement("div");
+                if (isCheckin && isPrimeiroApartamento) {
+                    master = document.createElement("div");
                     master.classList.add("reserva-master");
                     master.textContent = nomeCurto(r.cliente);
                     master.style.width = `calc(${totalDias * 100}%)`;
                     master.style.left = "0";
                     master.setAttribute("data-info", tooltipTexto);
                     cel.style.position = "relative";
+                }
+
+                // Reserva de 1 dia → só master
+                if (!(isCheckin && isCheckout)) {
+
+                    // Fragmentos diários
+                    const div = document.createElement("div");
+                    div.classList.add("reserva");
+
+                    if (isCheckin) {
+                        div.classList.add("reserva-inicio-metade");
+                    } else if (isCheckout) {
+                        div.classList.add("reserva-fim-metade");
+                    } else {
+                        div.classList.add("reserva-meio");
+                    }
+
+                    div.setAttribute("data-info", tooltipTexto);
+                    cel.appendChild(div);
+                }
+
+                // MASTER SEMPRE NO FIM → fica por cima
+                if (master) {
                     cel.appendChild(master);
                 }
-
-                // Reserva de 1 dia → só master, não criar metades
-                if (isCheckin && isCheckout) continue;
-
-                // Fragmentos diários
-                const div = document.createElement("div");
-                div.classList.add("reserva");
-
-                if (isCheckin) {
-                    div.classList.add("reserva-inicio-metade"); // metade direita
-                } else if (isCheckout) {
-                    div.classList.add("reserva-fim-metade");    // metade esquerda
-                } else {
-                    div.classList.add("reserva-meio");          // dia completo
-                }
-
-                div.setAttribute("data-info", tooltipTexto);
-                cel.appendChild(div);
             }
         });
     });
