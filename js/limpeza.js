@@ -162,8 +162,9 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
     // 🔥 DESENHAR BARRAS DE RESERVA
     reservas.forEach(r => {
-        const ap = r.apartamentos?.[0];
-        if (!ap) return;
+       const apartamentosReserva = r.apartamentos;
+        if (!Array.isArray(apartamentosReserva) || apartamentosReserva.length === 0) return;
+
 
         const ci = parseDataPt(r.checkin);
         const co = parseDataPt(r.checkout);
@@ -171,23 +172,21 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
         const totalDias = Math.floor((co - ci) / (1000 * 60 * 60 * 24)) + 1;
 
-        for (let dt = new Date(ci); dt <= co; dt.setDate(dt.getDate() + 1)) {
-            const dia = dt.getDate();
-            const cel = document.getElementById(`cel-${ap}-${dia}`);
-            if (!cel) continue;
+        apartamentosReserva.forEach(ap => {
+    for (let dt = new Date(ci); dt <= co; dt.setDate(dt.getDate() + 1)) {
+        const dia = dt.getDate();
+        const cel = document.getElementById(`cel-${ap}-${dia}`);
+        if (!cel) continue;
 
-            // Só desenha a barra no dia de check-in
-            if (dt.getTime() === ci.getTime()) {
-                const barra = document.createElement("div");
-                barra.classList.add("reserva-master");
-                barra.textContent = r.cliente;
+        if (dt.getTime() === ci.getTime()) {
+            const barra = document.createElement("div");
+            barra.classList.add("reserva-master");
+            barra.textContent = r.cliente;
 
-                // Largura proporcional ao número de dias
-                barra.style.width = `calc(${totalDias * 100}% + ${totalDias - 1}px)`;
-                barra.style.left = "0";
+            barra.style.width = `calc(${totalDias * 100}% + ${totalDias - 1}px)`;
+            barra.style.left = "0";
 
-                // Tooltip
-                barra.setAttribute("data-info", `
+            barra.setAttribute("data-info", `
 ${r.cliente}
 Check-in: ${ci.toLocaleDateString("pt-PT")}
 Check-out: ${co.toLocaleDateString("pt-PT")}
@@ -195,13 +194,13 @@ ${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
 Idades: ${r.idadesCriancas || "-"}
 Berço: ${r.berco ? "Sim" : "Não"}
 Obs: ${r.comentarios || "-"}
-                `.trim());
+            `.trim());
 
-                cel.appendChild(barra);
-            }
+            cel.appendChild(barra);
         }
-    });
-}
+    }
+});
+
 
 // -------------------------------------------------------------
 // 8) TOTAIS (APENAS ADMIN)
