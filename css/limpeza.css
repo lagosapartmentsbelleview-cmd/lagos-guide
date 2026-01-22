@@ -79,11 +79,12 @@ h2 {
 /* ---------------------------------------------------------
    CALENDÁRIO
 --------------------------------------------------------- */
+
 .calendario {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
-    table-layout: fixed; /* ESSENCIAL */
+    table-layout: fixed;
 }
 
 .calendario th,
@@ -95,7 +96,7 @@ h2 {
     font-size: 12px;
     padding: 0;
     border: 1px solid #ccc;
-    height: 44px; /* 🔥 Adicionado */
+    height: 44px;
 }
 
 /* Células */
@@ -114,25 +115,23 @@ h2 {
     background: #1976d2;
     color: #fff;
     font-size: 10px;
-    padding: 2px 4px;
-    border-radius: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    border-radius: 12px;
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    pointer-events: none; /* permite tooltip por cima */
 }
 
 /* Fragmentos diários */
 .reserva {
     position: absolute;
     top: 0;
+    left: 0; /* ESSENCIAL */
     height: 100%;
     background: #1976d2;
-    border-radius: 4px;
+    border-radius: 12px;
     z-index: 1;
 }
 
@@ -140,39 +139,43 @@ h2 {
 .reserva-inicio-metade {
     width: 50%;
     right: 0;
-    left: auto; /* 🔥 importante para evitar conflito */
+    left: auto;
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    position: absolute;
-    top: 0;
-    height: 100%;
 }
 
 /* Metade esquerda — CHECK-OUT */
 .reserva-fim-metade {
     width: 50%;
     left: 0;
-    right: auto; /* 🔥 importante */
+    right: auto;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
-    position: absolute;
-    top: 0;
-    height: 100%;
 }
 
 /* Dia completo */
 .reserva-meio {
     left: 0;
     width: 100%;
-    position: absolute;
-    top: 0;
-    height: 100%;
 }
 
+/* Tooltip flutuante */
+.tooltip {
+    position: fixed;
+    background: #333;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 9999;
+    max-width: 260px;
+    white-space: pre-line;
+}
 
 /* ---------------------------------------------------------
    TOOLTIP (igual ao calendario.html)
