@@ -212,6 +212,10 @@ Obs: ${r.comentarios || "-"}
 
         const dtN = normalizar(dt);
         const dia = dtN.getDate();
+
+        // Garante que só desenhas dias do mês visível
+        if (dtN.getMonth() !== visInicio.getMonth()) continue;
+
         const cel = document.getElementById(`cel-${ap}-${dia}`);
         if (!cel) continue;
 
