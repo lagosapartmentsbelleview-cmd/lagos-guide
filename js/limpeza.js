@@ -212,11 +212,9 @@ Obs: ${r.comentarios || "-"}
                 if (!cel) continue;
 
                 const dtN = normalizar(dt);
-                const iniN = visInicio;
-                const fimN = visFim;
+                const isCheckinReal = dtN.getTime() === realInicio.getTime();
+                const isCheckoutReal = dtN.getTime() === realFim.getTime();
 
-                const isCheckinVis = dtN.getTime() === iniN.getTime();
-                const isCheckoutVis = dtN.getTime() === fimN.getTime();
 
                 // MASTER no primeiro dia visível
                 if (!masterCriada && isCheckinVis) {
@@ -236,13 +234,16 @@ Obs: ${r.comentarios || "-"}
                 const div = document.createElement("div");
                 div.classList.add("reserva");
 
-                if (isCheckinVis) {
-                    div.classList.add("reserva-inicio-metade");
-                } else if (isCheckoutVis) {
-                    div.classList.add("reserva-fim-metade");
-                } else {
-                    div.classList.add("reserva-meio");
+                if (isCheckinReal) {
+                div.classList.add("reserva-inicio-metade");
                 }
+                else if (isCheckoutReal) {
+                div.classList.add("reserva-fim-metade");
+                }
+                else {
+                div.classList.add("reserva-meio");
+                }
+
 
                 div.setAttribute("data-info", tooltipTexto);
                 cel.appendChild(div);
