@@ -1847,5 +1847,49 @@ async function confirmarApagarDesaparecidas() {
     alert("Reservas apagadas.");
 }
 
+// -------------------------------------------------------------
+// FUNÇÃO UNIVERSAL: DEVOLVE TODAS AS RESERVAS NORMALIZADAS
+// -------------------------------------------------------------
+async function carregarReservasNormalizadas() {
+    const snap = await db.collection("reservas").orderBy("checkin").get();
+
+    const lista = [];
+    snap.forEach(doc => lista.push({ id: doc.id, ...doc.data() }));
+
+    lista.forEach(r => {
+
+        // Nome do cliente
+        r.cliente = r.cliente || r.reservadoPor || "";
+
+        // Pessoas
+        r.adultos = Number(r.adultos || 0);
+        r.criancas = Number(r.criancas || 0);
+        r.hospedes = Number(r.hospedes || (r.adultos + r.criancas));
+
+        // Idades
+        r.idadesCriancas = r.idadesCriancas || "";
+
+        // Berço
+        r.berco = !!r.berco;
+
+        // Comentários
+        r.comentarios = r.comentarios || r.observacoes || "";
+
+        // Apartamentos sempre array de strings
+        if (!Array.isArray(r.apartamentos)) {
+            if (r.apartamentos) {
+                r.apartamentos = [String(r.apartamentos)];
+            } else {
+                r.apartamentos = [];
+            }
+        } else {
+            r.apartamentos = r.apartamentos.map(a => String(a));
+        }
+
+        // Datas já vêm em dd/mm/yyyy → OK
+    });
+
+    return lista;
+}
 
 
