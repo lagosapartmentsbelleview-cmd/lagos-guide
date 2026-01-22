@@ -122,11 +122,10 @@ function preencherLista(reservas) {
 // -------------------------------------------------------------
 // 7) CALENDÁRIO DE LIMPEZA
 // -------------------------------------------------------------
-function preencherCalendario(reservas, inicio, fim) {
+function desenharCalendarioLimpeza(reservas, inicio, fim) {
     const container = document.getElementById("calendarioContainer");
     container.innerHTML = "";
 
-    // Criar intervalo de dias
     const dias = [];
     let d = new Date(inicio);
     while (d <= fim) {
@@ -134,33 +133,24 @@ function preencherCalendario(reservas, inicio, fim) {
         d.setDate(d.getDate() + 1);
     }
 
-    // Ordem fixa igual ao calendário principal
     const apartamentos = ["2301", "2203", "2204"];
 
-    // Criar tabela com o mesmo layout do calendário principal
     let html = `<div id="calendarioWrapper"><table><thead><tr><th>Apt</th>`;
-
-    dias.forEach(dia => {
-        html += `<th>${dia.getDate()}</th>`;
-    });
-
+    dias.forEach(dia => html += `<th>${dia.getDate()}</th>`);
     html += `</tr></thead><tbody>`;
 
     apartamentos.forEach(ap => {
         html += `<tr><td>${ap}</td>`;
-
         dias.forEach(dia => {
             const id = `cel-${ap}-${dia.getDate()}`;
             html += `<td class="dia-celula" id="${id}"></td>`;
         });
-
         html += `</tr>`;
     });
 
     html += `</tbody></table></div>`;
     container.innerHTML = html;
 
-    // Preencher com reservas (tooltip de limpeza)
     reservas.forEach(r => {
         const ap = r.apartamentos?.[0];
         if (!ap) return;
@@ -169,26 +159,40 @@ function preencherCalendario(reservas, inicio, fim) {
         const co = parseDataPt(r.checkout);
         if (!ci || !co) return;
 
-        dias.forEach(dia => {
-            if (ci <= dia && co >= dia) {
-                const cel = document.getElementById(`cel-${ap}-${dia.getDate()}`);
-                if (!cel) return;
+        const totalDias = Math.floor((co - ci) / (1000 * 60 * 60 * 24)) + 1;
 
-                const tooltip = `
+        for (let dt = new Date(ci); dt <= co; dt.setDate(dt.getDate() + 1)) {
+            const dia = dt.getDate();
+            const cel = document.getElementById(`cel-${ap}-${dia}`);
+            if (!cel) continue;
+
+            if (dt.getTime() === ci.getTime()) {
+                const barra = document.createElement("div");
+                barra.classList.add("reserva-master");
+                barra.textContent = r.cliente;
+
+                barra.style.width = `calc(${totalDias * 100}% + ${totalDias - 1}px)`;
+                barra.style.left = "0";
+
+                const checkinPt = ci.toLocaleDateString("pt-PT");
+                const checkoutPt = co.toLocaleDateString("pt-PT");
+
+                barra.setAttribute("data-info", `
 ${r.cliente}
+Check-in: ${checkinPt}
+Check-out: ${checkoutPt}
 ${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
 Idades: ${r.idadesCriancas || "-"}
 Berço: ${r.berco ? "Sim" : "Não"}
 Obs: ${r.comentarios || "-"}
-                `.trim();
+                `.trim());
 
-                cel.classList.add("ocupado");
-                cel.title = tooltip;
-                cel.textContent = r.cliente;
+                cel.appendChild(barra);
             }
-        });
+        }
     });
 }
+
 
 // -------------------------------------------------------------
 // 8) TOTAIS (APENAS ADMIN)
