@@ -163,7 +163,7 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
     html += `</tbody></table></div>`;
     container.innerHTML = html;
 
-    // Função nome curto
+    // Nome curto
     function nomeCurto(nome) {
         if (!nome) return "";
         const partes = nome.trim().split(" ");
@@ -171,9 +171,10 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
         return partes[0] + " " + partes[partes.length - 1];
     }
 
+    // Normalizar datas (tirar horas)
     function normalizar(d) {
-    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-}
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    }
 
     // Desenhar reservas
     reservas.forEach(r => {
@@ -185,9 +186,18 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
         const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
 
-        listaAps.forEach((ap, indexApto) => {
+        // Tooltip comum
+        const tooltipTexto = `
+${r.cliente}
+Check-in: ${dataInicio.toLocaleDateString("pt-PT")}
+Check-out: ${dataFim.toLocaleDateString("pt-PT")}
+${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
+Idades: ${r.idadesCriancas || "-"}
+Berço: ${r.berco ? "Sim" : "Não"}
+Obs: ${r.comentarios || "-"}
+        `.trim();
 
-            const isPrimeiroApartamento = indexApto === 0;
+        listaAps.forEach(ap => {
 
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
@@ -204,74 +214,35 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
                 const isCheckin = dtN.getTime() === iniN.getTime();
                 const isCheckout = dtN.getTime() === fimN.getTime();
 
+                // MASTER (nome) – igual ao calendário principal: 1 por apartamento, no dia de check-in
+                if (isCheckin) {
+                    const master = document.createElement("div");
+                    master.classList.add("reserva-master");
+                    master.textContent = nomeCurto(r.cliente);
+                    master.style.width = `calc(${totalDias * 100}%)`;
+                    master.style.left = "0";
+                    master.setAttribute("data-info", tooltipTexto);
+                    cel.style.position = "relative";
+                    cel.appendChild(master);
+                }
 
-// 🔵 MASTER — aparece só no primeiro dia e só no primeiro apartamento
-if (isCheckin && isPrimeiroApartamento) {
+                // Reserva de 1 dia → só master, não criar metades
+                if (isCheckin && isCheckout) continue;
 
-    const master = document.createElement("div");
-    master.classList.add("reserva-master");
+                // Fragmentos diários
+                const div = document.createElement("div");
+                div.classList.add("reserva");
 
-    master.textContent = nomeCurto(r.cliente);
+                if (isCheckin) {
+                    div.classList.add("reserva-inicio-metade"); // metade direita
+                } else if (isCheckout) {
+                    div.classList.add("reserva-fim-metade");    // metade esquerda
+                } else {
+                    div.classList.add("reserva-meio");          // dia completo
+                }
 
-    master.style.width = `calc(${totalDias * 100}%)`;
-    master.style.left = "0";
-
-    master.setAttribute("data-info", `
-${r.cliente}
-Check-in: ${dataInicio.toLocaleDateString("pt-PT")}
-Check-out: ${dataFim.toLocaleDateString("pt-PT")}
-${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
-Idades: ${r.idadesCriancas || "-"}
-Berço: ${r.berco ? "Sim" : "Não"}
-Obs: ${r.comentarios || "-"}
-    `.trim());
-
-    cel.style.position = "relative";
-    cel.appendChild(master);
-
-    // 🔥 ADICIONAR TAMBÉM O FRAGMENTO DE CHECK-IN (metade direita)
-    const fragInicio = document.createElement("div");
-    fragInicio.classList.add("reserva", "reserva-inicio-metade");
-    fragInicio.setAttribute("data-info", `
-${r.cliente}
-Check-in: ${dataInicio.toLocaleDateString("pt-PT")}
-Check-out: ${dataFim.toLocaleDateString("pt-PT")}
-${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
-Idades: ${r.idadesCriancas || "-"}
-Berço: ${r.berco ? "Sim" : "Não"}
-Obs: ${r.comentarios || "-"}
-    `.trim());
-    cel.appendChild(fragInicio);
-}
-
-// Reserva de 1 dia → só master + metade direita já criada acima
-if (isCheckin && isCheckout) continue;
-
-// 🔵 Fragmentos diários (para todos os outros dias)
-const div = document.createElement("div");
-div.classList.add("reserva");
-
-if (isCheckin) {
-    div.classList.add("reserva-inicio-metade"); // direita
-} else if (isCheckout) {
-    div.classList.add("reserva-fim-metade"); // esquerda
-} else {
-    div.classList.add("reserva-meio");
-}
-
-// Tooltip em TODAS as células
-div.setAttribute("data-info", `
-${r.cliente}
-Check-in: ${dataInicio.toLocaleDateString("pt-PT")}
-Check-out: ${dataFim.toLocaleDateString("pt-PT")}
-${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
-Idades: ${r.idadesCriancas || "-"}
-Berço: ${r.berco ? "Sim" : "Não"}
-Obs: ${r.comentarios || "-"}
-`.trim());
-
-cel.appendChild(div);
-
+                div.setAttribute("data-info", tooltipTexto);
+                cel.appendChild(div);
             }
         });
     });
