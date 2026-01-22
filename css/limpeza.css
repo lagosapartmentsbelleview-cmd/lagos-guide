@@ -130,7 +130,7 @@ h2 {
     left: 0; /* ESSENCIAL */
     height: 100%;
     background: #1976d2;
-    border-radius: 12px;
+    border-radius: 0; /* ✅ Sem arredondamento por defeito */
     z-index: 1;
 }
 
@@ -158,8 +158,9 @@ h2 {
 
 /* Dia completo */
 .reserva-meio {
-    left: 0;
-    width: 100%;
+  left: 0;
+  width: 100%;
+  border-radius: 0; /* ✅ Remove qualquer arredondamento residual */
 }
 
 /* Tooltip flutuante */
