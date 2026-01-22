@@ -201,21 +201,21 @@ Berço: ${r.berco ? "Sim" : "Não"}
 Obs: ${r.comentarios || "-"}
         `.trim();
 
-       listaAps.forEach(ap => {
+listaAps.forEach(ap => {
 
     let masterCriada = false;
 
-    for (let i = 0; i < totalDiasVisiveis; i++) {
+    // Seleciona apenas os dias que pertencem à reserva dentro do intervalo visível
+    const diasVisiveis = dias.filter(d => {
+        const dn = normalizar(d);
+        return dn >= visInicio && dn <= visFim;
+    });
 
-        const dtN = new Date(visInicio.getFullYear(), visInicio.getMonth(), visInicio.getDate() + i);
+    diasVisiveis.forEach((dtN, i) => {
 
         const dia = dtN.getDate();
-
-        // Garante que só desenhas dias do mês visível
-     
-
         const cel = document.getElementById(`cel-${ap}-${dia}`);
-        if (!cel) continue;
+        if (!cel) return;
 
         const isCheckinReal = dtN.getTime() === realInicio.getTime();
         const isCheckoutReal = dtN.getTime() === realFim.getTime();
@@ -225,7 +225,7 @@ Obs: ${r.comentarios || "-"}
             const master = document.createElement("div");
             master.classList.add("reserva-master");
             master.textContent = nomeCurto(r.cliente);
-            master.style.width = `calc(${totalDiasVisiveis * 100}%)`;
+            master.style.width = `calc(${diasVisiveis.length * 100}%)`;
             master.style.left = "0";
             master.setAttribute("data-info", tooltipTexto);
             cel.appendChild(master);
@@ -233,8 +233,8 @@ Obs: ${r.comentarios || "-"}
         }
 
         // Se só há 1 dia visível E é check-in e check-out reais → só master
-        if (totalDiasVisiveis === 1 && isCheckinReal && isCheckoutReal) {
-            continue;
+        if (diasVisiveis.length === 1 && isCheckinReal && isCheckoutReal) {
+            return;
         }
 
         const div = document.createElement("div");
@@ -252,7 +252,7 @@ Obs: ${r.comentarios || "-"}
 
         div.setAttribute("data-info", tooltipTexto);
         cel.appendChild(div);
-    }
+    });
 });
 
     });
