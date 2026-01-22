@@ -128,12 +128,14 @@ function preencherLista(reservas) {
 }
 
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
+
     inicio = new Date(inicio);
     fim = new Date(fim);
 
     const container = document.getElementById("calendarioContainer");
     container.innerHTML = "";
 
+    // Gerar lista de dias
     const dias = [];
     let d = new Date(inicio);
     while (d <= fim) {
@@ -143,10 +145,12 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
     const apartamentos = ["2301", "2203", "2204"];
 
+    // Cabeçalho
     let html = `<div id="calendarioWrapper"><table class="calendario"><thead><tr><th>Apt</th>`;
     dias.forEach(dia => html += `<th>${dia.getDate()}</th>`);
     html += `</tr></thead><tbody>`;
 
+    // Linhas por apartamento
     apartamentos.forEach(ap => {
         html += `<tr><td>${ap}</td>`;
         dias.forEach(dia => {
@@ -159,7 +163,17 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
     html += `</tbody></table></div>`;
     container.innerHTML = html;
 
+    // Função nome curto
+    function nomeCurto(nome) {
+        if (!nome) return "";
+        const partes = nome.trim().split(" ");
+        if (partes.length === 1) return partes[0];
+        return partes[0] + " " + partes[partes.length - 1];
+    }
+
+    // Desenhar reservas
     reservas.forEach(r => {
+
         const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
         const dataInicio = parseDataPt(r.checkin);
         const dataFim = parseDataPt(r.checkout);
@@ -168,9 +182,11 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
         const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
 
         listaAps.forEach((ap, indexApto) => {
+
             const isPrimeiroApartamento = indexApto === 0;
 
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
+
                 if (dt < inicio || dt > fim) continue;
 
                 const dia = dt.getDate();
@@ -180,12 +196,17 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
                 const isCheckin = dt.getTime() === dataInicio.getTime();
                 const isCheckout = dt.getTime() === dataFim.getTime();
 
+                // 🔵 MASTER — aparece só no primeiro dia e só no primeiro apartamento
                 if (isCheckin && isPrimeiroApartamento) {
+
                     const master = document.createElement("div");
                     master.classList.add("reserva-master");
-                    master.textContent = r.cliente;
+
+                    master.textContent = nomeCurto(r.cliente);
+
                     master.style.width = `calc(${totalDias * 100}%)`;
                     master.style.left = "0";
+
                     master.setAttribute("data-info", `
 ${r.cliente}
 Check-in: ${dataInicio.toLocaleDateString("pt-PT")}
@@ -195,22 +216,36 @@ Idades: ${r.idadesCriancas || "-"}
 Berço: ${r.berco ? "Sim" : "Não"}
 Obs: ${r.comentarios || "-"}
                     `.trim());
+
                     cel.style.position = "relative";
                     cel.appendChild(master);
                 }
 
+                // Reserva de 1 dia → só master
                 if (isCheckin && isCheckout) continue;
 
+                // 🔵 Fragmentos diários
                 const div = document.createElement("div");
                 div.classList.add("reserva");
 
                 if (isCheckin) {
-                    div.classList.add("reserva-inicio-metade");
+                    div.classList.add("reserva-inicio-metade"); // direita
                 } else if (isCheckout) {
-                    div.classList.add("reserva-fim-metade");
+                    div.classList.add("reserva-fim-metade"); // esquerda
                 } else {
                     div.classList.add("reserva-meio");
                 }
+
+                // Tooltip em TODAS as células
+                div.setAttribute("data-info", `
+${r.cliente}
+Check-in: ${dataInicio.toLocaleDateString("pt-PT")}
+Check-out: ${dataFim.toLocaleDateString("pt-PT")}
+${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
+Idades: ${r.idadesCriancas || "-"}
+Berço: ${r.berco ? "Sim" : "Não"}
+Obs: ${r.comentarios || "-"}
+                `.trim());
 
                 cel.appendChild(div);
             }
