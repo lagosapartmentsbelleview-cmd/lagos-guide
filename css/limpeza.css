@@ -95,6 +95,7 @@ h2 {
     font-size: 12px;
     padding: 0;
     border: 1px solid #ccc;
+    height: 44px; /* 🔥 Adicionado */
 }
 
 /* Células */
@@ -119,6 +120,10 @@ h2 {
     overflow: hidden;
     text-overflow: ellipsis;
     z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 /* Fragmentos diários */
@@ -131,15 +136,15 @@ h2 {
     z-index: 1;
 }
 
-/* Metade esquerda (check-in) */
+/* Metade direita (check-in) */
 .reserva-inicio-metade {
-    left: 0;
+    left: 50%;
     width: 50%;
 }
 
-/* Metade direita (check-out) */
+/* Metade esquerda (check-out) */
 .reserva-fim-metade {
-    right: 0;
+    left: 0;
     width: 50%;
 }
 
