@@ -171,6 +171,10 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
         return partes[0] + " " + partes[partes.length - 1];
     }
 
+    function normalizar(d) {
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
     // Desenhar reservas
     reservas.forEach(r => {
 
@@ -193,8 +197,13 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) continue;
 
-                const isCheckin = dt.getTime() === dataInicio.getTime();
-                const isCheckout = dt.getTime() === dataFim.getTime();
+                const dtN = normalizar(dt);
+                const iniN = normalizar(dataInicio);
+                const fimN = normalizar(dataFim);
+
+                const isCheckin = dtN.getTime() === iniN.getTime();
+                const isCheckout = dtN.getTime() === fimN.getTime();
+
 
                 // 🔵 MASTER — aparece só no primeiro dia e só no primeiro apartamento
                 if (isCheckin && isPrimeiroApartamento) {
