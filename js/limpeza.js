@@ -210,6 +210,8 @@ Obs: ${r.comentarios || "-"}
                 const dia = dt.getDate();
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) continue;
+                cel.innerHTML = "";   // 🔥 limpa fragmentos antigos antes de desenhar
+
 
                 const dtN = normalizar(dt);
                 const iniN = normalizar(dataInicio);
