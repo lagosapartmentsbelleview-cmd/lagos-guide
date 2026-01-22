@@ -129,8 +129,8 @@ h2 {
     align-items: center;
     justify-content: center;
     text-align: center;
-    pointer-events: none; /* permite tooltip por cima */
 }
+
 
 /* Fragmentos diários */
 .reserva {
