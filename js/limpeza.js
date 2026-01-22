@@ -163,7 +163,6 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
     html += `</tbody></table></div>`;
     container.innerHTML = html;
 
-    // Nome curto
     function nomeCurto(nome) {
         if (!nome) return "";
         const partes = nome.trim().split(" ");
@@ -171,12 +170,10 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
         return partes[0] + " " + partes[partes.length - 1];
     }
 
-    // Normalizar datas
     function normalizar(d) {
         return new Date(d.getFullYear(), d.getMonth(), d.getDate());
     }
 
-    // Desenhar reservas
     reservas.forEach(r => {
 
         const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
@@ -184,13 +181,20 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
         const dataFim = parseDataPt(r.checkout);
         if (!dataInicio || !dataFim) return;
 
-        const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
+        // corta a reserva ao intervalo visível
+        const realInicio = normalizar(dataInicio);
+        const realFim = normalizar(dataFim);
+        const visInicio = realInicio < inicio ? normalizar(inicio) : realInicio;
+        const visFim = realFim > fim ? normalizar(fim) : realFim;
+        if (visInicio > visFim) return;
 
-        // Tooltip (sem valores financeiros)
+        const totalDiasVisiveis =
+            Math.floor((visFim - visInicio) / (1000 * 60 * 60 * 24)) + 1;
+
         const tooltipTexto = `
 ${r.cliente}
-Check-in: ${dataInicio.toLocaleDateString("pt-PT")}
-Check-out: ${dataFim.toLocaleDateString("pt-PT")}
+Check-in: ${realInicio.toLocaleDateString("pt-PT")}
+Check-out: ${realFim.toLocaleDateString("pt-PT")}
 ${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
 Idades: ${r.idadesCriancas || "-"}
 Berço: ${r.berco ? "Sim" : "Não"}
@@ -199,51 +203,42 @@ Obs: ${r.comentarios || "-"}
 
         listaAps.forEach(ap => {
 
-            for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
+            let masterCriada = false;
 
-                if (dt < inicio || dt > fim) continue;
+            for (let dt = new Date(visInicio); dt <= visFim; dt.setDate(dt.getDate() + 1)) {
 
                 const dia = dt.getDate();
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) continue;
 
                 const dtN = normalizar(dt);
-                const iniN = normalizar(dataInicio);
-                const fimN = normalizar(dataFim);
+                const iniN = visInicio;
+                const fimN = visFim;
 
-                const isCheckin = dtN.getTime() === iniN.getTime();
-                const isCheckout = dtN.getTime() === fimN.getTime();
+                const isCheckinVis = dtN.getTime() === iniN.getTime();
+                const isCheckoutVis = dtN.getTime() === fimN.getTime();
 
-                // MASTER — igual ao calendário principal
-                if (isCheckin) {
+                // MASTER no primeiro dia visível
+                if (!masterCriada && isCheckinVis) {
                     const master = document.createElement("div");
                     master.classList.add("reserva-master");
                     master.textContent = nomeCurto(r.cliente);
-                    const diasVisiveis = [];
-                    for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
-                    if (dt >= inicio && dt <= fim) diasVisiveis.push(new Date(dt));
-                }
-
-                    const largura = diasVisiveis.length;
-                    const deslocamento = (diasVisiveis[0].getDate() - dia) * 100;
-
-                    master.style.width = `calc(${largura * 100}%)`;
-                    master.style.left = `calc(${deslocamento}%)`;
-
+                    master.style.width = `calc(${totalDiasVisiveis * 100}%)`;
+                    master.style.left = "0";
                     master.setAttribute("data-info", tooltipTexto);
                     cel.appendChild(master);
+                    masterCriada = true;
                 }
 
-                // Reserva de 1 dia → só master
-                if (isCheckin && isCheckout) continue;
+                // Reserva de 1 dia visível → só master
+                if (totalDiasVisiveis === 1) continue;
 
-                // Fragmentos diários
                 const div = document.createElement("div");
                 div.classList.add("reserva");
 
-                if (isCheckin) {
+                if (isCheckinVis) {
                     div.classList.add("reserva-inicio-metade");
-                } else if (isCheckout) {
+                } else if (isCheckoutVis) {
                     div.classList.add("reserva-fim-metade");
                 } else {
                     div.classList.add("reserva-meio");
