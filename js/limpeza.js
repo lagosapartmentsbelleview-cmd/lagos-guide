@@ -219,8 +219,17 @@ Obs: ${r.comentarios || "-"}
                     const master = document.createElement("div");
                     master.classList.add("reserva-master");
                     master.textContent = nomeCurto(r.cliente);
-                    master.style.width = `calc(${totalDias * 100}%)`;
-                    master.style.left = "0";
+                    const diasVisiveis = [];
+                    for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
+                    if (dt >= inicio && dt <= fim) diasVisiveis.push(new Date(dt));
+                }
+
+                    const largura = diasVisiveis.length;
+                    const deslocamento = (diasVisiveis[0].getDate() - dia) * 100;
+
+                    master.style.width = `calc(${largura * 100}%)`;
+                    master.style.left = `calc(${deslocamento}%)`;
+
                     master.setAttribute("data-info", tooltipTexto);
                     cel.appendChild(master);
                 }
