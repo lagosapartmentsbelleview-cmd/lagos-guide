@@ -197,7 +197,11 @@ Berço: ${r.berco ? "Sim" : "Não"}
 Obs: ${r.comentarios || "-"}
         `.trim();
 
-        listaAps.forEach(ap => {
+        listaAps.forEach((ap, indexApto) => {
+
+        const isPrimeiroApartamento = indexApto === 0;
+
+
 
             for (let dt = new Date(dataInicio); dt <= dataFim; dt.setDate(dt.getDate() + 1)) {
 
