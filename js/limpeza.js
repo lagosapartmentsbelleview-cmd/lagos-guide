@@ -177,7 +177,7 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
                 const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) continue;
 
-                if (dt.getTime() === ci.getTime()) {
+                if (dt.getTime() === Math.max(ci.getTime(), inicio.getTime())) {
 
                     const barra = document.createElement("div");
                     barra.classList.add("reserva-master");
