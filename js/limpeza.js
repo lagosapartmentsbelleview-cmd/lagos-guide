@@ -217,7 +217,7 @@ Obs: ${r.comentarios || "-"}
 
 
                 // MASTER no primeiro dia visível
-                if (!masterCriada && isCheckinVis) {
+                    if (!masterCriada && dtN.getTime() === visInicio.getTime()) {
                     const master = document.createElement("div");
                     master.classList.add("reserva-master");
                     master.textContent = nomeCurto(r.cliente);
