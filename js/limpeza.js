@@ -207,10 +207,8 @@ Obs: ${r.comentarios || "-"}
 
     for (let i = 0; i < totalDiasVisiveis; i++) {
 
-        const dt = new Date(visInicio);
-        dt.setDate(dt.getDate() + i);
+        const dtN = new Date(visInicio.getFullYear(), visInicio.getMonth(), visInicio.getDate() + i);
 
-        const dtN = normalizar(dt);
         const dia = dtN.getDate();
 
         // Garante que só desenhas dias do mês visível
