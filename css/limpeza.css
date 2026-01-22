@@ -79,15 +79,6 @@ h2 {
 /* ---------------------------------------------------------
    CALENDÁRIO
 --------------------------------------------------------- */
-.reserva-inicio-metade {
-    border: 2px solid red !important;
-}
-.reserva-master {
-    border: 2px solid green !important;
-}
-
-
-
 .calendario {
     width: 100%;
     border-collapse: collapse;
