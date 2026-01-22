@@ -136,23 +136,43 @@ h2 {
     z-index: 1;
 }
 
-/* Metade direita (check-in) */
+/* Metade direita — CHECK-IN */
 .reserva-inicio-metade {
-    left: 50%;
     width: 50%;
+    right: 0;
+    left: auto; /* 🔥 importante para evitar conflito */
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    position: absolute;
+    top: 0;
+    height: 100%;
 }
 
-/* Metade esquerda (check-out) */
+/* Metade esquerda — CHECK-OUT */
 .reserva-fim-metade {
-    left: 0;
     width: 50%;
+    left: 0;
+    right: auto; /* 🔥 importante */
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    position: absolute;
+    top: 0;
+    height: 100%;
 }
 
 /* Dia completo */
 .reserva-meio {
     left: 0;
     width: 100%;
+    position: absolute;
+    top: 0;
+    height: 100%;
 }
+
 
 /* ---------------------------------------------------------
    TOOLTIP (igual ao calendario.html)
