@@ -1,5 +1,6 @@
-<link rel="stylesheet" href="calendario.css">
-
+/* ---------------------------------------------------------
+   BASE
+--------------------------------------------------------- */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -51,7 +52,9 @@ h2 {
     margin-top: 0;
 }
 
-/* TABELA */
+/* ---------------------------------------------------------
+   TABELA LISTA DE LIMPEZA
+--------------------------------------------------------- */
 .tabela {
     width: 100%;
     border-collapse: collapse;
@@ -73,7 +76,28 @@ h2 {
     background: #fafafa;
 }
 
-/* Células do calendário */
+/* ---------------------------------------------------------
+   CALENDÁRIO
+--------------------------------------------------------- */
+.calendario {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    table-layout: fixed; /* ESSENCIAL */
+}
+
+.calendario th,
+.calendario td {
+    width: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    text-align: center;
+    font-size: 12px;
+    padding: 0;
+    border: 1px solid #ccc;
+}
+
+/* Células */
 .dia-celula {
     position: relative;
     padding: 0;
@@ -125,9 +149,38 @@ h2 {
     width: 100%;
 }
 
+/* ---------------------------------------------------------
+   TOOLTIP (igual ao calendario.html)
+--------------------------------------------------------- */
+:root {
+    --mouse-x: 0px;
+    --mouse-y: 0px;
+}
 
+[data-info]::after {
+    content: attr(data-info);
+    position: fixed;
+    top: var(--mouse-y);
+    left: var(--mouse-x);
+    background: #333;
+    color: #fff;
+    font-size: 11px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    white-space: pre;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}
 
-/* PAINEL ADMIN */
+[data-info]:hover::after {
+    opacity: 1;
+}
+
+/* ---------------------------------------------------------
+   PAINEL ADMIN
+--------------------------------------------------------- */
 .painel-admin {
     background: #fff3cd;
     border-left: 5px solid #ffca28;
@@ -151,7 +204,9 @@ h2 {
     display: none;
 }
 
-/* RESPONSIVO */
+/* ---------------------------------------------------------
+   RESPONSIVO
+--------------------------------------------------------- */
 @media (max-width: 800px) {
     .filtros {
         flex-direction: column;
