@@ -69,7 +69,7 @@ async function gerarLimpeza() {
     const filtradas = filtrarPorDatas(reservas, dataInicio, dataFim);
 
     preencherLista(filtradas);
-    preencherCalendario(filtradas, dataInicio, dataFim);
+    desenharCalendarioLimpeza(reservas, inicio, fim);
 
     if (isAdmin) calcularTotais(filtradas, dataInicio, dataFim);
 }
