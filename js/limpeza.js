@@ -228,8 +228,8 @@ Obs: ${r.comentarios || "-"}
                     masterCriada = true;
                 }
 
-                // Reserva de 1 dia visível → só master
-                if (totalDiasVisiveis === 1) continue;
+                // Se só há 1 dia visível E é o check-in e check-out real → só master
+                if (totalDiasVisiveis === 1 && isCheckinReal && isCheckoutReal) return;
 
                 const div = document.createElement("div");
                 div.classList.add("reserva");
@@ -243,6 +243,7 @@ Obs: ${r.comentarios || "-"}
                 else {
                 div.classList.add("reserva-meio");
                 }
+
 
 
                 div.setAttribute("data-info", tooltipTexto);
