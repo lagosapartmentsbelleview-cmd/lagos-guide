@@ -188,10 +188,6 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
 }
 
 
-            }
-        });
-    });
-}
 
 function calcularTotais(reservas) {
     let totalBase = 0;
