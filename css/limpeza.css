@@ -73,36 +73,14 @@ h2 {
     background: #fafafa;
 }
 
-/* CALENDÁRIO */
-.calendario {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-.calendario th {
-    background: #e0e0e0;
-    padding: 6px;
-    text-align: center;
-}
-
-.calendario td {
-    border: 1px solid #ccc;
-    height: 32px;
-    text-align: center;
-    font-size: 12px;
-}
-
-.calendario td.ocupado {
-    background: #90caf9;
-    font-weight: bold;
-}
-
+/* Células do calendário */
 .dia-celula {
     position: relative;
     padding: 0;
+    overflow: hidden;
 }
 
+/* Barra MASTER (nome do cliente) */
 .reserva-master {
     position: absolute;
     top: 0;
@@ -116,7 +94,37 @@ h2 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    z-index: 2;
 }
+
+/* Fragmentos diários */
+.reserva {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: #1976d2;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+/* Metade esquerda (check-in) */
+.reserva-inicio-metade {
+    left: 0;
+    width: 50%;
+}
+
+/* Metade direita (check-out) */
+.reserva-fim-metade {
+    right: 0;
+    width: 50%;
+}
+
+/* Dia completo */
+.reserva-meio {
+    left: 0;
+    width: 100%;
+}
+
 
 
 /* PAINEL ADMIN */
