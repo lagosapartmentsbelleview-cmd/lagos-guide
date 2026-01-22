@@ -41,11 +41,6 @@ async function gerarLimpeza() {
     const reservas = await carregarReservas();
     const filtradas = filtrarPorDatas(reservas, dataInicio, dataFim);
 
-    function formatarData(str) {
-    const d = new Date(str);
-    return isNaN(d) ? "" : d.toLocaleDateString("pt-PT");
-}
-
     preencherLista(filtradas);
     preencherCalendario(filtradas, dataInicio, dataFim);
 
@@ -78,7 +73,10 @@ function filtrarPorDatas(reservas, inicio, fim) {
     });
 }
 
-
+    function formatarData(str) {
+    const d = new Date(str);
+    return isNaN(d) ? "" : d.toLocaleDateString("pt-PT");
+}
 
 function preencherLista(reservas) {
     const tbody = document.querySelector("#tabelaLimpeza tbody");
