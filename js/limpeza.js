@@ -65,13 +65,13 @@ async function gerarLimpeza() {
 
     // 🔥 AQUI ESTÁ A MÁGICA: usar a função universal
     const reservas = await carregarReservasNormalizadas();
-
     const filtradas = filtrarPorDatas(reservas, dataInicio, dataFim);
 
     preencherLista(filtradas);
     desenharCalendarioLimpeza(reservas, dataInicio, dataFim);
 
     if (isAdmin) calcularTotais(filtradas, dataInicio, dataFim);
+
 }
 
 // -------------------------------------------------------------
