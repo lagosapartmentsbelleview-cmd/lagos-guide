@@ -126,79 +126,41 @@ function preencherCalendario(reservas, inicio, fim) {
     const container = document.getElementById("calendarioContainer");
     container.innerHTML = "";
 
-    const dias = [];
-    let d = new Date(inicio);
-    while (d <= fim) {
-        dias.push(new Date(d));
-        d.setDate(d.getDate() + 1);
-    }
+    // 1) Gerar a grelha base do calendário (função do calendario.js)
+    const dias = gerarDiasIntervalo(inicio, fim); 
+    const apartamentos = obterApartamentosOrdenados(reservas);
 
-    const apartamentosSet = new Set();
+    let html = gerarTabelaCalendario(dias, apartamentos); 
+    container.innerHTML = html;
+
+    // 2) Preencher com reservas (tooltip específico da limpeza)
     reservas.forEach(r => {
-        if (r.apartamentos?.[0]) apartamentosSet.add(String(r.apartamentos[0]));
-    });
+        const ap = r.apartamentos?.[0];
+        if (!ap) return;
 
-    const ordemFixa = ["2301", "2203", "2204"];
-    let apartamentos = Array.from(apartamentosSet);
-
-    apartamentos.sort((a, b) => {
-        const ia = ordemFixa.indexOf(a);
-        const ib = ordemFixa.indexOf(b);
-        if (ia === -1 && ib === -1) return a.localeCompare(b);
-        if (ia === -1) return 1;
-        if (ib === -1) return -1;
-        return ia - ib;
-    });
-
-    if (apartamentos.length === 0) {
-        container.innerHTML = "<p>Sem reservas neste período.</p>";
-        return;
-    }
-
-    let html = `<table class="calendario"><thead><tr><th>Apt</th>`;
-
-    dias.forEach(dia => {
-        html += `<th>${dia.getDate()}</th>`;
-    });
-
-    html += `</tr></thead><tbody>`;
-
-    apartamentos.forEach(ap => {
-        html += `<tr><td><strong>${ap}</strong></td>`;
+        const ci = parseDataPt(r.checkin);
+        const co = parseDataPt(r.checkout);
 
         dias.forEach(dia => {
-            const reserva = reservas.find(r => {
-                if (String(r.apartamentos?.[0]) !== ap) return false;
+            if (ci <= dia && co >= dia) {
+                const cellId = `cell-${ap}-${dia.toISOString().slice(0,10)}`;
+                const cell = document.getElementById(cellId);
+                if (!cell) return;
 
-                const ci = parseDataPt(r.checkin);
-                const co = parseDataPt(r.checkout);
-                if (!ci || !co) return false;
-
-                return ci <= dia && co >= dia;
-            });
-
-            if (reserva) {
                 const tooltip = `
-Apt ${ap}
-${reserva.cliente}
-${reserva.hospedes} pessoas (${reserva.adultos}A + ${reserva.criancas}C)
-Idades: ${reserva.idadesCriancas || "-"}
-Berço: ${reserva.berco ? "Sim" : "Não"}
-Obs: ${reserva.comentarios || "-"}
+${r.cliente}
+${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
+Idades: ${r.idadesCriancas || "-"}
+Berço: ${r.berco ? "Sim" : "Não"}
+Obs: ${r.comentarios || "-"}
                 `.trim();
 
-                html += `<td class="ocupado normal" title="${tooltip}">${reserva.cliente}</td>`;
-            } else {
-                html += `<td></td>`;
+                cell.classList.add("ocupado");
+                cell.title = tooltip;
+                cell.textContent = r.cliente;
             }
         });
-
-        html += `</tr>`;
     });
-
-    html += `</tbody></table>`;
-
-    container.innerHTML = html;
 }
 
 // -------------------------------------------------------------
