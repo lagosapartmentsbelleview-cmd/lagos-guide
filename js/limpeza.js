@@ -171,33 +171,27 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
         apartamentosReserva.forEach(ap => {
 
-            for (let dt = new Date(ci); dt <= co; dt.setDate(dt.getDate() + 1)) {
+           for (let dt = new Date(ci); dt <= co; dt.setDate(dt.getDate() + 1)) {
+    const dia = dt.getDate();
+    const cel = document.getElementById(`cel-${ap}-${dia}`);
+    if (!cel) continue;
 
-                const dia = dt.getDate();
-                const cel = document.getElementById(`cel-${ap}-${dia}`);
-                if (!cel) continue;
+    const fragmento = document.createElement("div");
+    fragmento.classList.add("reserva-fragmento");
 
-                if (dt.getTime() === Math.max(ci.getTime(), inicio.getTime())) {
+    if (dt.getTime() === ci.getTime()) {
+        fragmento.classList.add("checkin");
+    } else if (dt.getTime() === co.getTime()) {
+        fragmento.classList.add("checkout");
+    } else {
+        fragmento.classList.add("intermedio");
+    }
 
-                    const barra = document.createElement("div");
-                    barra.classList.add("reserva-master");
-                    barra.textContent = r.cliente;
+    fragmento.setAttribute("title", r.cliente);
+    cel.style.position = "relative";
+    cel.appendChild(fragmento);
+}
 
-                    barra.style.width = `calc(${totalDias * 100}% + ${totalDias - 1}px)`;
-                    barra.style.left = "0";
-
-                    barra.setAttribute("data-info", `
-${r.cliente}
-Check-in: ${ci.toLocaleDateString("pt-PT")}
-Check-out: ${co.toLocaleDateString("pt-PT")}
-${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
-Idades: ${r.idadesCriancas || "-"}
-Berço: ${r.berco ? "Sim" : "Não"}
-Obs: ${r.comentarios || "-"}
-                    `.trim());
-                    cel.style.position = "relative";
-                    cel.appendChild(barra);
-                }
             }
         });
     });
