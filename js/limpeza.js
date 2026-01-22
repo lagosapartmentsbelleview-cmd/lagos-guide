@@ -120,12 +120,18 @@ function preencherLista(reservas) {
 }
 
 // -------------------------------------------------------------
-// 7) CALENDÁRIO DE LIMPEZA
+// 7) CALENDÁRIO DE LIMPEZA (VERSÃO CORRIGIDA)
 // -------------------------------------------------------------
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
+
+    // 🔥 GARANTIR QUE AS DATAS SÃO OBJETOS DATE
+    inicio = new Date(inicio);
+    fim = new Date(fim);
+
     const container = document.getElementById("calendarioContainer");
     container.innerHTML = "";
 
+    // 🔥 GERAR LISTA DE DIAS (AGORA FUNCIONA)
     const dias = [];
     let d = new Date(inicio);
     while (d <= fim) {
@@ -133,12 +139,15 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
         d.setDate(d.getDate() + 1);
     }
 
+    // APARTAMENTOS FIXOS
     const apartamentos = ["2301", "2203", "2204"];
 
+    // 🔥 CABEÇALHO COM DIAS
     let html = `<div id="calendarioWrapper"><table><thead><tr><th>Apt</th>`;
     dias.forEach(dia => html += `<th>${dia.getDate()}</th>`);
     html += `</tr></thead><tbody>`;
 
+    // 🔥 LINHAS POR APARTAMENTO
     apartamentos.forEach(ap => {
         html += `<tr><td>${ap}</td>`;
         dias.forEach(dia => {
@@ -151,6 +160,7 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
     html += `</tbody></table></div>`;
     container.innerHTML = html;
 
+    // 🔥 DESENHAR BARRAS DE RESERVA
     reservas.forEach(r => {
         const ap = r.apartamentos?.[0];
         if (!ap) return;
@@ -166,21 +176,21 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
             const cel = document.getElementById(`cel-${ap}-${dia}`);
             if (!cel) continue;
 
+            // Só desenha a barra no dia de check-in
             if (dt.getTime() === ci.getTime()) {
                 const barra = document.createElement("div");
                 barra.classList.add("reserva-master");
                 barra.textContent = r.cliente;
 
+                // Largura proporcional ao número de dias
                 barra.style.width = `calc(${totalDias * 100}% + ${totalDias - 1}px)`;
                 barra.style.left = "0";
 
-                const checkinPt = ci.toLocaleDateString("pt-PT");
-                const checkoutPt = co.toLocaleDateString("pt-PT");
-
+                // Tooltip
                 barra.setAttribute("data-info", `
 ${r.cliente}
-Check-in: ${checkinPt}
-Check-out: ${checkoutPt}
+Check-in: ${ci.toLocaleDateString("pt-PT")}
+Check-out: ${co.toLocaleDateString("pt-PT")}
 ${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
 Idades: ${r.idadesCriancas || "-"}
 Berço: ${r.berco ? "Sim" : "Não"}
@@ -192,7 +202,6 @@ Obs: ${r.comentarios || "-"}
         }
     });
 }
-
 
 // -------------------------------------------------------------
 // 8) TOTAIS (APENAS ADMIN)
