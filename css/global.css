@@ -138,3 +138,54 @@ select, option {
     color: #222 !important;
     background-color: #fff !important;
 }
+
+/* ===============================
+   TABELA FINANCEIRA PROFISSIONAL
+   =============================== */
+
+#tabelaTotaisAno {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#tabelaTotaisAno thead {
+    background: #1e88e5; /* azul profissional */
+    color: white;
+}
+
+#tabelaTotaisAno th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+#tabelaTotaisAno tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#tabelaTotaisAno tbody tr:nth-child(even) {
+    background: #f7f9fc;
+}
+
+#tabelaTotaisAno td {
+    padding: 10px 12px;
+    color: #333;
+}
+
+#tabelaTotaisAno tbody tr:hover {
+    background: #e8f2ff;
+    transition: 0.2s;
+}
+
+/* Coluna do acumulado em destaque */
+#tabelaTotaisAno td:last-child {
+    font-weight: 600;
+    color: #1565c0;
+}
+
