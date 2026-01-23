@@ -133,12 +133,13 @@ window.addEventListener("load", function () {
         document.body.appendChild(wrapper);
 
         const opt = {
-            margin: 10,
-            filename: "limpeza_completa.pdf",
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-            pagebreak: { mode: ['css', 'legacy'] }
-        };
+    margin: [10, 5, 10, 2], // [top, right, bottom, left]
+    filename: "limpeza_completa.pdf",
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+    pagebreak: { mode: ['css', 'legacy'] }
+};
+
 
         html2pdf()
             .set(opt)
