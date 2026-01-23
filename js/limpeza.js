@@ -30,16 +30,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const painelAdmin = document.getElementById("painelAdmin");
     const toggleAdmin = document.getElementById("toggleAdmin");
+    const btnGerar = document.getElementById("btnGerar");
 
-    painelAdmin.classList.add("aberto");
+    // Se não existir painel admin, ignora esta parte
+    if (painelAdmin && toggleAdmin) {
+        painelAdmin.classList.add("aberto");
 
-    toggleAdmin.addEventListener("click", () => {
-        painelAdmin.classList.toggle("fechado");
-        toggleAdmin.textContent = painelAdmin.classList.contains("fechado") ? "▶" : "▼";
-    });
+        toggleAdmin.addEventListener("click", () => {
+            painelAdmin.classList.toggle("fechado");
+            toggleAdmin.textContent = painelAdmin.classList.contains("fechado") ? "▶" : "▼";
+        });
+    }
 
-    document.getElementById("btnGerar").addEventListener("click", gerarLimpeza);
+    // Se existir botão gerar, ativa-o
+    if (btnGerar) {
+        btnGerar.addEventListener("click", gerarLimpeza);
+    }
 });
+
 
 // -------------------------------------------------------------
 // 3) FORMATAR DATA (dd/mm/yyyy)
