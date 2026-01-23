@@ -327,6 +327,124 @@ async function apagarExtra(id) {
     }
 }
 
+// ===============================
+//  FUNÇÃO BASE — Calcular total de um mês
+// ===============================
+
+async function calcularTotalMes(ano, mes) {
+    const inicio = new Date(ano, mes - 1, 1);
+    const fim = new Date(ano, mes, 1);
+
+    let totalLimpezas = 0;
+    let totalExtras = 0;
+
+    // Somar limpezas reais
+    const reservasSnap = await db.collection("reservas").get();
+
+    reservasSnap.forEach(doc => {
+        const r = doc.data();
+        if (!r.checkout || r.limpeza == null) return;
+
+        const checkoutDate = parseDataBR(r.checkout);
+
+        if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
+            totalLimpezas += Number(r.limpeza);
+        }
+    });
+
+    // Somar extras
+    const docId = `${ano}_${String(mes).padStart(2, "0")}`;
+    const extrasSnap = await db
+        .collection("custos_limpeza")
+        .doc(docId)
+        .collection("extras")
+        .get();
+
+    extrasSnap.forEach(doc => {
+        const extra = doc.data();
+        totalExtras += Number(extra.valor);
+    });
+
+    return {
+        totalLimpezas,
+        totalExtras,
+        totalMes: totalLimpezas + totalExtras
+    };
+}
+
+// ===============================
+//  PASSO 3 — Calcular total anual
+// ===============================
+
+async function calcularTotaisAno(ano) {
+    let totalLimpezasAno = 0;
+    let totalExtrasAno = 0;
+
+    for (let mes = 1; mes <= 12; mes++) {
+        const dadosMes = await calcularTotalMes(ano, mes);
+        totalLimpezasAno += dadosMes.totalLimpezas;
+        totalExtrasAno += dadosMes.totalExtras;
+    }
+
+    return {
+        ano,
+        totalLimpezasAno,
+        totalExtrasAno,
+        totalAno: totalLimpezasAno + totalExtrasAno
+    };
+}
+
+// ===============================
+//  PASSO 4 — Calcular acumulado do ano atual
+// ===============================
+
+async function calcularAcumuladoAno(ano) {
+    const hoje = new Date();
+    const mesAtual = hoje.getMonth() + 1;
+
+    let acumulado = 0;
+
+    for (let mes = 1; mes <= mesAtual; mes++) {
+        const dadosMes = await calcularTotalMes(ano, mes);
+        acumulado += dadosMes.totalMes;
+    }
+
+    return acumulado;
+}
+
+// ===============================
+//  PASSO 5 — Gerar tabela de totais anuais
+// ===============================
+
+async function gerarTabelaTotaisAnuais() {
+    const tabela = document.querySelector("#tabelaTotaisAno tbody");
+    tabela.innerHTML = "";
+
+    const anoAtual = new Date().getFullYear();
+
+    for (let ano = 2020; ano <= anoAtual; ano++) {
+        const dadosAno = await calcularTotaisAno(ano);
+
+        let acumulado = "—";
+        if (ano === anoAtual) {
+            acumulado = await calcularAcumuladoAno(ano);
+            acumulado = acumulado.toFixed(2) + " €";
+        }
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${ano}</td>
+            <td>${dadosAno.totalLimpezasAno.toFixed(2)} €</td>
+            <td>${dadosAno.totalExtrasAno.toFixed(2)} €</td>
+            <td>${dadosAno.totalAno.toFixed(2)} €</td>
+            <td>${acumulado}</td>
+        `;
+
+        tabela.appendChild(tr);
+    }
+}
+
 
 // ===============================
 //  LISTENERS
