@@ -254,3 +254,11 @@ h2 {
     page-break-before: always;
 }
 
+#calendarioContainer {
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+
