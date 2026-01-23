@@ -1,7 +1,7 @@
 /* MENU NO TOPO */
 .top-menu {
     width: 100%;
-    background: #1e88e5; /* mesma cor do botão Exportar PDF */
+    background: #2196f3; /* mesma cor do botão Exportar PDF */
     padding: 10px;
     position: fixed;
     top: 0;
@@ -27,7 +27,7 @@
 .dropdown-menu {
     display: none;
     flex-direction: column;
-    background: #1e88e5; /* mesma cor */
+    background: #2196f3; /* mesma cor */
     margin-top: 10px;
     padding: 10px;
     border-radius: 4px;
