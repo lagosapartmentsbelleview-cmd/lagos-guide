@@ -103,15 +103,16 @@
     }
 
     function exportarPDF() {
-        const elemento = document.querySelector(".secao"); // exporta a secção inteira
-        const opt = {
-            margin: 10,
-            filename: "limpeza.pdf",
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
-        };
-        html2pdf().set(opt).from(elemento).save();
-    }
+    const elemento = document.body; // Exporta TUDO
+    const opt = {
+        margin: 10,
+        filename: "limpeza_completa.pdf",
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+    };
+    html2pdf().set(opt).from(elemento).save();
+}
+
 </script>
 
 </body>
