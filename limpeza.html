@@ -103,13 +103,15 @@
     }
 
     function exportarPDF() {
-    const elemento = document.body; // Exporta TUDO
+    const elemento = document.body;
+
     const opt = {
-        margin: 10,
-        filename: "limpeza_completa.pdf",
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+        margin:       5,
+        filename:     "limpeza_completa.pdf",
+        html2canvas:  { scale: 3, useCORS: true },
+        jsPDF:        { unit: "mm", format: "a4", orientation: "landscape" }
     };
+
     html2pdf().set(opt).from(elemento).save();
 }
 
