@@ -32,6 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const hoje = new Date();
     selectMes.value = hoje.getMonth() + 1;
     selectAno.value = hoje.getFullYear();
+
+    // Calcular previsão inicial 
+    calcularPrevisao(); 
+    
+    // 🔥 CARREGAR EXTRAS AQUI (local correto) 
+    carregarExtras(); 
 });
 
 // ===============================
@@ -85,4 +91,60 @@ async function calcularPrevisao() {
 // Recalcular quando muda mês/ano
 document.getElementById("selectMes").addEventListener("change", calcularPrevisao);
 document.getElementById("selectAno").addEventListener("change", calcularPrevisao);
+document.getElementById("selectMes").addEventListener("change", carregarExtras);
+document.getElementById("selectAno").addEventListener("change", carregarExtras);
+
+
+// ===============================
+//  PASSO 3 — Carregar EXTRAS
+// ===============================
+
+async function carregarExtras() {
+    const mes = Number(document.getElementById("selectMes").value);
+    const ano = Number(document.getElementById("selectAno").value);
+
+    const tabela = document.querySelector("#tabelaExtras tbody");
+    tabela.innerHTML = "";
+
+    const docId = `${ano}_${String(mes).padStart(2, "0")}`;
+
+    try {
+        const extrasRef = db
+            .collection("custos_limpeza")
+            .doc(docId)
+            .collection("extras");
+
+        const snapshot = await extrasRef.orderBy("data", "asc").get();
+
+        snapshot.forEach(doc => {
+            const extra = doc.data();
+
+            const tr = document.createElement("tr");
+
+            const data = extra.data.toDate().toLocaleDateString("pt-PT");
+            const descricao = extra.descricao;
+            const valor = extra.valor.toFixed(2) + " €";
+
+            tr.innerHTML = `
+                <td>${data}</td>
+                <td>${descricao}</td>
+                <td>${valor}</td>
+                <td>
+                    <button class="btnApagarExtra" data-id="${doc.id}">Apagar</button>
+                </td>
+            `;
+
+            tabela.appendChild(tr);
+        });
+
+        // Ativar botões de apagar
+        document.querySelectorAll(".btnApagarExtra").forEach(btn => {
+            btn.addEventListener("click", () => apagarExtra(btn.dataset.id));
+        });
+
+    } catch (err) {
+        console.error("Erro ao carregar extras:", err);
+    }
+}
+
 
