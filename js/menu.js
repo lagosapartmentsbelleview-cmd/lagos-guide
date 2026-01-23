@@ -12,3 +12,26 @@ document.addEventListener("click", function(e) {
         menu.style.display = "none";
     }
 });
+// Guardar automaticamente o filtro
+document.addEventListener("DOMContentLoaded", () => {
+    const inicio = document.getElementById("inicio");
+    const fim = document.getElementById("fim");
+
+    // Restaurar valores guardados
+    if (localStorage.getItem("filtro_inicio")) {
+        inicio.value = localStorage.getItem("filtro_inicio");
+    }
+    if (localStorage.getItem("filtro_fim")) {
+        fim.value = localStorage.getItem("filtro_fim");
+    }
+
+    // Guardar sempre que o utilizador escreve
+    inicio.addEventListener("input", () => {
+        localStorage.setItem("filtro_inicio", inicio.value);
+    });
+
+    fim.addEventListener("input", () => {
+        localStorage.setItem("filtro_fim", fim.value);
+    });
+});
+
