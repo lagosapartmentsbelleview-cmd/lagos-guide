@@ -50,13 +50,18 @@ initFinanceiro();
 
 
 // ===============================
-//  PASSO 2 — Calcular PREVISÃO
+//  FUNÇÃO AUXILIAR — Data BR
 // ===============================
 
 function parseDataBR(dataStr) {
     const [dia, mes, ano] = dataStr.split("/").map(Number);
     return new Date(ano, mes - 1, dia);
 }
+
+
+// ===============================
+//  PASSO 2 — Calcular PREVISÃO
+// ===============================
 
 async function calcularPrevisao() {
     const mes = Number(document.getElementById("selectMes").value);
@@ -130,11 +135,16 @@ async function carregarExtras() {
                 <td>${descricao}</td>
                 <td>${valor}</td>
                 <td>
+                    <button class="btnEditarExtra" data-id="${doc.id}">Editar</button>
                     <button class="btnApagarExtra" data-id="${doc.id}">Apagar</button>
                 </td>
             `;
 
             tabela.appendChild(tr);
+        });
+
+        document.querySelectorAll(".btnEditarExtra").forEach(btn => {
+            btn.addEventListener("click", () => editarExtra(btn.dataset.id));
         });
 
         document.querySelectorAll(".btnApagarExtra").forEach(btn => {
@@ -204,7 +214,127 @@ async function calcularCustoReal() {
 
 
 // ===============================
-//  LISTENERS — Mudar mês/ano
+//  PASSO 5 — Adicionar EXTRA
+// ===============================
+
+async function adicionarExtra() {
+    const mes = Number(document.getElementById("selectMes").value);
+    const ano = Number(document.getElementById("selectAno").value);
+
+    const dataInput = document.getElementById("extraData").value;
+    const valorInput = document.getElementById("extraValor").value;
+    const descInput = document.getElementById("extraDescricao").value;
+
+    if (!dataInput || !valorInput || !descInput) {
+        alert("Preencha todos os campos.");
+        return;
+    }
+
+    const dataParts = dataInput.split("/");
+    if (dataParts.length !== 3) {
+        alert("Data inválida. Use o formato DD/MM/AAAA.");
+        return;
+    }
+
+    const dataObj = new Date(
+        Number(dataParts[2]),
+        Number(dataParts[1]) - 1,
+        Number(dataParts[0])
+    );
+
+    const docId = `${ano}_${String(mes).padStart(2, "0")}`;
+
+    try {
+        await db
+            .collection("custos_limpeza")
+            .doc(docId)
+            .collection("extras")
+            .add({
+                data: dataObj,
+                valor: Number(valorInput),
+                descricao: descInput
+            });
+
+        document.getElementById("extraData").value = "";
+        document.getElementById("extraValor").value = "";
+        document.getElementById("extraDescricao").value = "";
+
+        await carregarExtras();
+        await calcularCustoReal();
+
+    } catch (err) {
+        console.error("Erro ao adicionar extra:", err);
+    }
+}
+
+
+// ===============================
+//  PASSO 6 — Editar EXTRA
+// ===============================
+
+async function editarExtra(id) {
+    const mes = Number(document.getElementById("selectMes").value);
+    const ano = Number(document.getElementById("selectAno").value);
+
+    const novoValor = prompt("Novo valor (€):");
+    if (novoValor === null) return;
+
+    const novaDesc = prompt("Nova descrição:");
+    if (novaDesc === null) return;
+
+    const docId = `${ano}_${String(mes).padStart(2, "0")}`;
+
+    try {
+        await db
+            .collection("custos_limpeza")
+            .doc(docId)
+            .collection("extras")
+            .doc(id)
+            .update({
+                valor: Number(novoValor),
+                descricao: novaDesc
+            });
+
+        await carregarExtras();
+        await calcularCustoReal();
+
+    } catch (err) {
+        console.error("Erro ao editar extra:", err);
+    }
+}
+
+
+// ===============================
+//  PASSO 7 — Apagar EXTRA
+// ===============================
+
+async function apagarExtra(id) {
+    const mes = Number(document.getElementById("selectMes").value);
+    const ano = Number(document.getElementById("selectAno").value);
+
+    const docId = `${ano}_${String(mes).padStart(2, "0")}`;
+
+    if (!confirm("Tem a certeza que deseja apagar este extra?")) return;
+
+    try {
+        await db
+            .collection("custos_limpeza")
+            .doc(docId)
+            .collection("extras")
+            .doc(id)
+            .delete();
+
+        await carregarExtras();
+        await calcularCustoReal();
+
+    } catch (err) {
+        console.error("Erro ao apagar extra:", err);
+    }
+}
+
+
+// ===============================
+//  LISTENERS
 // ===============================
 
 document.addEventListener("change", e => {
@@ -214,3 +344,8 @@ document.addEventListener("change", e => {
         calcularCustoReal();
     }
 });
+
+const btnAdicionarExtra = document.getElementById("btnAdicionarExtra");
+if (btnAdicionarExtra) {
+    btnAdicionarExtra.addEventListener("click", adicionarExtra);
+}
