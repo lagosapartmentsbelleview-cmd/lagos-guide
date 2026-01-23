@@ -1,10 +1,24 @@
+// ===============================
+//  MENU SUPERIOR (todas as páginas)
+// ===============================
+
+// Abre/fecha o menu ao clicar no botão
 function toggleMenu() {
     const menu = document.getElementById("dropdown-menu");
     if (!menu) return;
     menu.style.display = menu.style.display === "flex" ? "none" : "flex";
 }
 
-document.addEventListener("click", function(e) {
+// Ligar o botão ao toggleMenu
+document.addEventListener("DOMContentLoaded", () => {
+    const button = document.getElementById("toggleMenu");
+    if (button) {
+        button.addEventListener("click", toggleMenu);
+    }
+});
+
+// Fechar o menu ao clicar fora
+document.addEventListener("click", function (e) {
     const menu = document.getElementById("dropdown-menu");
     const button = document.querySelector(".menu-button");
 
@@ -15,7 +29,11 @@ document.addEventListener("click", function(e) {
     }
 });
 
-// Guardar automaticamente o filtro
+
+// ===============================
+//  FILTROS (apenas limpeza.html)
+// ===============================
+
 document.addEventListener("DOMContentLoaded", () => {
     const inicio = document.getElementById("inicio");
     const fim = document.getElementById("fim");
