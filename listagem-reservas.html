@@ -657,6 +657,27 @@ td button {
 
 <body>
 
+    <!-- ========================= -->
+<!--       MENU SUPERIOR       -->
+<!-- ========================= -->
+<div class="top-menu">
+    <span class="menu-button" id="toggleMenu">☰ Menu</span>
+
+    <div class="dropdown-menu" id="dropdown-menu">
+        <a href="index.html">Início</a>
+        <a href="reservas.html">Reservas</a>
+        <a href="listagem-reservas.html">Listagem</a>
+        <a href="calendario.html">Calendário</a>
+        <a href="limpeza.html">Limpeza</a>
+        <a href="precos.html">Preços</a>
+        <a href="financeiro.html">Financeiro</a>
+        <a href="logout.html" class="sair">Sair</a>
+    </div>
+</div>
+
+<div class="content">
+
+
     <h1>Gestão de Reservas</h1>
 
     <div id="acoes">
@@ -758,6 +779,7 @@ td button {
 
         <tbody></tbody>
     </table>
+    </div>
 
   <!-- MODAL DE NOVA RESERVA -->
 <div id="modalNovaReserva" class="modal">
@@ -866,9 +888,12 @@ td button {
     </div>
 </div>
 
+<!-- Menu -->
+<script src="js/menu.js"></script>
 
-    <!-- XLSX para importar Excel -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<!-- XLSX para importar Excel -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
 
     <!-- Firebase compat v9 (como tinhas antes) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
