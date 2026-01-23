@@ -41,6 +41,7 @@ function initFinanceiro() {
 
     calcularPrevisao();
     carregarExtras();
+    calcularCustoReal();
 
     console.log("Financeiro inicializado");
 }
@@ -95,18 +96,6 @@ async function calcularPrevisao() {
 
 
 // ===============================
-//  Recalcular quando muda mês/ano
-// ===============================
-
-document.addEventListener("change", e => {
-    if (e.target.id === "selectMes" || e.target.id === "selectAno") {
-        calcularPrevisao();
-        carregarExtras();
-    }
-});
-
-
-// ===============================
 //  PASSO 3 — Carregar EXTRAS
 // ===============================
 
@@ -156,3 +145,72 @@ async function carregarExtras() {
         console.error("Erro ao carregar extras:", err);
     }
 }
+
+
+// ===============================
+//  PASSO 4 — Calcular CUSTO REAL
+// ===============================
+
+async function calcularCustoReal() {
+    const mes = Number(document.getElementById("selectMes").value);
+    const ano = Number(document.getElementById("selectAno").value);
+
+    const custoRealEl = document.getElementById("custoRealValor");
+
+    const inicio = new Date(ano, mes - 1, 1);
+    const fim = new Date(ano, mes, 1);
+
+    let totalReal = 0;
+
+    try {
+        // 1. Somar limpezas reais
+        const snapshot = await db.collection("reservas").get();
+
+        snapshot.forEach(doc => {
+            const r = doc.data();
+
+            if (!r.checkout || r.limpeza == null) return;
+
+            const checkoutDate = parseDataBR(r.checkout);
+
+            if (checkoutDate >= inicio && checkoutDate < fim) {
+                if (r.status !== "cancelado") {
+                    totalReal += Number(r.limpeza);
+                }
+            }
+        });
+
+        // 2. Somar extras
+        const docId = `${ano}_${String(mes).padStart(2, "0")}`;
+        const extrasRef = db
+            .collection("custos_limpeza")
+            .doc(docId)
+            .collection("extras");
+
+        const extrasSnap = await extrasRef.get();
+
+        extrasSnap.forEach(doc => {
+            const extra = doc.data();
+            totalReal += Number(extra.valor);
+        });
+
+        custoRealEl.textContent = totalReal.toFixed(2) + " €";
+
+    } catch (err) {
+        console.error("Erro ao calcular custo real:", err);
+        custoRealEl.textContent = "Erro";
+    }
+}
+
+
+// ===============================
+//  LISTENERS — Mudar mês/ano
+// ===============================
+
+document.addEventListener("change", e => {
+    if (e.target.id === "selectMes" || e.target.id === "selectAno") {
+        calcularPrevisao();
+        carregarExtras();
+        calcularCustoReal();
+    }
+});
