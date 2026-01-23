@@ -273,3 +273,17 @@ td:first-child, th:first-child {
 .reserva-master:hover::before {
     display: none;
 }
+/* Corrigir texto do filtro do calendário */
+#navegacaoMes button,
+#navegacaoMes select,
+#navegacaoMes option {
+    color: #000; /* texto preto */
+}
+
+/* Se quiseres fundo claro também */
+#navegacaoMes button,
+#navegacaoMes select {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
