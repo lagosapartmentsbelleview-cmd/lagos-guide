@@ -102,18 +102,20 @@
         XLSX.writeFile(wb, "limpeza.xlsx");
     }
 
-    function exportarPDF() {
+   function exportarPDF() {
     const elemento = document.body;
 
     const opt = {
         margin:       5,
         filename:     "limpeza_completa.pdf",
         html2canvas:  { scale: 3, useCORS: true },
-        jsPDF:        { unit: "mm", format: "a4", orientation: "landscape" }
+        jsPDF:        { unit: "mm", format: "a4", orientation: "landscape" },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
     html2pdf().set(opt).from(elemento).save();
 }
+
 
 </script>
 
