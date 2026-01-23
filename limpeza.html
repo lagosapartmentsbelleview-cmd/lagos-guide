@@ -94,6 +94,26 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
+<script>
+    function exportarExcel() {
+        const tabela = document.querySelector(".tabela");
+        const wb = XLSX.utils.table_to_book(tabela, { sheet: "Limpeza" });
+        XLSX.writeFile(wb, "limpeza.xlsx");
+    }
+
+    function exportarPDF() {
+        const elemento = document.querySelector(".secao"); // exporta a secção inteira
+        const opt = {
+            margin: 10,
+            filename: "limpeza.pdf",
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+        };
+        html2pdf().set(opt).from(elemento).save();
+    }
+</script>
+
 </body>
 </html>
+
 
