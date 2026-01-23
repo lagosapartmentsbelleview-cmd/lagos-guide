@@ -2,11 +2,10 @@
 //  PASSO 1 — Carregar meses/anos
 // ===============================
 
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", () => {
     const selectMes = document.getElementById("selectMes");
     const selectAno = document.getElementById("selectAno");
 
-    // Meses por extenso
     const meses = [
         "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
         "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -15,12 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Preencher meses
     meses.forEach((mes, index) => {
         const opt = document.createElement("option");
-        opt.value = index + 1; // 1 a 12
+        opt.value = index + 1;
         opt.textContent = mes;
         selectMes.appendChild(opt);
     });
 
-    // Preencher anos (2023 → 2030)
+    // Preencher anos
     for (let ano = 2023; ano <= 2050; ano++) {
         const opt = document.createElement("option");
         opt.value = ano;
@@ -33,11 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
     selectMes.value = hoje.getMonth() + 1;
     selectAno.value = hoje.getFullYear();
 
-    // Calcular previsão inicial 
-    calcularPrevisao(); 
-    
-    // 🔥 CARREGAR EXTRAS AQUI (local correto) 
-    carregarExtras(); 
+    // Carregar dados iniciais
+    calcularPrevisao();
+    carregarExtras();
 });
 
 // ===============================
@@ -87,11 +84,14 @@ async function calcularPrevisao() {
 }
 
 // Recalcular quando muda mês/ano
-document.getElementById("selectMes").addEventListener("change", calcularPrevisao);
-document.getElementById("selectAno").addEventListener("change", calcularPrevisao);
-document.getElementById("selectMes").addEventListener("change", carregarExtras);
-document.getElementById("selectAno").addEventListener("change", carregarExtras);
-
+document.getElementById("selectMes").addEventListener("change", () => {
+    calcularPrevisao();
+    carregarExtras();
+});
+document.getElementById("selectAno").addEventListener("change", () => {
+    calcularPrevisao();
+    carregarExtras();
+});
 
 // ===============================
 //  PASSO 3 — Carregar EXTRAS
@@ -144,5 +144,3 @@ async function carregarExtras() {
         console.error("Erro ao carregar extras:", err);
     }
 }
-
-
