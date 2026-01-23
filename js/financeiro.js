@@ -44,8 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
 //  PASSO 2 — Calcular PREVISÃO
 // ===============================
 
-const db = firebase.firestore();
-
 // Converter "DD/MM/YYYY" → Date()
 function parseDataBR(dataStr) {
     const [dia, mes, ano] = dataStr.split("/").map(Number);
