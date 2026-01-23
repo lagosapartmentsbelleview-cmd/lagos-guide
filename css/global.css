@@ -57,3 +57,37 @@
 .content {
     padding-top: 70px;
 }
+
+/* FILTROS */
+.filtros {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filtros label {
+    font-weight: bold;
+}
+
+.filtros input {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.filtros button {
+    background: #2196f3; /* igual ao botão Exportar PDF */
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.filtros button:hover {
+    background: #1976d2;
+}
+
