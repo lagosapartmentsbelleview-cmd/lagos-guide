@@ -28,7 +28,7 @@ function initFinanceiro() {
         selectMes.appendChild(opt);
     });
 
-    for (let ano = 2023; ano <= 2050; ano++) {
+    for (let ano = 2020; ano <= 2050; ano++) {
         const opt = document.createElement("option");
         opt.value = ano;
         opt.textContent = ano;
