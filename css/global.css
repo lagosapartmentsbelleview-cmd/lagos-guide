@@ -1,7 +1,7 @@
 /* MENU NO TOPO */
 .top-menu {
     width: 100%;
-    background: #2196f3; /* azul consistente */
+    background: #1976d2; /* azul escuro */
     padding: 10px;
     position: fixed;
     top: 0;
@@ -17,19 +17,19 @@
     padding: 8px 12px;
     border-radius: 4px;
     display: inline-block;
-    background-color: #2196f3;
+    background-color: #1976d2; /* azul escuro */
     border: none;
 }
 
 .menu-button:hover {
-    background-color: #1976d2;
+    background-color: #0d47a1; /* hover mais escuro */
 }
 
 /* MENU EXPANDIDO */
 .dropdown-menu {
     display: none;
     flex-direction: column;
-    background: #2196f3;
+    background: #1976d2; /* azul escuro */
     margin-top: 10px;
     padding: 10px;
     border-radius: 4px;
@@ -41,12 +41,12 @@
     padding: 10px;
     font-weight: bold;
     border-radius: 4px;
-    background-color: #2196f3;
+    background-color: #1976d2; /* azul escuro */
     border: none;
 }
 
 .dropdown-menu a:hover {
-    background-color: #1976d2;
+    background-color: #0d47a1;
 }
 
 .dropdown-menu .sair {
@@ -91,7 +91,7 @@
 }
 
 .filtros button {
-    background: #1976d2;
+    background: #1976d2; /* azul escuro */
     color: white;
     border: none;
     padding: 8px 14px;
@@ -106,7 +106,7 @@
 
 /* BOTÕES GERAIS (Exportar, etc) */
 button {
-    background-color: #2196f3;
+    background-color: #1976d2; /* azul escuro */
     color: white;
     font-weight: bold;
     border: none;
@@ -115,5 +115,5 @@ button {
 }
 
 button:hover {
-    background-color: #1976d2;
+    background-color: #0d47a1; /* hover mais escuro */
 }
