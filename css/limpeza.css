@@ -246,3 +246,11 @@ h2 {
         padding: 2px;
     }
 }
+
+/* ---------------------------------------------------------
+   PARA IMPRESSÃO PDF EM PAGINAS SEPARADAS
+--------------------------------------------------------- */
+.secao-calendario-pdf-break {
+    page-break-before: always;
+}
+
