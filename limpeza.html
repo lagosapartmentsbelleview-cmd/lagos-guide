@@ -62,6 +62,10 @@
         <h2>Lista de Limpeza</h2>
         <button class="btn-primario" onclick="exportarExcel()">Exportar Excel</button>
         <button class="btn-primario" onclick="exportarPDF()">Exportar PDF</button>
+        <button class="btn-primario" onclick="exportarEEnviarWhatsApp()">
+        Exportar PDF e Enviar WhatsApp
+        </button>
+
         <table id="tabelaLimpeza" class="tabela">
             <thead>
                 <tr>
@@ -223,6 +227,21 @@ window.addEventListener("load", function () {
     };
 
 });
+
+    // 🔥 NOVA FUNÇÃO — Exportar PDF e abrir o grupo WhatsApp
+window.exportarEEnviarWhatsApp = function () {
+
+    // 1) gerar o PDF
+    window.exportarPDF();
+
+    // 2) abrir o grupo WhatsApp após 2 segundos
+    setTimeout(() => {
+        const grupo = "D98y5fnPZ7A7IeYZuNjlt1"; // <-- ID do teu grupo
+        const link = `https://chat.whatsapp.com/${grupo}`;
+        window.open(link, "_blank");
+    }, 2000);
+};
+
 </script>
 
 </body>
