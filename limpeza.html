@@ -96,56 +96,61 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
-    function exportarExcel() {
+window.onload = function () {
+
+    // EXPORTAR EXCEL (mantém igual)
+    window.exportarExcel = function () {
         const tabela = document.querySelector(".tabela");
         const wb = XLSX.utils.table_to_book(tabela, { sheet: "Limpeza" });
         XLSX.writeFile(wb, "limpeza.xlsx");
-    }
-
-  function exportarPDF() {
-    const listaSecao = document.querySelector(".secao:nth-of-type(1)");
-    const calendarioSecao = document.querySelector(".secao:nth-of-type(2)");
-
-    // criar contentor temporário
-    const wrapper = document.createElement("div");
-    wrapper.style.width = "100%";
-    wrapper.style.boxSizing = "border-box";
-
-    // clonar lista
-    const listaClone = listaSecao.cloneNode(true);
-    wrapper.appendChild(listaClone);
-
-    // clonar calendário e forçar nova página
-    const calendarioClone = calendarioSecao.cloneNode(true);
-    calendarioClone.style.pageBreakBefore = "always";
-    wrapper.appendChild(calendarioClone);
-
-    // ADICIONAR AO DOM (PASSO OBRIGATÓRIO)
-    document.body.appendChild(wrapper);
-
-    const opt = {
-        margin: 10,
-        filename: "limpeza_completa.pdf",
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-        pagebreak: { mode: ['css', 'legacy'] }
     };
 
-    html2pdf()
-        .set(opt)
-        .from(wrapper)
-        .save()
-        .then(() => {
-            // remover contentor temporário
-            document.body.removeChild(wrapper);
-        });
-}
+    // EXPORTAR PDF (corrigido e funcional)
+    window.exportarPDF = function () {
+        const listaSecao = document.querySelector(".secao:nth-of-type(1)");
+        const calendarioSecao = document.querySelector(".secao:nth-of-type(2)");
 
+        if (!listaSecao || !calendarioSecao) {
+            console.error("Erro: não encontrei as secções .secao");
+            alert("Erro ao gerar PDF: secções não encontradas.");
+            return;
+        }
 
+        // criar contentor temporário
+        const wrapper = document.createElement("div");
+        wrapper.style.width = "100%";
+        wrapper.style.boxSizing = "border-box";
 
-</script>
-<script>
-console.log("SECOES ENCONTRADAS:", document.querySelectorAll(".secao"));
+        // clonar lista
+        const listaClone = listaSecao.cloneNode(true);
+        wrapper.appendChild(listaClone);
+
+        // clonar calendário e forçar nova página
+        const calendarioClone = calendarioSecao.cloneNode(true);
+        calendarioClone.style.pageBreakBefore = "always";
+        wrapper.appendChild(calendarioClone);
+
+        // adicionar ao DOM
+        document.body.appendChild(wrapper);
+
+        const opt = {
+            margin: 10,
+            filename: "limpeza_completa.pdf",
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+            pagebreak: { mode: ['css', 'legacy'] }
+        };
+
+        html2pdf()
+            .set(opt)
+            .from(wrapper)
+            .save()
+            .then(() => {
+                document.body.removeChild(wrapper);
+            });
+    };
+
+};
 </script>
 
 </body>
