@@ -12,23 +12,9 @@ function initFinanceiro() {
     }
 
     // ===============================
-    //  PASSO 1 — Carregar meses/anos
+    //  CARREGAR ANOS (2020 → 2050)
     // ===============================
 
-    const meses = [
-        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-    ];
-
-    // Preencher meses
-    meses.forEach((mes, index) => {
-        const opt = document.createElement("option");
-        opt.value = index + 1;
-        opt.textContent = mes;
-        selectMes.appendChild(opt);
-    });
-
-    // Preencher anos (2020 → 2050)
     for (let ano = 2020; ano <= 2050; ano++) {
         const opt = document.createElement("option");
         opt.value = ano;
@@ -51,6 +37,7 @@ function initFinanceiro() {
 }
 
 initFinanceiro();
+
 
 // ===============================
 //  FUNÇÃO AUXILIAR — Data BR
