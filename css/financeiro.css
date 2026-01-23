@@ -150,3 +150,14 @@
 .btnApagarExtra:hover {
     background: #8e0000;
 }
+
+/* Forçar cor visível nos selects */
+.filtros-custos select {
+    color: #222 !important;
+    background-color: #fff !important;
+}
+select {
+    color: #222 !important;
+    background-color: #fff !important;
+}
+
