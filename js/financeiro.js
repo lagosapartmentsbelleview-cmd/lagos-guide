@@ -1,6 +1,5 @@
 // ===============================
 //  INICIALIZADOR ROBUSTO
-//  (funciona mesmo com script injetado depois do load)
 // ===============================
 
 function initFinanceiro() {
@@ -11,6 +10,17 @@ function initFinanceiro() {
     if (!selectMes || !selectAno) {
         return setTimeout(initFinanceiro, 30);
     }
+
+    // Chamadas principais
+    calcularPrevisao();
+    carregarExtras();
+    calcularCustoReal();
+    gerarTabelaTotaisAnuais(); // 🔹 NOVO
+
+    console.log("Financeiro inicializado");
+}
+
+initFinanceiro();
 
     // ===============================
     //  PASSO 1 — Carregar meses/anos
