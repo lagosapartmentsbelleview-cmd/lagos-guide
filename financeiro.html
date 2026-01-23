@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Financeiro</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/financeiro.css">
+</head>
+
+<body>
+
+    <!-- MENU SUPERIOR -->
+    <div class="top-menu">
+        <span class="menu-button" id="toggleMenu">☰ Menu</span>
+
+        <div class="dropdown-menu" id="dropdown-menu">
+            <a href="index.html">Início</a>
+            <a href="listagem-reservas.html">Reservas</a>
+            <a href="calendario.html">Calendário</a>
+            <a href="limpeza.html">Limpeza</a>
+            <a href="precos.html">Preços</a>
+            <a href="financeiro.html">Financeiro</a>
+            <a href="logout.html" class="sair">Sair</a>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <h1>Financeiro</h1>
+
+        <!-- ABAS -->
+        <div class="tabs">
+            <button class="tab active" data-tab="limpeza">Limpeza</button>
+            <button class="tab" data-tab="condominio">Condomínio</button>
+            <button class="tab" data-tab="agua">Água</button>
+            <button class="tab" data-tab="luz">Luz</button>
+            <button class="tab" data-tab="impostos">Impostos</button>
+            <button class="tab" data-tab="equipamentos">Equipamentos</button>
+            <button class="tab" data-tab="outros">Outros</button>
+        </div>
+
+        <!-- CONTEÚDOS DAS ABAS -->
+        <div class="tab-content active" id="tab-limpeza">
+
+            <h2>Custos de Limpeza</h2>
+
+            <!-- Seleção de mês -->
+            <div class="filtros-custos">
+                <label>Mês:</label>
+                <select id="selectMes"></select>
+
+                <label>Ano:</label>
+                <select id="selectAno"></select>
+            </div>
+
+            <!-- Previsão -->
+            <div class="card">
+                <h3>Previsão de Custos</h3>
+                <p id="previsaoValor">0 €</p>
+            </div>
+
+            <!-- Custo Real -->
+            <div class="card">
+                <h3>Custo Real</h3>
+                <p id="custoRealValor">0 €</p>
+            </div>
+
+            <!-- Extras -->
+            <div class="card">
+                <h3>Custos Extra</h3>
+
+                <div class="extra-form">
+                    <input type="date" id="extraData">
+                    <input type="number" id="extraValor" placeholder="Valor (€)">
+                    <input type="text" id="extraDescricao" placeholder="Descrição">
+                    <button id="btnAdicionarExtra">Adicionar</button>
+                </div>
+
+                <table id="tabelaExtras">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Valor (€)</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- Outras abas (vazias por agora) -->
+        <div class="tab-content" id="tab-condominio"></div>
+        <div class="tab-content" id="tab-agua"></div>
+        <div class="tab-content" id="tab-luz"></div>
+        <div class="tab-content" id="tab-impostos"></div>
+        <div class="tab-content" id="tab-equipamentos"></div>
+        <div class="tab-content" id="tab-outros"></div>
+
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/financeiro.js"></script>
+
+</body>
+</html>
