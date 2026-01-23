@@ -33,3 +33,56 @@ document.addEventListener("DOMContentLoaded", () => {
     selectMes.value = hoje.getMonth() + 1;
     selectAno.value = hoje.getFullYear();
 });
+
+// ===============================
+//  PASSO 2 — Calcular PREVISÃO
+// ===============================
+
+const db = firebase.firestore();
+
+// Converter "DD/MM/YYYY" → Date()
+function parseDataBR(dataStr) {
+    const [dia, mes, ano] = dataStr.split("/").map(Number);
+    return new Date(ano, mes - 1, dia);
+}
+
+async function calcularPrevisao() {
+    const mes = Number(document.getElementById("selectMes").value);
+    const ano = Number(document.getElementById("selectAno").value);
+
+    const previsaoEl = document.getElementById("previsaoValor");
+
+    const inicio = new Date(ano, mes - 1, 1);
+    const fim = new Date(ano, mes, 1);
+
+    let totalPrevisao = 0;
+
+    try {
+        const snapshot = await db.collection("reservas").get();
+
+        snapshot.forEach(doc => {
+            const r = doc.data();
+
+            if (!r.checkout || r.limpeza == null) return;
+
+            const checkoutDate = parseDataBR(r.checkout);
+
+            if (checkoutDate >= inicio && checkoutDate < fim) {
+                if (r.status !== "cancelado") {
+                    totalPrevisao += Number(r.limpeza);
+                }
+            }
+        });
+
+        previsaoEl.textContent = totalPrevisao.toFixed(2) + " €";
+
+    } catch (err) {
+        console.error("Erro ao calcular previsão:", err);
+        previsaoEl.textContent = "Erro";
+    }
+}
+
+// Recalcular quando muda mês/ano
+document.getElementById("selectMes").addEventListener("change", calcularPrevisao);
+document.getElementById("selectAno").addEventListener("change", calcularPrevisao);
+
