@@ -132,3 +132,9 @@ button {
 button:hover {
     background-color: #0d47a1;
 }
+
+/* Corrigir selects invisíveis */
+select, option {
+    color: #222 !important;
+    background-color: #fff !important;
+}
