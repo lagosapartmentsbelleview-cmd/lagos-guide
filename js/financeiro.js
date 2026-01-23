@@ -370,7 +370,10 @@ async function calcularTotaisAno(ano) {
     let totalLimpezasAno = 0;
     let totalExtrasAno = 0;
 
-    for (let mes = 1; mes <= 12; mes++) {
+    const hoje = new Date();
+    const mesLimite = (ano === hoje.getFullYear()) ? hoje.getMonth() + 1 : 12;
+
+    for (let mes = 1; mes <= mesLimite; mes++) {
         const dadosMes = await calcularTotalMes(ano, mes);
         totalLimpezasAno += dadosMes.totalLimpezas;
         totalExtrasAno += dadosMes.totalExtras;
