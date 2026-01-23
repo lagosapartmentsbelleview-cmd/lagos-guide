@@ -1,3 +1,9 @@
+console.log("financeiro.js carregado");
+window.addEventListener("load", () => {
+    console.log("LOAD DISPAROU");
+});
+
+
 // ===============================
 //  PASSO 1 — Carregar meses/anos
 // ===============================
