@@ -107,9 +107,23 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-    <script src="js/firebase-config.js"></script>
-    <script src="js/menu.js"></script>
-    <script src="js/financeiro.js"></script>
+   <script src="js/firebase-config.js"></script>
+   <script src="js/menu.js"></script>
+
+<script>
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    // Só carrega o JS depois do login estar confirmado
+    const script = document.createElement("script");
+    script.src = "js/financeiro.js";
+    document.body.appendChild(script);
+});
+</script>
+
 
 </body>
 </html>
