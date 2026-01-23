@@ -3,7 +3,6 @@
 // ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
-
     const selectMes = document.getElementById("selectMes");
     const selectAno = document.getElementById("selectAno");
 
@@ -12,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
     ];
 
-    // Preencher meses
     meses.forEach((mes, index) => {
         const opt = document.createElement("option");
         opt.value = index + 1;
@@ -20,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         selectMes.appendChild(opt);
     });
 
-    // Preencher anos
     for (let ano = 2023; ano <= 2050; ano++) {
         const opt = document.createElement("option");
         opt.value = ano;
@@ -28,12 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
         selectAno.appendChild(opt);
     }
 
-    // Selecionar mês/ano atual
     const hoje = new Date();
     selectMes.value = hoje.getMonth() + 1;
     selectAno.value = hoje.getFullYear();
 
-    // Carregar dados iniciais
     calcularPrevisao();
     carregarExtras();
 });
@@ -42,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 //  PASSO 2 — Calcular PREVISÃO
 // ===============================
 
-// Converter "DD/MM/YYYY" → Date()
 function parseDataBR(dataStr) {
     const [dia, mes, ano] = dataStr.split("/").map(Number);
     return new Date(ano, mes - 1, dia);
@@ -136,7 +130,6 @@ async function carregarExtras() {
             tabela.appendChild(tr);
         });
 
-        // Ativar botões de apagar
         document.querySelectorAll(".btnApagarExtra").forEach(btn => {
             btn.addEventListener("click", () => apagarExtra(btn.dataset.id));
         });
