@@ -103,18 +103,34 @@
     }
 
    function exportarPDF() {
-    const elemento = document.body;
+    const listaSecao = document.querySelector(".secao:nth-of-type(1)");
+    const calendarioSecao = document.querySelector(".secao:nth-of-type(2)");
+
+    // criar contentor temporário
+    const wrapper = document.createElement("div");
+    wrapper.style.width = "100%";
+    wrapper.style.boxSizing = "border-box";
+
+    // clonar lista
+    const listaClone = listaSecao.cloneNode(true);
+    wrapper.appendChild(listaClone);
+
+    // clonar calendário e forçar nova página
+    const calendarioClone = calendarioSecao.cloneNode(true);
+    calendarioClone.classList.add("secao-calendario-pdf-break");
+    wrapper.appendChild(calendarioClone);
 
     const opt = {
-        margin:       5,
-        filename:     "limpeza_completa.pdf",
-        html2canvas:  { scale: 3, useCORS: true },
-        jsPDF:        { unit: "mm", format: "a4", orientation: "landscape" },
-        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        margin: 10,
+        filename: "limpeza_completa.pdf",
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+        pagebreak: { mode: ['css', 'legacy'] }
     };
 
-    html2pdf().set(opt).from(elemento).save();
+    html2pdf().set(opt).from(wrapper).save();
 }
+
 
 
 </script>
