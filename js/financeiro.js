@@ -230,17 +230,12 @@ async function adicionarExtra() {
         return;
     }
 
-    const dataParts = dataInput.split("/");
-    if (dataParts.length !== 3) {
-        alert("Data inválida. Use o formato DD/MM/AAAA.");
-        return;
-    }
+const dataObj = new Date(dataInput);
+if (isNaN(dataObj.getTime())) {
+    alert("Data inválida.");
+    return;
+}
 
-    const dataObj = new Date(
-        Number(dataParts[2]),
-        Number(dataParts[1]) - 1,
-        Number(dataParts[0])
-    );
 
     const docId = `${ano}_${String(mes).padStart(2, "0")}`;
 
