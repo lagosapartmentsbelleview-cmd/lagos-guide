@@ -99,11 +99,56 @@
 window.addEventListener("load", function () {
 
     // EXPORTAR EXCEL
-    window.exportarExcel = function () {
-        const tabela = document.querySelector(".tabela");
-        const wb = XLSX.utils.table_to_book(tabela, { sheet: "Limpeza" });
-        XLSX.writeFile(wb, "limpeza.xlsx");
-    };
+   window.exportarExcel = function () {
+    const tabela = document.querySelector("#tabelaLimpeza");
+
+    // Converter tabela em sheet
+    const ws = XLSX.utils.table_to_sheet(tabela);
+
+    // Ajustar largura das colunas automaticamente
+    const colWidths = [];
+    const range = XLSX.utils.decode_range(ws['!ref']);
+
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+        let maxWidth = 10;
+        for (let R = range.s.r; R <= range.e.r; ++R) {
+            const cell = ws[XLSX.utils.encode_cell({ r: R, c: C })];
+            if (cell && cell.v) {
+                const len = cell.v.toString().length;
+                if (len > maxWidth) maxWidth = len;
+            }
+        }
+        colWidths.push({ wch: maxWidth + 2 });
+    }
+
+    ws['!cols'] = colWidths;
+
+    // Estilo do cabeçalho
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+        const cellRef = XLSX.utils.encode_cell({ r: 0, c: C });
+        if (ws[cellRef]) {
+            ws[cellRef].s = {
+                fill: { fgColor: { rgb: "D9E1F2" } },
+                font: { bold: true },
+                alignment: { horizontal: "center", vertical: "center" },
+                border: {
+                    top: { style: "thin", color: { rgb: "000000" } },
+                    bottom: { style: "thin", color: { rgb: "000000" } },
+                    left: { style: "thin", color: { rgb: "000000" } },
+                    right: { style: "thin", color: { rgb: "000000" } }
+                }
+            };
+        }
+    }
+
+    // Criar workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Limpeza");
+
+    // Exportar
+    XLSX.writeFile(wb, "limpeza_formatado.xlsx");
+};
+
 
     // EXPORTAR PDF
     window.exportarPDF = function () {
