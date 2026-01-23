@@ -99,16 +99,17 @@
 window.addEventListener("load", function () {
 
     // EXPORTAR EXCEL
-   window.exportarExcel = function () {
+  window.exportarExcel = function () {
     const tabela = document.querySelector("#tabelaLimpeza");
 
     // Converter tabela em sheet
     const ws = XLSX.utils.table_to_sheet(tabela);
 
-    // Ajustar largura das colunas automaticamente
-    const colWidths = [];
+    // Detectar intervalo
     const range = XLSX.utils.decode_range(ws['!ref']);
 
+    // Aplicar largura automática
+    const colWidths = [];
     for (let C = range.s.c; C <= range.e.c; ++C) {
         let maxWidth = 10;
         for (let R = range.s.r; R <= range.e.r; ++R) {
@@ -120,7 +121,6 @@ window.addEventListener("load", function () {
         }
         colWidths.push({ wch: maxWidth + 2 });
     }
-
     ws['!cols'] = colWidths;
 
     // Estilo do cabeçalho
@@ -140,6 +140,28 @@ window.addEventListener("load", function () {
             };
         }
     }
+
+    // Formatar datas (colunas 2 e 3 → Check-in e Check-out)
+    const dateCols = [2, 3];
+    for (let C of dateCols) {
+        for (let R = 1; R <= range.e.r; ++R) {
+            const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
+            const cell = ws[cellRef];
+            if (cell && typeof cell.v === "string" && cell.v.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+                const [dia, mes, ano] = cell.v.split("/");
+                const jsDate = new Date(`${ano}-${mes}-${dia}`);
+                cell.v = jsDate;
+                cell.t = "d";
+                cell.z = "dd/mm/yyyy";
+            }
+        }
+    }
+
+    // Filtros automáticos
+    ws['!autofilter'] = { ref: XLSX.utils.encode_range(range) };
+
+    // Congelar cabeçalho
+    ws['!freeze'] = { xSplit: 0, ySplit: 1 };
 
     // Criar workbook
     const wb = XLSX.utils.book_new();
