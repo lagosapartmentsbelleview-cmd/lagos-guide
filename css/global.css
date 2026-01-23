@@ -1,55 +1,59 @@
-/* MENU LATERAL */
-.sidebar {
+/* MENU NO TOPO */
+.top-menu {
+    width: 100%;
+    background: #1e88e5;
+    padding: 10px;
     position: fixed;
     top: 0;
     left: 0;
-    width: 220px;
-    height: 100vh;
-    background: #1e88e5;
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+    z-index: 999;
 }
 
-.sidebar h2 {
+.menu-button {
     color: white;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: inline-block;
 }
 
-.sidebar a {
+.menu-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* MENU EXPANDIDO */
+.dropdown-menu {
+    display: none;
+    flex-direction: column;
+    background: #1e88e5;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.dropdown-menu a {
     color: white;
     text-decoration: none;
-    padding: 12px 20px;
-    font-size: 16px;
+    padding: 10px;
     font-weight: bold;
     border-radius: 4px;
-    transition: 0.2s;
 }
 
-.sidebar a:hover {
+.dropdown-menu a:hover {
     background: rgba(255, 255, 255, 0.25);
 }
 
-.sidebar .sair {
-    margin-top: auto;
+.dropdown-menu .sair {
     background: #e53935;
 }
 
-.sidebar .sair:hover {
+.dropdown-menu .sair:hover {
     background: #c62828;
 }
 
-/* CONTEÚDO PRINCIPAL */
+/* AJUSTE DO CONTEÚDO */
 .content {
-    margin-left: 240px;
-    padding: 20px;
-}
-
-/* Página ativa (se quiseres usar) */
-.sidebar a.active {
-    background: rgba(255, 255, 255, 0.4);
+    padding-top: 70px;
 }
