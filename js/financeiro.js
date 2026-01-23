@@ -1,10 +1,20 @@
 // ===============================
-//  PASSO 1 — Carregar meses/anos
+//  INICIALIZADOR ROBUSTO
+//  (funciona mesmo com script injetado depois do load)
 // ===============================
 
-document.addEventListener("DOMContentLoaded", () => {
+function initFinanceiro() {
     const selectMes = document.getElementById("selectMes");
     const selectAno = document.getElementById("selectAno");
+
+    // DOM ainda não existe → tenta de novo
+    if (!selectMes || !selectAno) {
+        return setTimeout(initFinanceiro, 30);
+    }
+
+    // ===============================
+    //  PASSO 1 — Carregar meses/anos
+    // ===============================
 
     const meses = [
         "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -31,7 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     calcularPrevisao();
     carregarExtras();
-});
+
+    console.log("Financeiro inicializado");
+}
+
+initFinanceiro();
+
 
 // ===============================
 //  PASSO 2 — Calcular PREVISÃO
@@ -78,15 +93,18 @@ async function calcularPrevisao() {
     }
 }
 
-// Recalcular quando muda mês/ano
-document.getElementById("selectMes").addEventListener("change", () => {
-    calcularPrevisao();
-    carregarExtras();
+
+// ===============================
+//  Recalcular quando muda mês/ano
+// ===============================
+
+document.addEventListener("change", e => {
+    if (e.target.id === "selectMes" || e.target.id === "selectAno") {
+        calcularPrevisao();
+        carregarExtras();
+    }
 });
-document.getElementById("selectAno").addEventListener("change", () => {
-    calcularPrevisao();
-    carregarExtras();
-});
+
 
 // ===============================
 //  PASSO 3 — Carregar EXTRAS
