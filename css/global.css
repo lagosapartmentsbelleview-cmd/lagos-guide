@@ -1,7 +1,9 @@
-/* MENU NO TOPO */
+/* ============================
+   MENU SUPERIOR
+============================ */
 .top-menu {
     width: 100%;
-    background: #1976d2; /* azul escuro */
+    background: #1976d2;
     padding: 10px;
     position: fixed;
     top: 0;
@@ -17,19 +19,19 @@
     padding: 8px 12px;
     border-radius: 4px;
     display: inline-block;
-    background-color: #1976d2; /* azul escuro */
+    background-color: #1976d2;
     border: none;
 }
 
 .menu-button:hover {
-    background-color: #0d47a1; /* hover mais escuro */
+    background-color: #0d47a1;
 }
 
 /* MENU EXPANDIDO */
 .dropdown-menu {
     display: none;
     flex-direction: column;
-    background: #1976d2; /* azul escuro */
+    background: #1976d2;
     margin-top: 10px;
     padding: 10px;
     border-radius: 4px;
@@ -41,8 +43,7 @@
     padding: 10px;
     font-weight: bold;
     border-radius: 4px;
-    background-color: #1976d2; /* azul escuro */
-    border: none;
+    background-color: #1976d2;
 }
 
 .dropdown-menu a:hover {
@@ -57,18 +58,22 @@
     background: #c62828;
 }
 
-/* AJUSTE DO CONTEÚDO */
+/* ============================
+   AJUSTE DO CONTEÚDO
+============================ */
 .content {
     padding-top: 70px;
 }
 
-/* TÍTULO */
+/* TÍTULOS */
 .content h1 {
     margin-bottom: 6px;
     padding-left: 20px;
 }
 
-/* FILTROS */
+/* ============================
+   FILTROS (botão Gerar)
+============================ */
 .filtros {
     display: flex;
     justify-content: flex-end;
@@ -76,7 +81,7 @@
     gap: 12px;
     margin-bottom: 20px;
     flex-wrap: wrap;
-    padding-right: 20px; /* alinha com a tabela */
+    padding-right: 20px;
 }
 
 .filtros label {
@@ -91,29 +96,39 @@
 }
 
 .filtros button {
-    background: #1976d2; /* azul escuro */
+    padding: 8px 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    background: #1976d2;
     color: white;
     border: none;
-    padding: 8px 14px;
-    border-radius: 4px;
-    font-weight: bold;
     cursor: pointer;
+    height: 40px; /* altura padrão */
 }
 
 .filtros button:hover {
     background: #0d47a1;
 }
 
-/* BOTÕES GERAIS (Exportar, etc) */
+/* ============================
+   BOTÕES GERAIS (Exportar, etc)
+============================ */
 button {
-    background-color: #1976d2; /* azul escuro */
+    background-color: #1976d2;
     color: white;
     font-weight: bold;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+
+    /* Estes dois garantem MESMA ALTURA dos botões Gerar */
+    padding: 8px 14px;
+    height: 40px;
+
+    box-sizing: border-box;
 }
 
 button:hover {
-    background-color: #0d47a1; /* hover mais escuro */
+    background-color: #0d47a1;
 }
