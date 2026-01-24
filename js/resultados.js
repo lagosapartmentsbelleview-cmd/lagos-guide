@@ -534,13 +534,12 @@ async function iniciarResultados() {
 }
 
 // Esperar Firebase
-document.addEventListener("DOMContentLoaded", () => {
-    setTimeout(() => {
-        if (typeof db !== "undefined") {
-            iniciarResultados();
-        } else {
-            console.error("Firebase não inicializou a tempo em resultados. Tentando novamente...");
-            setTimeout(iniciarResultados, 300);
-        }
-    }, 200);
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    iniciarResultados();
 });
+
