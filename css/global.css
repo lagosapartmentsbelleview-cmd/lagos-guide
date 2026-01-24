@@ -225,3 +225,10 @@ select, option {
     border-bottom: 3px solid #1565c0; /* destaque */
 }
 
+/* Impedir que o estilo global de button afete as abas */
+.tabs .tab {
+    height: auto !important;
+    padding: 8px 16px !important;
+    background-color: #f5f5f5 !important;
+    color: #333 !important;
+}
