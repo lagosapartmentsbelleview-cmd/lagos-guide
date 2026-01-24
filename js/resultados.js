@@ -1,6 +1,10 @@
 // js/resultados.js
 console.log("JS RESULTADOS A CORRER");
 
+function obterTipoComparacao() {
+    return document.getElementById("tipoComparacao").value;
+}
+
 async function carregarReservasNormalizadas() {
     const snap = await db.collection("reservas").orderBy("checkin").get();
 
