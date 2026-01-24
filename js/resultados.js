@@ -362,24 +362,26 @@ function atualizarGraficos(mapaMensal, mapaAnual, anoFiltro) {
     const dadosBrutoMes = mesesOrdenados.map(m => m.receitaBruta);
     const dadosLiquidoMes = mesesOrdenados.map(m => m.receitaLiquida);
 
-    graficoReceita = criarOuAtualizarGrafico(
-        ctxReceita,
-        "bar",
-        {
-            labels: labelsMes,
-            datasets: [
-                {
-                    label: "Receita Bruta",
-                    data: dadosBrutoMes,
-                    backgroundColor: "rgba(25, 118, 210, 0.7)"
-                },
-                {
-                    label: "Receita Líquida",
-                    data: dadosLiquidoMes,
-                    backgroundColor: "rgba(13, 71, 161, 0.7)"
-                }
-            ]
-        },
+    const tipo = obterTipoComparacao(); // "bruto" ou "liquido"
+
+const dadosMes = tipo === "bruto"
+    ? dadosBrutoMes
+    : dadosLiquidoMes;
+
+graficoReceita = criarOuAtualizarGrafico(
+    ctxReceita,
+    "bar",
+    {
+        labels: labelsMes,
+        datasets: [
+            {
+                label: tipo === "bruto" ? "Receita Bruta" : "Receita Líquida",
+                data: dadosMes,
+                backgroundColor: "rgba(25, 118, 210, 0.7)"
+            }
+        ]
+    },
+
         {
             responsive: true,
             plugins: { legend: { position: "top" } },
