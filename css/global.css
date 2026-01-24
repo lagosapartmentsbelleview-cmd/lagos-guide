@@ -114,7 +114,7 @@
 /* ============================
    BOTÕES GERAIS (Exportar, etc)
 ============================ */
-button {
+button:not(.tab) {
     background-color: #1976d2;
     color: white;
     font-weight: bold;
