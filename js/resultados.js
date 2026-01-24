@@ -450,46 +450,47 @@ function atualizarGraficos(mapaMensal, mapaAnual, anoFiltro) {
         graficoCustos
     );
 
-  // --- Comparação Anual (Ano vs Ano Anterior, bruto ou líquido) ---
-const anosOrdenados = Object.values(mapaAnual).sort((a, b) => a.ano - b.ano);
-const labelsAno = anosOrdenados.map(a => a.ano);
+    // --- Comparação Anual (Ano vs Ano Anterior, bruto ou líquido) ---
+    const anosOrdenados = Object.values(mapaAnual).sort((a, b) => a.ano - b.ano);
+    const labelsAno = anosOrdenados.map(a => a.ano);
 
-const tipoComparacao = obterTipoComparacao(); // "bruto" ou "liquido"
-const valoresAno = anosOrdenados.map(a =>
-    tipoComparacao === "bruto" ? a.receitaBruta : a.receitaLiquida
-);
+    const tipoComparacao = obterTipoComparacao(); // "bruto" ou "liquido"
+    const valoresAno = anosOrdenados.map(a =>
+        tipoComparacao === "bruto" ? a.receitaBruta : a.receitaLiquida
+    );
 
-// calcular variações ano vs ano anterior
-const variacoesAno = valoresAno.map((v, i) => {
-    if (i === 0) return null;
-    const anterior = valoresAno[i - 1];
-    if (!anterior) return null;
-    return ((v - anterior) / anterior) * 100;
-});
+    // calcular variações ano vs ano anterior
+    const variacoesAno = valoresAno.map((v, i) => {
+        if (i === 0) return null;
+        const anterior = valoresAno[i - 1];
+        if (!anterior) return null;
+        return ((v - anterior) / anterior) * 100;
+    });
 
-graficoComparacao = criarOuAtualizarGrafico(
-    ctxComparacao,
-    "bar",
-    {
-        labels: labelsAno,
-        datasets: [
-            {
-                label: tipoComparacao === "bruto" ? "Receita Bruta" : "Receita Líquida",
-                data: valoresAno,
-                backgroundColor: "rgba(25, 118, 210, 0.7)"
-            }
-        ]
-    },
-    {
-        responsive: true,
-        plugins: { legend: { position: "top" } },
-        scales: { y: { beginAtZero: true } }
-    },
-    graficoComparacao
-);
+    graficoComparacao = criarOuAtualizarGrafico(
+        ctxComparacao,
+        "bar",
+        {
+            labels: labelsAno,
+            datasets: [
+                {
+                    label: tipoComparacao === "bruto" ? "Receita Bruta" : "Receita Líquida",
+                    data: valoresAno,
+                    backgroundColor: "rgba(25, 118, 210, 0.7)"
+                }
+            ]
+        },
+        {
+            responsive: true,
+            plugins: { legend: { position: "top" } },
+            scales: { y: { beginAtZero: true } }
+        },
+        graficoComparacao
+    );
 
-// atualizar texto de comparação
-atualizarComparacaoTexto(labelsAno, valoresAno, variacoesAno);
+    // atualizar texto de comparação
+    atualizarComparacaoTexto(labelsAno, valoresAno, variacoesAno);
+}
 
 function atualizarComparacaoTexto(labels, valores, variacoes) {
     const div = document.getElementById("comparacaoTexto");
