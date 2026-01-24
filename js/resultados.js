@@ -450,38 +450,72 @@ function atualizarGraficos(mapaMensal, mapaAnual, anoFiltro) {
         graficoCustos
     );
 
-    // --- Comparação Anual (barras lado a lado) ---
-    const anosOrdenados = Object.values(mapaAnual).sort((a, b) => a.ano - b.ano);
-    const labelsAno = anosOrdenados.map(a => a.ano);
-    const dadosBrutoAno = anosOrdenados.map(a => a.receitaBruta);
-    const dadosLiquidoAno = anosOrdenados.map(a => a.receitaLiquida);
+  // --- Comparação Anual (Ano vs Ano Anterior, bruto ou líquido) ---
+const anosOrdenados = Object.values(mapaAnual).sort((a, b) => a.ano - b.ano);
+const labelsAno = anosOrdenados.map(a => a.ano);
 
-    graficoComparacao = criarOuAtualizarGrafico(
-        ctxComparacao,
-        "bar",
-        {
-            labels: labelsAno,
-            datasets: [
-                {
-                    label: "Receita Bruta",
-                    data: dadosBrutoAno,
-                    backgroundColor: "rgba(25, 118, 210, 0.7)"
-                },
-                {
-                    label: "Receita Líquida",
-                    data: dadosLiquidoAno,
-                    backgroundColor: "rgba(13, 71, 161, 0.7)"
-                }
-            ]
-        },
-        {
-            responsive: true,
-            plugins: { legend: { position: "top" } },
-            scales: { y: { beginAtZero: true } }
-        },
-        graficoComparacao
-    );
+const tipoComparacao = obterTipoComparacao(); // "bruto" ou "liquido"
+const valoresAno = anosOrdenados.map(a =>
+    tipoComparacao === "bruto" ? a.receitaBruta : a.receitaLiquida
+);
+
+// calcular variações ano vs ano anterior
+const variacoesAno = valoresAno.map((v, i) => {
+    if (i === 0) return null;
+    const anterior = valoresAno[i - 1];
+    if (!anterior) return null;
+    return ((v - anterior) / anterior) * 100;
+});
+
+graficoComparacao = criarOuAtualizarGrafico(
+    ctxComparacao,
+    "bar",
+    {
+        labels: labelsAno,
+        datasets: [
+            {
+                label: tipoComparacao === "bruto" ? "Receita Bruta" : "Receita Líquida",
+                data: valoresAno,
+                backgroundColor: "rgba(25, 118, 210, 0.7)"
+            }
+        ]
+    },
+    {
+        responsive: true,
+        plugins: { legend: { position: "top" } },
+        scales: { y: { beginAtZero: true } }
+    },
+    graficoComparacao
+);
+
+// atualizar texto de comparação
+atualizarComparacaoTexto(labelsAno, valoresAno, variacoesAno);
+
+function atualizarComparacaoTexto(labels, valores, variacoes) {
+    const div = document.getElementById("comparacaoTexto");
+    if (!div) return;
+
+    div.innerHTML = "";
+
+    for (let i = 1; i < labels.length; i++) {
+        const ano = labels[i];
+        const valor = valores[i];
+        const varPct = variacoes[i];
+
+        const p = document.createElement("p");
+
+        if (varPct === null) {
+            p.textContent = `${ano}: sem comparação com ano anterior`;
+        } else {
+            const direcao = varPct > 0 ? "↑" : (varPct < 0 ? "↓" : "→");
+            const sinal = varPct > 0 ? "+" : "";
+            p.textContent = `${ano}: ${valor.toFixed(2)} € (${sinal}${varPct.toFixed(1)}% ${direcao})`;
+        }
+
+        div.appendChild(p);
+    }
 }
+
 
 // -------------------------------------------------------------
 // 8) POPULAR SELECT DE ANOS
@@ -533,6 +567,12 @@ async function iniciarResultados() {
     popularAnos(reservasResultados);
 
     document.getElementById("btnAplicarFiltros").addEventListener("click", aplicarFiltrosResultados);
+
+    const selTipo = document.getElementById("tipoComparacao");
+if (selTipo) {
+    selTipo.addEventListener("change", aplicarFiltrosResultados);
+}
+
 
     aplicarFiltrosResultados();
 }
