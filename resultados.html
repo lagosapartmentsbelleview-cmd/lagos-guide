@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados</title>
+
+    <!-- CSS Global do Sistema -->
+    <link rel="stylesheet" href="css/global.css">
+
+    <!-- CSS Específico dos Resultados -->
+    <link rel="stylesheet" href="css/resultados.css">
+</head>
+
+<body>
+
+    <!-- MENU SUPERIOR -->
+    <div class="top-menu">
+        <span class="menu-button" id="toggleMenu">☰ Menu</span>
+
+        <div class="dropdown-menu" id="dropdown-menu">
+            <a href="listagem-reservas.html">Reservas</a>
+            <a href="calendario.html">Calendario</a>
+            <a href="limpeza.html">Limpeza</a>
+            <a href="precos.html">Preços</a>
+            <span class="menu-ativo">Resultados</span>
+            <a href="login.html" class="sair">Sair</a>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <h1>Resultados e Estatísticas</h1>
+
+        <!-- FILTROS -->
+        <div class="filtros-resultados">
+            <label>Ano:</label>
+            <select id="filtroAno"></select>
+
+            <label>Mês:</label>
+            <select id="filtroMes">
+                <option value="">Todos</option>
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3">Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+            </select>
+
+            <label>Comparação:</label>
+            <select id="filtroComparacao">
+                <option value="">Nenhuma</option>
+                <option value="ano">Ano vs Ano</option>
+                <option value="mes">Mês vs Mês</option>
+                <option value="anoAnterior">Ano atual vs anterior</option>
+                <option value="mesAnterior">Mês atual vs anterior</option>
+            </select>
+
+            <button id="btnAplicarFiltros">Aplicar</button>
+        </div>
+
+        <!-- KPIs PRINCIPAIS -->
+        <div class="kpi-container">
+
+            <div class="kpi-card">
+                <h3>Receita Bruta</h3>
+                <p id="kpiReceitaBruta">0 €</p>
+            </div>
+
+            <div class="kpi-card">
+                <h3>Receita Líquida</h3>
+                <p id="kpiReceitaLiquida">0 €</p>
+            </div>
+
+            <div class="kpi-card">
+                <h3>Ocupação</h3>
+                <p id="kpiOcupacao">0%</p>
+            </div>
+
+            <div class="kpi-card">
+                <h3>Preço Médio por Noite</h3>
+                <p id="kpiPrecoMedio">0 €</p>
+            </div>
+
+            <div class="kpi-card">
+                <h3>Lucro</h3>
+                <p id="kpiLucro">0 €</p>
+            </div>
+
+        </div>
+
+        <!-- GRÁFICOS -->
+        <div class="card">
+            <h3>Receita Mensal</h3>
+            <canvas id="graficoReceita"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>Ocupação Mensal</h3>
+            <canvas id="graficoOcupacao"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>Distribuição de Custos</h3>
+            <canvas id="graficoCustos"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>Comparação Entre Anos</h3>
+            <canvas id="graficoComparacao"></canvas>
+        </div>
+
+        <!-- TABELAS DETALHADAS -->
+        <div class="card">
+            <h3>Estatísticas Mensais</h3>
+            <table id="tabelaMensal">
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <th>Receita Bruta</th>
+                        <th>Custos</th>
+                        <th>Receita Líquida</th>
+                        <th>Ocupação</th>
+                        <th>Preço Médio</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>Estatísticas Anuais</h3>
+            <table id="tabelaAnual">
+                <thead>
+                    <tr>
+                        <th>Ano</th>
+                        <th>Receita Bruta</th>
+                        <th>Custos</th>
+                        <th>Receita Líquida</th>
+                        <th>Ocupação</th>
+                        <th>Preço Médio</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- LEGENDA EXPLICATIVA -->
+        <div class="card">
+            <h3>Legenda e Explicação dos Cálculos</h3>
+
+            <p><strong>Receita Bruta:</strong> Soma de todas as reservas concluídas no período selecionado.</p>
+            <p><strong>Custos:</strong> Limpezas, extras, condomínio, água, luz, impostos, equipamentos e outros.</p>
+            <p><strong>Receita Líquida:</strong> Receita Bruta menos todos os custos.</p>
+            <p><strong>Ocupação:</strong> (Noites ocupadas / Noites disponíveis) × 100.</p>
+            <p><strong>Preço Médio por Noite:</strong> Receita Bruta / Noites ocupadas.</p>
+            <p><strong>Lucro:</strong> Receita Líquida após dedução de todos os custos.</p>
+        </div>
+
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/menu.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JS dos Resultados -->
+    <script src="js/resultados.js"></script>
+
+</body>
+</html>
