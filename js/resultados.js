@@ -1,592 +1,605 @@
-// js/resultados.js
-console.log("JS RESULTADOS A CORRER");
-
-function obterTipoComparacao() {
-    return document.getElementById("tipoComparacao").value;
-}
-
-async function carregarReservasNormalizadas() {
-    const snap = await db.collection("reservas").orderBy("checkin").get();
-
-    const lista = [];
-    snap.forEach(doc => lista.push({ id: doc.id, ...doc.data() }));
-
-    lista.forEach(r => {
-
-        // Nome do cliente
-        r.cliente = r.cliente || r.reservadoPor || "";
-
-        // Pessoas
-        r.adultos = Number(r.adultos || 0);
-        r.criancas = Number(r.criancas || 0);
-        r.hospedes = Number(r.hospedes || (r.adultos + r.criancas));
-
-        // Idades
-        r.idadesCriancas = r.idadesCriancas || "";
-
-        // Berço
-        r.berco = !!r.berco;
-
-        // Comentários
-        r.comentarios = r.comentarios || r.observacoes || "";
-
-        // Apartamentos sempre array de strings
-        if (!Array.isArray(r.apartamentos)) {
-            if (r.apartamentos) {
-                r.apartamentos = [String(r.apartamentos)];
-            } else {
-                r.apartamentos = [];
-            }
-        } else {
-            r.apartamentos = r.apartamentos.map(a => String(a));
-        }
-
-        // Datas já vêm em dd/mm/yyyy → OK
-    });
-
-    return lista;
-}
-
-
 // -------------------------------------------------------------
-// 0) ESTADO GLOBAL
+// RESULTADOS.JS
+// Lógica de KPIs, tabelas e gráficos de resultados
 // -------------------------------------------------------------
-let reservasResultados = [];
+
+// Referência ao Firestore (firebase-config.js já inicializou firebase)
+const db = firebase.firestore();
+
+// Armazena todas as reservas carregadas
+let reservas = [];
+
+// Estruturas agregadas
+let agregadosMensais = {}; // { ano: { mes: { ... } } }
+let agregadosAnuais = {};  // { ano: { ... } }
+
+// Gráficos Chart.js
 let graficoReceita, graficoOcupacao, graficoCustos, graficoComparacao;
 
-// assume os mesmos apartamentos fixos da listagem
-const APARTAMENTOS_FIXOS = ["2301", "2203", "2204"];
+// Nomes dos meses
+const NOMES_MESES = [
+    "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+    "Jul", "Ago", "Set", "Out", "Nov", "Dez"
+];
 
 // -------------------------------------------------------------
-// 1) HELPERS DE DATAS E PERIODOS
+// UTILITÁRIOS
 // -------------------------------------------------------------
-function parseDataPt(str) {
+
+function parseDataDDMMYYYY(str) {
     if (!str) return null;
-    const [d, m, a] = str.split("/").map(Number);
-    return new Date(a, m - 1, d);
+    const [dia, mes, ano] = str.split("/");
+    return new Date(Number(ano), Number(mes) - 1, Number(dia));
 }
 
-function getAnoMes(reserva) {
-    const d = parseDataPt(reserva.checkin);
-    if (!d) return { ano: null, mes: null };
-    return { ano: d.getFullYear(), mes: d.getMonth() + 1 };
+// Conta noites por (ano, mes) entre check-in e check-out
+// Regra A: contagem simples por datas (diaAtual -> diaSeguinte)
+function calcularNoitesPorMes(reserva) {
+    const mapa = {}; // chave "ano-mes" -> noites
+
+    const checkin = parseDataDDMMYYYY(reserva.checkin);
+    const checkout = parseDataDDMMYYYY(reserva.checkout);
+    if (!checkin || !checkout) return mapa;
+
+    // Vamos iterar noite a noite: diaAtual -> diaSeguinte
+    let atual = new Date(checkin.getTime());
+
+    while (atual < checkout) {
+        const ano = atual.getFullYear();
+        const mes = atual.getMonth() + 1; // 1-12
+
+        const chave = `${ano}-${mes}`;
+        if (!mapa[chave]) mapa[chave] = 0;
+        mapa[chave] += 1;
+
+        // Avança um dia
+        atual.setDate(atual.getDate() + 1);
+    }
+
+    return mapa;
 }
 
-function nomeMes(m) {
-    const nomes = [
-        "", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
-        "Jul", "Ago", "Set", "Out", "Nov", "Dez"
-    ];
-    return nomes[m] || "";
-}
-
-function diasNoMes(ano, mes) {
+// Número de dias num mês/ano
+function diasNoMes(mes, ano) {
     return new Date(ano, mes, 0).getDate();
 }
 
-function diasNoAno(ano) {
-    return ((ano % 4 === 0 && ano % 100 !== 0) || ano % 400 === 0) ? 366 : 365;
-}
-
-// -------------------------------------------------------------
-// 2) HELPERS FINANCEIROS
-// -------------------------------------------------------------
-function obterComissaoTotal(r) {
-    const base = Number(r.comissao || 0);
-    const extra = Number(r.comissaoExtra || 0);
-    if (r.comissaoTotal !== undefined) return Number(r.comissaoTotal);
-    return base + extra;
-}
-
-function obterLimpeza(r) {
-    return Number(r.limpeza || 0);
-}
-
-function obterTotalBruto(r) {
-    return Number(r.totalBruto || 0);
-}
-
-function obterNoites(r) {
-    return Number(r.noites || 0);
-}
-
+// Formatar número como moeda €
 function formatarEuro(valor) {
-    return Number(valor || 0).toFixed(2) + " €";
+    if (isNaN(valor)) return "0 €";
+    return valor.toLocaleString("pt-PT", {
+        style: "currency",
+        currency: "EUR",
+        minimumFractionDigits: 2
+    });
 }
 
+// Formatar percentagem
 function formatarPercent(valor) {
-    return Number(valor || 0).toFixed(1) + " %";
+    if (isNaN(valor)) return "0%";
+    return `${valor.toFixed(1)} %`;
 }
 
 // -------------------------------------------------------------
-// 3) AGREGADORES (MENSAL / ANUAL)
+// CARREGAR RESERVAS DO FIRESTORE
 // -------------------------------------------------------------
-function agregarPorAno(reservas) {
-    const mapa = {};
 
-    reservas.forEach(r => {
-        const { ano } = getAnoMes(r);
-        if (!ano) return;
-
-        if (!mapa[ano]) {
-            mapa[ano] = {
-                ano,
-                receitaBruta: 0,
-                custos: 0,
-                receitaLiquida: 0,
-                noitesOcupadas: 0,
-                noitesDisponiveis: diasNoAno(ano) * APARTAMENTOS_FIXOS.length
-            };
-        }
-
-        const bruto = obterTotalBruto(r);
-        const comissaoTotal = obterComissaoTotal(r);
-        const limpeza = obterLimpeza(r);
-        const noites = obterNoites(r);
-
-        mapa[ano].receitaBruta += bruto;
-        mapa[ano].custos += comissaoTotal + limpeza;
-        mapa[ano].noitesOcupadas += noites;
-    });
-
-    Object.values(mapa).forEach(a => {
-        a.receitaLiquida = a.receitaBruta - a.custos;
-        a.ocupacao = a.noitesDisponiveis > 0
-            ? (a.noitesOcupadas / a.noitesDisponiveis) * 100
-            : 0;
-        a.precoMedio = a.noitesOcupadas > 0
-            ? a.receitaBruta / a.noitesOcupadas
-            : 0;
-    });
-
-    return mapa;
-}
-
-function agregarPorMes(reservas) {
-    const mapa = {};
-
-    reservas.forEach(r => {
-        const { ano, mes } = getAnoMes(r);
-        if (!ano || !mes) return;
-
-        const chave = `${ano}-${mes}`;
-        if (!mapa[chave]) {
-            mapa[chave] = {
-                ano,
-                mes,
-                receitaBruta: 0,
-                custos: 0,
-                receitaLiquida: 0,
-                noitesOcupadas: 0,
-                noitesDisponiveis: diasNoMes(ano, mes) * APARTAMENTOS_FIXOS.length
-            };
-        }
-
-        const bruto = obterTotalBruto(r);
-        const comissaoTotal = obterComissaoTotal(r);
-        const limpeza = obterLimpeza(r);
-        const noites = obterNoites(r);
-
-        mapa[chave].receitaBruta += bruto;
-        mapa[chave].custos += comissaoTotal + limpeza;
-        mapa[chave].noitesOcupadas += noites;
-    });
-
-    Object.values(mapa).forEach(m => {
-        m.receitaLiquida = m.receitaBruta - m.custos;
-        m.ocupacao = m.noitesDisponiveis > 0
-            ? (m.noitesOcupadas / m.noitesDisponiveis) * 100
-            : 0;
-        m.precoMedio = m.noitesOcupadas > 0
-            ? m.receitaBruta / m.noitesOcupadas
-            : 0;
-    });
-
-    return mapa;
-}
-
-// -------------------------------------------------------------
-// 4) FILTROS DO DASHBOARD
-// -------------------------------------------------------------
-function obterFiltroAnoMes() {
-    const ano = Number(document.getElementById("filtroAno").value || 0);
-    const mes = Number(document.getElementById("filtroMes").value || 0);
-    return { ano: ano || null, mes: mes || null };
-}
-
-function filtrarReservasPorPeriodo(reservas, ano, mes) {
-    if (!ano && !mes) return reservas;
-
-    return reservas.filter(r => {
-        const d = parseDataPt(r.checkin);
-        if (!d) return false;
-
-        if (ano && d.getFullYear() !== ano) return false;
-        if (mes && (d.getMonth() + 1) !== mes) return false;
-
-        return true;
-    });
-}
-
-// -------------------------------------------------------------
-// 5) ATUALIZAR KPIs
-// -------------------------------------------------------------
-function atualizarKPIs(reservas, ano, mes) {
-    const filtradas = filtrarReservasPorPeriodo(reservas, ano, mes);
-
-    let receitaBruta = 0;
-    let custos = 0;
-    let noitesOcupadas = 0;
-    let noitesDisponiveis = 0;
-
-    filtradas.forEach(r => {
-        const bruto = obterTotalBruto(r);
-        const comissaoTotal = obterComissaoTotal(r);
-        const limpeza = obterLimpeza(r);
-        const noites = obterNoites(r);
-
-        receitaBruta += bruto;
-        custos += comissaoTotal + limpeza;
-        noitesOcupadas += noites;
-
-        const d = parseDataPt(r.checkin);
-        if (d) {
-            const anoR = d.getFullYear();
-            const mesR = d.getMonth() + 1;
-            if (ano && mes) {
-                noitesDisponiveis = diasNoMes(ano, mes) * APARTAMENTOS_FIXOS.length;
-            } else if (ano && !mes) {
-                noitesDisponiveis = diasNoAno(ano) * APARTAMENTOS_FIXOS.length;
-            }
-        }
-    });
-
-    if (!ano && !mes) {
-        // período total
-        const anos = new Set();
-        reservas.forEach(r => {
-            const d = parseDataPt(r.checkin);
-            if (d) anos.add(d.getFullYear());
+function carregarReservas() {
+    db.collection("reservas")
+        .get()
+        .then(snapshot => {
+            reservas = snapshot.docs.map(doc => doc.data());
+            processarReservas();
+        })
+        .catch(err => {
+            console.error("Erro ao carregar reservas:", err);
         });
-        anos.forEach(a => {
-            noitesDisponiveis += diasNoAno(a) * APARTAMENTOS_FIXOS.length;
-        });
-    }
-
-    const receitaLiquida = receitaBruta - custos;
-    const lucro = receitaLiquida; // por agora igual
-    const ocupacao = noitesDisponiveis > 0
-        ? (noitesOcupadas / noitesDisponiveis) * 100
-        : 0;
-    const precoMedio = noitesOcupadas > 0
-        ? receitaBruta / noitesOcupadas
-        : 0;
-
-    document.getElementById("kpiReceitaBruta").textContent = formatarEuro(receitaBruta);
-    document.getElementById("kpiReceitaLiquida").textContent = formatarEuro(receitaLiquida);
-    document.getElementById("kpiOcupacao").textContent = formatarPercent(ocupacao);
-    document.getElementById("kpiPrecoMedio").textContent = formatarEuro(precoMedio);
-    document.getElementById("kpiLucro").textContent = formatarEuro(lucro);
 }
 
 // -------------------------------------------------------------
-// 6) TABELAS MENSAL / ANUAL
+// PROCESSAR RESERVAS EM AGREGAÇÕES MENSAIS E ANUAIS
 // -------------------------------------------------------------
-function preencherTabelaMensal(mapaMensal) {
-    const tbody = document.querySelector("#tabelaMensal tbody");
-    tbody.innerHTML = "";
 
-    const linhas = Object.values(mapaMensal).sort((a, b) => {
-        if (a.ano !== b.ano) return a.ano - b.ano;
-        return a.mes - b.mes;
-    });
+function processarReservas() {
+    agregadosMensais = {};
+    agregadosAnuais = {};
 
-    linhas.forEach(m => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${nomeMes(m.mes)} ${m.ano}</td>
-            <td>${formatarEuro(m.receitaBruta)}</td>
-            <td>${formatarEuro(m.custos)}</td>
-            <td>${formatarEuro(m.receitaLiquida)}</td>
-            <td>${formatarPercent(m.ocupacao)}</td>
-            <td>${formatarEuro(m.precoMedio)}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
+    reservas.forEach(r => {
+        const checkinDate = parseDataDDMMYYYY(r.checkin);
+        const checkoutDate = parseDataDDMMYYYY(r.checkout);
+        if (!checkinDate || !checkoutDate) return;
 
-function preencherTabelaAnual(mapaAnual) {
-    const tbody = document.querySelector("#tabelaAnual tbody");
-    tbody.innerHTML = "";
+        const anoCheckin = checkinDate.getFullYear();
+        const mesCheckin = checkinDate.getMonth() + 1; // 1-12
 
-    const linhas = Object.values(mapaAnual).sort((a, b) => a.ano - b.ano);
+        const totalBruto = Number(r.totalBruto || 0);
+        const comissaoTotal = Number(r.comissaoTotal || r.comissao || 0);
+        const limpezaBase = Number(r.limpeza || 0);
+        const numAps = Array.isArray(r.apartamentos) ? r.apartamentos.length : 1;
+        const limpezaTotal = limpezaBase * numAps;
 
-    linhas.forEach(a => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${a.ano}</td>
-            <td>${formatarEuro(a.receitaBruta)}</td>
-            <td>${formatarEuro(a.custos)}</td>
-            <td>${formatarEuro(a.receitaLiquida)}</td>
-            <td>${formatarPercent(a.ocupacao)}</td>
-            <td>${formatarEuro(a.precoMedio)}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
+        // Noites por mês (para ocupação e preço médio)
+        const noitesPorMes = calcularNoitesPorMes(r);
 
-// -------------------------------------------------------------
-// 7) GRÁFICOS
-// -------------------------------------------------------------
-function criarOuAtualizarGrafico(ctx, tipo, dados, opcoes, instanciaAtual) {
-    if (instanciaAtual) instanciaAtual.destroy();
-    return new Chart(ctx, {
-        type: tipo,
-        data: dados,
-        options: opcoes
-    });
-}
+        // -------------------------------------------------
+        // 1) AGREGAR MENSAL
+        // -------------------------------------------------
+        if (!agregadosMensais[anoCheckin]) agregadosMensais[anoCheckin] = {};
 
-function atualizarGraficos(mapaMensal, mapaAnual, anoFiltro) {
-    const ctxReceita = document.getElementById("graficoReceita").getContext("2d");
-    const ctxOcupacao = document.getElementById("graficoOcupacao").getContext("2d");
-    const ctxCustos = document.getElementById("graficoCustos").getContext("2d");
-    const ctxComparacao = document.getElementById("graficoComparacao").getContext("2d");
-
-    // --- Receita Mensal (barras) ---
-    const mesesOrdenados = Object.values(mapaMensal)
-        .filter(m => !anoFiltro || m.ano === anoFiltro)
-        .sort((a, b) => (a.ano - b.ano) || (a.mes - b.mes));
-
-    const labelsMes = mesesOrdenados.map(m => `${nomeMes(m.mes)} ${m.ano}`);
-    const dadosBrutoMes = mesesOrdenados.map(m => m.receitaBruta);
-    const dadosLiquidoMes = mesesOrdenados.map(m => m.receitaLiquida);
-
-    const tipo = obterTipoComparacao(); // "bruto" ou "liquido"
-
-const dadosMes = tipo === "bruto"
-    ? dadosBrutoMes
-    : dadosLiquidoMes;
-
-graficoReceita = criarOuAtualizarGrafico(
-    ctxReceita,
-    "bar",
-    {
-        labels: labelsMes,
-        datasets: [
-            {
-                label: tipo === "bruto" ? "Receita Bruta" : "Receita Líquida",
-                data: dadosMes,
-                backgroundColor: "rgba(25, 118, 210, 0.7)"
+        // Garantir que todos os 12 meses existem
+        for (let m = 1; m <= 12; m++) {
+            if (!agregadosMensais[anoCheckin][m]) {
+                agregadosMensais[anoCheckin][m] = {
+                    bruto: 0,
+                    custos: 0,
+                    liquido: 0,
+                    noites: 0,
+                    ocupacao: 0,
+                    precoMedio: 0
+                };
             }
-        ]
-    },
-
-        {
-            responsive: true,
-            plugins: { legend: { position: "top" } },
-            scales: { y: { beginAtZero: true } }
-        },
-        graficoReceita
-    );
-
-    // --- Ocupação Mensal (linha) ---
-    const dadosOcupacaoMes = mesesOrdenados.map(m => m.ocupacao);
-
-    graficoOcupacao = criarOuAtualizarGrafico(
-        ctxOcupacao,
-        "line",
-        {
-            labels: labelsMes,
-            datasets: [
-                {
-                    label: "Ocupação (%)",
-                    data: dadosOcupacaoMes,
-                    borderColor: "rgba(25, 118, 210, 1)",
-                    backgroundColor: "rgba(25, 118, 210, 0.2)",
-                    tension: 0.2
-                }
-            ]
-        },
-        {
-            responsive: true,
-            plugins: { legend: { position: "top" } },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100
-                }
-            }
-        },
-        graficoOcupacao
-    );
-
-    // --- Distribuição de Custos (pizza) ---
-    let totalComissoes = 0;
-    let totalLimpezas = 0;
-
-    reservasResultados.forEach(r => {
-        totalComissoes += obterComissaoTotal(r);
-        totalLimpezas += obterLimpeza(r);
-    });
-
-    graficoCustos = criarOuAtualizarGrafico(
-        ctxCustos,
-        "pie",
-        {
-            labels: ["Comissões", "Limpezas"],
-            datasets: [
-                {
-                    data: [totalComissoes, totalLimpezas],
-                    backgroundColor: [
-                        "rgba(25, 118, 210, 0.8)",
-                        "rgba(13, 71, 161, 0.8)"
-                    ]
-                }
-            ]
-        },
-        {
-            responsive: true,
-            plugins: { legend: { position: "bottom" } }
-        },
-        graficoCustos
-    );
-
-    // --- Comparação Anual (Ano vs Ano Anterior, bruto ou líquido) ---
-    const anosOrdenados = Object.values(mapaAnual).sort((a, b) => a.ano - b.ano);
-    const labelsAno = anosOrdenados.map(a => a.ano);
-
-    const tipoComparacao = obterTipoComparacao(); // "bruto" ou "liquido"
-    const valoresAno = anosOrdenados.map(a =>
-        tipoComparacao === "bruto" ? a.receitaBruta : a.receitaLiquida
-    );
-
-    // calcular variações ano vs ano anterior
-    const variacoesAno = valoresAno.map((v, i) => {
-        if (i === 0) return null;
-        const anterior = valoresAno[i - 1];
-        if (!anterior) return null;
-        return ((v - anterior) / anterior) * 100;
-    });
-
-    graficoComparacao = criarOuAtualizarGrafico(
-        ctxComparacao,
-        "bar",
-        {
-            labels: labelsAno,
-            datasets: [
-                {
-                    label: tipoComparacao === "bruto" ? "Receita Bruta" : "Receita Líquida",
-                    data: valoresAno,
-                    backgroundColor: "rgba(25, 118, 210, 0.7)"
-                }
-            ]
-        },
-        {
-            responsive: true,
-            plugins: { legend: { position: "top" } },
-            scales: { y: { beginAtZero: true } }
-        },
-        graficoComparacao
-    );
-
-    // atualizar texto de comparação
-    atualizarComparacaoTexto(labelsAno, valoresAno, variacoesAno);
-}
-
-function atualizarComparacaoTexto(labels, valores, variacoes) {
-    const div = document.getElementById("comparacaoTexto");
-    if (!div) return;
-
-    div.innerHTML = "";
-
-    for (let i = 1; i < labels.length; i++) {
-        const ano = labels[i];
-        const valor = valores[i];
-        const varPct = variacoes[i];
-
-        const p = document.createElement("p");
-
-        if (varPct === null) {
-            p.textContent = `${ano}: sem comparação com ano anterior`;
-        } else {
-            const direcao = varPct > 0 ? "↑" : (varPct < 0 ? "↓" : "→");
-            const sinal = varPct > 0 ? "+" : "";
-            p.textContent = `${ano}: ${valor.toFixed(2)} € (${sinal}${varPct.toFixed(1)}% ${direcao})`;
         }
 
-        div.appendChild(p);
-    }
-}
+        // Receita e custos: 100% no mês do check-in
+        const mesObj = agregadosMensais[anoCheckin][mesCheckin];
+        mesObj.bruto += totalBruto;
+        mesObj.custos += (comissaoTotal + limpezaTotal);
 
+        // Noites: distribuídas pelos meses reais
+        Object.keys(noitesPorMes).forEach(chave => {
+            const [anoStr, mesStr] = chave.split("-");
+            const ano = Number(anoStr);
+            const mes = Number(mesStr);
+            const noitesMes = noitesPorMes[chave];
 
-// -------------------------------------------------------------
-// 8) POPULAR SELECT DE ANOS
-// -------------------------------------------------------------
-function popularAnos(reservas) {
-    const selectAno = document.getElementById("filtroAno");
-    selectAno.innerHTML = "";
+            if (!agregadosMensais[ano]) agregadosMensais[ano] = {};
+            if (!agregadosMensais[ano][mes]) {
+                agregadosMensais[ano][mes] = {
+                    bruto: 0,
+                    custos: 0,
+                    liquido: 0,
+                    noites: 0,
+                    ocupacao: 0,
+                    precoMedio: 0
+                };
+            }
 
-    const anos = new Set();
-    reservas.forEach(r => {
-        const d = parseDataPt(r.checkin);
-        if (d) anos.add(d.getFullYear());
+            agregadosMensais[ano][mes].noites += noitesMes;
+        });
     });
 
-    const anosOrdenados = Array.from(anos).sort((a, b) => a - b);
+    // -------------------------------------------------
+    // 2) CALCULAR LÍQUIDO, OCUPAÇÃO, PREÇO MÉDIO
+    // -------------------------------------------------
+    Object.keys(agregadosMensais).forEach(anoStr => {
+        const ano = Number(anoStr);
+        const meses = agregadosMensais[ano];
 
-    const optTodos = document.createElement("option");
-    optTodos.value = "";
-    optTodos.textContent = "Todos";
-    selectAno.appendChild(optTodos);
+        for (let m = 1; m <= 12; m++) {
+            if (!meses[m]) {
+                meses[m] = {
+                    bruto: 0,
+                    custos: 0,
+                    liquido: 0,
+                    noites: 0,
+                    ocupacao: 0,
+                    precoMedio: 0
+                };
+            }
 
-    anosOrdenados.forEach(a => {
+            const mesObj = meses[m];
+
+            // Receita líquida
+            mesObj.liquido = mesObj.bruto - mesObj.custos;
+
+            // Ocupação = noites / (diasDoMes * 3 apartamentos)
+            const dias = diasNoMes(m, ano);
+            const noitesDisponiveis = dias * 3;
+            mesObj.ocupacao = noitesDisponiveis > 0
+                ? (mesObj.noites / noitesDisponiveis) * 100
+                : 0;
+
+            // Preço médio = receita bruta do mês / noites do mês
+            mesObj.precoMedio = mesObj.noites > 0
+                ? mesObj.bruto / mesObj.noites
+                : 0;
+        }
+    });
+
+    // -------------------------------------------------
+    // 3) AGREGAR ANUAL
+    // -------------------------------------------------
+    agregadosAnuais = {};
+
+    Object.keys(agregadosMensais).forEach(anoStr => {
+        const ano = Number(anoStr);
+        const meses = agregadosMensais[ano];
+
+        let brutoTotal = 0;
+        let custosTotal = 0;
+        let liquidoTotal = 0;
+        let noitesTotal = 0;
+        let noitesDisponiveisTotal = 0;
+
+        for (let m = 1; m <= 12; m++) {
+            const mesObj = meses[m];
+            brutoTotal += mesObj.bruto;
+            custosTotal += mesObj.custos;
+            liquidoTotal += mesObj.liquido;
+            noitesTotal += mesObj.noites;
+
+            const dias = diasNoMes(m, ano);
+            noitesDisponiveisTotal += dias * 3;
+        }
+
+        const ocupacaoAnual = noitesDisponiveisTotal > 0
+            ? (noitesTotal / noitesDisponiveisTotal) * 100
+            : 0;
+
+        const precoMedioAnual = noitesTotal > 0
+            ? brutoTotal / noitesTotal
+            : 0;
+
+        agregadosAnuais[ano] = {
+            bruto: brutoTotal,
+            custos: custosTotal,
+            liquido: liquidoTotal,
+            ocupacao: ocupacaoAnual,
+            precoMedio: precoMedioAnual
+        };
+    });
+
+    // Depois de processar tudo, inicializar filtros, KPIs, tabelas e gráficos
+    inicializarFiltros();
+    atualizarTudo();
+}
+
+// -------------------------------------------------------------
+// FILTROS (ANO, MÊS, TIPO COMPARAÇÃO)
+// -------------------------------------------------------------
+
+function inicializarFiltros() {
+    const filtroAno = document.getElementById("filtroAno");
+    filtroAno.innerHTML = "";
+
+    const anos = Object.keys(agregadosMensais)
+        .map(a => Number(a))
+        .sort((a, b) => a - b);
+
+    anos.forEach(ano => {
         const opt = document.createElement("option");
-        opt.value = a;
-        opt.textContent = a;
-        selectAno.appendChild(opt);
+        opt.value = ano;
+        opt.textContent = ano;
+        filtroAno.appendChild(opt);
     });
+
+    // Selecionar último ano por defeito
+    if (anos.length > 0) {
+        filtroAno.value = anos[anos.length - 1];
+    }
+
+    const btn = document.getElementById("btnAplicarFiltros");
+    btn.onclick = atualizarTudo;
 }
 
 // -------------------------------------------------------------
-// 9) APLICAR FILTROS DO DASHBOARD
+// ATUALIZAR TUDO (KPIs, TABELAS, GRÁFICOS)
 // -------------------------------------------------------------
-function aplicarFiltrosResultados() {
-    const { ano, mes } = obterFiltroAnoMes();
-    const mapaMensal = agregarPorMes(reservasResultados);
-    const mapaAnual = agregarPorAno(reservasResultados);
 
-    atualizarKPIs(reservasResultados, ano, mes);
-    preencherTabelaMensal(mapaMensal);
-    preencherTabelaAnual(mapaAnual);
-    atualizarGraficos(mapaMensal, mapaAnual, ano);
+function atualizarTudo() {
+    const anoSelecionado = Number(document.getElementById("filtroAno").value || 0);
+    const mesSelecionado = document.getElementById("filtroMes").value; // "" ou "1".."12"
+
+    atualizarKPIs(anoSelecionado, mesSelecionado);
+    atualizarTabelaMensal(anoSelecionado);
+    atualizarTabelaAnualComparativa();
+    atualizarGraficos(anoSelecionado);
 }
 
 // -------------------------------------------------------------
-// 10) INICIAR RESULTADOS
+// ATUALIZAR KPIs
 // -------------------------------------------------------------
-async function iniciarResultados() {
-    reservasResultados = await carregarReservasNormalizadas();
-    popularAnos(reservasResultados);
 
-    document.getElementById("btnAplicarFiltros").addEventListener("click", aplicarFiltrosResultados);
+function atualizarKPIs(ano, mesStr) {
+    const kpiBruto = document.getElementById("kpiReceitaBruta");
+    const kpiLiquido = document.getElementById("kpiReceitaLiquida");
+    const kpiOcupacao = document.getElementById("kpiOcupacao");
+    const kpiPrecoMedio = document.getElementById("kpiPrecoMedio");
+    const kpiLucro = document.getElementById("kpiLucro");
 
-    const selTipo = document.getElementById("tipoComparacao");
-if (selTipo) {
-    selTipo.addEventListener("change", aplicarFiltrosResultados);
-}
-
-
-    aplicarFiltrosResultados();
-}
-
-// Esperar Firebase
-firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-        window.location.href = "login.html";
+    if (!agregadosMensais[ano]) {
+        kpiBruto.textContent = "0 €";
+        kpiLiquido.textContent = "0 €";
+        kpiOcupacao.textContent = "0%";
+        kpiPrecoMedio.textContent = "0 €";
+        kpiLucro.textContent = "0 €";
         return;
     }
 
-    iniciarResultados();
-});
+    const meses = agregadosMensais[ano];
 
+    let brutoTotal = 0;
+    let custosTotal = 0;
+    let liquidoTotal = 0;
+    let noitesTotal = 0;
+    let noitesDisponiveisTotal = 0;
+
+    for (let m = 1; m <= 12; m++) {
+        const mesObj = meses[m];
+        const dias = diasNoMes(m, ano);
+        const noitesDisp = dias * 3;
+
+        // Se tiver mês selecionado, só conta esse
+        if (mesStr && Number(mesStr) !== m) continue;
+
+        brutoTotal += mesObj.bruto;
+        custosTotal += mesObj.custos;
+        liquidoTotal += mesObj.liquido;
+        noitesTotal += mesObj.noites;
+        noitesDisponiveisTotal += noitesDisp;
+    }
+
+    const ocupacao = noitesDisponiveisTotal > 0
+        ? (noitesTotal / noitesDisponiveisTotal) * 100
+        : 0;
+
+    const precoMedio = noitesTotal > 0
+        ? brutoTotal / noitesTotal
+        : 0;
+
+    const lucro = liquidoTotal; // aqui podes depois subtrair outros custos fixos se quiseres
+
+    kpiBruto.textContent = formatarEuro(brutoTotal);
+    kpiLiquido.textContent = formatarEuro(liquidoTotal);
+    kpiOcupacao.textContent = formatarPercent(ocupacao);
+    kpiPrecoMedio.textContent = formatarEuro(precoMedio);
+    kpiLucro.textContent = formatarEuro(lucro);
+}
+
+// -------------------------------------------------------------
+// TABELA MENSAL (já existe no HTML)
+// -------------------------------------------------------------
+
+function atualizarTabelaMensal(ano) {
+    const tbody = document.querySelector("#tabelaMensal tbody");
+    tbody.innerHTML = "";
+
+    if (!agregadosMensais[ano]) return;
+
+    const meses = agregadosMensais[ano];
+
+    for (let m = 1; m <= 12; m++) {
+        const mesObj = meses[m];
+
+        const tr = document.createElement("tr");
+
+        const tdMes = document.createElement("td");
+        tdMes.textContent = `${NOMES_MESES[m - 1]} ${ano}`;
+        tr.appendChild(tdMes);
+
+        const tdBruto = document.createElement("td");
+        tdBruto.textContent = formatarEuro(mesObj.bruto);
+        tr.appendChild(tdBruto);
+
+        const tdCustos = document.createElement("td");
+        tdCustos.textContent = formatarEuro(mesObj.custos);
+        tr.appendChild(tdCustos);
+
+        const tdLiquido = document.createElement("td");
+        tdLiquido.textContent = formatarEuro(mesObj.liquido);
+        tr.appendChild(tdLiquido);
+
+        const tdOcupacao = document.createElement("td");
+        tdOcupacao.textContent = formatarPercent(mesObj.ocupacao);
+        tr.appendChild(tdOcupacao);
+
+        const tdPrecoMedio = document.createElement("td");
+        tdPrecoMedio.textContent = formatarEuro(mesObj.precoMedio);
+        tr.appendChild(tdPrecoMedio);
+
+        tbody.appendChild(tr);
+    }
+}
+
+// -------------------------------------------------------------
+// TABELA ANUAL COMPARATIVA (Formato 3: mini-tabela em cada célula)
+// -------------------------------------------------------------
+
+function atualizarTabelaAnualComparativa() {
+    const tabela = document.getElementById("tabelaAnual");
+    const thead = tabela.querySelector("thead");
+    const tbody = tabela.querySelector("tbody");
+
+    tbody.innerHTML = "";
+
+    const anos = Object.keys(agregadosMensais)
+        .map(a => Number(a))
+        .sort((a, b) => a - b);
+
+    if (anos.length === 0) {
+        thead.innerHTML = `
+            <tr>
+                <th>Mês</th>
+            </tr>
+        `;
+        return;
+    }
+
+    // Cabeçalho dinâmico: Mês + 1 coluna por ano
+    let headerHtml = "<tr><th>Mês</th>";
+    anos.forEach(ano => {
+        headerHtml += `<th>${ano}</th>`;
+    });
+    headerHtml += "</tr>";
+    thead.innerHTML = headerHtml;
+
+    // Linhas: 12 meses
+    for (let m = 1; m <= 12; m++) {
+        const tr = document.createElement("tr");
+
+        const tdMes = document.createElement("td");
+        tdMes.textContent = NOMES_MESES[m - 1];
+        tr.appendChild(tdMes);
+
+        anos.forEach(ano => {
+            const tdAno = document.createElement("td");
+
+            const mesesAno = agregadosMensais[ano] || {};
+            const mesObj = mesesAno[m] || {
+                bruto: 0,
+                custos: 0,
+                liquido: 0,
+                ocupacao: 0,
+                precoMedio: 0
+            };
+
+            // Mini-tabela dentro da célula (Formato 3)
+            tdAno.innerHTML = `
+                <table class="mini-tabela">
+                    <tr><td>Bruto:</td><td>${formatarEuro(mesObj.bruto)}</td></tr>
+                    <tr><td>Custos:</td><td>${formatarEuro(mesObj.custos)}</td></tr>
+                    <tr><td>Líquido:</td><td>${formatarEuro(mesObj.liquido)}</td></tr>
+                    <tr><td>Ocupação:</td><td>${formatarPercent(mesObj.ocupacao)}</td></tr>
+                    <tr><td>Preço Médio:</td><td>${formatarEuro(mesObj.precoMedio)}</td></tr>
+                </table>
+            `;
+
+            tr.appendChild(tdAno);
+        });
+
+        tbody.appendChild(tr);
+    }
+}
+
+// -------------------------------------------------------------
+// GRÁFICOS (Chart.js) - versão simples mas funcional
+// -------------------------------------------------------------
+
+function atualizarGraficos(ano) {
+    const meses = agregadosMensais[ano];
+    if (!meses) return;
+
+    const labels = NOMES_MESES;
+    const dadosBruto = [];
+    const dadosOcupacao = [];
+    const dadosCustos = [];
+
+    for (let m = 1; m <= 12; m++) {
+        const mesObj = meses[m];
+        dadosBruto.push(mesObj.bruto);
+        dadosOcupacao.push(mesObj.ocupacao);
+        dadosCustos.push(mesObj.custos);
+    }
+
+    // Receita Mensal
+    const ctxReceita = document.getElementById("graficoReceita").getContext("2d");
+    if (graficoReceita) graficoReceita.destroy();
+    graficoReceita = new Chart(ctxReceita, {
+        type: "bar",
+        data: {
+            labels,
+            datasets: [{
+                label: "Receita Bruta",
+                data: dadosBruto,
+                backgroundColor: "rgba(75, 192, 192, 0.6)"
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            }
+        }
+    });
+
+    // Ocupação Mensal
+    const ctxOcupacao = document.getElementById("graficoOcupacao").getContext("2d");
+    if (graficoOcupacao) graficoOcupacao.destroy();
+    graficoOcupacao = new Chart(ctxOcupacao, {
+        type: "line",
+        data: {
+            labels,
+            datasets: [{
+                label: "Ocupação (%)",
+                data: dadosOcupacao,
+                borderColor: "rgba(255, 159, 64, 1)",
+                backgroundColor: "rgba(255, 159, 64, 0.2)",
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            },
+            scales: {
+                y: {
+                    ticks: {
+                        callback: value => `${value}%`
+                    }
+                }
+            }
+        }
+    });
+
+    // Distribuição de Custos
+    const ctxCustos = document.getElementById("graficoCustos").getContext("2d");
+    if (graficoCustos) graficoCustos.destroy();
+    graficoCustos = new Chart(ctxCustos, {
+        type: "bar",
+        data: {
+            labels,
+            datasets: [{
+                label: "Custos",
+                data: dadosCustos,
+                backgroundColor: "rgba(255, 99, 132, 0.6)"
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            }
+        }
+    });
+
+    // Comparação Entre Anos (bruto ou líquido)
+    const tipoComparacao = document.getElementById("tipoComparacao").value; // "bruto" ou "liquido"
+    const ctxComparacao = document.getElementById("graficoComparacao").getContext("2d");
+    if (graficoComparacao) graficoComparacao.destroy();
+
+    const anos = Object.keys(agregadosAnuais)
+        .map(a => Number(a))
+        .sort((a, b) => a - b);
+
+    const dadosComparacao = anos.map(a => {
+        const obj = agregadosAnuais[a];
+        return tipoComparacao === "bruto" ? obj.bruto : obj.liquido;
+    });
+
+    graficoComparacao = new Chart(ctxComparacao, {
+        type: "bar",
+        data: {
+            labels: anos.map(a => a.toString()),
+            datasets: [{
+                label: tipoComparacao === "bruto" ? "Receita Bruta Anual" : "Receita Líquida Anual",
+                data: dadosComparacao,
+                backgroundColor: "rgba(54, 162, 235, 0.6)"
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            }
+        }
+    });
+}
+
+// -------------------------------------------------------------
+// INICIALIZAÇÃO
+// -------------------------------------------------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+    carregarReservas();
+});
