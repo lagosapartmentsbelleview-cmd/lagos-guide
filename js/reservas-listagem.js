@@ -393,6 +393,16 @@ function desenharTabela(lista = reservas) {
         // Texto dos apartamentos
         const apartamentosTexto = (r.apartamentos || []).join(", ");
 
+        // Número real de apartamentos
+const numAps = Array.isArray(r.apartamentos) ? r.apartamentos.length : 1;
+
+// Valor/noite por apartamento
+const precoNoiteCorrigido = (Number(r.totalBruto) / numAps) / Number(r.noites);
+
+// Limpeza total (por apartamento)
+const limpezaCorrigida = Number(r.limpeza) * numAps;
+
+
         // 🔥 COR DA LINHA CONSOANTE O PAGAMENTO
         if (r.statusPagamento === "total") {
         tr.classList.add("pago-total");
@@ -419,9 +429,9 @@ function desenharTabela(lista = reservas) {
             <td>${r.noites !== undefined ? Math.round(r.noites) : ""}</td>
             <td>${r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : ""}</td>
             <td>${r.comissao !== undefined ? Number(r.comissao).toFixed(2) : ""}</td>
-            <td>${r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : ""}</td>
+            <td>${precoNoiteCorrigido.toFixed(2)}</td>
             <td>${r.berco ? "Sim" : "Não"}</td>
-            <td>${r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : ""}</td>
+            <td>${limpezaCorrigida.toFixed(2)}</td>
 
            <td>
             <button class="btnDetalhe" onclick="detalheReserva('${r.id}')">🔍</button>
