@@ -600,5 +600,15 @@ function atualizarGraficos(ano) {
 // -------------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
-    carregarReservas();
+    firebase.auth().onAuthStateChanged(user => {
+        if (!user) {
+            console.warn("Utilizador não autenticado. A redirecionar para login...");
+            window.location.href = "login.html";
+            return;
+        }
+
+        console.log("Utilizador autenticado:", user.email);
+        carregarReservas();
+    });
 });
+
