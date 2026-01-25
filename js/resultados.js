@@ -4,7 +4,6 @@
 // -------------------------------------------------------------
 
 // Referência ao Firestore (firebase-config.js já inicializou firebase)
-const db = firebase.firestore();
 
 // Armazena todas as reservas carregadas
 let reservas = [];
