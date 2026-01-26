@@ -1,5 +1,8 @@
 console.log("JS DA LISTAGEM A CORRER — VERSÃO FINAL");
 
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+
 // -------------------------------------------------------------
 // 0) ESTADO GLOBAL
 // -------------------------------------------------------------
