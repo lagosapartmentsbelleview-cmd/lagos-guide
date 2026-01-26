@@ -1,21 +1,27 @@
 // -------------------------------------------------------------
-// RESULTADOS.JS
-// Lógica de KPIs, tabelas e gráficos de resultados
+// RESULTADOS.JS (VERSÃO AVANÇADA COM MODO FINANCEIRO/OPERACIONAL)
 // -------------------------------------------------------------
 
-// Referência ao Firestore (firebase-config.js já inicializou firebase)
+// Firestore já inicializado em firebase-config.js
 
-// Armazena todas as reservas carregadas
-let reservas = [];
+// -------------------------------------------------------------
+// ESTADO GLOBAL
+// -------------------------------------------------------------
 
-// Estruturas agregadas
-let agregadosMensais = {}; // { ano: { mes: { ... } } }
-let agregadosAnuais = {};  // { ano: { ... } }
+let reservas = [];                 // Todas as reservas carregadas
+let modoAtual = "financeiro";      // "financeiro" ou "operacional"
 
-// Gráficos Chart.js
+// Agregações separadas por modo
+let agregadosFinanceirosMensais = {};
+let agregadosFinanceirosAnuais = {};
+
+let agregadosOperacionaisMensais = {};
+let agregadosOperacionaisAnuais = {};
+
+// Gráficos
 let graficoReceita, graficoOcupacao, graficoCustos, graficoComparacao;
 
-// Nomes dos meses
+// Meses
 const NOMES_MESES = [
     "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
     "Jul", "Ago", "Set", "Out", "Nov", "Dez"
@@ -31,56 +37,44 @@ function parseDataDDMMYYYY(str) {
     return new Date(Number(ano), Number(mes) - 1, Number(dia));
 }
 
-// Conta noites por (ano, mes) entre check-in e check-out
-// Regra A: contagem simples por datas (diaAtual -> diaSeguinte)
 function calcularNoitesPorMes(reserva) {
-    const mapa = {}; // chave "ano-mes" -> noites
-
+    const mapa = {};
     const checkin = parseDataDDMMYYYY(reserva.checkin);
     const checkout = parseDataDDMMYYYY(reserva.checkout);
     if (!checkin || !checkout) return mapa;
 
-    // Vamos iterar noite a noite: diaAtual -> diaSeguinte
     let atual = new Date(checkin.getTime());
-
     while (atual < checkout) {
         const ano = atual.getFullYear();
-        const mes = atual.getMonth() + 1; // 1-12
-
+        const mes = atual.getMonth() + 1;
         const chave = `${ano}-${mes}`;
         if (!mapa[chave]) mapa[chave] = 0;
         mapa[chave] += 1;
-
-        // Avança um dia
         atual.setDate(atual.getDate() + 1);
     }
-
     return mapa;
 }
 
-// Número de dias num mês/ano
 function diasNoMes(mes, ano) {
     return new Date(ano, mes, 0).getDate();
 }
 
-// Formatar número como moeda €
-function formatarEuro(valor) {
-    if (isNaN(valor)) return "0 €";
-    return valor.toLocaleString("pt-PT", {
+function formatarEuro(v) {
+    if (isNaN(v)) return "0 €";
+    return v.toLocaleString("pt-PT", {
         style: "currency",
         currency: "EUR",
         minimumFractionDigits: 2
     });
 }
 
-// Formatar percentagem
-function formatarPercent(valor) {
-    if (isNaN(valor)) return "0%";
-    return `${valor.toFixed(1)} %`;
+function formatarPercent(v) {
+    if (isNaN(v)) return "0%";
+    return `${v.toFixed(1)} %`;
 }
 
 // -------------------------------------------------------------
-// CARREGAR RESERVAS DO FIRESTORE
+// CARREGAR RESERVAS
 // -------------------------------------------------------------
 
 function carregarReservas() {
@@ -90,26 +84,27 @@ function carregarReservas() {
             reservas = snapshot.docs.map(doc => doc.data());
             processarReservas();
         })
-        .catch(err => {
-            console.error("Erro ao carregar reservas:", err);
-        });
+        .catch(err => console.error("Erro ao carregar reservas:", err));
 }
 
 // -------------------------------------------------------------
-// PROCESSAR RESERVAS EM AGREGAÇÕES MENSAIS E ANUAIS
+// PROCESSAR RESERVAS (FINANCEIRO + OPERACIONAL)
 // -------------------------------------------------------------
 
 function processarReservas() {
-    agregadosMensais = {};
-    agregadosAnuais = {};
+    agregadosFinanceirosMensais = {};
+    agregadosFinanceirosAnuais = {};
+
+    agregadosOperacionaisMensais = {};
+    agregadosOperacionaisAnuais = {};
 
     reservas.forEach(r => {
-        const checkinDate = parseDataDDMMYYYY(r.checkin);
-        const checkoutDate = parseDataDDMMYYYY(r.checkout);
-        if (!checkinDate || !checkoutDate) return;
+        const checkin = parseDataDDMMYYYY(r.checkin);
+        const checkout = parseDataDDMMYYYY(r.checkout);
+        if (!checkin || !checkout) return;
 
-        const anoCheckin = checkinDate.getFullYear();
-        const mesCheckin = checkinDate.getMonth() + 1; // 1-12
+        const anoCheckin = checkin.getFullYear();
+        const mesCheckin = checkin.getMonth() + 1;
 
         const totalBruto = Number(r.totalBruto || 0);
         const comissaoTotal = Number(r.comissaoTotal || r.comissao || 0);
@@ -117,43 +112,40 @@ function processarReservas() {
         const numAps = Array.isArray(r.apartamentos) ? r.apartamentos.length : 1;
         const limpezaTotal = limpezaBase * numAps;
 
-        // Noites por mês (para ocupação e preço médio)
         const noitesPorMes = calcularNoitesPorMes(r);
 
-        // -------------------------------------------------
-        // 1) AGREGAR MENSAL
-        // -------------------------------------------------
-        if (!agregadosMensais[anoCheckin]) agregadosMensais[anoCheckin] = {};
+        // ---------------------------------------------------------
+        // FINANCEIRO — receita e custos 100% no mês do check-in
+        // ---------------------------------------------------------
+        if (!agregadosFinanceirosMensais[anoCheckin])
+            agregadosFinanceirosMensais[anoCheckin] = {};
 
-        // Garantir que todos os 12 meses existem
-        for (let m = 1; m <= 12; m++) {
-            if (!agregadosMensais[anoCheckin][m]) {
-                agregadosMensais[anoCheckin][m] = {
-                    bruto: 0,
-                    custos: 0,
-                    liquido: 0,
-                    noites: 0,
-                    ocupacao: 0,
-                    precoMedio: 0
-                };
-            }
+        if (!agregadosFinanceirosMensais[anoCheckin][mesCheckin]) {
+            agregadosFinanceirosMensais[anoCheckin][mesCheckin] = {
+                bruto: 0,
+                custos: 0,
+                liquido: 0,
+                noites: 0,
+                ocupacao: 0,
+                precoMedio: 0
+            };
         }
 
-        // Receita e custos: 100% no mês do check-in
-        const mesObj = agregadosMensais[anoCheckin][mesCheckin];
-        mesObj.bruto += totalBruto;
-        mesObj.custos += (comissaoTotal + limpezaTotal);
+        agregadosFinanceirosMensais[anoCheckin][mesCheckin].bruto += totalBruto;
+        agregadosFinanceirosMensais[anoCheckin][mesCheckin].custos += (comissaoTotal + limpezaTotal);
 
-        // Noites: distribuídas pelos meses reais
+        // Noites distribuídas (para ocupação e preço médio financeiro)
         Object.keys(noitesPorMes).forEach(chave => {
             const [anoStr, mesStr] = chave.split("-");
             const ano = Number(anoStr);
             const mes = Number(mesStr);
-            const noitesMes = noitesPorMes[chave];
+            const noites = noitesPorMes[chave];
 
-            if (!agregadosMensais[ano]) agregadosMensais[ano] = {};
-            if (!agregadosMensais[ano][mes]) {
-                agregadosMensais[ano][mes] = {
+            if (!agregadosFinanceirosMensais[ano])
+                agregadosFinanceirosMensais[ano] = {};
+
+            if (!agregadosFinanceirosMensais[ano][mes]) {
+                agregadosFinanceirosMensais[ano][mes] = {
                     bruto: 0,
                     custos: 0,
                     liquido: 0,
@@ -163,16 +155,63 @@ function processarReservas() {
                 };
             }
 
-            agregadosMensais[ano][mes].noites += noitesMes;
+            agregadosFinanceirosMensais[ano][mes].noites += noites;
+        });
+
+        // ---------------------------------------------------------
+        // OPERACIONAL — receita proporcional às noites
+        // ---------------------------------------------------------
+        Object.keys(noitesPorMes).forEach(chave => {
+            const [anoStr, mesStr] = chave.split("-");
+            const ano = Number(anoStr);
+            const mes = Number(mesStr);
+            const noites = noitesPorMes[chave];
+
+            if (!agregadosOperacionaisMensais[ano])
+                agregadosOperacionaisMensais[ano] = {};
+
+            if (!agregadosOperacionaisMensais[ano][mes]) {
+                agregadosOperacionaisMensais[ano][mes] = {
+                    bruto: 0,
+                    custos: 0,
+                    liquido: 0,
+                    noites: 0,
+                    ocupacao: 0,
+                    precoMedio: 0,
+                    revpar: 0
+                };
+            }
+
+            const totalNoitesReserva = Object.values(noitesPorMes).reduce((a, b) => a + b, 0);
+            const receitaProporcional = totalNoitesReserva > 0
+                ? (totalBruto * (noites / totalNoitesReserva))
+                : 0;
+
+            const custosProporcionais = totalNoitesReserva > 0
+                ? ((comissaoTotal + limpezaTotal) * (noites / totalNoitesReserva))
+                : 0;
+
+            agregadosOperacionaisMensais[ano][mes].bruto += receitaProporcional;
+            agregadosOperacionaisMensais[ano][mes].custos += custosProporcionais;
+            agregadosOperacionaisMensais[ano][mes].noites += noites;
         });
     });
 
-    // -------------------------------------------------
-    // 2) CALCULAR LÍQUIDO, OCUPAÇÃO, PREÇO MÉDIO
-    // -------------------------------------------------
-    Object.keys(agregadosMensais).forEach(anoStr => {
+    // Depois disto, vamos calcular totais, KPIs e preparar filtros
+    finalizarAgregacoes();
+}
+// -------------------------------------------------------------
+// FINALIZAR AGREGAÇÕES (FINANCEIRO + OPERACIONAL)
+// -------------------------------------------------------------
+
+function finalizarAgregacoes() {
+
+    // ---------------------------------------------------------
+    // 1) COMPLETAR FINANCEIRO (líquido, ocupação, preço médio)
+    // ---------------------------------------------------------
+    Object.keys(agregadosFinanceirosMensais).forEach(anoStr => {
         const ano = Number(anoStr);
-        const meses = agregadosMensais[ano];
+        const meses = agregadosFinanceirosMensais[ano];
 
         for (let m = 1; m <= 12; m++) {
             if (!meses[m]) {
@@ -188,101 +227,150 @@ function processarReservas() {
 
             const mesObj = meses[m];
 
-            // Receita líquida
             mesObj.liquido = mesObj.bruto - mesObj.custos;
 
-            // Ocupação = noites / (diasDoMes * 3 apartamentos)
             const dias = diasNoMes(m, ano);
-            const noitesDisponiveis = dias * 3;
-            mesObj.ocupacao = noitesDisponiveis > 0
-                ? (mesObj.noites / noitesDisponiveis) * 100
+            const noitesDisp = dias * 3;
+
+            mesObj.ocupacao = noitesDisp > 0
+                ? (mesObj.noites / noitesDisp) * 100
                 : 0;
 
-            // Preço médio = receita bruta do mês / noites do mês
             mesObj.precoMedio = mesObj.noites > 0
                 ? mesObj.bruto / mesObj.noites
                 : 0;
         }
     });
 
-    // -------------------------------------------------
-    // 3) AGREGAR ANUAL
-    // -------------------------------------------------
-    agregadosAnuais = {};
-
-    Object.keys(agregadosMensais).forEach(anoStr => {
+    // ---------------------------------------------------------
+    // 2) COMPLETAR OPERACIONAL (líquido, ocupação, preço médio, RevPAR)
+    // ---------------------------------------------------------
+    Object.keys(agregadosOperacionaisMensais).forEach(anoStr => {
         const ano = Number(anoStr);
-        const meses = agregadosMensais[ano];
+        const meses = agregadosOperacionaisMensais[ano];
 
-        let brutoTotal = 0;
-        let custosTotal = 0;
-        let liquidoTotal = 0;
-        let noitesTotal = 0;
-        let noitesDisponiveisTotal = 0;
+        for (let m = 1; m <= 12; m++) {
+            if (!meses[m]) {
+                meses[m] = {
+                    bruto: 0,
+                    custos: 0,
+                    liquido: 0,
+                    noites: 0,
+                    ocupacao: 0,
+                    precoMedio: 0,
+                    revpar: 0
+                };
+            }
+
+            const mesObj = meses[m];
+
+            mesObj.liquido = mesObj.bruto - mesObj.custos;
+
+            const dias = diasNoMes(m, ano);
+            const noitesDisp = dias * 3;
+
+            mesObj.ocupacao = noitesDisp > 0
+                ? (mesObj.noites / noitesDisp) * 100
+                : 0;
+
+            mesObj.precoMedio = mesObj.noites > 0
+                ? mesObj.bruto / mesObj.noites
+                : 0;
+
+            mesObj.revpar = noitesDisp > 0
+                ? mesObj.bruto / noitesDisp
+                : 0;
+        }
+    });
+
+    // ---------------------------------------------------------
+    // 3) AGREGAR ANUAL — FINANCEIRO
+    // ---------------------------------------------------------
+    agregadosFinanceirosAnuais = {};
+
+    Object.keys(agregadosFinanceirosMensais).forEach(anoStr => {
+        const ano = Number(anoStr);
+        const meses = agregadosFinanceirosMensais[ano];
+
+        let bruto = 0, custos = 0, liquido = 0;
+        let noites = 0, noitesDisp = 0;
 
         for (let m = 1; m <= 12; m++) {
             const mesObj = meses[m];
-            brutoTotal += mesObj.bruto;
-            custosTotal += mesObj.custos;
-            liquidoTotal += mesObj.liquido;
-            noitesTotal += mesObj.noites;
+            bruto += mesObj.bruto;
+            custos += mesObj.custos;
+            liquido += mesObj.liquido;
+            noites += mesObj.noites;
 
-            const dias = diasNoMes(m, ano);
-            noitesDisponiveisTotal += dias * 3;
+            noitesDisp += diasNoMes(m, ano) * 3;
         }
 
-        const ocupacaoAnual = noitesDisponiveisTotal > 0
-            ? (noitesTotal / noitesDisponiveisTotal) * 100
-            : 0;
-
-        const precoMedioAnual = noitesTotal > 0
-            ? brutoTotal / noitesTotal
-            : 0;
-
-        agregadosAnuais[ano] = {
-            bruto: brutoTotal,
-            custos: custosTotal,
-            liquido: liquidoTotal,
-            ocupacao: ocupacaoAnual,
-            precoMedio: precoMedioAnual
+        agregadosFinanceirosAnuais[ano] = {
+            bruto,
+            custos,
+            liquido,
+            ocupacao: noitesDisp > 0 ? (noites / noitesDisp) * 100 : 0,
+            precoMedio: noites > 0 ? bruto / noites : 0
         };
     });
 
-    // Depois de processar tudo, inicializar filtros, KPIs, tabelas e gráficos
+    // ---------------------------------------------------------
+    // 4) AGREGAR ANUAL — OPERACIONAL
+    // ---------------------------------------------------------
+    agregadosOperacionaisAnuais = {};
+
+    Object.keys(agregadosOperacionaisMensais).forEach(anoStr => {
+        const ano = Number(anoStr);
+        const meses = agregadosOperacionaisMensais[ano];
+
+        let bruto = 0, custos = 0, liquido = 0;
+        let noites = 0, noitesDisp = 0;
+
+        for (let m = 1; m <= 12; m++) {
+            const mesObj = meses[m];
+            bruto += mesObj.bruto;
+            custos += mesObj.custos;
+            liquido += mesObj.liquido;
+            noites += mesObj.noites;
+
+            noitesDisp += diasNoMes(m, ano) * 3;
+        }
+
+        agregadosOperacionaisAnuais[ano] = {
+            bruto,
+            custos,
+            liquido,
+            ocupacao: noitesDisp > 0 ? (noites / noitesDisp) * 100 : 0,
+            precoMedio: noites > 0 ? bruto / noites : 0,
+            revpar: noitesDisp > 0 ? bruto / noitesDisp : 0
+        };
+    });
+
+    // ---------------------------------------------------------
+    // 5) PREPARAR FILTROS (2020–2050)
+    // ---------------------------------------------------------
     inicializarFiltros();
+
+    // ---------------------------------------------------------
+    // 6) ATUALIZAR TUDO
+    // ---------------------------------------------------------
+    atualizarTudo();
+}
+// -------------------------------------------------------------
+// ALTERAR MODO (FINANCEIRO / OPERACIONAL)
+// -------------------------------------------------------------
+
+function ativarModo(modo) {
+    modoAtual = modo;
+
+    document.getElementById("btnFinanceiro").classList.toggle("ativo", modo === "financeiro");
+    document.getElementById("btnOperacional").classList.toggle("ativo", modo === "operacional");
+
     atualizarTudo();
 }
 
 // -------------------------------------------------------------
-// FILTROS (ANO, MÊS, TIPO COMPARAÇÃO)
-// -------------------------------------------------------------
-
-function inicializarFiltros() {
-    const filtroAno = document.getElementById("filtroAno");
-    filtroAno.innerHTML = "";
-
-    const anos = Object.keys(agregadosMensais)
-        .map(a => Number(a))
-        .sort((a, b) => a - b);
-
-    anos.forEach(ano => {
-        const opt = document.createElement("option");
-        opt.value = ano;
-        opt.textContent = ano;
-        filtroAno.appendChild(opt);
-    });
-
-    // Selecionar último ano por defeito
-    if (anos.length > 0) {
-        filtroAno.value = anos[anos.length - 1];
-    }
-
-    const btn = document.getElementById("btnAplicarFiltros");
-    btn.onclick = atualizarTudo;
-}
-
-// -------------------------------------------------------------
-// ATUALIZAR TUDO (KPIs, TABELAS, GRÁFICOS)
+// ATUALIZAR TUDO (KPIs, Tabelas, Gráficos)
 // -------------------------------------------------------------
 
 function atualizarTudo() {
@@ -290,180 +378,178 @@ function atualizarTudo() {
     const mesSelecionado = document.getElementById("filtroMes").value; // "" ou "1".."12"
 
     atualizarKPIs(anoSelecionado, mesSelecionado);
-    atualizarTabelaMensal(anoSelecionado);
-    atualizarTabelaAnualComparativa();
+    atualizarTabelas(anoSelecionado);
     atualizarGraficos(anoSelecionado);
 }
 
 // -------------------------------------------------------------
-// ATUALIZAR KPIs
+// ATUALIZAR KPIs (FINANCEIRO OU OPERACIONAL)
 // -------------------------------------------------------------
 
 function atualizarKPIs(ano, mesStr) {
+
     const kpiBruto = document.getElementById("kpiReceitaBruta");
     const kpiLiquido = document.getElementById("kpiReceitaLiquida");
     const kpiOcupacao = document.getElementById("kpiOcupacao");
     const kpiPrecoMedio = document.getElementById("kpiPrecoMedio");
     const kpiLucro = document.getElementById("kpiLucro");
+    const kpiRevpar = document.getElementById("kpiRevpar"); // NOVO KPI
 
-    if (!agregadosMensais[ano]) {
+    let fonteMensal = modoAtual === "financeiro"
+        ? agregadosFinanceirosMensais
+        : agregadosOperacionaisMensais;
+
+    if (!fonteMensal[ano]) {
         kpiBruto.textContent = "0 €";
         kpiLiquido.textContent = "0 €";
         kpiOcupacao.textContent = "0%";
         kpiPrecoMedio.textContent = "0 €";
         kpiLucro.textContent = "0 €";
+        if (kpiRevpar) kpiRevpar.textContent = "0 €";
         return;
     }
 
-    const meses = agregadosMensais[ano];
+    const meses = fonteMensal[ano];
 
     let brutoTotal = 0;
     let custosTotal = 0;
     let liquidoTotal = 0;
     let noitesTotal = 0;
-    let noitesDisponiveisTotal = 0;
+    let noitesDispTotal = 0;
 
     for (let m = 1; m <= 12; m++) {
+        if (mesStr && Number(mesStr) !== m) continue;
+
         const mesObj = meses[m];
         const dias = diasNoMes(m, ano);
         const noitesDisp = dias * 3;
-
-        // Se tiver mês selecionado, só conta esse
-        if (mesStr && Number(mesStr) !== m) continue;
 
         brutoTotal += mesObj.bruto;
         custosTotal += mesObj.custos;
         liquidoTotal += mesObj.liquido;
         noitesTotal += mesObj.noites;
-        noitesDisponiveisTotal += noitesDisp;
+        noitesDispTotal += noitesDisp;
     }
 
-    const ocupacao = noitesDisponiveisTotal > 0
-        ? (noitesTotal / noitesDisponiveisTotal) * 100
+    const ocupacao = noitesDispTotal > 0
+        ? (noitesTotal / noitesDispTotal) * 100
         : 0;
 
     const precoMedio = noitesTotal > 0
         ? brutoTotal / noitesTotal
         : 0;
 
-    const lucro = liquidoTotal; // aqui podes depois subtrair outros custos fixos se quiseres
+    const lucro = liquidoTotal;
 
+    // RevPAR só existe no modo operacional
+    const revpar = modoAtual === "operacional"
+        ? (noitesDispTotal > 0 ? brutoTotal / noitesDispTotal : 0)
+        : 0;
+
+    // Atualizar KPIs
     kpiBruto.textContent = formatarEuro(brutoTotal);
     kpiLiquido.textContent = formatarEuro(liquidoTotal);
     kpiOcupacao.textContent = formatarPercent(ocupacao);
     kpiPrecoMedio.textContent = formatarEuro(precoMedio);
     kpiLucro.textContent = formatarEuro(lucro);
+
+    if (kpiRevpar) {
+        kpiRevpar.style.display = modoAtual === "operacional" ? "block" : "none";
+        kpiRevpar.textContent = formatarEuro(revpar);
+    }
 }
 
 // -------------------------------------------------------------
-// TABELA MENSAL (já existe no HTML)
+// ATUALIZAR TABELAS (FINANCEIRO OU OPERACIONAL)
 // -------------------------------------------------------------
 
-function atualizarTabelaMensal(ano) {
+function atualizarTabelas(ano) {
+
+    if (modoAtual === "financeiro") {
+        atualizarTabelaMensalFinanceiro(ano);
+        atualizarTabelaAnualFinanceiro();
+        document.getElementById("cardEvolucaoPrecoMedio").style.display = "none";
+        document.getElementById("btnMostrarMais").style.display = "none";
+        document.getElementById("cardTabelaCustos").style.display = "none";
+        document.getElementById("cardTabelaAnualOperacional").style.display = "none";
+    }
+
+    if (modoAtual === "operacional") {
+        atualizarTabelaMensalOperacional(ano);
+        atualizarTabelaEvolucaoPrecoMedio();
+        document.getElementById("cardEvolucaoPrecoMedio").style.display = "block";
+
+        // Mostrar mais (tabelas escondidas)
+        document.getElementById("btnMostrarMais").style.display = "block";
+    }
+}
+// -------------------------------------------------------------
+// TABELAS — FINANCEIRO
+// -------------------------------------------------------------
+
+function atualizarTabelaMensalFinanceiro(ano) {
     const tbody = document.querySelector("#tabelaMensal tbody");
     tbody.innerHTML = "";
 
-    if (!agregadosMensais[ano]) return;
-
-    const meses = agregadosMensais[ano];
+    const meses = agregadosFinanceirosMensais[ano];
+    if (!meses) return;
 
     for (let m = 1; m <= 12; m++) {
         const mesObj = meses[m];
 
         const tr = document.createElement("tr");
 
-        const tdMes = document.createElement("td");
-        tdMes.textContent = `${NOMES_MESES[m - 1]} ${ano}`;
-        tr.appendChild(tdMes);
-
-        const tdBruto = document.createElement("td");
-        tdBruto.textContent = formatarEuro(mesObj.bruto);
-        tr.appendChild(tdBruto);
-
-        const tdCustos = document.createElement("td");
-        tdCustos.textContent = formatarEuro(mesObj.custos);
-        tr.appendChild(tdCustos);
-
-        const tdLiquido = document.createElement("td");
-        tdLiquido.textContent = formatarEuro(mesObj.liquido);
-        tr.appendChild(tdLiquido);
-
-        const tdOcupacao = document.createElement("td");
-        tdOcupacao.textContent = formatarPercent(mesObj.ocupacao);
-        tr.appendChild(tdOcupacao);
-
-        const tdPrecoMedio = document.createElement("td");
-        tdPrecoMedio.textContent = formatarEuro(mesObj.precoMedio);
-        tr.appendChild(tdPrecoMedio);
+        tr.innerHTML = `
+            <td>${NOMES_MESES[m - 1]} ${ano}</td>
+            <td>${formatarEuro(mesObj.bruto)}</td>
+            <td>${formatarEuro(mesObj.custos)}</td>
+            <td>${formatarEuro(mesObj.liquido)}</td>
+            <td>${formatarPercent(mesObj.ocupacao)}</td>
+            <td>${formatarEuro(mesObj.precoMedio)}</td>
+        `;
 
         tbody.appendChild(tr);
     }
 }
 
-// -------------------------------------------------------------
-// TABELA ANUAL COMPARATIVA (Formato 3: mini-tabela em cada célula)
-// -------------------------------------------------------------
-
-function atualizarTabelaAnualComparativa() {
+function atualizarTabelaAnualFinanceiro() {
     const tabela = document.getElementById("tabelaAnual");
     const thead = tabela.querySelector("thead");
     const tbody = tabela.querySelector("tbody");
 
     tbody.innerHTML = "";
 
-    const anos = Object.keys(agregadosMensais)
-        .map(a => Number(a))
-        .sort((a, b) => a - b);
+    const anos = [];
+    for (let a = 2020; a <= 2050; a++) anos.push(a);
 
-    if (anos.length === 0) {
-        thead.innerHTML = `
-            <tr>
-                <th>Mês</th>
-            </tr>
-        `;
-        return;
-    }
+    // Cabeçalho
+    let header = "<tr><th>Mês</th>";
+    anos.forEach(a => header += `<th>${a}</th>`);
+    header += "</tr>";
+    thead.innerHTML = header;
 
-    // Cabeçalho dinâmico: Mês + 1 coluna por ano
-    let headerHtml = "<tr><th>Mês</th>";
-    anos.forEach(ano => {
-        headerHtml += `<th>${ano}</th>`;
-    });
-    headerHtml += "</tr>";
-    thead.innerHTML = headerHtml;
-
-    // Linhas: 12 meses
+    // Linhas
     for (let m = 1; m <= 12; m++) {
         const tr = document.createElement("tr");
-
-        const tdMes = document.createElement("td");
-        tdMes.textContent = NOMES_MESES[m - 1];
-        tr.appendChild(tdMes);
+        tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
 
         anos.forEach(ano => {
-            const tdAno = document.createElement("td");
-
-            const mesesAno = agregadosMensais[ano] || {};
+            const mesesAno = agregadosFinanceirosMensais[ano] || {};
             const mesObj = mesesAno[m] || {
-                bruto: 0,
-                custos: 0,
-                liquido: 0,
-                ocupacao: 0,
-                precoMedio: 0
+                bruto: 0, custos: 0, liquido: 0, ocupacao: 0, precoMedio: 0
             };
 
-            // Mini-tabela dentro da célula (Formato 3)
-            tdAno.innerHTML = `
-                <table class="mini-tabela">
-                    <tr><td>Bruto:</td><td>${formatarEuro(mesObj.bruto)}</td></tr>
-                    <tr><td>Custos:</td><td>${formatarEuro(mesObj.custos)}</td></tr>
-                    <tr><td>Líquido:</td><td>${formatarEuro(mesObj.liquido)}</td></tr>
-                    <tr><td>Ocupação:</td><td>${formatarPercent(mesObj.ocupacao)}</td></tr>
-                    <tr><td>Preço Médio:</td><td>${formatarEuro(mesObj.precoMedio)}</td></tr>
-                </table>
+            tr.innerHTML += `
+                <td>
+                    <table class="mini-tabela">
+                        <tr><td>Bruto:</td><td>${formatarEuro(mesObj.bruto)}</td></tr>
+                        <tr><td>Custos:</td><td>${formatarEuro(mesObj.custos)}</td></tr>
+                        <tr><td>Líquido:</td><td>${formatarEuro(mesObj.liquido)}</td></tr>
+                        <tr><td>Ocupação:</td><td>${formatarPercent(mesObj.ocupacao)}</td></tr>
+                        <tr><td>Preço Médio:</td><td>${formatarEuro(mesObj.precoMedio)}</td></tr>
+                    </table>
+                </td>
             `;
-
-            tr.appendChild(tdAno);
         });
 
         tbody.appendChild(tr);
@@ -471,11 +557,245 @@ function atualizarTabelaAnualComparativa() {
 }
 
 // -------------------------------------------------------------
-// GRÁFICOS (Chart.js) - versão simples mas funcional
+// TABELAS — OPERACIONAL
+// -------------------------------------------------------------
+
+function atualizarTabelaMensalOperacional(ano) {
+    const tbody = document.querySelector("#tabelaMensal tbody");
+    tbody.innerHTML = "";
+
+    const meses = agregadosOperacionaisMensais[ano];
+    if (!meses) return;
+
+    for (let m = 1; m <= 12; m++) {
+        const mesObj = meses[m];
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${NOMES_MESES[m - 1]} ${ano}</td>
+            <td>${formatarEuro(mesObj.bruto)}</td>
+            <td>${formatarEuro(mesObj.custos)}</td>
+            <td>${formatarEuro(mesObj.liquido)}</td>
+            <td>${formatarPercent(mesObj.ocupacao)}</td>
+            <td>${formatarEuro(mesObj.precoMedio)}</td>
+            <td>${formatarEuro(mesObj.revpar)}</td>
+        `;
+
+        tbody.appendChild(tr);
+    }
+}
+
+// -------------------------------------------------------------
+// TABELA ANUAL OPERACIONAL (fica escondida até clicar "Mostrar mais")
+// -------------------------------------------------------------
+
+function atualizarTabelaAnualOperacional() {
+    const tabela = document.getElementById("tabelaAnualOperacional");
+    const thead = tabela.querySelector("thead");
+    const tbody = tabela.querySelector("tbody");
+
+    tbody.innerHTML = "";
+
+    const anos = [];
+    for (let a = 2020; a <= 2050; a++) anos.push(a);
+
+    // Cabeçalho
+    let header = "<tr><th>Mês</th>";
+    anos.forEach(a => header += `<th>${a}</th>`);
+    header += "</tr>";
+    thead.innerHTML = header;
+
+    // Linhas
+    for (let m = 1; m <= 12; m++) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
+
+        anos.forEach(ano => {
+            const mesesAno = agregadosOperacionaisMensais[ano] || {};
+            const mesObj = mesesAno[m] || {
+                bruto: 0, custos: 0, liquido: 0, ocupacao: 0, precoMedio: 0, revpar: 0
+            };
+
+            tr.innerHTML += `
+                <td>
+                    <table class="mini-tabela">
+                        <tr><td>Bruto:</td><td>${formatarEuro(mesObj.bruto)}</td></tr>
+                        <tr><td>Custos:</td><td>${formatarEuro(mesObj.custos)}</td></tr>
+                        <tr><td>Líquido:</td><td>${formatarEuro(mesObj.liquido)}</td></tr>
+                        <tr><td>Ocupação:</td><td>${formatarPercent(mesObj.ocupacao)}</td></tr>
+                        <tr><td>Preço Médio:</td><td>${formatarEuro(mesObj.precoMedio)}</td></tr>
+                        <tr><td>RevPAR:</td><td>${formatarEuro(mesObj.revpar)}</td></tr>
+                    </table>
+                </td>
+            `;
+        });
+
+        tbody.appendChild(tr);
+    }
+}
+// -------------------------------------------------------------
+// TABELA — EVOLUÇÃO DO PREÇO MÉDIO (OPERACIONAL)
+// -------------------------------------------------------------
+
+function atualizarTabelaEvolucaoPrecoMedio() {
+    const tabela = document.getElementById("tabelaEvolucaoPrecoMedio");
+    const thead = tabela.querySelector("thead");
+    const tbody = tabela.querySelector("tbody");
+
+    tbody.innerHTML = "";
+
+    // Anos fixos 2020–2050
+    const anos = [];
+    for (let a = 2020; a <= 2050; a++) anos.push(a);
+
+    // Cabeçalho
+    let header = "<tr><th>Mês</th>";
+    anos.forEach(a => header += `<th>${a}</th>`);
+    header += "<th>Evolução Anual</th><th>Evolução Acumulada</th></tr>";
+    thead.innerHTML = header;
+
+    // Primeiro ano com dados (para evolução acumulada)
+    const anosComDados = Object.keys(agregadosOperacionaisMensais)
+        .map(a => Number(a))
+        .sort((a, b) => a - b);
+
+    const primeiroAno = anosComDados.length > 0 ? anosComDados[0] : null;
+
+    // Linhas
+    for (let m = 1; m <= 12; m++) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
+
+        let precoAnoAnterior = null;
+        let precoPrimeiroAno = null;
+
+        anos.forEach(ano => {
+            const mesesAno = agregadosOperacionaisMensais[ano] || {};
+            const mesObj = mesesAno[m] || { precoMedio: 0 };
+
+            const preco = mesObj.precoMedio;
+
+            if (ano === primeiroAno) precoPrimeiroAno = preco;
+
+            tr.innerHTML += `<td>${formatarEuro(preco)}</td>`;
+
+            // Guardar para evolução anual
+            if (preco > 0) precoAnoAnterior = preco;
+        });
+
+        // Evolução anual (ano atual vs ano anterior)
+        let evolucaoAnual = 0;
+        let evolucaoAcumulada = 0;
+
+        const anoAtual = Number(document.getElementById("filtroAno").value);
+
+        const mesesAnoAtual = agregadosOperacionaisMensais[anoAtual] || {};
+        const precoAtual = mesesAnoAtual[m] ? mesesAnoAtual[m].precoMedio : 0;
+
+        const precoAnoAnteriorReal = agregadosOperacionaisMensais[anoAtual - 1]
+            ? (agregadosOperacionaisMensais[anoAtual - 1][m]
+                ? agregadosOperacionaisMensais[anoAtual - 1][m].precoMedio
+                : 0)
+            : 0;
+
+        if (precoAnoAnteriorReal > 0) {
+            evolucaoAnual = ((precoAtual - precoAnoAnteriorReal) / precoAnoAnteriorReal) * 100;
+        }
+
+        if (precoPrimeiroAno > 0) {
+            evolucaoAcumulada = ((precoAtual - precoPrimeiroAno) / precoPrimeiroAno) * 100;
+        }
+
+        tr.innerHTML += `
+            <td>${formatarPercent(evolucaoAnual)}</td>
+            <td>${formatarPercent(evolucaoAcumulada)}</td>
+        `;
+
+        tbody.appendChild(tr);
+    }
+}
+
+// -------------------------------------------------------------
+// TABELA — CUSTOS (OPERACIONAL) — escondida até clicar "Mostrar mais"
+// -------------------------------------------------------------
+
+function atualizarTabelaCustos() {
+    const tabela = document.getElementById("tabelaCustos");
+    const thead = tabela.querySelector("thead");
+    const tbody = tabela.querySelector("tbody");
+
+    tbody.innerHTML = "";
+
+    const anos = [];
+    for (let a = 2020; a <= 2050; a++) anos.push(a);
+
+    // Cabeçalho
+    let header = "<tr><th>Mês</th>";
+    anos.forEach(a => header += `<th>${a}</th>`);
+    header += "</tr>";
+    thead.innerHTML = header;
+
+    // Linhas
+    for (let m = 1; m <= 12; m++) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
+
+        anos.forEach(ano => {
+            const mesesAno = agregadosOperacionaisMensais[ano] || {};
+            const mesObj = mesesAno[m] || { custos: 0, bruto: 0 };
+
+            const percent = mesObj.bruto > 0
+                ? (mesObj.custos / mesObj.bruto) * 100
+                : 0;
+
+            tr.innerHTML += `
+                <td>
+                    <table class="mini-tabela">
+                        <tr><td>Custos:</td><td>${formatarEuro(mesObj.custos)}</td></tr>
+                        <tr><td>% Receita:</td><td>${formatarPercent(percent)}</td></tr>
+                    </table>
+                </td>
+            `;
+        });
+
+        tbody.appendChild(tr);
+    }
+}
+
+// -------------------------------------------------------------
+// BOTÃO "MOSTRAR MAIS" — revela tabelas adicionais
+// -------------------------------------------------------------
+
+document.getElementById("btnMostrarMais").addEventListener("click", () => {
+    const cardAnual = document.getElementById("cardTabelaAnualOperacional");
+    const cardCustos = document.getElementById("cardTabelaCustos");
+
+    const visivel = cardAnual.style.display === "block";
+
+    if (visivel) {
+        cardAnual.style.display = "none";
+        cardCustos.style.display = "none";
+        document.getElementById("btnMostrarMais").textContent = "Mostrar mais estatísticas operacionais";
+    } else {
+        atualizarTabelaAnualOperacional();
+        atualizarTabelaCustos();
+        cardAnual.style.display = "block";
+        cardCustos.style.display = "block";
+        document.getElementById("btnMostrarMais").textContent = "Ocultar estatísticas operacionais";
+    }
+});
+// -------------------------------------------------------------
+// GRÁFICOS (FINANCEIRO OU OPERACIONAL)
 // -------------------------------------------------------------
 
 function atualizarGraficos(ano) {
-    const meses = agregadosMensais[ano];
+
+    const fonteMensal = modoAtual === "financeiro"
+        ? agregadosFinanceirosMensais
+        : agregadosOperacionaisMensais;
+
+    const meses = fonteMensal[ano];
     if (!meses) return;
 
     const labels = NOMES_MESES;
@@ -490,30 +810,31 @@ function atualizarGraficos(ano) {
         dadosCustos.push(mesObj.custos);
     }
 
-    // Receita Mensal
+    // ---------------------------------------------------------
+    // GRÁFICO — RECEITA
+    // ---------------------------------------------------------
     const ctxReceita = document.getElementById("graficoReceita").getContext("2d");
     if (graficoReceita) graficoReceita.destroy();
+
     graficoReceita = new Chart(ctxReceita, {
         type: "bar",
         data: {
             labels,
             datasets: [{
-                label: "Receita Bruta",
+                label: modoAtual === "financeiro" ? "Receita Bruta (Financeiro)" : "Receita Bruta (Operacional)",
                 data: dadosBruto,
                 backgroundColor: "rgba(75, 192, 192, 0.6)"
             }]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: true }
-            }
-        }
+        options: { responsive: true }
     });
 
-    // Ocupação Mensal
+    // ---------------------------------------------------------
+    // GRÁFICO — OCUPAÇÃO
+    // ---------------------------------------------------------
     const ctxOcupacao = document.getElementById("graficoOcupacao").getContext("2d");
     if (graficoOcupacao) graficoOcupacao.destroy();
+
     graficoOcupacao = new Chart(ctxOcupacao, {
         type: "line",
         data: {
@@ -528,22 +849,18 @@ function atualizarGraficos(ano) {
         },
         options: {
             responsive: true,
-            plugins: {
-                legend: { display: true }
-            },
             scales: {
-                y: {
-                    ticks: {
-                        callback: value => `${value}%`
-                    }
-                }
+                y: { ticks: { callback: v => `${v}%` } }
             }
         }
     });
 
-    // Distribuição de Custos
+    // ---------------------------------------------------------
+    // GRÁFICO — CUSTOS
+    // ---------------------------------------------------------
     const ctxCustos = document.getElementById("graficoCustos").getContext("2d");
     if (graficoCustos) graficoCustos.destroy();
+
     graficoCustos = new Chart(ctxCustos, {
         type: "bar",
         data: {
@@ -554,26 +871,27 @@ function atualizarGraficos(ano) {
                 backgroundColor: "rgba(255, 99, 132, 0.6)"
             }]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: true }
-            }
-        }
+        options: { responsive: true }
     });
 
-    // Comparação Entre Anos (bruto ou líquido)
-    const tipoComparacao = document.getElementById("tipoComparacao").value; // "bruto" ou "liquido"
+    // ---------------------------------------------------------
+    // GRÁFICO — COMPARAÇÃO ENTRE ANOS
+    // ---------------------------------------------------------
     const ctxComparacao = document.getElementById("graficoComparacao").getContext("2d");
     if (graficoComparacao) graficoComparacao.destroy();
 
-    const anos = Object.keys(agregadosAnuais)
-        .map(a => Number(a))
-        .sort((a, b) => a - b);
+    const anos = [];
+    for (let a = 2020; a <= 2050; a++) anos.push(a);
+
+    const tipoComparacao = document.getElementById("tipoComparacao").value;
 
     const dadosComparacao = anos.map(a => {
-        const obj = agregadosAnuais[a];
-        return tipoComparacao === "bruto" ? obj.bruto : obj.liquido;
+        const fonte = modoAtual === "financeiro"
+            ? agregadosFinanceirosAnuais[a]
+            : agregadosOperacionaisAnuais[a];
+
+        if (!fonte) return 0;
+        return tipoComparacao === "bruto" ? fonte.bruto : fonte.liquido;
     });
 
     graficoComparacao = new Chart(ctxComparacao, {
@@ -581,33 +899,54 @@ function atualizarGraficos(ano) {
         data: {
             labels: anos.map(a => a.toString()),
             datasets: [{
-                label: tipoComparacao === "bruto" ? "Receita Bruta Anual" : "Receita Líquida Anual",
+                label: tipoComparacao === "bruto"
+                    ? "Receita Bruta Anual"
+                    : "Receita Líquida Anual",
                 data: dadosComparacao,
                 backgroundColor: "rgba(54, 162, 235, 0.6)"
             }]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: true }
-            }
-        }
+        options: { responsive: true }
     });
 }
 
 // -------------------------------------------------------------
-// INICIALIZAÇÃO
+// INICIALIZAR FILTROS (2020–2050)
+// -------------------------------------------------------------
+
+function inicializarFiltros() {
+    const filtroAno = document.getElementById("filtroAno");
+    filtroAno.innerHTML = "";
+
+    for (let ano = 2020; ano <= 2050; ano++) {
+        const opt = document.createElement("option");
+        opt.value = ano;
+        opt.textContent = ano;
+        filtroAno.appendChild(opt);
+    }
+
+    filtroAno.value = new Date().getFullYear();
+
+    document.getElementById("btnAplicarFiltros").onclick = atualizarTudo;
+}
+
+// -------------------------------------------------------------
+// INICIALIZAÇÃO FINAL
 // -------------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    // Botões de modo
+    document.getElementById("btnFinanceiro").onclick = () => ativarModo("financeiro");
+    document.getElementById("btnOperacional").onclick = () => ativarModo("operacional");
+
+    // Firebase Auth
     firebase.auth().onAuthStateChanged(user => {
         if (!user) {
-            console.warn("Utilizador não autenticado. A redirecionar para login...");
             window.location.href = "login.html";
             return;
         }
 
-        console.log("Utilizador autenticado:", user.email);
         carregarReservas();
     });
 });
