@@ -1906,14 +1906,15 @@ async function carregarReservasNormalizadas() {
 }
 
 document.getElementById("btnExportExcel").addEventListener("click", function () {
-    const tabela = document.querySelector("#tabelaReservas");
+    const tabela = document.getElementById("tabelaReservas");
     if (!tabela) return;
 
-    const html = tabela.outerHTML.replace(/ /g, '%20');
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.table_to_sheet(tabela, { raw: true });
 
-    const a = document.createElement('a');
-    a.href = 'data:application/vnd.ms-excel,' + html;
-    a.download = 'reservas.xls';
-    a.click();
+    XLSX.utils.book_append_sheet(wb, ws, "Reservas");
+
+    XLSX.writeFile(wb, "reservas.xlsx");
 });
+
 
