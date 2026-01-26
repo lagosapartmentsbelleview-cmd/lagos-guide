@@ -181,3 +181,154 @@ document.getElementById("btnLimpar").addEventListener("click", function () {
 
     alert("Dados limpos com sucesso.");
 });
+// ===============================
+// GRELHA MENSAL – CARTÕES
+// ===============================
+
+// Feriados nacionais (fixos + móveis)
+const feriadosFixos = {
+    "01-01": "Ano Novo",
+    "04-25": "25 de Abril",
+    "05-01": "Dia do Trabalhador",
+    "06-10": "Dia de Portugal",
+    "08-15": "Assunção de Maria",
+    "10-05": "Implantação da República",
+    "11-01": "Dia de Todos os Santos",
+    "12-01": "Restauração da Independência",
+    "12-08": "Imaculada Conceição",
+    "12-25": "Natal"
+};
+
+// Eventos (exemplo)
+const eventos = [
+    { nome: "Festival dos Descobrimentos", inicio: "2026-05-01", fim: "2026-05-05", local: "Lagos" },
+    { nome: "MotoGP Portimão", inicio: "2026-03-20", fim: "2026-03-22", local: "Portimão" }
+];
+
+// Disponibilidade (placeholder)
+function obterDisponibilidade(dataISO) {
+    return 2; // depois ligamos ao teu sistema real
+}
+
+// Verifica se data está dentro de um evento
+function eventosDoDia(dataISO) {
+    return eventos.filter(ev => dataISO >= ev.inicio && dataISO <= ev.fim);
+}
+
+// Gera cartões ao mudar mês/ano
+document.getElementById("selAno").addEventListener("change", gerarGrelha);
+document.getElementById("selMes").addEventListener("change", gerarGrelha);
+
+function gerarGrelha() {
+    const ano = parseInt(document.getElementById("selAno").value);
+    const mes = parseInt(document.getElementById("selMes").value);
+
+    const grelha = document.getElementById("grelhaDias");
+    grelha.innerHTML = "";
+
+    const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+
+    for (let dia = 1; dia <= diasNoMes; dia++) {
+        const diaStr = String(dia).padStart(2, "0");
+        const mesStr = String(mes + 1).padStart(2, "0");
+        const dataISO = `${ano}-${mesStr}-${diaStr}`;
+
+        const dateObj = new Date(dataISO);
+        const diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+        const diaSemana = diasSemana[dateObj.getDay()];
+
+        const fimDeSemana = (diaSemana === "Sáb" || diaSemana === "Dom");
+
+        const feriadoNome = feriadosFixos[`${mesStr}-${diaStr}`] || null;
+
+        const eventosHoje = eventosDoDia(dataISO);
+
+        // Preço Vitasol
+        const vitasol = obterPrecoVitasol(dataISO);
+
+        // Disponibilidade
+        const dispo = obterDisponibilidade(dataISO);
+
+        // Se esgotado → cartão cinzento
+        if (dispo === 0) {
+            grelha.appendChild(criarCardEsgotado(dataISO, diaSemana));
+            continue;
+        }
+
+        // Descontos
+        const descontos = lerDescontosSelecionados();
+        const margem = lerMargem();
+
+        let finalDesejado = vitasol ? vitasol - margem : null;
+        let baseBooking = finalDesejado ? calcularPrecoBase(finalDesejado, descontos) : null;
+
+        grelha.appendChild(
+            criarCardDia({
+                dataISO,
+                diaSemana,
+                fimDeSemana,
+                feriadoNome,
+                eventosHoje,
+                vitasol,
+                finalDesejado,
+                baseBooking,
+                dispo
+            })
+        );
+    }
+}
+
+// Busca preço Vitasol importado
+function obterPrecoVitasol(dataISO) {
+    if (!window.concorrenciaLista) return null;
+    const item = window.concorrenciaLista.find(x => x.data === dataISO);
+    return item ? item.preco : null;
+}
+
+// Guardar lista global ao carregar Firebase
+db.collection("concorrencia").doc("dados").get().then(doc => {
+    if (doc.exists) {
+        window.concorrenciaLista = doc.data().lista;
+    }
+});
+
+// Cria cartão normal
+function criarCardDia(info) {
+    const card = document.createElement("div");
+    card.className = "card-dia";
+
+    card.innerHTML = `
+        <h4>📅 ${info.dataISO} (${info.diaSemana})</h4>
+
+        ${info.fimDeSemana ? `<div class="tag fds">🔵 Fim de semana</div>` : ""}
+
+        ${info.feriadoNome ? `<div class="tag feriado">🔴 ${info.feriadoNome}</div>` : ""}
+
+        ${info.eventosHoje.length > 0 ? 
+            info.eventosHoje.map(ev => `<div class="tag evento">🟠 ${ev.nome}</div>`).join("") 
+            : ""}
+
+        <div class="tag">💰 Vitasol: ${info.vitasol ? info.vitasol + " €" : "—"}</div>
+
+        <div class="tag">🎯 Final: ${info.finalDesejado ? info.finalDesejado.toFixed(2) + " €" : "—"}</div>
+
+        <div class="tag">🏷️ Base: ${info.baseBooking ? info.baseBooking.toFixed(2) + " €" : "—"}</div>
+
+        <div class="tag dispo">🟢 Disponibilidade: ${info.dispo}/3</div>
+    `;
+
+    return card;
+}
+
+// Cartão esgotado
+function criarCardEsgotado(dataISO, diaSemana) {
+    const card = document.createElement("div");
+    card.className = "card-dia card-esgotado";
+
+    card.innerHTML = `
+        <h4>📅 ${dataISO} (${diaSemana})</h4>
+        <div class="tag">❌ Esgotado</div>
+    `;
+
+    return card;
+}
