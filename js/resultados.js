@@ -370,11 +370,22 @@ function finalizarAgregacoes() {
 function ativarModo(modo) {
     modoAtual = modo;
 
+    // Atualizar botões
     document.getElementById("btnFinanceiro").classList.toggle("ativo", modo === "financeiro");
     document.getElementById("btnOperacional").classList.toggle("ativo", modo === "operacional");
 
+    // Atualizar classes no <body> para o CSS saber qual coluna mostrar
+    if (modo === "operacional") {
+        document.body.classList.add("modo-operacional");
+        document.body.classList.remove("modo-financeiro");
+    } else {
+        document.body.classList.add("modo-financeiro");
+        document.body.classList.remove("modo-operacional");
+    }
+
     atualizarTudo();
 }
+
 
 // -------------------------------------------------------------
 // ATUALIZAR TUDO (KPIs, Tabelas, Gráficos)
