@@ -26,6 +26,47 @@
 .menu-button:hover {
     background-color: #0d47a1;
 }
+/* ============================
+   AJUSTES PARA O NOVO DASHBOARD
+============================ */
+
+/* Evitar que o estilo global de button afete os botões de modo */
+.modo-btn {
+    height: auto !important;
+    padding: 10px 18px !important;
+    border-radius: 8px !important;
+    background-color: #e3f2fd !important;
+    color: #1976d2 !important;
+    border: 1px solid #1976d2 !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+}
+
+.modo-btn.ativo {
+    background-color: #1976d2 !important;
+    color: white !important;
+}
+
+/* Evitar que o estilo global de button afete o botão "Mostrar mais" */
+#btnMostrarMais {
+    height: auto !important;
+    padding: 10px 18px !important;
+    border-radius: 8px !important;
+    background-color: #1976d2 !important;
+    color: white !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+}
+
+/* Mini-tabelas dentro das células (não herdam bordas globais) */
+.mini-tabela td {
+    border: none !important;
+    background: transparent !important;
+    padding: 3px 6px !important;
+    font-size: 13px !important;
+    text-align: left !important;
+}
+
 
 /* MENU EXPANDIDO */
 .dropdown-menu {
