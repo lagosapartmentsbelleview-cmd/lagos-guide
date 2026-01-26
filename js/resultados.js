@@ -241,9 +241,10 @@ function finalizarAgregacoes() {
                 ? (mesObj.noites / noitesDisp) * 100
                 : 0;
 
-            mesObj.precoMedio = mesObj.noites > 0
-    ? mesObj.bruto / (mesObj.noites * 1)  // ← vamos corrigir isto já a seguir
+           mesObj.precoMedio = mesObj.noites > 0
+    ? mesObj.bruto / mesObj.noites
     : 0;
+
 
         }
     });
