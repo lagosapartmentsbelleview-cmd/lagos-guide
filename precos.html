@@ -129,22 +129,35 @@
             <div id="infoAtualizacao">Última atualização: —</div>
         </section>
 
-        <section class="resultado-section">
-            <h2>Dados Importados</h2>
+       <section class="resultado-section">
+    <h2>Dados Importados</h2>
 
-            <table id="tabelaResultados">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Dia da Semana</th>
-                        <th>Preço (€)</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </section>
+    <table id="tabelaResultados">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Dia da Semana</th>
+                <th>Preço (€)</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
 
-    </div> <!-- fecha .content -->
+<!-- =============================== -->
+<!-- NOVA SECÇÃO: SIMULADOR DE PREÇOS -->
+<!-- =============================== -->
+
+<section id="simuladorPrecos">
+    <h2>Simulador de Preços</h2>
+    <p>Selecione o ano e mês acima para gerar a grelha de preços.</p>
+
+    <div id="grelhaDiasContainer">
+        <div id="grelhaDias"></div>
+    </div>
+</section>
+
+</div> <!-- fecha .content -->
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
