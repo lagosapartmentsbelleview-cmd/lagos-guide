@@ -1914,4 +1914,7 @@ document.getElementById("btnExportExcel").addEventListener("click", function () 
     XLSX.writeFile(wb, "reservas.xlsx");
 });
 
+document.getElementById("btnExportPDF").addEventListener("click", function () {
+    window.print();
+});
 
