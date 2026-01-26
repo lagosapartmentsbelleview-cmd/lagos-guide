@@ -243,19 +243,15 @@ function gerarGrelha() {
 
         const eventosHoje = eventosDoDia(dataISO);
 
-        // Preço Vitasol
         const vitasol = obterPrecoVitasol(dataISO);
 
-        // Disponibilidade
         const dispo = obterDisponibilidade(dataISO);
 
-        // Se esgotado → cartão cinzento
         if (dispo === 0) {
             grelha.appendChild(criarCardEsgotado(dataISO, diaSemana));
             continue;
         }
 
-        // Descontos
         const descontos = lerDescontosSelecionados();
         const margem = lerMargem();
 
@@ -277,6 +273,7 @@ function gerarGrelha() {
         );
     }
 }
+
 
 // Busca preço Vitasol importado
 function obterPrecoVitasol(dataISO) {
