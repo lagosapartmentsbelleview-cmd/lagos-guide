@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <title>Resultados</title>
 
-    <!-- CSS Global do Sistema -->
     <link rel="stylesheet" href="css/global.css">
-
-    <!-- CSS Específico dos Resultados -->
     <link rel="stylesheet" href="css/resultados.css">
 </head>
 
 <body>
 
-    <!-- MENU SUPERIOR -->
     <div class="top-menu">
         <span class="menu-button" id="toggleMenu">☰ Menu</span>
 
@@ -30,6 +26,12 @@
     <div class="content">
 
         <h1>Resultados e Estatísticas</h1>
+
+        <!-- BOTÕES DE MODO -->
+        <div class="modo-toggle">
+            <button id="btnFinanceiro" class="modo-btn ativo">💰 Financeiro</button>
+            <button id="btnOperacional" class="modo-btn">📊 Operacional</button>
+        </div>
 
         <!-- FILTROS -->
         <div class="filtros-resultados">
@@ -55,10 +57,9 @@
 
             <label>Compar por:</label>
             <select id="tipoComparacao">
-             <option value="bruto">Receita Bruta</option>
-             <option value="liquido">Receita Líquida</option>
-           </select>
- 
+                <option value="bruto">Receita Bruta</option>
+                <option value="liquido">Receita Líquida</option>
+            </select>
 
             <button id="btnAplicarFiltros">Aplicar</button>
         </div>
@@ -91,6 +92,12 @@
                 <p id="kpiLucro">0 €</p>
             </div>
 
+            <!-- KPI extra só usado no modo operacional -->
+            <div class="kpi-card" id="kpiRevparCard">
+                <h3>RevPAR</h3>
+                <p id="kpiRevpar">0 €</p>
+            </div>
+
         </div>
 
         <!-- GRÁFICOS -->
@@ -114,7 +121,7 @@
             <canvas id="graficoComparacao"></canvas>
         </div>
 
-        <!-- TABELAS DETALHADAS -->
+        <!-- TABELA MENSAL (usa financeiro ou operacional consoante o modo) -->
         <div class="card">
             <h3>Estatísticas Mensais</h3>
             <table id="tabelaMensal">
@@ -126,25 +133,50 @@
                         <th>Receita Líquida</th>
                         <th>Ocupação</th>
                         <th>Preço Médio</th>
+                        <!-- No modo operacional, o JS acrescenta RevPAR na última coluna -->
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </div>
 
+        <!-- TABELA ANUAL FINANCEIRA (comparativa por mês vs anos) -->
         <div class="card">
-            <h3>Estatísticas Anuais</h3>
+            <h3>Estatísticas Anuais (Financeiro)</h3>
             <table id="tabelaAnual">
-                <thead>
-                    <tr>
-                        <th>Ano</th>
-                        <th>Receita Bruta</th>
-                        <th>Custos</th>
-                        <th>Receita Líquida</th>
-                        <th>Ocupação</th>
-                        <th>Preço Médio</th>
-                    </tr>
-                </thead>
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- CARD EVOLUÇÃO PREÇO MÉDIO (só modo operacional) -->
+        <div class="card" id="cardEvolucaoPrecoMedio" style="display:none;">
+            <h3>Evolução do Preço Médio por Noite</h3>
+            <table id="tabelaEvolucaoPrecoMedio">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- BOTÃO MOSTRAR MAIS (só modo operacional) -->
+        <div class="card" id="cardMostrarMaisOperacional" style="display:none;">
+            <button id="btnMostrarMais">Mostrar mais estatísticas operacionais</button>
+        </div>
+
+        <!-- TABELA ANUAL OPERACIONAL (escondida até clicar) -->
+        <div class="card" id="cardTabelaAnualOperacional" style="display:none;">
+            <h3>Estatísticas Anuais (Operacional)</h3>
+            <table id="tabelaAnualOperacional">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- TABELA DE CUSTOS (escondida até clicar) -->
+        <div class="card" id="cardTabelaCustos" style="display:none;">
+            <h3>Tabela de Custos</h3>
+            <table id="tabelaCustos">
+                <thead></thead>
                 <tbody></tbody>
             </table>
         </div>
@@ -153,29 +185,30 @@
         <div class="card">
             <h3>Legenda e Explicação dos Cálculos</h3>
 
-            <p><strong>Receita Bruta:</strong> Soma de todas as reservas concluídas no período selecionado.</p>
-            <p><strong>Custos:</strong> Limpezas, extras, condomínio, água, luz, impostos, equipamentos e outros.</p>
-            <p><strong>Receita Líquida:</strong> Receita Bruta menos todos os custos.</p>
+            <p><strong>Receita Bruta:</strong> Soma de todas as reservas no período selecionado.</p>
+            <p><strong>Custos:</strong> Comissões, limpezas e outros custos associados às reservas.</p>
+            <p><strong>Receita Líquida:</strong> Receita Bruta menos custos variáveis.</p>
             <p><strong>Ocupação:</strong> (Noites ocupadas / Noites disponíveis) × 100.</p>
             <p><strong>Preço Médio por Noite:</strong> Receita Bruta / Noites ocupadas.</p>
-            <p><strong>Lucro:</strong> Receita Líquida após dedução de todos os custos.</p>
+            <p><strong>Lucro:</strong> Receita Líquida (podes depois subtrair custos fixos se quiseres).</p>
+            <p><strong>RevPAR:</strong> Receita Bruta / Noites disponíveis (modo operacional).</p>
         </div>
 
     </div>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-<script src="js/firebase-config.js"></script>
-<script src="js/menu.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/menu.js"></script>
 
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- JS dos Resultados -->
-<script src="js/resultados.js"></script>
+    <!-- JS dos Resultados -->
+    <script src="js/resultados.js"></script>
 
 </body>
 </html>
