@@ -161,3 +161,93 @@ table tbody tr:hover {
         margin: 10px 0;
     }
 }
+/* ============================
+   MODO FINANCEIRO / OPERACIONAL
+============================ */
+
+.modo-toggle {
+    display: flex;
+    gap: 12px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.modo-btn {
+    background: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid #1976d2;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.modo-btn:hover {
+    background: #bbdefb;
+}
+
+.modo-btn.ativo {
+    background: #1976d2;
+    color: white;
+}
+
+/* ============================
+   KPI EXTRA (REVPAR)
+============================ */
+
+#kpiRevparCard {
+    display: none; /* JS ativa no modo operacional */
+}
+
+/* ============================
+   MINI-TABELAS (tabelas dentro de células)
+============================ */
+
+.mini-tabela {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mini-tabela td {
+    padding: 3px 6px;
+    border: none;
+    text-align: left;
+    font-size: 13px;
+}
+
+.mini-tabela tr:nth-child(even) {
+    background: transparent;
+}
+
+/* ============================
+   BOTÃO "MOSTRAR MAIS"
+============================ */
+
+#btnMostrarMais {
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    transition: 0.2s;
+}
+
+#btnMostrarMais:hover {
+    background: #0d47a1;
+}
+
+/* ============================
+   CARDS OCULTOS (operacional)
+============================ */
+
+#cardEvolucaoPrecoMedio,
+#cardTabelaAnualOperacional,
+#cardTabelaCustos,
+#cardMostrarMaisOperacional {
+    display: none;
+}
+
