@@ -468,6 +468,24 @@ td button {
     background-color: #0d47a1 !important;
 }
 
+/* O teu CSS atual */
+... tudo o que já tens ...
+
+/* 🔥 CSS para exportar PDF */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #tabelaReservas, #tabelaReservas * {
+        visibility: visible;
+    }
+    #tabelaReservas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
 
 </style>
 
