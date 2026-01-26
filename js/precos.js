@@ -332,3 +332,23 @@ function criarCardEsgotado(dataISO, diaSemana) {
 
     return card;
 }
+// ===============================
+// PREENCHER ANOS (2020–2050)
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+    const selAno = document.getElementById("selAno");
+    if (!selAno) return;
+
+    for (let ano = 2020; ano <= 2050; ano++) {
+        const opt = document.createElement("option");
+        opt.value = ano;
+        opt.textContent = ano;
+        selAno.appendChild(opt);
+    }
+
+    const hoje = new Date();
+    selAno.value = hoje.getFullYear();
+
+    const selMes = document.getElementById("selMes");
+    if (selMes) selMes.value = hoje.getMonth();
+});
