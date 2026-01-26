@@ -1902,4 +1902,15 @@ async function carregarReservasNormalizadas() {
     return lista;
 }
 
+document.getElementById("btnExportExcel").addEventListener("click", function () {
+    const tabela = document.querySelector("#tabelaReservas");
+    if (!tabela) return;
+
+    const html = tabela.outerHTML.replace(/ /g, '%20');
+
+    const a = document.createElement('a');
+    a.href = 'data:application/vnd.ms-excel,' + html;
+    a.download = 'reservas.xls';
+    a.click();
+});
 
