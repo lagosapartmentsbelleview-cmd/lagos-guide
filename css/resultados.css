@@ -250,4 +250,11 @@ table tbody tr:hover {
 #cardMostrarMaisOperacional {
     display: none;
 }
+/* Forçar a coluna RevPAR a aparecer no modo operacional */
+.modo-operacional .col-revpar {
+    display: table-cell !important;
+}
+.modo-operacional td.col-revpar {
+    display: table-cell !important;
+}
 
