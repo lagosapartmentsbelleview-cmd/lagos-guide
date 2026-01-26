@@ -185,3 +185,70 @@ th {
         grid-template-columns: 1fr;
     }
 }
+/* ============================
+   SIMULADOR – GRELHA HORIZONTAL
+============================ */
+
+#grelhaDiasContainer {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    margin-top: 20px;
+}
+
+#grelhaDias {
+    display: inline-flex;
+    gap: 12px;
+}
+
+/* ============================
+   CARTÕES COLORIDOS (B2-A)
+============================ */
+
+.card-dia {
+    width: 160px;
+    min-width: 160px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.card-dia h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Ícones coloridos */
+.tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+}
+
+.tag.fds { color: #1976d2; }       /* Azul */
+.tag.feriado { color: #d32f2f; }   /* Vermelho */
+.tag.evento { color: #ef6c00; }    /* Laranja */
+.tag.dispo { color: #388e3c; }     /* Verde */
+
+/* Esgotado */
+.card-esgotado {
+    background: #e0e0e0;
+    color: #555;
+    border: 1px solid #bbb;
+}
+
+.card-esgotado h4 {
+    color: #444;
+}
+
+.card-esgotado .tag {
+    color: #444;
+}
