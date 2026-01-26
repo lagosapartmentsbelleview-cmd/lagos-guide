@@ -43,17 +43,22 @@ function calcularNoitesPorMes(reserva) {
     const checkout = parseDataDDMMYYYY(reserva.checkout);
     if (!checkin || !checkout) return mapa;
 
+    const numAps = Array.isArray(reserva.apartamentos)
+        ? reserva.apartamentos.length
+        : 1;
+
     let atual = new Date(checkin.getTime());
     while (atual < checkout) {
         const ano = atual.getFullYear();
         const mes = atual.getMonth() + 1;
         const chave = `${ano}-${mes}`;
         if (!mapa[chave]) mapa[chave] = 0;
-        mapa[chave] += 1;
+        mapa[chave] += numAps;  // ✔ CORREÇÃO AQUI
         atual.setDate(atual.getDate() + 1);
     }
     return mapa;
 }
+
 
 function diasNoMes(mes, ano) {
     return new Date(ano, mes, 0).getDate();
@@ -237,8 +242,9 @@ function finalizarAgregacoes() {
                 : 0;
 
             mesObj.precoMedio = mesObj.noites > 0
-                ? mesObj.bruto / mesObj.noites
-                : 0;
+    ? mesObj.bruto / (mesObj.noites * 1)  // ← vamos corrigir isto já a seguir
+    : 0;
+
         }
     });
 
