@@ -207,7 +207,9 @@ function guardarFiltros() {
 function aplicarFiltros() {
     window.filtrosGuardados = {
         // Programas Premium
-        genius: (parseFloat(document.getElementById("selGenius").value) || 0) / 100,
+        // DEPOIS (correto se o select já tem 0, 0.10, 0.15, 0.20)
+        genius: parseFloat(document.getElementById("selGenius").value) || 0,
+
 
         // Segmentação
         telemovel: document.getElementById("chkTelemovel").checked ? 0.10 : 0,
