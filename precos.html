@@ -30,89 +30,98 @@
 
         <h1>Importar Preços da Concorrência</h1>
 
-        <!-- NOVO: CONFIGURAÇÃO DE DESCONTOS E FILTROS -->
-        <section class="config-section">
-            <h2>Configuração de Descontos e Filtros</h2>
+       <!-- NOVO: CONFIGURAÇÃO DE DESCONTOS E FILTROS -->
+<section class="config-section">
+    <h2>Configuração de Descontos e Filtros</h2>
 
-            <div class="filtros-linha">
-                <div>
-                    <label for="selAno">Ano:</label>
-                    <select id="selAno"></select>
-                </div>
-                <div>
-                    <label for="selMes">Mês:</label>
-                    <select id="selMes">
-                        <option value="0">Janeiro</option>
-                        <option value="1">Fevereiro</option>
-                        <option value="2">Março</option>
-                        <option value="3">Abril</option>
-                        <option value="4">Maio</option>
-                        <option value="5">Junho</option>
-                        <option value="6">Julho</option>
-                        <option value="7">Agosto</option>
-                        <option value="8">Setembro</option>
-                        <option value="9">Outubro</option>
-                        <option value="10">Novembro</option>
-                        <option value="11">Dezembro</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="inpMargem">Margem abaixo Vitasol (€):</label>
-                    <input type="number" id="inpMargem" value="1" step="0.5" min="0">
-                </div>
-            </div>
+    <div class="filtros-linha">
+        <div>
+            <label for="selAno">Ano:</label>
+            <select id="selAno"></select>
+        </div>
 
-            <div id="painelDescontos">
-                <h3>Descontos Booking</h3>
+        <div>
+            <label for="selMes">Mês:</label>
+            <select id="selMes">
+                <option value="0">Janeiro</option>
+                <option value="1">Fevereiro</option>
+                <option value="2">Março</option>
+                <option value="3">Abril</option>
+                <option value="4">Maio</option>
+                <option value="5">Junho</option>
+                <option value="6">Julho</option>
+                <option value="7">Agosto</option>
+                <option value="8">Setembro</option>
+                <option value="9">Outubro</option>
+                <option value="10">Novembro</option>
+                <option value="11">Dezembro</option>
+            </select>
+        </div>
 
-                <div class="linha-desconto">
-                    <label for="selGenius">Genius:</label>
-                    <select id="selGenius">
-                        <option value="0">Sem Genius</option>
-                        <option value="0.10">Genius 10%</option>
-                        <option value="0.15">Genius 15%</option>
-                        <option value="0.20">Genius 20%</option>
-                    </select>
-                </div>
+        <div>
+            <label for="inpMargem">Margem abaixo Vitasol (€):</label>
+            <input type="number" id="inpMargem" value="1" step="0.5" min="0">
+        </div>
+    </div>
 
-                <div class="linha-desconto">
-                    <label>
-                        <input type="checkbox" id="chkTelemovel">
-                        Tarifa Telemóvel (10%)
-                    </label>
-                </div>
+    <div id="painelDescontos">
+        <h3>Descontos Booking</h3>
 
-                <div class="linha-desconto">
-                    <label for="inpPais">Tarifa por País (%):</label>
-                    <input type="number" id="inpPais" value="10" min="0" max="100">
-                </div>
+        <div class="linha-desconto">
+            <label for="selGenius">Genius:</label>
+            <select id="selGenius">
+                <option value="0">Sem Genius</option>
+                <option value="0.10">Genius 10%</option>
+                <option value="0.15">Genius 15%</option>
+                <option value="0.20">Genius 20%</option>
+            </select>
+        </div>
 
-                <div class="linha-desconto">
-                    <label for="inpCampanha">Campanha Promo (%):</label>
-                    <input type="number" id="inpCampanha" value="20" min="0" max="100">
-                </div>
+        <div class="linha-desconto">
+            <label>
+                <input type="checkbox" id="chkTelemovel">
+                Tarifa Telemóvel (10%)
+            </label>
+        </div>
 
-                <div class="linha-desconto">
-                    <label for="inpOfertaBasica">Oferta Básica (%):</label>
-                    <input type="number" id="inpOfertaBasica" value="10">
-                </div>
+        <div class="linha-desconto">
+            <label for="inpPais">Tarifa por País (%):</label>
+            <input type="number" id="inpPais" value="10" min="0" max="100">
+        </div>
 
-                <div class="linha-desconto">
-                    <label for="inpOfertaUltimaHora">Oferta Última Hora (%):</label>
-                    <input type="number" id="inpOfertaUltimaHora" value="10">
-                </div>
+        <div class="linha-desconto">
+            <label for="inpCampanha">Campanha Promo (%):</label>
+            <input type="number" id="inpCampanha" value="20" min="0" max="100">
+        </div>
 
-                <div class="linha-desconto">
-                    <label for="inpOfertaAntecipada">Oferta Reserva Antecipada (%):</label>
-                    <input type="number" id="inpOfertaAntecipada" value="10">
-                </div>
+        <div class="linha-desconto">
+            <label for="inpOfertaBasica">Oferta Básica (%):</label>
+            <input type="number" id="inpOfertaBasica" value="10">
+        </div>
 
-                <div class="linha-desconto">
-                    <label for="inpTempoLimitado">Oferta Tempo Limitado (%):</label>
-                    <input type="number" id="inpTempoLimitado" value="0">
-                </div>
-            </div>
-        </section>
+        <div class="linha-desconto">
+            <label for="inpOfertaUltimaHora">Oferta Última Hora (%):</label>
+            <input type="number" id="inpOfertaUltimaHora" value="10">
+        </div>
+
+        <div class="linha-desconto">
+            <label for="inpOfertaAntecipada">Oferta Reserva Antecipada (%):</label>
+            <input type="number" id="inpOfertaAntecipada" value="10">
+        </div>
+
+        <div class="linha-desconto">
+            <label for="inpTempoLimitado">Oferta Tempo Limitado (%):</label>
+            <input type="number" id="inpTempoLimitado" value="0">
+        </div>
+    </div>
+
+    <!-- BOTÕES NOVOS -->
+    <div class="linha-botoes-filtros">
+        <button id="btnGuardarFiltros">Guardar Filtros</button>
+        <button id="btnAplicarFiltros">Aplicar Filtros</button>
+    </div>
+</section>
+
 
         <!-- IMPORTAÇÃO DE DADOS -->
         <section class="import-section">
