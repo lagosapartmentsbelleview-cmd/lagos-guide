@@ -253,26 +253,57 @@ th {
     color: #444;
 }
 
+.filtros-categoria {
+  margin-bottom: 24px;
+}
+
+.filtros-categoria h4 {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+}
+
+.filtros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.filtros-grid label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.filtros-grid input {
+  width: 100%;
+  padding: 6px;
+  font-size: 14px;
+}
+
 .tooltip {
-    cursor: help;
-    margin-left: 5px;
-    font-size: 13px;
-    color: #0077cc;
-    position: relative;
+  cursor: help;
+  margin-left: 5px;
+  font-size: 13px;
+  color: #0077cc;
+  position: relative;
 }
 
 .tooltip:hover::after {
-    content: attr(data-tip);
-    position: absolute;
-    left: 0;
-    top: 20px;
-    background: #333;
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 11px;
-    width: 220px;
-    z-index: 10;
-    line-height: 1.3;
+  content: attr(data-tip);
+  position: absolute;
+  left: 0;
+  top: 20px;
+  background: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  width: 240px;
+  z-index: 10;
+  line-height: 1.3;
 }
+
 
