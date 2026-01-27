@@ -633,25 +633,22 @@ document.getElementById("btnGuardarFiltros").addEventListener("click", () => {
     document.getElementById("mensagemFiltros").textContent = msg;
 });
 
-// Botão Aplicar Filtros
+// Botão Aplicar Filtros (VERSÃO FINAL CORRIGIDA)
 document.getElementById("btnAplicarFiltros").addEventListener("click", () => {
-    const msg = "Filtro aplicado em " + agoraPT();
-    document.getElementById("mensagemFiltros").textContent = msg;
 
-    gerarTabelaNova(); // NOVO
-});
-
-
-// Guardar data ao aplicar
-document.getElementById("btnAplicarFiltros").addEventListener("click", () => {
+    // Guardar datas
     const data = document.getElementById("dataFiltro").value;
     const dataMargem = document.getElementById("dataMargem").value;
 
     localStorage.setItem("dataFiltro", data);
     localStorage.setItem("dataMargem", dataMargem);
 
+    // Mensagem
     const msg = "Filtro aplicado em " + agoraPT();
     document.getElementById("mensagemFiltros").textContent = msg;
+
+    // Gerar nova tabela
+    gerarTabelaNova();
 });
 
 // Carregar data ao abrir
@@ -662,5 +659,3 @@ document.addEventListener("DOMContentLoaded", () => {
     if (data) document.getElementById("dataFiltro").value = data;
     if (dataMargem) document.getElementById("dataMargem").value = dataMargem;
 });
-
-
