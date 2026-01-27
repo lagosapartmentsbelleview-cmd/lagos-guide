@@ -613,6 +613,61 @@ function gerarTabelaNova() {
     document.getElementById("tabelaNovaContainer").innerHTML = html;
 }
 
+function preencherTabelaNova() {
+    const descontos = lerDescontosSelecionados();
+    const margem = lerMargem();
+
+    document.querySelectorAll("#tabelaNova td[data-dia]").forEach(td => {
+        const dataISO = td.getAttribute("data-dia");
+        const categoria = td.getAttribute("data-cat");
+
+        let valor = "—";
+
+        switch (categoria) {
+            case "Preço Vitasol":
+                const vitasol = obterPrecoVitasol(dataISO);
+                valor = vitasol ? vitasol + " €" : "—";
+                break;
+
+            case "Dia da Semana":
+                valor = calcularDiaSemana(dataISO);
+                break;
+
+            case "Feriado":
+                const [ano, mes, dia] = dataISO.split("-");
+                const feriado = feriadosFixos[`${mes}-${dia}`];
+                valor = feriado || "—";
+                break;
+
+            case "Evento":
+                const eventos = eventosDoDia(dataISO);
+                valor = eventos.length > 0 ? eventos.map(e => e.nome).join(", ") : "—";
+                break;
+
+            case "Preço Final":
+                const precoVit = obterPrecoVitasol(dataISO);
+                valor = precoVit ? (precoVit - margem).toFixed(2) + " €" : "—";
+                break;
+
+            case "Preço Base":
+                const finalDesejado = obterPrecoVitasol(dataISO);
+                if (finalDesejado) {
+                    const final = finalDesejado - margem;
+                    const base = calcularPrecoBaseSegmentado(final, descontos);
+                    valor = base ? base.toFixed(2) + " €" : "—";
+                }
+                break;
+
+            case "Disponibilidade":
+                const dispo = obterDisponibilidade(dataISO);
+                valor = dispo ? dispo + "/3" : "—";
+                break;
+        }
+
+        td.textContent = valor;
+    });
+}
+
 
 // Função para gerar data/hora PT
 function agoraPT() {
@@ -649,6 +704,8 @@ document.getElementById("btnAplicarFiltros").addEventListener("click", () => {
 
     // Gerar nova tabela
     gerarTabelaNova();
+    preencherTabelaNova();
+
 });
 
 // Carregar data ao abrir
