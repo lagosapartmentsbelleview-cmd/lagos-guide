@@ -207,7 +207,7 @@ function guardarFiltros() {
 function aplicarFiltros() {
     window.filtrosGuardados = {
         genius: parseFloat(document.getElementById("selGenius").value) || 0,
-        telemovel: document.getElementById("chkTelemovel").checked,
+        telemovel: document.getElementById("chkTelemovel").checked ? 0.10 : 0,
         pais: (parseFloat(document.getElementById("inpPais").value) || 0) / 100,
         campanha: (parseFloat(document.getElementById("inpCampanha").value) || 0) / 100,
         ofertaBasica: (parseFloat(document.getElementById("inpOfertaBasica").value) || 0) / 100,
@@ -218,6 +218,7 @@ function aplicarFiltros() {
 
     gerarGrelha();
 }
+
 
 // Carregar filtros guardados ao iniciar
 db.collection("configuracao").doc("precos").get().then(doc => {
