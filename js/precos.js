@@ -408,5 +408,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const selMes = document.getElementById("selMes");
     if (selMes) selMes.value = hoje.getMonth();
 
-    gerarGrelha();
+    // Esperar Firebase antes de gerar grelha
+    db.collection("concorrencia").doc("dados").get().then(doc => {
+        if (doc.exists) {
+            window.concorrenciaLista = doc.data().lista;
+            gerarGrelha(); // só agora é seguro gerar
+        }
+    });
 });
+
