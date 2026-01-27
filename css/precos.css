@@ -349,4 +349,27 @@ th {
     width: 160px;
 }
 
+#tabelaNovaContainer {
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+#tabelaNova {
+    border-collapse: collapse;
+    background: white;
+    width: max-content;
+}
+
+#tabelaNova th,
+#tabelaNova td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+#tabelaNova th {
+    background: #f0f0f0;
+    font-weight: bold;
+}
 
