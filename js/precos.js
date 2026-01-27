@@ -244,12 +244,13 @@ db.collection("configuracao").doc("precos").get().then(doc => {
         window.filtrosGuardados = {
             genius: filtros.genius || 0,
             telemovel: filtros.telemovel || false,
-            pais: (filtros.pais || 0) / 100,
-            campanha: (filtros.campanha || 0) / 100,
-            ofertaBasica: (filtros.ofertaBasica || 0) / 100,
-            ultimaHora: (filtros.ultimaHora || 0) / 100,
-            antecipada: (filtros.antecipada || 0) / 100,
-            tempoLimitado: (filtros.tempoLimitado || 0) / 100
+            pais: filtros.pais || 0,
+            campanha: filtros.campanha || 0,
+            ofertaBasica: filtros.ofertaBasica || 0,
+            ultimaHora: filtros.ultimaHora || 0,
+            antecipada: filtros.antecipada || 0,
+            tempoLimitado: filtros.tempoLimitado || 0
+
         };
 
         // Preencher inputs mas NÃO aplicar automaticamente
