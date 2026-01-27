@@ -5,13 +5,11 @@
 firebase.auth().onAuthStateChanged(user => {
     if (!user) {
         alert("Sessão expirada. Por favor faça login novamente.");
-        window.location.href = "login.html"; // ajusta para o teu login
+        window.location.href = "login.html";
         return;
     }
-
     console.log("Utilizador autenticado:", user.email);
 });
-
 
 const tabelaBody = document.querySelector("#tabelaResultados tbody");
 
@@ -19,6 +17,7 @@ const tabelaBody = document.querySelector("#tabelaResultados tbody");
 db.collection("concorrencia").doc("dados").get().then(doc => {
     if (doc.exists) {
         const dados = doc.data().lista;
+        window.concorrenciaLista = dados;
         renderTabela(dados);
 
         const data = doc.data().atualizadoEm;
@@ -57,24 +56,6 @@ btnExportar.addEventListener("click", () => {
 });
 
 // ===============================
-// LER DESCONTOS SELECIONADOS
-// ===============================
-
-function lerDescontosSelecionados() {
-    return {
-        genius: parseFloat(document.getElementById("selGenius").value) || 0,
-        telemovel: document.getElementById("chkTelemovel").checked ? 0.10 : 0,
-        pais: (parseFloat(document.getElementById("inpPais").value) || 0) / 100,
-        campanha: (parseFloat(document.getElementById("inpCampanha").value) || 0) / 100,
-        ofertaBasica: (parseFloat(document.getElementById("inpOfertaBasica").value) || 0) / 100,
-        ultimaHora: (parseFloat(document.getElementById("inpOfertaUltimaHora").value) || 0) / 100,
-        antecipada: (parseFloat(document.getElementById("inpOfertaAntecipada").value) || 0) / 100,
-        tempoLimitado: (parseFloat(document.getElementById("inpTempoLimitado").value) || 0) / 100
-    };
-}
-
-
-// ===============================
 // PARSER PRINCIPAL
 // ===============================
 
@@ -94,7 +75,6 @@ function parseTextoConcorrencia(texto) {
     for (let i = 0; i < linhas.length; i++) {
         const linha = linhas[i].trim().toLowerCase();
 
-        // Detectar mês e ano
         for (const nomeMes in meses) {
             if (linha.includes(nomeMes)) {
                 mesAtual = meses[nomeMes];
@@ -104,12 +84,10 @@ function parseTextoConcorrencia(texto) {
             }
         }
 
-        // Detectar dia
         if (/^\d{1,2}$/.test(linha)) {
             diaAtual = linha.padStart(2, "0");
         }
 
-        // Detectar preço
         if (linha.startsWith("€")) {
             const preco = parseFloat(linha.replace(/[^\d,]/g, "").replace(",", "."));
             if (diaAtual && mesAtual && anoAtual) {
@@ -185,54 +163,101 @@ document.getElementById("btnLimpar").addEventListener("click", function () {
 
     if (!confirmar) return;
 
-    // 1. Apagar do Firebase
     db.collection("concorrencia").doc("dados").delete();
-
-    // 2. Limpar tabela
     tabelaBody.innerHTML = "";
-
-    // 3. Limpar textarea
     document.getElementById("inputConcorrencia").value = "";
-
-    // 4. Limpar data
     document.getElementById("infoAtualizacao").textContent = "Última atualização: —";
 
     alert("Dados limpos com sucesso.");
 });
 // ===============================
-// GRELHA MENSAL – CARTÕES
+// FILTROS PERSISTENTES (GUARDAR + APLICAR)
 // ===============================
 
-// Feriados nacionais (fixos + móveis)
-const feriadosFixos = {
-    "01-01": "Ano Novo",
-    "04-25": "25 de Abril",
-    "05-01": "Dia do Trabalhador",
-    "06-10": "Dia de Portugal",
-    "08-15": "Assunção de Maria",
-    "10-05": "Implantação da República",
-    "11-01": "Dia de Todos os Santos",
-    "12-01": "Restauração da Independência",
-    "12-08": "Imaculada Conceição",
-    "12-25": "Natal"
-};
+// Botões
+document.getElementById("btnGuardarFiltros").addEventListener("click", guardarFiltros);
+document.getElementById("btnAplicarFiltros").addEventListener("click", aplicarFiltros);
 
-// Eventos (exemplo)
-const eventos = [
-    { nome: "Festival dos Descobrimentos", inicio: "2026-05-01", fim: "2026-05-05", local: "Lagos" },
-    { nome: "MotoGP Portimão", inicio: "2026-03-20", fim: "2026-03-22", local: "Portimão" }
-];
+// Estado global dos filtros guardados
+window.filtrosGuardados = null;
 
-// Disponibilidade (placeholder)
-function obterDisponibilidade(dataISO) {
-    return 2;
+// Guardar filtros no Firebase
+function guardarFiltros() {
+    const filtros = {
+        genius: parseFloat(document.getElementById("selGenius").value) || 0,
+        telemovel: document.getElementById("chkTelemovel").checked,
+        pais: parseFloat(document.getElementById("inpPais").value) || 0,
+        campanha: parseFloat(document.getElementById("inpCampanha").value) || 0,
+        ofertaBasica: parseFloat(document.getElementById("inpOfertaBasica").value) || 0,
+        ultimaHora: parseFloat(document.getElementById("inpOfertaUltimaHora").value) || 0,
+        antecipada: parseFloat(document.getElementById("inpOfertaAntecipada").value) || 0,
+        tempoLimitado: parseFloat(document.getElementById("inpTempoLimitado").value) || 0
+    };
+
+    db.collection("configuracao").doc("precos").set({
+        filtros,
+        atualizadoEm: new Date().toISOString()
+    }).then(() => {
+        alert("Filtros guardados com sucesso.");
+    });
 }
 
-// Verifica se data está dentro de um evento
-function eventosDoDia(dataISO) {
-    return eventos.filter(ev => dataISO >= ev.inicio && dataISO <= ev.fim);
+// Aplicar filtros (sem guardar)
+function aplicarFiltros() {
+    window.filtrosGuardados = {
+        genius: parseFloat(document.getElementById("selGenius").value) || 0,
+        telemovel: document.getElementById("chkTelemovel").checked,
+        pais: (parseFloat(document.getElementById("inpPais").value) || 0) / 100,
+        campanha: (parseFloat(document.getElementById("inpCampanha").value) || 0) / 100,
+        ofertaBasica: (parseFloat(document.getElementById("inpOfertaBasica").value) || 0) / 100,
+        ultimaHora: (parseFloat(document.getElementById("inpOfertaUltimaHora").value) || 0) / 100,
+        antecipada: (parseFloat(document.getElementById("inpOfertaAntecipada").value) || 0) / 100,
+        tempoLimitado: (parseFloat(document.getElementById("inpTempoLimitado").value) || 0) / 100
+    };
+
+    gerarGrelha();
 }
 
+// Carregar filtros guardados ao iniciar
+db.collection("configuracao").doc("precos").get().then(doc => {
+    if (doc.exists) {
+        const filtros = doc.data().filtros;
+        window.filtrosGuardados = {
+            genius: filtros.genius || 0,
+            telemovel: filtros.telemovel || false,
+            pais: (filtros.pais || 0) / 100,
+            campanha: (filtros.campanha || 0) / 100,
+            ofertaBasica: (filtros.ofertaBasica || 0) / 100,
+            ultimaHora: (filtros.ultimaHora || 0) / 100,
+            antecipada: (filtros.antecipada || 0) / 100,
+            tempoLimitado: (filtros.tempoLimitado || 0) / 100
+        };
+
+        // Preencher inputs mas NÃO aplicar automaticamente
+        document.getElementById("selGenius").value = filtros.genius;
+        document.getElementById("chkTelemovel").checked = filtros.telemovel;
+        document.getElementById("inpPais").value = filtros.pais;
+        document.getElementById("inpCampanha").value = filtros.campanha;
+        document.getElementById("inpOfertaBasica").value = filtros.ofertaBasica;
+        document.getElementById("inpOfertaUltimaHora").value = filtros.ultimaHora;
+        document.getElementById("inpOfertaAntecipada").value = filtros.antecipada;
+        document.getElementById("inpTempoLimitado").value = filtros.tempoLimitado;
+    }
+});
+
+// Substituir função antiga — agora lê dos filtros guardados
+function lerDescontosSelecionados() {
+    return window.filtrosGuardados || {
+        genius: 0,
+        telemovel: false,
+        pais: 0,
+        campanha: 0,
+        ofertaBasica: 0,
+        ultimaHora: 0,
+        antecipada: 0,
+        tempoLimitado: 0
+    };
+}
 // ===============================
 // FUNÇÕES EM FALTA (OBRIGATÓRIAS)
 // ===============================
@@ -283,6 +308,16 @@ document.getElementById("selAno").addEventListener("change", gerarGrelha);
 document.getElementById("selMes").addEventListener("change", gerarGrelha);
 
 function gerarGrelha() {
+    if (!window.concorrenciaLista) {
+        console.warn("⚠ A grelha tentou gerar antes dos dados Vitasol estarem carregados.");
+        return;
+    }
+
+    if (!window.filtrosGuardados) {
+        console.warn("⚠ A grelha tentou gerar antes dos filtros estarem carregados.");
+        return;
+    }
+
     const ano = parseInt(document.getElementById("selAno").value);
     const mes = parseInt(document.getElementById("selMes").value);
 
@@ -344,13 +379,6 @@ function obterPrecoVitasol(dataISO) {
     return item ? item.preco : null;
 }
 
-// Guardar lista global ao carregar Firebase
-db.collection("concorrencia").doc("dados").get().then(doc => {
-    if (doc.exists) {
-        window.concorrenciaLista = doc.data().lista;
-    }
-});
-
 // ===============================
 // CARTÕES
 // ===============================
@@ -388,7 +416,7 @@ function criarCardEsgotado(dataISO, diaSemana) {
 }
 
 // ===============================
-// PREENCHER ANOS
+// PREENCHER ANOS + CARREGAR FIREBASE ANTES DA GRELHA
 // ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -409,11 +437,30 @@ document.addEventListener("DOMContentLoaded", () => {
     if (selMes) selMes.value = hoje.getMonth();
 
     // Esperar Firebase antes de gerar grelha
-    db.collection("concorrencia").doc("dados").get().then(doc => {
-        if (doc.exists) {
-            window.concorrenciaLista = doc.data().lista;
-            gerarGrelha(); // só agora é seguro gerar
+    Promise.all([
+        db.collection("concorrencia").doc("dados").get(),
+        db.collection("configuracao").doc("precos").get()
+    ]).then(([conc, filtros]) => {
+
+        if (conc.exists) {
+            window.concorrenciaLista = conc.data().lista;
         }
+
+        if (filtros.exists) {
+            const f = filtros.data().filtros;
+
+            window.filtrosGuardados = {
+                genius: f.genius || 0,
+                telemovel: f.telemovel || false,
+                pais: (f.pais || 0) / 100,
+                campanha: (f.campanha || 0) / 100,
+                ofertaBasica: (f.ofertaBasica || 0) / 100,
+                ultimaHora: (f.ultimaHora || 0) / 100,
+                antecipada: (f.antecipada || 0) / 100,
+                tempoLimitado: (f.tempoLimitado || 0) / 100
+            };
+        }
+
+        gerarGrelha();
     });
 });
-
