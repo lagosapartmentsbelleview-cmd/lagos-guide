@@ -405,17 +405,25 @@ function gerarGrelha() {
         return;
     }
 
-    const ano = parseInt(document.getElementById("selAno").value);
-    const mes = parseInt(document.getElementById("selMes").value);
+    const dataEscolhida = document.getElementById("dataFiltro").value;
+
+    if (!dataEscolhida) {
+        console.warn("Nenhuma data selecionada.");
+        return;
+    }
+
+    const [ano, mes] = dataEscolhida.split("-").map(Number);
+    const mesIndex = mes - 1; // converter 1–12 para 0–11
 
     const grelha = document.getElementById("grelhaDias");
     grelha.innerHTML = "";
 
-    const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+    // número de dias do mês
+    const diasNoMes = new Date(ano, mesIndex + 1, 0).getDate();
 
     for (let dia = 1; dia <= diasNoMes; dia++) {
         const diaStr = String(dia).padStart(2, "0");
-        const mesStr = String(mes + 1).padStart(2, "0");
+        const mesStr = String(mesIndex + 1).padStart(2, "0"); // CORRIGIDO
         const dataISO = `${ano}-${mesStr}-${diaStr}`;
 
         const dateObj = new Date(dataISO);
@@ -579,6 +587,27 @@ document.getElementById("btnGuardarFiltros").addEventListener("click", () => {
 document.getElementById("btnAplicarFiltros").addEventListener("click", () => {
     const msg = "Filtro aplicado em " + agoraPT();
     document.getElementById("mensagemFiltros").textContent = msg;
+});
+
+// Guardar data ao aplicar
+document.getElementById("btnAplicarFiltros").addEventListener("click", () => {
+    const data = document.getElementById("dataFiltro").value;
+    const dataMargem = document.getElementById("dataMargem").value;
+
+    localStorage.setItem("dataFiltro", data);
+    localStorage.setItem("dataMargem", dataMargem);
+
+    const msg = "Filtro aplicado em " + agoraPT();
+    document.getElementById("mensagemFiltros").textContent = msg;
+});
+
+// Carregar data ao abrir
+document.addEventListener("DOMContentLoaded", () => {
+    const data = localStorage.getItem("dataFiltro");
+    const dataMargem = localStorage.getItem("dataMargem");
+
+    if (data) document.getElementById("dataFiltro").value = data;
+    if (dataMargem) document.getElementById("dataMargem").value = dataMargem;
 });
 
 
