@@ -356,9 +356,10 @@ function calcularPrecoBaseSegmentado(precoFinal, d) {
         d.pais || 0,
         d.estadoEUA || 0
     );
-    if (seg > 0) {
-        preco = preco / (1 - seg);
-    }
+    // 3. Segmentação — só acumula se NÃO houver campanha promocional
+if (seg > 0 && campanha === 0) {
+    preco = preco / (1 - seg);
+}
 
     // 4. Campanhas promocionais (maior)
     const campanha = Math.max(
