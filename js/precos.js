@@ -564,6 +564,56 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+function gerarTabelaNova() {
+    const dataEscolhida = document.getElementById("dataFiltro").value;
+    if (!dataEscolhida) return;
+
+    const [ano, mes] = dataEscolhida.split("-").map(Number);
+    const mesIndex = mes - 1;
+
+    const diasNoMes = new Date(ano, mesIndex + 1, 0).getDate();
+
+    // Criar tabela
+    let html = `<table id="tabelaNova"><thead><tr><th>Categoria</th>`;
+
+    // Cabeçalho com dias
+    for (let dia = 1; dia <= diasNoMes; dia++) {
+        html += `<th>${String(dia).padStart(2, "0")}</th>`;
+    }
+
+    html += `</tr></thead><tbody>`;
+
+    // Linhas fixas
+    const categorias = [
+        "Preço Vitasol",
+        "Dia da Semana",
+        "Feriado",
+        "Evento",
+        "Preço Final",
+        "Preço Base",
+        "Disponibilidade"
+    ];
+
+    categorias.forEach(cat => {
+        html += `<tr><td><strong>${cat}</strong></td>`;
+
+        for (let dia = 1; dia <= diasNoMes; dia++) {
+            const diaStr = String(dia).padStart(2, "0");
+            const mesStr = String(mesIndex + 1).padStart(2, "0");
+            const dataISO = `${ano}-${mesStr}-${diaStr}`;
+
+            html += `<td data-dia="${dataISO}" data-cat="${cat}">—</td>`;
+        }
+
+        html += `</tr>`;
+    });
+
+    html += `</tbody></table>`;
+
+    document.getElementById("tabelaNovaContainer").innerHTML = html;
+}
+
+
 // Função para gerar data/hora PT
 function agoraPT() {
     const agora = new Date();
@@ -587,7 +637,10 @@ document.getElementById("btnGuardarFiltros").addEventListener("click", () => {
 document.getElementById("btnAplicarFiltros").addEventListener("click", () => {
     const msg = "Filtro aplicado em " + agoraPT();
     document.getElementById("mensagemFiltros").textContent = msg;
+
+    gerarTabelaNova(); // NOVO
 });
+
 
 // Guardar data ao aplicar
 document.getElementById("btnAplicarFiltros").addEventListener("click", () => {
