@@ -170,6 +170,7 @@ document.getElementById("btnLimpar").addEventListener("click", function () {
 
     alert("Dados limpos com sucesso.");
 });
+
 // ===============================
 // FILTROS PERSISTENTES (GUARDAR + APLICAR)
 // ===============================
@@ -222,6 +223,7 @@ function aplicarFiltros() {
 db.collection("configuracao").doc("precos").get().then(doc => {
     if (doc.exists) {
         const filtros = doc.data().filtros;
+
         window.filtrosGuardados = {
             genius: filtros.genius || 0,
             telemovel: filtros.telemovel || false,
@@ -258,6 +260,7 @@ function lerDescontosSelecionados() {
         tempoLimitado: 0
     };
 }
+
 // ===============================
 // FUNÇÕES EM FALTA (OBRIGATÓRIAS)
 // ===============================
@@ -303,9 +306,6 @@ function calcularPrecoFinal(base, descontos) {
 // ===============================
 // GERAÇÃO DA GRELHA
 // ===============================
-
-document.getElementById("selAno").addEventListener("change", gerarGrelha);
-document.getElementById("selMes").addEventListener("change", gerarGrelha);
 
 function gerarGrelha() {
     if (!window.concorrenciaLista) {
@@ -461,6 +461,11 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-        gerarGrelha();
+        // ✔ Só agora ativamos os eventos change
+        document.getElementById("selAno").addEventListener("change", gerarGrelha);
+        document.getElementById("selMes").addEventListener("change", gerarGrelha);
+
+        gerarGrelha(); // ✔ Agora tudo está carregado
     });
 });
+
