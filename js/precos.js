@@ -206,18 +206,32 @@ function guardarFiltros() {
 // Aplicar filtros (sem guardar)
 function aplicarFiltros() {
     window.filtrosGuardados = {
-        genius: parseFloat(document.getElementById("selGenius").value) || 0,
+        // Programas Premium
+        genius: (parseFloat(document.getElementById("selGenius").value) || 0) / 100,
+
+        // Segmentação
         telemovel: document.getElementById("chkTelemovel").checked ? 0.10 : 0,
         pais: (parseFloat(document.getElementById("inpPais").value) || 0) / 100,
-        campanha: (parseFloat(document.getElementById("inpCampanha").value) || 0) / 100,
+        estadoEUA: 0, // por agora não usas, fica 0
+
+        // Campanhas promocionais
+        inicio2026: (parseFloat(document.getElementById("inpCampanha").value) || 0) / 100,
+        finalAno: 0,
+        sazonal: 0,
+
+        // Portefólio de ofertas
         ofertaBasica: (parseFloat(document.getElementById("inpOfertaBasica").value) || 0) / 100,
         ultimaHora: (parseFloat(document.getElementById("inpOfertaUltimaHora").value) || 0) / 100,
         antecipada: (parseFloat(document.getElementById("inpOfertaAntecipada").value) || 0) / 100,
-        tempoLimitado: (parseFloat(document.getElementById("inpTempoLimitado").value) || 0) / 100
+
+        // Ofertas especiais
+        tempoLimitado: (parseFloat(document.getElementById("inpTempoLimitado").value) || 0) / 100,
+        blackFriday: 0
     };
 
     gerarGrelha();
 }
+
 
 
 // Carregar filtros guardados ao iniciar
@@ -252,15 +266,20 @@ db.collection("configuracao").doc("precos").get().then(doc => {
 function lerDescontosSelecionados() {
     return window.filtrosGuardados || {
         genius: 0,
-        telemovel: false,
+        telemovel: 0,
         pais: 0,
-        campanha: 0,
+        estadoEUA: 0,
+        inicio2026: 0,
+        finalAno: 0,
+        sazonal: 0,
         ofertaBasica: 0,
         ultimaHora: 0,
         antecipada: 0,
-        tempoLimitado: 0
+        tempoLimitado: 0,
+        blackFriday: 0
     };
 }
+
 
 // ===============================
 // FERIADOS FIXOS
@@ -312,36 +331,56 @@ function lerMargem() {
     return isNaN(m) ? 0 : m;
 }
 
-// Calcula o preço base necessário no Booking
-function calcularPrecoBase(precoFinal, descontos) {
-    let total =
-        descontos.genius +
-        descontos.telemovel +
-        descontos.pais +
-        descontos.campanha +
-        descontos.ofertaBasica +
-        descontos.ultimaHora +
-        descontos.antecipada +
-        descontos.tempoLimitado;
+// Calcula o preço base necessário no Booking com regras de acumulação Booking.com
+function calcularPrecoBaseSegmentado(precoFinal, d) {
 
-    if (total <= 0) return precoFinal;
+    // 1. Ofertas especiais (não acumulam com nada)
+    const ofertaEspecial = Math.max(
+        d.tempoLimitado || 0,
+        d.blackFriday || 0
+    );
+    if (ofertaEspecial > 0) {
+        return precoFinal / (1 - ofertaEspecial);
+    }
 
-    return precoFinal / (1 - total);
-}
+    let preco = precoFinal;
 
-// (Opcional) calcular preço final a partir do base
-function calcularPrecoFinal(base, descontos) {
-    let total =
-        descontos.genius +
-        descontos.telemovel +
-        descontos.pais +
-        descontos.campanha +
-        descontos.ofertaBasica +
-        descontos.ultimaHora +
-        descontos.antecipada +
-        descontos.tempoLimitado;
+    // 2. Genius (acumula com tudo exceto ofertas especiais)
+    if (d.genius > 0) {
+        preco = preco / (1 - d.genius);
+    }
 
-    return base * (1 - total);
+    // 3. Segmentação (maior entre telemóvel / país / estado EUA)
+    const seg = Math.max(
+        d.telemovel || 0,
+        d.pais || 0,
+        d.estadoEUA || 0
+    );
+    if (seg > 0) {
+        preco = preco / (1 - seg);
+    }
+
+    // 4. Campanhas promocionais (maior)
+    const campanha = Math.max(
+        d.inicio2026 || 0,
+        d.finalAno || 0,
+        d.sazonal || 0
+    );
+    if (campanha > 0) {
+        preco = preco / (1 - campanha);
+    }
+
+    // 5. Portefólio de ofertas (maior)
+    const portefolio = Math.max(
+        d.ofertaBasica || 0,
+        d.ultimaHora || 0,
+        d.antecipada || 0
+    );
+    if (portefolio > 0) {
+        preco = preco / (1 - portefolio);
+    }
+
+    return preco;
 }
 
 
@@ -394,7 +433,7 @@ function gerarGrelha() {
         const margem = lerMargem();
 
         const finalDesejado = vitasol ? vitasol - margem : null;
-        const baseBooking = finalDesejado ? calcularPrecoBase(finalDesejado, descontos) : null;
+        const baseBooking = finalDesejado ? calcularPrecoBaseSegmentado(finalDesejado, descontos) : null;
 
         grelha.appendChild(
             criarCardDia({
