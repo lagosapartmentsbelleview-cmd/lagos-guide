@@ -300,10 +300,17 @@ th {
 }
 
 .filtros-grid input {
-  width: 80%;
+  width: 100%;
   padding: 6px;
   font-size: 14px;
 }
+
+.filtros-grid input[type="number"] {
+    width: 80px;      /* tamanho compacto */
+    padding: 6px;
+    font-size: 14px;
+}
+
 
 .tooltip {
   cursor: help;
