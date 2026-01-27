@@ -70,7 +70,6 @@
         <div class="linha-desconto">
             <label for="selGenius">Genius:</label>
             <span class="tooltip" data-tip="Acumula com: Campanhas Promo, Segmentação, Portefólio. Não acumula com: Ofertas Especiais.">ℹ️</span>
-
             <select id="selGenius">
                 <option value="0">Sem Genius</option>
                 <option value="0.10">Genius 10%</option>
@@ -83,11 +82,13 @@
             <label>
                 <input type="checkbox" id="chkTelemovel">
                 Tarifa Telemóvel (10%)
+                <span class="tooltip" data-tip="Acumula com: Genius, Portefólio. Não acumula com: Campanhas Promo, Ofertas Especiais.">ℹ️</span>
             </label>
         </div>
 
         <div class="linha-desconto">
             <label for="inpPais">Tarifa por País (%):</label>
+            <span class="tooltip" data-tip="Acumula com: Genius, Portefólio. Não acumula com: Campanhas Promo, Ofertas Especiais.">ℹ️</span>
             <input type="number" id="inpPais" value="10" min="0" max="100">
         </div>
 
@@ -102,21 +103,25 @@
 
         <div class="linha-desconto">
             <label for="inpOfertaBasica">Oferta Básica (%):</label>
+            <span class="tooltip" data-tip="Acumula com: Genius, Segmentação (se não houver campanha), Campanhas Promo. Não acumula com: Ofertas Especiais.">ℹ️</span>
             <input type="number" id="inpOfertaBasica" value="10">
         </div>
 
         <div class="linha-desconto">
             <label for="inpOfertaUltimaHora">Oferta Última Hora (%):</label>
+            <span class="tooltip" data-tip="Acumula com: Genius, Segmentação (se não houver campanha), Campanhas Promo. Não acumula com: Ofertas Especiais.">ℹ️</span>
             <input type="number" id="inpOfertaUltimaHora" value="10">
         </div>
 
         <div class="linha-desconto">
             <label for="inpOfertaAntecipada">Oferta Reserva Antecipada (%):</label>
+            <span class="tooltip" data-tip="Acumula com: Genius, Segmentação (se não houver campanha), Campanhas Promo. Não acumula com: Ofertas Especiais.">ℹ️</span>
             <input type="number" id="inpOfertaAntecipada" value="10">
         </div>
 
         <div class="linha-desconto">
             <label for="inpTempoLimitado">Oferta Tempo Limitado (%):</label>
+            <span class="tooltip" data-tip="Não acumula com nenhum outro desconto. Substitui todos os restantes.">ℹ️</span>
             <input type="number" id="inpTempoLimitado" value="0">
         </div>
     </div>
