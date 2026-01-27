@@ -253,7 +253,7 @@ db.collection("configuracao").doc("precos").get().then(doc => {
         };
 
         // Preencher inputs mas NÃO aplicar automaticamente
-        document.getElementById("selGenius").value = filtros.genius;   // ← ESTA É A LINHA CRÍTICA
+        document.getElementById("selGenius").value = Number(filtros.genius).toFixed(2);   // ← ESTA É A LINHA CRÍTICA
         document.getElementById("chkTelemovel").checked = filtros.telemovel;
         document.getElementById("inpPais").value = filtros.pais;
         document.getElementById("inpCampanha").value = filtros.campanha;
