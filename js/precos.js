@@ -345,33 +345,34 @@ function calcularPrecoBaseSegmentado(precoFinal, d) {
 
     let preco = precoFinal;
 
-    // 2. Genius (acumula com tudo exceto ofertas especiais)
+    // 2. Genius
     if (d.genius > 0) {
         preco = preco / (1 - d.genius);
     }
 
-    // 3. Segmentação (maior entre telemóvel / país / estado EUA)
-    const seg = Math.max(
-        d.telemovel || 0,
-        d.pais || 0,
-        d.estadoEUA || 0
-    );
-    // 3. Segmentação — só acumula se NÃO houver campanha promocional
-if (seg > 0 && campanha === 0) {
-    preco = preco / (1 - seg);
-}
-
-    // 4. Campanhas promocionais (maior)
+    // 3. Campanhas promocionais (maior)
     const campanha = Math.max(
         d.inicio2026 || 0,
         d.finalAno || 0,
         d.sazonal || 0
     );
+
+    // 4. Segmentação (só acumula se NÃO houver campanha)
+    const seg = Math.max(
+        d.telemovel || 0,
+        d.pais || 0,
+        d.estadoEUA || 0
+    );
+    if (seg > 0 && campanha === 0) {
+        preco = preco / (1 - seg);
+    }
+
+    // 5. Aplicar campanha (se existir)
     if (campanha > 0) {
         preco = preco / (1 - campanha);
     }
 
-    // 5. Portefólio de ofertas (maior)
+    // 6. Portefólio de ofertas (maior)
     const portefolio = Math.max(
         d.ofertaBasica || 0,
         d.ultimaHora || 0,
@@ -383,6 +384,7 @@ if (seg > 0 && campanha === 0) {
 
     return preco;
 }
+
 
 
 
