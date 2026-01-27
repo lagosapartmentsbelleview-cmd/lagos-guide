@@ -342,4 +342,11 @@ th {
   box-sizing: border-box; /* evita overflow */
 }
 
+#dataFiltro,
+#dataMargem {
+    padding: 6px;
+    font-size: 14px;
+    width: 160px;
+}
+
 
