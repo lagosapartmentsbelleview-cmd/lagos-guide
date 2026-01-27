@@ -57,6 +57,24 @@ btnExportar.addEventListener("click", () => {
 });
 
 // ===============================
+// LER DESCONTOS SELECIONADOS
+// ===============================
+
+function lerDescontosSelecionados() {
+    return {
+        genius: parseFloat(document.getElementById("selGenius").value) || 0,
+        telemovel: document.getElementById("chkTelemovel").checked ? 0.10 : 0,
+        pais: (parseFloat(document.getElementById("inpPais").value) || 0) / 100,
+        campanha: (parseFloat(document.getElementById("inpCampanha").value) || 0) / 100,
+        ofertaBasica: (parseFloat(document.getElementById("inpOfertaBasica").value) || 0) / 100,
+        ultimaHora: (parseFloat(document.getElementById("inpOfertaUltimaHora").value) || 0) / 100,
+        antecipada: (parseFloat(document.getElementById("inpOfertaAntecipada").value) || 0) / 100,
+        tempoLimitado: (parseFloat(document.getElementById("inpTempoLimitado").value) || 0) / 100
+    };
+}
+
+
+// ===============================
 // PARSER PRINCIPAL
 // ===============================
 
