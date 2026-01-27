@@ -225,7 +225,7 @@ const eventos = [
 
 // Disponibilidade (placeholder)
 function obterDisponibilidade(dataISO) {
-    return 2; // depois ligamos ao teu sistema real
+    return 2;
 }
 
 // Verifica se data está dentro de um evento
@@ -233,7 +233,52 @@ function eventosDoDia(dataISO) {
     return eventos.filter(ev => dataISO >= ev.inicio && dataISO <= ev.fim);
 }
 
-// Gera cartões ao mudar mês/ano
+// ===============================
+// FUNÇÕES EM FALTA (OBRIGATÓRIAS)
+// ===============================
+
+// Lê margem abaixo da Vitasol
+function lerMargem() {
+    const m = parseFloat(document.getElementById("inpMargem").value);
+    return isNaN(m) ? 0 : m;
+}
+
+// Calcula o preço base necessário no Booking
+function calcularPrecoBase(precoFinal, descontos) {
+    let total =
+        descontos.genius +
+        descontos.telemovel +
+        descontos.pais +
+        descontos.campanha +
+        descontos.ofertaBasica +
+        descontos.ultimaHora +
+        descontos.antecipada +
+        descontos.tempoLimitado;
+
+    if (total <= 0) return precoFinal;
+
+    return precoFinal / (1 - total);
+}
+
+// (Opcional) calcular preço final a partir do base
+function calcularPrecoFinal(base, descontos) {
+    let total =
+        descontos.genius +
+        descontos.telemovel +
+        descontos.pais +
+        descontos.campanha +
+        descontos.ofertaBasica +
+        descontos.ultimaHora +
+        descontos.antecipada +
+        descontos.tempoLimitado;
+
+    return base * (1 - total);
+}
+
+// ===============================
+// GERAÇÃO DA GRELHA
+// ===============================
+
 document.getElementById("selAno").addEventListener("change", gerarGrelha);
 document.getElementById("selMes").addEventListener("change", gerarGrelha);
 
@@ -256,13 +301,10 @@ function gerarGrelha() {
         const diaSemana = diasSemana[dateObj.getDay()];
 
         const fimDeSemana = (diaSemana === "Sáb" || diaSemana === "Dom");
-
         const feriadoNome = feriadosFixos[`${mesStr}-${diaStr}`] || null;
-
         const eventosHoje = eventosDoDia(dataISO);
 
         const vitasol = obterPrecoVitasol(dataISO);
-
         const dispo = obterDisponibilidade(dataISO);
 
         if (dispo === 0) {
@@ -273,8 +315,8 @@ function gerarGrelha() {
         const descontos = lerDescontosSelecionados();
         const margem = lerMargem();
 
-        let finalDesejado = vitasol ? vitasol - margem : null;
-        let baseBooking = finalDesejado ? calcularPrecoBase(finalDesejado, descontos) : null;
+        const finalDesejado = vitasol ? vitasol - margem : null;
+        const baseBooking = finalDesejado ? calcularPrecoBase(finalDesejado, descontos) : null;
 
         grelha.appendChild(
             criarCardDia({
@@ -292,8 +334,10 @@ function gerarGrelha() {
     }
 }
 
+// ===============================
+// BUSCAR PREÇO VITASOL
+// ===============================
 
-// Busca preço Vitasol importado
 function obterPrecoVitasol(dataISO) {
     if (!window.concorrenciaLista) return null;
     const item = window.concorrenciaLista.find(x => x.data === dataISO);
@@ -307,7 +351,10 @@ db.collection("concorrencia").doc("dados").get().then(doc => {
     }
 });
 
-// Cria cartão normal
+// ===============================
+// CARTÕES
+// ===============================
+
 function criarCardDia(info) {
     const card = document.createElement("div");
     card.className = "card-dia";
@@ -316,26 +363,18 @@ function criarCardDia(info) {
         <h4>📅 ${info.dataISO} (${info.diaSemana})</h4>
 
         ${info.fimDeSemana ? `<div class="tag fds">🔵 Fim de semana</div>` : ""}
-
         ${info.feriadoNome ? `<div class="tag feriado">🔴 ${info.feriadoNome}</div>` : ""}
-
-        ${info.eventosHoje.length > 0 ? 
-            info.eventosHoje.map(ev => `<div class="tag evento">🟠 ${ev.nome}</div>`).join("") 
-            : ""}
+        ${info.eventosHoje.length > 0 ? info.eventosHoje.map(ev => `<div class="tag evento">🟠 ${ev.nome}</div>`).join("") : ""}
 
         <div class="tag">💰 Vitasol: ${info.vitasol ? info.vitasol + " €" : "—"}</div>
-
         <div class="tag">🎯 Final: ${info.finalDesejado ? info.finalDesejado.toFixed(2) + " €" : "—"}</div>
-
         <div class="tag">🏷️ Base: ${info.baseBooking ? info.baseBooking.toFixed(2) + " €" : "—"}</div>
-
         <div class="tag dispo">🟢 Disponibilidade: ${info.dispo}/3</div>
     `;
 
     return card;
 }
 
-// Cartão esgotado
 function criarCardEsgotado(dataISO, diaSemana) {
     const card = document.createElement("div");
     card.className = "card-dia card-esgotado";
@@ -347,9 +386,11 @@ function criarCardEsgotado(dataISO, diaSemana) {
 
     return card;
 }
+
 // ===============================
-// PREENCHER ANOS (2020–2050)
+// PREENCHER ANOS
 // ===============================
+
 document.addEventListener("DOMContentLoaded", () => {
     const selAno = document.getElementById("selAno");
     if (!selAno) return;
@@ -366,4 +407,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const selMes = document.getElementById("selMes");
     if (selMes) selMes.value = hoje.getMonth();
+
+    gerarGrelha();
 });
