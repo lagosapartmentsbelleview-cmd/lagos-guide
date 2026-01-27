@@ -556,3 +556,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// Função para gerar data/hora PT
+function agoraPT() {
+    const agora = new Date();
+    return agora.toLocaleString("pt-PT", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+}
+
+// Botão Guardar Filtros
+document.getElementById("btnGuardarFiltros").addEventListener("click", () => {
+    const msg = "Filtro guardado em " + agoraPT();
+    document.getElementById("mensagemFiltros").textContent = msg;
+});
+
+// Botão Aplicar Filtros
+document.getElementById("btnAplicarFiltros").addEventListener("click", () => {
+    const msg = "Filtro aplicado em " + agoraPT();
+    document.getElementById("mensagemFiltros").textContent = msg;
+});
+
+
