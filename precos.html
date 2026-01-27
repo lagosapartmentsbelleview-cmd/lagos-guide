@@ -78,53 +78,82 @@
             </select>
         </div>
 
-        <div class="linha-desconto">
-            <label>
-                <input type="checkbox" id="chkTelemovel">
-                Tarifa Telemóvel (10%)
-                <span class="tooltip" data-tip="Acumula com: Genius, Portefólio. Não acumula com: Campanhas Promo, Ofertas Especiais.">ℹ️</span>
-            </label>
-        </div>
-
-        <div class="linha-desconto">
-            <label for="inpPais">Tarifa por País (%):</label>
-            <span class="tooltip" data-tip="Acumula com: Genius, Portefólio. Não acumula com: Campanhas Promo, Ofertas Especiais.">ℹ️</span>
-            <input type="number" id="inpPais" value="10" min="0" max="100">
-        </div>
-
-        <div class="linha-desconto">
-            <label for="inpCampanha">
-            Campanha Promo (%)
-            <span class="tooltip" data-tip="Acumula com: Genius, Portefólio. Não acumula com: Telemóvel, País, Ofertas Especiais.">ℹ️</span>
-            </label>
-            <input type="number" id="inpCampanha" min="0" max="100">
-        </div>
-
-
-        <div class="linha-desconto">
-            <label for="inpOfertaBasica">Oferta Básica (%):</label>
-            <span class="tooltip" data-tip="Acumula com: Genius, Segmentação (se não houver campanha), Campanhas Promo. Não acumula com: Ofertas Especiais.">ℹ️</span>
-            <input type="number" id="inpOfertaBasica" value="10">
-        </div>
-
-        <div class="linha-desconto">
-            <label for="inpOfertaUltimaHora">Oferta Última Hora (%):</label>
-            <span class="tooltip" data-tip="Acumula com: Genius, Segmentação (se não houver campanha), Campanhas Promo. Não acumula com: Ofertas Especiais.">ℹ️</span>
-            <input type="number" id="inpOfertaUltimaHora" value="10">
-        </div>
-
-        <div class="linha-desconto">
-            <label for="inpOfertaAntecipada">Oferta Reserva Antecipada (%):</label>
-            <span class="tooltip" data-tip="Acumula com: Genius, Segmentação (se não houver campanha), Campanhas Promo. Não acumula com: Ofertas Especiais.">ℹ️</span>
-            <input type="number" id="inpOfertaAntecipada" value="10">
-        </div>
-
-        <div class="linha-desconto">
-            <label for="inpTempoLimitado">Oferta Tempo Limitado (%):</label>
-            <span class="tooltip" data-tip="Não acumula com nenhum outro desconto. Substitui todos os restantes.">ℹ️</span>
-            <input type="number" id="inpTempoLimitado" value="0">
-        </div>
+        <!-- Promoções -->
+<div class="filtros-categoria">
+  <h4>Promoções</h4>
+  <div class="filtros-grid">
+    <div>
+      <label for="inpCampanha">
+        Campanha Promo (%)
+        <span class="tooltip" data-tip="Acumula com: Genius, Portefólio. Não acumula com: Segmentação, Ofertas Especiais.">ℹ️</span>
+      </label>
+      <input type="number" id="inpCampanha" min="0" max="100">
     </div>
+  </div>
+</div>
+
+<!-- Segmentação -->
+<div class="filtros-categoria">
+  <h4>Segmentação</h4>
+  <div class="filtros-grid">
+    <div>
+      <label for="chkTelemovel">
+        Tarifa Telemóvel (10%)
+        <span class="tooltip" data-tip="Acumula com: Genius, Portefólio. Não acumula com: Campanhas Promo, Ofertas Especiais.">ℹ️</span>
+      </label>
+      <input type="checkbox" id="chkTelemovel">
+    </div>
+    <div>
+      <label for="inpPais">
+        Tarifa por País (%)
+        <span class="tooltip" data-tip="Acumula com: Genius, Portefólio. Não acumula com: Campanhas Promo, Ofertas Especiais.">ℹ️</span>
+      </label>
+      <input type="number" id="inpPais" min="0" max="100">
+    </div>
+  </div>
+</div>
+
+<!-- Portefólio -->
+<div class="filtros-categoria">
+  <h4>Portefólio</h4>
+  <div class="filtros-grid">
+    <div>
+      <label for="inpOfertaBasica">
+        Oferta Básica (%)
+        <span class="tooltip" data-tip="Acumula com: Genius, Segmentação (sem campanha), Campanhas Promo. Não acumula com: Ofertas Especiais.">ℹ️</span>
+      </label>
+      <input type="number" id="inpOfertaBasica" min="0" max="100">
+    </div>
+    <div>
+      <label for="inpOfertaUltimaHora">
+        Última Hora (%)
+        <span class="tooltip" data-tip="Acumula com: Genius, Segmentação (sem campanha), Campanhas Promo. Não acumula com: Ofertas Especiais.">ℹ️</span>
+      </label>
+      <input type="number" id="inpOfertaUltimaHora" min="0" max="100">
+    </div>
+    <div>
+      <label for="inpOfertaAntecipada">
+        Reserva Antecipada (%)
+        <span class="tooltip" data-tip="Acumula com: Genius, Segmentação (sem campanha), Campanhas Promo. Não acumula com: Ofertas Especiais.">ℹ️</span>
+      </label>
+      <input type="number" id="inpOfertaAntecipada" min="0" max="100">
+    </div>
+  </div>
+</div>
+
+<!-- Ofertas Especiais -->
+<div class="filtros-categoria">
+  <h4>Ofertas Especiais</h4>
+  <div class="filtros-grid">
+    <div>
+      <label for="inpTempoLimitado">
+        Tempo Limitado (%)
+        <span class="tooltip" data-tip="Não acumula com nenhum outro desconto. Substitui todos os restantes.">ℹ️</span>
+      </label>
+      <input type="number" id="inpTempoLimitado" min="0" max="100">
+    </div>
+  </div>
+</div>
 
     <!-- BOTÕES NOVOS -->
     <div class="linha-botoes-filtros">
