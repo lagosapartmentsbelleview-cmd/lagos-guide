@@ -262,6 +262,46 @@ function lerDescontosSelecionados() {
 }
 
 // ===============================
+// FERIADOS FIXOS
+// ===============================
+
+const feriadosFixos = {
+    "01-01": "Ano Novo",
+    "04-25": "25 de Abril",
+    "05-01": "Dia do Trabalhador",
+    "06-10": "Dia de Portugal",
+    "08-15": "Assunção de Maria",
+    "10-05": "Implantação da República",
+    "11-01": "Dia de Todos os Santos",
+    "12-01": "Restauração da Independência",
+    "12-08": "Imaculada Conceição",
+    "12-25": "Natal"
+};
+
+// ===============================
+// EVENTOS
+// ===============================
+
+const eventos = [
+    { nome: "Festival dos Descobrimentos", inicio: "2026-05-01", fim: "2026-05-05", local: "Lagos" },
+    { nome: "MotoGP Portimão", inicio: "2026-03-20", fim: "2026-03-22", local: "Portimão" }
+];
+
+// ===============================
+// DISPONIBILIDADE (placeholder)
+// ===============================
+
+function obterDisponibilidade(dataISO) {
+    return 2; // podes ajustar mais tarde
+}
+
+// Verifica se data está dentro de um evento
+function eventosDoDia(dataISO) {
+    return eventos.filter(ev => dataISO >= ev.inicio && dataISO <= ev.fim);
+}
+
+
+// ===============================
 // FUNÇÕES EM FALTA (OBRIGATÓRIAS)
 // ===============================
 
@@ -302,6 +342,8 @@ function calcularPrecoFinal(base, descontos) {
 
     return base * (1 - total);
 }
+
+
 
 // ===============================
 // GERAÇÃO DA GRELHA
