@@ -273,3 +273,65 @@ select, option {
     background-color: #f5f5f5 !important;
     color: #333 !important;
 }
+
+/* ============================
+   CRUD DE ENTIDADES (isolado)
+============================ */
+
+.crud-entidades h1 {
+    margin-bottom: 20px;
+}
+
+.crud-entidades table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.crud-entidades th {
+    background: #2b7cff;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.crud-entidades td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.crud-entidades tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.crud-entidades .btn-edit { background: #007bff; }
+.crud-entidades .btn-delete { background: #d9534f; }
+.crud-entidades .btn-add { background: #5cb85c; margin-bottom: 15px; }
+
+.crud-entidades .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.crud-entidades .modal-content {
+    background: white;
+    padding: 20px;
+    width: 400px;
+    border-radius: 6px;
+}
+
+.crud-entidades input,
+.crud-entidades select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+}
+
