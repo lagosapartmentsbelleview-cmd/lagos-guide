@@ -701,4 +701,3 @@ function debug(...args) {
 // ===============================
 
 console.log("✔ precos.js carregado com sucesso.");
-
