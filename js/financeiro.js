@@ -481,30 +481,42 @@ document.querySelectorAll(".tab").forEach(botao => {
 
 
 function interpretarFatura(texto) {
-    const linhas = texto.split("\n");
+    const partes = texto.split("*");
     const dados = {};
 
-    linhas.forEach(l => {
-        const [chave, valor] = l.split(":");
+    partes.forEach(p => {
+        const [chave, valor] = p.split(":");
         dados[chave] = valor;
     });
 
-    const nif = dados["B"];
+    // Campos AT relevantes
+    const nif = dados["A"];          // NIF do emissor
+    const numero = dados["G"];       // Nº da fatura
+    const data = dados["F"];         // AAAAMMDD
+    const total = parseFloat(dados["O"]); // Total com IVA
+    const iva = parseFloat(dados["N"]);   // IVA total
+    const atcud = dados["H"];        // ATCUD
+
     const fornecedor = obterFornecedorPorNIF(nif);
     const categoria = inferirCategoria(nif);
 
     const entrada = {
-        data: dados["D"],
+        data: formatarDataAT(data),
         fornecedor,
         categoria,
-        valor: parseFloat(dados["E"]),
-        iva: parseFloat(dados["F"]),
-        numero: dados["C"],
-        atcud: dados["H"] || ""
+        valor: total,
+        iva: iva,
+        numero,
+        atcud
     };
 
     adicionarLinhaCustosIVA(entrada);
     guardarFaturaFirestore(entrada);
+}
+
+function formatarDataAT(yyyymmdd) {
+    if (!yyyymmdd || yyyymmdd.length !== 8) return "";
+    return `${yyyymmdd.substring(6,8)}/${yyyymmdd.substring(4,6)}/${yyyymmdd.substring(0,4)}`;
 }
 
 function adicionarLinhaCustosIVA(f) {
