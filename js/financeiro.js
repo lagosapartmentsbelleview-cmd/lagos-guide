@@ -456,6 +456,30 @@ if (btnAdicionarExtra) {
     btnAdicionarExtra.addEventListener("click", adicionarExtra);
 }
 
+// ======================================================
+//  SISTEMA DE ABAS DO FINANCEIRO
+// ======================================================
+
+document.querySelectorAll(".tab").forEach(botao => {
+    botao.addEventListener("click", () => {
+        const alvo = botao.dataset.tab; // ex: "custos-iva"
+
+        // Remover active de todos os botões
+        document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+
+        // Remover active de todos os conteúdos
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+
+        // Ativar o botão clicado
+        botao.classList.add("active");
+
+        // Ativar o conteúdo correspondente
+        const conteudo = document.getElementById("tab-" + alvo);
+        if (conteudo) conteudo.classList.add("active");
+    });
+});
+
+
 function interpretarFatura(texto) {
     const linhas = texto.split("\n");
     const dados = {};
