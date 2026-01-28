@@ -489,7 +489,6 @@ async function interpretarFatura(texto) {
         dados[chave] = valor;
     });
 
-    // Campos AT relevantes
     const nif = dados["A"];                // NIF do emissor
     const numero = dados["G"];             // Nº da fatura
     const data = dados["F"];               // AAAAMMDD
@@ -497,14 +496,18 @@ async function interpretarFatura(texto) {
     const iva = parseFloat(dados["N"]);    // IVA total
     const atcud = dados["H"];              // ATCUD
 
-    // 👉 NOVO: ir buscar o nome do fornecedor pela web
-    const fornecedorWeb = await obterNomePorNIF(nif);
+    // 1º tenta web, mas se falhar, ignora
+    let fornecedor = null;
+    try {
+        fornecedor = await obterNomePorNIF(nif);
+    } catch (e) {
+        fornecedor = null;
+    }
 
-    // Se a web falhar, cai no mapa local
-    const fornecedorLocal = obterFornecedorPorNIF(nif);
-    const fornecedor = fornecedorWeb !== "Fornecedor Desconhecido"
-        ? fornecedorWeb
-        : fornecedorLocal;
+    // Se a web falhar ou devolver "Fornecedor Desconhecido", usa o mapa local
+    if (!fornecedor || fornecedor === "Fornecedor Desconhecido") {
+        fornecedor = obterFornecedorPorNIF(nif);
+    }
 
     const categoria = inferirCategoria(nif);
 
@@ -531,7 +534,7 @@ async function obterNomePorNIF(nif) {
         const resposta = await fetch(url);
 
         if (!resposta.ok) {
-            console.warn("Falha ao consultar NIF:", resposta.status);
+            // console.warn("Falha ao consultar NIF:", resposta.status);
             return "Fornecedor Desconhecido";
         }
 
@@ -544,10 +547,11 @@ async function obterNomePorNIF(nif) {
         return "Fornecedor Desconhecido";
 
     } catch (e) {
-        console.error("Erro ao consultar NIF:", e);
+        // console.error("Erro ao consultar NIF:", e);
         return "Fornecedor Desconhecido";
     }
 }
+
 
 
 function formatarDataAT(yyyymmdd) {
