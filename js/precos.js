@@ -221,12 +221,19 @@ function guardarFiltros() {
     };
 
     db.collection("configuracao").doc("precos").set({
-        filtros,
-        atualizadoEm: new Date().toISOString()
-    }).then(() => {
-        alert("Filtros guardados com sucesso.");
-    });
-}
+    filtros,
+    atualizadoEm: new Date().toISOString()
+}).then(() => {
+
+    const agora = new Date();
+    const stamp = agora.toLocaleString("pt-PT");
+
+    document.getElementById("mensagemFiltros").textContent =
+        "Filtros guardados em: " + stamp;
+
+    alert("Filtros guardados com sucesso.");
+});
+
 
 // ===============================
 // CARREGAR FILTROS AO ABRIR A PÁGINA
@@ -274,10 +281,11 @@ db.collection("configuracao").doc("precos").get().then(doc => {
 // ===============================
 
 function aplicarFiltros() {
+
     if (!window.filtrosCarregados) {
-    console.warn("Filtros ainda não carregados — aplicarFiltros() ignorado.");
-    return;
-}
+        console.warn("Filtros ainda não carregados — aplicarFiltros() ignorado.");
+        return;
+    }
 
     const margem = parseFloat(document.getElementById("inpMargem").value) || 0;
 
@@ -293,11 +301,19 @@ function aplicarFiltros() {
         margem
     };
 
-    // Gerar grelha e tabela automaticamente
+    // Mensagem de aplicação
+    const agora = new Date();
+    const stamp = agora.toLocaleString("pt-PT");
+
+    document.getElementById("mensagemFiltros").textContent =
+        "Aplicação de filtros efetuada em: " + stamp;
+
+    // Gerar grelha e tabela
     gerarGrelha();
     gerarTabelaNova();
     preencherTabelaNova();
 }
+
 
 // ===============================
 // FERIADOS FIXOS
