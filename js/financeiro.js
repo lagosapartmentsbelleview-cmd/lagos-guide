@@ -554,23 +554,33 @@ function inferirCategoria(nif) {
     return categorias[nif] || "Outros";
 }
 
-window.addEventListener("load", () => {
-
+setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
-    if (btnScanQR) {
-        btnScanQR.addEventListener("click", () => {
-            const qrReader = new Html5Qrcode("qr-reader");
 
-            qrReader.start(
-                { facingMode: "environment" },
-                { fps: 10, qrbox: 250 },
-                qrCodeMessage => {
-                    console.log("QR Code lido:", qrCodeMessage);
-                    interpretarFatura(qrCodeMessage);
-                    qrReader.stop();
-                },
-                errorMessage => {
-                    console.warn("Erro QR:", errorMessage);
+    if (!btnScanQR) {
+        console.warn("Botão QR ainda não existe, tentando de novo...");
+        return;
+    }
+
+    btnScanQR.addEventListener("click", () => {
+        const qrReader = new Html5Qrcode("qr-reader");
+
+        qrReader.start(
+            { facingMode: "environment" },
+            { fps: 10, qrbox: 250 },
+            qrCodeMessage => {
+                console.log("QR Code lido:", qrCodeMessage);
+                interpretarFatura(qrCodeMessage);
+                qrReader.stop();
+            },
+            errorMessage => console.warn("Erro QR:", errorMessage)
+        );
+    });
+
+    console.log("Botão QR ligado com sucesso!");
+
+}, 300);
+
                 }
             );
         });
