@@ -480,7 +480,7 @@ document.querySelectorAll(".tab").forEach(botao => {
 });
 
 
-function interpretarFatura(texto) {
+async function interpretarFatura(texto) {
     const partes = texto.split("*");
     const dados = {};
 
@@ -490,14 +490,22 @@ function interpretarFatura(texto) {
     });
 
     // Campos AT relevantes
-    const nif = dados["A"];          // NIF do emissor
-    const numero = dados["G"];       // Nº da fatura
-    const data = dados["F"];         // AAAAMMDD
-    const total = parseFloat(dados["O"]); // Total com IVA
-    const iva = parseFloat(dados["N"]);   // IVA total
-    const atcud = dados["H"];        // ATCUD
+    const nif = dados["A"];                // NIF do emissor
+    const numero = dados["G"];             // Nº da fatura
+    const data = dados["F"];               // AAAAMMDD
+    const total = parseFloat(dados["O"]);  // Total com IVA
+    const iva = parseFloat(dados["N"]);    // IVA total
+    const atcud = dados["H"];              // ATCUD
 
-    const fornecedor = obterFornecedorPorNIF(nif);
+    // 👉 NOVO: ir buscar o nome do fornecedor pela web
+    const fornecedorWeb = await obterNomePorNIF(nif);
+
+    // Se a web falhar, cai no mapa local
+    const fornecedorLocal = obterFornecedorPorNIF(nif);
+    const fornecedor = fornecedorWeb !== "Fornecedor Desconhecido"
+        ? fornecedorWeb
+        : fornecedorLocal;
+
     const categoria = inferirCategoria(nif);
 
     const entrada = {
@@ -511,8 +519,36 @@ function interpretarFatura(texto) {
     };
 
     adicionarLinhaCustosIVA(entrada);
-    guardarFaturaFirestore(entrada);
+    await guardarFaturaFirestore(entrada);
 }
+
+async function obterNomePorNIF(nif) {
+    if (!nif) return "Fornecedor Desconhecido";
+
+    const url = `https://www.nif.pt/?json=1&q=${nif}`;
+
+    try {
+        const resposta = await fetch(url);
+
+        if (!resposta.ok) {
+            console.warn("Falha ao consultar NIF:", resposta.status);
+            return "Fornecedor Desconhecido";
+        }
+
+        const dados = await resposta.json();
+
+        if (dados.result && dados.result.name) {
+            return dados.result.name;
+        }
+
+        return "Fornecedor Desconhecido";
+
+    } catch (e) {
+        console.error("Erro ao consultar NIF:", e);
+        return "Fornecedor Desconhecido";
+    }
+}
+
 
 function formatarDataAT(yyyymmdd) {
     if (!yyyymmdd || yyyymmdd.length !== 8) return "";
@@ -588,7 +624,8 @@ setTimeout(() => {
                 await qrReader.stop();
                 document.getElementById("qr-reader").innerHTML = "";
 
-                interpretarFatura(qrCodeMessage);
+                await interpretarFatura(qrCodeMessage);
+
             },
             errorMessage => {
                 // IGNORAR erros normais de leitura
