@@ -646,6 +646,7 @@ function gerarTabelaNova() {
         "Evento",
         "Preço Final",
         "Preço Base",
+        "Preço Base (R)",
         "Disponibilidade"
     ];
 
