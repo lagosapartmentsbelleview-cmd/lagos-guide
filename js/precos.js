@@ -783,3 +783,18 @@ function debug(...args) {
 // ===============================
 
 console.log("✔ precos.js carregado com sucesso.");
+
+// Acordeão da tabela "Dados Importados"
+document.getElementById("toggleResultados").addEventListener("click", () => {
+    const wrapper = document.getElementById("resultadosWrapper");
+    const titulo = document.getElementById("toggleResultados");
+
+    if (wrapper.style.display === "none") {
+        wrapper.style.display = "block";
+        titulo.textContent = "▼ Dados Importados";
+    } else {
+        wrapper.style.display = "none";
+        titulo.textContent = "▶ Dados Importados";
+    }
+});
+
