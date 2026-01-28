@@ -335,3 +335,54 @@ select, option {
     margin-bottom: 12px;
 }
 
+/* ============================
+   CRUD DE CATEGORIAS (isolado)
+============================ */
+
+.crud-categorias table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.crud-categorias th {
+    background: #1976d2;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.crud-categorias td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.crud-categorias tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.crud-categorias .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.crud-categorias .modal-content {
+    background: white;
+    padding: 20px;
+    width: 400px;
+    border-radius: 6px;
+}
+
+.crud-categorias input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+}
