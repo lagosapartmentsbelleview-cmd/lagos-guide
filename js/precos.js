@@ -558,16 +558,42 @@ function gerarTabelaNova() {
 
     let html = `<table id="tabelaNova"><thead><tr><th>Categoria</th>`;
 
+    // ===============================
+    // LINHA 1 — MÊS (JAN, FEV, MAR…)
+    // ===============================
+    listaDatas.forEach(dataISO => {
+        const [ano, mes] = dataISO.split("-");
+        const nomeMes = new Date(dataISO).toLocaleString("pt-PT", { month: "short" });
+        html += `<th>${nomeMes}</th>`;
+    });
+
+    html += `</tr><tr><th></th>`;
+
+    // ===============================
+    // LINHA 2 — DIA DO MÊS (01, 02…)
+    // ===============================
     listaDatas.forEach(dataISO => {
         const dia = dataISO.split("-")[2];
         html += `<th>${dia}</th>`;
     });
 
+    html += `</tr><tr><th></th>`;
+
+    // ===============================
+    // LINHA 3 — DIA DA SEMANA (Dom, Seg…)
+    // ===============================
+    listaDatas.forEach(dataISO => {
+        const diaSemana = calcularDiaSemana(dataISO);
+        html += `<th>${diaSemana}</th>`;
+    });
+
     html += `</tr></thead><tbody>`;
 
+    // ===============================
+    // CATEGORIAS
+    // ===============================
     const categorias = [
         "Preço Vitasol",
-        "Dia da Semana",
         "Feriado",
         "Evento",
         "Preço Final",
@@ -589,6 +615,7 @@ function gerarTabelaNova() {
 
     document.getElementById("tabelaNovaContainer").innerHTML = html;
 }
+
 
 // ===============================
 // PREENCHER TABELA NOVA
