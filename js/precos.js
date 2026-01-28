@@ -206,82 +206,22 @@ function guardarFiltros() {
 // Aplicar filtros (sem guardar)
 function aplicarFiltros() {
     window.filtrosGuardados = {
-        // Programas Premium
-        // DEPOIS (correto se o select já tem 0, 0.10, 0.15, 0.20)
         genius: parseFloat(document.getElementById("selGenius").value) || 0,
-
-
-        // Segmentação
         telemovel: document.getElementById("chkTelemovel").checked ? 0.10 : 0,
         pais: (parseFloat(document.getElementById("inpPais").value) || 0) / 100,
-        estadoEUA: 0, // por agora não usas, fica 0
-
-        // Campanhas promocionais
+        estadoEUA: 0,
         inicio2026: (parseFloat(document.getElementById("inpCampanha").value) || 0) / 100,
         finalAno: 0,
         sazonal: 0,
-
-        // Portefólio de ofertas
         ofertaBasica: (parseFloat(document.getElementById("inpOfertaBasica").value) || 0) / 100,
         ultimaHora: (parseFloat(document.getElementById("inpOfertaUltimaHora").value) || 0) / 100,
         antecipada: (parseFloat(document.getElementById("inpOfertaAntecipada").value) || 0) / 100,
-
-        // Ofertas especiais
         tempoLimitado: (parseFloat(document.getElementById("inpTempoLimitado").value) || 0) / 100,
         blackFriday: 0
     };
 
     gerarGrelha();
 }
-
-
-
-// Carregar filtros guardados ao iniciar
-db.collection("configuracao").doc("precos").get().then(doc => {
-    if (doc.exists) {
-        const filtros = doc.data().filtros;
-
-        window.filtrosGuardados = {
-            genius: filtros.genius || 0,
-            telemovel: filtros.telemovel || false,
-            pais: filtros.pais || 0,
-            campanha: filtros.campanha || 0,
-            ofertaBasica: filtros.ofertaBasica || 0,
-            ultimaHora: filtros.ultimaHora || 0,
-            antecipada: filtros.antecipada || 0,
-            tempoLimitado: filtros.tempoLimitado || 0
-        };
-
-        // Preencher inputs mas NÃO aplicar automaticamente
-        document.getElementById("selGenius").value = Number(filtros.genius).toFixed(2);   // ← ESTA É A LINHA CRÍTICA
-        document.getElementById("chkTelemovel").checked = filtros.telemovel;
-        document.getElementById("inpPais").value = filtros.pais;
-        document.getElementById("inpCampanha").value = filtros.campanha;
-        document.getElementById("inpOfertaBasica").value = filtros.ofertaBasica;
-        document.getElementById("inpOfertaUltimaHora").value = filtros.ultimaHora;
-        document.getElementById("inpOfertaAntecipada").value = filtros.antecipada;
-        document.getElementById("inpTempoLimitado").value = filtros.tempoLimitado;
-    }
-});
-
-// Substituir função antiga — agora lê dos filtros guardados
-function lerDescontosSelecionados() {
-    return window.filtrosGuardados || {
-        genius: 0,
-        telemovel: 0,
-        pais: 0,
-        estadoEUA: 0,
-        inicio2026: 0,
-        finalAno: 0,
-        sazonal: 0,
-        ofertaBasica: 0,
-        ultimaHora: 0,
-        antecipada: 0,
-        tempoLimitado: 0,
-        blackFriday: 0
-    };
-}
-
 
 // ===============================
 // FERIADOS FIXOS
@@ -314,29 +254,23 @@ const eventos = [
 // ===============================
 
 function obterDisponibilidade(dataISO) {
-    return 2; // podes ajustar mais tarde
+    return 2;
 }
 
-// Verifica se data está dentro de um evento
 function eventosDoDia(dataISO) {
     return eventos.filter(ev => dataISO >= ev.inicio && dataISO <= ev.fim);
 }
-
 
 // ===============================
 // FUNÇÕES EM FALTA (OBRIGATÓRIAS)
 // ===============================
 
-// Lê margem abaixo da Vitasol
 function lerMargem() {
     const m = parseFloat(document.getElementById("inpMargem").value);
     return isNaN(m) ? 0 : m;
 }
 
-// Calcula o preço base necessário no Booking com regras de acumulação Booking.com
 function calcularPrecoBaseSegmentado(precoFinal, d) {
-
-    // 1. Ofertas especiais (não acumulam com nada)
     const ofertaEspecial = Math.max(
         d.tempoLimitado || 0,
         d.blackFriday || 0
@@ -347,19 +281,16 @@ function calcularPrecoBaseSegmentado(precoFinal, d) {
 
     let preco = precoFinal;
 
-    // 2. Genius
     if (d.genius > 0) {
         preco = preco / (1 - d.genius);
     }
 
-    // 3. Campanhas promocionais (maior)
     const campanha = Math.max(
         d.inicio2026 || 0,
         d.finalAno || 0,
         d.sazonal || 0
     );
 
-    // 4. Segmentação (só acumula se NÃO houver campanha)
     const seg = Math.max(
         d.telemovel || 0,
         d.pais || 0,
@@ -369,12 +300,10 @@ function calcularPrecoBaseSegmentado(precoFinal, d) {
         preco = preco / (1 - seg);
     }
 
-    // 5. Aplicar campanha (se existir)
     if (campanha > 0) {
         preco = preco / (1 - campanha);
     }
 
-    // 6. Portefólio de ofertas (maior)
     const portefolio = Math.max(
         d.ofertaBasica || 0,
         d.ultimaHora || 0,
@@ -387,11 +316,8 @@ function calcularPrecoBaseSegmentado(precoFinal, d) {
     return preco;
 }
 
-
-
-
 // ===============================
-// GERAÇÃO DA GRELHA
+// GERAÇÃO DA GRELHA (AGORA COM INTERVALO)
 // ===============================
 
 function gerarGrelha() {
@@ -405,30 +331,26 @@ function gerarGrelha() {
         return;
     }
 
-    const dataEscolhida = document.getElementById("dataFiltro").value;
+    const dataInicio = document.getElementById("dataInicio").value;
+    const dataFim = document.getElementById("dataFim").value;
 
-    if (!dataEscolhida) {
-        console.warn("Nenhuma data selecionada.");
+    if (!dataInicio || !dataFim) {
+        console.warn("Datas de início ou fim em falta.");
         return;
     }
 
-    const [ano, mes] = dataEscolhida.split("-").map(Number);
-    const mesIndex = mes - 1; // converter 1–12 para 0–11
+    const listaDatas = gerarIntervaloDatas(dataInicio, dataFim);
 
     const grelha = document.getElementById("grelhaDias");
     grelha.innerHTML = "";
 
-    // número de dias do mês
-    const diasNoMes = new Date(ano, mesIndex + 1, 0).getDate();
-
-    for (let dia = 1; dia <= diasNoMes; dia++) {
-        const diaStr = String(dia).padStart(2, "0");
-        const mesStr = String(mesIndex + 1).padStart(2, "0"); // CORRIGIDO
-        const dataISO = `${ano}-${mesStr}-${diaStr}`;
-
+    listaDatas.forEach(dataISO => {
         const dateObj = new Date(dataISO);
         const diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
         const diaSemana = diasSemana[dateObj.getDay()];
+
+        const mesStr = dataISO.split("-")[1];
+        const diaStr = dataISO.split("-")[2];
 
         const fimDeSemana = (diaSemana === "Sáb" || diaSemana === "Dom");
         const feriadoNome = feriadosFixos[`${mesStr}-${diaStr}`] || null;
@@ -439,7 +361,7 @@ function gerarGrelha() {
 
         if (dispo === 0) {
             grelha.appendChild(criarCardEsgotado(dataISO, diaSemana));
-            continue;
+            return;
         }
 
         const descontos = lerDescontosSelecionados();
@@ -461,7 +383,7 @@ function gerarGrelha() {
                 dispo
             })
         );
-    }
+    });
 }
 
 // ===============================
@@ -511,58 +433,9 @@ function criarCardEsgotado(dataISO, diaSemana) {
 }
 
 // ===============================
-// PREENCHER ANOS + CARREGAR FIREBASE ANTES DA GRELHA
+// INTERVALO DE DATAS
 // ===============================
 
-document.addEventListener("DOMContentLoaded", () => {
-    const selAno = document.getElementById("selAno");
-    if (!selAno) return;
-
-    for (let ano = 2020; ano <= 2050; ano++) {
-        const opt = document.createElement("option");
-        opt.value = ano;
-        opt.textContent = ano;
-        selAno.appendChild(opt);
-    }
-
-    const hoje = new Date();
-    selAno.value = hoje.getFullYear();
-
-    const selMes = document.getElementById("selMes");
-    if (selMes) selMes.value = hoje.getMonth();
-
-    // Esperar Firebase antes de gerar grelha
-    Promise.all([
-        db.collection("concorrencia").doc("dados").get(),
-        db.collection("configuracao").doc("precos").get()
-    ]).then(([conc, filtros]) => {
-
-        if (conc.exists) {
-            window.concorrenciaLista = conc.data().lista;
-        }
-
-        if (filtros.exists) {
-            const f = filtros.data().filtros;
-
-            window.filtrosGuardados = {
-                genius: f.genius || 0,
-                telemovel: f.telemovel || false,
-                pais: (f.pais || 0) / 100,
-                campanha: (f.campanha || 0) / 100,
-                ofertaBasica: (f.ofertaBasica || 0) / 100,
-                ultimaHora: (f.ultimaHora || 0) / 100,
-                antecipada: (f.antecipada || 0) / 100,
-                tempoLimitado: (f.tempoLimitado || 0) / 100
-            };
-        }
-
-        // ✔ Só agora ativamos os eventos change
-        document.getElementById("selAno").addEventListener("change", gerarGrelha);
-        document.getElementById("selMes").addEventListener("change", gerarGrelha);
-
-        gerarGrelha(); // ✔ Agora tudo está carregado
-    });
-});
 function gerarIntervaloDatas(inicioISO, fimISO) {
     const datas = [];
     let atual = new Date(inicioISO);
@@ -579,6 +452,10 @@ function gerarIntervaloDatas(inicioISO, fimISO) {
     return datas;
 }
 
+// ===============================
+// TABELA NOVA (INTERVALO COMPLETO)
+// ===============================
+
 function gerarTabelaNova() {
     const dataInicio = document.getElementById("dataInicio").value;
     const dataFim = document.getElementById("dataFim").value;
@@ -592,9 +469,8 @@ function gerarTabelaNova() {
 
     let html = `<table id="tabelaNova"><thead><tr><th>Categoria</th>`;
 
-    // Cabeçalho com dias
     listaDatas.forEach(dataISO => {
-        const [_, __, dia] = dataISO.split("-");
+        const dia = dataISO.split("-")[2];
         html += `<th>${dia}</th>`;
     });
 
@@ -636,6 +512,7 @@ function preencherTabelaNova() {
         let valor = "—";
 
         switch (categoria) {
+
             case "Preço Vitasol":
                 const vitasol = obterPrecoVitasol(dataISO);
                 valor = vitasol ? vitasol + " €" : "—";
@@ -662,9 +539,9 @@ function preencherTabelaNova() {
                 break;
 
             case "Preço Base":
-                const finalDesejado = obterPrecoVitasol(dataISO);
-                if (finalDesejado) {
-                    const final = finalDesejado - margem;
+                const vit = obterPrecoVitasol(dataISO);
+                if (vit) {
+                    const final = vit - margem;
                     const base = calcularPrecoBaseSegmentado(final, descontos);
                     valor = base ? base.toFixed(2) + " €" : "—";
                 }
@@ -679,52 +556,3 @@ function preencherTabelaNova() {
         td.textContent = valor;
     });
 }
-
-
-// Função para gerar data/hora PT
-function agoraPT() {
-    const agora = new Date();
-    return agora.toLocaleString("pt-PT", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-    });
-}
-
-// Botão Guardar Filtros
-document.getElementById("btnGuardarFiltros").addEventListener("click", () => {
-    const msg = "Filtro guardado em " + agoraPT();
-    document.getElementById("mensagemFiltros").textContent = msg;
-});
-
-// Botão Aplicar Filtros (VERSÃO FINAL CORRIGIDA)
-document.getElementById("btnAplicarFiltros").addEventListener("click", () => {
-
-    // Guardar datas
-    const data = document.getElementById("dataFiltro").value;
-    const dataMargem = document.getElementById("dataMargem").value;
-
-    localStorage.setItem("dataFiltro", data);
-    localStorage.setItem("dataMargem", dataMargem);
-
-    // Mensagem
-    const msg = "Filtro aplicado em " + agoraPT();
-    document.getElementById("mensagemFiltros").textContent = msg;
-
-    // Gerar nova tabela
-    gerarTabelaNova();
-    preencherTabelaNova();
-
-});
-
-// Carregar data ao abrir
-document.addEventListener("DOMContentLoaded", () => {
-    const data = localStorage.getItem("dataFiltro");
-    const dataMargem = localStorage.getItem("dataMargem");
-
-    if (data) document.getElementById("dataFiltro").value = data;
-    if (dataMargem) document.getElementById("dataMargem").value = dataMargem;
-});
