@@ -372,8 +372,35 @@ function eventosDoDia(dataISO) {
 // ===============================
 
 function obterDisponibilidade(dataISO) {
-    return 2; // 0 = esgotado, 1–3 = disponível
+
+    if (!window.reservas || window.reservas.length === 0) {
+        return null;
+    }
+
+    const totalAptos = window.listaApartamentos.length;
+    const ocupados = new Set();
+
+    window.reservas.forEach(res => {
+
+        if (!res.checkin || !res.checkout || !res.apartamentos) return;
+
+        // Converter datas para ISO (de DD/MM/YYYY para YYYY-MM-DD)
+        const [diaIn, mesIn, anoIn] = res.checkin.split("/");
+        const [diaOut, mesOut, anoOut] = res.checkout.split("/");
+
+        const inicio = `${anoIn}-${mesIn.padStart(2, "0")}-${diaIn.padStart(2, "0")}`;
+        const fim = `${anoOut}-${mesOut.padStart(2, "0")}-${diaOut.padStart(2, "0")}`;
+
+        // Verificar se a data está dentro da reserva
+        if (dataISO >= inicio && dataISO < fim) {
+            res.apartamentos.forEach(apt => ocupados.add(apt));
+        }
+    });
+
+    const disponiveis = totalAptos - ocupados.size;
+    return disponiveis < 0 ? 0 : disponiveis;
 }
+
 
 // ===============================
 // LEITURA DA MARGEM
@@ -688,10 +715,16 @@ function preencherTabelaNova() {
                 }
                 break;
 
-            case "Disponibilidade":
-                const dispo = obterDisponibilidade(dataISO);
-                valor = dispo ? dispo + "/3" : "—";
-                break;
+           case "Disponibilidade":
+    const dispo = obterDisponibilidade(dataISO);
+
+    if (dispo === null) {
+        valor = "—"; // reservas ainda não carregadas
+    } else {
+        valor = dispo + "/" + window.listaApartamentos.length;
+    }
+    break;
+
         }
 
         td.textContent = valor;
