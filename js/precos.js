@@ -716,6 +716,16 @@ function preencherTabelaNova() {
                 }
                 break;
 
+           case "Preço Base (R)":
+               const vitR = obterPrecoVitasol(dataISO);
+               if (vitR) {
+                    const finalR = vitR - margem;
+                    const baseR = calcularPrecoBaseSegmentado(finalR, descontos);
+                    valor = baseR ? (baseR * 0.95).toFixed(2) + " €" : "—";
+                }
+    break;
+
+
            case "Disponibilidade":
     const dispo = obterDisponibilidade(dataISO);
 
