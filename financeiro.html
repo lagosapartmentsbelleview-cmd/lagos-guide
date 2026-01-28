@@ -31,6 +31,7 @@
         <!-- ABAS -->
         <div class="tabs">
             <button class="tab active" data-tab="limpeza">Limpeza</button>
+            <button class="tab" data-tab="custos-iva">Custos & IVA (QR Code)</button>
             <button class="tab" data-tab="condominio">Condomínio</button>
             <button class="tab" data-tab="agua">Água</button>
             <button class="tab" data-tab="luz">Luz</button>
@@ -156,6 +157,40 @@
 </div>
 
         <!-- Outras abas (vazias por agora) -->
+
+        <div class="tab-content" id="tab-custos-iva">
+
+    <h2>Custos & IVA (QR Code)</h2>
+
+    <div class="card">
+        <h3>Importar Fatura via QR Code</h3>
+
+        <button id="btnScanQR">📷 Ler QR da Fatura</button>
+
+        <div id="qr-reader" style="width:300px; margin-top:15px;"></div>
+    </div>
+
+    <div class="card">
+        <h3>Faturas Importadas</h3>
+
+        <table id="tabelaCustosIVA">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Fornecedor</th>
+                    <th>Categoria</th>
+                    <th>Valor (€)</th>
+                    <th>IVA (€)</th>
+                    <th>Nº Fatura</th>
+                    <th>ATCUD</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+</div>
+
         <div class="tab-content" id="tab-condominio"></div>
         <div class="tab-content" id="tab-agua"></div>
         <div class="tab-content" id="tab-luz"></div>
@@ -164,6 +199,9 @@
         <div class="tab-content" id="tab-outros"></div>
 
     </div>
+
+    
+    <script src="https://unpkg.com/html5-qrcode"></script>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
