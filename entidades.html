@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão de Entidades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #2b7cff;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-edit { background: #007bff; }
+        .btn-delete { background: #d9534f; }
+        .btn-add { background: #5cb85c; margin-bottom: 15px; }
+
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            width: 400px;
+            border-radius: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 6px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Gestão de Entidades</h1>
+
+    <button class="btn-add" onclick="abrirModalAdicionar()">+ Adicionar Entidade</button>
+
+    <table id="tabelaEntidades">
+        <thead>
+            <tr>
+                <th>NIF</th>
+                <th>Entidade</th>
+                <th>Categoria</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal" id="modalEntidade">
+        <div class="modal-content">
+            <h3 id="tituloModal">Adicionar Entidade</h3>
+
+            <label>NIF</label>
+            <input type="text" id="inputNIF">
+
+            <label>Nome da Entidade</label>
+            <input type="text" id="inputNome">
+
+            <label>Categoria</label>
+            <select id="inputCategoria">
+                <option value="Água">Água</option>
+                <option value="Energia">Energia</option>
+                <option value="Telecomunicações">Telecomunicações</option>
+                <option value="Combustível">Combustível</option>
+                <option value="Alimentação">Alimentação</option>
+                <option value="Bricolage">Bricolage</option>
+                <option value="Construção">Construção</option>
+                <option value="Decoração">Decoração</option>
+                <option value="Equipamentos">Equipamentos</option>
+                <option value="Serviços">Serviços</option>
+                <option value="Outros">Outros</option>
+            </select>
+
+            <button class="btn-add" onclick="guardarEntidade()">Guardar</button>
+            <button class="btn-delete" onclick="fecharModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <script src="entidades.js"></script>
+    <script src="crud-entidades.js"></script>
+
+</body>
+</html>
