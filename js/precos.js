@@ -1,5 +1,5 @@
 // ===============================
-// FIREBASE – CARREGAR DADOS AO INICIAR
+// FIREBASE – AUTENTICAÇÃO
 // ===============================
 
 firebase.auth().onAuthStateChanged(user => {
@@ -11,44 +11,61 @@ firebase.auth().onAuthStateChanged(user => {
     console.log("Utilizador autenticado:", user.email);
 });
 
-const tabelaBody = document.querySelector("#tabelaResultados tbody");
+// ===============================
+// ELEMENTOS BASE
+// ===============================
 
-// Carregar dados guardados no Firebase ao abrir a página
+const tabelaBody = document.querySelector("#tabelaResultados tbody");
+window.concorrenciaLista = [];   // lista de preços Vitasol
+window.filtrosGuardados = null;  // filtros aplicados
+
+// ===============================
+// CARREGAR DADOS VITASOL AO ABRIR
+// ===============================
+
 db.collection("concorrencia").doc("dados").get().then(doc => {
     if (doc.exists) {
-        const dados = doc.data().lista;
+        const dados = doc.data().lista || [];
         window.concorrenciaLista = dados;
         renderTabela(dados);
 
         const data = doc.data().atualizadoEm;
         document.getElementById("infoAtualizacao").textContent =
             "Última atualização: " + new Date(data).toLocaleString("pt-PT");
+    } else {
+        console.warn("Nenhum dado Vitasol encontrado no Firebase.");
     }
 });
 
 // ===============================
-// BOTÕES
+// BOTÕES PRINCIPAIS
 // ===============================
 
 const btnImportar = document.getElementById("btnImportar");
 const btnExportar = document.getElementById("btnExportar");
 
 // ===============================
-// IMPORTAR DADOS
+// IMPORTAR DADOS VITASOL
 // ===============================
 
 btnImportar.addEventListener("click", () => {
-    const texto = document.getElementById("inputConcorrencia").value;
+    const texto = document.getElementById("inputConcorrencia").value.trim();
+    if (!texto) {
+        alert("Cole os dados do Booking ou Vitasol antes de importar.");
+        return;
+    }
 
     const dados = parseTextoConcorrencia(texto);
 
     renderTabela(dados);
     guardarConcorrencia(dados);
     atualizarDataAtualizacao();
+
+    window.concorrenciaLista = dados;
 });
 
 // ===============================
-// EXPORTAR (Fase 2)
+// EXPORTAR (placeholder)
 // ===============================
 
 btnExportar.addEventListener("click", () => {
@@ -56,7 +73,7 @@ btnExportar.addEventListener("click", () => {
 });
 
 // ===============================
-// PARSER PRINCIPAL
+// PARSER DE TEXTO (BOOKING / VITASOL)
 // ===============================
 
 function parseTextoConcorrencia(texto) {
@@ -75,6 +92,7 @@ function parseTextoConcorrencia(texto) {
     for (let i = 0; i < linhas.length; i++) {
         const linha = linhas[i].trim().toLowerCase();
 
+        // Mês + ano
         for (const nomeMes in meses) {
             if (linha.includes(nomeMes)) {
                 mesAtual = meses[nomeMes];
@@ -84,10 +102,12 @@ function parseTextoConcorrencia(texto) {
             }
         }
 
+        // Dia isolado
         if (/^\d{1,2}$/.test(linha)) {
             diaAtual = linha.padStart(2, "0");
         }
 
+        // Preço
         if (linha.startsWith("€")) {
             const preco = parseFloat(linha.replace(/[^\d,]/g, "").replace(",", "."));
             if (diaAtual && mesAtual && anoAtual) {
@@ -102,15 +122,8 @@ function parseTextoConcorrencia(texto) {
     return resultados;
 }
 
-function calcularDiaSemana(dataStr) {
-    const dias = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
-    const [ano, mes, dia] = dataStr.split("-");
-    const date = new Date(`${ano}-${mes}-${dia}`);
-    return dias[date.getDay()];
-}
-
 // ===============================
-// RENDERIZAÇÃO DA TABELA
+// RENDERIZAÇÃO DA TABELA IMPORTADA
 // ===============================
 
 function renderTabela(lista) {
@@ -168,23 +181,33 @@ document.getElementById("btnLimpar").addEventListener("click", function () {
     document.getElementById("inputConcorrencia").value = "";
     document.getElementById("infoAtualizacao").textContent = "Última atualização: —";
 
+    window.concorrenciaLista = [];
+
     alert("Dados limpos com sucesso.");
 });
 
 // ===============================
-// FILTROS PERSISTENTES (GUARDAR + APLICAR)
+// FILTROS PERSISTENTES (GUARDAR + CARREGAR + APLICAR)
 // ===============================
 
 // Botões
 document.getElementById("btnGuardarFiltros").addEventListener("click", guardarFiltros);
 document.getElementById("btnAplicarFiltros").addEventListener("click", aplicarFiltros);
 
-// Estado global dos filtros guardados
+// Estado global dos filtros aplicados
 window.filtrosGuardados = null;
 
-// Guardar filtros no Firebase
+// ===============================
+// GUARDAR FILTROS NO FIREBASE
+// ===============================
+
 function guardarFiltros() {
     const filtros = {
+        dataInicio: document.getElementById("dataInicio").value || "",
+        dataFim: document.getElementById("dataFim").value || "",
+        dataMargem: document.getElementById("dataMargem").value || "",
+        margem: parseFloat(document.getElementById("inpMargem").value) || 0,
+
         genius: parseFloat(document.getElementById("selGenius").value) || 0,
         telemovel: document.getElementById("chkTelemovel").checked,
         pais: parseFloat(document.getElementById("inpPais").value) || 0,
@@ -203,24 +226,61 @@ function guardarFiltros() {
     });
 }
 
-// Aplicar filtros (sem guardar)
+// ===============================
+// CARREGAR FILTROS AO ABRIR A PÁGINA
+// ===============================
+
+db.collection("configuracao").doc("precos").get().then(doc => {
+    if (!doc.exists) {
+        console.warn("Nenhum filtro guardado encontrado.");
+        return;
+    }
+
+    const filtros = doc.data().filtros;
+    if (!filtros) return;
+
+    // Preencher inputs
+    document.getElementById("dataInicio").value = filtros.dataInicio || "";
+    document.getElementById("dataFim").value = filtros.dataFim || "";
+    document.getElementById("dataMargem").value = filtros.dataMargem || "";
+    document.getElementById("inpMargem").value = filtros.margem ?? 1;
+
+    document.getElementById("selGenius").value = filtros.genius ?? 0;
+    document.getElementById("chkTelemovel").checked = filtros.telemovel ?? false;
+    document.getElementById("inpPais").value = filtros.pais ?? 0;
+    document.getElementById("inpCampanha").value = filtros.campanha ?? 0;
+    document.getElementById("inpOfertaBasica").value = filtros.ofertaBasica ?? 0;
+    document.getElementById("inpOfertaUltimaHora").value = filtros.ultimaHora ?? 0;
+    document.getElementById("inpOfertaAntecipada").value = filtros.antecipada ?? 0;
+    document.getElementById("inpTempoLimitado").value = filtros.tempoLimitado ?? 0;
+
+    // Aplicar automaticamente
+    aplicarFiltros();
+});
+
+// ===============================
+// APLICAR FILTROS (SEM GUARDAR)
+// ===============================
+
 function aplicarFiltros() {
+    const margem = parseFloat(document.getElementById("inpMargem").value) || 0;
+
     window.filtrosGuardados = {
         genius: parseFloat(document.getElementById("selGenius").value) || 0,
         telemovel: document.getElementById("chkTelemovel").checked ? 0.10 : 0,
         pais: (parseFloat(document.getElementById("inpPais").value) || 0) / 100,
-        estadoEUA: 0,
-        inicio2026: (parseFloat(document.getElementById("inpCampanha").value) || 0) / 100,
-        finalAno: 0,
-        sazonal: 0,
+        campanha: (parseFloat(document.getElementById("inpCampanha").value) || 0) / 100,
         ofertaBasica: (parseFloat(document.getElementById("inpOfertaBasica").value) || 0) / 100,
         ultimaHora: (parseFloat(document.getElementById("inpOfertaUltimaHora").value) || 0) / 100,
         antecipada: (parseFloat(document.getElementById("inpOfertaAntecipada").value) || 0) / 100,
         tempoLimitado: (parseFloat(document.getElementById("inpTempoLimitado").value) || 0) / 100,
-        blackFriday: 0
+        margem
     };
 
+    // Gerar grelha e tabela automaticamente
     gerarGrelha();
+    gerarTabelaNova();
+    preencherTabelaNova();
 }
 
 // ===============================
@@ -249,20 +309,20 @@ const eventos = [
     { nome: "MotoGP Portimão", inicio: "2026-03-20", fim: "2026-03-22", local: "Portimão" }
 ];
 
-// ===============================
-// DISPONIBILIDADE (placeholder)
-// ===============================
-
-function obterDisponibilidade(dataISO) {
-    return 2;
-}
-
 function eventosDoDia(dataISO) {
     return eventos.filter(ev => dataISO >= ev.inicio && dataISO <= ev.fim);
 }
 
 // ===============================
-// FUNÇÕES EM FALTA (OBRIGATÓRIAS)
+// DISPONIBILIDADE (placeholder)
+// ===============================
+
+function obterDisponibilidade(dataISO) {
+    return 2; // 0 = esgotado, 1–3 = disponível
+}
+
+// ===============================
+// LEITURA DA MARGEM
 // ===============================
 
 function lerMargem() {
@@ -270,10 +330,15 @@ function lerMargem() {
     return isNaN(m) ? 0 : m;
 }
 
+// ===============================
+// CÁLCULO DO PREÇO BASE SEGMENTADO
+// ===============================
+
 function calcularPrecoBaseSegmentado(precoFinal, d) {
+
+    // 1) Ofertas especiais anulam tudo
     const ofertaEspecial = Math.max(
-        d.tempoLimitado || 0,
-        d.blackFriday || 0
+        d.tempoLimitado || 0
     );
     if (ofertaEspecial > 0) {
         return precoFinal / (1 - ofertaEspecial);
@@ -281,34 +346,35 @@ function calcularPrecoBaseSegmentado(precoFinal, d) {
 
     let preco = precoFinal;
 
+    // 2) Genius
     if (d.genius > 0) {
         preco = preco / (1 - d.genius);
     }
 
-    const campanha = Math.max(
-        d.inicio2026 || 0,
-        d.finalAno || 0,
-        d.sazonal || 0
-    );
-
+    // 3) Segmentação (só se não houver campanha)
     const seg = Math.max(
         d.telemovel || 0,
-        d.pais || 0,
-        d.estadoEUA || 0
+        d.pais || 0
     );
+
+    const campanha = d.campanha || 0;
+
     if (seg > 0 && campanha === 0) {
         preco = preco / (1 - seg);
     }
 
+    // 4) Campanha
     if (campanha > 0) {
         preco = preco / (1 - campanha);
     }
 
+    // 5) Portefólio
     const portefolio = Math.max(
         d.ofertaBasica || 0,
         d.ultimaHora || 0,
         d.antecipada || 0
     );
+
     if (portefolio > 0) {
         preco = preco / (1 - portefolio);
     }
@@ -317,20 +383,20 @@ function calcularPrecoBaseSegmentado(precoFinal, d) {
 }
 
 // ===============================
-// GERAÇÃO DA GRELHA (AGORA COM INTERVALO)
+// BUSCAR PREÇO VITASOL
+// ===============================
+
+function obterPrecoVitasol(dataISO) {
+    if (!window.concorrenciaLista) return null;
+    const item = window.concorrenciaLista.find(x => x.data === dataISO);
+    return item ? item.preco : null;
+}
+
+// ===============================
+// GERAÇÃO DA GRELHA
 // ===============================
 
 function gerarGrelha() {
-    if (!window.concorrenciaLista) {
-        console.warn("⚠ A grelha tentou gerar antes dos dados Vitasol estarem carregados.");
-        return;
-    }
-
-    if (!window.filtrosGuardados) {
-        console.warn("⚠ A grelha tentou gerar antes dos filtros estarem carregados.");
-        return;
-    }
-
     const dataInicio = document.getElementById("dataInicio").value;
     const dataFim = document.getElementById("dataFim").value;
 
@@ -364,7 +430,7 @@ function gerarGrelha() {
             return;
         }
 
-        const descontos = lerDescontosSelecionados();
+        const descontos = window.filtrosGuardados || {};
         const margem = lerMargem();
 
         const finalDesejado = vitasol ? vitasol - margem : null;
@@ -384,16 +450,6 @@ function gerarGrelha() {
             })
         );
     });
-}
-
-// ===============================
-// BUSCAR PREÇO VITASOL
-// ===============================
-
-function obterPrecoVitasol(dataISO) {
-    if (!window.concorrenciaLista) return null;
-    const item = window.concorrenciaLista.find(x => x.data === dataISO);
-    return item ? item.preco : null;
 }
 
 // ===============================
@@ -501,8 +557,12 @@ function gerarTabelaNova() {
     document.getElementById("tabelaNovaContainer").innerHTML = html;
 }
 
+// ===============================
+// PREENCHER TABELA NOVA
+// ===============================
+
 function preencherTabelaNova() {
-    const descontos = lerDescontosSelecionados();
+    const descontos = window.filtrosGuardados || {};
     const margem = lerMargem();
 
     document.querySelectorAll("#tabelaNova td[data-dia]").forEach(td => {
@@ -529,8 +589,8 @@ function preencherTabelaNova() {
                 break;
 
             case "Evento":
-                const eventos = eventosDoDia(dataISO);
-                valor = eventos.length > 0 ? eventos.map(e => e.nome).join(", ") : "—";
+                const evs = eventosDoDia(dataISO);
+                valor = evs.length > 0 ? evs.map(e => e.nome).join(", ") : "—";
                 break;
 
             case "Preço Final":
@@ -556,3 +616,57 @@ function preencherTabelaNova() {
         td.textContent = valor;
     });
 }
+
+// ===============================
+// FUNÇÕES AUXILIARES
+// ===============================
+
+// Dia da semana (texto)
+function calcularDiaSemana(dataISO) {
+    const dias = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+    const d = new Date(dataISO);
+    return dias[d.getDay()];
+}
+
+// Converter YYYY-MM-DD → objeto Date
+function parseISO(dataISO) {
+    const [ano, mes, dia] = dataISO.split("-").map(Number);
+    return new Date(ano, mes - 1, dia);
+}
+
+// Verifica se data está dentro de intervalo
+function dentroIntervalo(dataISO, inicioISO, fimISO) {
+    const d = parseISO(dataISO);
+    return d >= parseISO(inicioISO) && d <= parseISO(fimISO);
+}
+
+// Adicionar dias a uma data
+function adicionarDias(dataISO, dias) {
+    const d = parseISO(dataISO);
+    d.setDate(d.getDate() + dias);
+    const ano = d.getFullYear();
+    const mes = String(d.getMonth() + 1).padStart(2, "0");
+    const dia = String(d.getDate()).padStart(2, "0");
+    return `${ano}-${mes}-${dia}`;
+}
+
+// Formatar data DD/MM
+function formatarDDMM(dataISO) {
+    const [ano, mes, dia] = dataISO.split("-");
+    return `${dia}/${mes}`;
+}
+
+// ===============================
+// DEBUG (opcional)
+// ===============================
+
+function debug(...args) {
+    console.log("[DEBUG]", ...args);
+}
+
+// ===============================
+// FINAL
+// ===============================
+
+console.log("✔ precos.js carregado com sucesso.");
+
