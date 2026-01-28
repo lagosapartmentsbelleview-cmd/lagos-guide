@@ -19,6 +19,15 @@ const tabelaBody = document.querySelector("#tabelaResultados tbody");
 window.concorrenciaLista = [];   // lista de preços Vitasol
 window.filtrosGuardados = null;  // filtros aplicados
 window.filtrosCarregados = false; // indica se os filtros já foram carregados do Firebase
+window.listaApartamentos = [
+    "Apto 1",
+    "Apto 2",
+    "Apto 3"
+    // adiciona aqui todos os códigos reais dos apartamentos
+];
+
+window.reservas = []; // vai guardar as reservas carregadas do Firebase
+
 
 
 // ===============================
@@ -275,6 +284,18 @@ db.collection("configuracao").doc("precos").get().then(doc => {
     // Aplicar automaticamente
     aplicarFiltros();
 });
+
+// ===============================
+// CARREGAR RESERVAS PARA DISPONIBILIDADE REAL
+// ===============================
+
+db.collection("reservas").get().then(snapshot => {
+    window.reservas = snapshot.docs.map(doc => doc.data());
+    console.log("Reservas carregadas:", window.reservas.length);
+}).catch(err => {
+    console.error("Erro ao carregar reservas:", err);
+});
+
 
 
 // ===============================
