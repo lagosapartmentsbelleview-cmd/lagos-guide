@@ -580,17 +580,24 @@ setTimeout(() => {
         qrReader.start(
             { facingMode: "environment" },
             { fps: 10, qrbox: 250 },
-            qrCodeMessage => {
+            async qrCodeMessage => {
+
                 console.log("QR Code lido:", qrCodeMessage);
+
+                // PARAR O LEITOR IMEDIATAMENTE
+                await qrReader.stop();
+                document.getElementById("qr-reader").innerHTML = "";
+
                 interpretarFatura(qrCodeMessage);
-                qrReader.stop();
             },
-            errorMessage => console.warn("Erro QR:", errorMessage)
+            errorMessage => {
+                // IGNORAR erros normais de leitura
+            }
         );
     });
 
     console.log("Botão QR ligado com sucesso!");
-
 }, 300);
+
 
       
