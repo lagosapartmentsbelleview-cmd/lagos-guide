@@ -455,3 +455,77 @@ const btnAdicionarExtra = document.getElementById("btnAdicionarExtra");
 if (btnAdicionarExtra) {
     btnAdicionarExtra.addEventListener("click", adicionarExtra);
 }
+
+function interpretarFatura(texto) {
+    const linhas = texto.split("\n");
+    const dados = {};
+
+    linhas.forEach(l => {
+        const [chave, valor] = l.split(":");
+        dados[chave] = valor;
+    });
+
+    const nif = dados["B"];
+    const fornecedor = obterFornecedorPorNIF(nif);
+    const categoria = inferirCategoria(nif);
+
+    const entrada = {
+        data: dados["D"],
+        fornecedor,
+        categoria,
+        valor: parseFloat(dados["E"]),
+        iva: parseFloat(dados["F"]),
+        numero: dados["C"],
+        atcud: dados["H"] || ""
+    };
+
+    adicionarLinhaCustosIVA(entrada);
+    guardarFaturaFirestore(entrada);
+}
+
+function adicionarLinhaCustosIVA(f) {
+    const tbody = document.querySelector("#tabelaCustosIVA tbody");
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+        <td>${f.data}</td>
+        <td>${f.fornecedor}</td>
+        <td>${f.categoria}</td>
+        <td>${f.valor.toFixed(2)} €</td>
+        <td>${f.iva.toFixed(2)} €</td>
+        <td>${f.numero}</td>
+        <td>${f.atcud}</td>
+    `;
+
+    tbody.appendChild(tr);
+}
+
+async function guardarFaturaFirestore(f) {
+    await firebase.firestore()
+        .collection("financeiro")
+        .doc("custos")
+        .collection("faturas")
+        .add(f);
+}
+
+function obterFornecedorPorNIF(nif) {
+    const mapa = {
+        "500906840": "EDP",
+        "503219795": "Águas do Algarve",
+        "500077568": "NOS",
+        "504615947": "MEO",
+        "503933813": "Leroy Merlin"
+    };
+    return mapa[nif] || "Fornecedor Desconhecido";
+}
+
+function inferirCategoria(nif) {
+    const categorias = {
+        "500906840": "Luz",
+        "503219795": "Água",
+        "500077568": "Telecomunicações",
+        "504615947": "Telecomunicações",
+        "503933813": "Equipamentos"
+    };
+    return categorias[nif] || "Outros";
+}
