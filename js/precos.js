@@ -233,7 +233,7 @@ function guardarFiltros() {
 
     alert("Filtros guardados com sucesso.");
 });
-
+}
 
 
 // ===============================
