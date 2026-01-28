@@ -563,6 +563,21 @@ document.addEventListener("DOMContentLoaded", () => {
         gerarGrelha(); // ✔ Agora tudo está carregado
     });
 });
+function gerarIntervaloDatas(inicioISO, fimISO) {
+    const datas = [];
+    let atual = new Date(inicioISO);
+    const fim = new Date(fimISO);
+
+    while (atual <= fim) {
+        const ano = atual.getFullYear();
+        const mes = String(atual.getMonth() + 1).padStart(2, "0");
+        const dia = String(atual.getDate()).padStart(2, "0");
+        datas.push(`${ano}-${mes}-${dia}`);
+        atual.setDate(atual.getDate() + 1);
+    }
+
+    return datas;
+}
 
 function gerarTabelaNova() {
     const dataInicio = document.getElementById("dataInicio").value;
