@@ -18,6 +18,8 @@ firebase.auth().onAuthStateChanged(user => {
 const tabelaBody = document.querySelector("#tabelaResultados tbody");
 window.concorrenciaLista = [];   // lista de preços Vitasol
 window.filtrosGuardados = null;  // filtros aplicados
+window.filtrosCarregados = false; // indica se os filtros já foram carregados do Firebase
+
 
 // ===============================
 // CARREGAR DADOS VITASOL AO ABRIR
@@ -231,13 +233,18 @@ function guardarFiltros() {
 // ===============================
 
 db.collection("configuracao").doc("precos").get().then(doc => {
+
     if (!doc.exists) {
         console.warn("Nenhum filtro guardado encontrado.");
+        window.filtrosCarregados = true;
         return;
     }
 
     const filtros = doc.data().filtros;
-    if (!filtros) return;
+    if (!filtros) {
+        window.filtrosCarregados = true;
+        return;
+    }
 
     // Preencher inputs
     document.getElementById("dataInicio").value = filtros.dataInicio || "";
@@ -254,15 +261,24 @@ db.collection("configuracao").doc("precos").get().then(doc => {
     document.getElementById("inpOfertaAntecipada").value = filtros.antecipada ?? 0;
     document.getElementById("inpTempoLimitado").value = filtros.tempoLimitado ?? 0;
 
+    // Agora sim, filtros carregados
+    window.filtrosCarregados = true;
+
     // Aplicar automaticamente
     aplicarFiltros();
 });
+
 
 // ===============================
 // APLICAR FILTROS (SEM GUARDAR)
 // ===============================
 
 function aplicarFiltros() {
+    if (!window.filtrosCarregados) {
+    console.warn("Filtros ainda não carregados — aplicarFiltros() ignorado.");
+    return;
+}
+
     const margem = parseFloat(document.getElementById("inpMargem").value) || 0;
 
     window.filtrosGuardados = {
