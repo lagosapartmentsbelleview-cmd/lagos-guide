@@ -331,7 +331,7 @@ function aplicarFiltros() {
         "Aplicação de filtros efetuada em: " + stamp;
 
     // Gerar grelha e tabela
-    gerarGrelha();
+    // gerarGrelha();
     gerarTabelaNova();
     preencherTabelaNova();
 }
