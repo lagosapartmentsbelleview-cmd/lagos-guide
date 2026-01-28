@@ -565,25 +565,26 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function gerarTabelaNova() {
-    const dataEscolhida = document.getElementById("dataFiltro").value;
-    if (!dataEscolhida) return;
+    const dataInicio = document.getElementById("dataInicio").value;
+    const dataFim = document.getElementById("dataFim").value;
 
-    const [ano, mes] = dataEscolhida.split("-").map(Number);
-    const mesIndex = mes - 1;
+    if (!dataInicio || !dataFim) {
+        console.warn("Datas de início ou fim em falta.");
+        return;
+    }
 
-    const diasNoMes = new Date(ano, mesIndex + 1, 0).getDate();
+    const listaDatas = gerarIntervaloDatas(dataInicio, dataFim);
 
-    // Criar tabela
     let html = `<table id="tabelaNova"><thead><tr><th>Categoria</th>`;
 
     // Cabeçalho com dias
-    for (let dia = 1; dia <= diasNoMes; dia++) {
-        html += `<th>${String(dia).padStart(2, "0")}</th>`;
-    }
+    listaDatas.forEach(dataISO => {
+        const [_, __, dia] = dataISO.split("-");
+        html += `<th>${dia}</th>`;
+    });
 
     html += `</tr></thead><tbody>`;
 
-    // Linhas fixas
     const categorias = [
         "Preço Vitasol",
         "Dia da Semana",
@@ -597,13 +598,9 @@ function gerarTabelaNova() {
     categorias.forEach(cat => {
         html += `<tr><td><strong>${cat}</strong></td>`;
 
-        for (let dia = 1; dia <= diasNoMes; dia++) {
-            const diaStr = String(dia).padStart(2, "0");
-            const mesStr = String(mesIndex + 1).padStart(2, "0");
-            const dataISO = `${ano}-${mesStr}-${diaStr}`;
-
+        listaDatas.forEach(dataISO => {
             html += `<td data-dia="${dataISO}" data-cat="${cat}">—</td>`;
-        }
+        });
 
         html += `</tr>`;
     });
