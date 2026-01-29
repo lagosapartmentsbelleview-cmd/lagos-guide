@@ -623,6 +623,19 @@ async function guardarFaturaFirestore(f) {
         .add(f);
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    const btnSync = document.getElementById("btnSyncFirebase");
+    if (btnSync) {
+        btnSync.addEventListener("click", () => {
+            if (typeof sincronizarFirebase === "function") {
+                sincronizarFirebase();
+            } else {
+                alert("Função de sincronização não disponível nesta página.");
+            }
+        });
+    }
+});
+
 
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
