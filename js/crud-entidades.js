@@ -13,7 +13,7 @@ function atualizarTabela() {
             <td>${ent.nome}</td>
             <td>${ent.categoria}</td>
             <td>
-                <button class="btn-edit" onclick="editarEntidade('${ent.nif}')">Editar</button>
+                <button onclick="editarEntidade('${ent.nif}')">Editar</button>
                 <button class="btn-delete" onclick="apagarEntidade('${ent.nif}')">Apagar</button>
             </td>
         `;
