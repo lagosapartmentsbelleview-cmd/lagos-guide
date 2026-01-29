@@ -3,6 +3,12 @@ async function carregarEntidadesDoFirestore() {
     entidadesCache = snap.docs.map(doc => doc.data());
 }
 
+async function carregarCategoriasDoFirestore() {
+    const snap = await db.collection("categorias").get();
+    categoriasCache = snap.docs.map(doc => doc.data());
+}
+
+
 // ======================================================
 //  SISTEMA DE CACHE LOCAL + SINCRONIZAÇÃO FIREBASE
 // ======================================================
