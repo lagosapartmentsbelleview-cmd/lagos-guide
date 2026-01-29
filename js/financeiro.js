@@ -566,11 +566,11 @@ async function interpretarFatura(texto) {
     });
 
     const nif = dados["A"];
-    const numero = dados["G"];
+    const numero = dados["G"]?.replace(/\s+/g, ""); // remove espaços no meio
     const data = dados["F"];
     const total = parseFloat(dados["O"]);
     const iva = parseFloat(dados["N"]);
-    const atcud = dados["H"];
+    const atcud = dados["H"]?.trim(); // remove espaços antes/depois
 
     // Procurar entidade (cache + fallback)
     const nifLimpo = String(nif).trim().replace(/\D/g, "");
