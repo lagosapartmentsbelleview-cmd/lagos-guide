@@ -1,11 +1,56 @@
 let modoEdicao = null; // null = adicionar, "123456789" = editar NIF
 
-// Atualiza a tabela com todas as entidades
-function atualizarTabela() {
+// ======================================================
+//  LISTAR ENTIDADES (FIRESTORE)
+// ======================================================
+async function listarEntidades() {
+    const snap = await db.collection("entidades").get();
+    return snap.docs.map(doc => doc.data());
+}
+
+// ======================================================
+//  OBTER ENTIDADE POR NIF (FIRESTORE)
+// ======================================================
+async function obterEntidadePorNIF(nif) {
+    const doc = await db.collection("entidades").doc(nif).get();
+    return doc.exists ? doc.data() : null;
+}
+
+// ======================================================
+//  ADICIONAR OU EDITAR ENTIDADE (FIRESTORE)
+// ======================================================
+async function adicionarOuEditarEntidade(nif, nome, categoria) {
+    await db.collection("entidades").doc(nif).set({
+        nif,
+        nome,
+        categoria
+    });
+
+    alert("Entidade guardada com sucesso!");
+}
+
+// ======================================================
+//  APAGAR ENTIDADE (FIRESTORE)
+// ======================================================
+async function apagarEntidade(nif) {
+    if (!confirm("Tem a certeza que deseja apagar esta entidade?")) return;
+
+    await db.collection("entidades").doc(nif).delete();
+
+    alert("Entidade apagada.");
+    atualizarTabela();
+}
+
+// ======================================================
+//  ATUALIZAR TABELA (CARREGA DO FIRESTORE)
+// ======================================================
+async function atualizarTabela() {
     const tbody = document.querySelector("#tabelaEntidades tbody");
     tbody.innerHTML = "";
 
-    listarEntidades().forEach(ent => {
+    const lista = await listarEntidades();
+
+    lista.forEach(ent => {
         const tr = document.createElement("tr");
 
         tr.innerHTML = `
@@ -22,33 +67,47 @@ function atualizarTabela() {
     });
 }
 
-// Abre modal para adicionar nova entidade
+// ======================================================
+//  MODAL — ADICIONAR
+// ======================================================
 function abrirModalAdicionar() {
     modoEdicao = null;
 
     document.getElementById("tituloModal").innerText = "Adicionar Entidade";
     document.getElementById("inputNIF").value = "";
-    document.getElementById("inputEntidade").value = "";   // ← corrigido
+    document.getElementById("inputEntidade").value = "";
     document.getElementById("inputCategoria").value = "Outros";
 
     document.getElementById("modalEntidade").style.display = "flex";
 }
 
-function editarEntidade(nif) {
+// ======================================================
+//  MODAL — EDITAR
+// ======================================================
+async function editarEntidade(nif) {
     modoEdicao = nif;
-    const ent = obterEntidadePorNIF(nif);
+
+    const ent = await obterEntidadePorNIF(nif);
+
+    if (!ent) {
+        alert("Erro: entidade não encontrada.");
+        return;
+    }
 
     document.getElementById("tituloModal").innerText = "Editar Entidade";
-    document.getElementById("inputNIF").value = nif;
-    document.getElementById("inputEntidade").value = ent.nome;   // ← corrigido
+    document.getElementById("inputNIF").value = ent.nif;
+    document.getElementById("inputEntidade").value = ent.nome;
     document.getElementById("inputCategoria").value = ent.categoria;
 
     document.getElementById("modalEntidade").style.display = "flex";
 }
 
-function guardarEntidade() {
+// ======================================================
+//  GUARDAR ENTIDADE (ADICIONAR OU EDITAR)
+// ======================================================
+async function guardarEntidade() {
     const nif = document.getElementById("inputNIF").value.trim();
-    const nome = document.getElementById("inputEntidade").value.trim();   // ← corrigido
+    const nome = document.getElementById("inputEntidade").value.trim();
     const categoria = document.getElementById("inputCategoria").value;
 
     if (!nif || !nome) {
@@ -56,24 +115,27 @@ function guardarEntidade() {
         return;
     }
 
-    adicionarOuEditarEntidade(nif, nome, categoria);
+    await adicionarOuEditarEntidade(nif, nome, categoria);
 
     fecharModal();
     atualizarTabela();
 }
 
-// Apagar entidade
-function apagarEntidade(nif) {
-    if (confirm("Tem a certeza que deseja apagar esta entidade?")) {
-        delete entidadesPorNIF[nif];
-        atualizarTabela();
-    }
-}
-
-// Fecha modal
+// ======================================================
+//  FECHAR MODAL
+// ======================================================
 function fecharModal() {
     document.getElementById("modalEntidade").style.display = "none";
 }
 
-// Inicializa tabela ao carregar página
+// ======================================================
+//  INICIALIZAR TABELA AO CARREGAR A PÁGINA
+// ======================================================
 window.onload = atualizarTabela;
+
+// ======================================================
+//  NAVEGAÇÃO
+// ======================================================
+function voltarFinanceiro() {
+    window.location.href = "financeiro.html#custos-iva";
+}
