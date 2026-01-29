@@ -2,26 +2,21 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    
-  <h1>Gestão de Entidades</h1>
-
-
+    <title>Gestão de Entidades</title>
     <link rel="stylesheet" href="css/global.css">
- 
 </head>
 
 <body>
 
-    <div class="crud-entidades">
-   <button onclick="voltarFinanceiro()">← Voltar ao Financeiro</button>
+<div class="crud-entidades">
 
-<div class="barra-entidades">
-  <h1>Gestão de Entidades</h1>
-</div>
+    <button onclick="voltarFinanceiro()">← Voltar ao Financeiro</button>
 
-<button onclick="abrirModalAdicionar()">+ Adicionar Entidade</button>
+    <div class="barra-entidades">
+        <h1>Gestão de Entidades</h1>
+    </div>
 
-
+    <button onclick="abrirModalAdicionar()">+ Adicionar Entidade</button>
 
     <table id="tabelaEntidades">
         <thead>
@@ -61,14 +56,15 @@
                 <option value="Outros">Outros</option>
             </select>
 
-            <button class="btn-add" onclick="guardarEntidade()">Guardar</button>
+            <button onclick="guardarEntidade()">Guardar</button>
             <button class="btn-delete" onclick="fecharModal()">Cancelar</button>
         </div>
     </div>
-</div> <!-- 👈 FECHAR AQUI A DIV DO CRUD -->
 
-    <script src="js/entidades.js"></script>
-    <script src="js/crud-entidades.js"></script>
+</div>
+
+<script src="js/entidades.js"></script>
+<script src="js/crud-entidades.js"></script>
 
 </body>
 </html>
