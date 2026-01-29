@@ -1,7 +1,24 @@
+async function carregarCategoriasDropdown() {
+    const select = document.getElementById("inputCategoria");
+    select.innerHTML = "";
+
+    const snap = await db.collection("categorias").orderBy("nome").get();
+
+    snap.forEach(doc => {
+        const opt = document.createElement("option");
+        opt.value = doc.data().nome;
+        opt.textContent = doc.data().nome;
+        select.appendChild(opt);
+    });
+}
+
+
+
 // =======================================
-//  REFERÊNCIA À COLEÇÃO NO FIRESTORE
+//  REFERÊNCIAS FIRESTORE
 // =======================================
 const categoriasRef = db.collection("categorias");
+const entidadesRef = db.collection("entidades");
 
 let categoriaAtualID = null;
 
@@ -24,7 +41,7 @@ function carregarCategorias() {
                 <td>${dados.nome}</td>
                 <td>
                     <button class="btn-edit" onclick="abrirModalCategoria('${id}', '${dados.nome}')">Editar</button>
-                    <button class="btn-delete" onclick="apagarCategoria('${id}')">Apagar</button>
+                    <button class="btn-delete" onclick="apagarCategoria('${id}', '${dados.nome}')">Apagar</button>
                 </td>
             `;
 
@@ -37,7 +54,7 @@ function carregarCategorias() {
 // =======================================
 //  GUARDAR CATEGORIA (Adicionar ou Editar)
 // =======================================
-function guardarCategoria() {
+async function guardarCategoria() {
     const nome = document.getElementById("inputNomeCategoria").value.trim();
 
     if (!nome) {
@@ -45,33 +62,45 @@ function guardarCategoria() {
         return;
     }
 
+    // Verificar duplicados
+    const dup = await categoriasRef.where("nome", "==", nome).get();
+    if (!categoriaAtualID && !dup.empty) {
+        alert("Já existe uma categoria com este nome.");
+        return;
+    }
+
     // EDITAR
     if (categoriaAtualID) {
-        categoriasRef.doc(categoriaAtualID).update({ nome })
-            .then(() => {
-                fecharModalCategoria();
-                carregarCategorias();
-            });
+        await categoriasRef.doc(categoriaAtualID).update({ nome });
+        fecharModalCategoria();
+        carregarCategorias();
         return;
     }
 
     // ADICIONAR
-    categoriasRef.add({ nome })
-        .then(() => {
-            fecharModalCategoria();
-            carregarCategorias();
-        });
+    await categoriasRef.add({ nome });
+    fecharModalCategoria();
+    carregarCategorias();
 }
 
 
 // =======================================
-//  APAGAR CATEGORIA
+//  APAGAR CATEGORIA (com proteção)
 // =======================================
-function apagarCategoria(id) {
+async function apagarCategoria(id, nome) {
+
+    // Verificar se alguma entidade usa esta categoria
+    const usadas = await entidadesRef.where("categoria", "==", nome).get();
+
+    if (!usadas.empty) {
+        alert("Não é possível apagar esta categoria porque está a ser usada por entidades.");
+        return;
+    }
+
     if (!confirm("Tem a certeza que deseja apagar esta categoria?")) return;
 
-    categoriasRef.doc(id).delete()
-        .then(() => carregarCategorias());
+    await categoriasRef.doc(id).delete();
+    carregarCategorias();
 }
 
 
