@@ -1,19 +1,3 @@
-async function carregarCategoriasDropdown() {
-    const select = document.getElementById("inputCategoria");
-    select.innerHTML = "";
-
-    const snap = await db.collection("categorias").orderBy("nome").get();
-
-    snap.forEach(doc => {
-        const opt = document.createElement("option");
-        opt.value = doc.data().nome;
-        opt.textContent = doc.data().nome;
-        select.appendChild(opt);
-    });
-}
-
-
-
 // =======================================
 //  REFERÊNCIAS FIRESTORE
 // =======================================
