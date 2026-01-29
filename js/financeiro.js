@@ -520,8 +520,11 @@ function gerarTabelaTotaisAnuais() {
 async function obterEntidadePorNIF(nif) {
     if (!nif) return null;
 
+    // Normalizar NIF
+    nif = String(nif).trim().replace(/\D/g, "");
+
     // 1) Procurar na cache local
-    const local = entidadesCache.find(e => e.nif == nif);
+    const local = entidadesCache.find(e => String(e.nif) === nif);
     if (local) return local;
 
     // 2) Procurar no Firebase (fallback)
@@ -534,10 +537,8 @@ async function obterEntidadePorNIF(nif) {
 
         if (snap.empty) return null;
 
-        const doc = snap.docs[0];
-        const entidade = doc.data();
+        const entidade = snap.docs[0].data();
 
-        // Guardar na cache local
         entidadesCache.push(entidade);
         guardarCache();
 
