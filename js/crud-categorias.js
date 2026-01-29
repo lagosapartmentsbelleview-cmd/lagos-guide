@@ -1,18 +1,46 @@
-// ===============================
-//  REFERÊNCIA À COLEÇÃO NO FIREBASE
-// ===============================
+// =======================================
+//  REFERÊNCIA À COLEÇÃO NO FIRESTORE
+// =======================================
+const categoriasRef = db.collection("categorias");
 
-const categoriasRef = firebase.firestore().collection("categorias");
+let categoriaAtualID = null;
 
 
-// ===============================
-//  GUARDAR CATEGORIA
-// ===============================
+// =======================================
+//  CARREGAR CATEGORIAS
+// =======================================
+function carregarCategorias() {
+    const tbody = document.querySelector("#tabelaCategorias tbody");
+    tbody.innerHTML = "";
 
+    categoriasRef.orderBy("nome").get().then(snapshot => {
+        snapshot.forEach(doc => {
+            const dados = doc.data();
+            const id = doc.id;
+
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${dados.nome}</td>
+                <td>
+                    <button class="btn-edit" onclick="abrirModalCategoria('${id}', '${dados.nome}')">Editar</button>
+                    <button class="btn-delete" onclick="apagarCategoria('${id}')">Apagar</button>
+                </td>
+            `;
+
+            tbody.appendChild(tr);
+        });
+    });
+}
+
+
+// =======================================
+//  GUARDAR CATEGORIA (Adicionar ou Editar)
+// =======================================
 function guardarCategoria() {
     const nome = document.getElementById("inputNomeCategoria").value.trim();
 
-    if (nome === "") {
+    if (!nome) {
         alert("O nome da categoria não pode estar vazio.");
         return;
     }
@@ -36,10 +64,9 @@ function guardarCategoria() {
 }
 
 
-// ===============================
+// =======================================
 //  APAGAR CATEGORIA
-// ===============================
-
+// =======================================
 function apagarCategoria(id) {
     if (!confirm("Tem a certeza que deseja apagar esta categoria?")) return;
 
@@ -48,30 +75,20 @@ function apagarCategoria(id) {
 }
 
 
-// ===============================
-//  CARREGAR TABELA DE CATEGORIAS
-// ===============================
+// =======================================
+//  MODAL
+// =======================================
+function abrirModalCategoria(id = null, nome = "") {
+    categoriaAtualID = id;
 
-function carregarCategorias() {
-    const tbody = document.querySelector("#tabelaCategorias tbody");
-    tbody.innerHTML = "";
+    document.getElementById("inputNomeCategoria").value = nome;
+    document.getElementById("tituloModalCategoria").textContent =
+        id ? "Editar Categoria" : "Adicionar Categoria";
 
-    categoriasRef.orderBy("nome").get().then(snapshot => {
-        snapshot.forEach(doc => {
-            const dados = doc.data();
-            const id = doc.id;
+    document.getElementById("modalCategoria").style.display = "flex";
+}
 
-            const tr = document.createElement("tr");
-
-            tr.innerHTML = `
-                <td>${dados.nome}</td>
-                <td>
-                    <button class="btn-edit" onclick="abrirModalCategoria('${id}', '${dados.nome}')">Editar</button>
-                    <button class="btn-delete" onclick="apagarCategoria('${id}')">Apagar</button>
-                </td>
-            `;
-
-            tbody.appendChild(tr);
-        });
-    });
+function fecharModalCategoria() {
+    document.getElementById("modalCategoria").style.display = "none";
+    categoriaAtualID = null;
 }
