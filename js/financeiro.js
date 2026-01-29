@@ -573,7 +573,8 @@ async function interpretarFatura(texto) {
     const atcud = dados["H"];
 
     // Procurar entidade (cache + fallback)
-    const entidade = await obterEntidadePorNIF(nif);
+    const nifLimpo = String(nif).trim().replace(/\D/g, "");
+    const entidade = await obterEntidadePorNIF(nifLimpo);
 
     let fornecedor = entidade ? entidade.nome : "Fornecedor Desconhecido";
     let categoria = entidade ? entidade.categoria : "Outros";
