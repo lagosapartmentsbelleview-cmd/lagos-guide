@@ -91,12 +91,14 @@ function iniciarSyncAutomatica() {
 //  BOTÃO DE SINCRONIZAÇÃO
 // ======================================================
 
-document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("btnSyncFirebase");
-    if (btn) {
-        btn.addEventListener("click", sincronizarFirebase);
-    }
-});
+const btn = document.getElementById("btnSyncFirebase");
+if (btn) {
+    btn.addEventListener("click", sincronizarFirebase);
+    console.log("Botão Sincronizar ligado.");
+} else {
+    console.warn("Botão Sincronizar não encontrado.");
+}
+
 
 // ======================================================
 //  INICIALIZADOR
