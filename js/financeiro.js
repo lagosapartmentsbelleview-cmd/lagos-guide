@@ -1,3 +1,8 @@
+async function carregarEntidadesDoFirestore() {
+    const snap = await db.collection("entidades").get();
+    entidadesCache = snap.docs.map(doc => doc.data());
+}
+
 // ======================================================
 //  SISTEMA DE CACHE LOCAL + SINCRONIZAÇÃO FIREBASE
 // ======================================================
@@ -44,14 +49,10 @@ async function sincronizarFirebase() {
         reservasCache = reservasSnap.docs.map(d => d.data());
 
         // 2) Entidades
-        async function carregarEntidadesDoFirestore() {
-        const snap = await db.collection("entidades").get();
-        entidadesCache = snap.docs.map(doc => doc.data());
-        }
+        await carregarEntidadesDoFirestore();
 
         // 3) Categorias
-        const categoriasSnap = await db.collection("categorias").get();
-        categoriasCache = categoriasSnap.docs.map(d => d.data());
+        await carregarCategoriasDoFirestore();
 
         // 4) Extras (todos os meses)
         extrasCache = {};
@@ -67,7 +68,6 @@ async function sincronizarFirebase() {
         console.log("✅ Sincronização concluída.");
         alert("Sincronização concluída com sucesso!");
 
-        // Recalcular tudo
         calcularPrevisao();
         carregarExtras();
         calcularCustoReal();
@@ -78,6 +78,7 @@ async function sincronizarFirebase() {
         alert("Erro ao sincronizar Firebase.");
     }
 }
+
 
 // ======================================================
 //  SINCRONIZAÇÃO AUTOMÁTICA (11:00 e 23:00)
