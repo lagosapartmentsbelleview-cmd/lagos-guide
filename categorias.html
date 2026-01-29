@@ -7,16 +7,6 @@
 </head>
 <body>
 
-  <!-- 🔐 LOGIN SCREEN -->
-  <div id="loginScreen" style="display:flex; flex-direction:column; gap:10px; padding:20px;">
-      <h2>Autenticação Necessária</h2>
-
-      <input id="email" type="email" placeholder="Email">
-      <input id="password" type="password" placeholder="Password">
-
-      <button onclick="login()">Entrar</button>
-  </div>
-
   <!-- 🔓 CRUD (só aparece depois do login) -->
   <div class="crud-categorias" id="crudScreen" style="display:none;">
 
@@ -59,35 +49,21 @@
   <!-- 🔥 Configuração Firebase -->
   <script src="js/firebase-config.js"></script>
 
-  <!-- 🔐 Login + Autenticação -->
+  <!-- 🔐 Verificação de sessão -->
   <script>
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+    auth.onAuthStateChanged(user => {
+        if (!user) {
+            window.location.href = "login.html"; // 🔥 Se não estiver autenticado, volta ao login
+            return;
+        }
 
-    function login() {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-
-        auth.signInWithEmailAndPassword(email, password)
-            .then(() => {
-                document.getElementById("loginScreen").style.display = "none";
-                document.getElementById("crudScreen").style.display = "block";
-                carregarCategorias();
-            })
-            .catch(err => alert("Erro no login: " + err.message));
-    }
+        document.getElementById("crudScreen").style.display = "block";
+        carregarCategorias();
+    });
 
     function logout() {
-        auth.signOut().then(() => location.reload());
+        auth.signOut().then(() => window.location.href = "login.html");
     }
-
-    auth.onAuthStateChanged(user => {
-        if (user) {
-            document.getElementById("loginScreen").style.display = "none";
-            document.getElementById("crudScreen").style.display = "block";
-            carregarCategorias();
-        }
-    });
   </script>
 
   <!-- CRUD -->
