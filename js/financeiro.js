@@ -479,6 +479,23 @@ document.querySelectorAll(".tab").forEach(botao => {
     });
 });
 
+async function obterEntidadePorNIF(nif) {
+    if (!nif) return null;
+
+    const snap = await firebase.firestore()
+        .collection("entidades")
+        .where("nif", "==", nif)
+        .limit(1)
+        .get();
+
+    if (snap.empty) return null;
+
+    const doc = snap.docs[0];
+    return {
+        nome: doc.data().nome,
+        categoria: doc.data().categoria
+    };
+}
 
 async function interpretarFatura(texto) {
     const partes = texto.split("*");
@@ -496,20 +513,26 @@ async function interpretarFatura(texto) {
     const iva = parseFloat(dados["N"]);    // IVA total
     const atcud = dados["H"];              // ATCUD
 
-    // 1º tenta web, mas se falhar, ignora
-    let fornecedor = null;
-    try {
-        fornecedor = await obterNomePorNIF(nif);
-    } catch (e) {
-        fornecedor = null;
-    }
+    // Procurar entidade no Firebase
+const entidade = await obterEntidadePorNIF(nif);
 
-    // Se a web falhar ou devolver "Fornecedor Desconhecido", usa o mapa local
-    if (!fornecedor || fornecedor === "Fornecedor Desconhecido") {
-        fornecedor = obterFornecedorPorNIF(nif);
-    }
+let fornecedor = "";
+let categoria = "";
 
-    const categoria = inferirCategoria(nif);
+// Se existir → usar dados reais
+if (entidade) {
+    fornecedor = entidade.nome;
+    categoria = entidade.categoria;
+} else {
+    // Se não existir → fornecedor desconhecido
+    fornecedor = "Fornecedor Desconhecido";
+    categoria = "Outros";
+
+    // Abrir modal para criar entidade automaticamente (se existir no sistema)
+    if (typeof abrirModalAdicionar === "function") {
+        abrirModalAdicionar(nif);
+    }
+}
 
     const entrada = {
         data: formatarDataAT(data),
@@ -523,6 +546,19 @@ async function interpretarFatura(texto) {
 
     adicionarLinhaCustosIVA(entrada);
     await guardarFaturaFirestore(entrada);
+}
+
+function abrirModalAdicionar(nifPrePreenchido = "") {
+    const nifInput = document.getElementById("inputNIF");
+    const nomeInput = document.getElementById("inputEntidade");
+    const catInput = document.getElementById("inputCategoria");
+
+    if (nifInput) nifInput.value = nifPrePreenchido;
+    if (nomeInput) nomeInput.value = "";
+    if (catInput) catInput.value = "";
+
+    const modal = document.getElementById("modalEntidade");
+    if (modal) modal.style.display = "flex";
 }
 
 async function obterNomePorNIF(nif) {
