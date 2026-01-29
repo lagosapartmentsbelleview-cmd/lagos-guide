@@ -1,19 +1,117 @@
-// ===============================
-//  INICIALIZADOR ROBUSTO
-// ===============================
+// ======================================================
+//  SISTEMA DE CACHE LOCAL + SINCRONIZAÇÃO FIREBASE
+// ======================================================
+
+// Caches em memória
+let reservasCache = [];
+let extrasCache = {};
+let entidadesCache = [];
+let categoriasCache = [];
+
+// Guardar no localStorage
+function guardarCache() {
+    localStorage.setItem("reservasCache", JSON.stringify(reservasCache));
+    localStorage.setItem("extrasCache", JSON.stringify(extrasCache));
+    localStorage.setItem("entidadesCache", JSON.stringify(entidadesCache));
+    localStorage.setItem("categoriasCache", JSON.stringify(categoriasCache));
+    localStorage.setItem("ultimaSync", Date.now());
+}
+
+// Carregar do localStorage
+function carregarCache() {
+    reservasCache = JSON.parse(localStorage.getItem("reservasCache") || "[]");
+    extrasCache = JSON.parse(localStorage.getItem("extrasCache") || "{}");
+    entidadesCache = JSON.parse(localStorage.getItem("entidadesCache") || "[]");
+    categoriasCache = JSON.parse(localStorage.getItem("categoriasCache") || "[]");
+}
+
+// ======================================================
+//  SINCRONIZAR FIREBASE (1 leitura por coleção)
+// ======================================================
+
+async function sincronizarFirebase() {
+    console.log("🔄 A sincronizar Firebase...");
+
+    try {
+        // 1) Reservas
+        const reservasSnap = await db.collection("reservas").get();
+        reservasCache = reservasSnap.docs.map(d => d.data());
+
+        // 2) Entidades
+        const entidadesSnap = await db.collection("entidades").get();
+        entidadesCache = entidadesSnap.docs.map(d => d.data());
+
+        // 3) Categorias
+        const categoriasSnap = await db.collection("categorias").get();
+        categoriasCache = categoriasSnap.docs.map(d => d.data());
+
+        // 4) Extras (todos os meses)
+        extrasCache = {};
+        const custosSnap = await db.collection("custos_limpeza").get();
+        for (const doc of custosSnap.docs) {
+            const mesId = doc.id;
+            const extrasSnap = await db.collection("custos_limpeza").doc(mesId).collection("extras").get();
+            extrasCache[mesId] = extrasSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        }
+
+        guardarCache();
+
+        console.log("✅ Sincronização concluída.");
+        alert("Sincronização concluída com sucesso!");
+
+        // Recalcular tudo
+        calcularPrevisao();
+        carregarExtras();
+        calcularCustoReal();
+        gerarTabelaTotaisAnuais();
+
+    } catch (err) {
+        console.error("❌ Erro na sincronização:", err);
+        alert("Erro ao sincronizar Firebase.");
+    }
+}
+
+// ======================================================
+//  SINCRONIZAÇÃO AUTOMÁTICA (11:00 e 23:00)
+// ======================================================
+
+function iniciarSyncAutomatica() {
+    setInterval(() => {
+        const agora = new Date();
+        const hora = agora.getHours();
+        const minuto = agora.getMinutes();
+
+        if ((hora === 11 || hora === 23) && minuto === 0) {
+            sincronizarFirebase();
+        }
+    }, 60000); // verifica a cada 1 minuto
+}
+
+// ======================================================
+//  BOTÃO DE SINCRONIZAÇÃO
+// ======================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("btnSyncFirebase");
+    if (btn) {
+        btn.addEventListener("click", sincronizarFirebase);
+    }
+});
+
+// ======================================================
+//  INICIALIZADOR
+// ======================================================
 
 function initFinanceiro() {
+    carregarCache();
+    iniciarSyncAutomatica();
+
     const selectMes = document.getElementById("selectMes");
     const selectAno = document.getElementById("selectAno");
 
-    // DOM ainda não existe → tenta de novo
     if (!selectMes || !selectAno) {
         return setTimeout(initFinanceiro, 30);
     }
-
-    // ===============================
-    //  CARREGAR ANOS (2020 → 2050)
-    // ===============================
 
     for (let ano = 2020; ano <= 2050; ano++) {
         const opt = document.createElement("option");
@@ -22,38 +120,34 @@ function initFinanceiro() {
         selectAno.appendChild(opt);
     }
 
-    // Definir mês e ano atual
     const hoje = new Date();
     selectMes.value = hoje.getMonth() + 1;
     selectAno.value = hoje.getFullYear();
 
-    // Chamadas principais
     calcularPrevisao();
     carregarExtras();
     calcularCustoReal();
     gerarTabelaTotaisAnuais();
 
-    console.log("Financeiro inicializado");
+    console.log("Financeiro inicializado com cache.");
 }
 
 initFinanceiro();
 
-
-// ===============================
+// ======================================================
 //  FUNÇÃO AUXILIAR — Data BR
-// ===============================
+// ======================================================
 
 function parseDataBR(dataStr) {
     const [dia, mes, ano] = dataStr.split("/").map(Number);
     return new Date(ano, mes - 1, dia);
 }
 
+// ======================================================
+//  CALCULAR PREVISÃO (USANDO CACHE)
+// ======================================================
 
-// ===============================
-//  PASSO 2 — Calcular PREVISÃO
-// ===============================
-
-async function calcularPrevisao() {
+function calcularPrevisao() {
     const mes = Number(document.getElementById("selectMes").value);
     const ano = Number(document.getElementById("selectAno").value);
 
@@ -64,37 +158,24 @@ async function calcularPrevisao() {
 
     let totalPrevisao = 0;
 
-    try {
-        const snapshot = await db.collection("reservas").get();
+    reservasCache.forEach(r => {
+        if (!r.checkout || r.limpeza == null) return;
 
-        snapshot.forEach(doc => {
-            const r = doc.data();
+        const checkoutDate = parseDataBR(r.checkout);
 
-            if (!r.checkout || r.limpeza == null) return;
+        if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
+            totalPrevisao += Number(r.limpeza);
+        }
+    });
 
-            const checkoutDate = parseDataBR(r.checkout);
-
-            if (checkoutDate >= inicio && checkoutDate < fim) {
-                if (r.status !== "cancelado") {
-                    totalPrevisao += Number(r.limpeza);
-                }
-            }
-        });
-
-        previsaoEl.textContent = totalPrevisao.toFixed(2) + " €";
-
-    } catch (err) {
-        console.error("Erro ao calcular previsão:", err);
-        previsaoEl.textContent = "Erro";
-    }
+    previsaoEl.textContent = totalPrevisao.toFixed(2) + " €";
 }
 
+// ======================================================
+//  CARREGAR EXTRAS (USANDO CACHE)
+// ======================================================
 
-// ===============================
-//  PASSO 3 — Carregar EXTRAS
-// ===============================
-
-async function carregarExtras() {
+function carregarExtras() {
     const mes = Number(document.getElementById("selectMes").value);
     const ano = Number(document.getElementById("selectAno").value);
 
@@ -102,56 +183,41 @@ async function carregarExtras() {
     tabela.innerHTML = "";
 
     const docId = `${ano}_${String(mes).padStart(2, "0")}`;
+    const lista = extrasCache[docId] || [];
 
-    try {
-        const extrasRef = db
-            .collection("custos_limpeza")
-            .doc(docId)
-            .collection("extras");
+    lista.forEach(extra => {
+        const tr = document.createElement("tr");
 
-        const snapshot = await extrasRef.orderBy("data", "asc").get();
+        const data = extra.data.toDate ? extra.data.toDate().toLocaleDateString("pt-PT") : 
+                                         new Date(extra.data).toLocaleDateString("pt-PT");
 
-        snapshot.forEach(doc => {
-            const extra = doc.data();
+        tr.innerHTML = `
+            <td>${data}</td>
+            <td>${extra.descricao}</td>
+            <td>${extra.valor.toFixed(2)} €</td>
+            <td>
+                <button class="btnEditarExtra" data-id="${extra.id}">Editar</button>
+                <button class="btnApagarExtra" data-id="${extra.id}">Apagar</button>
+            </td>
+        `;
 
-            const tr = document.createElement("tr");
+        tabela.appendChild(tr);
+    });
 
-            const data = extra.data.toDate().toLocaleDateString("pt-PT");
-            const descricao = extra.descricao;
-            const valor = extra.valor.toFixed(2) + " €";
+    document.querySelectorAll(".btnEditarExtra").forEach(btn => {
+        btn.addEventListener("click", () => editarExtra(btn.dataset.id));
+    });
 
-            tr.innerHTML = `
-                <td>${data}</td>
-                <td>${descricao}</td>
-                <td>${valor}</td>
-                <td>
-                    <button class="btnEditarExtra" data-id="${doc.id}">Editar</button>
-                    <button class="btnApagarExtra" data-id="${doc.id}">Apagar</button>
-                </td>
-            `;
-
-            tabela.appendChild(tr);
-        });
-
-        document.querySelectorAll(".btnEditarExtra").forEach(btn => {
-            btn.addEventListener("click", () => editarExtra(btn.dataset.id));
-        });
-
-        document.querySelectorAll(".btnApagarExtra").forEach(btn => {
-            btn.addEventListener("click", () => apagarExtra(btn.dataset.id));
-        });
-
-    } catch (err) {
-        console.error("Erro ao carregar extras:", err);
-    }
+    document.querySelectorAll(".btnApagarExtra").forEach(btn => {
+        btn.addEventListener("click", () => apagarExtra(btn.dataset.id));
+    });
 }
 
+// ======================================================
+//  CALCULAR CUSTO REAL (USANDO CACHE)
+// ======================================================
 
-// ===============================
-//  PASSO 4 — Calcular CUSTO REAL
-// ===============================
-
-async function calcularCustoReal() {
+function calcularCustoReal() {
     const mes = Number(document.getElementById("selectMes").value);
     const ano = Number(document.getElementById("selectAno").value);
 
@@ -162,50 +228,31 @@ async function calcularCustoReal() {
 
     let totalReal = 0;
 
-    try {
-        // 1. Somar limpezas reais
-        const snapshot = await db.collection("reservas").get();
+    // 1) Limpezas
+    reservasCache.forEach(r => {
+        if (!r.checkout || r.limpeza == null) return;
 
-        snapshot.forEach(doc => {
-            const r = doc.data();
+        const checkoutDate = parseDataBR(r.checkout);
 
-            if (!r.checkout || r.limpeza == null) return;
+        if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
+            totalReal += Number(r.limpeza);
+        }
+    });
 
-            const checkoutDate = parseDataBR(r.checkout);
+    // 2) Extras
+    const docId = `${ano}_${String(mes).padStart(2, "0")}`;
+    const lista = extrasCache[docId] || [];
 
-            if (checkoutDate >= inicio && checkoutDate < fim) {
-                if (r.status !== "cancelado") {
-                    totalReal += Number(r.limpeza);
-                }
-            }
-        });
+    lista.forEach(extra => {
+        totalReal += Number(extra.valor);
+    });
 
-        // 2. Somar extras
-        const docId = `${ano}_${String(mes).padStart(2, "0")}`;
-        const extrasRef = db
-            .collection("custos_limpeza")
-            .doc(docId)
-            .collection("extras");
-
-        const extrasSnap = await extrasRef.get();
-
-        extrasSnap.forEach(doc => {
-            const extra = doc.data();
-            totalReal += Number(extra.valor);
-        });
-
-        custoRealEl.textContent = totalReal.toFixed(2) + " €";
-
-    } catch (err) {
-        console.error("Erro ao calcular custo real:", err);
-        custoRealEl.textContent = "Erro";
-    }
+    custoRealEl.textContent = totalReal.toFixed(2) + " €";
 }
 
-
-// ===============================
-//  PASSO 5 — Adicionar EXTRA
-// ===============================
+// ======================================================
+//  ADICIONAR EXTRA (ATUALIZA FIREBASE + CACHE)
+// ======================================================
 
 async function adicionarExtra() {
     const mes = Number(document.getElementById("selectMes").value);
@@ -220,17 +267,17 @@ async function adicionarExtra() {
         return;
     }
 
-const dataObj = new Date(dataInput);
-if (isNaN(dataObj.getTime())) {
-    alert("Data inválida.");
-    return;
-}
-
+    const dataObj = new Date(dataInput);
+    if (isNaN(dataObj.getTime())) {
+        alert("Data inválida.");
+        return;
+    }
 
     const docId = `${ano}_${String(mes).padStart(2, "0")}`;
 
     try {
-        await db
+        // 1) Guardar no Firebase
+        const ref = await db
             .collection("custos_limpeza")
             .doc(docId)
             .collection("extras")
@@ -240,26 +287,38 @@ if (isNaN(dataObj.getTime())) {
                 descricao: descInput
             });
 
+        // 2) Atualizar cache local
+        if (!extrasCache[docId]) extrasCache[docId] = [];
+        extrasCache[docId].push({
+            id: ref.id,
+            data: dataObj,
+            valor: Number(valorInput),
+            descricao: descInput
+        });
+
+        guardarCache();
+
+        // 3) Atualizar UI
+        carregarExtras();
+        calcularCustoReal();
+
         document.getElementById("extraData").value = "";
         document.getElementById("extraValor").value = "";
         document.getElementById("extraDescricao").value = "";
-
-        await carregarExtras();
-        await calcularCustoReal();
 
     } catch (err) {
         console.error("Erro ao adicionar extra:", err);
     }
 }
 
-
-// ===============================
-//  PASSO 6 — Editar EXTRA
-// ===============================
+// ======================================================
+//  EDITAR EXTRA (ATUALIZA FIREBASE + CACHE)
+// ======================================================
 
 async function editarExtra(id) {
     const mes = Number(document.getElementById("selectMes").value);
     const ano = Number(document.getElementById("selectAno").value);
+    const docId = `${ano}_${String(mes).padStart(2, "0")}`;
 
     const novoValor = prompt("Novo valor (€):");
     if (novoValor === null) return;
@@ -267,9 +326,8 @@ async function editarExtra(id) {
     const novaDesc = prompt("Nova descrição:");
     if (novaDesc === null) return;
 
-    const docId = `${ano}_${String(mes).padStart(2, "0")}`;
-
     try {
+        // 1) Atualizar Firebase
         await db
             .collection("custos_limpeza")
             .doc(docId)
@@ -280,28 +338,38 @@ async function editarExtra(id) {
                 descricao: novaDesc
             });
 
-        await carregarExtras();
-        await calcularCustoReal();
+        // 2) Atualizar cache
+        const lista = extrasCache[docId] || [];
+        const item = lista.find(e => e.id === id);
+        if (item) {
+            item.valor = Number(novoValor);
+            item.descricao = novaDesc;
+        }
+
+        guardarCache();
+
+        // 3) Atualizar UI
+        carregarExtras();
+        calcularCustoReal();
 
     } catch (err) {
         console.error("Erro ao editar extra:", err);
     }
 }
 
-
-// ===============================
-//  PASSO 7 — Apagar EXTRA
-// ===============================
+// ======================================================
+//  APAGAR EXTRA (ATUALIZA FIREBASE + CACHE)
+// ======================================================
 
 async function apagarExtra(id) {
     const mes = Number(document.getElementById("selectMes").value);
     const ano = Number(document.getElementById("selectAno").value);
-
     const docId = `${ano}_${String(mes).padStart(2, "0")}`;
 
     if (!confirm("Tem a certeza que deseja apagar este extra?")) return;
 
     try {
+        // 1) Apagar no Firebase
         await db
             .collection("custos_limpeza")
             .doc(docId)
@@ -309,30 +377,33 @@ async function apagarExtra(id) {
             .doc(id)
             .delete();
 
-        await carregarExtras();
-        await calcularCustoReal();
+        // 2) Atualizar cache
+        extrasCache[docId] = (extrasCache[docId] || []).filter(e => e.id !== id);
+
+        guardarCache();
+
+        // 3) Atualizar UI
+        carregarExtras();
+        calcularCustoReal();
 
     } catch (err) {
         console.error("Erro ao apagar extra:", err);
     }
 }
 
-// ===============================
-//  FUNÇÃO BASE — Calcular total de um mês
-// ===============================
+// ======================================================
+//  CALCULAR TOTAL DE UM MÊS (USANDO CACHE)
+// ======================================================
 
-async function calcularTotalMes(ano, mes) {
+function calcularTotalMes(ano, mes) {
     const inicio = new Date(ano, mes - 1, 1);
     const fim = new Date(ano, mes, 1);
 
     let totalLimpezas = 0;
     let totalExtras = 0;
 
-    // Somar limpezas reais
-    const reservasSnap = await db.collection("reservas").get();
-
-    reservasSnap.forEach(doc => {
-        const r = doc.data();
+    // Limpezas
+    reservasCache.forEach(r => {
         if (!r.checkout || r.limpeza == null) return;
 
         const checkoutDate = parseDataBR(r.checkout);
@@ -342,16 +413,11 @@ async function calcularTotalMes(ano, mes) {
         }
     });
 
-    // Somar extras
+    // Extras
     const docId = `${ano}_${String(mes).padStart(2, "0")}`;
-    const extrasSnap = await db
-        .collection("custos_limpeza")
-        .doc(docId)
-        .collection("extras")
-        .get();
+    const lista = extrasCache[docId] || [];
 
-    extrasSnap.forEach(doc => {
-        const extra = doc.data();
+    lista.forEach(extra => {
         totalExtras += Number(extra.valor);
     });
 
@@ -362,11 +428,11 @@ async function calcularTotalMes(ano, mes) {
     };
 }
 
-// ===============================
-//  PASSO 3 — Calcular total anual
-// ===============================
+// ======================================================
+//  CALCULAR TOTAL ANUAL (SEM FIRESTORE)
+// ======================================================
 
-async function calcularTotaisAno(ano) {
+function calcularTotaisAno(ano) {
     let totalLimpezasAno = 0;
     let totalExtrasAno = 0;
 
@@ -374,7 +440,7 @@ async function calcularTotaisAno(ano) {
     const mesLimite = (ano === hoje.getFullYear()) ? hoje.getMonth() + 1 : 12;
 
     for (let mes = 1; mes <= mesLimite; mes++) {
-        const dadosMes = await calcularTotalMes(ano, mes);
+        const dadosMes = calcularTotalMes(ano, mes);
         totalLimpezasAno += dadosMes.totalLimpezas;
         totalExtrasAno += dadosMes.totalExtras;
     }
@@ -387,41 +453,40 @@ async function calcularTotaisAno(ano) {
     };
 }
 
-// ===============================
-//  PASSO 4 — Calcular acumulado do ano atual
-// ===============================
+// ======================================================
+//  CALCULAR ACUMULADO DO ANO ATUAL (SEM FIRESTORE)
+// ======================================================
 
-async function calcularAcumuladoAno(ano) {
+function calcularAcumuladoAno(ano) {
     const hoje = new Date();
     const mesAtual = hoje.getMonth() + 1;
 
     let acumulado = 0;
 
     for (let mes = 1; mes <= mesAtual; mes++) {
-        const dadosMes = await calcularTotalMes(ano, mes);
+        const dadosMes = calcularTotalMes(ano, mes);
         acumulado += dadosMes.totalMes;
     }
 
     return acumulado;
 }
 
-// ===============================
-//  PASSO 5 — Gerar tabela de totais anuais
-// ===============================
+// ======================================================
+//  GERAR TABELA DE TOTAIS ANUAIS (SEM FIRESTORE)
+// ======================================================
 
-async function gerarTabelaTotaisAnuais() {
+function gerarTabelaTotaisAnuais() {
     const tabela = document.querySelector("#tabelaTotaisAno tbody");
     tabela.innerHTML = "";
 
     const anoAtual = new Date().getFullYear();
 
     for (let ano = 2020; ano <= anoAtual; ano++) {
-        const dadosAno = await calcularTotaisAno(ano);
+        const dadosAno = calcularTotaisAno(ano);
 
         let acumulado = "—";
         if (ano === anoAtual) {
-            acumulado = await calcularAcumuladoAno(ano);
-            acumulado = acumulado.toFixed(2) + " €";
+            acumulado = calcularAcumuladoAno(ano).toFixed(2) + " €";
         }
 
         const tr = document.createElement("tr");
@@ -437,64 +502,40 @@ async function gerarTabelaTotaisAnuais() {
         tabela.appendChild(tr);
     }
 }
-
-
-// ===============================
-//  LISTENERS
-// ===============================
-
-document.addEventListener("change", e => {
-    if (e.target.id === "selectMes" || e.target.id === "selectAno") {
-        calcularPrevisao();
-        carregarExtras();
-        calcularCustoReal();
-    }
-});
-
-const btnAdicionarExtra = document.getElementById("btnAdicionarExtra");
-if (btnAdicionarExtra) {
-    btnAdicionarExtra.addEventListener("click", adicionarExtra);
-}
-
 // ======================================================
-//  SISTEMA DE ABAS DO FINANCEIRO
+//  OBTER ENTIDADE POR NIF (CACHE + FIREBASE FALLBACK)
 // ======================================================
-
-document.querySelectorAll(".tab").forEach(botao => {
-    botao.addEventListener("click", () => {
-        const alvo = botao.dataset.tab; // ex: "custos-iva"
-
-        // Remover active de todos os botões
-        document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
-
-        // Remover active de todos os conteúdos
-        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-
-        // Ativar o botão clicado
-        botao.classList.add("active");
-
-        // Ativar o conteúdo correspondente
-        const conteudo = document.getElementById("tab-" + alvo);
-        if (conteudo) conteudo.classList.add("active");
-    });
-});
 
 async function obterEntidadePorNIF(nif) {
     if (!nif) return null;
 
-    const snap = await firebase.firestore()
-        .collection("entidades")
-        .where("nif", "==", nif)
-        .limit(1)
-        .get();
+    // 1) Procurar na cache local
+    const local = entidadesCache.find(e => e.nif == nif);
+    if (local) return local;
 
-    if (snap.empty) return null;
+    // 2) Procurar no Firebase (fallback)
+    try {
+        const snap = await firebase.firestore()
+            .collection("entidades")
+            .where("nif", "==", nif)
+            .limit(1)
+            .get();
 
-    const doc = snap.docs[0];
-    return {
-        nome: doc.data().nome,
-        categoria: doc.data().categoria
-    };
+        if (snap.empty) return null;
+
+        const doc = snap.docs[0];
+        const entidade = doc.data();
+
+        // Guardar na cache local
+        entidadesCache.push(entidade);
+        guardarCache();
+
+        return entidade;
+
+    } catch (err) {
+        console.error("Erro ao procurar entidade:", err);
+        return null;
+    }
 }
 
 async function interpretarFatura(texto) {
@@ -506,33 +547,22 @@ async function interpretarFatura(texto) {
         dados[chave] = valor;
     });
 
-    const nif = dados["A"];                // NIF do emissor
-    const numero = dados["G"];             // Nº da fatura
-    const data = dados["F"];               // AAAAMMDD
-    const total = parseFloat(dados["O"]);  // Total com IVA
-    const iva = parseFloat(dados["N"]);    // IVA total
-    const atcud = dados["H"];              // ATCUD
+    const nif = dados["A"];
+    const numero = dados["G"];
+    const data = dados["F"];
+    const total = parseFloat(dados["O"]);
+    const iva = parseFloat(dados["N"]);
+    const atcud = dados["H"];
 
-    // Procurar entidade no Firebase
-const entidade = await obterEntidadePorNIF(nif);
+    // Procurar entidade (cache + fallback)
+    const entidade = await obterEntidadePorNIF(nif);
 
-let fornecedor = "";
-let categoria = "";
+    let fornecedor = entidade ? entidade.nome : "Fornecedor Desconhecido";
+    let categoria = entidade ? entidade.categoria : "Outros";
 
-// Se existir → usar dados reais
-if (entidade) {
-    fornecedor = entidade.nome;
-    categoria = entidade.categoria;
-} else {
-    // Se não existir → fornecedor desconhecido
-    fornecedor = "Fornecedor Desconhecido";
-    categoria = "Outros";
-
-    // Abrir modal para criar entidade automaticamente (se existir no sistema)
-    if (typeof abrirModalAdicionar === "function") {
+    if (!entidade && typeof abrirModalAdicionar === "function") {
         abrirModalAdicionar(nif);
     }
-}
 
     const entrada = {
         data: formatarDataAT(data),
@@ -548,108 +578,19 @@ if (entidade) {
     await guardarFaturaFirestore(entrada);
 }
 
-function abrirModalAdicionar(nifPrePreenchido = "") {
-    const nifInput = document.getElementById("inputNIF");
-    const nomeInput = document.getElementById("inputEntidade");
-    const catInput = document.getElementById("inputCategoria");
+document.querySelectorAll(".tab").forEach(botao => {
+    botao.addEventListener("click", () => {
+        const alvo = botao.dataset.tab;
 
-    if (nifInput) nifInput.value = nifPrePreenchido;
-    if (nomeInput) nomeInput.value = "";
-    if (catInput) catInput.value = "";
+        document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
 
-    const modal = document.getElementById("modalEntidade");
-    if (modal) modal.style.display = "flex";
-}
+        botao.classList.add("active");
 
-async function obterNomePorNIF(nif) {
-    if (!nif) return "Fornecedor Desconhecido";
-
-    const url = `https://www.nif.pt/?json=1&q=${nif}`;
-
-    try {
-        const resposta = await fetch(url);
-
-        if (!resposta.ok) {
-            // console.warn("Falha ao consultar NIF:", resposta.status);
-            return "Fornecedor Desconhecido";
-        }
-
-        const dados = await resposta.json();
-
-        if (dados.result && dados.result.name) {
-            return dados.result.name;
-        }
-
-        return "Fornecedor Desconhecido";
-
-    } catch (e) {
-        // console.error("Erro ao consultar NIF:", e);
-        return "Fornecedor Desconhecido";
-    }
-}
-
-
-
-function formatarDataAT(yyyymmdd) {
-    if (!yyyymmdd || yyyymmdd.length !== 8) return "";
-    return `${yyyymmdd.substring(6,8)}/${yyyymmdd.substring(4,6)}/${yyyymmdd.substring(0,4)}`;
-}
-
-function adicionarLinhaCustosIVA(f) {
-    const tbody = document.querySelector("#tabelaCustosIVA tbody");
-    const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-        <td>${f.data}</td>
-        <td>${f.fornecedor}</td>
-        <td>${f.categoria}</td>
-        <td>${f.valor.toFixed(2)} €</td>
-        <td>${f.iva.toFixed(2)} €</td>
-        <td>${f.numero}</td>
-        <td>${f.atcud}</td>
-    `;
-
-    tbody.appendChild(tr);
-}
-
-async function guardarFaturaFirestore(f) {
-    await firebase.firestore()
-        .collection("financeiro")
-        .doc("custos")
-        .collection("faturas")
-        .add(f);
-}
-
-function obterFornecedorPorNIF(nif) {
-    const mapa = {
-        "500906840": "EDP",
-        "503219795": "Águas do Algarve",
-        "500077568": "NOS",
-        "504615947": "MEO",
-        "503933813": "Leroy Merlin"
-    };
-    return mapa[nif] || "Fornecedor Desconhecido";
-}
-
-function inferirCategoria(nif) {
-    const categorias = {
-        "500906840": "Luz",
-        "503219795": "Água",
-        "500077568": "Telecomunicações",
-        "504615947": "Telecomunicações",
-        "503933813": "Equipamentos"
-    };
-    return categorias[nif] || "Outros";
-}
-
-function irParaEntidades() {
-    window.location.href = "entidades.html";
-}
-
-function irParaCategorias() {
-    window.location.href = "categorias.html"; // se ainda não existir, posso criar contigo
-}
-
+        const conteudo = document.getElementById("tab-" + alvo);
+        if (conteudo) conteudo.classList.add("active");
+    });
+});
 
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
@@ -669,21 +610,15 @@ setTimeout(() => {
 
                 console.log("QR Code lido:", qrCodeMessage);
 
-                // PARAR O LEITOR IMEDIATAMENTE
                 await qrReader.stop();
                 document.getElementById("qr-reader").innerHTML = "";
 
                 await interpretarFatura(qrCodeMessage);
 
             },
-            errorMessage => {
-                // IGNORAR erros normais de leitura
-            }
+            errorMessage => {}
         );
     });
 
     console.log("Botão QR ligado com sucesso!");
 }, 300);
-
-
-      
