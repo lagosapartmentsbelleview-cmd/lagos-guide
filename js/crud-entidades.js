@@ -28,29 +28,27 @@ function abrirModalAdicionar() {
 
     document.getElementById("tituloModal").innerText = "Adicionar Entidade";
     document.getElementById("inputNIF").value = "";
-    document.getElementById("inputNome").value = "";
+    document.getElementById("inputEntidade").value = "";   // ← corrigido
     document.getElementById("inputCategoria").value = "Outros";
 
     document.getElementById("modalEntidade").style.display = "flex";
 }
 
-// Abre modal para editar entidade existente
 function editarEntidade(nif) {
     modoEdicao = nif;
     const ent = obterEntidadePorNIF(nif);
 
     document.getElementById("tituloModal").innerText = "Editar Entidade";
     document.getElementById("inputNIF").value = nif;
-    document.getElementById("inputNome").value = ent.nome;
+    document.getElementById("inputEntidade").value = ent.nome;   // ← corrigido
     document.getElementById("inputCategoria").value = ent.categoria;
 
     document.getElementById("modalEntidade").style.display = "flex";
 }
 
-// Guarda entidade (nova ou editada)
 function guardarEntidade() {
     const nif = document.getElementById("inputNIF").value.trim();
-    const nome = document.getElementById("inputNome").value.trim();
+    const nome = document.getElementById("inputEntidade").value.trim();   // ← corrigido
     const categoria = document.getElementById("inputCategoria").value;
 
     if (!nif || !nome) {
