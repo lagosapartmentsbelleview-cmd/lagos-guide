@@ -67,8 +67,14 @@ function listarEntidades() {
 
 carregarEntidades();
 
-function carregarEntidades() { ... }
-function formatarNIF() { ... }
+function carregarEntidades() {
+    // TODO: carregar tabela de entidades
+}
+
+function formatarNIF(nif) {
+    return nif; // placeholder
+}
+
 
 // Navegação
 function voltarFinanceiro() {
