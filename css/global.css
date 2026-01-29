@@ -391,9 +391,12 @@ select, option {
     background-color: #1976d2;
     color: white;
     padding: 14px 20px;
-    border-radius: 6px;
     margin: 20px 0;
+    border-radius: 0;        /* remove arredondamento */
+    width: 100%;             /* ocupa toda a largura */
+    box-sizing: border-box;  /* garante que padding não estoura */
 }
+
 
 .barra-entidades h1 {
     margin: 0;
