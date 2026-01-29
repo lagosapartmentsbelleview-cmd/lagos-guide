@@ -615,6 +615,14 @@ function adicionarLinhaCustosIVA(f) {
     tbody.appendChild(tr);
 }
 
+async function guardarFaturaFirestore(f) {
+    await firebase.firestore()
+        .collection("financeiro")
+        .doc("custos")
+        .collection("faturas")
+        .add(f);
+}
+
 
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
