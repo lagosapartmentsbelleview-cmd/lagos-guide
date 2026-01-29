@@ -538,6 +538,12 @@ async function obterEntidadePorNIF(nif) {
     }
 }
 
+function formatarDataAT(yyyymmdd) {
+    if (!yyyymmdd || yyyymmdd.length !== 8) return "";
+    return `${yyyymmdd.substring(6,8)}/${yyyymmdd.substring(4,6)}/${yyyymmdd.substring(0,4)}`;
+}
+
+
 async function interpretarFatura(texto) {
     const partes = texto.split("*");
     const dados = {};
