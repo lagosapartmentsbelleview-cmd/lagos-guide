@@ -642,6 +642,15 @@ function inferirCategoria(nif) {
     return categorias[nif] || "Outros";
 }
 
+function irParaEntidades() {
+    window.location.href = "entidades.html";
+}
+
+function irParaCategorias() {
+    window.location.href = "categorias.html"; // se ainda não existir, posso criar contigo
+}
+
+
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
 
