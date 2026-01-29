@@ -403,3 +403,6 @@ select, option {
     font-size: 22px;
 }
 
+#tabelaEntidades {
+    margin-top: 15px;
+}
