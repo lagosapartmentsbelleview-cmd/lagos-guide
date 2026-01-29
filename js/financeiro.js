@@ -598,6 +598,24 @@ document.querySelectorAll(".tab").forEach(botao => {
     });
 });
 
+function adicionarLinhaCustosIVA(f) {
+    const tbody = document.querySelector("#tabelaCustosIVA tbody");
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+        <td>${f.data}</td>
+        <td>${f.fornecedor}</td>
+        <td>${f.categoria}</td>
+        <td>${f.valor.toFixed(2)} €</td>
+        <td>${f.iva.toFixed(2)} €</td>
+        <td>${f.numero}</td>
+        <td>${f.atcud}</td>
+    `;
+
+    tbody.appendChild(tr);
+}
+
+
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
 
