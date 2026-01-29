@@ -64,3 +64,14 @@ function listarEntidades() {
         categoria: dados.categoria
     }));
 }
+
+carregarEntidades();
+
+function carregarEntidades() { ... }
+function formatarNIF() { ... }
+
+// Navegação
+function voltarFinanceiro() {
+    window.location.href = "financeiro.html#custos-iva";
+}
+
