@@ -8,7 +8,18 @@
 
 <body>
 
-<div class="crud-entidades">
+<!-- 🔐 LOGIN SCREEN -->
+<div id="loginScreen" style="display:flex; flex-direction:column; gap:10px; padding:20px;">
+    <h2>Autenticação Necessária</h2>
+
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="login()">Entrar</button>
+</div>
+
+<!-- 🔓 CRUD (só aparece depois do login) -->
+<div class="crud-entidades" id="crudScreen" style="display:none;">
 
     <button onclick="voltarFinanceiro()">← Voltar ao Financeiro</button>
 
@@ -66,6 +77,7 @@
 <!-- 🔥 Firebase -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
 <script>
   var firebaseConfig = {
@@ -80,6 +92,30 @@
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
+  const auth = firebase.auth();
+
+  // LOGIN
+  function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      auth.signInWithEmailAndPassword(email, password)
+          .then(() => {
+              document.getElementById("loginScreen").style.display = "none";
+              document.getElementById("crudScreen").style.display = "block";
+              atualizarTabela();
+          })
+          .catch(err => alert("Erro no login: " + err.message));
+  }
+
+  // AUTO LOGIN CHECK
+  auth.onAuthStateChanged(user => {
+      if (user) {
+          document.getElementById("loginScreen").style.display = "none";
+          document.getElementById("crudScreen").style.display = "block";
+          atualizarTabela();
+      }
+  });
 </script>
 
 <!-- Os teus scripts -->
