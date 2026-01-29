@@ -25,6 +25,12 @@ function carregarCache() {
     categoriasCache = JSON.parse(localStorage.getItem("categoriasCache") || "[]");
 }
 
+async function carregarEntidadesDoFirestore() {
+    const snap = await db.collection("entidades").get();
+    entidadesCache = snap.docs.map(doc => doc.data());
+}
+
+
 // ======================================================
 //  SINCRONIZAR FIREBASE (1 leitura por coleção)
 // ======================================================
@@ -38,8 +44,10 @@ async function sincronizarFirebase() {
         reservasCache = reservasSnap.docs.map(d => d.data());
 
         // 2) Entidades
-        const entidadesSnap = await db.collection("entidades").get();
-        entidadesCache = entidadesSnap.docs.map(d => d.data());
+        async function carregarEntidadesDoFirestore() {
+        const snap = await db.collection("entidades").get();
+        entidadesCache = snap.docs.map(doc => doc.data());
+        }
 
         // 3) Categorias
         const categoriasSnap = await db.collection("categorias").get();
