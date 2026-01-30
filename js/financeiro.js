@@ -665,42 +665,74 @@ async function interpretarFatura(texto) {
     const partes = texto.split("*");
     const dados = {};
 
+    // Extrair pares chave:valor do QR Code
     partes.forEach(p => {
         const [chave, valor] = p.split(":");
         dados[chave] = valor;
     });
 
+    // Campos AT
     const nif = dados["A"];
-    const numero = dados["G"]?.replace(/\s+/g, ""); // remove espaços no meio
-    const data = dados["F"];
+    const numero = dados["G"]?.replace(/\s+/g, "");
+    const dataAT = dados["F"]; // AAAAMMDD
     const total = parseFloat(dados["O"]);
     const iva = parseFloat(dados["N"]);
-    const atcud = dados["H"]?.trim(); // remove espaços antes/depois
+    const atcud = dados["H"]?.trim();
 
-    // Procurar entidade (cache + fallback)
+    // Normalizar NIF
     const nifLimpo = String(nif).trim().replace(/\D/g, "");
+
+    // Procurar entidade
     const entidade = await obterEntidadePorNIF(nifLimpo);
 
     let fornecedor = entidade ? entidade.nome : "Fornecedor Desconhecido";
     let categoria = entidade ? entidade.categoria : "Outros";
 
+    // Se não existir, abrir modal para criar
     if (!entidade && typeof abrirModalAdicionar === "function") {
         abrirModalAdicionar(nif);
     }
 
+    // Converter data AT → ISO (para filtros)
+    const dataISO = `${dataAT.substring(0,4)}-${dataAT.substring(4,6)}-${dataAT.substring(6,8)}`;
+
+    // Converter data AT → PT (para mostrar)
+    const dataDisplay = `${dataAT.substring(6,8)}/${dataAT.substring(4,6)}/${dataAT.substring(0,4)}`;
+
+    // Calcular valor sem IVA
+    const valorSemIVA = total - iva;
+
+    // Calcular taxa IVA
+    const taxaIVA = valorSemIVA > 0 ? Math.round((iva / valorSemIVA) * 100) : null;
+
+    // Objeto final da fatura
     const entrada = {
-        data: formatarDataAT(data),
+        data: dataISO,
+        dataDisplay,
+        nif: nifLimpo,
         fornecedor,
         categoria,
-        valor: total,
-        iva: iva,
-        numero,
-        atcud
+        valorBruto: total,
+        valorIVA: iva,
+        valorSemIVA,
+        taxaIVA,
+        numeroFatura: numero,
+        atcud,
+        origem: "QR",
+        criadoEm: firebase.firestore.FieldValue.serverTimestamp()
     };
 
-    adicionarLinhaCustosIVA(entrada);
+    // Guardar no Firestore (coleção própria)
     await guardarFaturaFirestore(entrada);
+
+    // Atualizar cache local
+    faturasCache.push(entrada);
+
+    // Atualizar tabela e totais
+    renderizarTabelaFaturas();
+    calcularTotaisFaturas();
 }
+
 
 document.querySelectorAll(".tab").forEach(botao => {
     botao.addEventListener("click", () => {
