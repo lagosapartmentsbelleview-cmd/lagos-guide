@@ -287,27 +287,33 @@ function gerarDetalheMes() {
     const inicio = new Date(ano, mes - 1, 1);
     const fim = new Date(ano, mes, 1);
 
-    // 🔹 1) Reservas que contribuem para o mês
-    reservasCache.forEach(r => {
-        if (!r.checkout || r.limpeza == null) return;
+   // 🔹 1) Reservas que contribuem para o mês
+reservasCache.forEach(r => {
+    if (!r.checkout || r.limpeza == null) return;
 
-        const checkoutDate = parseDataBR(r.checkout);
+    const checkoutDate = parseDataBR(r.checkout);
 
-        if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
+    if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
 
+        const cliente = r.cliente || "";
+        const apartamentos = Array.isArray(r.apartamentos) ? r.apartamentos : [];
+
+        // 🔥 Criar uma linha por apartamento
+        apartamentos.forEach(apto => {
             const tr = document.createElement("tr");
 
             tr.innerHTML = `
-                <td>${(r.apartamentos && r.apartamentos.length > 0) ? r.apartamentos[0] : ""}</td>
-                <td>${r.cliente || ""}</td>
+                <td>${apto}</td>
+                <td>${cliente}</td>
                 <td>${r.checkin || ""}</td>
                 <td>${r.checkout || ""}</td>
                 <td>${Number(r.limpeza).toFixed(2)} €</td>
             `;
 
             tbody.appendChild(tr);
-        }
-    });
+        });
+    }
+});
 
     // 🔹 2) Extras do mês
     const docId = `${ano}_${String(mes).padStart(2, "0")}`;
