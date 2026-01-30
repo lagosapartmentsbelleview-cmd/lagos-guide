@@ -22,12 +22,13 @@ function carregarCategorias() {
             const tr = document.createElement("tr");
 
             tr.innerHTML = `
-                <td>${dados.nome}</td>
-                <td>
-                    <button class="btn-edit" onclick="abrirModalCategoria('${id}', '${dados.nome}')">Editar</button>
-                    <button class="btn-delete" onclick="apagarCategoria('${id}', '${dados.nome}')">Apagar</button>
-                </td>
-            `;
+  <td>${cat.nome}</td>
+  <td>
+    <button class="btn-edit" onclick="editarCategoria('${cat.id}')">Editar</button>
+    <button class="btn-delete" onclick="apagarCategoria('${cat.id}')">Apagar</button>
+  </td>
+`;
+
 
             tbody.appendChild(tr);
         });
