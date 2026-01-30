@@ -293,55 +293,68 @@ function gerarDetalheMes() {
     const inicio = new Date(ano, mes - 1, 1);
     const fim = new Date(ano, mes, 1);
 
-   // 🔹 1) Reservas que contribuem para o mês
-reservasCache.forEach(r => {
-    if (!r.checkout || r.limpeza == null) return;
+    let totalMes = 0;
 
-    const checkoutDate = parseDataBR(r.checkout);
+    // 🔹 1) Reservas que contribuem para o mês
+    reservasCache.forEach(r => {
+        if (!r.checkout || r.limpeza == null) return;
 
-    if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
+        const checkoutDate = parseDataBR(r.checkout);
 
-        const cliente = r.cliente || "";
-        const apartamentos = Array.isArray(r.apartamentos) ? r.apartamentos : [];
+        if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
+            const cliente = r.cliente || "";
+            const apartamentos = Array.isArray(r.apartamentos) ? r.apartamentos : [];
 
-        // 🔥 Criar uma linha por apartamento
-        apartamentos.forEach(apto => {
-            const tr = document.createElement("tr");
+            apartamentos.forEach(apto => {
+                const valor = Number(r.limpeza);
+                totalMes += valor;
 
-            tr.innerHTML = `
-                <td>${apto}</td>
-                <td>${cliente}</td>
-                <td>${r.checkin || ""}</td>
-                <td>${r.checkout || ""}</td>
-                <td>${Number(r.limpeza).toFixed(2)} €</td>
-            `;
-
-            tbody.appendChild(tr);
-        });
-    }
-});
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${apto}</td>
+                    <td>${cliente}</td>
+                    <td>${r.checkin || ""}</td>
+                    <td>${r.checkout || ""}</td>
+                    <td>${valor.toFixed(2)} €</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    });
 
     // 🔹 2) Extras do mês
     const docId = `${ano}_${String(mes).padStart(2, "0")}`;
     const extras = extrasCache[docId] || [];
 
     extras.forEach(extra => {
-        const tr = document.createElement("tr");
+        const valor = Number(extra.valor);
+        totalMes += valor;
 
         const data = extra.data.toDate
             ? extra.data.toDate().toLocaleDateString("pt-PT")
             : new Date(extra.data).toLocaleDateString("pt-PT");
 
+        const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>—</td>
             <td>Extra</td>
             <td>${data}</td>
             <td>—</td>
-            <td>${extra.valor.toFixed(2)} €</td>
+            <td>${valor.toFixed(2)} €</td>
         `;
-
         tbody.appendChild(tr);
     });
+
+    // 🔹 3) Linha final TOTAL
+    const trTotal = document.createElement("tr");
+    trTotal.style.fontWeight = "bold";
+    trTotal.style.background = "#e3f0ff";
+
+    trTotal.innerHTML = `
+        <td colspan="4" style="text-align:right;">TOTAL DO MÊS:</td>
+        <td>${totalMes.toFixed(2)} €</td>
+    `;
+    tbody.appendChild(trTotal);
 }
 
 
