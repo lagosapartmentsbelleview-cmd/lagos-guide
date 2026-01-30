@@ -1072,6 +1072,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    ["selectAnoTotais", "selectMesTotais", "selectTrimTotais"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("change", atualizarTotaisEscolhidos);
+    });
+});
+
+
 
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
