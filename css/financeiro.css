@@ -194,3 +194,32 @@
 #tabelaDetalheMes tr:nth-child(even) {
     background: #fcfcfc;
 }
+
+.totais-financeiros {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.total-box {
+    background: #f7faff;
+    border: 1px solid #d0e3ff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    min-width: 180px;
+}
+
+.total-box h4 {
+    margin: 0 0 5px 0;
+    color: #1976d2;
+}
+
+.total-box p {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.total-box small {
+    color: #555;
+}
