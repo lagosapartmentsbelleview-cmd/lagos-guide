@@ -306,15 +306,16 @@ function fecharModal() {
 window.onload = atualizarTabela;
 
 // ======================================================
-//  EXPORTAR ENTIDADES PARA EXCEL (CSV)
+//  EXPORTAR ENTIDADES PARA EXCEL (UTF-8 BOM + NIF COMO TEXTO)
 // ======================================================
 async function exportarExcel() {
     const lista = await listarEntidades();
 
-    let csv = "NIF;Entidade;Categoria\n";
+    // BOM para Excel reconhecer acentos
+    let csv = "\uFEFFNIF;Entidade;Categoria\n";
 
     lista.forEach(ent => {
-        csv += `${ent.nif};${ent.nome};${ent.categoria}\n`;
+        csv += `'${ent.nif};${ent.nome};${ent.categoria}\n`;
     });
 
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
@@ -327,6 +328,7 @@ async function exportarExcel() {
 
     URL.revokeObjectURL(url);
 }
+
 
 
 // ======================================================
