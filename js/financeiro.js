@@ -118,8 +118,7 @@ if (btn) {
 function initFinanceiro() {
     carregarCache();
     iniciarSyncAutomatica();
-    sincronizarFirebase();
-
+   
     const selectMes = document.getElementById("selectMes");
     const selectAno = document.getElementById("selectAno");
     
@@ -142,6 +141,8 @@ function initFinanceiro() {
     selectAno.value = hoje.getFullYear();
 
     console.log("Financeiro inicializado com cache.");
+
+    sincronizarFirebase(); // ← mover para aqui
 
     // 🔹 LIGAR BOTÃO ADICIONAR EXTRA AQUI
     const btnAddExtra = document.getElementById("btnAdicionarExtra");
@@ -409,6 +410,7 @@ async function adicionarExtra() {
         // 3) Atualizar UI
         carregarExtras();
         calcularCustoReal();
+        gerarDetalheMes(); // ← adicionar esta linha
 
         document.getElementById("extraData").value = "";
         document.getElementById("extraValor").value = "";
