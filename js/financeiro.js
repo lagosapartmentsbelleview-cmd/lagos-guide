@@ -176,6 +176,42 @@ async function carregarFaturas() {
     }
 }
 
+function renderizarTabelaFaturas() {
+    const tbody = document.querySelector("#tabelaCustosIVA tbody");
+    if (!tbody) return;
+
+    tbody.innerHTML = "";
+
+    const filtroNIF = document.getElementById("filtroNIF")?.value.trim().toLowerCase() || "";
+    const filtroEnt = document.getElementById("filtroEntidade")?.value.trim().toLowerCase() || "";
+    const filtroCat = document.getElementById("filtroCategoria")?.value || "";
+    const filtroMesAno = document.getElementById("filtroMesAno")?.value || ""; // yyyy-mm
+
+    let lista = [...faturasCache];
+
+    lista = lista.filter(f => {
+        if (filtroNIF && !String(f.nif || "").toLowerCase().includes(filtroNIF)) return false;
+        if (filtroEnt && !String(f.fornecedor || "").toLowerCase().includes(filtroEnt)) return false;
+        if (filtroCat && f.categoria !== filtroCat) return false;
+        if (filtroMesAno && f.data?.substring(0,7) !== filtroMesAno) return false;
+        return true;
+    });
+
+    lista.forEach(f => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${f.dataDisplay || f.data || ""}</td>
+            <td>${f.fornecedor || ""}</td>
+            <td>${f.categoria || ""}</td>
+            <td>${(f.valorBruto || 0).toFixed(2)} €</td>
+            <td>${(f.valorIVA || 0).toFixed(2)} €</td>
+            <td>${f.numeroFatura || ""}</td>
+            <td>${f.atcud || ""}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
 
 // ======================================================
 //  FUNÇÃO AUXILIAR — Data BR
@@ -867,6 +903,14 @@ document.getElementById("btnExportExcel").addEventListener("click", () => {
     XLSX.utils.book_append_sheet(wb, ws, "Detalhe do Mês");
     XLSX.writeFile(wb, "detalhe_mes.xlsx");
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    ["filtroNIF","filtroEntidade","filtroCategoria","filtroMesAno"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", renderizarTabelaFaturas);
+    });
+});
+
 
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
