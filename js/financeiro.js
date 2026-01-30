@@ -636,6 +636,15 @@ async function guardarFaturaFirestore(f) {
         .add(f);
 }
 
+function irParaEntidades() {
+    window.location.href = "entidades.html";
+}
+
+function irParaCategorias() {
+    window.location.href = "categorias.html";
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const btnSync = document.getElementById("btnSyncFirebase");
     if (btnSync) {
