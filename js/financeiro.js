@@ -794,6 +794,14 @@ document.getElementById("btnExportExcel").addEventListener("click", () => {
     XLSX.writeFile(wb, "detalhe_mes.xlsx");
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    const btnAddExtra = document.getElementById("btnAdicionarExtra");
+    if (btnAddExtra) {
+        btnAddExtra.addEventListener("click", adicionarExtra);
+    }
+
+});
 
 
 setTimeout(() => {
