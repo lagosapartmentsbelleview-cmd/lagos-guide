@@ -121,10 +121,13 @@ function initFinanceiro() {
 
     const selectMes = document.getElementById("selectMes");
     const selectAno = document.getElementById("selectAno");
-
+    
     if (!selectMes || !selectAno) {
         return setTimeout(initFinanceiro, 30);
     }
+
+    selectMes.addEventListener("change", atualizarUI);
+    selectAno.addEventListener("change", atualizarUI);
 
     for (let ano = 2020; ano <= 2050; ano++) {
         const opt = document.createElement("option");
@@ -262,6 +265,14 @@ function calcularCustoReal() {
 
     custoRealEl.textContent = totalReal.toFixed(2) + " €";
 }
+
+function atualizarUI() {
+    calcularPrevisao();
+    carregarExtras();
+    calcularCustoReal();
+    gerarTabelaTotaisAnuais();
+}
+
 
 // ======================================================
 //  ADICIONAR EXTRA (ATUALIZA FIREBASE + CACHE)
