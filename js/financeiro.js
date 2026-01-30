@@ -138,6 +138,18 @@ function initFinanceiro() {
         selectAno.appendChild(opt);
     }
 
+    // Preencher selectAnoTotais (Totais Financeiros)
+const selectAnoTotais = document.getElementById("selectAnoTotais");
+if (selectAnoTotais) {
+    for (let ano = 2020; ano <= 2050; ano++) {
+        const opt2 = document.createElement("option");
+        opt2.value = ano;
+        opt2.textContent = ano;
+        selectAnoTotais.appendChild(opt2);
+    }
+}
+
+
     const hoje = new Date();
     selectMes.value = hoje.getMonth() + 1;
     selectAno.value = hoje.getFullYear();
