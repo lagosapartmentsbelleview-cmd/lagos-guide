@@ -72,6 +72,8 @@ async function sincronizarFirebase() {
         carregarExtras();
         calcularCustoReal();
         gerarTabelaTotaisAnuais();
+        gerarDetalheMes();
+
 
     } catch (err) {
         console.error("❌ Erro na sincronização:", err);
@@ -271,6 +273,63 @@ function atualizarUI() {
     carregarExtras();
     calcularCustoReal();
     gerarTabelaTotaisAnuais();
+    gerarDetalheMes();
+
+}
+
+function gerarDetalheMes() {
+    const mes = Number(document.getElementById("selectMes").value);
+    const ano = Number(document.getElementById("selectAno").value);
+
+    const tbody = document.querySelector("#tabelaDetalheMes tbody");
+    tbody.innerHTML = "";
+
+    const inicio = new Date(ano, mes - 1, 1);
+    const fim = new Date(ano, mes, 1);
+
+    // 🔹 1) Reservas que contribuem para o mês
+    reservasCache.forEach(r => {
+        if (!r.checkout || r.limpeza == null) return;
+
+        const checkoutDate = parseDataBR(r.checkout);
+
+        if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
+
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${r.apartamento || ""}</td>
+                <td>${r.nome || ""}</td>
+                <td>${r.checkin || ""}</td>
+                <td>${r.checkout || ""}</td>
+                <td>${Number(r.limpeza).toFixed(2)} €</td>
+            `;
+
+            tbody.appendChild(tr);
+        }
+    });
+
+    // 🔹 2) Extras do mês
+    const docId = `${ano}_${String(mes).padStart(2, "0")}`;
+    const extras = extrasCache[docId] || [];
+
+    extras.forEach(extra => {
+        const tr = document.createElement("tr");
+
+        const data = extra.data.toDate
+            ? extra.data.toDate().toLocaleDateString("pt-PT")
+            : new Date(extra.data).toLocaleDateString("pt-PT");
+
+        tr.innerHTML = `
+            <td>—</td>
+            <td>Extra</td>
+            <td>${data}</td>
+            <td>—</td>
+            <td>${extra.valor.toFixed(2)} €</td>
+        `;
+
+        tbody.appendChild(tr);
+    });
 }
 
 
