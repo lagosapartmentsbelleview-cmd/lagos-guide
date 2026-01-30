@@ -162,3 +162,35 @@
     display: flex;
     gap: 10px;
 }
+
+#tabelaDetalheMes {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+#tabelaDetalheMes thead {
+    background: #f0f0f0;
+    border-bottom: 2px solid #ccc;
+}
+
+#tabelaDetalheMes th {
+    padding: 10px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+}
+
+#tabelaDetalheMes td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#tabelaDetalheMes tr:hover {
+    background: #fafafa;
+}
+
+#tabelaDetalheMes tr:nth-child(even) {
+    background: #fcfcfc;
+}
