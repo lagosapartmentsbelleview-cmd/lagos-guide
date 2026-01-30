@@ -34,6 +34,34 @@ function carregarCategorias() {
     });
 }
 
+// ======================================================
+//  FILTRAR CATEGORIAS (PESQUISA)
+// ======================================================
+async function filtrarCategorias() {
+    const termo = document.getElementById("pesquisaCategorias").value.toLowerCase();
+    const tbody = document.querySelector("#tabelaCategorias tbody");
+    tbody.innerHTML = "";
+
+    const snap = await categoriasRef.orderBy("nome").get();
+
+    snap.forEach(doc => {
+        const dados = doc.data();
+        if (!dados.nome.toLowerCase().includes(termo)) return;
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${dados.nome}</td>
+            <td>
+                <button class="btn-edit" onclick="abrirModalCategoria('${doc.id}', '${dados.nome}')">Editar</button>
+                <button class="btn-delete" onclick="apagarCategoria('${doc.id}', '${dados.nome}')">Apagar</button>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
 
 // =======================================
 //  GUARDAR CATEGORIA (Adicionar ou Editar)
