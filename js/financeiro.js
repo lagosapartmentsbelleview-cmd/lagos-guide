@@ -182,7 +182,9 @@ function calcularPrevisao() {
         const checkoutDate = parseDataBR(r.checkout);
 
         if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
-            totalPrevisao += Number(r.limpeza);
+            const qtdAptos = Array.isArray(r.apartamentos) ? r.apartamentos.length : 1;
+            totalPrevisao += Number(r.limpeza) * qtdAptos;
+
         }
     });
 
@@ -253,7 +255,9 @@ function calcularCustoReal() {
         const checkoutDate = parseDataBR(r.checkout);
 
         if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
-            totalReal += Number(r.limpeza);
+            const qtdAptos = Array.isArray(r.apartamentos) ? r.apartamentos.length : 1;
+            totalReal += Number(r.limpeza) * qtdAptos;
+
         }
     });
 
