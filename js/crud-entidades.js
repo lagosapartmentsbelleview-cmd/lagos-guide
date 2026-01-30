@@ -173,6 +173,26 @@ async function filtrarEntidades() {
     });
 }
 
+async function exportarExcel() {
+    const lista = await listarEntidades();
+
+    let csv = "NIF;Entidade;Categoria\n";
+
+    lista.forEach(ent => {
+        csv += `${ent.nif};${ent.nome};${ent.categoria}\n`;
+    });
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "entidades.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
 
 // ======================================================
 //  MODAL — ADICIONAR
@@ -243,6 +263,30 @@ function fecharModal() {
 //  INICIALIZAR TABELA
 // ======================================================
 window.onload = atualizarTabela;
+
+// ======================================================
+//  EXPORTAR ENTIDADES PARA EXCEL (CSV)
+// ======================================================
+async function exportarExcel() {
+    const lista = await listarEntidades();
+
+    let csv = "NIF;Entidade;Categoria\n";
+
+    lista.forEach(ent => {
+        csv += `${ent.nif};${ent.nome};${ent.categoria}\n`;
+    });
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "entidades.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
 
 // ======================================================
 //  NAVEGAÇÃO
