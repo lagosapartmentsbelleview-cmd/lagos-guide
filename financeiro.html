@@ -118,6 +118,12 @@
     <h3>Detalhe do Mês</h3>
 
     <table id="tabelaDetalheMes">
+
+        <div class="acoes-financeiro">
+        <button id="btnExportExcel">Exportar Excel</button>
+        <button id="btnExportPDF">Exportar PDF</button>
+        </div>
+
         <thead>
             <tr>
                 <th>Apartamento</th>
@@ -254,6 +260,10 @@ firebase.auth().onAuthStateChanged(user => {
 });
 
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
 
 </body>
