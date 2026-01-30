@@ -120,7 +120,6 @@ function initFinanceiro() {
     iniciarSyncAutomatica();
     sincronizarFirebase();
 
-
     const selectMes = document.getElementById("selectMes");
     const selectAno = document.getElementById("selectAno");
     
@@ -142,15 +141,18 @@ function initFinanceiro() {
     selectMes.value = hoje.getMonth() + 1;
     selectAno.value = hoje.getFullYear();
 
-    // calcularPrevisao();
-    // carregarExtras();
-    // calcularCustoReal();
-    // gerarTabelaTotaisAnuais();
-
     console.log("Financeiro inicializado com cache.");
+
+    // 🔹 LIGAR BOTÃO ADICIONAR EXTRA AQUI
+    const btnAddExtra = document.getElementById("btnAdicionarExtra");
+    if (btnAddExtra) {
+        btnAddExtra.addEventListener("click", adicionarExtra);
+        console.log("Botão Adicionar Extra ligado em initFinanceiro.");
+    } else {
+        console.warn("Botão Adicionar Extra NÃO encontrado em initFinanceiro.");
+    }
 }
 
-//initFinanceiro();
 
 // ======================================================
 //  FUNÇÃO AUXILIAR — Data BR
@@ -793,17 +795,6 @@ document.getElementById("btnExportExcel").addEventListener("click", () => {
     XLSX.utils.book_append_sheet(wb, ws, "Detalhe do Mês");
     XLSX.writeFile(wb, "detalhe_mes.xlsx");
 });
-
-window.addEventListener("load", () => {
-    const btnAddExtra = document.getElementById("btnAdicionarExtra");
-    if (btnAddExtra) {
-        btnAddExtra.addEventListener("click", adicionarExtra);
-        console.log("Botão Adicionar Extra ligado.");
-    } else {
-        console.warn("Botão Adicionar Extra NÃO encontrado no load.");
-    }
-});
-
 
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
