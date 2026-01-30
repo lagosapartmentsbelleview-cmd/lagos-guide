@@ -223,57 +223,7 @@ function renderizarTabelaFaturas() {
     });
 }
 
-function calcularTotaisFaturas() {
-    const agora = new Date();
-    const anoAtual = agora.getFullYear();
-    const mesAtual = agora.getMonth() + 1;
 
-    const trimestre = Math.ceil(mesAtual / 3);
-    const mesInicioTrim = (trimestre - 1) * 3 + 1;
-    const mesFimTrim = mesInicioTrim + 2;
-
-    let totalMesBruto = 0;
-    let totalMesIVA = 0;
-
-    let totalTrimBruto = 0;
-    let totalTrimIVA = 0;
-
-    let totalAnoBruto = 0;
-    let totalAnoIVA = 0;
-
-    faturasCache.forEach(f => {
-        if (!f.data) return;
-
-        const [ano, mes] = f.data.split("-").map(Number);
-
-        const vb = Number(f.valorBruto || 0);
-        const vi = Number(f.valorIVA || 0);
-
-        if (ano === anoAtual) {
-            totalAnoBruto += vb;
-            totalAnoIVA += vi;
-
-            if (mes === mesAtual) {
-                totalMesBruto += vb;
-                totalMesIVA += vi;
-            }
-
-            if (mes >= mesInicioTrim && mes <= mesFimTrim) {
-                totalTrimBruto += vb;
-                totalTrimIVA += vi;
-            }
-        }
-    });
-
-    document.getElementById("totalMesBruto").textContent = totalMesBruto.toFixed(2) + " €";
-    document.getElementById("totalMesIVA").textContent = totalMesIVA.toFixed(2) + " €";
-
-    document.getElementById("totalTrimBruto").textContent = totalTrimBruto.toFixed(2) + " €";
-    document.getElementById("totalTrimIVA").textContent = totalTrimIVA.toFixed(2) + " €";
-
-    document.getElementById("totalAnoBruto").textContent = totalAnoBruto.toFixed(2) + " €";
-    document.getElementById("totalAnoIVA").textContent = totalAnoIVA.toFixed(2) + " €";
-}
 
 // ======================================================
 //  TOTAIS FINANCEIROS — QUALQUER MÊS / TRIMESTRE / ANO
