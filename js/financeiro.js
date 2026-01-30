@@ -137,10 +137,10 @@ function initFinanceiro() {
     selectMes.value = hoje.getMonth() + 1;
     selectAno.value = hoje.getFullYear();
 
-    calcularPrevisao();
-    carregarExtras();
-    calcularCustoReal();
-    gerarTabelaTotaisAnuais();
+    // calcularPrevisao();
+    // carregarExtras();
+    // calcularCustoReal();
+    // gerarTabelaTotaisAnuais();
 
     console.log("Financeiro inicializado com cache.");
 }
