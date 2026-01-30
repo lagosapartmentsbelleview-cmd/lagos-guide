@@ -132,13 +132,13 @@ function initFinanceiro() {
     selectAno.addEventListener("change", atualizarUI);
 
     for (let ano = 2020; ano <= 2050; ano++) {
-        const opt = document.createElement("option");
-        opt.value = ano;
-        opt.textContent = ano;
-        selectAno.appendChild(opt);
-    }
+    const opt = document.createElement("option");
+    opt.value = ano;
+    opt.textContent = ano;
+    selectAno.appendChild(opt);
+}
 
-    // Preencher selectAnoTotais (Totais Financeiros)
+// 🔹 Preencher selectAnoTotais (Totais Financeiros)
 const selectAnoTotais = document.getElementById("selectAnoTotais");
 if (selectAnoTotais) {
     for (let ano = 2020; ano <= 2050; ano++) {
@@ -148,7 +148,6 @@ if (selectAnoTotais) {
         selectAnoTotais.appendChild(opt2);
     }
 }
-
 
     const hoje = new Date();
     selectMes.value = hoje.getMonth() + 1;
@@ -274,6 +273,104 @@ function calcularTotaisFaturas() {
 
     document.getElementById("totalAnoBruto").textContent = totalAnoBruto.toFixed(2) + " €";
     document.getElementById("totalAnoIVA").textContent = totalAnoIVA.toFixed(2) + " €";
+}
+
+// ======================================================
+//  TOTAIS FINANCEIROS — QUALQUER MÊS / TRIMESTRE / ANO
+// ======================================================
+
+function totalPorMes(ano, mes) {
+    let bruto = 0;
+    let iva = 0;
+
+    faturasCache.forEach(f => {
+        if (!f.data) return;
+        const [a, m] = f.data.split("-").map(Number);
+        if (a === ano && m === mes) {
+            bruto += Number(f.valorBruto || 0);
+            iva += Number(f.valorIVA || 0);
+        }
+    });
+
+    return { bruto, iva, semIVA: bruto - iva };
+}
+
+function totalPorTrimestre(ano, trimestre) {
+    const inicio = (trimestre - 1) * 3 + 1;
+    const fim = inicio + 2;
+
+    let bruto = 0;
+    let iva = 0;
+
+    faturasCache.forEach(f => {
+        if (!f.data) return;
+        const [a, m] = f.data.split("-").map(Number);
+        if (a === ano && m >= inicio && m <= fim) {
+            bruto += Number(f.valorBruto || 0);
+            iva += Number(f.valorIVA || 0);
+        }
+    });
+
+    return { bruto, iva, semIVA: bruto - iva };
+}
+
+function totalPorAno(ano) {
+    let bruto = 0;
+    let iva = 0;
+
+    faturasCache.forEach(f => {
+        if (!f.data) return;
+        const [a] = f.data.split("-").map(Number);
+        if (a === ano) {
+            bruto += Number(f.valorBruto || 0);
+            iva += Number(f.valorIVA || 0);
+        }
+    });
+
+    return { bruto, iva, semIVA: bruto - iva };
+}
+
+function calcularTaxaIVA(bruto, iva) {
+    if (bruto <= 0) return 0;
+    const liquido = bruto - iva;
+    if (liquido <= 0) return 0;
+    return Math.round((iva / liquido) * 100);
+}
+
+// ======================================================
+//  ATUALIZAR CARDS CONFORME ESCOLHA DO UTILIZADOR
+// ======================================================
+
+function atualizarTotaisEscolhidos() {
+    const ano = Number(document.getElementById("selectAnoTotais").value);
+    const mes = Number(document.getElementById("selectMesTotais").value);
+    const trim = Number(document.getElementById("selectTrimTotais").value);
+
+    let totMes = { bruto: 0, iva: 0, semIVA: 0 };
+    let totTrim = { bruto: 0, iva: 0, semIVA: 0 };
+    let totAno = { bruto: 0, iva: 0, semIVA: 0 };
+
+    if (ano && mes) totMes = totalPorMes(ano, mes);
+    if (ano && trim) totTrim = totalPorTrimestre(ano, trim);
+    if (ano) totAno = totalPorAno(ano);
+
+    // Mês
+    document.getElementById("mesBruto").textContent = totMes.bruto.toFixed(2) + " €";
+    document.getElementById("mesIVA").textContent = totMes.iva.toFixed(2) + " €";
+    document.getElementById("mesLiquido").textContent = totMes.semIVA.toFixed(2) + " €";
+    document.getElementById("mesTaxa").textContent = calcularTaxaIVA(totMes.bruto, totMes.iva) + "%";
+
+    // Trimestre
+    document.getElementById("trimBruto").textContent = totTrim.bruto.toFixed(2) + " €";
+    document.getElementById("trimIVA").textContent = totTrim.iva.toFixed(2) + " €";
+    document.getElementById("trimLiquido").textContent = totTrim.semIVA.toFixed(2) + " €";
+    document.getElementById("trimTaxa").textContent = calcularTaxaIVA(totTrim.bruto, totTrim.iva) + "%";
+
+    // Ano
+    document.getElementById("anoBruto").textContent = totAno.bruto.toFixed(2) + " €";
+    document.getElementById("anoIVA").textContent = totAno.iva.toFixed(2) + " €";
+    document.getElementById("anoLiquido").textContent = totAno.semIVA.toFixed(2) + " €";
+    document.getElementById("anoTaxa").textContent = calcularTaxaIVA(totAno.bruto, totAno.iva) + "%";
 }
 
 
