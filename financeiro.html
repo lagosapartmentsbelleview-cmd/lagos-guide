@@ -226,14 +226,15 @@ firebase.auth().onAuthStateChanged(user => {
         return;
     }
 
-    // Só carrega o JS depois do login estar confirmado
     const script = document.createElement("script");
     script.src = "js/financeiro.js";
-    script.onload = () => initFinanceiro();   // 🔥 CHAMA AQUI, NO MOMENTO CERTO
+    script.onload = () => {
+        firebase.firestore(); 
+        setTimeout(() => initFinanceiro(), 150);
+    };
     document.body.appendChild(script);
-    ;
-
 });
+
 </script>
 
 
