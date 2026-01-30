@@ -181,7 +181,7 @@ async function carregarFaturas() {
         }));
 
         renderizarTabelaFaturas();
-        calcularTotaisFaturas();
+    
     } catch (err) {
         console.error("Erro ao carregar faturas:", err);
     }
@@ -897,7 +897,7 @@ async function interpretarFatura(texto) {
 
     // Atualizar tabela e totais
     renderizarTabelaFaturas();
-    calcularTotaisFaturas();
+    
 }
 
 
