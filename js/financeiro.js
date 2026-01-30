@@ -961,6 +961,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    ["selectAnoTotais", "selectMesTotais", "selectTrimTotais"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener("change", atualizarTotaisEscolhidos);
+        }
+    });
+});
+
+
 document.getElementById("btnExportPDF").addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: "landscape" });
