@@ -385,18 +385,19 @@ async function adicionarExtra() {
     const docId = `${ano}_${String(mes).padStart(2, "0")}`;
 
     try {
-        // 1) Guardar no Firebase
-        const ref = await db
-            .collection("custos_limpeza")
-            .doc(docId)
-            .collection("extras")
-            .add({
-                data: dataObj,
-                valor: Number(valorInput),
-                descricao: descInput
-            });
+        const docRef = db.collection("custos_limpeza").doc(docId);
 
-        // 2) Atualizar cache local
+        // 🔥 GARANTIR QUE O DOCUMENTO EXISTE
+        await docRef.set({}, { merge: true });
+
+        // 🔥 AGORA SIM, ADICIONAR EXTRA
+        const ref = await docRef.collection("extras").add({
+            data: dataObj,
+            valor: Number(valorInput),
+            descricao: descInput
+        });
+
+        // 🔥 ATUALIZAR CACHE LOCAL
         if (!extrasCache[docId]) extrasCache[docId] = [];
         extrasCache[docId].push({
             id: ref.id,
@@ -407,17 +408,20 @@ async function adicionarExtra() {
 
         guardarCache();
 
-        // 3) Atualizar UI
+        // 🔥 ATUALIZAR UI
         carregarExtras();
         calcularCustoReal();
-        gerarDetalheMes(); // ← adicionar esta linha
+        gerarDetalheMes();
+        gerarTabelaTotaisAnuais();
 
+        // 🔥 LIMPAR FORMULÁRIO
         document.getElementById("extraData").value = "";
         document.getElementById("extraValor").value = "";
         document.getElementById("extraDescricao").value = "";
 
     } catch (err) {
-        console.error("Erro ao adicionar extra:", err);
+        console.error("❌ Erro ao adicionar extra:", err);
+        alert("Erro ao gravar extra no Firebase.");
     }
 }
 
