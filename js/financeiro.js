@@ -116,6 +116,8 @@ if (btn) {
 function initFinanceiro() {
     carregarCache();
     iniciarSyncAutomatica();
+    sincronizarFirebase();
+
 
     const selectMes = document.getElementById("selectMes");
     const selectAno = document.getElementById("selectAno");
