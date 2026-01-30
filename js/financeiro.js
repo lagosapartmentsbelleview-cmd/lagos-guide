@@ -938,7 +938,6 @@ async function guardarFaturaFirestore(f) {
         .add(f);
 }
 
-
 function irParaEntidades() {
     window.location.href = "entidades.html";
 }
@@ -947,8 +946,14 @@ function irParaCategorias() {
     window.location.href = "categorias.html";
 }
 
-
+/* ============================================================
+   🔥 BLOCO ÚNICO DOMContentLoaded — TUDO AQUI DENTRO
+   ============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
+
+    /* -------------------------
+       🔄 Botão Sincronizar
+    -------------------------- */
     const btnSync = document.getElementById("btnSyncFirebase");
     if (btnSync) {
         btnSync.addEventListener("click", () => {
@@ -959,123 +964,120 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-    ["selectAnoTotais", "selectMesTotais", "selectTrimTotais"].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener("change", atualizarTotaisEscolhidos);
-        }
-    });
-});
-
-
-document.getElementById("btnExportPDF").addEventListener("click", () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: "landscape" });
-
-    doc.setFontSize(16);
-    doc.text("Detalhe do Mês - Limpeza", 14, 15);
-
-    doc.autoTable({
-        html: "#tabelaDetalheMes",
-        startY: 25,
-        theme: "grid",
-        headStyles: {
-            fillColor: [25, 118, 210], // azul do sistema
-            textColor: 255,
-            fontSize: 12,
-            halign: "left"
-        },
-        bodyStyles: {
-            fontSize: 11
-        },
-        styles: {
-            cellPadding: 3
-        }
-    });
-
-    doc.save("detalhe_mes.pdf");
-});
-
-document.getElementById("btnExportExcel").addEventListener("click", () => {
-    const tabela = document.getElementById("tabelaDetalheMes");
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.table_to_sheet(tabela);
-
-    // Auto-ajustar colunas
-    const colWidths = [];
-    const range = XLSX.utils.decode_range(ws['!ref']);
-
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-        let maxWidth = 10;
-        for (let R = range.s.r; R <= range.e.r; ++R) {
-            const cell = ws[XLSX.utils.encode_cell({ r: R, c: C })];
-            if (cell && cell.v) {
-                maxWidth = Math.max(maxWidth, cell.v.toString().length);
-            }
-        }
-        colWidths.push({ wch: maxWidth + 2 });
-    }
-
-    ws['!cols'] = colWidths;
-
-    XLSX.utils.book_append_sheet(wb, ws, "Detalhe do Mês");
-    XLSX.writeFile(wb, "detalhe_mes.xlsx");
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    ["filtroNIF","filtroEntidade","filtroCategoria","filtroMesAno"].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener("input", renderizarTabelaFaturas);
-    });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    ["selectAnoTotais", "selectMesTotais", "selectTrimTotais"].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener("change", atualizarTotaisEscolhidos);
-    });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
+    /* -------------------------
+       🔍 Filtros da tabela
+    -------------------------- */
     ["filtroNIF", "filtroEntidade", "filtroCategoria", "filtroMesAno"].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
             el.addEventListener("input", renderizarTabelaFaturas);
         }
     });
-});
 
-
-setTimeout(() => {
-    const btnScanQR = document.getElementById("btnScanQR");
-
-    if (!btnScanQR) {
-        console.warn("Botão QR ainda não existe, tentando de novo...");
-        return;
-    }
-
-    btnScanQR.addEventListener("click", () => {
-        const qrReader = new Html5Qrcode("qr-reader");
-
-        qrReader.start(
-            { facingMode: "environment" },
-            { fps: 10, qrbox: 250 },
-            async qrCodeMessage => {
-
-                console.log("QR Code lido:", qrCodeMessage);
-
-                await qrReader.stop();
-                document.getElementById("qr-reader").innerHTML = "";
-
-                await interpretarFatura(qrCodeMessage);
-
-            },
-            errorMessage => {}
-        );
+    /* -------------------------
+       📊 Selects dos totais
+    -------------------------- */
+    ["selectAnoTotais", "selectMesTotais", "selectTrimTotais"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener("change", atualizarTotaisEscolhidos);
+        }
     });
 
-    console.log("Botão QR ligado com sucesso!");
-}, 300);
+    /* -------------------------
+       📄 Exportar PDF
+    -------------------------- */
+    const btnPDF = document.getElementById("btnExportPDF");
+    if (btnPDF) {
+        btnPDF.addEventListener("click", () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: "landscape" });
+
+            doc.setFontSize(16);
+            doc.text("Detalhe do Mês - Limpeza", 14, 15);
+
+            doc.autoTable({
+                html: "#tabelaDetalheMes",
+                startY: 25,
+                theme: "grid",
+                headStyles: {
+                    fillColor: [25, 118, 210],
+                    textColor: 255,
+                    fontSize: 12,
+                    halign: "left"
+                },
+                bodyStyles: { fontSize: 11 },
+                styles: { cellPadding: 3 }
+            });
+
+            doc.save("detalhe_mes.pdf");
+        });
+    }
+
+    /* -------------------------
+       📊 Exportar Excel
+    -------------------------- */
+    const btnExcel = document.getElementById("btnExportExcel");
+    if (btnExcel) {
+        btnExcel.addEventListener("click", () => {
+            const tabela = document.getElementById("tabelaDetalheMes");
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.table_to_sheet(tabela);
+
+            const colWidths = [];
+            const range = XLSX.utils.decode_range(ws['!ref']);
+
+            for (let C = range.s.c; C <= range.e.c; ++C) {
+                let maxWidth = 10;
+                for (let R = range.s.r; R <= range.e.r; ++R) {
+                    const cell = ws[XLSX.utils.encode_cell({ r: R, c: C })];
+                    if (cell && cell.v) {
+                        maxWidth = Math.max(maxWidth, cell.v.toString().length);
+                    }
+                }
+                colWidths.push({ wch: maxWidth + 2 });
+            }
+
+            ws['!cols'] = colWidths;
+
+            XLSX.utils.book_append_sheet(wb, ws, "Detalhe do Mês");
+            XLSX.writeFile(wb, "detalhe_mes.xlsx");
+        });
+    }
+
+    /* -------------------------
+       📷 QR Code
+    -------------------------- */
+    setTimeout(() => {
+        const btnScanQR = document.getElementById("btnScanQR");
+
+        if (!btnScanQR) {
+            console.warn("Botão QR ainda não existe, tentando de novo...");
+            return;
+        }
+
+        btnScanQR.addEventListener("click", () => {
+            const qrReader = new Html5Qrcode("qr-reader");
+
+            qrReader.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: 250 },
+                async qrCodeMessage => {
+
+                    console.log("QR Code lido:", qrCodeMessage);
+
+                    await qrReader.stop();
+                    document.getElementById("qr-reader").innerHTML = "";
+
+                    await interpretarFatura(qrCodeMessage);
+
+                },
+                errorMessage => {}
+            );
+        });
+
+        console.log("Botão QR ligado com sucesso!");
+    }, 300);
+
+});
