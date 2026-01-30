@@ -18,6 +18,8 @@ let reservasCache = [];
 let extrasCache = {};
 let entidadesCache = [];
 let categoriasCache = [];
+let faturasCache = [];
+
 
 // Guardar no localStorage
 function guardarCache() {
@@ -733,11 +735,10 @@ function adicionarLinhaCustosIVA(f) {
 
 async function guardarFaturaFirestore(f) {
     await firebase.firestore()
-        .collection("financeiro")
-        .doc("custos")
         .collection("faturas")
         .add(f);
 }
+
 
 function irParaEntidades() {
     window.location.href = "entidades.html";
