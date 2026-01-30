@@ -768,6 +768,33 @@ document.getElementById("btnExportPDF").addEventListener("click", () => {
     doc.save("detalhe_mes.pdf");
 });
 
+document.getElementById("btnExportExcel").addEventListener("click", () => {
+    const tabela = document.getElementById("tabelaDetalheMes");
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.table_to_sheet(tabela);
+
+    // Auto-ajustar colunas
+    const colWidths = [];
+    const range = XLSX.utils.decode_range(ws['!ref']);
+
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+        let maxWidth = 10;
+        for (let R = range.s.r; R <= range.e.r; ++R) {
+            const cell = ws[XLSX.utils.encode_cell({ r: R, c: C })];
+            if (cell && cell.v) {
+                maxWidth = Math.max(maxWidth, cell.v.toString().length);
+            }
+        }
+        colWidths.push({ wch: maxWidth + 2 });
+    }
+
+    ws['!cols'] = colWidths;
+
+    XLSX.utils.book_append_sheet(wb, ws, "Detalhe do Mês");
+    XLSX.writeFile(wb, "detalhe_mes.xlsx");
+});
+
+
 
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
