@@ -145,7 +145,7 @@ function initFinanceiro() {
     console.log("Financeiro inicializado com cache.");
 }
 
-initFinanceiro();
+//initFinanceiro();
 
 // ======================================================
 //  FUNÇÃO AUXILIAR — Data BR
