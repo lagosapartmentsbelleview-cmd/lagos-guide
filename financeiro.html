@@ -205,6 +205,27 @@
     <div class="card">
         <h3>Faturas Importadas</h3>
 
+        <!-- AQUI: filtros --> 
+        <div class="filtros-custos">
+        <input type="text" id="filtroNIF" placeholder="Filtrar por NIF"> 
+        <input type="text" id="filtroEntidade" placeholder="Filtrar por Entidade"> 
+        <select id="filtroCategoria"> 
+        <option value="">Todas as categorias</option> 
+        <option value="Água">Água</option> 
+        <option value="Energia">Energia</option> 
+        <option value="Telecomunicações">Telecomunicações</option> 
+        <option value="Combustível">Combustível</option> 
+        <option value="Alimentação">Alimentação</option> 
+        <option value="Bricolage">Bricolage</option> 
+        <option value="Construção">Construção</option> 
+        <option value="Decoração">Decoração</option> 
+        <option value="Equipamentos">Equipamentos</option> 
+        <option value="Serviços">Serviços</option> 
+        <option value="Outros">Outros</option> 
+        </select> 
+        <input type="month" id="filtroMesAno"> 
+        </div>
+
         <table id="tabelaCustosIVA">
             <thead>
                 <tr>
