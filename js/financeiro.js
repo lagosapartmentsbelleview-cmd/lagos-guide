@@ -298,8 +298,8 @@ function gerarDetalheMes() {
             const tr = document.createElement("tr");
 
             tr.innerHTML = `
-                <td>${r.apartamento || ""}</td>
-                <td>${r.nome || ""}</td>
+                <td>${(r.apartamentos && r.apartamentos.length > 0) ? r.apartamentos[0] : ""}</td>
+                <td>${r.cliente || ""}</td>
                 <td>${r.checkin || ""}</td>
                 <td>${r.checkout || ""}</td>
                 <td>${Number(r.limpeza).toFixed(2)} €</td>
