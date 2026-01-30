@@ -144,6 +144,36 @@ async function atualizarTabela() {
     });
 }
 
+async function filtrarEntidades() {
+    const termo = document.getElementById("pesquisaEntidades").value.toLowerCase();
+    const tbody = document.querySelector("#tabelaEntidades tbody");
+    tbody.innerHTML = "";
+
+    const lista = await listarEntidades();
+
+    const filtradas = lista.filter(ent =>
+        ent.nome.toLowerCase().includes(termo) ||
+        ent.nif.includes(termo)
+    );
+
+    filtradas.forEach(ent => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${ent.nif}</td>
+            <td>${ent.nome}</td>
+            <td>${ent.categoria}</td>
+            <td>
+                <button onclick="editarEntidade('${ent.nif}')">Editar</button>
+                <button class="btn-delete" onclick="apagarEntidade('${ent.nif}')">Apagar</button>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
+
 // ======================================================
 //  MODAL — ADICIONAR
 // ======================================================
