@@ -193,6 +193,47 @@ async function exportarExcel() {
     URL.revokeObjectURL(url);
 }
 
+// ======================================================
+//  ORDENAR ENTIDADES POR COLUNA
+// ======================================================
+let ordemAtual = { campo: null, asc: true };
+
+async function ordenarEntidades(campo) {
+    const lista = await listarEntidades();
+
+    // Alternar asc/desc
+    if (ordemAtual.campo === campo) {
+        ordemAtual.asc = !ordemAtual.asc;
+    } else {
+        ordemAtual = { campo, asc: true };
+    }
+
+    lista.sort((a, b) => {
+        if (a[campo] < b[campo]) return ordemAtual.asc ? -1 : 1;
+        if (a[campo] > b[campo]) return ordemAtual.asc ? 1 : -1;
+        return 0;
+    });
+
+    const tbody = document.querySelector("#tabelaEntidades tbody");
+    tbody.innerHTML = "";
+
+    lista.forEach(ent => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${ent.nif}</td>
+            <td>${ent.nome}</td>
+            <td>${ent.categoria}</td>
+            <td>
+                <button onclick="editarEntidade('${ent.nif}')">Editar</button>
+                <button class="btn-delete" onclick="apagarEntidade('${ent.nif}')">Apagar</button>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
 
 // ======================================================
 //  MODAL — ADICIONAR
