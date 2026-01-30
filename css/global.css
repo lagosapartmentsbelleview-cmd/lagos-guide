@@ -429,3 +429,32 @@ select, option {
     border-radius: 4px;
     cursor: pointer;
 }
+
+/* BOTÕES UNIVERSAIS DE AÇÃO */
+.btn-add {
+    background: #5cb85c;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background: #007bff;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background: #d9534f;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
