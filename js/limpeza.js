@@ -116,24 +116,29 @@ function preencherLista(reservas) {
     tbody.innerHTML = "";
 
     reservas.forEach(r => {
-        const tr = document.createElement("tr");
+        const apartamentos = Array.isArray(r.apartamentos) ? r.apartamentos : [""];
 
-        tr.innerHTML = `
-            <td>${r.cliente}</td>
-            <td>${r.apartamentos?.[0] || ""}</td>
-            <td>${formatarData(r.checkin)}</td>
-            <td>${formatarData(r.checkout)}</td>
-            <td>${r.hospedes}</td>
-            <td>${r.adultos}</td>
-            <td>${r.criancas}</td>
-            <td>${r.idadesCriancas}</td>
-            <td>${r.berco ? "Sim" : "Não"}</td>
-            <td>${r.comentarios || ""}</td>
-        `;
+        apartamentos.forEach(ap => {
+            const tr = document.createElement("tr");
 
-        tbody.appendChild(tr);
+            tr.innerHTML = `
+                <td>${r.cliente}</td>
+                <td>${ap}</td>
+                <td>${formatarData(r.checkin)}</td>
+                <td>${formatarData(r.checkout)}</td>
+                <td>${r.hospedes}</td>
+                <td>${r.adultos}</td>
+                <td>${r.criancas}</td>
+                <td>${r.idadesCriancas}</td>
+                <td>${r.berco ? "Sim" : "Não"}</td>
+                <td>${r.comentarios || ""}</td>
+            `;
+
+            tbody.appendChild(tr);
+        });
     });
 }
+
 
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
