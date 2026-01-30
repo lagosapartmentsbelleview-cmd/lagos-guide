@@ -154,6 +154,26 @@ function initFinanceiro() {
     } else {
         console.warn("Botão Adicionar Extra NÃO encontrado em initFinanceiro.");
     }
+    carregarFaturas();
+}
+
+async function carregarFaturas() {
+    try {
+        const snap = await firebase.firestore()
+            .collection("faturas")
+            .orderBy("data")
+            .get();
+
+        faturasCache = snap.docs.map(d => ({
+            id: d.id,
+            ...d.data()
+        }));
+
+        renderizarTabelaFaturas();
+        calcularTotaisFaturas();
+    } catch (err) {
+        console.error("Erro ao carregar faturas:", err);
+    }
 }
 
 
