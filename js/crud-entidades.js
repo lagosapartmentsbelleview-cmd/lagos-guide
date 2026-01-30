@@ -1,6 +1,5 @@
 // =====================================
 //  IMPORTAÇÃO TEMPORÁRIA DE ENTIDADES ANTIGAS
-//  (apenas para migração para Firestore)
 // =====================================
 
 const entidadesAntigas = {
@@ -59,11 +58,27 @@ async function importarEntidadesAntigas() {
     alert(`Importação concluída. Foram gravadas ${contador} entidades no Firestore.`);
 }
 
-
-let modoEdicao = null; // null = adicionar, "123456789" = editar NIF
+let modoEdicao = null;
 
 // ======================================================
-//  LISTAR ENTIDADES (FIRESTORE)
+//  CARREGAR CATEGORIAS DO FIRESTORE
+// ======================================================
+async function carregarCategoriasDropdown() {
+    const select = document.getElementById("inputCategoria");
+    select.innerHTML = "";
+
+    const snap = await db.collection("categorias").orderBy("nome").get();
+
+    snap.forEach(doc => {
+        const opt = document.createElement("option");
+        opt.value = doc.data().nome;
+        opt.textContent = doc.data().nome;
+        select.appendChild(opt);
+    });
+}
+
+// ======================================================
+//  LISTAR ENTIDADES
 // ======================================================
 async function listarEntidades() {
     const snap = await db.collection("entidades").get();
@@ -71,7 +86,7 @@ async function listarEntidades() {
 }
 
 // ======================================================
-//  OBTER ENTIDADE POR NIF (FIRESTORE)
+//  OBTER ENTIDADE POR NIF
 // ======================================================
 async function obterEntidadePorNIF(nif) {
     const doc = await db.collection("entidades").doc(nif).get();
@@ -79,7 +94,7 @@ async function obterEntidadePorNIF(nif) {
 }
 
 // ======================================================
-//  ADICIONAR OU EDITAR ENTIDADE (FIRESTORE)
+//  ADICIONAR OU EDITAR ENTIDADE
 // ======================================================
 async function adicionarOuEditarEntidade(nif, nome, categoria) {
     await db.collection("entidades").doc(nif).set({
@@ -92,7 +107,7 @@ async function adicionarOuEditarEntidade(nif, nome, categoria) {
 }
 
 // ======================================================
-//  APAGAR ENTIDADE (FIRESTORE)
+//  APAGAR ENTIDADE
 // ======================================================
 async function apagarEntidade(nif) {
     if (!confirm("Tem a certeza que deseja apagar esta entidade?")) return;
@@ -104,7 +119,7 @@ async function apagarEntidade(nif) {
 }
 
 // ======================================================
-//  ATUALIZAR TABELA (CARREGA DO FIRESTORE)
+//  ATUALIZAR TABELA
 // ======================================================
 async function atualizarTabela() {
     const tbody = document.querySelector("#tabelaEntidades tbody");
@@ -132,13 +147,15 @@ async function atualizarTabela() {
 // ======================================================
 //  MODAL — ADICIONAR
 // ======================================================
-function abrirModalAdicionar() {
+async function abrirModalAdicionar() {
     modoEdicao = null;
+
+    await carregarCategoriasDropdown(); // 🔥 CATEGORIAS DO FIRESTORE
 
     document.getElementById("tituloModal").innerText = "Adicionar Entidade";
     document.getElementById("inputNIF").value = "";
     document.getElementById("inputEntidade").value = "";
-    document.getElementById("inputCategoria").value = "Outros";
+    document.getElementById("inputCategoria").value = "";
 
     document.getElementById("modalEntidade").style.display = "flex";
 }
@@ -156,6 +173,8 @@ async function editarEntidade(nif) {
         return;
     }
 
+    await carregarCategoriasDropdown(); // 🔥 ATUALIZA DROPDOWN
+
     document.getElementById("tituloModal").innerText = "Editar Entidade";
     document.getElementById("inputNIF").value = ent.nif;
     document.getElementById("inputEntidade").value = ent.nome;
@@ -165,7 +184,7 @@ async function editarEntidade(nif) {
 }
 
 // ======================================================
-//  GUARDAR ENTIDADE (ADICIONAR OU EDITAR)
+//  GUARDAR ENTIDADE
 // ======================================================
 async function guardarEntidade() {
     const nif = document.getElementById("inputNIF").value.trim();
@@ -191,7 +210,7 @@ function fecharModal() {
 }
 
 // ======================================================
-//  INICIALIZAR TABELA AO CARREGAR A PÁGINA
+//  INICIALIZAR TABELA
 // ======================================================
 window.onload = atualizarTabela;
 
