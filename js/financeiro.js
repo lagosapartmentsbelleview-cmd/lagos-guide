@@ -1039,6 +1039,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    ["filtroNIF", "filtroEntidade", "filtroCategoria", "filtroMesAno"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener("input", renderizarTabelaFaturas);
+        }
+    });
+});
 
 
 setTimeout(() => {
