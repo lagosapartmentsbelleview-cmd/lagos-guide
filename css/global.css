@@ -458,3 +458,19 @@ select, option {
     cursor: pointer;
 }
 
+/* 🔧 Forçar estilos universais para botões de ação */
+button.btn-add {
+    background: #5cb85c !important;
+    color: white !important;
+}
+
+button.btn-edit {
+    background: #007bff !important;
+    color: white !important;
+}
+
+button.btn-delete {
+    background: #d9534f !important;
+    color: white !important;
+}
+
