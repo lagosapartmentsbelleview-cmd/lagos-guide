@@ -740,6 +740,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+document.getElementById("btnExportPDF").addEventListener("click", () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "landscape" });
+
+    doc.setFontSize(16);
+    doc.text("Detalhe do Mês - Limpeza", 14, 15);
+
+    doc.autoTable({
+        html: "#tabelaDetalheMes",
+        startY: 25,
+        theme: "grid",
+        headStyles: {
+            fillColor: [25, 118, 210], // azul do sistema
+            textColor: 255,
+            fontSize: 12,
+            halign: "left"
+        },
+        bodyStyles: {
+            fontSize: 11
+        },
+        styles: {
+            cellPadding: 3
+        }
+    });
+
+    doc.save("detalhe_mes.pdf");
+});
+
 
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
