@@ -24,6 +24,15 @@
     <h1>Gestão de Categorias</h1>
     <button class="btn-add" onclick="abrirModalCategoria()">+ Adicionar Categoria</button>
 
+    <input 
+    type="text" 
+    id="pesquisaCategorias" 
+    placeholder="Pesquisar categorias..." 
+    oninput="filtrarCategorias()" 
+    style="margin-bottom: 15px; padding: 8px; width: 300px;"
+>
+
+
     <table id="tabelaCategorias">
       <thead>
         <tr>
