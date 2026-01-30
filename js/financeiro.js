@@ -803,6 +803,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+window.addEventListener("load", () => {
+    const btnAddExtra = document.getElementById("btnAdicionarExtra");
+    if (btnAddExtra) {
+        btnAddExtra.addEventListener("click", adicionarExtra);
+        console.log("Botão Adicionar Extra ligado.");
+    } else {
+        console.warn("Botão Adicionar Extra NÃO encontrado no load.");
+    }
+});
+
 
 setTimeout(() => {
     const btnScanQR = document.getElementById("btnScanQR");
