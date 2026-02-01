@@ -208,29 +208,20 @@ function renderizarTabelaFaturas() {
         return true;
     });
 
-   lista.forEach(f => {
-    const tr = document.createElement("tr");
-
-    const bruto = Number(f.valorBruto || 0);
-    const iva = Number(f.valorIVA || 0);
-    const liquido = bruto - iva;
-    const taxa = liquido > 0 ? Math.round((iva / liquido) * 100) : 0;
-
-    tr.innerHTML = `
-        <td>${f.dataDisplay || f.data || ""}</td>
-        <td>${f.fornecedor || ""}</td>
-        <td>${f.nif || ""}</td>
-        <td>${f.categoria || ""}</td>
-        <td>${bruto.toFixed(2)} €</td>
-        <td>${iva.toFixed(2)} €</td>
-        <td>${liquido.toFixed(2)} €</td>
-        <td>${taxa}%</td>
-        <td>${f.numeroFatura || ""}</td>
-        <td>${f.atcud || ""}</td>
-    `;
-    tbody.appendChild(tr);
-});
-
+    lista.forEach(f => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${f.dataDisplay || f.data || ""}</td>
+            <td>${f.fornecedor || ""}</td>
+            <td>${f.categoria || ""}</td>
+            <td>${(f.valorBruto || 0).toFixed(2)} €</td>
+            <td>${(f.valorIVA || 0).toFixed(2)} €</td>
+            <td>${f.numeroFatura || ""}</td>
+            <td>${f.atcud || ""}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
 
 
 
@@ -1055,38 +1046,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-   /* -------------------------
-   📷 QR Code
--------------------------- */
-setTimeout(() => {
-    const btnScanQR = document.getElementById("btnScanQR");
+    /* -------------------------
+       📷 QR Code
+    -------------------------- */
+    setTimeout(() => {
+        const btnScanQR = document.getElementById("btnScanQR");
 
-    if (!btnScanQR) {
-        console.warn("Botão QR ainda não existe, tentando de novo...");
-        return;
-    }
+        if (!btnScanQR) {
+            console.warn("Botão QR ainda não existe, tentando de novo...");
+            return;
+        }
 
-    btnScanQR.addEventListener("click", () => {
-        const qrReader = new Html5Qrcode("qr-reader");
+        btnScanQR.addEventListener("click", () => {
+            const qrReader = new Html5Qrcode("qr-reader");
 
-        qrReader.start(
-            { facingMode: "environment" },
-            { fps: 10, qrbox: 250 },
-            async qrCodeMessage => {
+            qrReader.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: 250 },
+                async qrCodeMessage => {
 
-                console.log("QR Code lido:", qrCodeMessage);
+                    console.log("QR Code lido:", qrCodeMessage);
 
-                await qrReader.stop();
-                document.getElementById("qr-reader").innerHTML = "";
+                    await qrReader.stop();
+                    document.getElementById("qr-reader").innerHTML = "";
 
-                await interpretarFatura(qrCodeMessage);
+                    await interpretarFatura(qrCodeMessage);
 
-            },
-            errorMessage => {}
-        );
-    });
+                },
+                errorMessage => {}
+            );
+        });
 
-    console.log("Botão QR ligado com sucesso!");
-}, 300);
+        console.log("Botão QR ligado com sucesso!");
+    }, 300);
 
-}); // ← FECHA O DOMContentLoaded CORRETAMENTE
+});
