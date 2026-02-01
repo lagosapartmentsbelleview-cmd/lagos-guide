@@ -919,13 +919,17 @@ async function interpretarFatura(texto) {
     }
 
     // Guardar no Firestore
-    await guardarFaturaFirestore(entrada);
+await guardarFaturaFirestore(entrada);
 
-    // Atualizar cache local
-    faturasCache.push(entrada);
+// Atualizar cache local
+faturasCache.push(entrada);
 
-    // Atualizar tabela e totais
-    renderizarTabelaFaturas();
+// Aviso de sucesso
+alert("✅ Fatura carregada com sucesso!");
+
+// Atualizar tabela e totais
+renderizarTabelaFaturas();
+
 }
 
 
