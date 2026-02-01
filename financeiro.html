@@ -14,7 +14,7 @@
     <div class="top-menu">
         <span class="menu-button" id="toggleMenu">☰ Menu</span>
 
-       <div class="dropdown-menu" id="dropdown-menu">
+        <div class="dropdown-menu" id="dropdown-menu">
             <a href="listagem-reservas.html">Reservas</a>
             <a href="calendario.html">Calendario</a>
             <a href="limpeza.html">Limpeza</a>
@@ -41,7 +41,9 @@
             <button class="tab" data-tab="outros">Outros</button>
         </div>
 
-        <!-- CONTEÚDOS DAS ABAS -->
+        <!-- ========================= -->
+        <!-- ABA LIMPEZA -->
+        <!-- ========================= -->
         <div class="tab-content active" id="tab-limpeza">
 
             <h2>Custos de Limpeza</h2>
@@ -49,57 +51,25 @@
             <!-- Seleção de mês -->
             <div class="filtros-custos">
                 <label>Mês:</label>
-               <select id="selectMes">
-                <option value="1">Janeiro</option>
-                <option value="2">Fevereiro</option>
-                <option value="3">Março</option>
-                <option value="4">Abril</option>
-                <option value="5">Maio</option>
-                <option value="6">Junho</option>
-                <option value="7">Julho</option>
-                <option value="8">Agosto</option>
-                <option value="9">Setembro</option>
-                <option value="10">Outubro</option>
-                <option value="11">Novembro</option>
-                <option value="12">Dezembro</option>
-               </select>
-
+                <select id="selectMes">
+                    <option value="1">Janeiro</option>
+                    <option value="2">Fevereiro</option>
+                    <option value="3">Março</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Maio</option>
+                    <option value="6">Junho</option>
+                    <option value="7">Julho</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </select>
 
                 <label>Ano:</label>
-               <select id="selectAno">
-    <option value="2020">2020</option>
-    <option value="2021">2021</option>
-    <option value="2022">2022</option>
-    <option value="2023">2023</option>
-    <option value="2024">2024</option>
-    <option value="2025">2025</option>
-    <option value="2026">2026</option>
-    <option value="2027">2027</option>
-    <option value="2028">2028</option>
-    <option value="2029">2029</option>
-    <option value="2030">2030</option>
-    <option value="2031">2031</option>
-    <option value="2032">2032</option>
-    <option value="2033">2033</option>
-    <option value="2034">2034</option>
-    <option value="2035">2035</option>
-    <option value="2036">2036</option>
-    <option value="2037">2037</option>
-    <option value="2038">2038</option>
-    <option value="2039">2039</option>
-    <option value="2040">2040</option>
-    <option value="2041">2041</option>
-    <option value="2042">2042</option>
-    <option value="2043">2043</option>
-    <option value="2044">2044</option>
-    <option value="2045">2045</option>
-    <option value="2046">2046</option>
-    <option value="2047">2047</option>
-    <option value="2048">2048</option>
-    <option value="2049">2049</option>
-    <option value="2050">2050</option>
-</select>
-
+                <select id="selectAno">
+                    <!-- preenchido pelo JS -->
+                </select>
             </div>
 
             <!-- Previsão -->
@@ -114,205 +84,194 @@
                 <p id="custoRealValor">0 €</p>
             </div>
 
+            <!-- Detalhe do mês -->
             <div class="card">
-    <h3>Detalhe do Mês</h3>
+                <h3>Detalhe do Mês</h3>
 
-     <div class="acoes-financeiro">
-        <button id="btnExportExcel">Exportar Excel</button>
-        <button id="btnExportPDF">Exportar PDF</button>
+                <div class="acoes-financeiro">
+                    <button id="btnExportExcel">Exportar Excel</button>
+                    <button id="btnExportPDF">Exportar PDF</button>
+                </div>
+
+                <table id="tabelaDetalheMes">
+                    <thead>
+                        <tr>
+                            <th>Apartamento</th>
+                            <th>Cliente</th>
+                            <th>Check‑in</th>
+                            <th>Check‑out</th>
+                            <th>Valor (€)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Extras -->
+            <div class="card">
+                <h3>Custos Extra</h3>
+
+                <div class="extra-form">
+                    <input type="date" id="extraData">
+                    <input type="number" id="extraValor" placeholder="Valor (€)">
+                    <input type="text" id="extraDescricao" placeholder="Descrição">
+                    <button id="btnAdicionarExtra">Adicionar</button>
+                </div>
+
+                <table id="tabelaExtras">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Valor (€)</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Totais Anuais -->
+            <div class="card">
+                <h3>Totais Anuais</h3>
+
+                <table id="tabelaTotaisAno">
+                    <thead>
+                        <tr>
+                            <th>Ano</th>
+                            <th>Limpezas (€)</th>
+                            <th>Extras (€)</th>
+                            <th>Total (€)</th>
+                            <th>Acumulado</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div> <!-- fecha tab-limpeza -->
+
+        <!-- ========================= -->
+        <!-- ABA CUSTOS & IVA -->
+        <!-- ========================= -->
+        <div class="tab-content" id="tab-custos-iva">
+
+            <h2>Custos & IVA (QR Code)</h2>
+
+            <div class="acoes-financeiro">
+                <button class="btn-add" onclick="irParaEntidades()">Gerir Entidades</button>
+                <button class="btn-add" onclick="irParaCategorias()">Gerir Categorias</button>
+            </div>
+
+            <div class="card">
+                <h3>Importar Fatura via QR Code</h3>
+                <button id="btnScanQR">📷 Ler QR da Fatura</button>
+                <div id="qr-reader" style="width:300px; margin-top:15px;"></div>
+            </div>
+
+            <div class="card">
+                <h3>Faturas Importadas</h3>
+
+                <div class="filtros-custos">
+                    <input type="text" id="filtroNIF" placeholder="Filtrar por NIF">
+                    <input type="text" id="filtroEntidade" placeholder="Filtrar por Entidade">
+                    <select id="filtroCategoria">
+                        <option value="">Todas as categorias</option>
+                        <option value="Água">Água</option>
+                        <option value="Energia">Energia</option>
+                        <option value="Telecomunicações">Telecomunicações</option>
+                        <option value="Combustível">Combustível</option>
+                        <option value="Alimentação">Alimentação</option>
+                        <option value="Bricolage">Bricolage</option>
+                        <option value="Construção">Construção</option>
+                        <option value="Decoração">Decoração</option>
+                        <option value="Equipamentos">Equipamentos</option>
+                        <option value="Serviços">Serviços</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                    <input type="month" id="filtroMesAno">
+                </div>
+
+                <div class="filtros-totais">
+                    <select id="selectAnoTotais"><option value="">Ano</option></select>
+                    <select id="selectMesTotais">
+                        <option value="">Mês</option>
+                        <option value="1">Janeiro</option>
+                        <option value="2">Fevereiro</option>
+                        <option value="3">Março</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maio</option>
+                        <option value="6">Junho</option>
+                        <option value="7">Julho</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Setembro</option>
+                        <option value="10">Outubro</option>
+                        <option value="11">Novembro</option>
+                        <option value="12">Dezembro</option>
+                    </select>
+                    <select id="selectTrimTotais">
+                        <option value="">Trimestre</option>
+                        <option value="1">1º Trimestre</option>
+                        <option value="2">2º Trimestre</option>
+                        <option value="3">3º Trimestre</option>
+                        <option value="4">4º Trimestre</option>
+                    </select>
+                </div>
+
+                <div class="card">
+                    <h3>Totais Financeiros</h3>
+
+                    <div class="totais-financeiros">
+
+                        <div class="total-box">
+                            <h4>Mês Selecionado</h4>
+                            <p><strong>Bruto:</strong> <span id="mesBruto">0 €</span></p>
+                            <p><strong>IVA:</strong> <span id="mesIVA">0 €</span></p>
+                            <p><strong>Taxa IVA:</strong> <span id="mesTaxa">0%</span></p>
+                            <p><strong>Líquido:</strong> <span id="mesLiquido">0 €</span></p>
+                        </div>
+
+                        <div class="total-box">
+                            <h4>Trimestre Selecionado</h4>
+                            <p><strong>Bruto:</strong> <span id="trimBruto">0 €</span></p>
+                            <p><strong>IVA:</strong> <span id="trimIVA">0 €</span></p>
+                            <p><strong>Taxa IVA:</strong> <span id="trimTaxa">0%</span></p>
+                            <p><strong>Líquido:</strong> <span id="trimLiquido">0 €</span></p>
+                        </div>
+
+                        <div class="total-box">
+                            <h4>Ano Selecionado</h4>
+                            <p><strong>Bruto:</strong> <span id="anoBruto">0 €</span></p>
+                            <p><strong>IVA:</strong> <span id="anoIVA">0 €</span></p>
+                            <p><strong>Taxa IVA:</strong> <span id="anoTaxa">0%</span></p>
+                            <p><strong>Líquido:</strong> <span id="anoLiquido">0 €</span></p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <table id="tabelaCustosIVA">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Fornecedor</th>
+                            <th>NIF</th>
+                            <th>Categoria</th>
+                            <th>Valor (€)</th>
+                            <th>IVA (€)</th>
+                            <th>Líquido (€)</th>
+                            <th>Taxa Efetiva</th>
+                            <th>Nº Fatura</th>
+                            <th>ATCUD</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+            </div>
         </div>
 
-    <table id="tabelaDetalheMes">
-
-         <thead>
-            <tr>
-                <th>Apartamento</th>
-                <th>Cliente</th>
-                <th>Check‑in</th>
-                <th>Check‑out</th>
-                <th>Valor (€)</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
-
-
-           <!-- Extras -->
-<div class="card">
-    <h3>Custos Extra</h3>
-
-    <div class="extra-form">
-        <input type="date" id="extraData">
-        <input type="number" id="extraValor" placeholder="Valor (€)">
-        <input type="text" id="extraDescricao" placeholder="Descrição">
-        <button id="btnAdicionarExtra">Adicionar</button>
-    </div>
-
-    <table id="tabelaExtras">
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Descrição</th>
-                <th>Valor (€)</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
-
-<div class="card">
-    <h3>Totais Anuais</h3>
-
-    <table id="tabelaTotaisAno">
-        <thead>
-            <tr>
-                <th>Ano</th>
-                <th>Limpezas (€)</th>
-                <th>Extras (€)</th>
-                <th>Total (€)</th>
-                <th>Acumulado</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
-
-</div> <!-- fecha tab-limpeza -->
-
-</div> <!-- fecha o .content principal -->
-
-<div class="content"> <!-- reabre content para as outras abas -->
-
-<div class="tab-content" id="tab-custos-iva">
-
-    <h2>Custos & IVA (QR Code)</h2>
-
-    <div class="acoes-financeiro">
-        <button class="btn-add" onclick="irParaEntidades()">Gerir Entidades</button>
-        <button class="btn-add" onclick="irParaCategorias()">Gerir Categorias</button>
-    </div>
-
-    <div class="card">
-        <h3>Importar Fatura via QR Code</h3>
-        <button id="btnScanQR">📷 Ler QR da Fatura</button>
-        <div id="qr-reader" style="width:300px; margin-top:15px;"></div>
-    </div>
-
-    <div class="card">
-        <h3>Faturas Importadas</h3>
-
-
-        <!-- AQUI: filtros --> 
-        <div class="filtros-custos">
-        <input type="text" id="filtroNIF" placeholder="Filtrar por NIF"> 
-        <input type="text" id="filtroEntidade" placeholder="Filtrar por Entidade"> 
-        <select id="filtroCategoria"> 
-        <option value="">Todas as categorias</option> 
-        <option value="Água">Água</option> 
-        <option value="Energia">Energia</option> 
-        <option value="Telecomunicações">Telecomunicações</option> 
-        <option value="Combustível">Combustível</option> 
-        <option value="Alimentação">Alimentação</option> 
-        <option value="Bricolage">Bricolage</option> 
-        <option value="Construção">Construção</option> 
-        <option value="Decoração">Decoração</option> 
-        <option value="Equipamentos">Equipamentos</option> 
-        <option value="Serviços">Serviços</option> 
-        <option value="Outros">Outros</option> 
-        </select> 
-        <input type="month" id="filtroMesAno"> 
-        </div>
-
-<div class="filtros-totais">
-    <select id="selectAnoTotais">
-        <option value="">Ano</option>
-    </select>
-
-    <select id="selectMesTotais">
-        <option value="">Mês</option>
-        <option value="1">Janeiro</option>
-        <option value="2">Fevereiro</option>
-        <option value="3">Março</option>
-        <option value="4">Abril</option>
-        <option value="5">Maio</option>
-        <option value="6">Junho</option>
-        <option value="7">Julho</option>
-        <option value="8">Agosto</option>
-        <option value="9">Setembro</option>
-        <option value="10">Outubro</option>
-        <option value="11">Novembro</option>
-        <option value="12">Dezembro</option>
-    </select>
-
-    <select id="selectTrimTotais">
-        <option value="">Trimestre</option>
-        <option value="1">1º Trimestre</option>
-        <option value="2">2º Trimestre</option>
-        <option value="3">3º Trimestre</option>
-        <option value="4">4º Trimestre</option>
-    </select>
-</div>
-
-        
-     <div class="card">
-    <h3>Totais Financeiros</h3>
-
-    <div class="totais-financeiros">
-
-        <!-- MÊS -->
-        <div class="total-box">
-            <h4>Mês Selecionado</h4>
-            <p><strong>Bruto:</strong> <span id="mesBruto">0 €</span></p>
-            <p><strong>IVA:</strong> <span id="mesIVA">0 €</span></p>
-            <p><strong>Taxa IVA:</strong> <span id="mesTaxa">0%</span></p>
-            <p><strong>Líquido:</strong> <span id="mesLiquido">0 €</span></p>
-        </div>
-
-        <!-- TRIMESTRE -->
-        <div class="total-box">
-            <h4>Trimestre Selecionado</h4>
-            <p><strong>Bruto:</strong> <span id="trimBruto">0 €</span></p>
-            <p><strong>IVA:</strong> <span id="trimIVA">0 €</span></p>
-            <p><strong>Taxa IVA:</strong> <span id="trimTaxa">0%</span></p>
-            <p><strong>Líquido:</strong> <span id="trimLiquido">0 €</span></p>
-        </div>
-
-        <!-- ANO -->
-        <div class="total-box">
-            <h4>Ano Selecionado</h4>
-            <p><strong>Bruto:</strong> <span id="anoBruto">0 €</span></p>
-            <p><strong>IVA:</strong> <span id="anoIVA">0 €</span></p>
-            <p><strong>Taxa IVA:</strong> <span id="anoTaxa">0%</span></p>
-            <p><strong>Líquido:</strong> <span id="anoLiquido">0 €</span></p>
-        </div>
-
-    </div>
-</div>
-
-        
-        <table id="tabelaCustosIVA">
-            <thead>
-    <tr>
-        <th>Data</th>
-        <th>Fornecedor</th>
-        <th>NIF</th>
-        <th>Categoria</th>
-        <th>Valor (€)</th>
-        <th>IVA (€)</th>
-        <th>Líquido (€)</th>
-        <th>Taxa Efetiva</th>
-
-        <th>Nº Fatura</th>
-        <th>ATCUD</th>
-    </tr>
-</thead>
-
-            <tbody></tbody>
-        </table>
-    </div>
-
+        <!-- OUTRAS ABAS VAZIAS -->
         <div class="tab-content" id="tab-condominio"></div>
         <div class="tab-content" id="tab-agua"></div>
         <div class="tab-content" id="tab-luz"></div>
@@ -320,40 +279,37 @@
         <div class="tab-content" id="tab-equipamentos"></div>
         <div class="tab-content" id="tab-outros"></div>
 
-    </div>
+    </div> <!-- fecha .content -->
 
-    
+    <!-- SCRIPTS -->
     <script src="https://unpkg.com/html5-qrcode"></script>
 
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-   <script src="js/firebase-config.js"></script>
-   <script src="js/menu.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/menu.js"></script>
 
-<script>
-firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-        window.location.href = "login.html";
-        return;
-    }
-});
+    <script>
+        firebase.auth().onAuthStateChanged(user => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
+            }
+        });
+    </script>
 
-</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-
-<script src="js/financeiro.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    initFinanceiro();
-});
-</script>
-
+    <script src="js/financeiro.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            initFinanceiro();
+        });
+    </script>
 
 </body>
 </html>
