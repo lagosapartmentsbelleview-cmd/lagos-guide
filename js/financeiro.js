@@ -247,6 +247,42 @@ async function carregarFaturas() {
     }
 }
 
+async function migrarDatasFaturasParaDataISO() {
+    console.log("🚀 A iniciar migração de datas para dataISO...");
+
+    try {
+        const snap = await firebase.firestore().collection("faturas").get();
+
+        let contador = 0;
+
+        for (const doc of snap.docs) {
+            const f = doc.data();
+
+            // Se já tiver dataISO, salta
+            if (f.dataISO) continue;
+
+            const dataISO = normalizarDataParaISO(f.data || f.dataDisplay);
+
+            if (!dataISO) {
+                console.warn("⚠️ Fatura sem data válida:", doc.id, f);
+                continue;
+            }
+
+            await firebase.firestore().collection("faturas").doc(doc.id).update({
+                dataISO: dataISO
+            });
+
+            contador++;
+        }
+
+        console.log(`✅ Migração concluída. Faturas atualizadas: ${contador}`);
+
+    } catch (err) {
+        console.error("❌ Erro na migração de datas:", err);
+    }
+}
+
+
 function entrarModoEdicao(id, botao) {
     const tr = botao.closest("tr");
     const f = faturasCache.find(x => x.id === id);
