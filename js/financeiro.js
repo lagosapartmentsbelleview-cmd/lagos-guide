@@ -279,6 +279,33 @@ function gerarSelectCategorias(valorAtual) {
     return html;
 }
 
+async function guardarEdicao(id, botao) {
+    const tr = botao.closest("tr");
+
+    // Recolher todos os inputs/selects da linha
+    const dados = {};
+    tr.querySelectorAll("td.editavel").forEach(td => {
+        const campo = td.dataset.campo;
+        const input = td.querySelector("input, select");
+        if (!input) return;
+
+        let valor = input.value;
+
+        // Converter números
+        if (campo === "valorBruto" || campo === "valorIVA") {
+            valor = Number(valor);
+        }
+
+        dados[campo] = valor;
+    });
+
+    // Atualizar Firebase
+    await firebase.firestore().collection("faturas").doc(id).update(dados);
+
+    // Recarregar tabela
+    carregarFaturas();
+}
+
 
 // ======================================================
 //  RENDERIZAR TABELA
