@@ -292,19 +292,29 @@ function renderizarTabelaFaturas() {
         totalIvaGasoleo += ivaGasoleo;
         totalLiquido += liquido;
 
-        tr.innerHTML = `
-            <td>${f.dataDisplay || f.data || ""}</td>
-            <td>${f.fornecedor || ""}</td>
-            <td>${f.nif || ""}</td>
-            <td>${f.categoria || ""}</td>
-            <td>${bruto.toFixed(2)} €</td>
-            <td>${iva.toFixed(2)} €</td>
-            <td>${ivaGasoleo.toFixed(2)} €</td>
-            <td>${liquido.toFixed(2)} €</td>
-            <td>${taxaEfetiva}</td>
-            <td>${f.numeroFatura || ""}</td>
-            <td>${f.atcud || ""}</td>
-        `;
+        ttr.innerHTML = `
+    <td><input type="checkbox" class="checkFatura" value="${f.id}"></td>
+
+    <td class="editavel" data-campo="dataISO">${f.dataDisplay || f.data || ""}</td>
+    <td class="editavel" data-campo="fornecedor">${f.fornecedor || ""}</td>
+    <td class="editavel" data-campo="nif">${f.nif || ""}</td>
+    <td class="editavel" data-campo="categoria">${f.categoria || ""}</td>
+
+    <td class="editavel" data-campo="valorBruto">${bruto.toFixed(2)}</td>
+    <td class="editavel" data-campo="valorIVA">${iva.toFixed(2)}</td>
+
+    <td>${ivaGasoleo.toFixed(2)}</td>
+    <td>${liquido.toFixed(2)}</td>
+
+    <td class="editavel" data-campo="numeroFatura">${f.numeroFatura || ""}</td>
+    <td class="editavel" data-campo="atcud">${f.atcud || ""}</td>
+
+    <td>
+        <button class="btn-edit" onclick="entrarModoEdicao('${f.id}', this)">✏️</button>
+        <button class="btn-danger" onclick="apagarFatura('${f.id}')">🗑️</button>
+    </td>
+`;
+
         tbody.appendChild(tr);
     });
 
