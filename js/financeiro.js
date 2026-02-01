@@ -928,6 +928,19 @@ document.querySelectorAll(".tab").forEach(botao => {
     });
 });
 
+// Verificar duplicado
+const duplicada = faturasCache.some(f =>
+    f.nif === entrada.nif &&
+    f.numeroFatura === entrada.numeroFatura &&
+    f.data === entrada.data
+);
+
+if (duplicada) {
+    alert("⚠️ Esta fatura já foi carregada anteriormente.");
+    return;
+}
+
+
 function adicionarLinhaCustosIVA(f) {
     const tbody = document.querySelector("#tabelaCustosIVA tbody");
     const tr = document.createElement("tr");
