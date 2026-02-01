@@ -201,48 +201,51 @@
     <div class="card">
         <h3>Faturas Importadas</h3>
 
-        <!-- Filtros redesenhados -->
-        <div class="filtros-financeiro">
+       <div class="filtros-custos-iva">
 
-            <div class="filtro-grupo">
-                <label>NIF</label>
-                <input type="text" id="filtroNIF" placeholder="Filtrar por NIF">
-            </div>
+    <div class="campo">
+        <label>NIF</label>
+        <input type="text" id="filtroNIF" placeholder="Filtrar por NIF">
+    </div>
 
-            <div class="filtro-grupo">
-                <label>Entidade</label>
-                <input type="text" id="filtroEntidade" placeholder="Filtrar por Entidade">
-            </div>
+    <div class="campo">
+        <label>Entidade</label>
+        <input type="text" id="filtroEntidade" placeholder="Filtrar por Entidade">
+    </div>
 
-            <div class="filtro-grupo">
-                <label>Categoria</label>
-                <select id="filtroCategoria">
-                    <option value="">Todas as categorias</option>
-                    <option value="Água">Água</option>
-                    <option value="Energia">Energia</option>
-                    <option value="Telecomunicações">Telecomunicações</option>
-                    <option value="Combustível">Combustível</option>
-                    <option value="Alimentação">Alimentação</option>
-                    <option value="Bricolage">Bricolage</option>
-                    <option value="Construção">Construção</option>
-                    <option value="Decoração">Decoração</option>
-                    <option value="Equipamentos">Equipamentos</option>
-                    <option value="Serviços">Serviços</option>
-                    <option value="Outros">Outros</option>
-                </select>
-            </div>
+    <div class="campo">
+        <label>Categoria</label>
+        <select id="filtroCategoria">
+            <option value="">Todas</option>
+            <option value="Água">Água</option>
+            <option value="Energia">Energia</option>
+            <option value="Telecomunicações">Telecomunicações</option>
+            <option value="Combustível">Combustível</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Bricolage">Bricolage</option>
+            <option value="Construção">Construção</option>
+            <option value="Decoração">Decoração</option>
+            <option value="Equipamentos">Equipamentos</option>
+            <option value="Serviços">Serviços</option>
+            <option value="Outros">Outros</option>
+        </select>
+    </div>
 
-            <div class="filtro-grupo">
-                <label>Início</label>
-                <input type="date" id="filtroDataInicio">
-            </div>
+    <div class="campo">
+        <label>Início</label>
+        <input type="date" id="filtroDataInicio">
+    </div>
 
-            <div class="filtro-grupo">
-                <label>Fim</label>
-                <input type="date" id="filtroDataFim">
-            </div>
+    <div class="campo">
+        <label>Fim</label>
+        <input type="date" id="filtroDataFim">
+    </div>
 
-        </div>
+    <div class="campo botao-gerar">
+        <button onclick="renderizarTabelaFaturas()">Filtrar</button>
+    </div>
+
+</div>
 
         <table id="tabelaCustosIVA">
             <thead>
