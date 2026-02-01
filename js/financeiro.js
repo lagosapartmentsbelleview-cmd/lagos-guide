@@ -230,7 +230,7 @@ function renderizarTabelaFaturas() {
     `;
     tbody.appendChild(tr);
 });
-
+} 
 
 
 
