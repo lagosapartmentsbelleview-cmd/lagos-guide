@@ -204,6 +204,7 @@ function renderizarTabelaFaturas() {
 
     let lista = [...faturasCache];
 
+    // Aplicar filtros
     lista = lista.filter(f => {
         if (filtroNIF && !String(f.nif || "").toLowerCase().includes(filtroNIF)) return false;
         if (filtroEnt && !String(f.fornecedor || "").toLowerCase().includes(filtroEnt)) return false;
@@ -212,33 +213,66 @@ function renderizarTabelaFaturas() {
         return true;
     });
 
-   lista.forEach(f => {
-    const tr = document.createElement("tr");
+    // Totais
+    let totalBruto = 0;
+    let totalIVA = 0;
+    let totalIvaGasoleo = 0;
+    let totalLiquido = 0;
 
-    const bruto = Number(f.valorBruto || 0);
-    const iva = Number(f.valorIVA || 0);
-    const liquido = bruto - iva;
-    const taxa = liquido > 0 ? Math.round((iva / liquido) * 100) : 0;
+    lista.forEach(f => {
+        const tr = document.createElement("tr");
 
-    // Taxa efetiva: só mostra 6%, 13% ou 23. Caso contrário: "Misto"
-    const taxaEfetiva = [6, 13, 23].includes(taxa) ? taxa + "%" : "Misto";
+        const bruto = Number(f.valorBruto || 0);
+        const iva = Number(f.valorIVA || 0);
+        const liquido = bruto - iva;
 
-    tr.innerHTML = `
-        <td>${f.dataDisplay || f.data || ""}</td>
-        <td>${f.fornecedor || ""}</td>
-        <td>${f.nif || ""}</td>
-        <td>${f.categoria || ""}</td>
-        <td>${bruto.toFixed(2)} €</td>
-        <td>${iva.toFixed(2)} €</td>
-        <td>${liquido.toFixed(2)} €</td>
-        <td>${taxaEfetiva}</td>
-        <td>${f.numeroFatura || ""}</td>
-        <td>${f.atcud || ""}</td>
+        // IVA gasóleo (regra oficial)
+        const ivaGasoleo = (f.categoria === "Combustível") ? iva / 2 : iva;
+
+        // Taxa efetiva
+        const taxa = liquido > 0 ? Math.round((iva / liquido) * 100) : 0;
+        const taxaEfetiva = [6, 13, 23].includes(taxa) ? taxa + "%" : "Misto";
+
+        // Acumular totais
+        totalBruto += bruto;
+        totalIVA += iva;
+        totalIvaGasoleo += ivaGasoleo;
+        totalLiquido += liquido;
+
+        tr.innerHTML = `
+            <td>${f.dataDisplay || f.data || ""}</td>
+            <td>${f.fornecedor || ""}</td>
+            <td>${f.nif || ""}</td>
+            <td>${f.categoria || ""}</td>
+            <td>${bruto.toFixed(2)} €</td>
+            <td>${iva.toFixed(2)} €</td>
+            <td>${ivaGasoleo.toFixed(2)} €</td>
+            <td>${liquido.toFixed(2)} €</td>
+            <td>${taxaEfetiva}</td>
+            <td>${f.numeroFatura || ""}</td>
+            <td>${f.atcud || ""}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // Linha TOTAL
+    const trTotal = document.createElement("tr");
+    trTotal.style.fontWeight = "bold";
+    trTotal.style.background = "#e3f0ff";
+
+    trTotal.innerHTML = `
+        <td colspan="4" style="text-align:right;">TOTAL:</td>
+        <td>${totalBruto.toFixed(2)} €</td>
+        <td>${totalIVA.toFixed(2)} €</td>
+        <td>${totalIvaGasoleo.toFixed(2)} €</td>
+        <td>${totalLiquido.toFixed(2)} €</td>
+        <td>—</td>
+        <td></td>
+        <td></td>
     `;
-    tbody.appendChild(tr);
-});
 
-} 
+    tbody.appendChild(trTotal);
+}
 
 
 
