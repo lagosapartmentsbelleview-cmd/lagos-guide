@@ -131,23 +131,24 @@ function initFinanceiro() {
     selectMes.addEventListener("change", atualizarUI);
     selectAno.addEventListener("change", atualizarUI);
 
+    // 🔹 Preencher selectAno (filtros principais)
     for (let ano = 2020; ano <= 2050; ano++) {
-    const opt = document.createElement("option");
-    opt.value = ano;
-    opt.textContent = ano;
-    selectAno.appendChild(opt);
-}
+        const opt = document.createElement("option");
+        opt.value = ano;
+        opt.textContent = ano;
+        selectAno.appendChild(opt);
+    }   // ← ESTA CHAVE FALTAVA NO TEU CÓDIGO
 
-// 🔹 Preencher selectAnoTotais (Totais Financeiros)
-const selectAnoTotais = document.getElementById("selectAnoTotais");
-if (selectAnoTotais) {
-    for (let ano = 2020; ano <= 2050; ano++) {
-        const opt2 = document.createElement("option");
-        opt2.value = ano;
-        opt2.textContent = ano;
-        selectAnoTotais.appendChild(opt2);
+    // 🔹 Preencher selectAnoTotais (Totais Financeiros)
+    const selectAnoTotais = document.getElementById("selectAnoTotais");
+    if (selectAnoTotais) {
+        for (let ano = 2020; ano <= 2050; ano++) {
+            const opt2 = document.createElement("option");
+            opt2.value = ano;
+            opt2.textContent = ano;
+            selectAnoTotais.appendChild(opt2);
+        }
     }
-}
 
     const hoje = new Date();
     selectMes.value = hoje.getMonth() + 1;
@@ -155,9 +156,10 @@ if (selectAnoTotais) {
 
     console.log("Financeiro inicializado com cache.");
 
-    sincronizarFirebase(); // ← mover para aqui
+    // 🔹 Carregar dados iniciais
+    sincronizarFirebase();
 
-    // 🔹 LIGAR BOTÃO ADICIONAR EXTRA AQUI
+    // 🔹 Ligar botão Adicionar Extra
     const btnAddExtra = document.getElementById("btnAdicionarExtra");
     if (btnAddExtra) {
         btnAddExtra.addEventListener("click", adicionarExtra);
@@ -165,8 +167,10 @@ if (selectAnoTotais) {
     } else {
         console.warn("Botão Adicionar Extra NÃO encontrado em initFinanceiro.");
     }
+
     carregarFaturas();
 }
+
 
 async function carregarFaturas() {
     try {
