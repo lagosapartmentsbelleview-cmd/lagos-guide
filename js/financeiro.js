@@ -120,39 +120,6 @@ if (btn) {
 function initFinanceiro() {
     carregarCache();
     iniciarSyncAutomatica();
-   
-    const selectMes = document.getElementById("selectMes");
-    const selectAno = document.getElementById("selectAno");
-    
-    if (!selectMes || !selectAno) {
-        return setTimeout(initFinanceiro, 30);
-    }
-
-    selectMes.addEventListener("change", atualizarUI);
-    selectAno.addEventListener("change", atualizarUI);
-
-    // 🔹 Preencher selectAno (filtros principais)
-    for (let ano = 2020; ano <= 2050; ano++) {
-        const opt = document.createElement("option");
-        opt.value = ano;
-        opt.textContent = ano;
-        selectAno.appendChild(opt);
-    }   // ← ESTA CHAVE FALTAVA NO TEU CÓDIGO
-
-    // 🔹 Preencher selectAnoTotais (Totais Financeiros)
-    const selectAnoTotais = document.getElementById("selectAnoTotais");
-    if (selectAnoTotais) {
-        for (let ano = 2020; ano <= 2050; ano++) {
-            const opt2 = document.createElement("option");
-            opt2.value = ano;
-            opt2.textContent = ano;
-            selectAnoTotais.appendChild(opt2);
-        }
-    }
-
-    const hoje = new Date();
-    selectMes.value = hoje.getMonth() + 1;
-    selectAno.value = hoje.getFullYear();
 
     console.log("Financeiro inicializado com cache.");
 
@@ -169,12 +136,16 @@ function initFinanceiro() {
     }
 
     // 🔹 Ligar filtros de data
-document.getElementById("filtroDataInicio")?.addEventListener("change", renderizarTabelaFaturas);
-document.getElementById("filtroDataFim")?.addEventListener("change", renderizarTabelaFaturas);
-
+    document.getElementById("filtroDataInicio")?.addEventListener("change", renderizarTabelaFaturas);
+    document.getElementById("filtroDataFim")?.addEventListener("change", renderizarTabelaFaturas);
 
     carregarFaturas();
 }
+
+
+// ======================================================
+//  NORMALIZAR DATA
+// ======================================================
 
 function normalizarDataParaISO(dataStr) {
     if (!dataStr) return "";
@@ -202,7 +173,9 @@ function normalizarDataParaISO(dataStr) {
 }
 
 
-
+// ======================================================
+//  CARREGAR FATURAS
+// ======================================================
 
 async function carregarFaturas() {
     try {
@@ -214,19 +187,23 @@ async function carregarFaturas() {
         faturasCache = snap.docs.map(d => {
             const f = { id: d.id, ...d.data() };
 
-            // Criar dataISO se não existir
+            // Criar dataISO sempre
             f.dataISO = normalizarDataParaISO(f.data || f.dataDisplay);
 
             return f;
         });
 
         renderizarTabelaFaturas();
-    
+
     } catch (err) {
         console.error("Erro ao carregar faturas:", err);
     }
 }
 
+
+// ======================================================
+//  RENDERIZAR TABELA
+// ======================================================
 
 function renderizarTabelaFaturas() {
     const tbody = document.querySelector("#tabelaCustosIVA tbody");
@@ -243,29 +220,25 @@ function renderizarTabelaFaturas() {
     console.log("Filtro Início:", inicio);
     console.log("Filtro Fim:", fim);
 
-
     let lista = [...faturasCache];
 
     // Aplicar filtros
     lista = lista.filter(f => {
-    if (filtroNIF && !String(f.nif || "").toLowerCase().includes(filtroNIF)) return false;
-    if (filtroEnt && !String(f.fornecedor || "").toLowerCase().includes(filtroEnt)) return false;
-    if (filtroCat && f.categoria !== filtroCat) return false;
+        if (filtroNIF && !String(f.nif || "").toLowerCase().includes(filtroNIF)) return false;
+        if (filtroEnt && !String(f.fornecedor || "").toLowerCase().includes(filtroEnt)) return false;
+        if (filtroCat && f.categoria !== filtroCat) return false;
 
-    // Garantir dataISO válida
-    const dataISO = f.dataISO || normalizarDataParaISO(f.data || f.dataDisplay);
+        // Garantir dataISO válida
+        const dataISO = f.dataISO || normalizarDataParaISO(f.data || f.dataDisplay);
 
-    // Se não houver data válida, não aplicar filtro de datas
-    if (!dataISO) return true;
+        // Se não houver data válida, não aplicar filtro de datas
+        if (!dataISO) return true;
 
-    if (inicio && dataISO < inicio) return false;
-    if (fim && dataISO > fim) return false;
+        if (inicio && dataISO < inicio) return false;
+        if (fim && dataISO > fim) return false;
 
-    return true;
-});
-
-
-
+        return true;
+    });
 
     // Totais
     let totalBruto = 0;
@@ -280,7 +253,7 @@ function renderizarTabelaFaturas() {
         const iva = Number(f.valorIVA || 0);
         const liquido = bruto - iva;
 
-        // IVA gasóleo (regra oficial)
+        // IVA gasóleo
         const ivaGasoleo = (f.categoria === "Combustível") ? iva / 2 : iva;
 
         // Taxa efetiva
@@ -327,8 +300,6 @@ function renderizarTabelaFaturas() {
 
     tbody.appendChild(trTotal);
 }
-
-
 
 // ======================================================
 //  TOTAIS FINANCEIROS — QUALQUER MÊS / TRIMESTRE / ANO
