@@ -173,22 +173,33 @@ async function initFinanceiro() {
 
 
     // 🔹 Ligar botão Adicionar Extra
-    const btnAddExtra = document.getElementById("btnAdicionarExtra");
-    if (btnAddExtra) {
-        btnAddExtra.addEventListener("click", adicionarExtra);
-    }
+const btnAddExtra = document.getElementById("btnAdicionarExtra");
+if (btnAddExtra) {
+    btnAddExtra.addEventListener("click", adicionarExtra);
+}
 
-    document.getElementById("btnApagarSelecionados")
+document.getElementById("btnApagarSelecionados")
     ?.addEventListener("click", apagarSelecionadas);
 
-    document.getElementById("btnNovaFatura")?.addEventListener("click", novaFaturaManual);
-    document.getElementById("btnExportExcelFaturas")?.addEventListener("click", exportarFaturasExcel);
-    document.getElementById("btnExportPDFFaturas")?.addEventListener("click", exportarFaturasPDF);
+// 🔹 Selecionar / desmarcar todas as faturas
+document.getElementById("checkAll")
+    ?.addEventListener("change", function () {
+        const estado = this.checked;
+        document.querySelectorAll(".checkFatura")
+            .forEach(chk => chk.checked = estado);
+    });
 
+document.getElementById("btnNovaFatura")
+    ?.addEventListener("click", novaFaturaManual);
 
+document.getElementById("btnExportExcelFaturas")
+    ?.addEventListener("click", exportarFaturasExcel);
 
+document.getElementById("btnExportPDFFaturas")
+    ?.addEventListener("click", exportarFaturasPDF);
 
-    // 🔹 Ligar filtros de data (Custos & IVA)
+// 🔹 Ligar filtros de data (Custos & IVA)
+
     document.getElementById("filtroDataInicio")?.addEventListener("change", renderizarTabelaFaturas);
     document.getElementById("filtroDataFim")?.addEventListener("change", renderizarTabelaFaturas);
 
