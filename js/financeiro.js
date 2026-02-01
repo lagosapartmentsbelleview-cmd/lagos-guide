@@ -168,6 +168,11 @@ function initFinanceiro() {
         console.warn("Botão Adicionar Extra NÃO encontrado em initFinanceiro.");
     }
 
+    // 🔹 Ligar filtros de data
+document.getElementById("filtroDataInicio")?.addEventListener("change", renderizarTabelaFaturas);
+document.getElementById("filtroDataFim")?.addEventListener("change", renderizarTabelaFaturas);
+
+
     carregarFaturas();
 }
 
