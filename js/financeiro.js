@@ -217,18 +217,26 @@ function renderizarTabelaFaturas() {
     const filtroNIF = document.getElementById("filtroNIF")?.value.trim().toLowerCase() || "";
     const filtroEnt = document.getElementById("filtroEntidade")?.value.trim().toLowerCase() || "";
     const filtroCat = document.getElementById("filtroCategoria")?.value || "";
-    const filtroMesAno = document.getElementById("filtroMesAno")?.value || ""; // yyyy-mm
+    const inicio = document.getElementById("filtroDataInicio")?.value || "";
+    const fim = document.getElementById("filtroDataFim")?.value || "";
 
     let lista = [...faturasCache];
 
     // Aplicar filtros
     lista = lista.filter(f => {
-        if (filtroNIF && !String(f.nif || "").toLowerCase().includes(filtroNIF)) return false;
-        if (filtroEnt && !String(f.fornecedor || "").toLowerCase().includes(filtroEnt)) return false;
-        if (filtroCat && f.categoria !== filtroCat) return false;
-        if (filtroMesAno && f.data?.substring(0,7) !== filtroMesAno) return false;
-        return true;
-    });
+    if (filtroNIF && !String(f.nif || "").toLowerCase().includes(filtroNIF)) return false;
+    if (filtroEnt && !String(f.fornecedor || "").toLowerCase().includes(filtroEnt)) return false;
+    if (filtroCat && f.categoria !== filtroCat) return false;
+
+    // Filtro por intervalo de datas
+    const dataISO = normalizarDataParaISO(f.data || f.dataDisplay);
+
+    if (inicio && dataISO < inicio) return false;
+    if (fim && dataISO > fim) return false;
+
+    return true;
+});
+
 
     // Totais
     let totalBruto = 0;
