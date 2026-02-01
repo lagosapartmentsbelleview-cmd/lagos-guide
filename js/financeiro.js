@@ -345,7 +345,7 @@ function renderizarTabelaFaturas() {
         totalIvaGasoleo += ivaGasoleo;
         totalLiquido += liquido;
 
-        ttr.innerHTML = `
+        tr.innerHTML = `
     <td><input type="checkbox" class="checkFatura" value="${f.id}"></td>
 
     <td class="editavel" data-campo="dataISO">${f.dataDisplay || f.data || ""}</td>
