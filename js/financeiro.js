@@ -343,7 +343,6 @@ function cancelarEdicao(id, botao) {
 function novaFaturaManual() {
     const tbody = document.querySelector("#tabelaCustosIVA tbody");
 
-    // Criar linha vazia
     const tr = document.createElement("tr");
     tr.classList.add("editando");
 
@@ -372,6 +371,7 @@ function novaFaturaManual() {
 
     tbody.prepend(tr);
 }
+
 
 async function guardarNovaFatura(botao) {
     const tr = botao.closest("tr");
