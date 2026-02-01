@@ -181,7 +181,7 @@ function normalizarDataParaISO(dataStr) {
 
     dataStr = String(dataStr).trim();
 
-    // Já está no formato YYYY-MM-DD (mesmo que mês/dia sejam 1 dígito)
+    // Formato YYYY-M-D ou YYYY-MM-DD
     if (/^\d{4}[-/]\d{1,2}[-/]\d{1,2}$/.test(dataStr)) {
         const partes = dataStr.split(/[-/]/).map(Number);
         const ano = partes[0];
@@ -190,7 +190,7 @@ function normalizarDataParaISO(dataStr) {
         return `${ano}-${mes}-${dia}`;
     }
 
-    // Formato DD/MM/YYYY
+    // Formato D/M/YYYY ou DD/MM/YYYY
     if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dataStr)) {
         const [d, m, a] = dataStr.split("/").map(Number);
         const dia = String(d).padStart(2, "0");
@@ -200,6 +200,7 @@ function normalizarDataParaISO(dataStr) {
 
     return "";
 }
+
 
 
 
@@ -251,14 +252,18 @@ function renderizarTabelaFaturas() {
     if (filtroEnt && !String(f.fornecedor || "").toLowerCase().includes(filtroEnt)) return false;
     if (filtroCat && f.categoria !== filtroCat) return false;
 
-    // Filtro por intervalo de datas usando dataISO
-    const dataISO = f.dataISO;
+    // Garantir dataISO válida
+    const dataISO = f.dataISO || normalizarDataParaISO(f.data || f.dataDisplay);
+
+    // Se não houver data válida, não aplicar filtro de datas
+    if (!dataISO) return true;
 
     if (inicio && dataISO < inicio) return false;
     if (fim && dataISO > fim) return false;
 
     return true;
 });
+
 
 
 
