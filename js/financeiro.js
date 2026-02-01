@@ -364,8 +364,8 @@ function novaFaturaManual() {
         <td class="editavel" data-campo="atcud"><input type="text"></td>
 
         <td>
-            <button class="btn-add" onclick="guardarNovaFatura(this)">Guardar</button>
-            <button class="btn-danger" onclick="cancelarNovaFatura(this)">Cancelar</button>
+            <button class="btn-add" onclick="event.stopPropagation(); guardarNovaFatura(this)">Guardar</button>
+            <button class="btn-danger" onclick="event.stopPropagation(); cancelarNovaFatura(this)">Cancelar</button>
         </td>
     `;
 
