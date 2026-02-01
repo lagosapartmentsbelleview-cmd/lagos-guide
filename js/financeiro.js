@@ -306,6 +306,19 @@ async function guardarEdicao(id, botao) {
     carregarFaturas();
 }
 
+function cancelarEdicao(id, botao) {
+    const tr = botao.closest("tr");
+
+    // Recuperar valores originais guardados no entrarModoEdicao()
+    const original = JSON.parse(tr.dataset.original);
+
+    // Sair do modo edição
+    tr.classList.remove("editando");
+
+    // Re-renderizar tabela inteira para restaurar a linha
+    renderizarTabelaFaturas();
+}
+
 
 // ======================================================
 //  RENDERIZAR TABELA
