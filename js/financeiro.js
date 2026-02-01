@@ -182,6 +182,12 @@ async function initFinanceiro() {
     ?.addEventListener("click", apagarSelecionadas);
 
     document.getElementById("btnNovaFatura")?.addEventListener("click", novaFaturaManual);
+    document.getElementById("btnExportExcel")
+    ?.addEventListener("click", exportarFaturasExcel);
+
+    document.getElementById("btnExportPDF")
+    ?.addEventListener("click", exportarFaturasPDF);
+
 
 
     // 🔹 Ligar filtros de data (Custos & IVA)
@@ -491,6 +497,59 @@ async function apagarSelecionadas() {
     }
 }
 
+function exportarFaturasExcel() {
+    if (!faturasFiltradas.length) {
+        alert("Não há faturas para exportar.");
+        return;
+    }
+
+    const dados = faturasFiltradas.map(f => ({
+        Data: f.dataISO || "",
+        Fornecedor: f.fornecedor || "",
+        NIF: f.nif || "",
+        Categoria: f.categoria || "",
+        ValorBruto: Number(f.valorBruto || 0),
+        ValorIVA: Number(f.valorIVA || 0),
+        NumeroFatura: f.numeroFatura || "",
+        ATCUD: f.atcud || ""
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(dados);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Faturas");
+
+    XLSX.writeFile(wb, "faturas_filtradas.xlsx");
+}
+
+function exportarFaturasPDF() {
+    if (!faturasFiltradas.length) {
+        alert("Não há faturas para exportar.");
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const dados = faturasFiltradas.map(f => [
+        f.dataISO || "",
+        f.fornecedor || "",
+        f.nif || "",
+        f.categoria || "",
+        Number(f.valorBruto || 0).toFixed(2),
+        Number(f.valorIVA || 0).toFixed(2),
+        f.numeroFatura || "",
+        f.atcud || ""
+    ]);
+
+    doc.autoTable({
+        head: [["Data", "Fornecedor", "NIF", "Categoria", "Bruto", "IVA", "Nº Fatura", "ATCUD"]],
+        body: dados,
+        theme: "grid",
+        styles: { fontSize: 8 }
+    });
+
+    doc.save("faturas_filtradas.pdf");
+}
 
 
 // ======================================================
