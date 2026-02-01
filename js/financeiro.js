@@ -930,17 +930,18 @@ function adicionarLinhaCustosIVA(f) {
     const tr = document.createElement("tr");
 
     tr.innerHTML = `
-        <td>${f.data}</td>
+        <td>${f.dataDisplay || f.data}</td>
         <td>${f.fornecedor}</td>
         <td>${f.categoria}</td>
-        <td>${f.valor.toFixed(2)} €</td>
-        <td>${f.iva.toFixed(2)} €</td>
-        <td>${f.numero}</td>
-        <td>${f.atcud}</td>
+        <td>${f.valorBruto.toFixed(2)} €</td>
+        <td>${f.valorIVA.toFixed(2)} €</td>
+        <td>${f.numeroFatura || ""}</td>
+        <td>${f.atcud || ""}</td>
     `;
 
     tbody.appendChild(tr);
 }
+
 
 async function guardarFaturaFirestore(f) {
     await firebase.firestore()
