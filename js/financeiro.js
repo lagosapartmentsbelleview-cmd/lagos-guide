@@ -123,6 +123,32 @@ function initFinanceiro() {
 
     console.log("Financeiro inicializado com cache.");
 
+    // Seletores da aba Limpeza
+    const selectMes = document.getElementById("selectMes");
+    const selectAno = document.getElementById("selectAno");
+
+    // Esperar até os selects existirem no DOM
+    if (!selectMes || !selectAno) {
+        return setTimeout(initFinanceiro, 30);
+    }
+
+    // Preencher ANOS dinamicamente (2020–2050)
+    for (let ano = 2020; ano <= 2050; ano++) {
+        const opt = document.createElement("option");
+        opt.value = ano;
+        opt.textContent = ano;
+        selectAno.appendChild(opt);
+    }
+
+    // Selecionar mês/ano atual
+    const hoje = new Date();
+    selectMes.value = hoje.getMonth() + 1;
+    selectAno.value = hoje.getFullYear();
+
+    // Listeners para atualizar a aba Limpeza
+    selectMes.addEventListener("change", atualizarUI);
+    selectAno.addEventListener("change", atualizarUI);
+
     // 🔹 Carregar dados iniciais
     sincronizarFirebase();
 
@@ -130,18 +156,18 @@ function initFinanceiro() {
     const btnAddExtra = document.getElementById("btnAdicionarExtra");
     if (btnAddExtra) {
         btnAddExtra.addEventListener("click", adicionarExtra);
-        console.log("Botão Adicionar Extra ligado em initFinanceiro.");
-    } else {
-        console.warn("Botão Adicionar Extra NÃO encontrado em initFinanceiro.");
     }
 
-    // 🔹 Ligar filtros de data
+    // 🔹 Ligar filtros de data (Custos & IVA)
     document.getElementById("filtroDataInicio")?.addEventListener("change", renderizarTabelaFaturas);
     document.getElementById("filtroDataFim")?.addEventListener("change", renderizarTabelaFaturas);
 
+    // 🔹 Carregar faturas (Custos & IVA)
     carregarFaturas();
-}
 
+    // 🔹 Atualizar UI da aba Limpeza
+    atualizarUI();
+}
 
 // ======================================================
 //  NORMALIZAR DATA
