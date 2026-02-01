@@ -179,6 +179,9 @@ function initFinanceiro() {
     document.getElementById("filtroDataInicio")?.addEventListener("change", renderizarTabelaFaturas);
     document.getElementById("filtroDataFim")?.addEventListener("change", renderizarTabelaFaturas);
 
+    document.getElementById("btnNovaFatura")?.addEventListener("click", novaFaturaManual);
+
+
     // 🔹 Carregar faturas (Custos & IVA)
     carregarFaturas();
 
@@ -334,6 +337,68 @@ function cancelarEdicao(id, botao) {
 
     // Re-renderizar tabela inteira para restaurar a linha
     renderizarTabelaFaturas();
+}
+
+function novaFaturaManual() {
+    const tbody = document.querySelector("#tabelaCustosIVA tbody");
+
+    // Criar linha vazia
+    const tr = document.createElement("tr");
+    tr.classList.add("editando");
+
+    tr.innerHTML = `
+        <td></td>
+
+        <td class="editavel" data-campo="dataISO"><input type="date"></td>
+        <td class="editavel" data-campo="fornecedor">${gerarSelectEntidades("")}</td>
+        <td class="editavel" data-campo="nif"><input type="text"></td>
+        <td class="editavel" data-campo="categoria">${gerarSelectCategorias("")}</td>
+
+        <td class="editavel" data-campo="valorBruto"><input type="text"></td>
+        <td class="editavel" data-campo="valorIVA"><input type="text"></td>
+
+        <td>0.00</td>
+        <td>0.00</td>
+
+        <td class="editavel" data-campo="numeroFatura"><input type="text"></td>
+        <td class="editavel" data-campo="atcud"><input type="text"></td>
+
+        <td>
+            <button class="btn-add" onclick="guardarNovaFatura(this)">Guardar</button>
+            <button class="btn-danger" onclick="cancelarNovaFatura(this)">Cancelar</button>
+        </td>
+    `;
+
+    tbody.prepend(tr);
+}
+
+async function guardarNovaFatura(botao) {
+    const tr = botao.closest("tr");
+
+    const dados = {};
+    tr.querySelectorAll("td.editavel").forEach(td => {
+        const campo = td.dataset.campo;
+        const input = td.querySelector("input, select");
+        if (!input) return;
+
+        let valor = input.value;
+
+        if (campo === "valorBruto" || campo === "valorIVA") {
+            valor = Number(valor);
+        }
+
+        dados[campo] = valor;
+    });
+
+    // Criar documento no Firebase
+    await firebase.firestore().collection("faturas").add(dados);
+
+    carregarFaturas();
+}
+
+function cancelarNovaFatura(botao) {
+    const tr = botao.closest("tr");
+    tr.remove();
 }
 
 
