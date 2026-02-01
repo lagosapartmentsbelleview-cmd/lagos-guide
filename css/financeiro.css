@@ -163,37 +163,6 @@
     gap: 10px;
 }
 
-#tabelaDetalheMes {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-    font-size: 14px;
-}
-
-#tabelaDetalheMes thead {
-    background: #f0f0f0;
-    border-bottom: 2px solid #ccc;
-}
-
-#tabelaDetalheMes th {
-    padding: 10px;
-    text-align: left;
-    font-weight: 600;
-    color: #333;
-}
-
-#tabelaDetalheMes td {
-    padding: 8px 10px;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-#tabelaDetalheMes tr:hover {
-    background: #fafafa;
-}
-
-#tabelaDetalheMes tr:nth-child(even) {
-    background: #fcfcfc;
-}
 
 .totais-financeiros {
     display: flex;
@@ -223,3 +192,36 @@
 .total-box small {
     color: #555;
 }
+
+#tabelaDetalheMes,
+#tabelaCustosIVA {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+#tabelaDetalheMes th,
+#tabelaCustosIVA th {
+    background: #e8f1ff;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #c5d9ff;
+}
+
+#tabelaDetalheMes td,
+#tabelaCustosIVA td {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#tabelaDetalheMes tr:nth-child(even),
+#tabelaCustosIVA tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+#tabelaDetalheMes tr:hover,
+#tabelaCustosIVA tr:hover {
+    background: #eef5ff;
+}
+
