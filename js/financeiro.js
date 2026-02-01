@@ -130,7 +130,8 @@ async function carregarCategoriasCache() {
 //  INICIALIZADOR
 // ======================================================
 
-function initFinanceiro() {
+async function initFinanceiro() {
+
     carregarCache();
     iniciarSyncAutomatica();
 
