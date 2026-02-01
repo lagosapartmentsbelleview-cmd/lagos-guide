@@ -174,19 +174,28 @@ function initFinanceiro() {
 function normalizarDataParaISO(dataStr) {
     if (!dataStr) return "";
 
-    // Caso já esteja no formato YYYY-MM-DD
-    if (/^\d{4}-\d{2}-\d{2}$/.test(dataStr)) {
-        return dataStr;
+    dataStr = String(dataStr).trim();
+
+    // Já está no formato YYYY-MM-DD (mesmo que mês/dia sejam 1 dígito)
+    if (/^\d{4}[-/]\d{1,2}[-/]\d{1,2}$/.test(dataStr)) {
+        const partes = dataStr.split(/[-/]/).map(Number);
+        const ano = partes[0];
+        const mes = String(partes[1]).padStart(2, "0");
+        const dia = String(partes[2]).padStart(2, "0");
+        return `${ano}-${mes}-${dia}`;
     }
 
-    // Caso esteja no formato DD/MM/YYYY
-    if (/^\d{2}\/\d{2}\/\d{4}$/.test(dataStr)) {
-        const [dia, mes, ano] = dataStr.split("/");
-        return `${ano}-${mes}-${dia}`;
+    // Formato DD/MM/YYYY
+    if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dataStr)) {
+        const [d, m, a] = dataStr.split("/").map(Number);
+        const dia = String(d).padStart(2, "0");
+        const mes = String(m).padStart(2, "0");
+        return `${a}-${mes}-${dia}`;
     }
 
     return "";
 }
+
 
 
 async function carregarFaturas() {
