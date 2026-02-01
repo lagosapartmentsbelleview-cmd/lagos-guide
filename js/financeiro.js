@@ -182,11 +182,9 @@ async function initFinanceiro() {
     ?.addEventListener("click", apagarSelecionadas);
 
     document.getElementById("btnNovaFatura")?.addEventListener("click", novaFaturaManual);
-    document.getElementById("btnExportExcel")
-    ?.addEventListener("click", exportarFaturasExcel);
+    document.getElementById("btnExportExcelFaturas")?.addEventListener("click", exportarFaturasExcel);
+    document.getElementById("btnExportPDFFaturas")?.addEventListener("click", exportarFaturasPDF);
 
-    document.getElementById("btnExportPDF")
-    ?.addEventListener("click", exportarFaturasPDF);
 
 
 
