@@ -193,7 +193,7 @@ async function carregarFaturas() {
     try {
         const snap = await firebase.firestore()
             .collection("faturas")
-            .orderBy("data")
+            .orderBy("dataISO")
             .get();
 
         faturasCache = snap.docs.map(d => ({
