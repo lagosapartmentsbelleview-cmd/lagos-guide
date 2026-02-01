@@ -216,8 +216,8 @@ function renderizarTabelaFaturas() {
     const liquido = bruto - iva;
     const taxa = liquido > 0 ? Math.round((iva / liquido) * 100) : 0;
 
-    // Mostrar taxa efetiva apenas se for 6, 13 ou 23
-    const taxaEfetiva = [6, 13, 23].includes(taxa) ? taxa + "%" : "—";
+    // Taxa efetiva: só mostra 6%, 13% ou 23. Caso contrário: "Misto"
+    const taxaEfetiva = [6, 13, 23].includes(taxa) ? taxa + "%" : "Misto";
 
     tr.innerHTML = `
         <td>${f.dataDisplay || f.data || ""}</td>
@@ -233,6 +233,7 @@ function renderizarTabelaFaturas() {
     `;
     tbody.appendChild(tr);
 });
+
 } 
 
 
