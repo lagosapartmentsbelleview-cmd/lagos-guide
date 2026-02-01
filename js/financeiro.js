@@ -234,6 +234,10 @@ function renderizarTabelaFaturas() {
     const inicio = document.getElementById("filtroDataInicio")?.value || "";
     const fim = document.getElementById("filtroDataFim")?.value || "";
 
+    console.log("Filtro Início:", inicio);
+    console.log("Filtro Fim:", fim);
+
+
     let lista = [...faturasCache];
 
     // Aplicar filtros
