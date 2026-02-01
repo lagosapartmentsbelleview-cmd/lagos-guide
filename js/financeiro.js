@@ -636,7 +636,7 @@ function renderizarTabelaFaturas() {
 
     <td>
         <button class="btn-edit" onclick="entrarModoEdicao('${f.id}', this)">✏️</button>
-        <button class="btn-danger" onclick="apagarFatura('${f.id}')">🗑️</button>
+        <button class="btn btn-red" onclick="apagarFatura('${f.id}')">🗑️</button>
     </td>
 `;
 
