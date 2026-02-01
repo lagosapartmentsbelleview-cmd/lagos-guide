@@ -25,6 +25,7 @@
         </div>
     </div>
 
+    <!-- CONTAINER PRINCIPAL -->
     <div class="content">
 
         <h1>Financeiro</h1>
@@ -41,9 +42,9 @@
             <button class="tab" data-tab="outros">Outros</button>
         </div>
 
-        <!-- ========================= -->
+        <!-- ========================================================= -->
         <!-- ABA LIMPEZA -->
-        <!-- ========================= -->
+        <!-- ========================================================= -->
         <div class="tab-content active" id="tab-limpeza">
 
             <h2>Custos de Limpeza</h2>
@@ -67,9 +68,7 @@
                 </select>
 
                 <label>Ano:</label>
-                <select id="selectAno">
-                    <!-- preenchido pelo JS -->
-                </select>
+                <select id="selectAno"></select>
             </div>
 
             <!-- Previsão -->
@@ -149,11 +148,11 @@
                 </table>
             </div>
 
-        </div> <!-- fecha tab-limpeza -->
+        </div> <!-- FIM ABA LIMPEZA -->
 
-        <!-- ========================= -->
+        <!-- ========================================================= -->
         <!-- ABA CUSTOS & IVA -->
-        <!-- ========================= -->
+        <!-- ========================================================= -->
         <div class="tab-content" id="tab-custos-iva">
 
             <h2>Custos & IVA (QR Code)</h2>
@@ -271,7 +270,7 @@
             </div>
         </div>
 
-        <!-- OUTRAS ABAS VAZIAS -->
+        <!-- OUTRAS ABAS -->
         <div class="tab-content" id="tab-condominio"></div>
         <div class="tab-content" id="tab-agua"></div>
         <div class="tab-content" id="tab-luz"></div>
@@ -279,7 +278,7 @@
         <div class="tab-content" id="tab-equipamentos"></div>
         <div class="tab-content" id="tab-outros"></div>
 
-    </div> <!-- fecha .content -->
+    </div> <!-- FIM DO CONTENT -->
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/html5-qrcode"></script>
