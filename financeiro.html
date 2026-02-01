@@ -138,33 +138,31 @@
 </div>
 
 
-            <!-- Extras -->
-            <div class="card">
-                <h3>Custos Extra</h3>
+           <!-- Extras -->
+<div class="card">
+    <h3>Custos Extra</h3>
 
-            
+    <div class="extra-form">
+        <input type="date" id="extraData">
+        <input type="number" id="extraValor" placeholder="Valor (€)">
+        <input type="text" id="extraDescricao" placeholder="Descrição">
+        <button id="btnAdicionarExtra">Adicionar</button>
+    </div>
 
-                <div class="extra-form">
-                    <input type="date" id="extraData">
-                    <input type="number" id="extraValor" placeholder="Valor (€)">
-                    <input type="text" id="extraDescricao" placeholder="Descrição">
-                    <button id="btnAdicionarExtra">Adicionar</button>
-                </div>
+    <table id="tabelaExtras">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Valor (€)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-                <table id="tabelaExtras">
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Descrição</th>
-                            <th>Valor (€)</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <div class="card">
+<div class="card">
     <h3>Totais Anuais</h3>
 
     <table id="tabelaTotaisAno">
@@ -180,6 +178,7 @@
         <tbody></tbody>
     </table>
 </div>
+
 </div> <!-- fecha tab-limpeza -->
 
 </div> <!-- fecha o .content principal -->
@@ -191,21 +190,19 @@
     <h2>Custos & IVA (QR Code)</h2>
 
     <div class="acoes-financeiro">
-    <button class="btn-add" onclick="irParaEntidades()">Gerir Entidades</button>
-    <button class="btn-add" onclick="irParaCategorias()">Gerir Categorias</button>
+        <button class="btn-add" onclick="irParaEntidades()">Gerir Entidades</button>
+        <button class="btn-add" onclick="irParaCategorias()">Gerir Categorias</button>
     </div>
-
 
     <div class="card">
         <h3>Importar Fatura via QR Code</h3>
-
         <button id="btnScanQR">📷 Ler QR da Fatura</button>
-
         <div id="qr-reader" style="width:300px; margin-top:15px;"></div>
     </div>
 
     <div class="card">
         <h3>Faturas Importadas</h3>
+
 
         <!-- AQUI: filtros --> 
         <div class="filtros-custos">
