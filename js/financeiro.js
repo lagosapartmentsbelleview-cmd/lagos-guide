@@ -226,6 +226,59 @@ async function carregarFaturas() {
     }
 }
 
+function entrarModoEdicao(id, botao) {
+    const tr = botao.closest("tr");
+    const f = faturasCache.find(x => x.id === id);
+
+    if (!f) return;
+
+    // Marcar linha como editando
+    tr.classList.add("editando");
+
+    // Guardar valores originais para cancelar
+    tr.dataset.original = JSON.stringify(f);
+
+    // Transformar células editáveis em inputs/selects
+    tr.querySelectorAll(".editavel").forEach(td => {
+        const campo = td.dataset.campo;
+        const valor = f[campo] || "";
+
+        if (campo === "categoria") {
+            td.innerHTML = gerarSelectCategorias(valor);
+        } else if (campo === "fornecedor") {
+            td.innerHTML = gerarSelectEntidades(valor);
+        } else if (campo === "dataISO") {
+            td.innerHTML = `<input type="date" value="${valor}">`;
+        } else {
+            td.innerHTML = `<input type="text" value="${valor}">`;
+        }
+    });
+
+    // Substituir botões por Guardar/Cancelar
+    tr.querySelector("td:last-child").innerHTML = `
+        <button class="btn-add" onclick="guardarEdicao('${id}', this)">Guardar</button>
+        <button class="btn-danger" onclick="cancelarEdicao('${id}', this)">Cancelar</button>
+    `;
+}
+
+function gerarSelectEntidades(valorAtual) {
+    let html = `<select>`;
+    entidadesCache.forEach(e => {
+        html += `<option value="${e.nome}" ${e.nome === valorAtual ? "selected" : ""}>${e.nome}</option>`;
+    });
+    html += `</select>`;
+    return html;
+}
+
+function gerarSelectCategorias(valorAtual) {
+    let html = `<select>`;
+    categoriasCache.forEach(c => {
+        html += `<option value="${c.nome}" ${c.nome === valorAtual ? "selected" : ""}>${c.nome}</option>`;
+    });
+    html += `</select>`;
+    return html;
+}
+
 
 // ======================================================
 //  RENDERIZAR TABELA
