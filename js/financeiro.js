@@ -21,6 +21,7 @@ let categoriasCache = [];
 let faturasCache = [];
 
 
+
 // Guardar no localStorage
 function guardarCache() {
     localStorage.setItem("reservasCache", JSON.stringify(reservasCache));
@@ -112,6 +113,18 @@ if (btn) {
     console.warn("Botão Sincronizar não encontrado.");
 }
 
+async function carregarEntidadesCache() {
+    entidadesCache = [];
+    const snap = await firebase.firestore().collection("entidades").get();
+    snap.forEach(doc => entidadesCache.push(doc.data()));
+}
+
+async function carregarCategoriasCache() {
+    categoriasCache = [];
+    const snap = await firebase.firestore().collection("categorias").get();
+    snap.forEach(doc => categoriasCache.push(doc.data()));
+}
+
 
 // ======================================================
 //  INICIALIZADOR
@@ -151,6 +164,10 @@ function initFinanceiro() {
 
     // 🔹 Carregar dados iniciais
     sincronizarFirebase();
+
+    await carregarEntidadesCache();
+    await carregarCategoriasCache();
+
 
     // 🔹 Ligar botão Adicionar Extra
     const btnAddExtra = document.getElementById("btnAdicionarExtra");
