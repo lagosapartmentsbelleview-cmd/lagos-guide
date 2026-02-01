@@ -208,20 +208,29 @@ function renderizarTabelaFaturas() {
         return true;
     });
 
-    lista.forEach(f => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${f.dataDisplay || f.data || ""}</td>
-            <td>${f.fornecedor || ""}</td>
-            <td>${f.categoria || ""}</td>
-            <td>${(f.valorBruto || 0).toFixed(2)} €</td>
-            <td>${(f.valorIVA || 0).toFixed(2)} €</td>
-            <td>${f.numeroFatura || ""}</td>
-            <td>${f.atcud || ""}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
+   lista.forEach(f => {
+    const tr = document.createElement("tr");
+
+    const bruto = Number(f.valorBruto || 0);
+    const iva = Number(f.valorIVA || 0);
+    const liquido = bruto - iva;
+    const taxa = liquido > 0 ? Math.round((iva / liquido) * 100) : 0;
+
+    tr.innerHTML = `
+        <td>${f.dataDisplay || f.data || ""}</td>
+        <td>${f.fornecedor || ""}</td>
+        <td>${f.nif || ""}</td>
+        <td>${f.categoria || ""}</td>
+        <td>${bruto.toFixed(2)} €</td>
+        <td>${iva.toFixed(2)} €</td>
+        <td>${liquido.toFixed(2)} €</td>
+        <td>${taxa}%</td>
+        <td>${f.numeroFatura || ""}</td>
+        <td>${f.atcud || ""}</td>
+    `;
+    tbody.appendChild(tr);
+});
+
 
 
 
