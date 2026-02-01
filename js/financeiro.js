@@ -176,6 +176,12 @@ async function initFinanceiro() {
         btnAddExtra.addEventListener("click", adicionarExtra);
     }
 
+    document.getElementById("btnApagarSelecionados")
+    ?.addEventListener("click", apagarSelecionadas);
+
+    document.getElementById("btnNovaFatura")?.addEventListener("click", novaFaturaManual);
+
+
     // 🔹 Ligar filtros de data (Custos & IVA)
     document.getElementById("filtroDataInicio")?.addEventListener("change", renderizarTabelaFaturas);
     document.getElementById("filtroDataFim")?.addEventListener("change", renderizarTabelaFaturas);
