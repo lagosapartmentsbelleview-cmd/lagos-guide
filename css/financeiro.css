@@ -225,3 +225,45 @@
     background: #eef5ff;
 }
 
+.filtros-financeiro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: #f5f8ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #dce6f7;
+}
+
+.filtro-grupo {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+}
+
+.filtro-grupo label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2a3f5f;
+    margin-bottom: 4px;
+}
+
+.filtro-grupo input,
+.filtro-grupo select {
+    padding: 8px 10px;
+    border: 1px solid #c7d4eb;
+    border-radius: 6px;
+    background: white;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.filtro-grupo input:focus,
+.filtro-grupo select:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74,144,226,0.2);
+    outline: none;
+}
+
+
