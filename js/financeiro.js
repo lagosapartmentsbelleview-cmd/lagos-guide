@@ -1065,37 +1065,60 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* -------------------------
-       📷 QR Code
-    -------------------------- */
-    setTimeout(() => {
-        const btnScanQR = document.getElementById("btnScanQR");
+   /* -------------------------
+   📷 QR Code
+-------------------------- */
+let qrReader = null;
 
-        if (!btnScanQR) {
-            console.warn("Botão QR ainda não existe, tentando de novo...");
+setTimeout(() => {
+    const btnScanQR = document.getElementById("btnScanQR");
+    const btnStopQR = document.getElementById("btnStopQR");
+
+    if (!btnScanQR) {
+        console.warn("Botão QR ainda não existe, tentando de novo...");
+        return;
+    }
+
+    // 👉 Iniciar scanner
+    btnScanQR.addEventListener("click", () => {
+
+        // Se já estiver ativo, não criar outro
+        if (qrReader) {
+            console.log("Scanner já está ativo.");
             return;
         }
 
-        btnScanQR.addEventListener("click", () => {
-    const qrReader = new Html5Qrcode("qr-reader");
+        qrReader = new Html5Qrcode("qr-reader");
 
-    qrReader.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        async qrCodeMessage => {
+        qrReader.start(
+            { facingMode: "environment" },
+            { fps: 10, qrbox: 250 },
+            async qrCodeMessage => {
 
-            console.log("QR Code lido:", qrCodeMessage);
+                console.log("QR Code lido:", qrCodeMessage);
 
-            // Mantém a câmara aberta
-            await interpretarFatura(qrCodeMessage);
+                // Mantém a câmara aberta
+                await interpretarFatura(qrCodeMessage);
 
-        },
-        errorMessage => {}
-    );
-});
+            },
+            errorMessage => {
+                // erros ignorados
+            }
+        );
+    });
 
+    // 👉 Parar scanner manualmente
+    btnStopQR.addEventListener("click", () => {
+        if (qrReader) {
+            qrReader.stop().then(() => {
+                document.getElementById("qr-reader").innerHTML = "";
+                qrReader = null;
+                console.log("Câmara desligada.");
+            });
+        }
+    });
 
-        console.log("Botão QR ligado com sucesso!");
-    }, 300);
+    console.log("Botões QR ligados com sucesso!");
+}, 300);
 
 });
