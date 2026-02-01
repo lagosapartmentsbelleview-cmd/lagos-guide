@@ -532,6 +532,8 @@ function renderizarTabelaFaturas() {
         return true;
     });
 
+    faturasFiltradas = lista;
+
     // Totais
     let totalBruto = 0;
     let totalIVA = 0;
