@@ -193,13 +193,17 @@ async function carregarFaturas() {
     try {
         const snap = await firebase.firestore()
             .collection("faturas")
-            .orderBy("dataISO")
+            .orderBy("dataISO")   // ← vamos ordenar pelo campo correto
             .get();
 
-        faturasCache = snap.docs.map(d => ({
-            id: d.id,
-            ...d.data()
-        }));
+        faturasCache = snap.docs.map(d => {
+            const f = { id: d.id, ...d.data() };
+
+            // Criar dataISO se não existir
+            f.dataISO = normalizarDataParaISO(f.data || f.dataDisplay);
+
+            return f;
+        });
 
         renderizarTabelaFaturas();
     
@@ -207,6 +211,7 @@ async function carregarFaturas() {
         console.error("Erro ao carregar faturas:", err);
     }
 }
+
 
 function renderizarTabelaFaturas() {
     const tbody = document.querySelector("#tabelaCustosIVA tbody");
