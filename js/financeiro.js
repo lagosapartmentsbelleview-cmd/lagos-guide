@@ -214,7 +214,7 @@ function renderizarTabelaFaturas() {
     const bruto = Number(f.valorBruto || 0);
     const iva = Number(f.valorIVA || 0);
     const liquido = bruto - iva;
-    const taxa = bruto > 0 ? Math.round((iva / bruto) * 100) : 0;
+    const taxa = liquido > 0 ? Math.round((iva / liquido) * 100) : 0;
 
     tr.innerHTML = `
         <td>${f.dataDisplay || f.data || ""}</td>
