@@ -391,6 +391,9 @@ async function guardarNovaFatura(botao) {
         dados[campo] = valor;
     });
 
+    console.log("DADOS A ENVIAR:", dados);
+
+
     // Criar documento no Firebase
     await firebase.firestore().collection("faturas").add(dados);
 
