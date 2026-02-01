@@ -868,7 +868,7 @@ async function interpretarFatura(texto) {
     let fornecedor = entidade ? entidade.nome : "Fornecedor Desconhecido";
     let categoria = entidade ? entidade.categoria : "Outros";
 
-    // Se não existir, abrir modal para criar
+    // Se não existir, abrir modal para criar entidade
     if (!entidade && typeof abrirModalAdicionar === "function") {
         abrirModalAdicionar(nif);
     }
@@ -902,7 +902,19 @@ async function interpretarFatura(texto) {
         criadoEm: firebase.firestore.FieldValue.serverTimestamp()
     };
 
-    // Guardar no Firestore (coleção própria)
+    // 🔹 VERIFICAR DUPLICADO ANTES DE GUARDAR
+    const duplicada = faturasCache.some(f =>
+        f.nif === entrada.nif &&
+        f.numeroFatura === entrada.numeroFatura &&
+        f.data === entrada.data
+    );
+
+    if (duplicada) {
+        alert("⚠️ Esta fatura já foi carregada anteriormente.");
+        return;
+    }
+
+    // Guardar no Firestore
     await guardarFaturaFirestore(entrada);
 
     // Atualizar cache local
@@ -910,34 +922,6 @@ async function interpretarFatura(texto) {
 
     // Atualizar tabela e totais
     renderizarTabelaFaturas();
-    
-}
-
-
-document.querySelectorAll(".tab").forEach(botao => {
-    botao.addEventListener("click", () => {
-        const alvo = botao.dataset.tab;
-
-        document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
-        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-
-        botao.classList.add("active");
-
-        const conteudo = document.getElementById("tab-" + alvo);
-        if (conteudo) conteudo.classList.add("active");
-    });
-});
-
-// Verificar duplicado
-const duplicada = faturasCache.some(f =>
-    f.nif === entrada.nif &&
-    f.numeroFatura === entrada.numeroFatura &&
-    f.data === entrada.data
-);
-
-if (duplicada) {
-    alert("⚠️ Esta fatura já foi carregada anteriormente.");
-    return;
 }
 
 
