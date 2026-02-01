@@ -233,14 +233,15 @@ function renderizarTabelaFaturas() {
     if (filtroEnt && !String(f.fornecedor || "").toLowerCase().includes(filtroEnt)) return false;
     if (filtroCat && f.categoria !== filtroCat) return false;
 
-    // Filtro por intervalo de datas
-    const dataISO = normalizarDataParaISO(f.data || f.dataDisplay);
+    // Filtro por intervalo de datas usando dataISO
+    const dataISO = f.dataISO;
 
     if (inicio && dataISO < inicio) return false;
     if (fim && dataISO > fim) return false;
 
     return true;
 });
+
 
 
     // Totais
