@@ -187,11 +187,17 @@
                 <button class="btn-add" onclick="irParaCategorias()">Gerir Categorias</button>
             </div>
 
-            <div class="card">
-                <h3>Importar Fatura via QR Code</h3>
-                <button id="btnScanQR">📷 Ler QR da Fatura</button>
-                <div id="qr-reader" style="width:300px; margin-top:15px;"></div>
-            </div>
+           <div class="card">
+    <h3>Importar Fatura via QR Code</h3>
+
+    <div class="acoes-financeiro">
+        <button id="btnScanQR">📷 Ler QR da Fatura</button>
+        <button id="btnStopQR" style="background:#c62828; color:white;">⛔ Parar Câmara</button>
+    </div>
+
+    <div id="qr-reader" style="width:300px; margin-top:15px;"></div>
+</div>
+
 
             <div class="card">
                 <h3>Faturas Importadas</h3>
