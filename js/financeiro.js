@@ -441,6 +441,49 @@ function cancelarNovaFatura(botao) {
     tr.remove();
 }
 
+async function apagarFatura(id) {
+    if (!confirm("Tem a certeza que deseja apagar esta fatura?")) return;
+
+    try {
+        await firebase.firestore().collection("faturas").doc(id).delete();
+        console.log("Fatura apagada:", id);
+        carregarFaturas();
+    } catch (err) {
+        console.error("Erro ao apagar fatura:", err);
+        alert("Erro ao apagar fatura.");
+    }
+}
+
+async function apagarSelecionadas() {
+    const checks = document.querySelectorAll(".checkFatura:checked");
+
+    if (!checks.length) {
+        alert("Nenhuma fatura selecionada.");
+        return;
+    }
+
+    if (!confirm(`Apagar ${checks.length} fatura(s) selecionada(s)?`)) return;
+
+    const batch = firebase.firestore().batch();
+    const colRef = firebase.firestore().collection("faturas");
+
+    checks.forEach(chk => {
+        const id = chk.value;
+        const docRef = colRef.doc(id);
+        batch.delete(docRef);
+    });
+
+    try {
+        await batch.commit();
+        console.log("Faturas apagadas:", checks.length);
+        carregarFaturas();
+    } catch (err) {
+        console.error("Erro ao apagar selecionadas:", err);
+        alert("Erro ao apagar faturas selecionadas.");
+    }
+}
+
+
 
 // ======================================================
 //  RENDERIZAR TABELA
