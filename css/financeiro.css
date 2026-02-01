@@ -307,3 +307,24 @@
     background: #125a9c;
 }
 
+/* Células editáveis */
+#tabelaCustosIVA td.editavel {
+    cursor: pointer;
+    background: #fafafa;
+}
+
+/* Linha em modo edição */
+#tabelaCustosIVA tr.editando {
+    background: #fff7d6 !important;
+}
+
+/* Inputs dentro da tabela */
+#tabelaCustosIVA input,
+#tabelaCustosIVA select {
+    width: 100%;
+    padding: 4px 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+
