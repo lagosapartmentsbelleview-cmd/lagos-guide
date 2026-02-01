@@ -19,6 +19,8 @@ let extrasCache = {};
 let entidadesCache = [];
 let categoriasCache = [];
 let faturasCache = [];
+let faturasFiltradas = [];
+
 
 
 
