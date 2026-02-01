@@ -1077,24 +1077,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         btnScanQR.addEventListener("click", () => {
-            const qrReader = new Html5Qrcode("qr-reader");
+    const qrReader = new Html5Qrcode("qr-reader");
 
-            qrReader.start(
-                { facingMode: "environment" },
-                { fps: 10, qrbox: 250 },
-                async qrCodeMessage => {
+    qrReader.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        async qrCodeMessage => {
 
-                    console.log("QR Code lido:", qrCodeMessage);
+            console.log("QR Code lido:", qrCodeMessage);
 
-                    await qrReader.stop();
-                    document.getElementById("qr-reader").innerHTML = "";
+            // Mantém a câmara aberta
+            await interpretarFatura(qrCodeMessage);
 
-                    await interpretarFatura(qrCodeMessage);
+        },
+        errorMessage => {}
+    );
+});
 
-                },
-                errorMessage => {}
-            );
-        });
 
         console.log("Botão QR ligado com sucesso!");
     }, 300);
