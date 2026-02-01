@@ -327,4 +327,42 @@
     font-size: 14px;
 }
 
+/* BOTÕES BASE */
+.btn {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+/* AZUL (ações positivas) */
+.btn-blue {
+    background: #1976d2;
+    color: white;
+}
+.btn-blue:hover {
+    background: #0d47a1;
+}
+
+/* VERMELHO (ações destrutivas) */
+.btn-red {
+    background: #d32f2f;
+    color: white;
+}
+.btn-red:hover {
+    background: #9a0007;
+}
+
+/* CINZA (secundário, se precisares) */
+.btn-gray {
+    background: #e0e0e0;
+    color: #333;
+}
+.btn-gray:hover {
+    background: #bdbdbd;
+}
+
 
