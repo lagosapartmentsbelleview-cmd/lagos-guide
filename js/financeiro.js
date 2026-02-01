@@ -171,6 +171,23 @@ function initFinanceiro() {
     carregarFaturas();
 }
 
+function normalizarDataParaISO(dataStr) {
+    if (!dataStr) return "";
+
+    // Caso já esteja no formato YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dataStr)) {
+        return dataStr;
+    }
+
+    // Caso esteja no formato DD/MM/YYYY
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(dataStr)) {
+        const [dia, mes, ano] = dataStr.split("/");
+        return `${ano}-${mes}-${dia}`;
+    }
+
+    return "";
+}
+
 
 async function carregarFaturas() {
     try {
