@@ -1596,7 +1596,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-   /* -------------------------
+/* -------------------------
+   Abrir e fechar modal AT
+-------------------------- */
+
+function abrirReconAT() {
+    document.getElementById("modalAT").style.display = "block";
+}
+
+function fecharReconAT() {
+    document.getElementById("modalAT").style.display = "none";
+}
+
+
+/* -------------------------
    📷 QR Code
 -------------------------- */
 let qrReader = null;
