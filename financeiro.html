@@ -207,6 +207,7 @@
         <button id="btnNovaFatura" class="btn btn-blue">Adicionar Fatura Manual</button>
         <button id="btnExportExcelFaturas" class="btn btn-blue">Exportar Excel</button>
         <button id="btnExportPDFFaturas" class="btn btn-blue">Exportar PDF</button>
+        <button onclick="abrirReconAT()" class="btn btn-secondary">Reconciliação AT</button>
     </div>
 
     <!-- Filtros -->
@@ -290,6 +291,41 @@
         <div class="tab-content" id="tab-outros"></div>
 
     </div> <!-- fecha .content -->
+
+<!-- Modal Reconciliação AT -->
+<div id="modalAT" class="modal" style="
+    display:none;
+    position:fixed;
+    top:0; left:0; right:0; bottom:0;
+    background:rgba(0,0,0,0.5);
+    z-index:9999;
+">
+    <div class="modal-content" style="
+        background:white;
+        margin:60px auto;
+        padding:20px;
+        width:90%;
+        max-width:800px;
+        border-radius:8px;
+    ">
+        <h2>Reconciliação com AT</h2>
+
+        <p>Cole aqui o texto da AT (copy-paste direto do portal):</p>
+
+        <textarea id="textareaAT" style="
+            width:100%;
+            height:250px;
+            padding:10px;
+            font-size:14px;
+        "></textarea>
+
+        <div style="margin-top:15px; text-align:right;">
+            <button onclick="fecharReconAT()" class="btn btn-light">Fechar</button>
+            <button onclick="processarAT()" class="btn btn-blue">Processar AT</button>
+        </div>
+    </div>
+</div>
+
 
     <script src="https://unpkg.com/html5-qrcode"></script>
 
