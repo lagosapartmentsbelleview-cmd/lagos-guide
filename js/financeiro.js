@@ -528,21 +528,87 @@ function exportarFaturasExcel() {
         return;
     }
 
-    const dados = faturasFiltradas.map(f => ({
-        Data: f.dataISO || "",
-        Fornecedor: f.fornecedor || "",
-        NIF: f.nif || "",
-        Categoria: f.categoria || "",
-        ValorBruto: Number(f.valorBruto || 0),
-        ValorIVA: Number(f.valorIVA || 0),
-        NumeroFatura: f.numeroFatura || "",
-        ATCUD: f.atcud || ""
-    }));
+    const dados = faturasFiltradas.map(f => {
+        const bruto = Number(f.valorBruto || 0);
+        const iva = Number(f.valorIVA || 0);
+        const liquido = bruto - iva;
+        const ivaGasoleo = (f.categoria === "Combustível") ? iva / 2 : iva;
 
+        return {
+            "Data": f.dataISO || "",
+            "Fornecedor": f.fornecedor || "",
+            "NIF": f.nif || "",
+            "Categoria": f.categoria || "",
+            "Valor Bruto (€)": bruto,
+            "IVA (€)": iva,
+            "IVA Gasóleo (€)": ivaGasoleo,
+            "Líquido (€)": liquido,
+            "Nº Fatura": f.numeroFatura || "",
+            "ATCUD": f.atcud || ""
+        };
+    });
+
+    // Criar worksheet
     const ws = XLSX.utils.json_to_sheet(dados);
+
+    // 🔹 FORMATAÇÃO DO CABEÇALHO
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    for (let C = range.s.c; C <= range.e.c; C++) {
+        const cell = ws[XLSX.utils.encode_cell({ r: 0, c: C })];
+        if (cell) {
+            cell.s = {
+                font: { bold: true, color: { rgb: "FFFFFF" } },
+                fill: { fgColor: { rgb: "4F81BD" } },
+                alignment: { horizontal: "center", vertical: "center" },
+                border: {
+                    top: { style: "thin", color: { rgb: "000000" } },
+                    bottom: { style: "thin", color: { rgb: "000000" } },
+                    left: { style: "thin", color: { rgb: "000000" } },
+                    right: { style: "thin", color: { rgb: "000000" } }
+                }
+            };
+        }
+    }
+
+    // 🔹 FORMATAÇÃO DAS LINHAS (números alinhados à direita)
+    for (let R = 1; R <= range.e.r; R++) {
+        for (let C = 0; C <= range.e.c; C++) {
+            const cell = ws[XLSX.utils.encode_cell({ r: R, c: C })];
+            if (!cell) continue;
+
+            const header = Object.keys(dados[0])[C];
+
+            // Datas ao centro
+            if (header === "Data") {
+                cell.s = { alignment: { horizontal: "center" } };
+            }
+
+            // Valores numéricos à direita
+            if ([
+                "Valor Bruto (€)",
+                "IVA (€)",
+                "IVA Gasóleo (€)",
+                "Líquido (€)"
+            ].includes(header)) {
+                cell.s = { alignment: { horizontal: "right" } };
+            }
+        }
+    }
+
+    // 🔹 LARGURA AUTOMÁTICA DAS COLUNAS
+    const colWidths = Object.keys(dados[0]).map(key => ({
+        wch: Math.max(
+            key.length,
+            ...dados.map(r => String(r[key]).length)
+        ) + 2
+    }));
+    ws['!cols'] = colWidths;
+
+    // Criar workbook
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Faturas");
 
+    // Exportar
     XLSX.writeFile(wb, "faturas_filtradas.xlsx");
 }
 
