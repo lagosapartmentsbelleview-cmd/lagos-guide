@@ -319,19 +319,6 @@ function entrarModoEdicao(id, botao) {
     tr.dataset.original = JSON.stringify(f);
 
     // Transformar células editáveis em inputs/selects
-  function entrarModoEdicao(id, botao) {
-    const tr = botao.closest("tr");
-    const f = faturasCache.find(x => x.id === id);
-
-    if (!f) return;
-
-    // Marcar linha como editando
-    tr.classList.add("editando");
-
-    // Guardar valores originais para cancelar
-    tr.dataset.original = JSON.stringify(f);
-
-    // Transformar células editáveis em inputs/selects
     tr.querySelectorAll(".editavel").forEach(td => {
         const campo = td.dataset.campo;
         const valor = f[campo] || "";
