@@ -677,7 +677,7 @@ function renderizarTabelaFaturas() {
     trTotal.style.background = "#e3f0ff";
 
     trTotal.innerHTML = `
-        <td colspan="4" style="text-align:right;">TOTAL:</td>
+        <td colspan="5" style="text-align:right;">TOTAL:</td>
         <td>${totalBruto.toFixed(2)} €</td>
         <td>${totalIVA.toFixed(2)} €</td>
         <td>${totalIvaGasoleo.toFixed(2)} €</td>
