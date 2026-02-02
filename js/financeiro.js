@@ -469,6 +469,11 @@ if (dados.dataISO) {
 
     console.log("DADOS A ENVIAR:", dados);
 
+    // 🔥 Criar dataISO a partir da data do QR
+if (dados.data || dados.dataDisplay) {
+    dados.dataISO = normalizarDataParaISO(dados.data || dados.dataDisplay);
+}
+
 
     // Criar documento no Firebase
     await firebase.firestore().collection("faturas").add(dados);
