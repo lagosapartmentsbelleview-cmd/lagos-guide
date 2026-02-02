@@ -631,7 +631,7 @@ function renderizarTabelaFaturas() {
         tr.innerHTML = `
     <td><input type="checkbox" class="checkFatura" value="${f.id}"></td>
 
-    <td class="editavel" data-campo="dataISO">${f.dataDisplay || f.data || ""}</td>
+    <td class="editavel" data-campo="dataISO">${f.dataISO || ""}</td>
     <td class="editavel" data-campo="fornecedor">${f.fornecedor || ""}</td>
     <td class="editavel" data-campo="nif">${f.nif || ""}</td>
     <td class="editavel" data-campo="categoria">${f.categoria || ""}</td>
