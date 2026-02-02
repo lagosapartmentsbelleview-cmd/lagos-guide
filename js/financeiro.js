@@ -258,7 +258,8 @@ async function carregarFaturas() {
             const f = { id: d.id, ...d.data() };
 
             // Criar dataISO sempre
-            f.dataISO = normalizarDataParaISO(f.data || f.dataDisplay);
+            f.dataISO = f.dataISO || normalizarDataParaISO(f.data || f.dataDisplay);
+
 
             return f;
         });
