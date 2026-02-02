@@ -469,12 +469,6 @@ if (dados.dataISO) {
 
     console.log("DADOS A ENVIAR:", dados);
 
-    // 🔥 Criar dataISO a partir da data do QR
-if (dados.data || dados.dataDisplay) {
-    dados.dataISO = normalizarDataParaISO(dados.data || dados.dataDisplay);
-}
-
-
     // Criar documento no Firebase
     await firebase.firestore().collection("faturas").add(dados);
 
@@ -1332,10 +1326,14 @@ async function interpretarFatura(texto) {
     }
 
     // Converter data AT → ISO (para filtros)
-    const dataISO = `${dataAT.substring(0,4)}-${dataAT.substring(4,6)}-${dataAT.substring(6,8)}`;
+    const dataISO = dataAT
+        ? `${dataAT.substring(0,4)}-${dataAT.substring(4,6)}-${dataAT.substring(6,8)}`
+        : "";
 
-    // Converter data AT → PT (para mostrar)
-    const dataDisplay = `${dataAT.substring(6,8)}/${dataAT.substring(4,6)}/${dataAT.substring(0,4)}`;
+    // Converter data AT → PT (para mostrar, se precisares no futuro)
+    const dataDisplay = dataAT
+        ? `${dataAT.substring(6,8)}/${dataAT.substring(4,6)}/${dataAT.substring(0,4)}`
+        : "";
 
     // Calcular valor sem IVA
     const valorSemIVA = total - iva;
@@ -1343,10 +1341,10 @@ async function interpretarFatura(texto) {
     // Calcular taxa IVA
     const taxaIVA = valorSemIVA > 0 ? Math.round((iva / valorSemIVA) * 100) : null;
 
-    // Objeto final da fatura
+    // Objeto final da fatura — AGORA NO NOVO CONTRATO
     const entrada = {
-        data: dataISO,
-        dataDisplay,
+        dataISO,          // 👈 chave principal para o sistema
+        dataDisplay,      // 👈 opcional, para mostrar se quiseres
         nif: nifLimpo,
         fornecedor,
         categoria,
@@ -1360,11 +1358,11 @@ async function interpretarFatura(texto) {
         criadoEm: firebase.firestore.FieldValue.serverTimestamp()
     };
 
-    // 🔹 VERIFICAR DUPLICADO ANTES DE GUARDAR
+    // 🔹 VERIFICAR DUPLICADO ANTES DE GUARDAR (usando dataISO)
     const duplicada = faturasCache.some(f =>
         f.nif === entrada.nif &&
         f.numeroFatura === entrada.numeroFatura &&
-        f.data === entrada.data
+        (f.dataISO || f.data) === entrada.dataISO
     );
 
     if (duplicada) {
@@ -1373,17 +1371,16 @@ async function interpretarFatura(texto) {
     }
 
     // Guardar no Firestore
-await guardarFaturaFirestore(entrada);
+    await guardarFaturaFirestore(entrada);
 
-// Atualizar cache local
-faturasCache.push(entrada);
+    // Atualizar cache local
+    faturasCache.push(entrada);
 
-// Aviso de sucesso
-alert("✅ Fatura carregada com sucesso!");
+    // Aviso de sucesso
+    alert("✅ Fatura carregada com sucesso!");
 
-// Atualizar tabela e totais
-renderizarTabelaFaturas();
-
+    // Atualizar tabela e totais
+    renderizarTabelaFaturas();
 }
 
 
