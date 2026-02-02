@@ -324,16 +324,18 @@ function entrarModoEdicao(id, botao) {
         const valor = f[campo] || "";
 
         if (campo === "categoria") {
-            td.innerHTML = gerarSelectCategorias(valor);
-        } else if (campo === "fornecedor") {
-            td.innerHTML = gerarSelectEntidades(valor);
-       } else if (campo === "dataISO") {
-        td.innerHTML = `<input type="date" name="dataISO" value="${f.dataISO || ""}">`;
+    td.innerHTML = gerarSelectCategorias(valor);
+
+} else if (campo === "fornecedor") {
+    td.innerHTML = gerarSelectEntidades(valor);
+
+} else if (campo === "dataISO") {
+    td.innerHTML = `<input type="date" name="dataISO" value="${f.dataISO || ""}">`;
+
+} else {
+    td.innerHTML = `<input type="text" value="${valor}">`;
 }
-        } else {
-            td.innerHTML = `<input type="text" value="${valor}">`;
-        }
-    });
+
 
     // Substituir botões por Guardar/Cancelar
     tr.querySelector("td:last-child").innerHTML = `
