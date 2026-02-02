@@ -382,9 +382,9 @@
     background: #5a6268;
 }
 
-/* 🔧 Forçar visibilidade do botão Reconciliação AT */
-.btn-secondary {
-    background: #6c757d !important; /* cinza elegante */
+/* 🔧 Forçar o botão Reconciliação AT a aparecer */
+.acoes-financeiro .btn-secondary {
+    background: #6c757d !important;
     color: white !important;
     padding: 8px 14px !important;
     border-radius: 6px !important;
@@ -392,13 +392,12 @@
     cursor: pointer !important;
     font-weight: 600 !important;
     font-size: 14px !important;
+
     display: inline-block !important;
     visibility: visible !important;
     opacity: 1 !important;
-}
 
-.btn-secondary:hover {
-    background: #5a6268 !important;
+    flex-shrink: 0 !important;   /* 🔥 impede o botão de desaparecer no flex */
 }
 
 
