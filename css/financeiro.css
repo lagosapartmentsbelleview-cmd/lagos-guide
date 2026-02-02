@@ -365,4 +365,21 @@
     background: #bdbdbd;
 }
 
+/* BOTÃO SECUNDÁRIO (Reconciliação AT) */
+.btn-secondary {
+    background: #6c757d;   /* cinza elegante */
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
 
