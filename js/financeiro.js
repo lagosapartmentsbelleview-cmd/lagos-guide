@@ -379,6 +379,12 @@ async function guardarEdicao(id, botao) {
         dados[campo] = valor;
     });
 
+    // 🔥 NORMALIZAR DATA PARA dataISO
+if (dados.dataISO) {
+    dados.dataISO = normalizarDataParaISO(dados.dataISO);
+}
+
+
     // Atualizar Firebase
     await firebase.firestore().collection("faturas").doc(id).update(dados);
 
@@ -449,6 +455,12 @@ async function guardarNovaFatura(botao) {
 
         dados[campo] = valor;
     });
+
+    // 🔥 NORMALIZAR DATA PARA dataISO
+if (dados.dataISO) {
+    dados.dataISO = normalizarDataParaISO(dados.dataISO);
+}
+
 
     console.log("DADOS A ENVIAR:", dados);
 
@@ -589,7 +601,8 @@ function renderizarTabelaFaturas() {
         if (filtroCat && f.categoria !== filtroCat) return false;
 
         // Garantir dataISO válida
-        const dataISO = f.dataISO || normalizarDataParaISO(f.data || f.dataDisplay);
+        const dataISO = f.dataISO;
+
 
         // Se não houver data válida, não aplicar filtro de datas
         if (!dataISO) return true;
