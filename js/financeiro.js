@@ -1424,17 +1424,31 @@ async function interpretarFatura(texto) {
         criadoEm: firebase.firestore.FieldValue.serverTimestamp()
     };
 
-    // 🔹 VERIFICAR DUPLICADO ANTES DE GUARDAR (usando dataISO)
-    const duplicada = faturasCache.some(f =>
-        f.nif === entrada.nif &&
-        f.numeroFatura === entrada.numeroFatura &&
-        (f.dataISO || f.data) === entrada.dataISO
-    );
+    // 🔹 VERIFICAR DUPLICADO LOCAL (cache)
+const duplicadaLocal = faturasCache.some(f =>
+    f.nif === entrada.nif &&
+    f.numeroFatura === entrada.numeroFatura &&
+    (f.dataISO || f.data) === entrada.dataISO
+);
 
-    if (duplicada) {
-        alert("⚠️ Esta fatura já foi carregada anteriormente.");
-        return;
-    }
+if (duplicadaLocal) {
+    alert("⚠️ Esta fatura já foi carregada anteriormente (cache).");
+    return;
+}
+
+// 🔹 VERIFICAR DUPLICADO NO FIREBASE (blindagem total)
+const duplicadaFirestore = await firebase.firestore()
+    .collection("faturas")
+    .where("nif", "==", entrada.nif)
+    .where("numeroFatura", "==", entrada.numeroFatura)
+    .where("dataISO", "==", entrada.dataISO)
+    .get();
+
+if (!duplicadaFirestore.empty) {
+    alert("⚠️ Esta fatura já existe no sistema (Firebase).");
+    return;
+}
+
 
     // Guardar no Firestore
     await guardarFaturaFirestore(entrada);
