@@ -178,35 +178,42 @@ function normalizarData(dataStr) {
 // ===============================
 
 function compararATComSistema(listaAT, listaSistema) {
+
     const emFaltaNoSistema = [];
     const emFaltaNaAT = [];
     const divergentes = [];
 
-    // Índices rápidos por ATCUD e Nº Fatura
-    const mapaSistemaPorATCUD = new Map();
-    const mapaSistemaPorNumero = new Map();
+    // Normalizar chaves
+    function chave(f) {
+        if (!f) return "";
+        return (f.identificacao || f.numeroFatura || f.atcud || "")
+            .toString()
+            .toUpperCase()
+            .replace(/\s+/g, "")
+            .replace(/\./g, "")
+            .replace(/-/g, "")
+            .trim();
+    }
 
-    listaSistema.forEach(f => {
-        if (f.atcud) mapaSistemaPorATCUD.set(f.atcud, f);
-        if (f.numeroFatura) mapaSistemaPorNumero.set(f.numeroFatura, f);
-    });
+    // Fallback: comparar por NIF + Data + Valor
+    function matchFallback(fAT, fS) {
+        return (
+            fAT.nif === fS.nif &&
+            (fAT.dataISO || "").substring(0,10) === (fS.dataISO || "").substring(0,10) &&
+            Math.abs(fAT.valorBruto - fS.valorBruto) < 0.01
+        );
+    }
 
-    const mapaATPorATCUD = new Map();
-    const mapaATPorNumero = new Map();
-
-    listaAT.forEach(f => {
-        if (f.atcud) mapaATPorATCUD.set(f.atcud, f);
-        if (f.numeroFatura) mapaATPorNumero.set(f.numeroFatura, f);
-    });
-
-    // 1) Faturas que estão na AT mas não no sistema
+    // 1) Faturas AT → procurar no sistema
     listaAT.forEach(fAT => {
-        let fS = null;
 
-        if (fAT.atcud && mapaSistemaPorATCUD.has(fAT.atcud)) {
-            fS = mapaSistemaPorATCUD.get(fAT.atcud);
-        } else if (fAT.numeroFatura && mapaSistemaPorNumero.has(fAT.numeroFatura)) {
-            fS = mapaSistemaPorNumero.get(fAT.numeroFatura);
+        const chaveAT = chave(fAT);
+
+        let fS = listaSistema.find(f => chave(f) === chaveAT);
+
+        if (!fS) {
+            // tentar fallback
+            fS = listaSistema.find(f => matchFallback(fAT, f));
         }
 
         if (!fS) {
@@ -214,21 +221,13 @@ function compararATComSistema(listaAT, listaSistema) {
             return;
         }
 
-        // Se existe nos dois, verificar divergências
+        // verificar divergências
         const difs = [];
 
-        if (Math.round(fS.valorBruto * 100) !== Math.round(fAT.valorBruto * 100)) {
-            difs.push("Valor Bruto");
-        }
-        if (Math.round(fS.valorIVA * 100) !== Math.round(fAT.valorIVA * 100)) {
-            difs.push("IVA");
-        }
-        if ((fS.dataISO || "").substring(0, 10) !== (fAT.dataISO || "").substring(0, 10)) {
-            difs.push("Data");
-        }
-        if ((fS.nif || "") !== (fAT.nif || "")) {
-            difs.push("NIF");
-        }
+        if (Math.abs(fAT.valorBruto - fS.valorBruto) > 0.01) difs.push("Valor Bruto");
+        if (Math.abs(fAT.valorIVA - fS.valorIVA) > 0.01) difs.push("IVA");
+        if ((fAT.dataISO || "").substring(0,10) !== (fS.dataISO || "").substring(0,10)) difs.push("Data");
+        if (fAT.nif !== fS.nif) difs.push("NIF");
 
         if (difs.length) {
             divergentes.push({
@@ -239,14 +238,16 @@ function compararATComSistema(listaAT, listaSistema) {
         }
     });
 
-    // 2) Faturas que estão no sistema mas não na AT
+    // 2) Faturas Sistema → procurar na AT
     listaSistema.forEach(fS => {
-        let fAT = null;
 
-        if (fS.atcud && mapaATPorATCUD.has(fS.atcud)) {
-            fAT = mapaATPorATCUD.get(fS.atcud);
-        } else if (fS.numeroFatura && mapaATPorNumero.has(fS.numeroFatura)) {
-            fAT = mapaATPorNumero.get(fS.numeroFatura);
+        const chaveS = chave(fS);
+
+        let fAT = listaAT.find(f => chave(f) === chaveS);
+
+        if (!fAT) {
+            // fallback
+            fAT = listaAT.find(f => matchFallback(f, fS));
         }
 
         if (!fAT) {
@@ -256,6 +257,7 @@ function compararATComSistema(listaAT, listaSistema) {
 
     return { emFaltaNoSistema, emFaltaNaAT, divergentes };
 }
+
 
 // ===============================
 //  RENDERIZAÇÃO DOS RESULTADOS
