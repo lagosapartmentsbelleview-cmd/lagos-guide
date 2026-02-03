@@ -108,9 +108,12 @@ const faturasATFiltradas = faturasAT.filter(f => {
 // 🔥 Comparar apenas o intervalo selecionado
 const resultado = compararATComSistema(faturasATFiltradas, faturasSistemaFiltradas);
 
-    // 3) Renderizar resultados
-    renderizarResultados(resultado);
-}
+// Guardar resultado global para exportação
+window.ultimoResultadoReconcil = resultado;
+
+// 3) Renderizar resultados
+renderizarResultados(resultado);
+
 
 // ===============================
 //  PARSER DO TEXTO DA AT
