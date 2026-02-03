@@ -218,6 +218,24 @@ function normalizarData(dataStr) {
 // ===============================
 //  COMPARAÇÃO AT vs SISTEMA
 // ===============================
+function somarTotais(lista) {
+    let totalBruto = 0;
+    let totalIVA = 0;
+    let totalIVAGasoleo = 0;
+    let totalLiquido = 0;
+
+    lista.forEach(f => {
+        totalBruto += Number(f.valorBruto || 0);
+        totalIVA += Number(f.valorIVA || 0);
+        totalLiquido += Number(f.valorBruto || 0) - Number(f.valorIVA || 0);
+
+        if ((f.categoria || "").toLowerCase().includes("gasóleo")) {
+            totalIVAGasoleo += Number(f.valorIVA || 0);
+        }
+    });
+
+    return { totalBruto, totalIVA, totalIVAGasoleo, totalLiquido };
+}
 
 function compararATComSistema(listaAT, listaSistema) {
 
@@ -299,8 +317,17 @@ function compararATComSistema(listaAT, listaSistema) {
         }
     });
 
-    return { emFaltaNoSistema, emFaltaNaAT, divergentes };
-}
+    const totaisAT = somarTotais(listaAT);
+    const totaisSistema = somarTotais(listaSistema);
+
+return { 
+    emFaltaNoSistema, 
+    emFaltaNaAT, 
+    divergentes,
+    totaisAT,
+    totaisSistema
+};
+
 
 
 // ===============================
