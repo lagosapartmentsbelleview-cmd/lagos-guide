@@ -230,30 +230,49 @@ function somarTotais(lista) {
     let totalIVANaoDedutivel = 0;
     let totalIVAGasoleo = 0;
 
+    // Detectar se é lista do sistema (tem categoria)
+    const isSistema = lista.length && lista[0].hasOwnProperty("categoria");
+
     lista.forEach(f => {
         const bruto = Number(f.valorBruto || 0);
         const iva = Number(f.valorIVA || 0);
+        const ivaDedAT = Number(f.valorDedutivel || 0);
 
         totalBruto += bruto;
         totalIVA += iva;
         totalLiquido += bruto - iva;
 
-        const categoria = (f.categoria || "").toLowerCase();
+        if (isSistema) {
+            // ============================
+            // 🔥 SISTEMA
+            // ============================
 
-        if (categoria.includes("combust")) {
-            // 🔥 Combustível → IVA dedutível = 50%
-            const ivaDed = iva * 0.50;
+            const categoria = (f.categoria || "").toLowerCase();
 
-            totalIVADedutivel += ivaDed;
-            totalIVANaoDedutivel += iva - ivaDed;
+            if (categoria.includes("combust")) {
+                // Combustível → IVA dedutível = 50%
+                const ivaDed = iva * 0.50;
 
-            // IVA gasóleo = IVA dedutível
-            totalIVAGasoleo += ivaDed;
+                totalIVADedutivel += ivaDed;
+                totalIVANaoDedutivel += iva - ivaDed;
+                totalIVAGasoleo += ivaDed;
+
+            } else {
+                // Outras categorias → 100% dedutível
+                totalIVADedutivel += iva;
+                totalIVANaoDedutivel += 0;
+            }
 
         } else {
-            // 🔥 Outras categorias → IVA dedutível = 100%
-            totalIVADedutivel += iva;
-            totalIVANaoDedutivel += 0;
+            // ============================
+            // 🔥 AT
+            // ============================
+
+            totalIVADedutivel += ivaDedAT;
+            totalIVANaoDedutivel += iva - ivaDedAT;
+
+            // AT não tem IVA gasóleo
+            totalIVAGasoleo += 0;
         }
     });
 
@@ -266,6 +285,7 @@ function somarTotais(lista) {
         totalIVAGasoleo
     };
 }
+
 
 
 
