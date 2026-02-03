@@ -1596,16 +1596,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-/* -------------------------
-   Abrir e fechar modal AT
--------------------------- */
+// ===============================
+//  MODAL RECONCILIAÇÃO AT
+// ===============================
 
 function abrirReconAT() {
-    document.getElementById("modalAT").style.display = "block";
+    const modal = document.getElementById("modalAT");
+    if (modal) modal.style.display = "block";
 }
 
 function fecharReconAT() {
-    document.getElementById("modalAT").style.display = "none";
+    const modal = document.getElementById("modalAT");
+    if (modal) modal.style.display = "none";
 }
 
 function processarAT() {
@@ -1618,6 +1620,7 @@ function processarAT() {
     console.log("Texto AT recebido:", texto);
     alert("Processamento AT ainda não implementado.");
 }
+
 
 
 
