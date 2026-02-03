@@ -436,10 +436,6 @@ function gerarTabelaDivergentes(lista) {
     html += `</tbody></table>`;
     return html;
 }
-    // 🔥 2) GUARDAR TEXTO SEMPRE QUE O UTILIZADOR ESCREVE
-document.getElementById("textoAT").addEventListener("input", () => {
-    localStorage.setItem("textoAT_cache", document.getElementById("textoAT").value);
-});
 
 function exportarExcel() {
     if (!window.ultimoResultadoReconcil) {
@@ -508,4 +504,11 @@ function exportarExcel() {
     // Download
     XLSX.writeFile(wb, "divergencias_AT.xlsx");
 }
+    
+    // 🔥 2) GUARDAR TEXTO SEMPRE QUE O UTILIZADOR ESCREVE
+document.getElementById("textoAT").addEventListener("input", () => {
+    localStorage.setItem("textoAT_cache", document.getElementById("textoAT").value);
+});
+
+
 
