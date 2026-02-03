@@ -229,24 +229,36 @@ function somarTotais(lista) {
     let totalIVADedutivel = 0;
     let totalIVANaoDedutivel = 0;
 
+    // Detectar se é lista do sistema (tem categoria)
+    const isSistema = lista.length && lista[0].hasOwnProperty("categoria");
+
     lista.forEach(f => {
         const bruto = Number(f.valorBruto || 0);
         const iva = Number(f.valorIVA || 0);
-        const ivaDed = Number(f.valorDedutivel || 0);
+        const ivaDedAT = Number(f.valorDedutivel || 0);
 
         totalBruto += bruto;
         totalIVA += iva;
         totalLiquido += bruto - iva;
 
-        // IVA dedutível da AT
-        totalIVADedutivel += ivaDed;
-
-        // IVA não dedutível
-        totalIVANaoDedutivel += (iva - ivaDed);
-
-        // IVA gasóleo no sistema (categoria contém "gasóleo")
-        if ((f.categoria || "").toLowerCase().includes("gasóleo")) {
+        // IVA gasóleo no sistema
+        const isGasoleo = (f.categoria || "").toLowerCase().includes("gasóleo");
+        if (isGasoleo) {
             totalIVAGasoleo += iva;
+        }
+
+        if (isSistema) {
+            // 🔥 No sistema: IVA dedutível = IVA gasóleo
+            const ivaDedSistema = isGasoleo ? iva : iva; 
+            // Nota: no teu sistema IVA = IVA gasóleo na maioria dos casos
+
+            totalIVADedutivel += ivaDedSistema;
+            totalIVANaoDedutivel += iva - ivaDedSistema;
+
+        } else {
+            // 🔥 Na AT: IVA dedutível = Valor Deduzido
+            totalIVADedutivel += ivaDedAT;
+            totalIVANaoDedutivel += iva - ivaDedAT;
         }
     });
 
@@ -259,6 +271,7 @@ function somarTotais(lista) {
         totalIVANaoDedutivel
     };
 }
+
 
 
 function compararATComSistema(listaAT, listaSistema) {
