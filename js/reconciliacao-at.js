@@ -224,53 +224,49 @@ function normalizarData(dataStr) {
 function somarTotais(lista) {
     let totalBruto = 0;
     let totalIVA = 0;
-    let totalIVAGasoleo = 0;
     let totalLiquido = 0;
+
     let totalIVADedutivel = 0;
     let totalIVANaoDedutivel = 0;
-
-    // Detectar se é lista do sistema (tem categoria)
-    const isSistema = lista.length && lista[0].hasOwnProperty("categoria");
+    let totalIVAGasoleo = 0;
 
     lista.forEach(f => {
         const bruto = Number(f.valorBruto || 0);
         const iva = Number(f.valorIVA || 0);
-        const ivaDedAT = Number(f.valorDedutivel || 0);
 
         totalBruto += bruto;
         totalIVA += iva;
         totalLiquido += bruto - iva;
 
-        // IVA gasóleo no sistema
-        const isGasoleo = (f.categoria || "").toLowerCase().includes("gasóleo");
-        if (isGasoleo) {
-            totalIVAGasoleo += iva;
-        }
+        const categoria = (f.categoria || "").toLowerCase();
 
-        if (isSistema) {
-            // 🔥 No sistema: IVA dedutível = IVA gasóleo
-            const ivaDedSistema = isGasoleo ? iva : iva; 
-            // Nota: no teu sistema IVA = IVA gasóleo na maioria dos casos
+        if (categoria.includes("combust")) {
+            // 🔥 Combustível → IVA dedutível = 50%
+            const ivaDed = iva * 0.50;
 
-            totalIVADedutivel += ivaDedSistema;
-            totalIVANaoDedutivel += iva - ivaDedSistema;
+            totalIVADedutivel += ivaDed;
+            totalIVANaoDedutivel += iva - ivaDed;
+
+            // IVA gasóleo = IVA dedutível
+            totalIVAGasoleo += ivaDed;
 
         } else {
-            // 🔥 Na AT: IVA dedutível = Valor Deduzido
-            totalIVADedutivel += ivaDedAT;
-            totalIVANaoDedutivel += iva - ivaDedAT;
+            // 🔥 Outras categorias → IVA dedutível = 100%
+            totalIVADedutivel += iva;
+            totalIVANaoDedutivel += 0;
         }
     });
 
-    return { 
-        totalBruto, 
-        totalIVA, 
-        totalIVAGasoleo, 
+    return {
+        totalBruto,
+        totalIVA,
         totalLiquido,
         totalIVADedutivel,
-        totalIVANaoDedutivel
+        totalIVANaoDedutivel,
+        totalIVAGasoleo
     };
 }
+
 
 
 
