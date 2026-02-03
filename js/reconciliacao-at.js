@@ -142,17 +142,27 @@ function parseTextoAT(texto) {
         const dataISO = normalizarData(data);
 
         // Criar fatura
-        faturas.push({
-            tipo,
-            identificacao,
-            fornecedor,
-            nif,
-            dataISO,
-            valorBruto: bruto,
-            valorIVA: ivaNum,
-            numeroFatura: identificacao,
-            atcud: identificacao
-        });
+faturas.push({
+    tipo,
+    identificacao,
+    fornecedor,
+    nif,
+    dataISO,
+
+    // 🔥 Valor total da fatura (Bruto = Base Tributável + IVA)
+    valorBruto: bruto + ivaNum,
+
+    // Mantemos o IVA
+    valorIVA: ivaNum,
+
+    // Opcional: guardar o valor ilíquido (pode ser útil)
+    valorIliquido: bruto,
+
+    // Usamos a identificação como número e ATCUD
+    numeroFatura: identificacao,
+    atcud: identificacao
+});
+
 
         i += 9; // avançar para o próximo bloco
     }
