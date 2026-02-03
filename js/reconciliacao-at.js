@@ -334,13 +334,57 @@ return {
 //  RENDERIZAÇÃO DOS RESULTADOS
 // ===============================
 
-function renderizarResultados({ emFaltaNoSistema, emFaltaNaAT, divergentes }) {
+function renderizarResultados({ emFaltaNoSistema, emFaltaNaAT, divergentes, totaisAT, totaisSistema }) {
     const div = document.getElementById("resultados");
     div.innerHTML = "";
 
     const partes = [];
 
     partes.push(`<h2>Resultados da Reconciliação</h2>`);
+
+    partes.push(`
+    <div class="secao">
+        <h3>Resumo Financeiro do Período</h3>
+
+        <table class="tabela-resumo">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Valor (€)</th>
+                    <th>IVA (€)</th>
+                    <th>IVA Gasóleo (€)</th>
+                    <th>Líquido (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>AT</strong></td>
+                    <td>${totaisAT.totalBruto.toFixed(2)}</td>
+                    <td>${totaisAT.totalIVA.toFixed(2)}</td>
+                    <td>${totaisAT.totalIVAGasoleo.toFixed(2)}</td>
+                    <td>${totaisAT.totalLiquido.toFixed(2)}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Sistema</strong></td>
+                    <td>${totaisSistema.totalBruto.toFixed(2)}</td>
+                    <td>${totaisSistema.totalIVA.toFixed(2)}</td>
+                    <td>${totaisSistema.totalIVAGasoleo.toFixed(2)}</td>
+                    <td>${totaisSistema.totalLiquido.toFixed(2)}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Diferença</strong></td>
+                    <td>${(totaisAT.totalBruto - totaisSistema.totalBruto).toFixed(2)}</td>
+                    <td>${(totaisAT.totalIVA - totaisSistema.totalIVA).toFixed(2)}</td>
+                    <td>${(totaisAT.totalIVAGasoleo - totaisSistema.totalIVAGasoleo).toFixed(2)}</td>
+                    <td>${(totaisAT.totalLiquido - totaisSistema.totalLiquido).toFixed(2)}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+`);
+
 
     partes.push(`<p><strong>Faturas AT:</strong> ${faturasAT.length}</p>`);
     partes.push(`<p><strong>Faturas Sistema:</strong> ${faturasSistema.length}</p>`);
