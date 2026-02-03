@@ -443,68 +443,114 @@ function exportarExcel() {
         return;
     }
 
-    const divergentes = window.ultimoResultadoReconcil.divergentes;
-    if (!divergentes.length) {
-        alert("Não existem divergências para exportar.");
-        return;
-    }
+    const { emFaltaNoSistema, emFaltaNaAT, divergentes } = window.ultimoResultadoReconcil;
 
     // Criar workbook
     const wb = XLSX.utils.book_new();
 
-    // Cabeçalho
-    const dados = [
+    // ============================
+    // 1) FALTAS NO SISTEMA
+    // ============================
+    const dadosFaltaSistema = [
+        ["Data", "Fornecedor", "NIF", "Bruto", "IVA", "Nº Fatura", "ATCUD"]
+    ];
+
+    emFaltaNoSistema.forEach(f => {
+        dadosFaltaSistema.push([
+            (f.dataISO || "").substring(0,10),
+            f.fornecedor || "",
+            f.nif || "",
+            Number(f.valorBruto || 0),
+            Number(f.valorIVA || 0),
+            f.numeroFatura || "",
+            f.atcud || ""
+        ]);
+    });
+
+    const ws1 = XLSX.utils.aoa_to_sheet(dadosFaltaSistema);
+    ajustarColunas(ws1, dadosFaltaSistema);
+    ws1["!autofilter"] = { ref: "A1:G" + dadosFaltaSistema.length };
+    XLSX.utils.book_append_sheet(wb, ws1, "Faltas no Sistema");
+
+    // ============================
+    // 2) FALTAS NA AT
+    // ============================
+    const dadosFaltaAT = [
+        ["Data", "Fornecedor", "NIF", "Bruto", "IVA", "Nº Fatura", "ATCUD"]
+    ];
+
+    emFaltaNaAT.forEach(f => {
+        dadosFaltaAT.push([
+            (f.dataISO || "").substring(0,10),
+            f.fornecedor || "",
+            f.nif || "",
+            Number(f.valorBruto || 0),
+            Number(f.valorIVA || 0),
+            f.numeroFatura || "",
+            f.atcud || ""
+        ]);
+    });
+
+    const ws2 = XLSX.utils.aoa_to_sheet(dadosFaltaAT);
+    ajustarColunas(ws2, dadosFaltaAT);
+    ws2["!autofilter"] = { ref: "A1:G" + dadosFaltaAT.length };
+    XLSX.utils.book_append_sheet(wb, ws2, "Faltas na AT");
+
+    // ============================
+    // 3) DIVERGÊNCIAS
+    // ============================
+    const dadosDivergencias = [
         ["Campo", "Valor AT", "Valor Sistema", "Identificação"]
     ];
 
-   // Preencher linhas
-divergentes.forEach(item => {
-    const { sistema: s, at, camposDiferentes } = item;
+    divergentes.forEach(item => {
+        const { sistema: s, at, camposDiferentes } = item;
 
-    camposDiferentes.forEach(campo => {
-        let valorAT = "";
-        let valorS = "";
+        camposDiferentes.forEach(campo => {
+            let valorAT = "";
+            let valorS = "";
 
-        if (campo === "Valor Bruto") {
-            valorAT = Number(at.valorBruto);
-            valorS = Number(s.valorBruto);
-        } else if (campo === "IVA") {
-            valorAT = Number(at.valorIVA);
-            valorS = Number(s.valorIVA);
-        } else if (campo === "Data") {
-            valorAT = (at.dataISO || "").substring(0,10);
-            valorS = (s.dataISO || "").substring(0,10);
-        } else if (campo === "NIF") {
-            valorAT = at.nif;
-            valorS = s.nif;
-        }
+            if (campo === "Valor Bruto") {
+                valorAT = Number(at.valorBruto);
+                valorS = Number(s.valorBruto);
+            } else if (campo === "IVA") {
+                valorAT = Number(at.valorIVA);
+                valorS = Number(s.valorIVA);
+            } else if (campo === "Data") {
+                valorAT = (at.dataISO || "").substring(0,10);
+                valorS = (s.dataISO || "").substring(0,10);
+            } else if (campo === "NIF") {
+                valorAT = at.nif;
+                valorS = s.nif;
+            }
 
-        const id = at.atcud || at.numeroFatura || s.atcud || s.numeroFatura || "(sem id)";
+            const id = at.atcud || at.numeroFatura || s.atcud || s.numeroFatura || "(sem id)";
 
-        dados.push([campo, valorAT, valorS, id]);
+            dadosDivergencias.push([campo, valorAT, valorS, id]);
+        });
     });
-});
+
+    const ws3 = XLSX.utils.aoa_to_sheet(dadosDivergencias);
+    ajustarColunas(ws3, dadosDivergencias);
+    ws3["!autofilter"] = { ref: "A1:D" + dadosDivergencias.length };
+    XLSX.utils.book_append_sheet(wb, ws3, "Divergências");
+
+    // ============================
+    // DOWNLOAD FINAL
+    // ============================
+    XLSX.writeFile(wb, "reconciliacao_AT.xlsx");
+}
 
 
-    // Criar worksheet
-    const ws = XLSX.utils.aoa_to_sheet(dados);
-
-    // Auto-ajustar colunas
+// Função auxiliar para ajustar colunas
+function ajustarColunas(ws, dados) {
     const colWidths = dados[0].map((_, colIndex) => {
         const maxLen = Math.max(...dados.map(row => (row[colIndex] + "").length));
         return { wch: maxLen + 2 };
     });
     ws["!cols"] = colWidths;
-
-    // Filtros automáticos
-    ws["!autofilter"] = { ref: "A1:D" + dados.length };
-
-    // Adicionar folha ao workbook
-    XLSX.utils.book_append_sheet(wb, ws, "Divergências");
-
-    // Download
-    XLSX.writeFile(wb, "divergencias_AT.xlsx");
 }
+
     
     // 🔥 2) GUARDAR TEXTO SEMPRE QUE O UTILIZADOR ESCREVE
 document.getElementById("textoAT").addEventListener("input", () => {
