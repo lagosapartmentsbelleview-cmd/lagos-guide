@@ -1608,6 +1608,18 @@ function fecharReconAT() {
     document.getElementById("modalAT").style.display = "none";
 }
 
+function processarAT() {
+    const texto = document.getElementById("textareaAT").value.trim();
+    if (!texto) {
+        alert("Cole o texto da AT primeiro.");
+        return;
+    }
+
+    console.log("Texto AT recebido:", texto);
+    alert("Processamento AT ainda não implementado.");
+}
+
+
 
 /* -------------------------
    📷 QR Code
