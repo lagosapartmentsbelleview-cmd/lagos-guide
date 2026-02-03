@@ -457,33 +457,34 @@ function exportarExcel() {
         ["Campo", "Valor AT", "Valor Sistema", "Identificação"]
     ];
 
-    // Preencher linhas
-    divergentes.forEach(item => {
-        const { sistema: s, at, camposDiferentes } = item;
+   // Preencher linhas
+divergentes.forEach(item => {
+    const { sistema: s, at, camposDiferentes } = item;
 
-        camposDiferentes.forEach(campo => {
-            let valorAT = "";
-            let valorS = "";
+    camposDiferentes.forEach(campo => {
+        let valorAT = "";
+        let valorS = "";
 
-            if (campo === "Valor Bruto") {
-                valorAT = at.valorBruto;
-                valorS = s.valorBruto;
-            } else if (campo === "IVA") {
-                valorAT = at.valorIVA;
-                valorS = s.valorIVA;
-            } else if (campo === "Data") {
-                valorAT = (at.dataISO || "").substring(0,10);
-                valorS = (s.dataISO || "").substring(0,10);
-            } else if (campo === "NIF") {
-                valorAT = at.nif;
-                valorS = s.nif;
-            }
+        if (campo === "Valor Bruto") {
+            valorAT = Number(at.valorBruto);
+            valorS = Number(s.valorBruto);
+        } else if (campo === "IVA") {
+            valorAT = Number(at.valorIVA);
+            valorS = Number(s.valorIVA);
+        } else if (campo === "Data") {
+            valorAT = (at.dataISO || "").substring(0,10);
+            valorS = (s.dataISO || "").substring(0,10);
+        } else if (campo === "NIF") {
+            valorAT = at.nif;
+            valorS = s.nif;
+        }
 
-            const id = at.atcud || at.numeroFatura || s.atcud || s.numeroFatura || "(sem id)";
+        const id = at.atcud || at.numeroFatura || s.atcud || s.numeroFatura || "(sem id)";
 
-            dados.push([campo, valorAT, valorS, id]);
-        });
+        dados.push([campo, valorAT, valorS, id]);
     });
+});
+
 
     // Criar worksheet
     const ws = XLSX.utils.aoa_to_sheet(dados);
