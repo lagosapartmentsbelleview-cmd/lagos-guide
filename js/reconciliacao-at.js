@@ -84,8 +84,29 @@ function processarAT() {
         return;
     }
 
-    // 2) Comparar com o sistema
-    const resultado = compararATComSistema(faturasAT, faturasSistema);
+   // 🔥 Ler intervalo escolhido pelo utilizador
+const inicio = document.getElementById("dataInicio").value;
+const fim = document.getElementById("dataFim").value;
+
+if (!inicio || !fim) {
+    alert("Escolha a data início e data fim para a reconciliação.");
+    return;
+}
+
+// 🔥 Filtrar faturas do sistema pelo intervalo escolhido
+const faturasSistemaFiltradas = faturasSistema.filter(f => {
+    const d = (f.dataISO || "").substring(0,10);
+    return d >= inicio && d <= fim;
+});
+
+// 🔥 Filtrar faturas AT pelo intervalo escolhido
+const faturasATFiltradas = faturasAT.filter(f => {
+    const d = (f.dataISO || "").substring(0,10);
+    return d >= inicio && d <= fim;
+});
+
+// 🔥 Comparar apenas o intervalo selecionado
+const resultado = compararATComSistema(faturasATFiltradas, faturasSistemaFiltradas);
 
     // 3) Renderizar resultados
     renderizarResultados(resultado);
