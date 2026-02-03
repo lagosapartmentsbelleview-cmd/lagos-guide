@@ -328,7 +328,7 @@ return {
     totaisSistema
 };
 
-
+}
 
 // ===============================
 //  RENDERIZAÇÃO DOS RESULTADOS
