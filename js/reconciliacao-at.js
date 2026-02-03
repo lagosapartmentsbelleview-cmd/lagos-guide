@@ -10,6 +10,13 @@ let faturasAT = [];
 // ===============================
 
 document.addEventListener("DOMContentLoaded", async () => {
+
+    // 🔥 1) CARREGAR TEXTO DA CACHE
+    const cache = localStorage.getItem("textoAT_cache");
+    if (cache) {
+        document.getElementById("textoAT").value = cache;
+    }
+
     // Garante que o user está autenticado (igual ao resto do sistema)
     firebase.auth().onAuthStateChanged(async user => {
         if (!user) {
@@ -20,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await carregarFaturasSistema();
     });
 });
+
 
 // ===============================
 //  CARREGAR FATURAS DO SISTEMA
@@ -352,7 +360,7 @@ function gerarTabelaDivergentes(lista) {
         <tbody>
     `;
 
-    lista.forEach(item => {
+        lista.forEach(item => {
         const { sistema: s, at, camposDiferentes } = item;
 
         camposDiferentes.forEach(campo => {
@@ -385,6 +393,12 @@ function gerarTabelaDivergentes(lista) {
             `;
         });
     });
+
+    // 🔥 2) GUARDAR TEXTO SEMPRE QUE O UTILIZADOR ESCREVE
+document.getElementById("textoAT").addEventListener("input", () => {
+    localStorage.setItem("textoAT_cache", document.getElementById("textoAT").value);
+});
+
 
     html += `</tbody></table>`;
     return html;
