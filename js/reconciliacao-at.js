@@ -99,46 +99,59 @@ function parseTextoAT(texto) {
         .filter(l => l.length > 0);
 
     const faturas = [];
+    let i = 0;
 
-    for (const linha of linhas) {
-        // Tenta primeiro ; depois tab
-        let partes = linha.split(";");
-        if (partes.length < 5) {
-            partes = linha.split("\t");
-        }
+    while (i < linhas.length) {
 
-        if (partes.length < 5) {
-            console.warn("Linha ignorada (poucos campos):", linha);
+        // Ignorar cabeçalhos
+        if (["Documento", "Identificação", "Data Emissão", "Base Tributável", "IVA", "Valor Deduzido", "Percentagem Deduzida"].includes(linhas[i])) {
+            i++;
             continue;
         }
 
-        // Ajustar índices conforme o formato real
-        const data = (partes[0] || "").trim();
-        const fornecedor = (partes[1] || "").trim();
-        const nif = (partes[2] || "").trim();
-        const categoria = (partes[3] || "").trim();
-        const brutoStr = (partes[4] || "").replace(",", ".").trim();
-        const ivaStr = (partes[5] || "").replace(",", ".").trim();
-        const numeroFatura = (partes[6] || "").trim();
-        const atcud = (partes[7] || "").trim();
+        // Bloco de 9 linhas
+        const tipo = linhas[i] || "";
+        const identificacao = linhas[i+1] || "";
+        const fornecedor = linhas[i+2] || "";
+        const nif = linhas[i+3] || "";
+        const data = linhas[i+4] || "";
+        const baseTrib = linhas[i+5] || "";
+        const iva = linhas[i+6] || "";
+        const valorDeduzido = linhas[i+7] || "";
+        const percentagem = linhas[i+8] || "";
 
-        const valorBruto = Number(brutoStr || 0);
-        const valorIVA = Number(ivaStr || 0);
+        // Validar bloco
+        if (!identificacao || !nif || !data) {
+            i++;
+            continue;
+        }
 
+        // Normalizar valores
+        const bruto = parseFloat(baseTrib.replace("€","").replace(",",".").trim()) || 0;
+        const ivaNum = parseFloat(iva.replace("€","").replace(",",".").trim()) || 0;
+
+        // Normalizar data
+        const dataISO = normalizarData(data);
+
+        // Criar fatura
         faturas.push({
-            dataISO: normalizarData(data),
+            tipo,
+            identificacao,
             fornecedor,
             nif,
-            categoria,
-            valorBruto,
-            valorIVA,
-            numeroFatura,
-            atcud
+            dataISO,
+            valorBruto: bruto,
+            valorIVA: ivaNum,
+            numeroFatura: identificacao,
+            atcud: identificacao
         });
+
+        i += 9; // avançar para o próximo bloco
     }
 
     return faturas;
 }
+
 
 function normalizarData(dataStr) {
     if (!dataStr) return "";
