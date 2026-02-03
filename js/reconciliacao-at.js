@@ -113,7 +113,7 @@ window.ultimoResultadoReconcil = resultado;
 
 // 3) Renderizar resultados
 renderizarResultados(resultado);
-
+}
 
 // ===============================
 //  PARSER DO TEXTO DA AT
