@@ -404,12 +404,13 @@ function gerarTabelaDivergentes(lista) {
         });
     });
 
-    // 🔥 2) GUARDAR TEXTO SEMPRE QUE O UTILIZADOR ESCREVE
-document.getElementById("textoAT").addEventListener("input", () => {
-    localStorage.setItem("textoAT_cache", document.getElementById("textoAT").value);
-});
+
 
 
     html += `</tbody></table>`;
     return html;
 }
+    // 🔥 2) GUARDAR TEXTO SEMPRE QUE O UTILIZADOR ESCREVE
+document.getElementById("textoAT").addEventListener("input", () => {
+    localStorage.setItem("textoAT_cache", document.getElementById("textoAT").value);
+});
