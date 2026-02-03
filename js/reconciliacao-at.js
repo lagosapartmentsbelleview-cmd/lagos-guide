@@ -440,3 +440,72 @@ function gerarTabelaDivergentes(lista) {
 document.getElementById("textoAT").addEventListener("input", () => {
     localStorage.setItem("textoAT_cache", document.getElementById("textoAT").value);
 });
+
+function exportarExcel() {
+    if (!window.ultimoResultadoReconcil) {
+        alert("Primeiro execute a reconciliação.");
+        return;
+    }
+
+    const divergentes = window.ultimoResultadoReconcil.divergentes;
+    if (!divergentes.length) {
+        alert("Não existem divergências para exportar.");
+        return;
+    }
+
+    // Criar workbook
+    const wb = XLSX.utils.book_new();
+
+    // Cabeçalho
+    const dados = [
+        ["Campo", "Valor AT", "Valor Sistema", "Identificação"]
+    ];
+
+    // Preencher linhas
+    divergentes.forEach(item => {
+        const { sistema: s, at, camposDiferentes } = item;
+
+        camposDiferentes.forEach(campo => {
+            let valorAT = "";
+            let valorS = "";
+
+            if (campo === "Valor Bruto") {
+                valorAT = at.valorBruto;
+                valorS = s.valorBruto;
+            } else if (campo === "IVA") {
+                valorAT = at.valorIVA;
+                valorS = s.valorIVA;
+            } else if (campo === "Data") {
+                valorAT = (at.dataISO || "").substring(0,10);
+                valorS = (s.dataISO || "").substring(0,10);
+            } else if (campo === "NIF") {
+                valorAT = at.nif;
+                valorS = s.nif;
+            }
+
+            const id = at.atcud || at.numeroFatura || s.atcud || s.numeroFatura || "(sem id)";
+
+            dados.push([campo, valorAT, valorS, id]);
+        });
+    });
+
+    // Criar worksheet
+    const ws = XLSX.utils.aoa_to_sheet(dados);
+
+    // Auto-ajustar colunas
+    const colWidths = dados[0].map((_, colIndex) => {
+        const maxLen = Math.max(...dados.map(row => (row[colIndex] + "").length));
+        return { wch: maxLen + 2 };
+    });
+    ws["!cols"] = colWidths;
+
+    // Filtros automáticos
+    ws["!autofilter"] = { ref: "A1:D" + dados.length };
+
+    // Adicionar folha ao workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Divergências");
+
+    // Download
+    XLSX.writeFile(wb, "divergencias_AT.xlsx");
+}
+
