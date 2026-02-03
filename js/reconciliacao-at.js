@@ -335,6 +335,7 @@ return {
 // ===============================
 
 function renderizarResultados({ emFaltaNoSistema, emFaltaNaAT, divergentes, totaisAT, totaisSistema }) {
+
     const div = document.getElementById("resultados");
     div.innerHTML = "";
 
