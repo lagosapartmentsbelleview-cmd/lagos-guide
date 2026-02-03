@@ -176,10 +176,13 @@ faturas.push({
     // 🔥 Valor total da fatura (Bruto = Base Tributável + IVA)
     valorBruto: bruto + ivaNum,
 
-    // Mantemos o IVA
+    // Mantemos o IVA total
     valorIVA: ivaNum,
 
-    // Opcional: guardar o valor ilíquido (pode ser útil)
+    // 🔥 IVA dedutível (AT)
+    valorDedutivel: parseFloat(valorDeduzido.replace("€","").replace(",",".").trim()) || 0,
+
+    // Opcional: valor ilíquido
     valorIliquido: bruto,
 
     // Usamos a identificação como número e ATCUD
@@ -223,19 +226,40 @@ function somarTotais(lista) {
     let totalIVA = 0;
     let totalIVAGasoleo = 0;
     let totalLiquido = 0;
+    let totalIVADedutivel = 0;
+    let totalIVANaoDedutivel = 0;
 
     lista.forEach(f => {
-        totalBruto += Number(f.valorBruto || 0);
-        totalIVA += Number(f.valorIVA || 0);
-        totalLiquido += Number(f.valorBruto || 0) - Number(f.valorIVA || 0);
+        const bruto = Number(f.valorBruto || 0);
+        const iva = Number(f.valorIVA || 0);
+        const ivaDed = Number(f.valorDedutivel || 0);
 
+        totalBruto += bruto;
+        totalIVA += iva;
+        totalLiquido += bruto - iva;
+
+        // IVA dedutível da AT
+        totalIVADedutivel += ivaDed;
+
+        // IVA não dedutível
+        totalIVANaoDedutivel += (iva - ivaDed);
+
+        // IVA gasóleo no sistema (categoria contém "gasóleo")
         if ((f.categoria || "").toLowerCase().includes("gasóleo")) {
-            totalIVAGasoleo += Number(f.valorIVA || 0);
+            totalIVAGasoleo += iva;
         }
     });
 
-    return { totalBruto, totalIVA, totalIVAGasoleo, totalLiquido };
+    return { 
+        totalBruto, 
+        totalIVA, 
+        totalIVAGasoleo, 
+        totalLiquido,
+        totalIVADedutivel,
+        totalIVANaoDedutivel
+    };
 }
+
 
 function compararATComSistema(listaAT, listaSistema) {
 
@@ -348,39 +372,50 @@ function renderizarResultados({ emFaltaNoSistema, emFaltaNaAT, divergentes, tota
         <h3>Resumo Financeiro do Período</h3>
 
         <table class="tabela-resumo">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Valor (€)</th>
-                    <th>IVA (€)</th>
-                    <th>IVA Gasóleo (€)</th>
-                    <th>Líquido (€)</th>
-                </tr>
-            </thead>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Valor (€)</th>
+            <th>IVA (€)</th>
+            <th>IVA Dedutível (€)</th>
+            <th>IVA Não Dedutível (€)</th>
+            <th>IVA Gasóleo (€)</th>
+            <th>Líquido (€)</th>
+        </tr>
+    </thead>
+
             <tbody>
                 <tr>
-                    <td><strong>AT</strong></td>
-                    <td>${totaisAT.totalBruto.toFixed(2)}</td>
-                    <td>${totaisAT.totalIVA.toFixed(2)}</td>
-                    <td>${totaisAT.totalIVAGasoleo.toFixed(2)}</td>
-                    <td>${totaisAT.totalLiquido.toFixed(2)}</td>
-                </tr>
+    <td><strong>AT</strong></td>
+    <td>${totaisAT.totalBruto.toFixed(2)}</td>
+    <td>${totaisAT.totalIVA.toFixed(2)}</td>
+    <td>${totaisAT.totalIVADedutivel.toFixed(2)}</td>
+    <td>${totaisAT.totalIVANaoDedutivel.toFixed(2)}</td>
+    <td>${totaisAT.totalIVAGasoleo.toFixed(2)}</td>
+    <td>${totaisAT.totalLiquido.toFixed(2)}</td>
+</tr>
+
 
                 <tr>
-                    <td><strong>Sistema</strong></td>
-                    <td>${totaisSistema.totalBruto.toFixed(2)}</td>
-                    <td>${totaisSistema.totalIVA.toFixed(2)}</td>
-                    <td>${totaisSistema.totalIVAGasoleo.toFixed(2)}</td>
-                    <td>${totaisSistema.totalLiquido.toFixed(2)}</td>
-                </tr>
+    <td><strong>Sistema</strong></td>
+    <td>${totaisSistema.totalBruto.toFixed(2)}</td>
+    <td>${totaisSistema.totalIVA.toFixed(2)}</td>
+    <td>${totaisSistema.totalIVADedutivel.toFixed(2)}</td>
+    <td>${totaisSistema.totalIVANaoDedutivel.toFixed(2)}</td>
+    <td>${totaisSistema.totalIVAGasoleo.toFixed(2)}</td>
+    <td>${totaisSistema.totalLiquido.toFixed(2)}</td>
+</tr>
 
                 <tr>
-                    <td><strong>Diferença</strong></td>
-                    <td>${(totaisAT.totalBruto - totaisSistema.totalBruto).toFixed(2)}</td>
-                    <td>${(totaisAT.totalIVA - totaisSistema.totalIVA).toFixed(2)}</td>
-                    <td>${(totaisAT.totalIVAGasoleo - totaisSistema.totalIVAGasoleo).toFixed(2)}</td>
-                    <td>${(totaisAT.totalLiquido - totaisSistema.totalLiquido).toFixed(2)}</td>
-                </tr>
+    <td><strong>Diferença</strong></td>
+    <td>${(totaisAT.totalBruto - totaisSistema.totalBruto).toFixed(2)}</td>
+    <td>${(totaisAT.totalIVA - totaisSistema.totalIVA).toFixed(2)}</td>
+    <td>${(totaisAT.totalIVADedutivel - totaisSistema.totalIVADedutivel).toFixed(2)}</td>
+    <td>${(totaisAT.totalIVANaoDedutivel - totaisSistema.totalIVANaoDedutivel).toFixed(2)}</td>
+    <td>${(totaisAT.totalIVAGasoleo - totaisSistema.totalIVAGasoleo).toFixed(2)}</td>
+    <td>${(totaisAT.totalLiquido - totaisSistema.totalLiquido).toFixed(2)}</td>
+</tr>
+
             </tbody>
         </table>
     </div>
@@ -607,6 +642,27 @@ function exportarExcel() {
     ws3["!autofilter"] = { ref: "A1:D" + dadosDivergencias.length };
     XLSX.utils.book_append_sheet(wb, ws3, "Divergências");
 
+// ============================
+// 4) RESUMO FINANCEIRO
+// ============================
+const { totaisAT, totaisSistema } = window.ultimoResultadoReconcil;
+
+const dadosResumo = [
+    ["Campo", "AT (€)", "Sistema (€)", "Diferença (€)"],
+    ["Valor Total", totaisAT.totalBruto, totaisSistema.totalBruto, totaisAT.totalBruto - totaisSistema.totalBruto],
+    ["IVA Total", totaisAT.totalIVA, totaisSistema.totalIVA, totaisAT.totalIVA - totaisSistema.totalIVA],
+    ["IVA Dedutível", totaisAT.totalIVADedutivel, totaisSistema.totalIVADedutivel, totaisAT.totalIVADedutivel - totaisSistema.totalIVADedutivel],
+    ["IVA Não Dedutível", totaisAT.totalIVANaoDedutivel, totaisSistema.totalIVANaoDedutivel, totaisAT.totalIVANaoDedutivel - totaisSistema.totalIVANaoDedutivel],
+    ["IVA Gasóleo", totaisAT.totalIVAGasoleo, totaisSistema.totalIVAGasoleo, totaisAT.totalIVAGasoleo - totaisSistema.totalIVAGasoleo],
+    ["Líquido", totaisAT.totalLiquido, totaisSistema.totalLiquido, totaisAT.totalLiquido - totaisSistema.totalLiquido]
+];
+
+const wsResumo = XLSX.utils.aoa_to_sheet(dadosResumo);
+ajustarColunas(wsResumo, dadosResumo);
+wsResumo["!autofilter"] = { ref: "A1:D" + dadosResumo.length };
+XLSX.utils.book_append_sheet(wb, wsResumo, "Resumo");
+
+    
     // ============================
     // DOWNLOAD FINAL
     // ============================
