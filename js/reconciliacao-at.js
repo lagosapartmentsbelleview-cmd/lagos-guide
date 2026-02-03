@@ -242,8 +242,10 @@ function compararATComSistema(listaAT, listaSistema) {
         // verificar divergências
         const difs = [];
 
-        if (Math.abs(fAT.valorBruto - fS.valorBruto) > 0.01) difs.push("Valor Bruto");
-        if (Math.abs(fAT.valorIVA - fS.valorIVA) > 0.01) difs.push("IVA");
+        // 🔥 Ignorar diferenças até 5 cêntimos
+        if (Math.abs(fAT.valorBruto - fS.valorBruto) > 0.05) difs.push("Valor Bruto");
+        if (Math.abs(fAT.valorIVA - fS.valorIVA) > 0.05) difs.push("IVA");
+
         if ((fAT.dataISO || "").substring(0,10) !== (fS.dataISO || "").substring(0,10)) difs.push("Data");
         if (fAT.nif !== fS.nif) difs.push("NIF");
 
