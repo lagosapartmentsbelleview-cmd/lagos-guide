@@ -227,6 +227,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+setTimeout(() => {
+    const tabAgua = document.querySelector('[data-tab="agua"]');
+    if (tabAgua && tabAgua.classList.contains("active")) {
+        abrirAbaAgua();
+    }
+}, 200);
+
 
 // ======================================================
 //  NORMALIZAR DATA
@@ -362,8 +369,12 @@ function calcularTotaisAgua(lista) {
 
 
 function abrirAbaAgua() {
-    const el = document.getElementById("tabela-agua-container");
-    if (!el) return;
+   const el = document.getElementById("tabela-agua-container");
+if (!el) {
+    console.warn("A aba Água ainda não está carregada no DOM.");
+    return;
+}
+
 
     const lista = obterFaturasAgua();
     el.innerHTML = gerarTabelaAgua(lista);
