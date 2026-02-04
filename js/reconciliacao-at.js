@@ -736,6 +736,40 @@ function ajustarColunas(ws, dados) {
     ws["!cols"] = colWidths;
 }
 
+function exportarATExcel() {
+    if (!window.ultimoResultadoReconcil || !window.ultimoResultadoReconcil.faturasAT) {
+        alert("Ainda não carregaste dados da AT.");
+        return;
+    }
+
+    const faturas = window.ultimoResultadoReconcil.faturasAT;
+
+    const dados = [
+        ["Identificação", "Fornecedor", "NIF", "Data", "Base Tributável", "IVA", "IVA Dedutível", "Total"]
+    ];
+
+    faturas.forEach(f => {
+        dados.push([
+            f.identificacao || "",
+            f.fornecedor || "",
+            f.nif || "",
+            (f.dataISO || "").substring(0,10),
+            (Number(f.valorBruto) - Number(f.valorIVA)).toFixed(2),
+            Number(f.valorIVA).toFixed(2),
+            Number(f.valorDedutivel).toFixed(2),
+            Number(f.valorBruto).toFixed(2)
+        ]);
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet(dados);
+    ajustarColunas(ws, dados);
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Faturas AT");
+
+    XLSX.writeFile(wb, "AT_faturas.xlsx");
+}
+
     
     // 🔥 2) GUARDAR TEXTO SEMPRE QUE O UTILIZADOR ESCREVE
 document.getElementById("textoAT").addEventListener("input", () => {
