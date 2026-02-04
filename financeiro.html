@@ -283,21 +283,38 @@
 </div>
 
 
-</div>
+</div> <!-- fecha tab-custos-iva -->
 
-        <div class="tab-content" id="tab-agua">
+<!-- ABA ÁGUA -->
+<div class="tab-content" id="tab-agua">
+
     <h2>Água</h2>
 
     <div class="card">
         <h3>Faturas de Água (a partir de Custos & IVA)</h3>
 
-        <p>Lista automática de faturas com categoria "Água".</p>
+        <!-- FILTROS -->
+        <div class="filtros-agua">
+            <label>Início:</label>
+            <input type="date" id="filtroAguaInicio" min="2020-01-01" max="2050-12-31">
 
+            <label>Fim:</label>
+            <input type="date" id="filtroAguaFim" min="2020-01-01" max="2050-12-31">
+
+            <button onclick="abrirAbaAgua()">Filtrar</button>
+        </div>
+
+        <!-- TOTAIS -->
+        <div id="totais-agua" style="margin-top:10px; font-weight:bold;"></div>
+
+        <!-- TABELA -->
         <div id="tabela-agua-container">
-            <!-- A tabela de água será gerada via JavaScript -->
+            <!-- A tabela será gerada via JS -->
         </div>
     </div>
-</div>
+
+</div> <!-- fecha tab-agua -->
+
 
 <div class="tab-content" id="tab-condominio"></div>
 <div class="tab-content" id="tab-luz"></div>
@@ -305,12 +322,7 @@
 <div class="tab-content" id="tab-equipamentos"></div>
 <div class="tab-content" id="tab-outros"></div>
 
-        <div class="tab-content" id="tab-condominio"></div>
-        <div class="tab-content" id="tab-luz"></div>
-        <div class="tab-content" id="tab-impostos"></div>
-        <div class="tab-content" id="tab-equipamentos"></div>
-        <div class="tab-content" id="tab-outros"></div>
-
+       
     </div> <!-- fecha .content -->
 
 
