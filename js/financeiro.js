@@ -227,14 +227,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-setTimeout(() => {
-    const tabAgua = document.querySelector('[data-tab="agua"]');
-    if (tabAgua && tabAgua.classList.contains("active")) {
-        abrirAbaAgua();
-    }
-}, 200);
-
-
 // ======================================================
 //  NORMALIZAR DATA
 // ======================================================
