@@ -455,8 +455,9 @@ function renderizarResultados({ emFaltaNoSistema, emFaltaNaAT, divergentes, tota
 `);
 
 
-    partes.push(`<p><strong>Faturas AT:</strong> ${resultado.faturasAT.length}</p>`);
-    partes.push(`<p><strong>Faturas Sistema:</strong> ${faturasSistema.length}</p>`);
+    partes.push(`<p><strong>Faturas AT:</strong> ${window.ultimoResultadoReconcil.faturasAT.length}</p>`);
+    partes.push(`<p><strong>Faturas Sistema:</strong> ${window.ultimoResultadoReconcil.faturasSistema.length}</p>`);
+
 
     // 1) Em falta no sistema
     partes.push(`<div class="secao">`);
