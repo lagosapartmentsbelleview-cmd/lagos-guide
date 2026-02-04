@@ -213,6 +213,21 @@ document.getElementById("btnExportPDFFaturas")
     atualizarUI();
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    const tabs = document.querySelectorAll(".tab");
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            const target = tab.getAttribute("data-tab");
+
+            if (target === "agua") {
+                abrirAbaAgua();
+            }
+        });
+    });
+});
+
+
 // ======================================================
 //  NORMALIZAR DATA
 // ======================================================
@@ -270,6 +285,62 @@ async function carregarFaturas() {
         console.error("Erro ao carregar faturas:", err);
     }
 }
+
+function obterFaturasAgua() {
+    return faturasCache.filter(f =>
+        (f.categoria || "").toLowerCase().includes("água") ||
+        (f.categoria || "").toLowerCase().includes("agua")
+    );
+}
+
+function gerarTabelaAgua() {
+    const lista = obterFaturasAgua();
+
+    if (!lista.length) {
+        return "<p>Sem faturas de água.</p>";
+    }
+
+    let html = `
+        <table class="tabela-agua">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Fornecedor</th>
+                    <th>NIF</th>
+                    <th>Bruto (€)</th>
+                    <th>IVA (€)</th>
+                    <th>Nº Fatura</th>
+                    <th>ATCUD</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    lista.forEach(f => {
+        html += `
+            <tr>
+                <td>${(f.dataISO || "").substring(0,10)}</td>
+                <td>${f.fornecedor || ""}</td>
+                <td>${f.nif || ""}</td>
+                <td>${Number(f.valorBruto || 0).toFixed(2)}</td>
+                <td>${Number(f.valorIVA || 0).toFixed(2)}</td>
+                <td>${f.numeroFatura || ""}</td>
+                <td>${f.atcud || ""}</td>
+            </tr>
+        `;
+    });
+
+    html += "</tbody></table>";
+    return html;
+}
+
+function abrirAbaAgua() {
+    const el = document.getElementById("tabela-agua-container");
+    if (!el) return;
+
+    el.innerHTML = gerarTabelaAgua();
+}
+
 
 async function migrarDatasFaturasParaDataISO() {
     console.log("🚀 A iniciar migração de datas para dataISO...");
