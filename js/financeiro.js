@@ -220,8 +220,10 @@ document.addEventListener("DOMContentLoaded", () => {
         tab.addEventListener("click", () => {
             const target = tab.getAttribute("data-tab");
 
-            if (target === "agua") {
-                abrirAbaAgua();
+         if (target === "agua") abrirAbaAgua();
+         if (target === "luz") abrirAbaLuz();
+
+
             }
         });
     });
@@ -383,6 +385,104 @@ if (!el) {
         Total Líquido: ${totais.totalLiquido.toFixed(2)} €
     `;
 }
+
+function obterFaturasLuz() {
+    const inicio = document.getElementById("filtroLuzInicio")?.value || "";
+    const fim = document.getElementById("filtroLuzFim")?.value || "";
+
+    return faturasCache.filter(f => {
+        const fornecedor = (f.fornecedor || "").toLowerCase();
+
+        // 🔥 Aqui filtramos EDP (podes adicionar mais)
+        const isEDP =
+            fornecedor.includes("edp") ||
+            fornecedor.includes("energias de portugal") ||
+            fornecedor.includes("edp comercial") ||
+            fornecedor.includes("edp serviço universal");
+
+        if (!isEDP) return false;
+
+        const data = f.dataISO || "";
+
+        if (inicio && data < inicio) return false;
+        if (fim && data > fim) return false;
+
+        return true;
+    });
+}
+
+function gerarTabelaLuz(lista) {
+    if (!lista.length) {
+        return "<p>Sem faturas de luz.</p>";
+    }
+
+    let html = `
+        <table class="tabela-agua tabela-estilo">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Fornecedor</th>
+                    <th>NIF</th>
+                    <th>Bruto (€)</th>
+                    <th>IVA (€)</th>
+                    <th>Nº Fatura</th>
+                    <th>ATCUD</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    lista.forEach(f => {
+        html += `
+            <tr>
+                <td>${(f.dataISO || "").substring(0,10)}</td>
+                <td>${f.fornecedor || ""}</td>
+                <td>${f.nif || ""}</td>
+                <td>${Number(f.valorBruto || 0).toFixed(2)}</td>
+                <td>${Number(f.valorIVA || 0).toFixed(2)}</td>
+                <td>${f.numeroFatura || ""}</td>
+                <td>${f.atcud || ""}</td>
+            </tr>
+        `;
+    });
+
+    html += "</tbody></table>";
+    return html;
+}
+
+function calcularTotaisLuz(lista) {
+    let totalBruto = 0;
+    let totalIVA = 0;
+
+    lista.forEach(f => {
+        totalBruto += Number(f.valorBruto || 0);
+        totalIVA += Number(f.valorIVA || 0);
+    });
+
+    return {
+        totalBruto,
+        totalIVA,
+        totalLiquido: totalBruto - totalIVA
+    };
+}
+
+function abrirAbaLuz() {
+    const el = document.getElementById("tabela-luz-container");
+    if (!el) return;
+
+    const lista = obterFaturasLuz();
+    el.innerHTML = gerarTabelaLuz(lista);
+
+    const totais = calcularTotaisLuz(lista);
+
+    document.getElementById("totais-luz").innerHTML = `
+        Total Bruto: ${totais.totalBruto.toFixed(2)} € |
+        Total IVA: ${totais.totalIVA.toFixed(2)} € |
+        Total Líquido: ${totais.totalLiquido.toFixed(2)} €
+    `;
+}
+
+
 
 
 
