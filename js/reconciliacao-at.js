@@ -455,7 +455,7 @@ function renderizarResultados({ emFaltaNoSistema, emFaltaNaAT, divergentes, tota
 `);
 
 
-    partes.push(`<p><strong>Faturas AT:</strong> ${faturasAT.length}</p>`);
+    partes.push(`<p><strong>Faturas AT:</strong> ${resultado.faturasAT.length}</p>`);
     partes.push(`<p><strong>Faturas Sistema:</strong> ${faturasSistema.length}</p>`);
 
     // 1) Em falta no sistema
