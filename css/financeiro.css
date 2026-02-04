@@ -400,4 +400,31 @@
     flex-shrink: 0 !important;   /* 🔥 impede o botão de desaparecer no flex */
 }
 
+/* Tabela com o mesmo design da tabela principal */
+.tabela-estilo {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.tabela-estilo thead {
+    background: #f0f4ff;
+    font-weight: bold;
+}
+
+.tabela-estilo th,
+.tabela-estilo td {
+    border: 1px solid #d0d7e2;
+    padding: 8px 10px;
+    text-align: left;
+}
+
+.tabela-estilo tbody tr:nth-child(even) {
+    background: #f9fbff;
+}
+
+.tabela-estilo tbody tr:hover {
+    background: #eef4ff;
+}
 
