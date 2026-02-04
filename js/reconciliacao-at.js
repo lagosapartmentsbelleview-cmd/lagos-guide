@@ -672,6 +672,34 @@ function exportarExcel() {
     XLSX.utils.book_append_sheet(wb, ws3, "Divergências");
 
 // ============================
+// 4) LISTA COMPLETA DE FATURAS AT
+// ============================
+const faturasAT = window.ultimoResultadoReconcil.faturasAT;
+
+const dadosAT = [
+    ["Identificação", "Fornecedor", "NIF", "Data", "Base Tributável", "IVA", "IVA Dedutível", "Total"]
+];
+
+faturasAT.forEach(f => {
+    dadosAT.push([
+        f.identificacao || "",
+        f.fornecedor || "",
+        f.nif || "",
+        (f.dataISO || "").substring(0,10),
+        (Number(f.valorBruto) - Number(f.valorIVA)).toFixed(2),
+        Number(f.valorIVA).toFixed(2),
+        Number(f.valorDedutivel).toFixed(2),
+        Number(f.valorBruto).toFixed(2)
+    ]);
+});
+
+const wsAT = XLSX.utils.aoa_to_sheet(dadosAT);
+ajustarColunas(wsAT, dadosAT);
+wsAT["!autofilter"] = { ref: "A1:H" + dadosAT.length };
+XLSX.utils.book_append_sheet(wb, wsAT, "Faturas AT");
+
+    
+// ============================
 // 4) RESUMO FINANCEIRO
 // ============================
 const { totaisAT, totaisSistema } = window.ultimoResultadoReconcil;
