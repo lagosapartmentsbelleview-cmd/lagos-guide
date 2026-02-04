@@ -315,9 +315,37 @@
 
 </div> <!-- fecha tab-agua -->
 
+<div class="tab-content" id="tab-luz">
+
+    <h2>Luz</h2>
+
+    <div class="card">
+        <h3>Faturas de Luz (EDP)</h3>
+
+        <!-- FILTROS -->
+        <div class="filtros-luz">
+            <label>Início:</label>
+            <input type="date" id="filtroLuzInicio" min="2020-01-01" max="2050-12-31">
+
+            <label>Fim:</label>
+            <input type="date" id="filtroLuzFim" min="2020-01-01" max="2050-12-31">
+
+            <button onclick="abrirAbaLuz()">Filtrar</button>
+        </div>
+
+        <!-- TOTAIS -->
+        <div id="totais-luz" style="margin-top:10px; font-weight:bold;"></div>
+
+        <!-- TABELA -->
+        <div id="tabela-luz-container">
+            <!-- tabela será gerada via JS -->
+        </div>
+    </div>
+
+</div>
+
 
 <div class="tab-content" id="tab-condominio"></div>
-<div class="tab-content" id="tab-luz"></div>
 <div class="tab-content" id="tab-impostos"></div>
 <div class="tab-content" id="tab-equipamentos"></div>
 <div class="tab-content" id="tab-outros"></div>
