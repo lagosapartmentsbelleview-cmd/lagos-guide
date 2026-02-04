@@ -220,14 +220,12 @@ document.addEventListener("DOMContentLoaded", () => {
         tab.addEventListener("click", () => {
             const target = tab.getAttribute("data-tab");
 
-         if (target === "agua") abrirAbaAgua();
-         if (target === "luz") abrirAbaLuz();
-
-
-            }
+            if (target === "agua") abrirAbaAgua();
+            if (target === "luz") abrirAbaLuz();
         });
     });
 });
+
 
 // ======================================================
 //  NORMALIZAR DATA
