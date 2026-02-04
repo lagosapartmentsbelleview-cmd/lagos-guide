@@ -287,11 +287,22 @@ async function carregarFaturas() {
 }
 
 function obterFaturasAgua() {
-    return faturasCache.filter(f =>
-        (f.categoria || "").toLowerCase().includes("água") ||
-        (f.categoria || "").toLowerCase().includes("agua")
-    );
+    const inicio = document.getElementById("filtroAguaInicio")?.value || "";
+    const fim = document.getElementById("filtroAguaFim")?.value || "";
+
+    return faturasCache.filter(f => {
+        const cat = (f.categoria || "").toLowerCase();
+        if (!cat.includes("água") && !cat.includes("agua")) return false;
+
+        const data = f.dataISO || "";
+
+        if (inicio && data < inicio) return false;
+        if (fim && data > fim) return false;
+
+        return true;
+    });
 }
+
 
 function gerarTabelaAgua() {
     const lista = obterFaturasAgua();
@@ -333,13 +344,39 @@ function gerarTabelaAgua() {
     html += "</tbody></table>";
     return html;
 }
+function calcularTotaisAgua(lista) {
+    let totalBruto = 0;
+    let totalIVA = 0;
+
+    lista.forEach(f => {
+        totalBruto += Number(f.valorBruto || 0);
+        totalIVA += Number(f.valorIVA || 0);
+    });
+
+    return {
+        totalBruto,
+        totalIVA,
+        totalLiquido: totalBruto - totalIVA
+    };
+}
+
 
 function abrirAbaAgua() {
     const el = document.getElementById("tabela-agua-container");
     if (!el) return;
 
-    el.innerHTML = gerarTabelaAgua();
+    const lista = obterFaturasAgua();
+    el.innerHTML = gerarTabelaAgua(lista);
+
+    const totais = calcularTotaisAgua(lista);
+
+    document.getElementById("totais-agua").innerHTML = `
+        Total Bruto: ${totais.totalBruto.toFixed(2)} € |
+        Total IVA: ${totais.totalIVA.toFixed(2)} € |
+        Total Líquido: ${totais.totalLiquido.toFixed(2)} €
+    `;
 }
+
 
 
 async function migrarDatasFaturasParaDataISO() {
