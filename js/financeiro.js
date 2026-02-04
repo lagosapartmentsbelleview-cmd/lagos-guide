@@ -303,15 +303,13 @@ function obterFaturasAgua() {
 }
 
 
-function gerarTabelaAgua() {
-    const lista = obterFaturasAgua();
-
+function gerarTabelaAgua(lista) {
     if (!lista.length) {
         return "<p>Sem faturas de água.</p>";
     }
 
     let html = `
-        <table class="tabela-agua">
+        <table class="tabela-agua tabela-estilo">
             <thead>
                 <tr>
                     <th>Data</th>
@@ -340,9 +338,15 @@ function gerarTabelaAgua() {
         `;
     });
 
-    html += "</tbody></table>";
+    html += `
+            </tbody>
+        </table>
+    `;
+
     return html;
 }
+
+
 function calcularTotaisAgua(lista) {
     let totalBruto = 0;
     let totalIVA = 0;
