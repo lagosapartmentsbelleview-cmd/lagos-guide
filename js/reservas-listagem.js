@@ -1695,6 +1695,43 @@ function ligarEventos() {
 
     }   // <-- FECHA A FUNÇÃO ligarEventos() AQUI MESMO
 
+function calcularTotaisReservas(lista) {
+    let totalReservas = lista.length;
+    let totalNoites = 0;
+    let totalValor = 0;
+    let totalExtras = 0;
+
+    lista.forEach(r => {
+        totalNoites += Number(r.noites || 0);
+        totalValor += Number(r.totalBruto || 0);
+        totalExtras += Number(r.extras || 0);
+    });
+
+    return {
+        totalReservas,
+        totalNoites,
+        totalValor,
+        totalExtras,
+        totalLiquido: totalValor + totalExtras
+    };
+}
+
+function renderizarTotaisReservas() {
+    const el = document.getElementById("totais-reservas");
+    if (!el) return;
+
+    const t = calcularTotaisReservas(reservasFiltradas);
+
+    el.innerHTML = `
+        Reservas: <strong>${t.totalReservas}</strong> |
+        Noites: <strong>${t.totalNoites}</strong> |
+        Valor: <strong>${t.totalValor.toFixed(2)} €</strong> |
+        Extras: <strong>${t.totalExtras.toFixed(2)} €</strong> |
+        Total Líquido: <strong>${t.totalLiquido.toFixed(2)} €</strong>
+    `;
+}
+
+
     // -------------------------------------------------------------
     //   Filtros
     // -------------------------------------------------------------
@@ -1764,6 +1801,9 @@ function ligarEventos() {
     reservasFiltradas = lista;
 
     desenharTabela(reservasFiltradas);
+
+// 🔥 ADICIONAR ESTA LINHA 
+    renderizarTotaisReservas();
 }
 
 // -------------------------------------------------------------
