@@ -474,3 +474,24 @@ button.btn-delete {
     color: white !important;
 }
 
+.totais-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.total-card {
+    background: #f7faff;
+    border: 1px solid #d0e3ff;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.total-card strong {
+    font-size: 18px;
+    display: block;
+    margin-top: 4px;
+}
