@@ -2033,6 +2033,8 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
     "Limpeza (€)": Number(r.limpeza) || 0
 }));
 
+    console.log("DADOS EXPORTADOS:", dados); // <--- ADICIONA ISTO
+
     const ws = XLSX.utils.json_to_sheet(dados);
 
     // Filtros automáticos
