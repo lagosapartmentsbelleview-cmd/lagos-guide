@@ -478,15 +478,16 @@ button.btn-delete {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 12px;
-    margin-bottom: 20px;
+    margin: 15px 0;
 }
 
 .total-card {
-    background: #f7faff;
-    border: 1px solid #d0e3ff;
-    padding: 12px;
+    background: #f4f8ff;
+    border: 1px solid #d6e4ff;
+    padding: 12px 14px;
     border-radius: 8px;
     font-size: 14px;
+    line-height: 1.4;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
@@ -494,4 +495,6 @@ button.btn-delete {
     font-size: 18px;
     display: block;
     margin-top: 4px;
+    color: #003366;
 }
+
