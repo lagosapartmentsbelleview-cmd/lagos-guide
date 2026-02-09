@@ -946,67 +946,53 @@ td button {
         </div>
 
         <!-- FOOTER -->
-        <div class="modal-footer">
-            <button class="btnSecundario" onclick="fecharModalNovaReserva()">Cancelar</button>
-            <button class="btnPrimario" id="btnGuardar">Guardar</button>
-        </div>
+<div class="modal-footer">
+    <button class="btnSecundario" onclick="fecharModalNovaReserva()">Cancelar</button>
+    <button class="btnPrimario" id="btnGuardar">Guardar</button>
+</div>
 
-    </div>
+</div>
 </div>
 
 <!-- Menu -->
 <script src="js/menu.js"></script>
 
-<!-- XLSX para importar/exportar Excel -->
+<!-- XLSX para importar/exportar Excel (VERSÃO BOA) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
+<!-- Firebase compat v9 -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
+<!-- Configuração Firebase -->
+<script src="js/firebase-config.js"></script>
 
-    <!-- Firebase compat v9 (como tinhas antes) -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<!-- Proteção da página + logout -->
+<script>
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "login.html";
+    }
+});
 
-    <!-- Configuração Firebase (tem de criar firebase, db, etc.) -->
-    <script src="js/firebase-config.js"></script>
-
-    <!-- Proteção da página + logout -->
-    <script>
-      // proteger: se não estiver autenticado, manda para login
-      firebase.auth().onAuthStateChanged(user => {
-        if (!user) {
-          window.location.href = "login.html";
-        }
-      });
-
-      // botão Sair
-      document.addEventListener("DOMContentLoaded", () => {
-        const btnLogout = document.getElementById("btnLogout");
-        if (btnLogout) {
-          btnLogout.addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", () => {
+    const btnLogout = document.getElementById("btnLogout");
+    if (btnLogout) {
+        btnLogout.addEventListener("click", () => {
             firebase.auth().signOut().then(() => {
-              window.location.href = "login.html";
+                window.location.href = "login.html";
             });
-          });
-        }
-      });
-    </script>
-
-    <!-- Configuração de comissões (tem de vir primeiro) -->
-    <script src="js/configComissoes.js"></script>
-
-    <script>
-document.getElementById("statusPagamento").addEventListener("change", function () {
-    const status = this.value;
-
-    const totalBruto = Number(document.getElementById("totalBruto").value || 0);
-    const comissao = Number(document.getElementById("comissao").value || 0);
-
-    if (status === "total") {
-        const valor = totalBruto - comissao;
-        document.getElementById("valorPago").value = valor.toFixed(2);
+        });
     }
 });
 </script>
+
+<!-- Configuração de comissões -->
+<script src="js/configComissoes.js"></script>
+
+<!-- O TEU JS PRINCIPAL (FUNDAMENTAL!) -->
+<script src="js/reservas-listagem.js"></script>
+
 </body>
 </html>
