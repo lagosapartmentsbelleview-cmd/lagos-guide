@@ -2016,33 +2016,52 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
 
     const reservas = await carregarReservasNormalizadas();
 
-        const dados = reservas.map(r => ({
-    Origem: r.origem || "",
-    "Nº Reserva": r.bookingId || "",
-    Hóspede: r.cliente || "",
-    Quartos: Number(r.quartos) || 0,
-    Apartamento: Array.isArray(r.apartamentos) ? r.apartamentos.join(", ") : "",
-    Pessoas: `${Number(r.adultos) || 0}+${Number(r.criancas) || 0}${r.idadesCriancas ? " (" + String(r.idadesCriancas) + ")" : ""}`,
-    Checkin: r.checkin || "",
-    Checkout: r.checkout || "",
-    Noites: Number(r.noites) || 0,
-    "Total Bruto (€)": Number(r.totalBruto) || 0,
-    "Comissão Total (€)": Number(r.comissaoTotal) || 0,
-    "Valor/Noite (€)": Number(r.precoNoite) || 0,
-    Berço: r.berco ? "Sim" : "Não",
-    "Limpeza (€)": Number(r.limpeza) || 0
-}));
+    // 🔥 Função universal para garantir que NADA é objeto
+    const fix = v => {
+        if (v === undefined || v === null) return "";
+        if (typeof v === "object") return JSON.stringify(v); // evita erro "reading 's'"
+        return v;
+    };
 
-    console.log("DADOS EXPORTADOS:", dados); // <--- ADICIONA ISTO
+    // 🔥 Normalização extra para campos que podem vir como Timestamp ou objeto
+    reservas.forEach(r => {
+        r.checkin = fix(r.checkin);
+        r.checkout = fix(r.checkout);
+        r.dataReserva = fix(r.dataReserva);
+        r.dataCancelamento = fix(r.dataCancelamento);
+        r.paisCliente = fix(r.paisCliente);
+        r.origem = fix(r.origem);
+        r.tipoUnidade = fix(r.tipoUnidade);
+        r.dispositivo = fix(r.dispositivo);
+    });
 
+    // 🔥 Construção segura dos dados para o Excel
+    const dados = reservas.map(r => ({
+        Origem: fix(r.origem),
+        "Nº Reserva": fix(r.bookingId),
+        Hóspede: fix(r.cliente),
+        Quartos: Number(r.quartos) || 0,
+        Apartamento: Array.isArray(r.apartamentos) ? r.apartamentos.join(", ") : "",
+        Pessoas: `${Number(r.adultos) || 0}+${Number(r.criancas) || 0}${r.idadesCriancas ? " (" + String(r.idadesCriancas) + ")" : ""}`,
+        Checkin: fix(r.checkin),
+        Checkout: fix(r.checkout),
+        Noites: Number(r.noites) || 0,
+        "Total Bruto (€)": Number(r.totalBruto) || 0,
+        "Comissão Total (€)": Number(r.comissaoTotal) || 0,
+        "Valor/Noite (€)": Number(r.precoNoite) || 0,
+        Berço: r.berco ? "Sim" : "Não",
+        "Limpeza (€)": Number(r.limpeza) || 0
+    }));
+
+    console.log("DADOS EXPORTADOS:", dados);
+
+    // 🔥 Criação da sheet SEM estilos (evita erro 's')
     const ws = XLSX.utils.json_to_sheet(dados);
 
     // Filtros automáticos
     ws['!autofilter'] = { ref: XLSX.utils.encode_range(ws['!ref']) };
 
-   
-    // ws['!cols'] = colWidths;
-
+    // Criar workbook e exportar
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Reservas");
 
