@@ -1698,24 +1698,22 @@ function ligarEventos() {
 function calcularTotaisReservas(lista) {
     let totalReservas = lista.length;
     let totalNoites = 0;
-    let totalValor = 0;      // total bruto
-    let totalComissao = 0;
+    let totalValor = 0;      
+    let totalComissao = 0;   // agora vem do Firebase (comissaoTotal)
     let totalLimpeza = 0;
 
-    // Totais por origem
     let porOrigem = {};
 
     lista.forEach(r => {
         const bruto = Number(r.totalBruto || 0);
-        const comissao = Number(r.comissao || 0);
+        const comissaoTotal = Number(r.comissaoTotal || 0); // 🔥 usar o valor do Firebase
         const limpeza = Number(r.limpeza || 0);
 
         totalNoites += Number(r.noites || 0);
         totalValor += bruto;
-        totalComissao += comissao;
+        totalComissao += comissaoTotal;
         totalLimpeza += limpeza;
 
-        // Agrupar por origem
         const origem = r.origem || "Desconhecido";
 
         if (!porOrigem[origem]) {
@@ -1726,7 +1724,6 @@ function calcularTotaisReservas(lista) {
         porOrigem[origem].valor += bruto;
     });
 
-    // Total líquido = bruto - comissão - limpeza
     const totalLiquido = totalValor - totalComissao - totalLimpeza;
 
     return {
@@ -1739,6 +1736,7 @@ function calcularTotaisReservas(lista) {
         porOrigem
     };
 }
+
 
 
 function renderizarTotaisReservas() {
