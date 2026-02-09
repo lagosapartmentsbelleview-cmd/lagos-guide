@@ -2005,19 +2005,42 @@ async function carregarReservasNormalizadas() {
     return lista;
 }
 
-document.getElementById("btnExportExcel").addEventListener("click", function () {
-    const tabela = document.getElementById("tabelaReservas");
-    if (!tabela) return;
+document.getElementById("btnExportExcel").addEventListener("click", async function () {
 
+    const reservas = await carregarReservasNormalizadas();
+
+    const dados = reservas.map(r => ({
+        Origem: r.origem,
+        "Nº Reserva": r.bookingId,
+        Hóspede: r.cliente,
+        Quartos: r.quartos,
+        Apartamento: r.apartamentos.join(", "),
+        Pessoas: `${r.adultos}+${r.criancas}${r.idadesCriancas ? " (" + r.idadesCriancas + ")" : ""}`,
+        Checkin: r.checkin,
+        Checkout: r.checkout,
+        Noites: r.noites,
+        "Total Bruto (€)": r.totalBruto,
+        "Comissão Total (€)": r.comissaoTotal,
+        "Valor/Noite (€)": r.precoNoite,
+        Berço: r.berco ? "Sim" : "Não",
+        "Limpeza (€)": r.limpeza
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(dados);
+
+    // Filtros automáticos
+    ws['!autofilter'] = { ref: XLSX.utils.encode_range(ws['!ref']) };
+
+    // Auto-largura das colunas
+    const colWidths = Object.keys(dados[0]).map(key => ({
+        wch: Math.max(key.length, ...dados.map(r => String(r[key]).length)) + 2
+    }));
+    ws['!cols'] = colWidths;
+
+    // Criar workbook
     const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.table_to_sheet(tabela, { raw: true });
-
     XLSX.utils.book_append_sheet(wb, ws, "Reservas");
 
+    // Guardar ficheiro
     XLSX.writeFile(wb, "reservas.xlsx");
 });
-
-document.getElementById("btnExportPDF").addEventListener("click", function () {
-    window.print();
-});
-
