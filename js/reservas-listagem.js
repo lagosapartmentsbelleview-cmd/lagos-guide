@@ -1747,30 +1747,54 @@ function renderizarTotaisReservas() {
 
     const t = calcularTotaisReservas(reservasFiltradas);
 
-    // Função para formatar com vírgula
     const fmt = v => v.toFixed(2).replace(".", ",");
 
     let html = `
-        Reservas: <strong>${t.totalReservas}</strong> |
-        Noites: <strong>${fmt(t.totalNoites)}</strong> |
-        Valor Bruto: <strong>${fmt(t.totalValor)} €</strong> |
-        Comissão: <strong>${fmt(t.totalComissao)} €</strong> |
-        Limpeza: <strong>${fmt(t.totalLimpeza)} €</strong> |
-        Total Líquido: <strong>${fmt(t.totalLiquido)} €</strong>
-        <br><br>
-        <strong>Totais por Origem:</strong><br>
+        <div class="total-card">
+            Reservas
+            <strong>${t.totalReservas}</strong>
+        </div>
+
+        <div class="total-card">
+            Noites
+            <strong>${fmt(t.totalNoites)}</strong>
+        </div>
+
+        <div class="total-card">
+            Valor Bruto
+            <strong>${fmt(t.totalValor)} €</strong>
+        </div>
+
+        <div class="total-card">
+            Comissão
+            <strong>${fmt(t.totalComissao)} €</strong>
+        </div>
+
+        <div class="total-card">
+            Limpeza
+            <strong>${fmt(t.totalLimpeza)} €</strong>
+        </div>
+
+        <div class="total-card">
+            Total Líquido
+            <strong>${fmt(t.totalLiquido)} €</strong>
+        </div>
     `;
 
+    // Totais por origem
     for (const origem in t.porOrigem) {
         const o = t.porOrigem[origem];
         html += `
-            ${origem}: <strong>${fmt(o.valor)} €</strong> (${o.reservas} reservas)<br>
+            <div class="total-card">
+                ${origem}
+                <strong>${fmt(o.valor)} €</strong>
+                <small>${o.reservas} reservas</small>
+            </div>
         `;
     }
 
     el.innerHTML = html;
 }
-
 
 
     // -------------------------------------------------------------
