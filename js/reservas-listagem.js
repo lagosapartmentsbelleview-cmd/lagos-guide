@@ -2042,3 +2042,11 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
 
     XLSX.writeFile(wb, "reservas.xlsx");
 });
+
+// -------------------------------------------------------------
+// EXPORTAR PARA PDF
+// -------------------------------------------------------------
+document.getElementById("btnExportPDF").addEventListener("click", function () {
+    window.print();
+});
+
