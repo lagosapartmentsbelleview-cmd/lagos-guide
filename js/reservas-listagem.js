@@ -2040,10 +2040,7 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
     // Filtros automáticos
     ws['!autofilter'] = { ref: XLSX.utils.encode_range(ws['!ref']) };
 
-    // Auto-largura das colunas
-    const colWidths = Object.keys(dados[0]).map(key => ({
-        wch: Math.max(key.length, ...dados.map(r => String(r[key]).length)) + 2
-    }));
+   
     // ws['!cols'] = colWidths;
 
     const wb = XLSX.utils.book_new();
