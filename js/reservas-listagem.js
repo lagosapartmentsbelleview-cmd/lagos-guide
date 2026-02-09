@@ -2037,10 +2037,8 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
     }));
     ws['!cols'] = colWidths;
 
-    // Criar workbook
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Reservas");
 
-    // Guardar ficheiro
     XLSX.writeFile(wb, "reservas.xlsx");
 });
