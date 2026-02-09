@@ -1214,7 +1214,7 @@ function calcularComissoesBooking(totalBruto, comissaoOriginal) {
 // -------------------------------------------------------------
 // 13) IMPORTAÇÃO EXCEL BOOKING (COM ALOCAÇÃO INTELIGENTE + CAMPOS EXTRA)
 // -------------------------------------------------------------
-    async function importarExcelBooking(event) {
+async function importarExcelBooking(event) {
     console.log("IMPORTAR EXCEL BOOKING — INÍCIO");
 
     const file = event.target.files[0];
@@ -1223,11 +1223,18 @@ function calcularComissoesBooking(totalBruto, comissaoOriginal) {
     const data = await file.arrayBuffer();
     const workbook = XLSX.read(data);
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const linhas = XLSX.utils.sheet_to_json(sheet);
+
+    // ⭐ VERSÃO SEGURA — evita erro "reading 's'"
+    const linhas = XLSX.utils.sheet_to_json(sheet, {
+        defval: "",
+        raw: false,
+        blankrows: false
+    });
 
     const bookingIdsImportados = new Set();
     let reservasSimulacao = [...reservas];
     const hoje = new Date();
+
 
     for (const linha of linhas) {
         const bookingId = String(linha["Número da reserva"] || "").trim();
