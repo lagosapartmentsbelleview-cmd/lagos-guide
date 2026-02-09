@@ -2014,23 +2014,56 @@ async function carregarReservasNormalizadas() {
 
 document.getElementById("btnExportExcel").addEventListener("click", function () {
 
-    const tabela = document.getElementById("tabelaReservas");
+    const tabelaOriginal = document.getElementById("tabelaReservas");
 
-    // Criar sheet a partir da tabela HTML
-    const ws = XLSX.utils.table_to_sheet(tabela, { raw: true });
+    // Criar cópia invisível da tabela
+    const tabelaClone = tabelaOriginal.cloneNode(true);
+    tabelaClone.style.display = "none";
+    document.body.appendChild(tabelaClone);
 
-    // Ajustar colunas automaticamente
+    // 1) Remover ícones e botões
+    tabelaClone.querySelectorAll("i, svg, button, .acoes, .icone").forEach(el => el.remove());
+
+    // 2) Limpar coluna Pessoas (remover emojis)
+    tabelaClone.querySelectorAll("td:nth-child(7)").forEach(td => {
+        td.textContent = td.textContent
+            .replace(/👤/g, "")
+            .replace(/👶/g, "")
+            .trim();
+    });
+
+    // 3) Converter valores numéricos com ponto → vírgula
+    tabelaClone.querySelectorAll("td").forEach(td => {
+        const txt = td.textContent.trim();
+        if (/^\d+\.\d+$/.test(txt)) {
+            td.textContent = txt.replace(".", ",");
+        }
+    });
+
+    // Criar sheet a partir da tabela limpa
+    const ws = XLSX.utils.table_to_sheet(tabelaClone, { raw: true });
+
+    // Filtros automáticos
+    ws['!autofilter'] = { ref: XLSX.utils.encode_range(ws['!ref']) };
+
+    // Ajustar colunas
     const range = XLSX.utils.decode_range(ws['!ref']);
     ws['!cols'] = [];
     for (let C = range.s.c; C <= range.e.c; ++C) {
-        ws['!cols'].push({ wch: 20 }); // largura padrão
+        ws['!cols'].push({ wch: 20 });
     }
 
+    // Criar workbook
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Reservas");
 
+    // Remover tabela clone
+    tabelaClone.remove();
+
+    // Exportar
     XLSX.writeFile(wb, "reservas.xlsx");
 });
+
 
 
 
