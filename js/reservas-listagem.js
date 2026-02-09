@@ -2031,6 +2031,60 @@ document.getElementById("btnExportExcel").addEventListener("click", function () 
 
     XLSX.writeFile(wb, "reservas.xlsx");
 });
+depois assim já não abria nem funciona : document.getElementById("btnExportExcel").addEventListener("click", function () {
+
+    const tabelaOriginal = document.getElementById("tabelaReservas");
+
+    // Criar cópia invisível da tabela
+    const tabelaClone = tabelaOriginal.cloneNode(true);
+    tabelaClone.style.display = "none";
+    document.body.appendChild(tabelaClone);
+
+    // 1) Remover ícones e botões
+    tabelaClone.querySelectorAll("i, svg, button").forEach(el => el.remove());
+
+    // 2) Remover coluna Ações (última coluna)
+    tabelaClone.querySelectorAll("th:last-child, td:last-child").forEach(el => el.remove());
+
+    // 3) Limpar coluna Pessoas (remover emojis)
+    tabelaClone.querySelectorAll("td:nth-child(7)").forEach(td => {
+        td.textContent = td.textContent
+            .replace(/👤/g, "")
+            .replace(/👶/g, "")
+            .trim();
+    });
+
+    // 4) Converter valores numéricos com ponto → vírgula
+    tabelaClone.querySelectorAll("td").forEach(td => {
+        const txt = td.textContent.trim();
+        if (/^\d+\.\d+$/.test(txt)) {
+            td.textContent = txt.replace(".", ",");
+        }
+    });
+
+    // Criar sheet a partir da tabela limpa
+    const ws = XLSX.utils.table_to_sheet(tabelaClone, { raw: true });
+
+    // Filtros automáticos
+    ws['!autofilter'] = { ref: XLSX.utils.encode_range(ws['!ref']) };
+
+    // Ajustar colunas
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    ws['!cols'] = [];
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+        ws['!cols'].push({ wch: 20 });
+    }
+
+    // Criar workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Reservas");
+
+    // Remover tabela clone
+    tabelaClone.remove();
+
+    // Exportar
+    XLSX.writeFile(wb, "reservas.xlsx");
+});
 
 
 // -------------------------------------------------------------
