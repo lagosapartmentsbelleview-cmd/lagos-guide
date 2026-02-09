@@ -2045,10 +2045,13 @@ document.getElementById("btnExportExcel").addEventListener("click", function () 
 
     // 4) Remover coluna Ações **no Excel**, não no DOM
     const range = XLSX.utils.decode_range(ws['!ref']);
+    const lastCol = range.e.c;
+
     for (let R = range.s.r; R <= range.e.r; R++) {
-        const cellRef = XLSX.utils.encode_cell({ r: R, c: range.e.c });
+        const cellRef = XLSX.utils.encode_cell({ r: R, c: lastCol });
         delete ws[cellRef];
     }
+
     range.e.c--;
     ws['!ref'] = XLSX.utils.encode_range(range);
 
@@ -2066,10 +2069,6 @@ document.getElementById("btnExportExcel").addEventListener("click", function () 
 
     XLSX.writeFile(wb, "reservas.xlsx");
 });
-
-
-
-
 
 // -------------------------------------------------------------
 // EXPORTAR PARA PDF
