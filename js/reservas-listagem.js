@@ -2028,33 +2028,38 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
 
     // 🔥 3) Normalização extra para campos que podem vir como Timestamp ou objeto
     reservas.forEach(r => {
-        r.checkin = fix(r.checkin);
-        r.checkout = fix(r.checkout);
-        r.dataReserva = fix(r.dataReserva);
-        r.dataCancelamento = fix(r.dataCancelamento);
-        r.paisCliente = fix(r.paisCliente);
-        r.origem = fix(r.origem);
-        r.tipoUnidade = fix(r.tipoUnidade);
-        r.dispositivo = fix(r.dispositivo);
-    });
+    if (isNaN(Number(r.adultos))) r.adultos = 0;
+    if (isNaN(Number(r.criancas))) r.criancas = 0;
+    if (isNaN(Number(r.noites))) r.noites = 0;
+    if (isNaN(Number(r.totalBruto))) r.totalBruto = 0;
+    if (isNaN(Number(r.comissaoTotal))) r.comissaoTotal = 0;
+    if (isNaN(Number(r.precoNoite))) r.precoNoite = 0;
+    if (isNaN(Number(r.limpeza))) r.limpeza = 0;
+});
+
 
     // 🔥 4) Construção segura dos dados para o Excel
-    const dados = reservas.map(r => ({
-        Origem: fix(r.origem),
-        "Nº Reserva": fix(r.bookingId),
-        Hóspede: fix(r.cliente),
-        Quartos: Number(r.quartos) || 0,
-        Apartamento: Array.isArray(r.apartamentos) ? r.apartamentos.join(", ") : "",
-        Pessoas: `${Number(r.adultos) || 0}+${Number(r.criancas) || 0}${r.idadesCriancas ? " (" + String(r.idadesCriancas) + ")" : ""}`,
-        Checkin: fix(r.checkin),
-        Checkout: fix(r.checkout),
-        Noites: Number(r.noites) || 0,
-        "Total Bruto (€)": Number(r.totalBruto) || 0,
-        "Comissão Total (€)": Number(r.comissaoTotal) || 0,
-        "Valor/Noite (€)": Number(r.precoNoite) || 0,
-        Berço: r.berco ? "Sim" : "Não",
-        "Limpeza (€)": Number(r.limpeza) || 0
-    }));
+   const dados = reservas.map(r => ({
+    Origem: fix(r.origem),
+    "Nº Reserva": fix(r.bookingId),
+    Hóspede: fix(r.cliente),
+    Quartos: Number(r.quartos) || 0,
+    Apartamento: Array.isArray(r.apartamentos) ? r.apartamentos.join(", ") : "",
+    Pessoas: fix(
+        `${Number(r.adultos) || 0}+${Number(r.criancas) || 0}${
+            r.idadesCriancas ? " (" + fix(r.idadesCriancas) + ")" : ""
+        }`
+    ),
+    Checkin: fix(r.checkin),
+    Checkout: fix(r.checkout),
+    Noites: Number(r.noites) || 0,
+    "Total Bruto (€)": Number(r.totalBruto) || 0,
+    "Comissão Total (€)": Number(r.comissaoTotal) || 0,
+    "Valor/Noite (€)": Number(r.precoNoite) || 0,
+    Berço: r.berco ? "Sim" : "Não",
+    "Limpeza (€)": Number(r.limpeza) || 0
+}));
+
 
     console.log("DADOS EXPORTADOS:", dados);
 
