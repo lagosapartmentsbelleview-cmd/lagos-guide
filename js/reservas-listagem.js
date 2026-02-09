@@ -2012,69 +2012,26 @@ async function carregarReservasNormalizadas() {
     return lista;
 }
 
-document.getElementById("btnExportExcel").addEventListener("click", async function () {
+document.getElementById("btnExportExcel").addEventListener("click", function () {
 
-    let reservas = await carregarReservasNormalizadas();
+    const tabela = document.getElementById("tabelaReservas");
 
-    // 🔥 1) Remover protótipos, timestamps e lixo do Firestore
-    reservas = reservas.map(r => JSON.parse(JSON.stringify(r)));
+    // Criar sheet a partir da tabela HTML
+    const ws = XLSX.utils.table_to_sheet(tabela, { raw: true });
 
-    // 🔥 2) Função universal para garantir que NADA é objeto ou undefined
-    const fix = v => {
-        if (v === undefined || v === null) return "";
-        if (typeof v === "object") return JSON.stringify(v);
-        return v;
-    };
+    // Ajustar colunas automaticamente
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    ws['!cols'] = [];
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+        ws['!cols'].push({ wch: 20 }); // largura padrão
+    }
 
-    // 🔥 3) Normalização extra para campos que podem vir como Timestamp ou objeto
-    reservas.forEach(r => {
-    if (isNaN(Number(r.adultos))) r.adultos = 0;
-    if (isNaN(Number(r.criancas))) r.criancas = 0;
-    if (isNaN(Number(r.noites))) r.noites = 0;
-    if (isNaN(Number(r.totalBruto))) r.totalBruto = 0;
-    if (isNaN(Number(r.comissaoTotal))) r.comissaoTotal = 0;
-    if (isNaN(Number(r.precoNoite))) r.precoNoite = 0;
-    if (isNaN(Number(r.limpeza))) r.limpeza = 0;
-});
-
-
-    // 🔥 4) Construção segura dos dados para o Excel
-   const dados = reservas.map(r => ({
-    Origem: fix(r.origem),
-    "Nº Reserva": fix(r.bookingId),
-    Hóspede: fix(r.cliente),
-    Quartos: Number(r.quartos) || 0,
-    Apartamento: Array.isArray(r.apartamentos) ? r.apartamentos.join(", ") : "",
-    Pessoas: fix(
-        `${Number(r.adultos) || 0}+${Number(r.criancas) || 0}${
-            r.idadesCriancas ? " (" + fix(r.idadesCriancas) + ")" : ""
-        }`
-    ),
-    Checkin: fix(r.checkin),
-    Checkout: fix(r.checkout),
-    Noites: Number(r.noites) || 0,
-    "Total Bruto (€)": Number(r.totalBruto) || 0,
-    "Comissão Total (€)": Number(r.comissaoTotal) || 0,
-    "Valor/Noite (€)": Number(r.precoNoite) || 0,
-    Berço: r.berco ? "Sim" : "Não",
-    "Limpeza (€)": Number(r.limpeza) || 0
-}));
-
-
-    console.log("DADOS EXPORTADOS:", dados);
-
-    // 🔥 5) Criar sheet SEM estilos (evita erro 's')
-    const ws = XLSX.utils.json_to_sheet(dados);
-
-    // Filtros automáticos
-    ws['!autofilter'] = { ref: XLSX.utils.encode_range(ws['!ref']) };
-
-    // Criar workbook e exportar
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Reservas");
 
     XLSX.writeFile(wb, "reservas.xlsx");
 });
+
 
 
 // -------------------------------------------------------------
