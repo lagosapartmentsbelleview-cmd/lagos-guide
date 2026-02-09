@@ -2022,9 +2022,12 @@ document.getElementById("btnExportExcel").addEventListener("click", function () 
     document.body.appendChild(tabelaClone);
 
     // 1) Remover ícones e botões
-    tabelaClone.querySelectorAll("i, svg, button, .acoes, .icone").forEach(el => el.remove());
+    tabelaClone.querySelectorAll("i, svg, button").forEach(el => el.remove());
 
-    // 2) Limpar coluna Pessoas (remover emojis)
+    // 2) Remover coluna Ações (última coluna)
+    tabelaClone.querySelectorAll("th:last-child, td:last-child").forEach(el => el.remove());
+
+    // 3) Limpar coluna Pessoas (remover emojis)
     tabelaClone.querySelectorAll("td:nth-child(7)").forEach(td => {
         td.textContent = td.textContent
             .replace(/👤/g, "")
@@ -2032,7 +2035,7 @@ document.getElementById("btnExportExcel").addEventListener("click", function () 
             .trim();
     });
 
-    // 3) Converter valores numéricos com ponto → vírgula
+    // 4) Converter valores numéricos com ponto → vírgula
     tabelaClone.querySelectorAll("td").forEach(td => {
         const txt = td.textContent.trim();
         if (/^\d+\.\d+$/.test(txt)) {
