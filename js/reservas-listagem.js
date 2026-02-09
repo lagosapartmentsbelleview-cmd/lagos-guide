@@ -2044,7 +2044,7 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
     const colWidths = Object.keys(dados[0]).map(key => ({
         wch: Math.max(key.length, ...dados.map(r => String(r[key]).length)) + 2
     }));
-    ws['!cols'] = colWidths;
+    // ws['!cols'] = colWidths;
 
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Reservas");
