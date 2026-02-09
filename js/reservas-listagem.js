@@ -2014,16 +2014,19 @@ async function carregarReservasNormalizadas() {
 
 document.getElementById("btnExportExcel").addEventListener("click", async function () {
 
-    const reservas = await carregarReservasNormalizadas();
+    let reservas = await carregarReservasNormalizadas();
 
-    // 🔥 Função universal para garantir que NADA é objeto
+    // 🔥 1) Remover protótipos, timestamps e lixo do Firestore
+    reservas = reservas.map(r => JSON.parse(JSON.stringify(r)));
+
+    // 🔥 2) Função universal para garantir que NADA é objeto ou undefined
     const fix = v => {
         if (v === undefined || v === null) return "";
-        if (typeof v === "object") return JSON.stringify(v); // evita erro "reading 's'"
+        if (typeof v === "object") return JSON.stringify(v);
         return v;
     };
 
-    // 🔥 Normalização extra para campos que podem vir como Timestamp ou objeto
+    // 🔥 3) Normalização extra para campos que podem vir como Timestamp ou objeto
     reservas.forEach(r => {
         r.checkin = fix(r.checkin);
         r.checkout = fix(r.checkout);
@@ -2035,7 +2038,7 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
         r.dispositivo = fix(r.dispositivo);
     });
 
-    // 🔥 Construção segura dos dados para o Excel
+    // 🔥 4) Construção segura dos dados para o Excel
     const dados = reservas.map(r => ({
         Origem: fix(r.origem),
         "Nº Reserva": fix(r.bookingId),
@@ -2055,7 +2058,7 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
 
     console.log("DADOS EXPORTADOS:", dados);
 
-    // 🔥 Criação da sheet SEM estilos (evita erro 's')
+    // 🔥 5) Criar sheet SEM estilos (evita erro 's')
     const ws = XLSX.utils.json_to_sheet(dados);
 
     // Filtros automáticos
@@ -2067,6 +2070,7 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
 
     XLSX.writeFile(wb, "reservas.xlsx");
 });
+
 
 // -------------------------------------------------------------
 // EXPORTAR PARA PDF
