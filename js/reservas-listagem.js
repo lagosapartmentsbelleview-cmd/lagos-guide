@@ -2017,23 +2017,21 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
     const reservas = await carregarReservasNormalizadas();
 
         const dados = reservas.map(r => ({
-        Origem: r.origem || "",
-        "Nº Reserva": r.bookingId || "",
-        Hóspede: r.cliente || "",
-        Quartos: Number(r.quartos) || 0,
-        Apartamento: Array.isArray(r.apartamentos) ? r.apartamentos.join(", ") : "",
-        Pessoas: `${Number(r.adultos) || 0}+${Number(r.criancas) || 0}${r.idadesCriancas ? " (" + String(r.idadesCriancas) + ")" : ""}`,
-        Checkin: r.checkin || "",
-        Checkout: r.checkout || "",
-        Noites: Number(r.noites) || 0,
-        "Total Bruto (€)": Number(r.totalBruto) || 0,
-        "Comissão Total (€)": Number(r.comissaoTotal) || 0,
-        "Valor/Noite (€)": Number(r.precoNoite) || 0,
-        Berço: r.berco ? "Sim" : "Não",
-        "Limpeza (€)": Number(r.limpeza) || 0
-    }));
-
-
+    Origem: r.origem || "",
+    "Nº Reserva": r.bookingId || "",
+    Hóspede: r.cliente || "",
+    Quartos: Number(r.quartos) || 0,
+    Apartamento: Array.isArray(r.apartamentos) ? r.apartamentos.join(", ") : "",
+    Pessoas: `${Number(r.adultos) || 0}+${Number(r.criancas) || 0}${r.idadesCriancas ? " (" + String(r.idadesCriancas) + ")" : ""}`,
+    Checkin: r.checkin || "",
+    Checkout: r.checkout || "",
+    Noites: Number(r.noites) || 0,
+    "Total Bruto (€)": Number(r.totalBruto) || 0,
+    "Comissão Total (€)": Number(r.comissaoTotal) || 0,
+    "Valor/Noite (€)": Number(r.precoNoite) || 0,
+    Berço: r.berco ? "Sim" : "Não",
+    "Limpeza (€)": Number(r.limpeza) || 0
+}));
 
     const ws = XLSX.utils.json_to_sheet(dados);
 
