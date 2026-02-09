@@ -2034,6 +2034,7 @@ document.getElementById("btnExportExcel").addEventListener("click", async functi
     }));
 
 
+
     const ws = XLSX.utils.json_to_sheet(dados);
 
     // Filtros automáticos
