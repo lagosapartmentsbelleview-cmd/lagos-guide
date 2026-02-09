@@ -1698,23 +1698,48 @@ function ligarEventos() {
 function calcularTotaisReservas(lista) {
     let totalReservas = lista.length;
     let totalNoites = 0;
-    let totalValor = 0;
-    let totalExtras = 0;
+    let totalValor = 0;      // total bruto
+    let totalComissao = 0;
+    let totalLimpeza = 0;
+
+    // Totais por origem
+    let porOrigem = {};
 
     lista.forEach(r => {
+        const bruto = Number(r.totalBruto || 0);
+        const comissao = Number(r.comissao || 0);
+        const limpeza = Number(r.limpeza || 0);
+
         totalNoites += Number(r.noites || 0);
-        totalValor += Number(r.totalBruto || 0);
-        totalExtras += Number(r.extras || 0);
+        totalValor += bruto;
+        totalComissao += comissao;
+        totalLimpeza += limpeza;
+
+        // Agrupar por origem
+        const origem = r.origem || "Desconhecido";
+
+        if (!porOrigem[origem]) {
+            porOrigem[origem] = { reservas: 0, valor: 0 };
+        }
+
+        porOrigem[origem].reservas++;
+        porOrigem[origem].valor += bruto;
     });
+
+    // Total líquido = bruto - comissão - limpeza
+    const totalLiquido = totalValor - totalComissao - totalLimpeza;
 
     return {
         totalReservas,
         totalNoites,
         totalValor,
-        totalExtras,
-        totalLiquido: totalValor + totalExtras
+        totalComissao,
+        totalLimpeza,
+        totalLiquido,
+        porOrigem
     };
 }
+
 
 function renderizarTotaisReservas() {
     const el = document.getElementById("totais-reservas");
@@ -1722,14 +1747,30 @@ function renderizarTotaisReservas() {
 
     const t = calcularTotaisReservas(reservasFiltradas);
 
-    el.innerHTML = `
+    // Função para formatar com vírgula
+    const fmt = v => v.toFixed(2).replace(".", ",");
+
+    let html = `
         Reservas: <strong>${t.totalReservas}</strong> |
-        Noites: <strong>${t.totalNoites}</strong> |
-        Valor: <strong>${t.totalValor.toFixed(2)} €</strong> |
-        Extras: <strong>${t.totalExtras.toFixed(2)} €</strong> |
-        Total Líquido: <strong>${t.totalLiquido.toFixed(2)} €</strong>
+        Noites: <strong>${fmt(t.totalNoites)}</strong> |
+        Valor Bruto: <strong>${fmt(t.totalValor)} €</strong> |
+        Comissão: <strong>${fmt(t.totalComissao)} €</strong> |
+        Limpeza: <strong>${fmt(t.totalLimpeza)} €</strong> |
+        Total Líquido: <strong>${fmt(t.totalLiquido)} €</strong>
+        <br><br>
+        <strong>Totais por Origem:</strong><br>
     `;
+
+    for (const origem in t.porOrigem) {
+        const o = t.porOrigem[origem];
+        html += `
+            ${origem}: <strong>${fmt(o.valor)} €</strong> (${o.reservas} reservas)<br>
+        `;
+    }
+
+    el.innerHTML = html;
 }
+
 
 
     // -------------------------------------------------------------
