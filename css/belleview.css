@@ -333,8 +333,10 @@ footer {
 .contador {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 10px;
     margin: 6px 0 12px;
+    width: 100%;
 }
 
 .contador label {
@@ -352,6 +354,14 @@ footer {
     color: #fff;
     font-size: 1.1rem;
     cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;      /* impede que o botão seja esmagado */
+    position: relative;  /* garante clique */
+    z-index: 2;          /* impede que algo tape o botão */
 }
 
 .contador span {
@@ -360,6 +370,7 @@ footer {
     width: 20px;
     text-align: center;
 }
+
 
 /* Idades das crianças */
 .idade-crianca {
