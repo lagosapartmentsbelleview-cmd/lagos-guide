@@ -803,6 +803,86 @@ document.getElementById("btnMostrarMais").addEventListener("click", () => {
         document.getElementById("btnMostrarMais").textContent = "Ocultar estatísticas operacionais";
     }
 });
+
+// -------------------------------------------------------------
+// GRÁFICO — COMPARAÇÃO MENSAL (ANO ATUAL vs 2 ANOS ANTERIORES)
+// -------------------------------------------------------------
+function atualizarGraficoComparacaoMensal(anoBase) {
+
+    const ctx = document.getElementById("graficoComparacaoMensal");
+    if (!ctx) return;
+
+    const fonteMensal = modoAtual === "financeiro"
+        ? agregadosFinanceirosMensais
+        : agregadosOperacionaisMensais;
+
+    const anos = [anoBase - 2, anoBase - 1, anoBase];
+
+    const cores = [
+        "rgba(54, 162, 235, 0.6)",
+        "rgba(255, 159, 64, 0.6)",
+        "rgba(75, 192, 192, 0.8)"
+    ];
+
+    const datasets = anos.map((ano, idx) => {
+        const mesesAno = fonteMensal[ano] || {};
+        const valores = [];
+
+        for (let m = 1; m <= 12; m++) {
+            const mesObj = mesesAno[m] || { bruto: 0 };
+            valores.push(mesObj.bruto);
+        }
+
+        return {
+            label: ano.toString(),
+            data: valores,
+            backgroundColor: cores[idx],
+            borderWidth: 1
+        };
+    });
+
+    if (window.graficoComparacaoMensal) {
+        window.graficoComparacaoMensal.destroy();
+    }
+
+    window.graficoComparacaoMensal = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: NOMES_MESES,
+            datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Comparação Mensal — ${anos[0]}, ${anos[1]}, ${anos[2]}`
+                },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => {
+                            const v = ctx.raw || 0;
+                            return `${ctx.dataset.label}: ${v.toLocaleString("pt-PT", {
+                                style: "currency",
+                                currency: "EUR"
+                            })}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: v => v.toLocaleString("pt-PT") + " €"
+                    }
+                }
+            }
+        }
+    });
+}
+
+
 // -------------------------------------------------------------
 // GRÁFICOS (FINANCEIRO OU OPERACIONAL)
 // -------------------------------------------------------------
@@ -846,6 +926,11 @@ function atualizarGraficos(ano) {
         },
         options: { responsive: true }
     });
+
+    // ---------------------------------------------------------
+    // GRÁFICO — COMPARAÇÃO MENSAL (NOVO)
+    // ---------------------------------------------------------
+    atualizarGraficoComparacaoMensal(ano);
 
     // ---------------------------------------------------------
     // GRÁFICO — OCUPAÇÃO
@@ -893,7 +978,7 @@ function atualizarGraficos(ano) {
     });
 
     // ---------------------------------------------------------
-    // GRÁFICO — COMPARAÇÃO ENTRE ANOS
+    // GRÁFICO — COMPARAÇÃO ENTRE ANOS (ANUAL)
     // ---------------------------------------------------------
     const ctxComparacao = document.getElementById("graficoComparacao").getContext("2d");
     if (graficoComparacao) graficoComparacao.destroy();
