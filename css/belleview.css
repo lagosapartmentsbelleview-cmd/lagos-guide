@@ -56,8 +56,15 @@ header nav a {
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: 40px;
     padding: 60px 40px;
-    background: linear-gradient(135deg, #4da6ff 0%, #f2e8d5 60%, #ffffff 100%);
+
+    background-image: url("../img/hero/hero1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: white;
 }
+
 
 .hero-texto h1 {
     font-family: "Poppins", sans-serif;
