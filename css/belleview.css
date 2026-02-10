@@ -416,3 +416,9 @@ select option {
     z-index: 10;
 }
 
+/* Garantir contraste no desktop */
+.booking-card,
+.apartamento-bloco,
+.contador {
+    color: #005c99;
+}
