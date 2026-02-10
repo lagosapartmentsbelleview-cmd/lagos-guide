@@ -329,7 +329,10 @@ footer {
     font-weight: 600;
 }
 
-/* Contadores de adultos e crianças */
+/* ============================
+   CONTADORES (ADULTOS / CRIANÇAS)
+   ============================ */
+
 .contador {
     display: flex;
     align-items: center;
@@ -344,17 +347,19 @@ footer {
 .contador label {
     font-size: 0.9rem;
     color: #005c99;
-    width: 120px; /* FIXO → impede que empurre os botões */
+    width: 120px; /* largura fixa para não empurrar botões */
 }
 
+/* Botões + e – */
 .contador button {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     border: none;
-    background: #005c99;
-    color: #fff;
+    background: #005c99;      /* azul da marca */
+    color: #ffffff !important; /* texto branco para contraste */
     font-size: 1.1rem;
+    font-weight: 700;
     cursor: pointer;
 
     display: flex;
@@ -362,34 +367,31 @@ footer {
     align-items: center;
 
     position: relative;
-    z-index: 5; /* impede que algo tape o botão */
+    z-index: 5;
 }
 
+/* Número entre os botões */
 .contador span {
     font-size: 1rem;
     font-weight: 600;
     width: 24px;
     text-align: center;
-    color: #005c99 !important;
+    color: #005c99 !important; /* azul da marca */
 }
 
-/* Cor consistente e visível */
-.contador span,
-.contador button,
+/* Garantir cor consistente em selects e labels */
 .idade-crianca label,
 .idade-crianca select,
 select option {
     color: #005c99 !important;
 }
 
-/* Idades das crianças */
+/* ============================
+   IDADES DAS CRIANÇAS
+   ============================ */
+
 .idade-crianca {
     margin-bottom: 12px;
-}
-
-.idade-crianca label {
-    font-size: 0.9rem;
-    color: #005c99;
 }
 
 .idade-crianca select {
@@ -410,13 +412,15 @@ select option {
 .berco input {
     margin-right: 6px;
 }
+
+/* Espaço antes do botão "Ver disponibilidade" */
 #apartamentosContainer {
     margin-bottom: 40px;
     position: relative;
     z-index: 10;
 }
 
-/* Garantir contraste no desktop */
+/* Garantir contraste geral */
 .booking-card,
 .apartamento-bloco,
 .contador {
