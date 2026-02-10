@@ -147,7 +147,7 @@ function renderApartamentos() {
             renderIdades();
         }
     }
-
+}
 
 
         aptContainer.appendChild(bloco);
