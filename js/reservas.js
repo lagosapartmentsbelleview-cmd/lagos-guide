@@ -131,13 +131,24 @@ function renderApartamentos() {
         }
 
         // função que garante máximo 4 pessoas
-        function validarLimite() {
-            if (adultos + criancas > 4) {
-                criancas = 4 - adultos;
-                criancasContador.querySelector("span").textContent = criancas;
-                renderIdades();
-            }
+       function validarLimite() {
+    if (adultos + criancas > 4) {
+
+        // Se adultos foram aumentados e ultrapassam o limite
+        if (adultos > 4 - criancas) {
+            adultos = 4 - criancas;
+            adultosContador.querySelector("span").textContent = adultos;
         }
+
+        // Se crianças foram aumentadas e ultrapassam o limite
+        if (criancas > 4 - adultos) {
+            criancas = 4 - adultos;
+            criancasContador.querySelector("span").textContent = criancas;
+            renderIdades();
+        }
+    }
+
+
 
         aptContainer.appendChild(bloco);
     }
