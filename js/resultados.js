@@ -1045,27 +1045,28 @@ function atualizarGraficos(ano) {
     // GRÁFICO — OCUPAÇÃO
     // ---------------------------------------------------------
     const ctxOcupacao = document.getElementById("graficoOcupacao").getContext("2d");
-    if (graficoOcupacao) graficoOcupacao.destroy();
+if (graficoOcupacao) graficoOcupacao.destroy();
 
-    graficoOcupacao = new Chart(ctxOcupacao, {
-        type: "line",
-        data: {
-            labels,
-            datasets: [{
-                label: "Ocupação (%)",
-                data: dadosOcupacao,
-                borderColor: CORES.terciario,
-                backgroundColor: CORES.terciarioLight
-                fill: true
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: { ticks: { callback: v => `${v}%` } }
-            }
+graficoOcupacao = new Chart(ctxOcupacao, {
+    type: "line",
+    data: {
+        labels,
+        datasets: [{
+            label: "Ocupação (%)",
+            data: dadosOcupacao,
+            borderColor: CORES.terciario,
+            backgroundColor: CORES.terciarioLight,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: { ticks: { callback: v => `${v}%` } }
         }
-    });
+    }
+});
+
 
     // ---------------------------------------------------------
     // GRÁFICO — CUSTOS
