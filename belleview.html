@@ -5,147 +5,11 @@
     <title>Lagos Apartments Belleview</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/belleview.css">
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            margin: 0;
-            font-family: "Inter", sans-serif;
-            background: #f7f7f7;
-            color: #123;
-        }
-
-        /* Topo */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 40px;
-            background: rgba(255, 255, 255, 0.95);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        header .logo {
-            font-weight: 600;
-            font-size: 1.1rem;
-            letter-spacing: 0.04em;
-        }
-
-        header nav a {
-            margin-left: 20px;
-            text-decoration: none;
-            color: #005c99;
-            font-size: 0.95rem;
-        }
-
-        /* Bandeiras */
-        .lang-switch {
-            display: flex;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .lang-switch img {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .lang-switch img:hover {
-            transform: scale(1.12);
-            box-shadow: 0 0 6px rgba(0,0,0,0.3);
-        }
-
-        /* Hero */
-        .hero {
-            display: grid;
-            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-            gap: 40px;
-            padding: 60px 40px;
-            background: linear-gradient(135deg, #4da6ff 0%, #f2e8d5 60%, #ffffff 100%);
-        }
-
-        .hero-texto h1 {
-            font-family: "Poppins", sans-serif;
-            font-size: 2.6rem;
-            margin-bottom: 12px;
-        }
-
-        .hero-texto p {
-            font-size: 1.05rem;
-            max-width: 480px;
-        }
-
-        /* Booking Card */
-        .booking-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .booking-card h2 {
-            margin: 0 0 8px;
-            font-size: 1.2rem;
-        }
-
-        .booking-card label {
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .booking-card input,
-        .booking-card select {
-            padding: 8px 10px;
-            border-radius: 8px;
-            border: 1px solid #d0d7de;
-            font-size: 0.95rem;
-        }
-
-        .booking-card button {
-            margin-top: 8px;
-            padding: 10px 14px;
-            border-radius: 999px;
-            border: none;
-            background: #005c99;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .booking-card button:hover {
-            background: #004676;
-        }
-
-        /* Secções */
-        .secao {
-            padding: 50px 40px;
-            background: #ffffff;
-            margin-top: 16px;
-        }
-
-        .secao h2 {
-            font-family: "Poppins", sans-serif;
-            margin-bottom: 12px;
-        }
-
-        /* Footer */
-        footer {
-            padding: 24px 40px;
-            background: #123;
-            color: #f7f7f7;
-            font-size: 0.9rem;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -161,9 +25,9 @@
     </nav>
 
     <div class="lang-switch">
-        <img src="https://flagcdn.com/w20/pt.png" data-lang="pt">
-        <img src="https://flagcdn.com/w20/gb.png" data-lang="en">
-        <img src="https://flagcdn.com/w20/es.png" data-lang="es">
+        <img src="img/pt.png" data-lang="pt">
+        <img src="img/gb.png" data-lang="en">
+        <img src="img/es.png" data-lang="es">
     </div>
 </header>
 
@@ -177,20 +41,22 @@
         <h2 data-i18n="book_title"></h2>
 
         <label data-i18n="checkin"></label>
-        <input type="date">
+        <input type="date" id="checkin">
 
         <label data-i18n="checkout"></label>
-        <input type="date">
+        <input type="date" id="checkout">
 
         <label data-i18n="guests"></label>
-        <select>
+        <select id="hospedes">
             <option data-i18n="guest1"></option>
             <option data-i18n="guest2"></option>
             <option data-i18n="guest3"></option>
             <option data-i18n="guest4"></option>
         </select>
 
-        <button data-i18n="check_availability"></button>
+        <button id="btnDisponibilidade" data-i18n="check_availability"></button>
+
+        <div id="resultadoDisponibilidade"></div>
     </div>
 </section>
 
@@ -213,112 +79,10 @@
     Lagos Apartments Belleview · info@belleview.pt · +351 XXX XXX XXX
 </footer>
 
-<script>
-const translations = {
-    pt: {
-        menu_alojamento: "Alojamento",
-        menu_comodidades: "Comodidades",
-        menu_localizacao: "Localização",
-        menu_contactos: "Contactos",
-
-        hero_title: "A sua estadia perfeita no Algarve",
-        hero_sub: "Estúdios modernos a minutos da praia",
-
-        book_title: "Reserve a sua estadia",
-        checkin: "Check‑in",
-        checkout: "Check‑out",
-        guests: "Hóspedes",
-        guest1: "1 hóspede",
-        guest2: "2 hóspedes",
-        guest3: "3 hóspedes",
-        guest4: "4 hóspedes",
-        check_availability: "Ver disponibilidade",
-
-        section_alojamento: "O Alojamento",
-        text_alojamento: "Estúdios modernos e luminosos, perfeitos para casais, famílias pequenas ou estadias de trabalho.",
-
-        section_comodidades: "Comodidades",
-        text_comodidades: "Wi‑Fi rápido · Ar condicionado · Cozinha equipada · Máquina de café · Varanda · TV · Estacionamento fácil · Check‑in autónomo",
-
-        section_localizacao: "Localização",
-        text_localizacao: "A 5 minutos da praia · Zona tranquila · Próximo de serviços"
-    },
-
-    en: {
-        menu_alojamento: "Accommodation",
-        menu_comodidades: "Amenities",
-        menu_localizacao: "Location",
-        menu_contactos: "Contact",
-
-        hero_title: "Your perfect stay in the Algarve",
-        hero_sub: "Modern studios just minutes from the beach",
-
-        book_title: "Book your stay",
-        checkin: "Check‑in",
-        checkout: "Check‑out",
-        guests: "Guests",
-        guest1: "1 guest",
-        guest2: "2 guests",
-        guest3: "3 guests",
-        guest4: "4 guests",
-        check_availability: "Check availability",
-
-        section_alojamento: "The Apartment",
-        text_alojamento: "Bright and modern studios, perfect for couples, small families or work stays.",
-
-        section_comodidades: "Amenities",
-        text_comodidades: "Fast Wi‑Fi · Air conditioning · Equipped kitchen · Coffee machine · Balcony · TV · Easy parking · Self check‑in",
-
-        section_localizacao: "Location",
-        text_localizacao: "5 minutes from the beach · Quiet area · Close to services"
-    },
-
-    es: {
-        menu_alojamento: "Alojamiento",
-        menu_comodidades: "Comodidades",
-        menu_localizacao: "Ubicación",
-        menu_contactos: "Contacto",
-
-        hero_title: "Su estancia perfecta en el Algarve",
-        hero_sub: "Estudios modernos a pocos minutos de la playa",
-
-        book_title: "Reserve su estancia",
-        checkin: "Entrada",
-        checkout: "Salida",
-        guests: "Huéspedes",
-        guest1: "1 huésped",
-        guest2: "2 huéspedes",
-        guest3: "3 huéspedes",
-        guest4: "4 huéspedes",
-        check_availability: "Ver disponibilidad",
-
-        section_alojamento: "El Alojamiento",
-        text_alojamento: "Estudios modernos y luminosos, perfectos para parejas, familias pequeñas o estancias de trabajo.",
-
-        section_comodidades: "Comodidades",
-        text_comodidades: "Wi‑Fi rápido · Aire acondicionado · Cocina equipada · Cafetera · Balcón · TV · Aparcamiento fácil · Auto check‑in",
-
-        section_localizacao: "Ubicación",
-        text_localizacao: "A 5 minutos de la playa · Zona tranquila · Cerca de servicios"
-    }
-};
-
-function setLanguage(lang) {
-    document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        el.textContent = translations[lang][key];
-    });
-}
-
-document.querySelectorAll(".lang-switch img").forEach(img => {
-    img.addEventListener("click", () => {
-        setLanguage(img.dataset.lang);
-    });
-});
-
-// idioma inicial
-setLanguage("pt");
-</script>
+<!-- JS -->
+<script src="js/i18n.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/reservas.js"></script>
 
 </body>
 </html>
