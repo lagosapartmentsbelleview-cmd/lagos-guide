@@ -169,8 +169,7 @@ function renderApartamentos() {
             criancas = 4 - adultos;
             criancasContador.querySelector("span").textContent = criancas;
             renderIdades();
-        }
-    }
+        }    }
 }
 
 
