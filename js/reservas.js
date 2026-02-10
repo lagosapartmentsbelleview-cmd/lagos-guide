@@ -24,6 +24,33 @@ function renderApartamentos() {
         titulo.textContent = `Apartamento ${i}`;
         bloco.appendChild(titulo);
 
+// valores internos
+let adultos = 0;
+let criancas = 0;
+
+// contador de adultos
+const adultosContador = criarContador("Adultos", (v) => {
+    adultos = v;
+    validarLimite();
+});
+bloco.appendChild(adultosContador);
+
+// contador de crianças
+const criancasContador = criarContador("Crianças", (v) => {
+    criancas = v;
+    validarLimite();
+});
+bloco.appendChild(criancasContador);
+
+// função que garante máximo 4 pessoas
+function validarLimite() {
+    if (adultos + criancas > 4) {
+        // reduzir crianças automaticamente
+        criancas = 4 - adultos;
+        criancasContador.querySelector("span").textContent = criancas;
+    }
+}
+        
 // ------------------------------
 // ADULTOS E CRIANÇAS (PASSO 4)
 // ------------------------------
