@@ -171,14 +171,12 @@ footer {
    ============================ */
 @media (max-width: 768px) {
 
-    /* Layout geral */
-    body {
-        font-size: 16px;
-    }
-
+    /* HEADER */
     header {
+        display: flex;
         flex-direction: column;
-        gap: 12px;
+        align-items: center;
+        gap: 14px;
         padding: 16px;
         text-align: center;
     }
@@ -187,17 +185,33 @@ footer {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 12px;
+        gap: 14px;
     }
 
     nav a {
         font-size: 0.95rem;
+        padding: 6px 10px;
+        border-radius: 6px;
+        background: rgba(0, 92, 153, 0.08);
+        color: #005c99;
+    }
+
+    nav a:hover {
+        background: rgba(0, 92, 153, 0.15);
+    }
+
+    /* Bandeiras mais pequenas e alinhadas */
+    .lang-switch {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
     }
 
     .lang-switch img {
-        width: 28px;
+        width: 26px;
         height: auto;
-        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #ddd;
     }
 
     /* HERO em coluna */
@@ -215,41 +229,52 @@ footer {
 
     .hero-texto p {
         font-size: 1rem;
-        white-space: normal; /* permite quebrar linha no mobile */
+        white-space: normal;
         margin-top: 8px;
     }
 
-    /* Booking Card centrada */
+    /* Booking Card mais elegante e menos “ao meio” */
     .booking-card {
+        width: 100%;
         max-width: 360px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 22px;
         border-radius: 14px;
-        gap: 10px;
-        color: #005c99; /* mantém a cor que escolheste */
+        gap: 12px;
+        color: #005c99;
+        background: #fff;
+        box-shadow: 0 10px 28px rgba(0,0,0,0.12);
     }
 
     .booking-card h2 {
-        font-size: 1.3rem;
-        margin-bottom: 12px;
+        font-size: 1.35rem;
+        margin-bottom: 14px;
         text-align: center;
         color: #005c99;
+        font-weight: 600;
     }
 
     .booking-card label {
         font-size: 0.9rem;
+        font-weight: 500;
+        color: #005c99;
     }
 
     .booking-card input,
     .booking-card select {
         padding: 12px;
         font-size: 1rem;
+        border-radius: 10px;
+        border: 1px solid #cfd8e3;
     }
 
     .booking-card button {
         padding: 14px;
         font-size: 1rem;
         border-radius: 999px;
+        background: #005c99;
+        color: #fff;
+        font-weight: 600;
     }
 
     /* Secções */
@@ -261,6 +286,7 @@ footer {
     .secao h2 {
         font-size: 1.6rem;
         margin-bottom: 10px;
+        color: #005c99;
     }
 
     .secao p {
@@ -275,4 +301,3 @@ footer {
         text-align: center;
     }
 }
-
