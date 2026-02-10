@@ -373,6 +373,14 @@ footer {
     color: #005c99 !important;
 }
 
+/* Cor consistente e visível */
+.contador span,
+.contador button,
+.idade-crianca label,
+.idade-crianca select,
+select option {
+    color: #005c99 !important;
+}
 
 /* Idades das crianças */
 .idade-crianca {
