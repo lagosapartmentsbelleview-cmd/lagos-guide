@@ -165,3 +165,114 @@ footer {
     font-size: 0.9rem;
     margin-top: 20px;
 }
+
+/* ============================
+   MOBILE / TABLET RESPONSIVE
+   ============================ */
+@media (max-width: 768px) {
+
+    /* Layout geral */
+    body {
+        font-size: 16px;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px;
+        text-align: center;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    nav a {
+        font-size: 0.95rem;
+    }
+
+    .lang-switch img {
+        width: 28px;
+        height: auto;
+        cursor: pointer;
+    }
+
+    /* HERO em coluna */
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 40px 20px;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .hero-texto h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+
+    .hero-texto p {
+        font-size: 1rem;
+        white-space: normal; /* permite quebrar linha no mobile */
+        margin-top: 8px;
+    }
+
+    /* Booking Card centrada */
+    .booking-card {
+        max-width: 360px;
+        margin: 0 auto;
+        padding: 20px;
+        border-radius: 14px;
+        gap: 10px;
+        color: #005c99; /* mantém a cor que escolheste */
+    }
+
+    .booking-card h2 {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+        text-align: center;
+        color: #005c99;
+    }
+
+    .booking-card label {
+        font-size: 0.9rem;
+    }
+
+    .booking-card input,
+    .booking-card select {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .booking-card button {
+        padding: 14px;
+        font-size: 1rem;
+        border-radius: 999px;
+    }
+
+    /* Secções */
+    .secao {
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    .secao h2 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+
+    .secao p {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+        padding: 20px;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+}
+
