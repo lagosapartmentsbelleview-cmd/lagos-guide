@@ -56,7 +56,7 @@ header nav a {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: 40px;
-    padding: 80px 40px;
+    padding: 60px 40px;
     align-items: center; /* alinha texto e formulário */
 
     background-image: url("../img/hero/hero1.jpg");
