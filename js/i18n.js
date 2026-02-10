@@ -5,8 +5,8 @@ const translations = {
         menu_localizacao: "Localização",
         menu_contactos: "Contactos",
 
-        hero_title: "A sua estadia perfeita no Algarve",
-        hero_sub: "Estúdios modernos a minutos da praia",
+        hero_title: "A sua estadia perfeita em Lagos – Algarve",
+        hero_sub: "Apartamentos modernos numa zona calma e a minutos da praia",
 
         book_title: "Reserve a sua estadia",
         checkin: "Check‑in",
@@ -34,8 +34,8 @@ const translations = {
         menu_localizacao: "Location",
         menu_contactos: "Contact",
 
-        hero_title: "Your perfect stay in the Algarve",
-        hero_sub: "Modern studios just minutes from the beach",
+        hero_title: "Your perfect stay in Lagos – Algarve",
+        hero_sub: "Modern apartments in a quiet area, just minutes from the beach",
 
         book_title: "Book your stay",
         checkin: "Check‑in",
@@ -63,8 +63,8 @@ const translations = {
         menu_localizacao: "Ubicación",
         menu_contactos: "Contacto",
 
-        hero_title: "Su estancia perfecta en el Algarve",
-        hero_sub: "Estudios modernos a pocos minutos de la playa",
+        hero_title: "Su estancia perfecta en Lagos – Algarve",
+        hero_sub: "Apartamentos modernos en una zona tranquila y a pocos minutos de la playa",
 
         book_title: "Reserve su estancia",
         checkin: "Entrada",
