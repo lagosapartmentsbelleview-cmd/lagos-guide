@@ -399,3 +399,9 @@ footer {
 .berco input {
     margin-right: 6px;
 }
+#apartamentosContainer {
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 10;
+}
+
