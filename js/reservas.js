@@ -24,12 +24,50 @@ function renderApartamentos() {
         titulo.textContent = `Apartamento ${i}`;
         bloco.appendChild(titulo);
 
-        // Aqui depois vamos inserir:
-        // - Adultos
-        // - Crianças
-        // - Idades
-        // - Berço
-        // (mas só no próximo passo)
+// ------------------------------
+// ADULTOS E CRIANÇAS (PASSO 4)
+// ------------------------------
+
+function criarContador(label, callback) {
+    const div = document.createElement("div");
+    div.className = "contador";
+
+    const labelEl = document.createElement("label");
+    labelEl.textContent = label;
+
+    const menos = document.createElement("button");
+    menos.textContent = "-";
+
+    const mais = document.createElement("button");
+    mais.textContent = "+";
+
+    const valor = document.createElement("span");
+    valor.textContent = "0";
+
+    menos.onclick = () => {
+        let v = parseInt(valor.textContent);
+        if (v > 0) {
+            valor.textContent = v - 1;
+            callback(v - 1);
+        }
+    };
+
+    mais.onclick = () => {
+        let v = parseInt(valor.textContent);
+        if (v < 4) { // limite individual
+            valor.textContent = v + 1;
+            callback(v + 1);
+        }
+    };
+
+    div.appendChild(labelEl);
+    div.appendChild(menos);
+    div.appendChild(valor);
+    div.appendChild(mais);
+
+    return div;
+}
+
 
         aptContainer.appendChild(bloco);
     }
