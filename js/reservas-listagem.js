@@ -2014,25 +2014,6 @@ async function carregarReservasNormalizadas() {
 
 document.getElementById("btnExportExcel").addEventListener("click", function () {
 
-    const tabela = document.getElementById("tabelaReservas");
-
-    // Criar sheet a partir da tabela HTML
-    const ws = XLSX.utils.table_to_sheet(tabela, { raw: true });
-
-    // Ajustar colunas automaticamente
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    ws['!cols'] = [];
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-        ws['!cols'].push({ wch: 20 }); // largura padrão
-    }
-
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Reservas");
-
-    XLSX.writeFile(wb, "reservas.xlsx");
-});
-depois assim já não abria nem funciona : document.getElementById("btnExportExcel").addEventListener("click", function () {
-
     const tabelaOriginal = document.getElementById("tabelaReservas");
 
     // Criar cópia invisível da tabela
