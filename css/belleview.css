@@ -347,25 +347,24 @@ footer {
 .contador label {
     font-size: 0.9rem;
     color: #005c99;
-    width: 120px; /* largura fixa para não empurrar botões */
+    width: 120px;
 }
 
-/* Botões + e – */
+/* Botões + e – (texto branco, fundo azul) */
 .contador button {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     border: none;
-    background: #005c99;      /* azul da marca */
-    color: #ffffff !important; /* texto branco para contraste */
-    font-size: 1.1rem;
+    background: #005c99 !important;
+    color: #ffffff !important;   /* CORRIGIDO: texto branco */
+    font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    z-index: 5;
 }
 
 /* Número entre os botões */
@@ -374,14 +373,20 @@ footer {
     font-weight: 600;
     width: 24px;
     text-align: center;
-    color: #005c99 !important; /* azul da marca */
+    color: #005c99 !important;
 }
 
-/* Garantir cor consistente em selects e labels */
-.idade-crianca label,
+/* ============================
+   SELECTS (datas, idades, nº apt)
+   ============================ */
+
+/* Texto dentro dos selects */
+.booking-card select,
+.booking-card input[type="date"],
+.booking-card select option,
 .idade-crianca select,
-select option {
-    color: #005c99 !important;
+.idade-crianca select option {
+    color: #005c99 !important;   /* CORRIGIDO: deixa de ficar preto */
 }
 
 /* ============================
@@ -390,6 +395,11 @@ select option {
 
 .idade-crianca {
     margin-bottom: 12px;
+}
+
+.idade-crianca label {
+    font-size: 0.9rem;
+    color: #005c99;
 }
 
 .idade-crianca select {
@@ -411,39 +421,35 @@ select option {
     margin-right: 6px;
 }
 
-/* Espaço antes do botão "Ver disponibilidade" */
+/* ============================
+   ESPAÇAMENTO ENTRE APARTAMENTOS E BOTÃO
+   ============================ */
+
 #apartamentosContainer {
-    margin-bottom: 40px;
-    position: relative;
-    z-index: 10;
+    margin-bottom: 20px;
 }
 
-/* Garantir contraste geral */
-.booking-card,
-.apartamento-bloco,
-.contador {
-    color: #005c99;
-}
+/* ============================
+   DISPLAY DE DISPONIBILIDADE (compacto)
+   ============================ */
 
-/* Display de disponibilidade — versão profissional e compacta */
 #resultadoDisponibilidade {
     margin-top: 10px;
     padding: 8px 12px;
     font-size: 0.85rem;
     border-radius: 8px;
-    background: #eef6fb; /* azul muito suave */
+    background: #eef6fb;
     color: #005c99;
     border: 1px solid #cfe4f2;
-    max-width: 260px; /* reduz o tamanho */
+    max-width: 240px;   /* CORRIGIDO: agora fica pequeno */
 }
 
-/* Texto dentro de selects e opções em azul da marca */
-.booking-card select,
-.booking-card select option,
-.idade-crianca select,
-.idade-crianca select option {
-    color: #005c99 !important;
+/* ============================
+   GARANTIR COERÊNCIA DE COR
+   ============================ */
+
+.booking-card,
+.apartamento-bloco,
+.contador {
+    color: #005c99;
 }
-
-
-
