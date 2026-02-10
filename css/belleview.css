@@ -1,0 +1,136 @@
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: #f7f7f7;
+    color: #123;
+}
+
+/* Topo */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background: rgba(255, 255, 255, 0.95);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+header .logo {
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+}
+
+header nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #005c99;
+    font-size: 0.95rem;
+}
+
+/* Bandeiras */
+.lang-switch {
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.lang-switch img {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lang-switch img:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 6px rgba(0,0,0,0.3);
+}
+
+/* Hero */
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 40px;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #4da6ff 0%, #f2e8d5 60%, #ffffff 100%);
+}
+
+.hero-texto h1 {
+    font-family: "Poppins", sans-serif;
+    font-size: 2.6rem;
+    margin-bottom: 12px;
+}
+
+.hero-texto p {
+    font-size: 1.05rem;
+    max-width: 480px;
+}
+
+/* Booking Card */
+.booking-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.booking-card h2 {
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+}
+
+.booking-card label {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.booking-card input,
+.booking-card select {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #d0d7de;
+    font-size: 0.95rem;
+}
+
+.booking-card button {
+    margin-top: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: none;
+    background: #005c99;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.booking-card button:hover {
+    background: #004676;
+}
+
+/* Secções */
+.secao {
+    padding: 50px 40px;
+    background: #ffffff;
+    margin-top: 16px;
+}
+
+.secao h2 {
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 12px;
+}
+
+/* Footer */
+footer {
+    padding: 24px 40px;
+    background: #123;
+    color: #f7f7f7;
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
