@@ -892,41 +892,69 @@ function atualizarGraficos(ano) {
         options: { responsive: true }
     });
 
-    // ---------------------------------------------------------
-    // GRÁFICO — COMPARAÇÃO ENTRE ANOS
+        // ---------------------------------------------------------
+    // GRÁFICO — COMPARAÇÃO ENTRE ANOS (MENSAL, 3 ANOS)
     // ---------------------------------------------------------
     const ctxComparacao = document.getElementById("graficoComparacao").getContext("2d");
     if (graficoComparacao) graficoComparacao.destroy();
 
-    const anos = [];
-    for (let a = 2020; a <= 2050; a++) anos.push(a);
+    const anoBase = ano; // ano selecionado no filtro
+    const anosComparar = [anoBase - 2, anoBase - 1, anoBase].filter(a => a >= 2020);
 
-    const tipoComparacao = document.getElementById("tipoComparacao").value;
+    const tipoComparacao = document.getElementById("tipoComparacao").value; 
+    // "bruto" ou "liquido" (se já existir no HTML)
 
-    const dadosComparacao = anos.map(a => {
-        const fonte = modoAtual === "financeiro"
-            ? agregadosFinanceirosAnuais[a]
-            : agregadosOperacionaisAnuais[a];
+    const datasets = anosComparar.map((anoComp, idx) => {
+        const mesesAno = fonteMensal[anoComp] || {};
+        const dados = [];
 
-        if (!fonte) return 0;
-        return tipoComparacao === "bruto" ? fonte.bruto : fonte.liquido;
+        for (let m = 1; m <= 12; m++) {
+            const mesObj = mesesAno[m] || { bruto: 0, liquido: 0 };
+            const valor = tipoComparacao === "liquido"
+                ? mesObj.liquido
+                : mesObj.bruto; // por omissão, vendas brutas
+
+            dados.push(valor);
+        }
+
+        const cores = [
+            "rgba(54, 162, 235, 0.7)",
+            "rgba(255, 159, 64, 0.7)",
+            "rgba(75, 192, 192, 0.7)"
+        ];
+
+        return {
+            label: anoComp.toString(),
+            data: dados,
+            backgroundColor: cores[idx % cores.length]
+        };
     });
 
     graficoComparacao = new Chart(ctxComparacao, {
         type: "bar",
         data: {
-            labels: anos.map(a => a.toString()),
-            datasets: [{
-                label: tipoComparacao === "bruto"
-                    ? "Receita Bruta Anual"
-                    : "Receita Líquida Anual",
-                data: dadosComparacao,
-                backgroundColor: "rgba(54, 162, 235, 0.6)"
-            }]
+            labels: NOMES_MESES,
+            datasets
         },
-        options: { responsive: true }
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: ctx => {
+                            const v = ctx.raw || 0;
+                            return `${ctx.dataset.label}: ${v.toLocaleString("pt-PT", {
+                                style: "currency",
+                                currency: "EUR",
+                                minimumFractionDigits: 2
+                            })}`;
+                        }
+                    }
+                }
+            }
+        }
     });
-}
+
 
 // -------------------------------------------------------------
 // INICIALIZAR FILTROS (2020–2050)
