@@ -56,79 +56,103 @@ function renderApartamentos() {
 
     for (let i = 1; i <= num; i++) {
 
-        const bloco = document.createElement("div");
-        bloco.className = "apartamento-bloco";
+    const bloco = document.createElement("div");
+    bloco.className = "apartamento-bloco";
 
-        const titulo = document.createElement("h3");
-        titulo.textContent = `Apartamento ${i}`;
-        bloco.appendChild(titulo);
+    const titulo = document.createElement("h3");
+    titulo.textContent = `Apartamento ${i}`;
+    bloco.appendChild(titulo);
 
-        // valores internos
-        let adultos = 0;
-        let criancas = 0;
+    // valores internos
+    let adultos = 0;
+    let criancas = 0;
 
-        // contador de adultos
-        const adultosContador = criarContador("Adultos", (v) => {
-            adultos = v;
-            validarLimite();
-        });
-        bloco.appendChild(adultosContador);
+    // Área das idades
+    const idadesDiv = document.createElement("div");
+    bloco.appendChild(idadesDiv);
 
-        // contador de crianças
-        const criancasContador = criarContador("Crianças", (v) => {
-            criancas = v;
-            validarLimite();
-            renderIdades();
-        });
-        bloco.appendChild(criancasContador);
+    // função que garante máximo 4 pessoas
+    function validarLimite() {
+        if (adultos + criancas > 4) {
 
-        // Área onde vão aparecer as idades das crianças
-        const idadesDiv = document.createElement("div");
-        bloco.appendChild(idadesDiv);
+            // Ajustar adultos se ultrapassar
+            if (adultos > 4 - criancas) {
+                adultos = 4 - criancas;
+                adultosSpan.textContent = adultos;
+            }
 
-        // Atualiza a lista de idades sempre que o nº de crianças muda
-        function renderIdades() {
-            idadesDiv.innerHTML = ""; // limpa tudo
-
-            for (let c = 1; c <= criancas; c++) {
-                const idadeBox = document.createElement("div");
-                idadeBox.className = "idade-crianca";
-
-                idadeBox.innerHTML = `
-                    <label>Idade da criança ${c}</label>
-                    <select class="idadeSelect">
-                        ${Array.from({ length: 18 }, (_, i) => `<option value="${i}">${i} anos</option>`).join("")}
-                    </select>
-                `;
-
-                const select = idadeBox.querySelector(".idadeSelect");
-
-                // Mostrar berço apenas quando idade <= 2
-                select.addEventListener("change", () => {
-                    const idade = parseInt(select.value);
-
-                    let berco = idadeBox.querySelector(".berco");
-
-                    if (idade <= 2) {
-                        if (!berco) {
-                            berco = document.createElement("div");
-                            berco.className = "berco";
-                            berco.innerHTML = `
-                                <label>
-                                    <input type="checkbox" class="bercoCheck">
-                                    Necessita de berço
-                                </label>
-                            `;
-                            idadeBox.appendChild(berco);
-                        }
-                    } else {
-                        if (berco) berco.remove();
-                    }
-                });
-
-                idadesDiv.appendChild(idadeBox);
+            // Ajustar crianças se ultrapassar
+            if (criancas > 4 - adultos) {
+                criancas = 4 - adultos;
+                criancasSpan.textContent = criancas;
+                renderIdades();
             }
         }
+    }
+
+    // contador de adultos
+    const adultosContador = criarContador("Adultos", (v) => {
+        adultos = v;
+        adultosSpan.textContent = v;
+        validarLimite();
+    });
+    const adultosSpan = adultosContador.querySelector("span");
+    bloco.appendChild(adultosContador);
+
+    // contador de crianças
+    const criancasContador = criarContador("Crianças", (v) => {
+        criancas = v;
+        criancasSpan.textContent = v;
+        validarLimite();
+        renderIdades();
+    });
+    const criancasSpan = criancasContador.querySelector("span");
+    bloco.appendChild(criancasContador);
+
+    // Atualiza a lista de idades sempre que o nº de crianças muda
+    function renderIdades() {
+        idadesDiv.innerHTML = "";
+
+        for (let c = 1; c <= criancas; c++) {
+            const idadeBox = document.createElement("div");
+            idadeBox.className = "idade-crianca";
+
+            idadeBox.innerHTML = `
+                <label>Idade da criança ${c}</label>
+                <select class="idadeSelect">
+                    ${Array.from({ length: 18 }, (_, i) => `<option value="${i}">${i} anos</option>`).join("")}
+                </select>
+            `;
+
+            const select = idadeBox.querySelector(".idadeSelect");
+
+            select.addEventListener("change", () => {
+                const idade = parseInt(select.value);
+                let berco = idadeBox.querySelector(".berco");
+
+                if (idade <= 2) {
+                    if (!berco) {
+                        berco = document.createElement("div");
+                        berco.className = "berco";
+                        berco.innerHTML = `
+                            <label>
+                                <input type="checkbox" class="bercoCheck">
+                                Necessita de berço
+                            </label>
+                        `;
+                        idadeBox.appendChild(berco);
+                    }
+                } else {
+                    if (berco) berco.remove();
+                }
+            });
+
+            idadesDiv.appendChild(idadeBox);
+        }
+    }
+
+    aptContainer.appendChild(bloco);
+}
 
         // função que garante máximo 4 pessoas
        function validarLimite() {
