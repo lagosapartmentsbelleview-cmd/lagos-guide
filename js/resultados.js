@@ -841,9 +841,10 @@ function atualizarGraficoComparacaoMensal(anoBase) {
         };
     });
 
-    if (window.graficoComparacaoMensal) {
-        window.graficoComparacaoMensal.destroy();
-    }
+   if (window.graficoComparacaoMensal instanceof Chart) {
+    window.graficoComparacaoMensal.destroy();
+}
+
 
     window.graficoComparacaoMensal = new Chart(ctx, {
         type: "bar",
