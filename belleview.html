@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Lagos Apartments Belleview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background: #f7f7f7;
+            color: #123;
+        }
+
+        /* Topo */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        header .logo {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.04em;
+        }
+
+        header nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #005c99;
+            font-size: 0.95rem;
+        }
+
+        /* Hero */
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+            gap: 40px;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #4da6ff 0%, #f2e8d5 60%, #ffffff 100%);
+        }
+
+        .hero-texto h1 {
+            font-family: "Poppins", sans-serif;
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+        }
+
+        .hero-texto p {
+            font-size: 1.05rem;
+            max-width: 480px;
+        }
+
+        /* Booking Card */
+        .booking-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .booking-card h2 {
+            margin: 0 0 8px;
+            font-size: 1.2rem;
+        }
+
+        .booking-card label {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .booking-card input,
+        .booking-card select {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            font-size: 0.95rem;
+        }
+
+        .booking-card button {
+            margin-top: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: none;
+            background: #005c99;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .booking-card button:hover {
+            background: #004676;
+        }
+
+        /* Secções */
+        .secao {
+            padding: 50px 40px;
+            background: #ffffff;
+            margin-top: 16px;
+        }
+
+        .secao h2 {
+            font-family: "Poppins", sans-serif;
+            margin-bottom: 12px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 24px 40px;
+            background: #123;
+            color: #f7f7f7;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Lagos Apartments Belleview</div>
+    <nav>
+        <a href="#alojamento">Alojamento</a>
+        <a href="#comodidades">Comodidades</a>
+        <a href="#localizacao">Localização</a>
+        <a href="#contactos">Contactos</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-texto">
+        <h1>A sua estadia perfeita no Algarve</h1>
+        <p>Estúdios modernos a minutos da praia, com todo o conforto e privacidade.</p>
+    </div>
+
+    <div class="booking-card">
+        <h2>Reserve a sua estadia</h2>
+
+        <label>Check‑in</label>
+        <input type="date">
+
+        <label>Check‑out</label>
+        <input type="date">
+
+        <label>Hóspedes</label>
+        <select>
+            <option>1 hóspede</option>
+            <option selected>2 hóspedes</option>
+            <option>3 hóspedes</option>
+            <option>4 hóspedes</option>
+        </select>
+
+        <button>Ver disponibilidade</button>
+    </div>
+</section>
+
+<section id="alojamento" class="secao">
+    <h2>O Alojamento</h2>
+    <p>Estúdios modernos e luminosos, perfeitos para casais, famílias pequenas ou estadias de trabalho. Cada unidade inclui cozinha equipada, varanda, Wi‑Fi rápido e ar condicionado.</p>
+</section>
+
+<section id="comodidades" class="secao">
+    <h2>Comodidades</h2>
+    <p>Wi‑Fi rápido · Ar condicionado · Cozinha equipada · Máquina de café · Varanda · TV · Estacionamento fácil · Check‑in autónomo</p>
+</section>
+
+<section id="localizacao" class="secao">
+    <h2>Localização</h2>
+    <p>A 5 minutos da praia · Zona tranquila · Próximo de serviços</p>
+</section>
+
+<footer id="contactos">
+    Lagos Apartments Belleview · info@belleview.pt · +351 XXX XXX XXX
+</footer>
+
+</body>
+</html>
