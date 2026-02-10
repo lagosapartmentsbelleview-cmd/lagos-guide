@@ -39,8 +39,58 @@ bloco.appendChild(adultosContador);
 const criancasContador = criarContador("Crianças", (v) => {
     criancas = v;
     validarLimite();
+    renderIdades();
 });
 bloco.appendChild(criancasContador);
+
+// Área onde vão aparecer as idades das crianças
+const idadesDiv = document.createElement("div");
+bloco.appendChild(idadesDiv);
+
+// Atualiza a lista de idades sempre que o nº de crianças muda
+function renderIdades() {
+    idadesDiv.innerHTML = ""; // limpa tudo
+
+    for (let c = 1; c <= criancas; c++) {
+        const idadeBox = document.createElement("div");
+        idadeBox.className = "idade-crianca";
+
+        idadeBox.innerHTML = `
+            <label>Idade da criança ${c}</label>
+            <select class="idadeSelect">
+                ${Array.from({ length: 18 }, (_, i) => `<option value="${i}">${i} anos</option>`).join("")}
+            </select>
+        `;
+
+        const select = idadeBox.querySelector(".idadeSelect");
+
+        // Mostrar berço apenas quando idade <= 2
+        select.addEventListener("change", () => {
+            const idade = parseInt(select.value);
+
+            let berco = idadeBox.querySelector(".berco");
+
+            if (idade <= 2) {
+                if (!berco) {
+                    berco = document.createElement("div");
+                    berco.className = "berco";
+                    berco.innerHTML = `
+                        <label>
+                            <input type="checkbox" class="bercoCheck">
+                            Necessita de berço
+                        </label>
+                    `;
+                    idadeBox.appendChild(berco);
+                }
+            } else {
+                if (berco) berco.remove();
+            }
+        });
+
+        idadesDiv.appendChild(idadeBox);
+    }
+}
+
 
 // função que garante máximo 4 pessoas
 function validarLimite() {
