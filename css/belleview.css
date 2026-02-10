@@ -50,13 +50,14 @@ header nav a {
     box-shadow: 0 0 6px rgba(0,0,0,0.3);
 }
 
-/* HERO COM OVERLAY E ALINHAMENTO MELHORADO */
+/* HERO COM OVERLAY SUAVE E ALINHAMENTO PERFEITO */
 .hero {
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: 40px;
-    padding: 80px 40px; /* mais espaço para respirar */
+    padding: 80px 40px;
+    align-items: center; /* alinha texto e formulário */
 
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
@@ -66,37 +67,38 @@ header nav a {
     color: white;
 }
 
-/* Overlay suave para melhorar contraste */
+/* Overlay mais claro (15%) */
 .hero::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.35); /* 35% escuro */
+    background: rgba(0, 0, 0, 0.15); 
     z-index: 0;
 }
 
-/* Garantir que o texto fica acima do overlay */
+/* Garantir que texto e formulário ficam acima do overlay */
 .hero-texto,
 .booking-card {
     position: relative;
     z-index: 1;
 }
 
-/* TÍTULO MAIS IMPONENTE E MELHOR ALINHADO */
+/* TÍTULO */
 .hero-texto h1 {
     font-family: "Poppins", sans-serif;
-    font-size: 3rem; /* maior impacto */
+    font-size: 3rem;
     line-height: 1.2;
     margin-bottom: 16px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
 }
 
-/* SUBTÍTULO MAIS CONTROLADO */
+/* SUBTÍTULO — numa só linha */
 .hero-texto p {
     font-size: 1.15rem;
-    max-width: 420px;
+    white-space: nowrap; /* mantém numa linha */
     margin-bottom: 20px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
 }
-
 
 /* Booking Card */
 .booking-card {
