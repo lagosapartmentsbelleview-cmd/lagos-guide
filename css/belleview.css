@@ -453,3 +453,54 @@ footer {
 .contador {
     color: #005c99;
 }
+
+/* ============================
+   AJUSTES PROFISSIONAIS DE TAMANHO
+   ============================ */
+
+/* Booking card mais compacta */
+.booking-card {
+    padding: 16px !important;
+    gap: 6px !important;
+    max-width: 280px;
+}
+
+/* Inputs e selects mais pequenos */
+.booking-card input,
+.booking-card select {
+    padding: 6px 8px !important;
+    font-size: 0.85rem !important;
+    height: 32px !important;
+    color: #005c99 !important;
+}
+
+/* Títulos mais compactos */
+.booking-card h2 {
+    font-size: 1rem !important;
+    margin-bottom: 6px !important;
+}
+
+/* Labels mais pequenos */
+.booking-card label {
+    font-size: 0.8rem !important;
+}
+
+/* Display de disponibilidade realmente pequeno */
+#resultadoDisponibilidade {
+    margin-top: 8px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    background: #eef6fb;
+    color: #005c99;
+    border: 1px solid #cfe4f2;
+    max-width: 180px;
+}
+
+/* Selects de data e opções em azul */
+.booking-card input[type="date"],
+.booking-card select,
+.booking-card select option {
+    color: #005c99 !important;
+}
+
