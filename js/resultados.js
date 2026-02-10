@@ -883,6 +883,84 @@ function atualizarGraficoComparacaoMensal(anoBase) {
     });
 }
 
+// -------------------------------------------------------------
+// GRÁFICO — COMPARAÇÃO MENSAL DO PREÇO MÉDIO (3 ANOS)
+// -------------------------------------------------------------
+function atualizarGraficoComparacaoPrecoMedio(anoBase) {
+
+    const ctx = document.getElementById("graficoComparacaoPrecoMedio");
+    if (!ctx) return;
+
+    const fonteMensal = modoAtual === "financeiro"
+        ? agregadosFinanceirosMensais
+        : agregadosOperacionaisMensais;
+
+    const anos = [anoBase - 2, anoBase - 1, anoBase];
+
+    const cores = [
+        "rgba(153, 102, 255, 0.6)",
+        "rgba(255, 205, 86, 0.6)",
+        "rgba(75, 192, 192, 0.8)"
+    ];
+
+    const datasets = anos.map((ano, idx) => {
+        const mesesAno = fonteMensal[ano] || {};
+        const valores = [];
+
+        for (let m = 1; m <= 12; m++) {
+            const mesObj = mesesAno[m] || { precoMedio: 0 };
+            valores.push(mesObj.precoMedio);
+        }
+
+        return {
+            label: ano.toString(),
+            data: valores,
+            backgroundColor: cores[idx],
+            borderWidth: 1
+        };
+    });
+
+    if (window.graficoComparacaoPrecoMedio instanceof Chart) {
+        window.graficoComparacaoPrecoMedio.destroy();
+    }
+
+    window.graficoComparacaoPrecoMedio = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: NOMES_MESES,
+            datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Preço Médio por Noite — ${anos[0]}, ${anos[1]}, ${anos[2]}`
+                },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => {
+                            const v = ctx.raw || 0;
+                            return `${ctx.dataset.label}: ${v.toLocaleString("pt-PT", {
+                                style: "currency",
+                                currency: "EUR"
+                            })}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: v => v.toLocaleString("pt-PT") + " €"
+                    }
+                }
+            }
+        }
+    });
+}
+
 
 // -------------------------------------------------------------
 // GRÁFICOS (FINANCEIRO OU OPERACIONAL)
@@ -929,9 +1007,16 @@ function atualizarGraficos(ano) {
     });
 
     // ---------------------------------------------------------
-    // GRÁFICO — COMPARAÇÃO MENSAL (NOVO)
+    // GRÁFICO — COMPARAÇÃO MENSAL ANO MES 2 ANOS ANTERIORES (NOVO)
     // ---------------------------------------------------------
     atualizarGraficoComparacaoMensal(ano);
+
+    // ---------------------------------------------------------
+    // GRÁFICO — COMPARAÇÃO MENSAL PREÇO MÉDIO NOITE (NOVO)
+    // ---------------------------------------------------------
+    
+    atualizarGraficoComparacaoPrecoMedio(ano);
+
 
     // ---------------------------------------------------------
     // GRÁFICO — OCUPAÇÃO
