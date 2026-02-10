@@ -28,6 +28,27 @@ const NOMES_MESES = [
 ];
 
 // -------------------------------------------------------------
+// PALETA GLOBAL DE CORES (PROFISSIONAL)
+// -------------------------------------------------------------
+const CORES = {
+    primario: "rgba(75, 192, 192, 0.8)",        // verde água
+    primarioLight: "rgba(75, 192, 192, 0.4)",
+
+    secundario: "rgba(54, 162, 235, 0.8)",      // azul
+    secundarioLight: "rgba(54, 162, 235, 0.4)",
+
+    terciario: "rgba(255, 159, 64, 0.8)",       // laranja
+    terciarioLight: "rgba(255, 159, 64, 0.4)",
+
+    alerta: "rgba(255, 99, 132, 0.8)",          // vermelho
+    alertaLight: "rgba(255, 99, 132, 0.4)",
+
+    neutro: "rgba(153, 102, 255, 0.8)",         // roxo
+    neutroLight: "rgba(153, 102, 255, 0.4)"
+};
+
+
+// -------------------------------------------------------------
 // UTILITÁRIOS
 // -------------------------------------------------------------
 
@@ -819,10 +840,11 @@ function atualizarGraficoComparacaoMensal(anoBase) {
     const anos = [anoBase - 2, anoBase - 1, anoBase];
 
     const cores = [
-        "rgba(54, 162, 235, 0.6)",
-        "rgba(255, 159, 64, 0.6)",
-        "rgba(75, 192, 192, 0.8)"
+        CORES.secundario,
+        CORES.terciario,
+        CORES.primario
     ];
+
 
     const datasets = anos.map((ano, idx) => {
         const mesesAno = fonteMensal[ano] || {};
@@ -898,10 +920,11 @@ function atualizarGraficoComparacaoPrecoMedio(anoBase) {
     const anos = [anoBase - 2, anoBase - 1, anoBase];
 
     const cores = [
-        "rgba(153, 102, 255, 0.6)",
-        "rgba(255, 205, 86, 0.6)",
-        "rgba(75, 192, 192, 0.8)"
+        CORES.neutro,
+        CORES.secundario,
+        CORES.primario
     ];
+
 
     const datasets = anos.map((ano, idx) => {
         const mesesAno = fonteMensal[ano] || {};
@@ -1000,7 +1023,7 @@ function atualizarGraficos(ano) {
             datasets: [{
                 label: modoAtual === "financeiro" ? "Receita Bruta (Financeiro)" : "Receita Bruta (Operacional)",
                 data: dadosBruto,
-                backgroundColor: "rgba(75, 192, 192, 0.6)"
+                backgroundColor: CORES.primario
             }]
         },
         options: { responsive: true }
@@ -1031,8 +1054,8 @@ function atualizarGraficos(ano) {
             datasets: [{
                 label: "Ocupação (%)",
                 data: dadosOcupacao,
-                borderColor: "rgba(255, 159, 64, 1)",
-                backgroundColor: "rgba(255, 159, 64, 0.2)",
+                borderColor: CORES.terciario,
+                backgroundColor: CORES.terciarioLight
                 fill: true
             }]
         },
@@ -1057,7 +1080,7 @@ function atualizarGraficos(ano) {
             datasets: [{
                 label: "Custos",
                 data: dadosCustos,
-                backgroundColor: "rgba(255, 99, 132, 0.6)"
+                backgroundColor: CORES.alerta
             }]
         },
         options: { responsive: true }
@@ -1092,7 +1115,7 @@ function atualizarGraficos(ano) {
                     ? "Receita Bruta Anual"
                     : "Receita Líquida Anual",
                 data: dadosComparacao,
-                backgroundColor: "rgba(54, 162, 235, 0.6)"
+                backgroundColor: CORES.secundario
             }]
         },
         options: { responsive: true }
