@@ -337,6 +337,8 @@ footer {
     gap: 10px;
     margin: 6px 0 12px;
     width: 100%;
+    position: relative;
+    z-index: 20;
 }
 
 .contador label {
