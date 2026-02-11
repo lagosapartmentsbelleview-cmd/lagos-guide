@@ -160,21 +160,20 @@ function renderApartamentos() {
 }
 
 // ---------------------------------------------------------------
+// BOTÃO VER DISPONIBILIDADE
+// ---------------------------------------------------------------
+const btn = document.getElementById("btnDisponibilidade");
+const resultado = document.getElementById("resultadoDisponibilidade");
+
+btn.addEventListener("click", () => {
+    resultado.textContent = "A verificar disponibilidade...";
+    resultado.classList.add("has-result");
+});
+
+// ---------------------------------------------------------------
 // EVENTOS
 // ---------------------------------------------------------------
 numAptSelect.addEventListener("change", renderApartamentos);
 renderApartamentos();
 
 console.log("reservas.js carregado");
-
-// ---------------------------------------------------------------
-// BOTÃO VER DISPONIBILIDADE
-// ---------------------------------------------------------------
-
-const btn = document.getElementById("btnDisponibilidade");
-const resultado = document.getElementById("resultadoDisponibilidade");
-
-btn.addEventListener("click", () => {
-    resultado.textContent = "A verificar disponibilidade...";
-    resultado.classList.add("has-result"); // ⭐ AQUI
-});
