@@ -6,7 +6,7 @@ const translations = {
         menu_contactos: "Contactos",
 
         hero_title: "A sua estadia perfeita em Lagos – Algarve",
-        hero_sub: “Apartamentos T1 modernos, numa zona calma e perto da praia, pensados para proporcionar férias verdadeiramente merecidas.”,
+        hero_sub:"Apartamentos T1 modernos, numa zona calma e perto da praia, pensados para proporcionar férias verdadeiramente merecidas",
 
         book_title: "Reserve a sua estadia",
         checkin: "Check‑in",
@@ -35,7 +35,7 @@ const translations = {
         menu_contactos: "Contact",
 
         hero_title: "Your perfect stay in Lagos – Algarve",
-        hero_sub: “Modern one‑bedroom apartments in a quiet area near the beach, designed to offer the relaxing holiday you truly deserve.”,
+        hero_sub:"Modern one‑bedroom apartments in a quiet area near the beach, designed to offer the relaxing holiday you truly deserve.",
 
         book_title: "Book your stay",
         checkin: "Check‑in",
@@ -64,7 +64,7 @@ const translations = {
         menu_contactos: "Contacto",
 
         hero_title: "Su estancia perfecta en Lagos – Algarve",
-        hero_sub: “Apartamentos T1 modernos, en una zona tranquila y cerca de la playa, pensados para ofrecerle unas vacaciones realmente merecidas.”,
+        hero_sub:"Apartamentos T1 modernos, en una zona tranquila y cerca de la playa, pensados para ofrecerle unas vacaciones realmente merecidas.",
 
         book_title: "Reserve su estancia",
         checkin: "Entrada",
