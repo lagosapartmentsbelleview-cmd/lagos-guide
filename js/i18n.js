@@ -6,16 +6,16 @@ const translations = {
         menu_contactos: "Contactos",
 
         hero_title: "A sua estadia perfeita em Lagos – Algarve",
-        hero_sub:"Apartamentos T1 modernos, zona tranquila e perto da praia. \nPara as férias que merece.",
+        hero_sub: "Apartamentos T1 modernos, zona tranquila e perto da praia. \nPara as férias que merece.",
 
         book_title: "Reserve a sua estadia",
         checkin: "Check‑in",
         checkout: "Check‑out",
-        guests: "Hóspedes",
-        guest1: "1 hóspede",
-        guest2: "2 hóspedes",
-        guest3: "3 hóspedes",
-        guest4: "4 hóspedes",
+        num_apartments: "Nº de apartamentos",
+        apartment_label: "Apartamento",
+        adults: "Adultos",
+        children: "Crianças",
+        placeholder_date: "dd/mm/aaaa",
         check_availability: "Ver disponibilidade",
 
         section_alojamento: "O Alojamento",
@@ -35,16 +35,16 @@ const translations = {
         menu_contactos: "Contact",
 
         hero_title: "Your perfect stay in Lagos – Algarve",
-        hero_sub:"Modern one‑bedroom apartments in a quiet area near the beach. \nFor the holiday you deserve.",
+        hero_sub: "Modern one‑bedroom apartments in a quiet area near the beach. \nFor the holiday you deserve.",
 
         book_title: "Book your stay",
         checkin: "Check‑in",
         checkout: "Check‑out",
-        guests: "Guests",
-        guest1: "1 guest",
-        guest2: "2 guests",
-        guest3: "3 guests",
-        guest4: "4 guests",
+        num_apartments: "Number of apartments",
+        apartment_label: "Apartment",
+        adults: "Adults",
+        children: "Children",
+        placeholder_date: "dd/mm/yyyy",
         check_availability: "Check availability",
 
         section_alojamento: "The Apartment",
@@ -64,16 +64,16 @@ const translations = {
         menu_contactos: "Contacto",
 
         hero_title: "Su estancia perfecta en Lagos – Algarve",
-        hero_sub:"Apartamentos T1 modernos, en una zona tranquila y cerca de la playa. \nPara las vacaciones que usted merece.",
+        hero_sub: "Apartamentos T1 modernos, en una zona tranquila y cerca de la playa. \nPara las vacaciones que usted merece.",
 
         book_title: "Reserve su estancia",
         checkin: "Entrada",
         checkout: "Salida",
-        guests: "Huéspedes",
-        guest1: "1 huésped",
-        guest2: "2 huéspedes",
-        guest3: "3 huéspedes",
-        guest4: "4 huéspedes",
+        num_apartments: "Nº de apartamentos",
+        apartment_label: "Apartamento",
+        adults: "Adultos",
+        children: "Niños",
+        placeholder_date: "dd/mm/aaaa",
         check_availability: "Ver disponibilidad",
 
         section_alojamento: "El Alojamiento",
@@ -88,20 +88,30 @@ const translations = {
 };
 
 function setLanguage(lang) {
+
+    // Tradução de texto normal
     document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (translations[lang][key] !== undefined) {
-    el.textContent = translations[lang][key];
-}
+            el.textContent = translations[lang][key];
+        }
+    });
 
+    // Tradução de placeholders
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (translations[lang][key] !== undefined) {
+            el.placeholder = translations[lang][key];
+        }
     });
 }
 
+// Switch de idiomas
 document.querySelectorAll(".lang-switch img").forEach(img => {
     img.addEventListener("click", () => {
         setLanguage(img.dataset.lang);
     });
 });
 
-// idioma inicial
+// Idioma inicial
 setLanguage("pt");
