@@ -166,3 +166,19 @@ numAptSelect.addEventListener("change", renderApartamentos);
 renderApartamentos();
 
 console.log("reservas.js carregado");
+
+// ---------------------------------------------------------------
+// BOTÃO VER DISPONIBILIDADE
+// ---------------------------------------------------------------
+const btn = document.getElementById("btnDisponibilidade");
+const resultado = document.getElementById("resultadoDisponibilidade");
+
+btn.addEventListener("click", () => {
+
+    // Aqui colocas o texto ou resultado real
+    resultado.textContent = "A verificar disponibilidade...";
+
+    // ⭐ AQUI MESMO: ativa o estilo de cartão
+    resultado.classList.add("has-result");
+});
+
