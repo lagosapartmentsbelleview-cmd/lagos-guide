@@ -527,3 +527,9 @@ header nav a:hover {
     color: #005c99 !important;
     transform: translateY(-1px);         /* leve elevação */
 }
+
+/* Subtítulo maior e mais elegante */
+.hero-texto p {
+    font-size: 1.35rem !important;   /* antes 1.15rem */
+    line-height: 1.35;               /* mais respirado */
+}
