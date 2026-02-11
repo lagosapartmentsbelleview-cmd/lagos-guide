@@ -569,6 +569,23 @@ header nav a:hover::after {
     width: 100%;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.belleview-logo {
+    display: block;
+}
+
+.logo-text {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #005c99;
+}
+
 /* Pequena elevação no hover */
 header nav a:hover {
     transform: translateY(-2px);
