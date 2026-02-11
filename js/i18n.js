@@ -6,7 +6,7 @@ const translations = {
         menu_contactos: "Contactos",
 
         hero_title: "A sua estadia perfeita em Lagos – Algarve",
-        hero_sub:"Apartamentos T1 modernos, zona tranquila, perto da praia, pensados para proporcionar as merecidas férias",
+        hero_sub:"Apartamentos T1 modernos, zona tranquila e perto da praia — para as férias que merece.",
 
         book_title: "Reserve a sua estadia",
         checkin: "Check‑in",
