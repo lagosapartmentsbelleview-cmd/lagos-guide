@@ -641,3 +641,15 @@ select {
     appearance: none;
 }
 
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 92, 153, 0.25);
+}
+
+.booking-card button {
+    outline: none;
+}
+
+.booking-card button:focus-visible {
+    outline: none;
+}
