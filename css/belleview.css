@@ -654,7 +654,7 @@ button:focus {
     outline: none;
 }
 
-/* Estado inicial: discreto, sem cartão */
+/* Estado inicial: discreto */
 #resultadoDisponibilidade {
     margin-top: 8px;
     padding: 0;
@@ -666,7 +666,7 @@ button:focus {
     box-sizing: border-box;
 }
 
-/* Quando houver resultado: vira cartão igual ao Apartamento 1 */
+/* Quando houver resultado: cartão igual ao Apartamento 1 */
 #resultadoDisponibilidade.has-result {
     margin-top: 15px;
     padding: 15px;
