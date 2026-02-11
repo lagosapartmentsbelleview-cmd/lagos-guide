@@ -60,7 +60,7 @@ function renderApartamentos() {
         bloco.className = "apartamento-bloco";
 
         const titulo = document.createElement("h3");
-        titulo.textContent = `Apartamento ${i}`;
+        titulo.textContent = `${translations[window.currentLang].apartment_label} ${i}`;
         bloco.appendChild(titulo);
 
         let adultos = 0;
@@ -126,7 +126,7 @@ function renderApartamentos() {
             }
         }
 
-        const adultosContador = criarContador("Adultos", (v) => {
+        const adultosContador = criarContador(translations[window.currentLang].adults, (v) => {
             adultos = v;
             adultosSpan.textContent = v;
             validarLimite();
@@ -134,7 +134,7 @@ function renderApartamentos() {
         const adultosSpan = adultosContador.querySelector("span");
         bloco.appendChild(adultosContador);
 
-        const criancasContador = criarContador("Crianças", (v) => {
+        const criancasContador = criarContador(translations[window.currentLang].children, (v) => {
             criancas = v;
             criancasSpan.textContent = v;
             validarLimite();
