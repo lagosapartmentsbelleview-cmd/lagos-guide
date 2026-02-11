@@ -598,3 +598,29 @@ header nav a:hover {
 #extraCampos {
     margin-top: 15px;
 }
+
+/* Estilo premium para inputs de data */
+.booking-card input[type="date"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #c7d4e2;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: "Inter", sans-serif;
+    background-color: #f8fafc;
+    color: #005c99;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* Placeholder mais elegante */
+.booking-card input[type="date"]::placeholder {
+    color: #8aa4b8;
+}
+
+/* Efeito ao clicar */
+.booking-card input[type="date"]:focus {
+    border-color: #005c99;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 92, 153, 0.15);
+}
