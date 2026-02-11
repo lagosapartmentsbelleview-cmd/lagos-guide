@@ -89,6 +89,9 @@ const translations = {
 
 function setLanguage(lang) {
 
+    // Guardar o idioma atual para o reservas.js
+    window.currentLang = lang;
+
     // Tradução de texto normal
     document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
@@ -104,6 +107,11 @@ function setLanguage(lang) {
             el.placeholder = translations[lang][key];
         }
     });
+
+    // Atualizar apartamentos quando muda o idioma
+    if (typeof renderApartamentos === "function") {
+        renderApartamentos();
+    }
 }
 
 // Switch de idiomas
