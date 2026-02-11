@@ -683,3 +683,14 @@ button:focus {
     outline: none;
     box-shadow: none;
 }
+
+.booking-card select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #c7d4e2;
+    border-radius: 10px;
+    background-color: #f8fafc; /* ⭐ mesma cor dos inputs de data */
+    font-size: 15px;
+    color: #005c99;
+    box-sizing: border-box;
+}
