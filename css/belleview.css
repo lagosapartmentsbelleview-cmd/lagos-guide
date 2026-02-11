@@ -667,3 +667,21 @@ button:focus {
     outline: none;
 }
 
+#resultadoDisponibilidade {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #c7d4e2;
+    border-radius: 10px;
+    background-color: #f8fafc;
+    min-height: 120px; /* ⭐ igual ao cartão do apartamento */
+    box-sizing: border-box;
+    color: #005c99;
+}
+
+/* Remover barra azul de focus */
+#resultadoDisponibilidade:focus,
+#resultadoDisponibilidade:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
