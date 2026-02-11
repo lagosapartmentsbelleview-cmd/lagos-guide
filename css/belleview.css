@@ -653,3 +653,17 @@ button:focus {
 .booking-card button:focus-visible {
     outline: none;
 }
+
+#resultadoDisponibilidade:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+#resultadoDisponibilidade {
+    outline: none;
+}
+
+#resultadoDisponibilidade:focus-visible {
+    outline: none;
+}
+
