@@ -182,3 +182,10 @@ btn.addEventListener("click", () => {
     resultado.classList.add("has-result");
 });
 
+const btn = document.getElementById("btnDisponibilidade");
+const resultado = document.getElementById("resultadoDisponibilidade");
+
+btn.addEventListener("click", () => {
+    resultado.textContent = "A verificar disponibilidade...";
+    resultado.classList.add("has-result"); // ⭐ AQUI
+});
