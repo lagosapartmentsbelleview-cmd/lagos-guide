@@ -533,3 +533,43 @@ header nav a:hover {
     font-size: 1.35rem !important;   /* antes 1.15rem */
     line-height: 1.35;               /* mais respirado */
 }
+
+.hero-texto p {
+    white-space: normal !important;
+}
+
+/* ============================
+   MENU PREMIUM BELLEVIEW
+   ============================ */
+
+header nav a {
+    font-size: 1.05rem !important;       /* ligeiramente maior */
+    font-weight: 600 !important;         /* mais presença */
+    color: #005c99 !important;           /* azul da marca */
+    padding: 6px 12px;
+    position: relative;
+    transition: all 0.25s ease-in-out;
+    letter-spacing: 0.02em;
+}
+
+/* Linha animada por baixo (efeito premium) */
+header nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    background-color: #005c99;
+    transition: width 0.25s ease-in-out;
+    border-radius: 2px;
+}
+
+header nav a:hover::after {
+    width: 100%;
+}
+
+/* Pequena elevação no hover */
+header nav a:hover {
+    transform: translateY(-2px);
+}
