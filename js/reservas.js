@@ -111,6 +111,47 @@ function alocarApartamentosInteligente(quartos, checkin, checkout, reservasExist
     return resultado;
 }
 
+function verificarDisponibilidade(checkin, checkout, numApt) {
+    if (!checkin || !checkout) {
+        return { status: "erro", mensagem: "Selecione datas válidas." };
+    }
+
+    if (!validarDatasCheckinCheckout(checkin, checkout)) {
+        return { status: "erro", mensagem: "Checkout deve ser depois do check-in." };
+    }
+
+    // Tenta alocar apartamentos usando o teu algoritmo inteligente
+    const apartamentosLivres = alocarApartamentosInteligente(
+        numApt,
+        checkin,
+        checkout,
+        reservas
+    );
+
+    // Nenhum apartamento disponível
+    if (apartamentosLivres.length === 0) {
+        return {
+            status: "indisponivel",
+            mensagem: "Não há apartamentos disponíveis neste intervalo."
+        };
+    }
+
+    // Disponibilidade parcial
+    if (apartamentosLivres.length < numApt) {
+        return {
+            status: "parcial",
+            mensagem: `Só ${apartamentosLivres.length} disponível(is).`,
+            apartamentos: apartamentosLivres
+        };
+    }
+
+    // Disponível
+    return {
+        status: "disponivel",
+        mensagem: "Datas disponíveis!",
+        apartamentos: apartamentosLivres
+    };
+}
 
 
 // ------------------------------
@@ -281,9 +322,41 @@ const btn = document.getElementById("btnDisponibilidade");
 const resultado = document.getElementById("resultadoDisponibilidade");
 
 btn.addEventListener("click", () => {
-    resultado.textContent = "A verificar disponibilidade...";
+    const checkin = document.getElementById("checkin").value;
+    const checkout = document.getElementById("checkout").value;
+    const numApt = parseInt(document.getElementById("numApt").value);
+
+    const r = verificarDisponibilidade(checkin, checkout, numApt);
+
     resultado.classList.add("has-result");
+
+    if (r.status === "erro") {
+        resultado.textContent = r.mensagem;
+        return;
+    }
+
+    if (r.status === "indisponivel") {
+        resultado.textContent = "❌ Indisponível: " + r.mensagem;
+        return;
+    }
+
+    if (r.status === "parcial") {
+        resultado.innerHTML = `
+            ⚠️ Disponibilidade parcial<br>
+            ${r.mensagem}<br>
+            Apartamentos livres: ${r.apartamentos.join(", ")}
+        `;
+        return;
+    }
+
+    if (r.status === "disponivel") {
+        resultado.innerHTML = `
+            ✅ Disponível!<br>
+            Apartamentos atribuídos: ${r.apartamentos.join(", ")}
+        `;
+    }
 });
+
 
 // ---------------------------------------------------------------
 // EVENTOS
