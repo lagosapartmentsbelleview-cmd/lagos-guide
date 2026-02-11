@@ -47,6 +47,18 @@ function criarContador(label, callback) {
 const numAptSelect = document.getElementById("numApt");
 const aptContainer = document.getElementById("apartamentosContainer");
 
+const checkinInput = document.getElementById("checkin");
+const extraCampos = document.getElementById("extraCampos");
+
+checkinInput.addEventListener("focus", () => {
+    extraCampos.classList.remove("hidden");
+});
+
+document.getElementById("checkout").addEventListener("focus", () => {
+    extraCampos.classList.remove("hidden");
+});
+
+
 // ------------------------------
 // GERAR APARTAMENTOS
 // ------------------------------
