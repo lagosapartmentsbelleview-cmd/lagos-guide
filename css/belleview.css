@@ -624,3 +624,7 @@ header nav a:hover {
     background-color: #ffffff;
     box-shadow: 0 0 0 3px rgba(0, 92, 153, 0.15);
 }
+
+.booking-card input[type="date"] {
+    box-sizing: border-box;
+}
