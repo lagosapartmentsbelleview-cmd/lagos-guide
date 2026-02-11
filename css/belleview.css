@@ -590,3 +590,11 @@ header nav a:hover::after {
 header nav a:hover {
     transform: translateY(-2px);
 }
+
+.hidden {
+    display: none;
+}
+
+#extraCampos {
+    margin-top: 15px;
+}
