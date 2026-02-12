@@ -215,12 +215,17 @@ const checkinInput = document.getElementById("checkin");
 const extraCampos = document.getElementById("extraCampos");
 
 checkinInput.addEventListener("focus", () => {
-    extraCampos.classList.remove("hidden");
+    extraCampos.style.display = "block";
 });
 
 document.getElementById("checkout").addEventListener("focus", () => {
-    extraCampos.classList.remove("hidden");
+    extraCampos.style.display = "block";
 });
+
+numAptSelect.addEventListener("change", () => {
+    extraCampos.style.display = "block";
+});
+
 
 
 // ------------------------------
