@@ -1,43 +1,107 @@
-body {
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    background: #f7f7f7;
-    color: #123;
+/* ============================================================
+   0. ROOT VARIABLES — Cores, sombras, tipografia
+   ============================================================ */
+:root {
+    --azul: #005c99;
+    --azul-suave: #eef6fb;
+    --cinza-borda: #d0d7de;
+    --cinza-fundo: #f7f7f7;
+    --texto-escuro: #123;
+    --radius: 12px;
+    --shadow-suave: 0 4px 14px rgba(0,0,0,0.08);
+    --shadow-media: 0 10px 28px rgba(0,0,0,0.12);
+    --shadow-hover: 0 12px 32px rgba(0,0,0,0.16);
+    --max-width: 1280px;
+    --font-titulo: "Poppins", sans-serif;
+    --font-base: "Inter", sans-serif;
 }
 
-/* Topo */
+/* ============================================================
+   1. GLOBAL RESET + BODY
+   ============================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-base);
+    background: var(--cinza-fundo);
+    color: var(--texto-escuro);
+    line-height: 1.4;
+}
+
+/* ============================================================
+   2. HEADER + MENU PREMIUM
+   ============================================================ */
 header {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 18px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 40px;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255,255,255,0.95);
     position: sticky;
     top: 0;
-    z-index: 10;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    z-index: 20;
+    box-shadow: var(--shadow-suave);
 }
 
-/* Ajuste profissional do cabeçalho */
-header .logo {
-    font-size: 1.35rem !important;   /* maior, mas elegante */
-    font-weight: 700 !important;     /* mais presença */
-    color: #005c99 !important;       /* azul da marca */
-    letter-spacing: 0.03em;          /* ligeiro refinamento */
+/* LOGO */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
+.logo-text {
+    font-family: var(--font-titulo);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--azul);
+}
+
+/* MENU */
 header nav a {
-    margin-left: 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--azul);
+    padding: 6px 12px;
+    border-radius: 6px;
+    position: relative;
+    transition: all 0.25s ease;
+    letter-spacing: 0.02em;
     text-decoration: none;
-    color: #005c99;
-    font-size: 0.95rem;
+}
+
+/* Linha animada */
+header nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    background-color: var(--azul);
+    transition: width 0.25s ease;
+    border-radius: 2px;
+}
+
+header nav a:hover::after {
+    width: 100%;
+}
+
+header nav a:hover {
+    transform: translateY(-2px);
 }
 
 /* Bandeiras */
 .lang-switch {
     display: flex;
     gap: 10px;
-    cursor: pointer;
 }
 
 .lang-switch img {
@@ -52,663 +116,275 @@ header nav a {
     box-shadow: 0 0 6px rgba(0,0,0,0.3);
 }
 
-/* HERO COM OVERLAY SUAVE E ALINHAMENTO PERFEITO */
+/* ============================================================
+   3. HERO — Minimalista Premium + Azul Belleview
+   ============================================================ */
 .hero {
-    position: relative;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 80px 40px;
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    gap: 40px;
-    padding: 85px 40px;
-    padding-top: 20px !important
-    align-items: center; /* alinha texto e formulário */
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: center;
 
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-
-    color: white;
+    position: relative;
 }
 
-/* Overlay mais claro (15%) */
+/* Overlay suave */
 .hero::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.15); 
+    background: rgba(0,0,0,0.18);
     z-index: 0;
 }
 
-/* Garantir que texto e formulário ficam acima do overlay */
-.hero-texto,
+.hero-texto {
+    position: relative;
+    z-index: 2;
+}
+
+/* TÍTULO — A2 + H1 */
+.hero-texto h1 {
+    font-family: var(--font-titulo);
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    margin-bottom: 14px;
+}
+
+/* SUBTÍTULO */
+.hero-texto p {
+    font-size: 1.25rem;
+    color: #f0f4f8;
+    max-width: 460px;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.25);
+}
+
+/* ============================================================
+   4. BOOKING CARD — B3 (sombra média)
+   ============================================================ */
 .booking-card {
     position: relative;
-    z-index: 1;
-}
-
-/* TÍTULO */
-.hero-texto h1 {
-    font-family: "Poppins", sans-serif;
-    font-size: 3rem;
-    line-height: 1.2;
-    margin-bottom: 16px;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
-}
-
-/* SUBTÍTULO — numa só linha */
-.hero-texto p {
-    font-size: 1.15rem;
-    white-space: nowrap; /* mantém numa linha */
-    margin-bottom: 20px;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
-}
-
-/* Booking Card */
-.booking-card {
-    background: #ffffff;
-    border-radius: 16px;
+    z-index: 2;
+    background: #fff;
     padding: 24px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-media);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 }
 
 .booking-card h2 {
-    margin: 0 0 8px;
-    font-size: 1.2rem;
-    color: #005c99; /* ou #111 para ficar mais elegante */ 
+    font-family: var(--font-titulo);
+    font-size: 1.3rem;
+    color: var(--azul);
+    margin-bottom: 6px;
 }
 
+/* Labels */
 .booking-card label {
     font-size: 0.85rem;
     font-weight: 500;
+    color: var(--azul);
 }
 
+/* Inputs + selects — D1 */
 .booking-card input,
 .booking-card select {
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid #d0d7de;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--cinza-borda);
+    background: #f8fafc;
     font-size: 0.95rem;
+    color: var(--azul);
+    transition: all 0.2s ease;
 }
 
+.booking-card input:focus,
+.booking-card select:focus {
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(0,92,153,0.15);
+    outline: none;
+}
+
+/* Botão — C3 */
 .booking-card button {
-    margin-top: 8px;
-    padding: 10px 14px;
+    margin-top: 6px;
+    padding: 12px;
     border-radius: 999px;
     border: none;
-    background: #005c99;
+    background: var(--azul);
     color: #fff;
     font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .booking-card button:hover {
     background: #004676;
+    box-shadow: var(--shadow-hover);
 }
 
-.booking-card > * {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Secções */
-.secao {
-    padding: 50px 40px;
-    background: #ffffff;
-    margin-top: 16px;
-}
-
-.secao h2 {
-    font-family: "Poppins", sans-serif;
-    margin-bottom: 12px;
-}
-
-/* Footer */
-footer {
-    padding: 24px 40px;
-    background: #123;
-    color: #f7f7f7;
-    font-size: 0.9rem;
-    margin-top: 20px;
-}
-
-/* ============================================
-   MOBILE / TABLET RESPONSIVE (até 768px)
-   ============================================ */
-@media (max-width: 768px) {
-
-    /* HEADER */
-    header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 14px;
-        padding: 16px;
-        text-align: center;
-    }
-
-    nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    nav a {
-        font-size: 0.9rem;
-        padding: 6px 12px;
-        border-radius: 6px;
-        background: rgba(0, 92, 153, 0.10);
-        color: #005c99;
-        font-weight: 500;
-    }
-
-    nav a:hover {
-        background: rgba(0, 92, 153, 0.18);
-    }
-
-    /* Bandeiras */
-    .lang-switch {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-    }
-
-    .lang-switch img {
-        width: 24px;
-        height: auto;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-    }
-
-    /* HERO */
-    .hero {
-        grid-template-columns: 1fr;
-        padding: 30px 20px;
-        text-align: center;
-        gap: 24px;
-        min-height: 70vh; /* imagem mais visível */
-    }
-
-    /* Overlay mais leve no mobile */
-    .hero::before {
-        background: rgba(0, 0, 0, 0.10);
-    }
-
-    .hero-texto h1 {
-        font-size: 1.8rem;
-        line-height: 1.2;
-        margin-bottom: 6px;
-    }
-
-    .hero-texto p {
-        font-size: 1rem;
-        white-space: normal; /* quebra linha no mobile */
-        margin-top: 4px;
-    }
-
-    /* BOOKING CARD */
-    .booking-card {
-        width: 100%;
-        max-width: 330px;
-        margin: 0 auto;
-        padding: 18px;
-        border-radius: 14px;
-        background: #fff;
-        box-shadow: 0 8px 22px rgba(0,0,0,0.12);
-        gap: 10px;
-        color: #005c99;
-    }
-
-    .booking-card h2 {
-        font-size: 1.25rem;
-        margin-bottom: 12px;
-        text-align: center;
-        font-weight: 600;
-        color: #005c99;
-    }
-
-    .booking-card label {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #005c99;
-    }
-
-    .booking-card input,
-    .booking-card select {
-        padding: 12px;
-        font-size: 1rem;
-        border-radius: 10px;
-        border: 1px solid #cfd8e3;
-    }
-
-    .booking-card button {
-        padding: 14px;
-        font-size: 1rem;
-        border-radius: 999px;
-        background: #005c99;
-        color: #fff;
-        font-weight: 600;
-    }
-
-    /* SECÇÕES */
-    .secao {
-        padding: 30px 20px;
-        text-align: center;
-    }
-
-    .secao h2 {
-        font-size: 1.6rem;
-        margin-bottom: 10px;
-        color: #005c99;
-    }
-
-    .secao p {
-        font-size: 1rem;
-        line-height: 1.5;
-    }
-
-    /* FOOTER */
-    footer {
-        padding: 20px;
-        font-size: 0.85rem;
-        text-align: center;
-    }
-}
-
-/* ============================
-   APARTAMENTOS – ESTILOS BASE
-   ============================ */
-
+/* ============================================================
+   5. APARTAMENTOS + CONTADORES
+   ============================================================ */
 .apartamento-bloco {
     margin-top: 12px;
     padding: 14px;
-    border-radius: 12px;
-    border: 1px solid #d0d7de;
+    border-radius: var(--radius);
+    border: 1px solid var(--cinza-borda);
     background: #f9fafb;
 }
 
 .apartamento-bloco h3 {
-    margin: 0 0 10px;
     font-size: 1rem;
-    color: #005c99;
     font-weight: 600;
+    color: var(--azul);
+    margin-bottom: 10px;
 }
 
-/* ============================
-   CONTADORES (ADULTOS / CRIANÇAS)
-   ============================ */
-
+/* Contadores */
 .contador {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    margin: 6px 0 12px;
-    width: 100%;
-    position: relative;
-    z-index: 20;
+    align-items: center;
+    margin: 8px 0 14px;
 }
 
-.contador label {
-    font-size: 0.9rem;
-    color: #005c99;
-    width: 120px;
-}
-
-/* Botões + e – (texto branco, fundo azul) */
 .contador button {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     border: none;
-    background: #005c99 !important;
-    color: #ffffff !important;   /* CORRIGIDO: texto branco */
+    background: var(--azul);
+    color: #fff;
     font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-/* Número entre os botões */
 .contador span {
     font-size: 1rem;
     font-weight: 600;
-    width: 24px;
-    text-align: center;
-    color: #005c99 !important;
+    color: var(--azul);
 }
 
-/* ============================
-   SELECTS (datas, idades, nº apt)
-   ============================ */
-
-/* Texto dentro dos selects */
-.booking-card select,
-.booking-card input[type="date"],
-.booking-card select option,
-.idade-crianca select,
-.idade-crianca select option {
-    color: #005c99 !important;   /* CORRIGIDO: deixa de ficar preto */
+/* ============================================================
+   6. CARD DE DISPONIBILIDADE — E4 (✔ premium)
+   ============================================================ */
+#resultadoDisponibilidade {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: var(--azul-suave);
+    border: 1px solid #cfe4f2;
+    color: var(--azul);
+    font-size: 0.9rem;
+    width: 100%;
+    display: none;
+    animation: fadeIn 0.3s ease;
 }
 
-/* ============================
-   IDADES DAS CRIANÇAS
-   ============================ */
+#resultadoDisponibilidade.has-result {
+    display: block;
+}
 
-.idade-crianca {
+#resultadoDisponibilidade::before {
+    content: "✔ ";
+    font-weight: 700;
+    margin-right: 4px;
+}
+
+/* Fade-in */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   7. SECÇÕES
+   ============================================================ */
+.secao {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 40px auto 0;
+    padding: 40px;
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-suave);
+}
+
+.secao h2 {
+    font-family: var(--font-titulo);
+    font-size: 1.8rem;
+    color: var(--azul);
     margin-bottom: 12px;
 }
 
-.idade-crianca label {
+/* ============================================================
+   8. FOOTER
+   ============================================================ */
+footer {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 40px auto 0;
+    padding: 24px 40px;
+    background: var(--texto-escuro);
+    color: #fff;
+    border-radius: var(--radius);
     font-size: 0.9rem;
-    color: #005c99;
 }
 
-.idade-crianca select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #cfd8e3;
-    margin-top: 4px;
-}
+/* ============================================================
+   9. RESPONSIVO (até 768px)
+   ============================================================ */
+@media (max-width: 768px) {
 
-/* Berço */
-.berco {
-    margin-top: 6px;
-    font-size: 0.9rem;
-    color: #005c99;
-}
+    header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px;
+    }
 
-.berco input {
-    margin-right: 6px;
-}
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 40px 20px;
+        text-align: center;
+        gap: 30px;
+    }
 
-/* ============================
-   ESPAÇAMENTO ENTRE APARTAMENTOS E BOTÃO
-   ============================ */
+    .hero-texto h1 {
+        font-size: 2rem;
+    }
 
-#apartamentosContainer {
-    margin-bottom: 20px;
-}
+    .hero-texto p {
+        font-size: 1.1rem;
+        margin: 0 auto;
+    }
 
-/* ============================
-   DISPLAY DE DISPONIBILIDADE (compacto)
-   ============================ */
+    .booking-card {
+        max-width: 340px;
+        margin: 0 auto;
+    }
 
-#resultadoDisponibilidade {
-    margin-top: 10px;
-    padding: 8px 12px;
-    font-size: 0.85rem;
-    border-radius: 8px;
-    background: #eef6fb;
-    color: #005c99;
-    border: 1px solid #cfe4f2;
-    max-width: 240px;   /* CORRIGIDO: agora fica pequeno */
-}
+    .secao {
+        padding: 30px 20px;
+        margin-top: 20px;
+    }
 
-/* ============================
-   GARANTIR COERÊNCIA DE COR
-   ============================ */
-
-.booking-card,
-.apartamento-bloco,
-.contador {
-    color: #005c99;
-}
-
-/* ============================
-   AJUSTES PROFISSIONAIS DE TAMANHO
-   ============================ */
-
-/* Booking card mais compacta */
-.booking-card {
-    padding: 16px !important;
-    gap: 6px !important;
-    max-width: 280px;
-}
-
-/* Inputs e selects mais pequenos */
-.booking-card input,
-.booking-card select {
-    padding: 6px 8px !important;
-    font-size: 0.85rem !important;
-    height: 32px !important;
-    color: #005c99 !important;
-}
-
-/* Títulos mais compactos */
-.booking-card h2 {
-    font-size: 1rem !important;
-    margin-bottom: 6px !important;
-}
-
-/* Labels mais pequenos */
-.booking-card label {
-    font-size: 0.8rem !important;
-}
-
-/* Display de disponibilidade realmente pequeno */
-#resultadoDisponibilidade {
-    margin-top: 8px;
-    padding: 6px 10px;
-    font-size: 0.75rem;
-    border-radius: 6px;
-    background: #eef6fb;
-    color: #005c99;
-    border: 1px solid #cfe4f2;
-    max-width: 180px;
-}
-
-/* Selects de data e opções em azul */
-.booking-card input[type="date"],
-.booking-card select,
-.booking-card select option {
-    color: #005c99 !important;
-}
-
-/* ============================
-   MENU PROFISSIONAL
-   ============================ */
-
-header nav a {
-    font-size: 1rem !important;          /* ligeiramente maior */
-    font-weight: 500 !important;         /* mais presença */
-    color: #005c99 !important;           /* azul da marca */
-    padding: 6px 10px;                   /* toque premium */
-    border-radius: 6px;                  /* suavidade */
-    transition: all 0.25s ease-in-out;   /* animação elegante */
-    letter-spacing: 0.02em;              /* refinamento */
-}
-
-/* Hover premium */
-header nav a:hover {
-    background: rgba(0, 92, 153, 0.12);  /* azul suave */
-    color: #005c99 !important;
-    transform: translateY(-1px);         /* leve elevação */
-}
-
-/* Subtítulo maior e mais elegante */
-.hero-texto p {
-    font-size: 1.35rem !important;   /* antes 1.15rem */
-    line-height: 1.35;               /* mais respirado */
-}
-
-.hero-texto p {
-    white-space: normal !important;
-}
-
-/* ============================
-   MENU PREMIUM BELLEVIEW
-   ============================ */
-
-header nav a {
-    font-size: 1.05rem !important;       /* ligeiramente maior */
-    font-weight: 600 !important;         /* mais presença */
-    color: #005c99 !important;           /* azul da marca */
-    padding: 6px 12px;
-    position: relative;
-    transition: all 0.25s ease-in-out;
-    letter-spacing: 0.02em;
-}
-
-/* Linha animada por baixo (efeito premium) */
-header nav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0%;
-    height: 2px;
-    background-color: #005c99;
-    transition: width 0.25s ease-in-out;
-    border-radius: 2px;
-}
-
-header nav a:hover::after {
-    width: 100%;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.belleview-logo {
-    display: block;
-}
-
-.logo-text {
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    color: #005c99;
-}
-
-/* Pequena elevação no hover */
-header nav a:hover {
-    transform: translateY(-2px);
-}
-
-.hidden {
-    display: none;
-}
-
-#extraCampos {
-    margin-top: 15px;
-}
-
-/* Estilo premium para inputs de data */
-.booking-card input[type="date"] {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #c7d4e2;
-    border-radius: 10px;
-    font-size: 15px;
-    font-family: "Inter", sans-serif;
-    background-color: #f8fafc;
-    color: #005c99;
-    outline: none;
-    transition: all 0.2s ease;
-}
-
-/* Placeholder mais elegante */
-.booking-card input[type="date"]::placeholder {
-    color: #8aa4b8;
-}
-
-/* Efeito ao clicar */
-.booking-card input[type="date"]:focus {
-    border-color: #005c99;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(0, 92, 153, 0.15);
-}
-
-.booking-card input[type="date"] {
-    box-sizing: border-box;
-}
-
-select:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 92, 153, 0.15); /* igual aos inputs de data */
-    border-color: #005c99;
-}
-
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 92, 153, 0.25);
-}
-
-.booking-card button {
-    outline: none;
-}
-
-.booking-card button:focus-visible {
-    outline: none;
-}
-
-.booking-card > * {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-
-/* Estado inicial — alinhado mas discreto */
-#resultadoDisponibilidade {
-    margin-top: 15px;
-    width: 100%;
-    padding: 15px;                /* ⭐ igual ao cartão */
-    border: 1px solid transparent;/* ⭐ mantém alinhamento sem mostrar borda */
-    border-radius: 10px;
-    background-color: transparent;
-    min-height: 120px;            /* ⭐ mesma altura mínima */
-    font-size: 13px;
-    color: #6b7a8a;
-    box-sizing: border-box;
-    display: block;
-}
-
-
-/* Quando houver resultado: cartão igual ao Apartamento 1 */
-#resultadoDisponibilidade.has-result {
-    padding: 15px;
-    border: 1px solid #c7d4e2;
-    border-radius: 10px;
-    background-color: #f8fafc;
-    min-height: 120px;
-    color: #005c99;
-    width: 100%;           /* ⭐ mesma largura */
-    box-sizing: border-box; /* ⭐ garante alinhamento */
-    display: block;         /* ⭐ força ocupar toda a linha */
-}
-
-
-/* Remover barra azul */
-#resultadoDisponibilidade:focus,
-#resultadoDisponibilidade:focus-visible {
-    outline: none;
-    box-shadow: none;
-}
-
-.booking-card select {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #c7d4e2;
-    border-radius: 10px;
-    background-color: #f8fafc; /* ⭐ mesma cor dos inputs de data */
-    font-size: 15px;
-    color: #005c99;
-    box-sizing: border-box;
+    footer {
+        padding: 20px;
+        text-align: center;
+    }
 }
