@@ -33,6 +33,14 @@ function parseDataPt(str) {
     return null;
 }
 
+function calcularNoites(checkin, checkout) {
+    const d1 = parseDataPt(checkin);
+    const d2 = parseDataPt(checkout);
+    const diff = d2.getTime() - d1.getTime();
+    return Math.round(diff / (1000 * 60 * 60 * 24));
+}
+
+
 function validarDatasCheckinCheckout(checkin, checkout) {
     const [d1, m1, a1] = checkin.split("/");
     const [d2, m2, a2] = checkout.split("/");
@@ -362,12 +370,22 @@ btn.addEventListener("click", () => {
 
     // DISPONÍVEL
     if (r.status === "disponivel") {
-        resultado.textContent = `O apartamento está disponível para ${r.apartamentos.length} noite(s)`;
+        const noites = calcularNoites(checkin, checkout);
+        resultado.textContent = `O apartamento está disponível para ${noites} noite(s)`;
         resultado.classList.add("disponivel");
         resultado.style.display = "block";
         return;
     }
 });
+
+function limparCard() {
+    resultado.style.display = "none";
+    resultado.classList.remove("disponivel", "indisponivel");
+}
+
+document.getElementById("checkin").addEventListener("change", limparCard);
+document.getElementById("checkout").addEventListener("change", limparCard);
+document.getElementById("numApt").addEventListener("change", limparCard);
 
 
 
