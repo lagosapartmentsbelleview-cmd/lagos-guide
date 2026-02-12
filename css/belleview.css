@@ -511,3 +511,6 @@ footer {
     color: #444;
 }
 
+.secao {
+    margin-top: 0px; /* ou 8px */
+}
