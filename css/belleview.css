@@ -96,7 +96,7 @@ header nav a:hover {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 40px;
-    padding: 85px 40px;
+    padding: 60px 40px;
     align-items: center;
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
