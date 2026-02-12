@@ -328,34 +328,45 @@ btn.addEventListener("click", () => {
 
     const r = verificarDisponibilidade(checkin, checkout, numApt);
 
-    resultado.classList.add("has-result");
+    // Limpa estados anteriores
+    resultado.classList.remove("disponivel", "indisponivel");
+    resultado.style.display = "none";
 
+    // ERRO
     if (r.status === "erro") {
         resultado.textContent = r.mensagem;
+        resultado.classList.add("indisponivel");
+        resultado.style.display = "block";
         return;
     }
 
+    // INDISPONÍVEL
     if (r.status === "indisponivel") {
-        resultado.textContent = "❌ Indisponível: " + r.mensagem;
+        resultado.textContent = `Não existe disponibilidade para estas datas`;
+        resultado.classList.add("indisponivel");
+        resultado.style.display = "block";
         return;
     }
 
+    // PARCIAL
     if (r.status === "parcial") {
         resultado.innerHTML = `
             ⚠️ Disponibilidade parcial<br>
             ${r.mensagem}<br>
             Apartamentos livres: ${r.apartamentos.join(", ")}
         `;
+        resultado.classList.add("disponivel");
+        resultado.style.display = "block";
         return;
     }
 
+    // DISPONÍVEL
     if (r.status === "disponivel") {
-    resultado.innerHTML = `
-        <strong>${translations[window.currentLang].availability_ok_title}</strong><br>
-        ${translations[window.currentLang].availability_ok_msg}
-    `;
-}
-
+        resultado.textContent = `O apartamento está disponível para ${r.apartamentos.length} noite(s)`;
+        resultado.classList.add("disponivel");
+        resultado.style.display = "block";
+        return;
+    }
 });
 
 
