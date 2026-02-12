@@ -148,6 +148,11 @@ header nav a {
     background: #004676;
 }
 
+.booking-card > * {
+    width: 100%;
+    box-sizing: border-box;
+}
+
 /* Secções */
 .secao {
     padding: 50px 40px;
