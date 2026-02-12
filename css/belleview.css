@@ -254,12 +254,25 @@ header nav a:hover {
     margin-bottom: 10px;
 }
 
-/* Contadores */
+/* Contadores — versão corrigida */
 .contador {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin: 8px 0 14px;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+}
+
+.contador label {
+    flex: 1;
+    font-size: 0.9rem;
+    color: var(--azul);
+}
+
+.contador-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .contador button {
@@ -275,6 +288,8 @@ header nav a:hover {
 }
 
 .contador span {
+    width: 28px;
+    text-align: center;
     font-size: 1rem;
     font-weight: 600;
     color: var(--azul);
@@ -291,22 +306,21 @@ header nav a:hover {
     border: 1px solid #cfe4f2;
     color: var(--azul);
     font-size: 0.85rem;
-    width: fit-content;        /* ⭐ compacto */
-    max-width: 100%;           /* ⭐ não quebra no mobile */
+    width: fit-content;
+    max-width: 100%;
     display: none;
     animation: fadeIn 0.25s ease;
-    white-space: nowrap;       /* ⭐ mantém compacto */
+    white-space: nowrap;
 }
 
 #resultadoDisponibilidade.has-result {
-    display: inline-block;     /* ⭐ mantém tamanho natural */
+    display: inline-block;
 }
 
 #resultadoDisponibilidade::before {
     content: "✔ ";
     font-weight: 700;
 }
-
 
 /* Fade-in */
 @keyframes fadeIn {
