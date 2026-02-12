@@ -359,3 +359,16 @@ footer {
         text-align: center;
     }
 }
+
+.booking-card label {
+    color: #003d66;
+}
+
+.booking-card select {
+    background-color: #ffffff;
+}
+
+#extraCampos {
+    display: none;
+}
+
