@@ -288,9 +288,10 @@ header nav a:hover {
    ============================================================ */
 .secao {
     padding: 50px 40px;
-    background: #ffffff;
     margin-top: 16px;
+    background: transparent;
 }
+
 
 .secao h2 {
     font-family: "Poppins", sans-serif;
