@@ -500,3 +500,11 @@ footer {
     color: #005c99; /* azul praia profundo */
     margin-bottom: 10px;
 }
+
+#alojamento .subtitulo {
+    text-align: justify;
+    text-justify: inter-word;
+    max-width: 900px;
+    margin-left: 0;
+    margin-right: 0;
+}
