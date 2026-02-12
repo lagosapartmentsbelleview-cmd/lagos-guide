@@ -284,27 +284,29 @@ header nav a:hover {
    6. CARD DE DISPONIBILIDADE — E4 (✔ premium)
    ============================================================ */
 #resultadoDisponibilidade {
-    margin-top: 14px;
-    padding: 14px 16px;
+    margin-top: 12px;
+    padding: 10px 14px;
     border-radius: 10px;
     background: var(--azul-suave);
     border: 1px solid #cfe4f2;
     color: var(--azul);
-    font-size: 0.9rem;
-    width: 100%;
+    font-size: 0.85rem;
+    width: fit-content;        /* ⭐ compacto */
+    max-width: 100%;           /* ⭐ não quebra no mobile */
     display: none;
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.25s ease;
+    white-space: nowrap;       /* ⭐ mantém compacto */
 }
 
 #resultadoDisponibilidade.has-result {
-    display: block;
+    display: inline-block;     /* ⭐ mantém tamanho natural */
 }
 
 #resultadoDisponibilidade::before {
     content: "✔ ";
     font-weight: 700;
-    margin-right: 4px;
 }
+
 
 /* Fade-in */
 @keyframes fadeIn {
