@@ -13,6 +13,88 @@ body {
 }
 
 /* ============================================================
+   TIPOGRAFIA BELLEVIEW — Premium, inspirada em Booking/Airbnb
+   ============================================================ */
+
+/* Base geral */
+body {
+    font-family: "Inter", sans-serif;
+    color: #333;
+    line-height: 1.55;
+}
+
+/* Títulos principais */
+h1, h2, h3 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    color: #003d66;
+    margin: 0 0 12px 0;
+}
+
+/* H1 — Hero e secções grandes */
+h1 {
+    font-size: 2.8rem;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+}
+
+/* H2 — Secções (Alojamento, Comodidades, etc.) */
+h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+/* H3 — Cartões, subtítulos internos */
+h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+}
+
+/* Parágrafos */
+p {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: #444;
+    line-height: 1.55;
+}
+
+/* Labels, notas, detalhes */
+small, label {
+    font-size: 0.85rem;
+    color: #555;
+    font-weight: 500;
+}
+
+/* ------------------------------------------------------------
+   HERO — Ajustes premium específicos
+   ------------------------------------------------------------ */
+
+.hero-local {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #f0f0f0;
+    opacity: 0.9;
+    margin-bottom: 6px;
+}
+
+.hero-texto h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 12px;
+}
+
+.hero_sub {
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.45;
+    max-width: 480px;
+    opacity: 0.95;
+}
+
+
+/* ============================================================
    2. HEADER
    ============================================================ */
 header {
@@ -86,58 +168,6 @@ header nav a:hover {
 .lang-switch img:hover {
     transform: scale(1.12);
     box-shadow: 0 0 6px rgba(0,0,0,0.3);
-}
-
-/* ============================================================
-   3. HERO
-   ============================================================ */
-.hero {
-    position: relative;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px;
-    padding: 60px 40px;
-    align-items: center;
-    background-image: url("../img/hero/hero1.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: white;
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.15);
-    z-index: 0;
-}
-
-.hero-texto,
-.booking-card {
-    position: relative;
-    z-index: 1;
-}
-
-/* Título premium */
-.hero-texto h1 {
-    font-family: "Poppins", sans-serif;
-    font-size: 3.2rem;
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.5px;
-    margin-bottom: 16px;
-    text-shadow: 0 3px 10px rgba(0,0,0,0.35);
-}
-
-/* Subtítulo elegante */
-.hero-texto p {
-    font-size: 1.35rem;
-    line-height: 1.45;
-    white-space: normal;
-    opacity: 0.95;
-    max-width: 480px;
-    margin-bottom: 20px;
 }
 
 /* ============================================================
