@@ -26,6 +26,10 @@ const translations = {
 
         section_localizacao: "Localização",
         text_localizacao: "A 5 minutos da praia · Zona tranquila · Próximo de serviços"
+
+        availability_ok_title: "Disponível!",
+        availability_ok_msg: "Temos alojamento para as datas selecionadas.",
+
     },
 
     en: {
@@ -55,6 +59,10 @@ const translations = {
 
         section_localizacao: "Location",
         text_localizacao: "5 minutes from the beach · Quiet area · Close to services"
+
+        availability_ok_title: "Available!",
+        availability_ok_msg: "We have accommodation for the selected dates.",
+
     },
 
     es: {
@@ -84,6 +92,10 @@ const translations = {
 
         section_localizacao: "Ubicación",
         text_localizacao: "A 5 minutos de la playa · Zona tranquila · Cerca de servicios"
+
+        availability_ok_title: "¡Disponible!",
+        availability_ok_msg: "Tenemos alojamiento para las fechas seleccionadas.",
+
     }
 };
 
