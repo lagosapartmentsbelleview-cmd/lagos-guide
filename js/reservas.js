@@ -350,12 +350,12 @@ btn.addEventListener("click", () => {
     }
 
     if (r.status === "disponivel") {
-        resultado.innerHTML = `
-            <strong>Disponível!</strong><br>
-            Temos alojamento para as datas selecionadas.
-        `;
+    resultado.innerHTML = `
+        <strong>${translations[window.currentLang].availability_ok_title}</strong><br>
+        ${translations[window.currentLang].availability_ok_msg}
+    `;
+}
 
-    }
 });
 
 
