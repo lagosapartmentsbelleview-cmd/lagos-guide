@@ -373,31 +373,31 @@ footer {
 }
 
 /* ============================================================
-   ALOJAMENTO — BOOKING PREMIUM DESIGN
+   ALOJAMENTO — BOOKING PREMIUM DESIGN SYSTEM
    ============================================================ */
 
 #alojamento {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 60px 20px;
+    padding: 80px 20px;
+    font-family: 'Inter', sans-serif;
 }
 
 /* TÍTULO PRINCIPAL */
 #alojamento h2 {
-    font-size: 2.4rem;
+    font-size: 2.6rem;
     font-weight: 700;
     color: #003d66;
     margin-bottom: 10px;
-    text-align: left;
 }
 
 #alojamento .subtitulo {
     font-size: 1.25rem;
     color: #555;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
-/* GRID PRINCIPAL (2 colunas estilo Booking) */
+/* GRID PRINCIPAL */
 #alojamento .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -445,4 +445,32 @@ footer {
     line-height: 0;
 }
 
-/
+/* GALERIA DE FOTOS */
+#alojamento .galeria {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+#alojamento .galeria img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+    #alojamento .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    #alojamento .galeria {
+        grid-template-columns: 1fr;
+    }
+
+    #alojamento .galeria img {
+        height: 200px;
+    }
+}
