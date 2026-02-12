@@ -351,9 +351,10 @@ btn.addEventListener("click", () => {
 
     if (r.status === "disponivel") {
         resultado.innerHTML = `
-            ✅ Disponível!<br>
-            Apartamentos atribuídos: ${r.apartamentos.join(", ")}
+            <strong>Disponível!</strong><br>
+            Temos alojamento para as datas selecionadas.
         `;
+
     }
 });
 
