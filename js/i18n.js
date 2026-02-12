@@ -95,6 +95,7 @@ const translations = {
     availability_ok_title: "¡Disponible!",
     availability_ok_msg: "Tenemos alojamiento para las fechas seleccionadas."
 }
+}; 
 
 function setLanguage(lang) {
 
