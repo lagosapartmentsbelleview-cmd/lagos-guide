@@ -5,7 +5,7 @@ const translations = {
     menu_localizacao: "Localização",
     menu_contactos: "Contactos",
 
-    hero_local: "Lagos · Algarve . Portugal", 
+    hero_local: "Lagos · Algarve · Portugal", 
     hero_title: "A sua estadia perfeita", 
     hero_sub: "Apartamentos modernos, zona tranquila e perto da praia. Para as férias que merece.",
 
