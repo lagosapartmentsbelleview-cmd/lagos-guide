@@ -75,7 +75,6 @@ const translations = {
     availability_ok_msg: "The apartment is available for {N} night(s)."
 },
 
-
    es: {
     menu_alojamento: "Alojamiento",
     menu_comodidades: "Comodidades",
