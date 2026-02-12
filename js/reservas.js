@@ -358,6 +358,18 @@ btn.addEventListener("click", () => {
 
 });
 
+// Expansão mobile do card de disponibilidade
+document.addEventListener("click", function (e) {
+    const card = document.getElementById("resultadoDisponibilidade");
+
+    if (!card.classList.contains("has-result")) return; // só funciona se houver resultado
+
+    if (window.innerWidth <= 768) {
+        if (e.target.closest("#resultadoDisponibilidade")) {
+            card.classList.toggle("expandido");
+        }
+    }
+});
 
 // ---------------------------------------------------------------
 // EVENTOS
