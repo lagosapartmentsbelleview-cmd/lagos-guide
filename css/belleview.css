@@ -288,9 +288,10 @@ header nav a:hover {
    ============================================================ */
 .secao {
     padding: 50px 40px;
-    margin-top: 16px;
+    margin-top: 0; /* transição suave entre hero e alojamento */
     background: transparent;
 }
+
 
 
 .secao h2 {
@@ -511,6 +512,4 @@ footer {
     color: #444;
 }
 
-.secao {
-    margin-top: 0px; /* ou 8px */
-}
+
