@@ -27,8 +27,13 @@ const translations = {
     section_localizacao: "Localização",
     text_localizacao: "A 5 minutos da praia · Zona tranquila · Próximo de serviços",
 
-    availability_ok_title: "Disponível!",
-    availability_ok_msg: "Temos alojamento para as datas selecionadas."
+    availability_error: "Selecione datas válidas.", 
+    availability_invalid: "Checkout deve ser depois do check-in.", 
+    availability_none: "Não há apartamentos disponíveis neste intervalo.", 
+    availability_partial_title: "Disponibilidade parcial", 
+    availability_partial_msg: "Só {X} disponível(is).", 
+    availability_ok_title: "Disponível", 
+    availability_ok_msg: "O apartamento está disponível para {N} noite(s)."
 },
 
    en: {
@@ -59,8 +64,13 @@ const translations = {
     section_localizacao: "Location",
     text_localizacao: "5 minutes from the beach · Quiet area · Close to services",
 
-    availability_ok_title: "Available!",
-    availability_ok_msg: "We have accommodation for the selected dates."
+    availability_error: "Please select valid dates.", 
+    availability_invalid: "Checkout must be after check-in.",
+    availability_none: "No apartments available for this period.", 
+    availability_partial_title: "Partial availability", 
+    availability_partial_msg: "Only {X} available.", 
+    availability_ok_title: "Available", 
+    availability_ok_msg: "The apartment is available for {N} night(s)."
 },
 
 
@@ -92,8 +102,13 @@ const translations = {
     section_localizacao: "Ubicación",
     text_localizacao: "A 5 minutos de la playa · Zona tranquila · Cerca de servicios",
 
-    availability_ok_title: "¡Disponible!",
-    availability_ok_msg: "Tenemos alojamiento para las fechas seleccionadas."
+    availability_error: "Seleccione fechas válidas.", 
+    availability_invalid: "La salida debe ser después de la entrada.", 
+    availability_none: "No hay apartamentos disponibles en este período.", 
+    availability_partial_title: "Disponibilidad parcial", 
+    availability_partial_msg: "Solo {X} disponible(s).", 
+    availability_ok_title: "Disponible",
+    availability_ok_msg: "El apartamento está disponible por {N} noche(s)."
 }
 }; 
 
