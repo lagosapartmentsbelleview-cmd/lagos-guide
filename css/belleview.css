@@ -484,3 +484,133 @@ footer {
         font-size: 1.2rem;
     }
 }
+
+/* ============================================================
+   ALOJAMENTO — BELLEVIEW PREMIUM DESIGN
+   ============================================================ */
+
+#alojamento {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* TÍTULO PRINCIPAL */
+#alojamento h2 {
+    font-size: 2.4rem;
+    color: #005c99;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+#alojamento .subtitulo {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #4a4a4a;
+    margin-bottom: 50px;
+}
+
+/* SECÇÕES */
+#alojamento h3 {
+    font-size: 1.6rem;
+    color: #005c99;
+    margin-bottom: 18px;
+    font-weight: 600;
+}
+
+/* LISTAS GERAIS */
+#alojamento ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#alojamento ul li {
+    padding: 10px 0;
+    font-size: 1.05rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ============================
+   DESTAQUES (CARDS)
+   ============================ */
+#alojamento .destaques ul li {
+    background: #eef6fb;
+    border: 1px solid #d6e8f5;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* ============================
+   BLOCOS COM SEPARADOR PREMIUM
+   ============================ */
+#alojamento > div {
+    padding: 30px 0;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+#alojamento > div:last-child {
+    border-bottom: none;
+}
+
+/* ============================
+   FAQ — ESTILO ACORDEÃO
+   ============================ */
+#alojamento .faq p {
+    background: #f9f9f9;
+    border: 1px solid #e3e3e3;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+#alojamento .faq p:hover {
+    background: #f1f1f1;
+    transform: translateX(4px);
+}
+
+/* ============================
+   REGRAS DA CASA — CARTÃO ESPECIAL
+   ============================ */
+#alojamento .regras ul li {
+    background: #fff7e6;
+    border: 1px solid #ffe2a8;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* ============================
+   LOCALIZAÇÃO
+   ============================ */
+#alojamento .localizacao ul li {
+    font-weight: 600;
+    padding: 6px 0;
+}
+
+/* ============================
+   RESPONSIVO
+   ============================ */
+@media (max-width: 768px) {
+    #alojamento {
+        padding: 40px 20px;
+    }
+
+    #alojamento h2 {
+        font-size: 2rem;
+    }
+
+    #alojamento h3 {
+        font-size: 1.3rem;
+    }
+}
+
