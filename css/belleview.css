@@ -654,6 +654,12 @@ button:focus {
     outline: none;
 }
 
+.booking-card > * {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
 /* Estado inicial — alinhado mas discreto */
 #resultadoDisponibilidade {
     margin-top: 15px;
