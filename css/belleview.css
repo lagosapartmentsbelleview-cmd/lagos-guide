@@ -93,6 +93,36 @@ small, label {
     opacity: 0.95;
 }
 
+/* ============================================================
+   3. HERO
+   ============================================================ */
+.hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    padding: 60px 40px;
+    align-items: center;
+    background-image: url("../img/hero/hero1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.15);
+    z-index: 0;
+}
+
+.hero-texto,
+.booking-card {
+    position: relative;
+    z-index: 1;
+}
 
 /* ============================================================
    2. HEADER
