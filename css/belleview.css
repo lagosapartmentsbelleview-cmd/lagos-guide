@@ -1,83 +1,54 @@
 /* ============================================================
-   0. ROOT VARIABLES — Cores, sombras, tipografia
+   1. RESET + BASE
    ============================================================ */
-:root {
-    --azul: #005c99;
-    --azul-suave: #eef6fb;
-    --cinza-borda: #d0d7de;
-    --cinza-fundo: #f7f7f7;
-    --texto-escuro: #123;
-    --radius: 12px;
-    --shadow-suave: 0 4px 14px rgba(0,0,0,0.08);
-    --shadow-media: 0 10px 28px rgba(0,0,0,0.12);
-    --shadow-hover: 0 12px 32px rgba(0,0,0,0.16);
-    --max-width: 1280px;
-    --font-titulo: "Poppins", sans-serif;
-    --font-base: "Inter", sans-serif;
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: #f7f7f7;
+    color: #123;
 }
 
-/* ============================================================
-   1. GLOBAL RESET + BODY
-   ============================================================ */
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: var(--font-base);
-    background: var(--cinza-fundo);
-    color: var(--texto-escuro);
-    line-height: 1.4;
-}
-
 /* ============================================================
-   2. HEADER + MENU PREMIUM
+   2. HEADER
    ============================================================ */
 header {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 18px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255,255,255,0.95);
+    padding: 16px 40px;
+    background: rgba(255, 255, 255, 0.95);
     position: sticky;
     top: 0;
-    z-index: 20;
-    box-shadow: var(--shadow-suave);
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-/* LOGO */
 .logo {
     display: flex;
     align-items: center;
     gap: 12px;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #005c99;
+    letter-spacing: 0.03em;
 }
 
-.logo-text {
-    font-family: var(--font-titulo);
-    font-weight: 600;
-    font-size: 20px;
-    color: var(--azul);
-}
-
-/* MENU */
 header nav a {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--azul);
-    padding: 6px 12px;
-    border-radius: 6px;
-    position: relative;
-    transition: all 0.25s ease;
-    letter-spacing: 0.02em;
+    margin-left: 20px;
     text-decoration: none;
+    color: #005c99;
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    position: relative;
+    transition: all 0.25s ease-in-out;
+    letter-spacing: 0.02em;
 }
 
-/* Linha animada */
 header nav a::after {
     content: "";
     position: absolute;
@@ -85,8 +56,8 @@ header nav a::after {
     bottom: -2px;
     width: 0%;
     height: 2px;
-    background-color: var(--azul);
-    transition: width 0.25s ease;
+    background-color: #005c99;
+    transition: width 0.25s ease-in-out;
     border-radius: 2px;
 }
 
@@ -102,6 +73,7 @@ header nav a:hover {
 .lang-switch {
     display: flex;
     gap: 10px;
+    cursor: pointer;
 }
 
 .lang-switch img {
@@ -117,162 +89,146 @@ header nav a:hover {
 }
 
 /* ============================================================
-   3. HERO — Minimalista Premium + Azul Belleview
+   3. HERO
    ============================================================ */
 .hero {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 80px 40px;
+    position: relative;
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 60px;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    padding: 85px 40px;
     align-items: center;
-
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
     background-position: center;
-    position: relative;
+    background-repeat: no-repeat;
+    color: white;
 }
 
-/* Overlay suave */
 .hero::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.18);
+    background: rgba(0,0,0,0.15);
     z-index: 0;
 }
 
-.hero-texto {
+.hero-texto,
+.booking-card {
     position: relative;
-    z-index: 2;
+    z-index: 1;
 }
 
-/* TÍTULO — A2 + H1 */
+/* Título premium */
 .hero-texto h1 {
-    font-family: var(--font-titulo);
-    font-size: 2.8rem;
+    font-family: "Poppins", sans-serif;
+    font-size: 3.2rem;
     font-weight: 700;
-    line-height: 1.2;
-    color: #fff;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.35);
-    margin-bottom: 14px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.35);
 }
 
-/* SUBTÍTULO */
+/* Subtítulo elegante */
 .hero-texto p {
-    font-size: 1.25rem;
-    color: #f0f4f8;
-    max-width: 460px;
-    text-shadow: 0 1px 6px rgba(0,0,0,0.25);
+    font-size: 1.35rem;
+    line-height: 1.45;
+    white-space: normal;
+    opacity: 0.95;
+    max-width: 480px;
+    margin-bottom: 20px;
 }
 
 /* ============================================================
-   4. BOOKING CARD — B3 (sombra média)
+   4. BOOKING CARD
    ============================================================ */
 .booking-card {
-    position: relative;
-    z-index: 2;
-    background: #fff;
+    background: #ffffff;
+    border-radius: 16px;
     padding: 24px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-media);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
+    max-width: 280px;
 }
 
 .booking-card h2 {
-    font-family: var(--font-titulo);
-    font-size: 1.3rem;
-    color: var(--azul);
-    margin-bottom: 6px;
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+    color: #005c99;
 }
 
-/* Labels */
 .booking-card label {
     font-size: 0.85rem;
     font-weight: 500;
-    color: var(--azul);
 }
 
-/* Inputs + selects — D1 */
 .booking-card input,
 .booking-card select {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid var(--cinza-borda);
-    background: #f8fafc;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #d0d7de;
     font-size: 0.95rem;
-    color: var(--azul);
-    transition: all 0.2s ease;
+    color: #005c99;
 }
 
-.booking-card input:focus,
+.booking-card input[type="date"]:focus,
 .booking-card select:focus {
-    border-color: var(--azul);
+    border-color: #005c99;
     box-shadow: 0 0 0 3px rgba(0,92,153,0.15);
     outline: none;
 }
 
-/* Botão — C3 */
 .booking-card button {
-    margin-top: 6px;
-    padding: 12px;
+    margin-top: 8px;
+    padding: 10px 14px;
     border-radius: 999px;
     border: none;
-    background: var(--azul);
+    background: #005c99;
     color: #fff;
     font-weight: 600;
-    font-size: 1rem;
     cursor: pointer;
-    transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .booking-card button:hover {
     background: #004676;
-    box-shadow: var(--shadow-hover);
 }
 
 /* ============================================================
-   5. APARTAMENTOS + CONTADORES
+   5. APARTAMENTOS
    ============================================================ */
 .apartamento-bloco {
     margin-top: 12px;
     padding: 14px;
-    border-radius: var(--radius);
-    border: 1px solid var(--cinza-borda);
+    border-radius: 12px;
+    border: 1px solid #d0d7de;
     background: #f9fafb;
 }
 
 .apartamento-bloco h3 {
+    margin: 0 0 10px;
     font-size: 1rem;
+    color: #005c99;
     font-weight: 600;
-    color: var(--azul);
-    margin-bottom: 10px;
 }
 
-/* Contadores — versão corrigida */
+/* ============================================================
+   6. CONTADORES
+   ============================================================ */
 .contador {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 6px 0;
+    gap: 10px;
+    margin: 6px 0 12px;
 }
 
 .contador label {
-    flex: 1;
     font-size: 0.9rem;
-    color: var(--azul);
-}
-
-.contador-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    color: #005c99;
+    width: 120px;
 }
 
 .contador button {
@@ -280,199 +236,126 @@ header nav a:hover {
     height: 32px;
     border-radius: 50%;
     border: none;
-    background: var(--azul);
-    color: #fff;
+    background: #005c99;
+    color: #ffffff;
     font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .contador span {
-    width: 28px;
-    text-align: center;
     font-size: 1rem;
     font-weight: 600;
-    color: var(--azul);
+    width: 28px;
+    text-align: center;
+    color: #005c99;
 }
 
 /* ============================================================
-   6. CARD DE DISPONIBILIDADE — E4 (✔ premium)
+   7. CARD DE DISPONIBILIDADE (PREMIUM)
    ============================================================ */
 #resultadoDisponibilidade {
-    margin-top: 12px;
-    padding: 10px 14px;
+    margin-top: 10px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
     border-radius: 10px;
-    background: var(--azul-suave);
+    background: #eef6fb;
     border: 1px solid #cfe4f2;
-    color: var(--azul);
-    font-size: 0.85rem;
-    width: fit-content;
-    max-width: 100%;
+    width: 100%;
+    color: #005c99;
     display: none;
-    animation: fadeIn 0.25s ease;
-    white-space: nowrap;
 }
 
-#resultadoDisponibilidade.has-result {
-    display: inline-block;
-}
-
-#resultadoDisponibilidade::before {
+/* ✔ Disponível */
+#resultadoDisponibilidade.disponivel::before {
     content: "✔ ";
+    color: #2ecc71;
     font-weight: 700;
 }
 
-/* Fade-in */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
+/* ✖ Indisponível */
+#resultadoDisponibilidade.indisponivel::before {
+    content: "✖ ";
+    color: #e74c3c;
+    font-weight: 700;
 }
 
 /* ============================================================
-   7. SECÇÕES
+   8. SECÇÕES
    ============================================================ */
 .secao {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 40px auto 0;
-    padding: 40px;
-    background: #fff;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-suave);
+    padding: 50px 40px;
+    background: #ffffff;
+    margin-top: 16px;
 }
 
 .secao h2 {
-    font-family: var(--font-titulo);
-    font-size: 1.8rem;
-    color: var(--azul);
+    font-family: "Poppins", sans-serif;
     margin-bottom: 12px;
 }
 
 /* ============================================================
-   8. FOOTER
+   9. FOOTER
    ============================================================ */
 footer {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 40px auto 0;
     padding: 24px 40px;
-    background: var(--texto-escuro);
-    color: #fff;
-    border-radius: var(--radius);
+    background: #123;
+    color: #f7f7f7;
     font-size: 0.9rem;
+    margin-top: 20px;
 }
 
 /* ============================================================
-   9. RESPONSIVO (até 768px)
+   10. MOBILE
    ============================================================ */
 @media (max-width: 768px) {
 
     header {
         flex-direction: column;
-        gap: 12px;
+        gap: 14px;
         padding: 16px;
+        text-align: center;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
     }
 
     .hero {
         grid-template-columns: 1fr;
-        padding: 40px 20px;
+        padding: 30px 20px;
         text-align: center;
-        gap: 30px;
+        gap: 24px;
+        min-height: 70vh;
     }
 
     .hero-texto h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     .hero-texto p {
-        font-size: 1.1rem;
-        margin: 0 auto;
+        font-size: 1rem;
     }
 
     .booking-card {
-        max-width: 340px;
+        max-width: 330px;
         margin: 0 auto;
+        padding: 18px;
     }
 
     .secao {
         padding: 30px 20px;
-        margin-top: 20px;
+        text-align: center;
     }
 
     footer {
         padding: 20px;
         text-align: center;
-    }
-}
-
-/* ============================
-   DISPLAY DISPONIBILIDADE — PREMIUM
-   ============================ */
-
-/* Estado base (desktop) */
-#resultadoDisponibilidade {
-    margin-top: 12px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    background: var(--azul-suave);
-    border: 1px solid #cfe4f2;
-    color: var(--azul);
-    font-size: 0.85rem;
-    width: fit-content;
-    max-width: 100%;
-    display: none;
-    animation: fadeIn 0.25s ease;
-    white-space: nowrap;
-    cursor: default;
-}
-
-/* Quando há resultado */
-#resultadoDisponibilidade.has-result {
-    display: inline-block;
-}
-
-/* Ícone ✔ */
-#resultadoDisponibilidade.has-result::before {
-    content: "✔ ";
-    font-weight: 700;
-}
-
-/* ============================
-   MOBILE — versão colapsada
-   ============================ */
-@media (max-width: 768px) {
-
-    /* Estado fechado */
-    #resultadoDisponibilidade {
-        width: 100%;
-        white-space: normal;
-        overflow: hidden;
-        max-height: 48px; /* só cabe a primeira linha */
-        cursor: pointer;
-        position: relative;
-        padding-right: 32px; /* espaço para seta */
-    }
-
-    /* Seta ▼ */
-    #resultadoDisponibilidade::after {
-        content: "▼";
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 0.9rem;
-        opacity: 0.7;
-    }
-
-    /* Estado expandido */
-    #resultadoDisponibilidade.expandido {
-        max-height: 500px; /* abre */
-        white-space: normal;
-        transition: max-height 0.35s ease;
-    }
-
-    /* Seta ▲ quando aberto */
-    #resultadoDisponibilidade.expandido::after {
-        content: "▲";
     }
 }
