@@ -339,15 +339,24 @@ btn.addEventListener("click", () => {
     const checkout = document.getElementById("checkout").value;
     const numApt = parseInt(document.getElementById("numApt").value);
 
+    const t = translations[window.currentLang];
     const r = verificarDisponibilidade(checkin, checkout, numApt);
 
     // Limpa estados anteriores
     resultado.classList.remove("disponivel", "indisponivel");
     resultado.style.display = "none";
 
-    // ERRO
+    // ERRO: datas inválidas
     if (r.status === "erro") {
-        resultado.textContent = r.mensagem;
+        resultado.textContent = t.availability_error;
+        resultado.classList.add("indisponivel");
+        resultado.style.display = "block";
+        return;
+    }
+
+    // ERRO: checkout antes do checkin
+    if (r.status === "invalid") {
+        resultado.textContent = t.availability_invalid;
         resultado.classList.add("indisponivel");
         resultado.style.display = "block";
         return;
@@ -355,7 +364,7 @@ btn.addEventListener("click", () => {
 
     // INDISPONÍVEL
     if (r.status === "indisponivel") {
-        resultado.textContent = `Não existe disponibilidade para estas datas`;
+        resultado.textContent = t.availability_none;
         resultado.classList.add("indisponivel");
         resultado.style.display = "block";
         return;
@@ -363,10 +372,11 @@ btn.addEventListener("click", () => {
 
     // PARCIAL
     if (r.status === "parcial") {
+        const msg = t.availability_partial_msg.replace("{X}", r.apartamentos.length);
         resultado.innerHTML = `
-            ⚠️ Disponibilidade parcial<br>
-            ${r.mensagem}<br>
-            Apartamentos livres: ${r.apartamentos.join(", ")}
+            ⚠️ <strong>${t.availability_partial_title}</strong><br>
+            ${msg}<br>
+            ${r.apartamentos.join(", ")}
         `;
         resultado.classList.add("disponivel");
         resultado.style.display = "block";
@@ -376,12 +386,18 @@ btn.addEventListener("click", () => {
     // DISPONÍVEL
     if (r.status === "disponivel") {
         const noites = calcularNoites(checkin, checkout);
-        resultado.textContent = `O apartamento está disponível para ${noites} noite(s)`;
+        const msg = t.availability_ok_msg.replace("{N}", noites);
+
+        resultado.innerHTML = `
+            <strong>${t.availability_ok_title}</strong><br>
+            ${msg}
+        `;
         resultado.classList.add("disponivel");
         resultado.style.display = "block";
         return;
     }
 });
+
 
 function limparCard() {
     resultado.style.display = "none";
