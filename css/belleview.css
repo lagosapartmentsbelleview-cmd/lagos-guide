@@ -676,3 +676,11 @@ footer {
     color: #444;
     margin-bottom: 14px;
 }
+
+#alojamento h2 {
+    color: #005c99;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
