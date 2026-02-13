@@ -650,3 +650,17 @@ footer {
     color: #444;
     margin-bottom: 14px;
 }
+
+.descricao-alojamento p,
+.intro-alojamento .subtitulo {
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    color: #444;
+    margin-bottom: 16px;
+}
