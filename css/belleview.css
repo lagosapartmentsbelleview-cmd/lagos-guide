@@ -776,3 +776,11 @@ footer {
     font-weight: 700;
 }
 
+.map-container {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 14px;
+    margin-top: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
