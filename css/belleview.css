@@ -792,6 +792,7 @@ footer {
     margin: 25px 0 10px;
 }
 
+/* Grelha responsiva */
 .proximidades-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -799,19 +800,18 @@ footer {
     margin-bottom: 20px;
 }
 
-.subtitulo-categoria {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #005c99;
-    margin: 25px 0 10px;
-}
-
+/* Card azul sistema (usa o teu design existente) */
 .cb-item.azul {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #005c99; /* garante o azul sistema */
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
+/* Texto branco dentro dos cards */
 .cb-item.azul span,
 .cb-item.azul small {
     color: #ffffff;
