@@ -654,3 +654,20 @@ footer {
     color: #444;
     margin-bottom: 14px;
 }
+
+.intro-alojamento {
+    background: #ffffff;
+    padding: 30px 20px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    border: 1px solid #e6e6e6;
+    margin-bottom: 40px;
+}
+
+.intro-alojamento h2 {
+    margin-top: 0;
+}
+
+.intro-alojamento .subtitulo {
+    margin-top: 10px;
+}
