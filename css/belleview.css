@@ -692,11 +692,16 @@ footer {
 footer {
     background: #005c99; /* azul sistema */
     padding: 40px 40px;
-    color: #ffffff;
+    color: #ffffff; /* texto branco */
     text-align: center;
     border-radius: 20px 20px 0 0;
     margin-top: 60px;
     font-family: "Poppins", sans-serif;
+}
+
+.footer-content p,
+.footer-content a {
+    color: #ffffff !important; /* força texto branco */
 }
 
 .footer-content p {
@@ -714,9 +719,9 @@ footer {
 .reclamacoes-link {
     display: inline-block;
     margin-top: 12px;
-    color: #ffffff; /* link branco */
     font-weight: 600;
     text-decoration: underline;
+    color: #ffffff !important; /* link branco */
     transition: opacity 0.2s ease;
 }
 
