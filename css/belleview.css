@@ -1,29 +1,24 @@
 /* ============================================================
    1. RESET + BASE
    ============================================================ */
-body {
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    background: #f7f7f7;
-    color: #123;
-}
-
 * {
     box-sizing: border-box;
 }
 
-/* ============================================================
-   TIPOGRAFIA BELLEVIEW — Premium, inspirada em Booking/Airbnb
-   ============================================================ */
-
-/* Base geral */
 body {
+    margin: 0;
     font-family: "Inter", sans-serif;
+    background: #f7f7f7;
     color: #333;
     line-height: 1.55;
 }
 
-/* Títulos principais */
+
+/* ============================================================
+   TIPOGRAFIA BELLEVIEW — Premium
+   ============================================================ */
+
+/* Títulos globais */
 h1, h2, h3 {
     font-family: "Poppins", sans-serif;
     font-weight: 700;
@@ -31,71 +26,37 @@ h1, h2, h3 {
     margin: 0 0 12px 0;
 }
 
-/* H1 — Hero e secções grandes */
 h1 {
     font-size: 2.8rem;
     line-height: 1.15;
     letter-spacing: -0.5px;
 }
 
-/* H2 — Secções (Alojamento, Comodidades, etc.) */
 h2 {
     font-size: 2.2rem;
-    font-weight: 700;
 }
 
-/* H3 — Cartões, subtítulos internos */
 h3 {
     font-size: 1.35rem;
-    font-weight: 600;
 }
 
 /* Parágrafos */
 p {
     font-size: 1.05rem;
-    font-weight: 400;
     color: #444;
-    line-height: 1.55;
 }
 
-/* Labels, notas, detalhes */
+/* Labels */
 small, label {
     font-size: 0.85rem;
     color: #555;
     font-weight: 500;
 }
 
-/* ------------------------------------------------------------
-   HERO — Ajustes premium específicos
-   ------------------------------------------------------------ */
-
-.hero-local {
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    color: #f0f0f0;
-    opacity: 0.9;
-    margin-bottom: 6px;
-}
-
-.hero-texto h1 {
-    font-size: 2.8rem;
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 12px;
-}
-
-.hero_sub {
-    font-size: 1.2rem;
-    font-weight: 400;
-    line-height: 1.45;
-    max-width: 480px;
-    opacity: 0.95;
-}
-
 /* ============================================================
    3. HERO
    ============================================================ */
+
 .hero {
     position: relative;
     display: grid;
@@ -106,7 +67,6 @@ small, label {
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
     color: white;
 }
 
@@ -114,7 +74,7 @@ small, label {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.15);
+    background: rgba(0,0,0,0.25);
     z-index: 0;
 }
 
@@ -122,6 +82,30 @@ small, label {
 .booking-card {
     position: relative;
     z-index: 1;
+}
+
+/* Tipografia específica do HERO (override do global) */
+.hero-local {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #f8f8f8;
+    opacity: 0.95;
+    margin-bottom: 6px;
+}
+
+.hero-texto h1 {
+    color: #ffffff;
+    font-size: 2.8rem;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.35);
+}
+
+.hero_sub {
+    font-size: 1.2rem;
+    color: #f2f2f2;
+    line-height: 1.45;
+    max-width: 480px;
+    opacity: 0.95;
 }
 
 /* ============================================================
@@ -203,6 +187,7 @@ header nav a:hover {
 /* ============================================================
    4. BOOKING CARD
    ============================================================ */
+
 .booking-card {
     background: #ffffff;
     border-radius: 16px;
@@ -215,14 +200,13 @@ header nav a:hover {
 }
 
 .booking-card h2 {
-    margin: 0 0 8px;
     font-size: 1.2rem;
     color: #005c99;
 }
 
 .booking-card label {
     font-size: 0.85rem;
-    font-weight: 500;
+    color: #003d66;
 }
 
 .booking-card input,
@@ -234,13 +218,6 @@ header nav a:hover {
     color: #005c99;
 }
 
-.booking-card input[type="date"]:focus,
-.booking-card select:focus {
-    border-color: #005c99;
-    box-shadow: 0 0 0 3px rgba(0,92,153,0.15);
-    outline: none;
-}
-
 .booking-card button {
     margin-top: 8px;
     padding: 10px 14px;
@@ -249,11 +226,30 @@ header nav a:hover {
     background: #005c99;
     color: #fff;
     font-weight: 600;
-    cursor: pointer;
 }
 
-.booking-card button:hover {
-    background: #004676;
+/* DISPLAY DISPONIBILIDADE */
+#resultadoDisponibilidade {
+    margin-top: 10px;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    background: #eef6fb;
+    border: 1px solid #cfe4f2;
+    color: #005c99;
+    display: none;
+}
+
+#resultadoDisponibilidade.disponivel::before {
+    content: "✔ ";
+    color: #2ecc71;
+    font-weight: 700;
+}
+
+#resultadoDisponibilidade.indisponivel::before {
+    content: "✖ ";
+    color: #e74c3c;
+    font-weight: 700;
 }
 
 /* ============================================================
