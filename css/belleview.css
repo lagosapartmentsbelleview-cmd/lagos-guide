@@ -684,3 +684,48 @@ footer {
     font-size: 1.05rem;
     font-weight: 600;
 }
+
+/* ============================================================
+   FOOTER BELLEVIEW — PREMIUM
+   ============================================================ */
+
+footer {
+    background: #005c99; /* azul sistema */
+    padding: 40px 40px;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 20px 20px 0 0;
+    margin-top: 60px;
+    font-family: "Poppins", sans-serif;
+}
+
+.footer-content p {
+    margin: 6px 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.footer-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.reclamacoes-link {
+    display: inline-block;
+    margin-top: 12px;
+    color: #ffffff; /* link branco */
+    font-weight: 600;
+    text-decoration: underline;
+    transition: opacity 0.2s ease;
+}
+
+.reclamacoes-link:hover {
+    opacity: 0.75;
+}
+
+.footer-copy {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
