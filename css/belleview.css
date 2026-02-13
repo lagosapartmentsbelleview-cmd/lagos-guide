@@ -792,7 +792,6 @@ footer {
     margin: 25px 0 10px;
 }
 
-/* Grelha das proximidades */
 .proximidades-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -800,28 +799,21 @@ footer {
     margin-bottom: 20px;
 }
 
-/* Cada card pequeno */
-.prox-item {
-    background: #ffffff;
-    border: 1px solid #e6e6e6;
-    border-radius: 12px;
-    padding: 14px 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+.subtitulo-categoria {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #005c99;
+    margin: 25px 0 10px;
+}
+
+.cb-item.azul {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* Nome do local — azul sistema */
-.prox-item span {
-    font-size: 1rem;
+.cb-item.azul span,
+.cb-item.azul small {
+    color: #ffffff;
     font-weight: 600;
-    color: #005c99;
-}
-
-/* Distância — azul sistema */
-.prox-item small {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #005c99;
 }
