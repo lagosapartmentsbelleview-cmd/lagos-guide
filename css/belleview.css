@@ -653,14 +653,12 @@ footer {
 
 .descricao-alojamento p,
 .intro-alojamento .subtitulo {
-    max-width: 750px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: auto;
-    line-height: 1.6;
+    width: 100%;                /* ocupa toda a largura */
+    text-align: justify;        /* justifica o texto */
+    text-justify: inter-word;   /* justificação suave */
+    hyphens: auto;              /* hifenização automática */
+    line-height: 1.6;           /* leitura confortável */
     font-size: 1.05rem;
     color: #444;
-    margin-bottom: 16px;
+    margin-bottom: 16px;        /* espaço entre parágrafos */
 }
