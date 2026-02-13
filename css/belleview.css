@@ -662,3 +662,31 @@ footer {
     color: #444;
     margin-bottom: 16px;        /* espaço entre parágrafos */
 }
+
+/* CARD FULL-WIDTH — Composição */
+.descricao-alojamento h3 {
+    color: #005c99;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.descricao-alojamento p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+/* Grelha de composição (usa o mesmo estilo dos cards de comodidades) */
+.composicao-grid {
+    margin-top: 20px;
+}
+
+/* Cards pequenos (já herdados de .cb-item) */
+.composicao-grid .cb-item span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #003d66;
+}
