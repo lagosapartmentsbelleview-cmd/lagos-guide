@@ -436,6 +436,7 @@ footer {
 #extraCampos {
     display: none;
 }
+
 /* ============================================================
    ALOJAMENTO — BOOKING PREMIUM + AZUL PRAIA BELLEVIEW
    ============================================================ */
@@ -446,19 +447,23 @@ footer {
     border-radius: 0 0 20px 20px;
 }
 
-/* Título */
+/* Título principal da secção */
 #alojamento h2 {
     font-family: "Poppins", sans-serif;
     font-size: 2.4rem;
     font-weight: 700;
-    color: #003d66;
-    margin-bottom: 10px;
+    color: #005c99; /* azul sistema */
+    margin-bottom: 20px;
 }
 
+/* Subtítulo introdutório (texto logo abaixo de "Os Alojamentos") */
 #alojamento .subtitulo {
     font-size: 1.2rem;
-    color: #555;
+    color: #444;
     margin-bottom: 40px;
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.6;
 }
 
 /* Galeria */
@@ -484,7 +489,7 @@ footer {
     gap: 40px;
 }
 
-/* Cartões */
+/* Cartões gerais da grelha */
 #alojamento .card {
     background: #ffffff;
     border-radius: 14px;
@@ -493,7 +498,7 @@ footer {
     border: 1px solid #e6e6e6;
 }
 
-/* Títulos dos cartões */
+/* Títulos dos cartões da grelha */
 #alojamento .card h3 {
     font-size: 1.35rem;
     font-weight: 600;
@@ -517,7 +522,7 @@ footer {
     gap: 10px;
 }
 
-/* Ícones */
+/* Ícones das listas */
 #alojamento ul li::before {
     content: "•";
     color: #005c99;
@@ -543,7 +548,7 @@ footer {
     margin-bottom: 10px;
 }
 
-/* Responsivo */
+/* Responsivo Alojamento */
 @media (max-width: 900px) {
     #alojamento .grid-2 {
         grid-template-columns: 1fr;
@@ -556,23 +561,6 @@ footer {
     #alojamento .galeria img {
         height: 200px;
     }
-}
-
-#alojamento h2 {
-    font-size: 2.6rem;
-    font-weight: 700;
-    color:  #005c99; /* azul praia profundo */
-    margin-bottom: 10px;
-}
-
-#alojamento .subtitulo {
-    text-align: justify;
-    text-justify: inter-word;
-    width: 100%;
-    max-width: none;
-    margin: 0 0 40px 0; /* espaço antes das fotos */
-    line-height: 1.6;
-    color: #444;
 }
 
 /* ============================================================
@@ -617,7 +605,7 @@ footer {
     color: #003d66;
 }
 
-/* Responsivo */
+/* Responsivo Comodidades */
 @media (max-width: 900px) {
     .comodidades-booking {
         grid-template-columns: repeat(2, 1fr);
@@ -628,16 +616,6 @@ footer {
     .comodidades-booking {
         grid-template-columns: 1fr;
     }
-/* ============================================================
-   ALOJAMENTO — TÍTULO PRINCIPAL
-   ============================================================ */
-
-#alojamento h2 {
-    font-family: "Poppins", sans-serif;
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: #005c99; /* azul sistema */
-    margin-bottom: 20px;
 }
 
 /* ============================================================
@@ -654,7 +632,7 @@ footer {
     margin-bottom: 40px;
 }
 
-/* TÍTULO DO CARD "O Apartamento" */
+/* Título do card "O Apartamento" (texto descritivo) */
 .descricao-alojamento h3 {
     font-family: "Poppins", sans-serif;
     font-size: 1.8rem;
@@ -663,7 +641,7 @@ footer {
     margin-bottom: 15px;
 }
 
-/* PARÁGRAFOS DOS CARDS */
+/* Texto dos cards intro + descrição */
 .intro-alojamento .subtitulo,
 .descricao-alojamento p {
     font-family: "Poppins", sans-serif;
