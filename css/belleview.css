@@ -784,7 +784,7 @@ footer {
     box-shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
-/* Título das subcategorias */
+/* Subtítulo das categorias */
 .subtitulo-categoria {
     font-size: 1.3rem;
     font-weight: 700;
@@ -812,15 +812,16 @@ footer {
     align-items: center;
 }
 
-/* Nome do local */
+/* Nome do local — azul sistema */
 .prox-item span {
     font-size: 1rem;
     font-weight: 600;
-    color: #003d66;
+    color: #005c99;
 }
 
-/* Distância */
+/* Distância — azul sistema */
 .prox-item small {
     font-size: 0.9rem;
-    color: #666;
+    font-weight: 600;
+    color: #005c99;
 }
