@@ -784,3 +784,36 @@ footer {
     box-shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
+/* Subtítulo das categorias */
+.subtitulo-categoria {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #005c99;
+    margin: 25px 0 10px;
+}
+
+/* Grelha responsiva */
+.proximidades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+/* Card azul sistema */
+.cb-item.azul {
+    background: #005c99;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Texto branco */
+.cb-item.azul span,
+.cb-item.azul small {
+    color: #ffffff;
+    font-weight: 600;
+}
