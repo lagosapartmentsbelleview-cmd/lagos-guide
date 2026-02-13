@@ -800,18 +800,18 @@ footer {
     margin-bottom: 20px;
 }
 
-/* Card azul sistema (usa o teu design existente) */
+/* Card azul sistema */
 .cb-item.azul {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #005c99; /* garante o azul sistema */
+    background: #005c99;
     border-radius: 12px;
     padding: 16px 18px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Texto branco dentro dos cards */
+/* Texto branco */
 .cb-item.azul span,
 .cb-item.azul small {
     color: #ffffff;
