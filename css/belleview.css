@@ -826,3 +826,61 @@ footer {
     color: inherit;        /* mantém a cor original */
 }
 
+/* ============================================================
+   COOKIE — ESTILO PREMIUM BELLEVIEW
+   ============================================================ */
+
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 20px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 9999;
+  animation: slideUp 0.4s ease-out;
+  font-family: 'Arial', sans-serif;
+}
+
+.cookie-box {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cookie-text {
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: #333;
+}
+
+.cookie-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cookie-btn {
+  padding: 10px 22px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.cookie-btn.accept {
+  background: #0057b8; /* Azul Belleview */
+  color: white;
+}
+
+.cookie-btn.reject {
+  background: #e0e0e0;
+  color: #333;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
