@@ -889,51 +889,59 @@ footer {
    RODAPÉ — ESTILO PREMIUM BELLEVIEW
    ============================================================ */
 
-.footer {
+footer {
     background: #f4f4f4;
     padding: 40px 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 30px;
-    font-size: 14px;
+    margin-top: 40px;
+    font-family: "Arial", sans-serif;
     color: #333;
 }
 
-.footer-section {
-    flex: 1 1 250px;
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 1.6;
 }
 
-.footer-section h4 {
-    margin-bottom: 10px;
-    font-size: 16px;
+.footer-title {
+    font-size: 20px;
     font-weight: bold;
+    margin-bottom: 15px;
+    color: #222;
 }
 
-.footer-section ul {
-    list-style: none;
-    padding: 0;
+.footer-content p {
+    margin: 10px 0;
+    font-size: 14px;
 }
 
-.footer-section ul li {
-    margin-bottom: 6px;
+.footer-links {
+    margin: 20px 0;
+    font-size: 14px;
 }
 
-.footer-section a {
+.footer-links a {
     color: #333;
     text-decoration: none;
+    margin: 0 6px;
 }
 
-.footer-section a:hover {
+.footer-links a:hover {
     text-decoration: underline;
 }
 
-.footer-bottom {
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 10px;
-    border-top: 1px solid #ccc;
-    font-size: 13px;
+.reclamacoes-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
 }
 
+.footer-copy {
+    margin-top: 25px;
+    font-size: 13px;
+    color: #555;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+}
