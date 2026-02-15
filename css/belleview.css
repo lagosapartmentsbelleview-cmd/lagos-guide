@@ -886,15 +886,14 @@ footer {
 }
 
 /* ============================================================
-   RODAPÉ — ESTILO PREMIUM BELLEVIEW
+   RODAPÉ — ESTILO PREMIUM BELLEVIEW (com azul #005c99)
    ============================================================ */
 
 footer {
-    background: #f4f4f4;
+    background: #005c99; /* azul do teu sistema */
     padding: 40px 20px;
     margin-top: 40px;
-    font-family: "Arial", sans-serif;
-    color: #333;
+    color: #fff; /* texto branco para contraste */
 }
 
 .footer-content {
@@ -908,12 +907,13 @@ footer {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 15px;
-    color: #222;
+    color: #fff;
 }
 
 .footer-content p {
     margin: 10px 0;
     font-size: 14px;
+    color: #f1f1f1;
 }
 
 .footer-links {
@@ -922,7 +922,7 @@ footer {
 }
 
 .footer-links a {
-    color: #333;
+    color: #f1f1f1;
     text-decoration: none;
     margin: 0 6px;
 }
@@ -935,13 +935,13 @@ footer {
     display: inline-block;
     margin-top: 10px;
     font-weight: bold;
-    color: #333;
+    color: #fff;
 }
 
 .footer-copy {
     margin-top: 25px;
     font-size: 13px;
-    color: #555;
-    border-top: 1px solid #ccc;
+    color: #e0e0e0;
+    border-top: 1px solid rgba(255,255,255,0.3);
     padding-top: 15px;
 }
