@@ -937,8 +937,12 @@ footer {
 
 .rules-section {
     width: 100%;
-    padding: 0 20px; /* igual ao card acima */
-    margin: 60px 0;
+    padding: 30px 20px; /* igual ao card acima */
+    margin: 40px 0;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    border: 1px solid #e6e6e6;
 }
 
 .rules-section h3 {
