@@ -874,12 +874,12 @@ footer {
     margin-top: 40px;
     color: #fff;
 
-    /* CORREÇÃO ABSOLUTA */
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;   /* ← NECESSÁRIO */
+    text-align: center;    /* ← NECESSÁRIO */
 }
-
 
 .footer-content {
     max-width: 1100px;
