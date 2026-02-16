@@ -894,6 +894,10 @@ footer {
     padding: 40px 20px;
     margin-top: 40px;
     color: #fff; /* texto branco para contraste */
+
+    /* garantir centralização mesmo que o pai use flex/grid */
+    display: flex;
+    justify-content: center;
 }
 
 .footer-content {
@@ -1059,12 +1063,5 @@ h2 {
     scroll-margin-top: 100px; /* altura aproximada do header */
 }
 
-footer {
-    text-align: center !important;
-}
 
-.footer-content {
-    margin: 0 auto !important;
-    text-align: center !important;
-}
 
