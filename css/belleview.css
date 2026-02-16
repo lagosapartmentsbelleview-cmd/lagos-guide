@@ -1085,12 +1085,10 @@ h2 {
 
 #localizacao {
     width: 100%;
-    padding: 30px 20px; /* igual aos outros cards */
+    padding: 30px 20px; /* igual às outras secções */
     margin: 40px 0;
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-    border: 1px solid #e6e6e6;
+    scroll-margin-top: 100px; /* mantém o que já tinhas */
 }
+
 
 
