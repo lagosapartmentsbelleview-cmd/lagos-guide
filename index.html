@@ -880,8 +880,6 @@
   document.getElementById("accept-cookies").onclick = function() {
     setCookie("cookieConsent", "accepted", 365);
     document.getElementById("cookie-banner").style.display = "none";
-
-    // Aqui podes carregar scripts externos (Analytics, Maps, etc.)
   };
 
   document.getElementById("reject-cookies").onclick = function() {
@@ -890,12 +888,14 @@
   };
 </script>
 
+<!-- JS das FAQ (DEVE ESTAR DENTRO DE <script>) -->
+<script>
 document.querySelectorAll(".faq-question").forEach(btn => {
     btn.addEventListener("click", () => {
         btn.parentElement.classList.toggle("active");
     });
 });
-
+</script>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -909,8 +909,6 @@ document.querySelectorAll(".faq-question").forEach(btn => {
 <script src="js/i18n.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/reservas.js"></script>
-
-
 
 </body>
 </html>
