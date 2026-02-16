@@ -1035,4 +1035,8 @@ footer {
     letter-spacing: 0.5px;
 }
 
+.comodidades-booking .cb-item span {
+    display: block;
+    text-align: center;
+}
 
