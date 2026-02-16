@@ -718,15 +718,6 @@ header nav a:hover {
    CARDS FULL-WIDTH — ESTILO PREMIUM BELLEVIEW
    ============================================================ */
 
-.descricao-alojamento {
-    background: #ffffff;
-    padding: 30px 20px;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-    border: 1px solid #e6e6e6;
-    margin-bottom: 40px;
-}
-
 /* Títulos dos cards */
 .descricao-alojamento h3 {
     font-family: "Poppins", sans-serif;
