@@ -939,7 +939,7 @@ footer {
     width: 100%;
     padding: 30px 20px; /* igual ao card acima */
     margin: 40px 0;
-    background: #ffffff;
+    background: #005c99;
     border-radius: 14px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.06);
     border: 1px solid #e6e6e6;
@@ -963,17 +963,19 @@ footer {
 
 /* Cada regra como card premium */
 .rule-item {
-    background: #005c99;
-    border-radius: 16px;
-    padding: 28px 24px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 25px 20px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.06);
     border: 1px solid #e6e6e6;
 
     display: flex;
     flex-direction: column;
-    align-items: center;        /* ← centra tudo */
-    text-align: center;         /* ← texto centrado */
+    align-items: center;
+    text-align: center;
     gap: 14px;
+}
+
 
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
