@@ -963,14 +963,25 @@ footer {
 
 .house-rules-list li {
     background: #f7f7f7;
-    padding: 12px 18px;
-    margin-bottom: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
     border-left: 4px solid #005c99;
     border-radius: 4px;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.7;
     color: #444;
+    text-align: justify;
+
+    /* ESSENCIAL PARA ALINHAR TUDO */
+    display: block;
+    width: 100%;
 }
+
+.house-rules-list li strong {
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
 
 /* ============================================================
    FAQ´S
