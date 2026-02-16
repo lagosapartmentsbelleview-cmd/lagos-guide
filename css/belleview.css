@@ -1059,3 +1059,12 @@ h2 {
     scroll-margin-top: 100px; /* altura aproximada do header */
 }
 
+footer {
+    text-align: center !important;
+}
+
+.footer-content {
+    margin: 0 auto !important;
+    text-align: center !important;
+}
+
