@@ -1090,5 +1090,8 @@ h2 {
     scroll-margin-top: 100px; /* mantém o que já tinhas */
 }
 
+#localizacao {
+    padding: 50px 20px; /* igual aos outros cards */
+}
 
 
