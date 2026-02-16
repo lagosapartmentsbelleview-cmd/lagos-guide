@@ -1012,9 +1012,11 @@ footer {
    ============================================================ */
 
 .faq-container {
-    max-width: 900px;
-    margin: 40px auto;
+    width: 100%;
+    padding: 0 20px; /* igual ao card acima */
+    margin: 40px 0;
 }
+
 
 .faq-item {
     border-bottom: 1px solid #ddd;
