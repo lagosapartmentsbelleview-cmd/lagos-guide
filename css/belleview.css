@@ -1052,3 +1052,10 @@ footer {
 h2 {
     color: #005c99;
 }
+
+#alojamento,
+#localizacao,
+#comodidades {
+    scroll-margin-top: 100px; /* altura aproximada do header */
+}
+
