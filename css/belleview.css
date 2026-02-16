@@ -1040,3 +1040,11 @@ footer {
     text-align: center;
 }
 
+.cb-item.azul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 60px;
+    padding: 12px;
+}
