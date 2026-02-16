@@ -890,15 +890,17 @@ footer {
    ============================================================ */
 
 footer {
-    background: #005c99; /* azul do teu sistema */
+    background: #005c99;
     padding: 40px 20px;
     margin-top: 40px;
-    color: #fff; /* texto branco para contraste */
+    color: #fff;
 
-    /* garantir centralização mesmo que o pai use flex/grid */
+    /* CORREÇÃO ABSOLUTA */
+    width: 100%;
     display: flex;
     justify-content: center;
 }
+
 
 .footer-content {
     max-width: 1100px;
