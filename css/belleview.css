@@ -1008,6 +1008,7 @@ footer {
     font-size: 15px;
     line-height: 1.6;
     color: #444;
+    text-align: justify; /* ADICIONAR ESTA LINHA */
 }
 
 .faq-item.active .faq-answer {
