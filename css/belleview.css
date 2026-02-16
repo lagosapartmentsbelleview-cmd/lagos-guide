@@ -1048,3 +1048,7 @@ footer {
     min-height: 60px;
     padding: 12px;
 }
+
+h2 {
+    color: #005c99;
+}
