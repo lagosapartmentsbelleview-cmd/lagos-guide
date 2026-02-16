@@ -1073,3 +1073,7 @@ h2 {
 #comodidades {
     scroll-margin-top: 100px; /* altura aproximada do header */
 }
+#localizacao.secao {
+    padding-left: 40px;
+    padding-right: 40px;
+}
