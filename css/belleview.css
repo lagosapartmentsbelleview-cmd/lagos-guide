@@ -950,39 +950,40 @@ footer {
    REGRAS DA CASA
    ============================================================ */
 
-.house-rules-container {
-    max-width: 900px;
-    margin: 40px auto;
+.rules-section {
+  max-width: 900px;
+  margin: 40px auto;
 }
 
-.house-rules-list {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
+.rules-section h3 {
+  color: #005c99;
+  font-weight: 700;
+  margin-bottom: 30px;
 }
 
-.house-rules-list li {
-    background: #f7f7f7;
-    padding: 14px 18px;
-    margin-bottom: 12px;
-    border-left: 4px solid #005c99;
-    border-radius: 4px;
-    font-size: 15px;
-    line-height: 1.7;
-    color: #444;
-    text-align: justify;
-
-    /* ESSENCIAL PARA ALINHAR TUDO */
-    display: block;
-    width: 100%;
+.rule-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  background: #f7f7f7;
+  padding: 16px;
+  border-left: 4px solid #005c99;
+  border-radius: 6px;
 }
 
-.house-rules-list li strong {
-    display: inline-block;
-    margin-bottom: 4px;
+.rule-icon {
+  font-size: 22px;
+  margin-right: 14px;
+  line-height: 1.4;
+  flex-shrink: 0;
 }
 
-
+.rule-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #444;
+  text-align: justify;
+}
 
 /* ============================================================
    FAQ´S
