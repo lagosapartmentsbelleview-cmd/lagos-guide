@@ -937,10 +937,9 @@ footer {
 
 .rules-section {
     width: 100%;
-    padding: 0 40px; /* igual às outras secções */
+    padding: 0 20px; /* igual ao card acima */
     margin: 60px 0;
 }
-
 
 .rules-section h3 {
     font-size: 2rem;
@@ -957,7 +956,6 @@ footer {
     grid-template-columns: repeat(4, 1fr);
     gap: 25px;
 }
-
 
 /* Cada regra como card premium */
 .rule-item {
