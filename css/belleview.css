@@ -945,3 +945,72 @@ footer {
     border-top: 1px solid rgba(255,255,255,0.3);
     padding-top: 15px;
 }
+
+/* ============================================================
+   REGRAS DA CASA
+   ============================================================ */
+
+.house-rules-container {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.house-rules-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.house-rules-list li {
+    background: #f7f7f7;
+    padding: 12px 18px;
+    margin-bottom: 10px;
+    border-left: 4px solid #005c99;
+    border-radius: 4px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #444;
+}
+
+/* ============================================================
+   FAQ´S
+   ============================================================ */
+
+.faq-container {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.faq-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 12px 0;
+    cursor: pointer;
+    color: #005c99;
+}
+
+.faq-question:hover {
+    color: #003d66;
+}
+
+.faq-answer {
+    display: none;
+    padding: 0 0 15px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #444;
+}
+
+.faq-item.active .faq-answer {
+    display: block;
+}
+
