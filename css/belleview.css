@@ -1137,3 +1137,10 @@ h2 {
     font-size: 0.95rem;
     opacity: 0.9;
 }
+.cb-item.azul {
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
