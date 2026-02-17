@@ -1144,3 +1144,29 @@ h2 {
     justify-content: center;
     align-items: center;
 }
+/* Todas as secções principais com o mesmo espaçamento */
+.secao {
+    padding: 50px 40px;
+    margin: 40px 0;
+}
+
+/* CARD FULL-WIDTH (igual ao alojamento) */
+.descricao-alojamento {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 32px 26px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    margin: 40px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Cards azuis — altura uniforme */
+.cb-item.azul {
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
