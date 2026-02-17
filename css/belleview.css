@@ -1,86 +1,128 @@
 /* ============================================================
    1. RESET + BASE
    ============================================================ */
-
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
 }
 
 body {
+    margin: 0;
     font-family: "Inter", sans-serif;
     background: #f7f7f7;
     color: #333;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
 }
 
-/* Links globais */
-a {
-    color: inherit;
-    text-decoration: none;
-}
 
 /* ============================================================
-   2. TIPOGRAFIA GLOBAL — BELLEVIEW PREMIUM
+   TIPOGRAFIA BELLEVIEW — Premium
    ============================================================ */
 
-/* Títulos uniformizados */
-h1, h2, h3, h4 {
+/* Títulos globais */
+h1, h2, h3 {
     font-family: "Poppins", sans-serif;
     font-weight: 700;
-    color: #005c99; /* azul sistema */
-    line-height: 1.2;
-    margin-bottom: 14px;
+    color: #003d66;
+    margin: 0 0 12px 0;
 }
 
-/* Hierarquia premium */
-h1 { font-size: 2.8rem; letter-spacing: -0.5px; }
-h2 { font-size: 2.2rem; }
-h3 { font-size: 1.8rem; }
-h4 { font-size: 1.3rem; }
+h1 {
+    font-size: 2.8rem;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+}
+
+h2 {
+    font-size: 2.2rem;
+}
+
+h3 {
+    font-size: 1.35rem;
+}
 
 /* Parágrafos */
 p {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: #444;
-    margin-bottom: 16px;
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: auto;
 }
 
-/* Labels e small */
-label, small {
-    font-size: 0.9rem;
-    font-weight: 500;
+/* Labels */
+small, label {
+    font-size: 0.85rem;
     color: #555;
+    font-weight: 500;
 }
+
 /* ============================================================
-   2. HEADER + NAVEGAÇÃO + LÍNGUAS — BELLEVIEW PREMIUM
+   3. HERO
    ============================================================ */
 
+.hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    padding: 60px 40px;
+    align-items: center;
+    background-image: url("../img/hero/hero1.jpg");
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    z-index: 0;
+}
+
+.hero-texto,
+.booking-card {
+    position: relative;
+    z-index: 1;
+}
+
+/* Tipografia específica do HERO (override do global) */
+.hero-local {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #f8f8f8;
+    opacity: 0.95;
+    margin-bottom: 6px;
+}
+
+.hero-texto h1 {
+    color: #ffffff;
+    font-size: 2.8rem;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.35);
+}
+
+.hero_sub {
+    font-size: 1.2rem;
+    color: #f2f2f2;
+    line-height: 1.45;
+    max-width: 480px;
+    opacity: 0.95;
+}
+
+/* ============================================================
+   2. HEADER
+   ============================================================ */
 header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    width: 100%;
-    padding: 16px 40px;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(6px);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 16px 40px;
+    background: rgba(255, 255, 255, 0.95);
+    position: sticky;
+    top: 0;
+    z-index: 10;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-/* LOGO */
 .logo {
     display: flex;
     align-items: center;
@@ -88,43 +130,38 @@ header {
     font-size: 1.35rem;
     font-weight: 700;
     color: #005c99;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
 }
 
 .logo span {
+    color: #005c99 !important;
     font-family: "Poppins", sans-serif;
     font-weight: 700;
-    color: #005c99;
 }
 
-/* NAVEGAÇÃO */
-header nav {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-}
 
 header nav a {
-    font-family: "Poppins", sans-serif;
+    margin-left: 20px;
+    text-decoration: none;
+    color: #005c99;
     font-size: 1.05rem;
     font-weight: 600;
-    color: #005c99;
-    padding: 6px 4px;
+    padding: 6px 12px;
     position: relative;
-    transition: all 0.25s ease;
+    transition: all 0.25s ease-in-out;
+    letter-spacing: 0.02em;
 }
 
-/* Linha animada */
 header nav a::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -3px;
+    bottom: -2px;
     width: 0%;
     height: 2px;
-    background: #005c99;
+    background-color: #005c99;
+    transition: width 0.25s ease-in-out;
     border-radius: 2px;
-    transition: width 0.25s ease;
 }
 
 header nav a:hover::after {
@@ -135,233 +172,87 @@ header nav a:hover {
     transform: translateY(-2px);
 }
 
-/* SWITCH DE LÍNGUAS */
+/* Bandeiras */
 .lang-switch {
     display: flex;
-    align-items: center;
     gap: 10px;
+    cursor: pointer;
 }
 
 .lang-switch img {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .lang-switch img:hover {
     transform: scale(1.12);
-    box-shadow: 0 0 6px rgba(0,0,0,0.25);
+    box-shadow: 0 0 6px rgba(0,0,0,0.3);
 }
 
 /* ============================================================
-   HEADER — RESPONSIVO
-   ============================================================ */
-
-@media (max-width: 768px) {
-
-    header {
-        flex-direction: column;
-        gap: 14px;
-        padding: 16px 20px;
-        text-align: center;
-    }
-
-    header nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 14px;
-    }
-}
-/* ============================================================
-   3. HERO — BELLEVIEW PREMIUM
-   ============================================================ */
-
-.hero {
-    position: relative;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px;
-    padding: 70px 40px;
-    align-items: center;
-
-    background-image: url("../img/hero/hero1.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    color: #ffffff;
-}
-
-/* Overlay suave */
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.28);
-    z-index: 0;
-}
-
-/* Conteúdo acima do overlay */
-.hero-texto,
-.booking-card {
-    position: relative;
-    z-index: 1;
-}
-
-/* Localização (linha superior) */
-.hero-local {
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    opacity: 0.95;
-    margin-bottom: 6px;
-}
-
-/* Título principal */
-.hero-texto h1 {
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: #ffffff;
-    text-shadow: 0 3px 10px rgba(0,0,0,0.35);
-    margin-bottom: 14px;
-}
-
-/* Subtítulo */
-.hero_sub {
-    font-size: 1.2rem;
-    line-height: 1.45;
-    max-width: 480px;
-    opacity: 0.95;
-}
-
-/* ============================================================
-   HERO — RESPONSIVO
-   ============================================================ */
-
-@media (max-width: 900px) {
-    .hero {
-        grid-template-columns: 1fr;
-        padding: 50px 30px;
-        text-align: center;
-        gap: 30px;
-    }
-
-    .hero-texto h1 {
-        font-size: 2.2rem;
-    }
-
-    .hero_sub {
-        margin: 0 auto;
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 600px) {
-    .hero {
-        padding: 40px 20px;
-    }
-
-    .hero-texto h1 {
-        font-size: 1.9rem;
-    }
-
-    .hero_sub {
-        font-size: 1rem;
-    }
-}
-/* ============================================================
-   4. BOOKING CARD — BELLEVIEW PREMIUM
+   4. BOOKING CARD
    ============================================================ */
 
 .booking-card {
     background: #ffffff;
     border-radius: 16px;
-    padding: 26px 24px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12); /* sombra média */
+    padding: 24px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    max-width: 300px;
-    width: 100%;
+    gap: 8px;
+    max-width: 280px;
 }
 
-/* Título do card */
 .booking-card h2 {
-    font-size: 1.4rem;
-    font-weight: 700;
+    font-size: 1.2rem;
     color: #005c99;
-    margin-bottom: 6px;
 }
 
-/* Labels */
 .booking-card label {
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.85rem;
     color: #003d66;
 }
 
-/* Inputs e selects */
 .booking-card input,
 .booking-card select {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
     border: 1px solid #d0d7de;
-    background: #ffffff;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #005c99;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.booking-card input:focus,
-.booking-card select:focus {
-    border-color: #005c99;
-    box-shadow: 0 0 0 3px rgba(0,92,153,0.15);
-    outline: none;
-}
-
-/* Botão de disponibilidade */
 .booking-card button {
-    margin-top: 10px;
-    padding: 12px 16px;
+    margin-top: 8px;
+    padding: 10px 14px;
     border-radius: 999px;
     border: none;
     background: #005c99;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.25s ease, transform 0.2s ease;
+    color: #fff;
+    font-weight: 600;
 }
 
-.booking-card button:hover {
-    background: #004d80;
-    transform: translateY(-2px);
-}
-
-/* Resultado da disponibilidade */
+/* DISPLAY DISPONIBILIDADE */
 #resultadoDisponibilidade {
-    margin-top: 12px;
-    padding: 14px 16px;
-    font-size: 1rem;
-    border-radius: 12px;
+    margin-top: 10px;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    border-radius: 10px;
     background: #eef6fb;
     border: 1px solid #cfe4f2;
     color: #005c99;
     display: none;
 }
 
-/* Disponível */
 #resultadoDisponibilidade.disponivel::before {
     content: "✔ ";
     color: #2ecc71;
     font-weight: 700;
 }
 
-/* Indisponível */
 #resultadoDisponibilidade.indisponivel::before {
     content: "✖ ";
     color: #e74c3c;
@@ -369,311 +260,523 @@ header nav a:hover {
 }
 
 /* ============================================================
-   BOOKING CARD — RESPONSIVO
+   5. APARTAMENTOS
    ============================================================ */
-
-@media (max-width: 768px) {
-    .booking-card {
-        max-width: 340px;
-        margin: 0 auto;
-        padding: 22px;
-    }
+.apartamento-bloco {
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #d0d7de;
+    background: #f9fafb;
 }
-/* ============================================================
-   5. SECÇÕES — ESTRUTURA PREMIUM BELLEVIEW
-   ============================================================ */
 
-/* Estrutura base das secções */
-.secao {
+.apartamento-bloco h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+    color: #005c99;
+    font-weight: 600;
+}
+
+/* ============================================================
+   6. CONTADORES
+   ============================================================ */
+.contador {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 6px 0 12px;
+}
+
+.contador label {
+    font-size: 0.9rem;
+    color: #005c99;
+    width: 120px;
+}
+
+.contador button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #005c99;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contador span {
+    font-size: 1rem;
+    font-weight: 600;
+    width: 28px;
+    text-align: center;
+    color: #005c99;
+}
+
+/* ============================================================
+   7. CARD DE DISPONIBILIDADE (PREMIUM)
+   ============================================================ */
+#resultadoDisponibilidade {
+    margin-top: 10px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    background: #eef6fb;
+    border: 1px solid #cfe4f2;
     width: 100%;
-    padding: 60px 40px;
-    margin: 40px 0;
+    color: #005c99;
+    display: none;
+}
+
+/* ✔ Disponível */
+#resultadoDisponibilidade.disponivel::before {
+    content: "✔ ";
+    color: #2ecc71;
+    font-weight: 700;
+}
+
+/* ✖ Indisponível */
+#resultadoDisponibilidade.indisponivel::before {
+    content: "✖ ";
+    color: #e74c3c;
+    font-weight: 700;
+}
+
+/* ============================================================
+   8. SECÇÕES
+   ============================================================ */
+.secao {
+    padding: 50px 40px;
+    margin-top: 0; /* transição suave entre hero e alojamento */
     background: transparent;
 }
 
-/* Títulos principais das secções */
+
+
 .secao h2 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #005c99;
-    margin-bottom: 25px;
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 12px;
 }
 
-/* Ajuste para navegação suave com header sticky */
-#alojamento,
-#comodidades,
-#localizacao,
-#regras {
-    scroll-margin-top: 110px; /* altura aproximada do header */
-}
-
-/* Versão mais compacta em mobile */
+/* ============================================================
+   10. MOBILE
+   ============================================================ */
 @media (max-width: 768px) {
-    .secao {
-        padding: 40px 20px;
-        margin: 30px 0;
+
+    header {
+        flex-direction: column;
+        gap: 14px;
+        padding: 16px;
         text-align: center;
     }
 
-    .secao h2 {
-        font-size: 1.9rem;
-        margin-bottom: 20px;
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 30px 20px;
+        text-align: center;
+        gap: 24px;
+        min-height: 70vh;
+    }
+
+    .hero-texto h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-texto p {
+        font-size: 1rem;
+    }
+
+    .booking-card {
+        max-width: 330px;
+        margin: 0 auto;
+        padding: 18px;
+    }
+
+    .secao {
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    footer {
+        padding: 20px;
+        text-align: center;
     }
 }
+
+.booking-card label {
+    color: #003d66;
+}
+
+.booking-card select {
+    background-color: #ffffff;
+}
+
+#extraCampos {
+    display: none;
+}
+
 /* ============================================================
-   6. CARDS FULL-WIDTH — BELLEVIEW PREMIUM
+   ALOJAMENTO — BOOKING PREMIUM + AZUL PRAIA BELLEVIEW
    ============================================================ */
 
-/* Estrutura base dos cards */
-.intro-alojamento,
-.descricao-alojamento {
-    width: 100%;
-    background: #ffffff;
-    padding: 32px 26px;
-    border-radius: 14px;
-    border: 1px solid #e6e6e6;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* sombra média */
-    margin-bottom: 45px;
+#alojamento {
+    background: #f5f7fa; /* fundo cinza suave */
+    padding: 80px 40px;
+    border-radius: 0 0 20px 20px;
 }
 
-/* Títulos internos (h3) */
-.descricao-alojamento h3,
-.intro-alojamento h3 {
-    font-size: 1.8rem;
+/* Título principal da secção */
+#alojamento h2 {
+    font-family: "Poppins", sans-serif;
+    font-size: 2.4rem;
     font-weight: 700;
-    color: #005c99;
-    margin-bottom: 18px;
+    color: #005c99; /* azul sistema */
+    margin-bottom: 20px;
 }
 
-/* Texto interno */
-.descricao-alojamento p,
-.intro-alojamento p,
-.intro-alojamento .subtitulo {
-    font-size: 1.15rem;
-    line-height: 1.65;
+/* Subtítulo introdutório (texto logo abaixo de "Os Alojamentos") */
+#alojamento .subtitulo {
+    font-size: 1.2rem;
     color: #444;
+    margin-bottom: 40px;
     text-align: justify;
     text-justify: inter-word;
-    hyphens: auto;
-    margin-bottom: 18px;
+    line-height: 1.6;
 }
 
-/* Subtítulos de categorias (ex: Principais atrações, Restaurantes, etc.) */
-.subtitulo-categoria {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #005c99;
-    margin: 30px 0 12px;
-}
-
-/* Ajustes para mobile */
-@media (max-width: 768px) {
-    .intro-alojamento,
-    .descricao-alojamento {
-        padding: 26px 20px;
-        margin-bottom: 35px;
-        text-align: center;
-    }
-
-    .descricao-alojamento h3,
-    .intro-alojamento h3 {
-        font-size: 1.6rem;
-    }
-
-    .descricao-alojamento p,
-    .intro-alojamento p {
-        font-size: 1.05rem;
-        text-align: justify;
-    }
-}
-/* ============================================================
-   7. GALERIAS — BELLEVIEW PREMIUM
-   ============================================================ */
-
-/* Grelha principal da galeria */
+/* Galeria */
 #alojamento .galeria {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
-    gap: 14px;
-    margin-bottom: 45px;
+    gap: 12px;
+    margin-bottom: 40px;
 }
 
-/* Imagens da galeria */
 #alojamento .galeria img {
     width: 100%;
     height: 260px;
     object-fit: cover;
     border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* sombra média */
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
 }
 
-/* Hover premium */
-#alojamento .galeria img:hover {
-    transform: scale(1.02);
-    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+/* Grelha 2 colunas */
+#alojamento .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
 }
 
-/* ============================================================
-   GALERIA — RESPONSIVO
-   ============================================================ */
+/* Cartões gerais da grelha */
+#alojamento .card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border: 1px solid #e6e6e6;
+}
 
+/* Títulos dos cartões da grelha */
+#alojamento .card h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #005c99;
+    margin-bottom: 18px;
+}
+
+/* Listas */
+#alojamento ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#alojamento ul li {
+    padding: 8px 0;
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Ícones das listas */
+#alojamento ul li::before {
+    content: "•";
+    color: #005c99;
+    font-size: 1.4rem;
+    line-height: 0;
+}
+
+/* FAQ */
+#alojamento .faq p {
+    background: #eef6fb;
+    border: 1px solid #cfe4f2;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+/* Regras */
+#alojamento .regras ul li {
+    background: #fff8e6;
+    border: 1px solid #ffe2a8;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Responsivo Alojamento */
 @media (max-width: 900px) {
+    #alojamento .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
     #alojamento .galeria {
         grid-template-columns: 1fr;
     }
 
     #alojamento .galeria img {
-        height: 220px;
-    }
-}
-
-@media (max-width: 600px) {
-    #alojamento .galeria img {
         height: 200px;
     }
 }
+
 /* ============================================================
-   8. SISTEMA DE GRELHAS — BELLEVIEW PREMIUM
+   COMODIDADES — ÍCONES OUTLINE BOLD (ESTILO BOOKING)
    ============================================================ */
 
-/* Grelha base unificada */
-.grid-2,
-.comodidades-booking,
-.composicao-grid,
-.proximidades-grid,
-.rules-grid {
-    display: grid;
-    gap: 22px;
-    width: 100%;
-}
-
-/* Grelha 2 colunas (ex: composição dos apartamentos) */
-.grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-/* Comodidades (ícones) — 4 colunas no desktop */
 .comodidades-booking {
+    display: grid;
     grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    margin: 50px 0;
 }
 
-/* Composição — 3 colunas no desktop */
-.composicao-grid {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-/* Proximidades — auto-fit para melhor fluidez */
-.proximidades-grid {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-
-/* Regras da casa — 4 colunas */
-.rules-grid {
-    grid-template-columns: repeat(4, 1fr);
-}
-
-/* ============================================================
-   RESPONSIVO — GRELHAS
-   ============================================================ */
-
-@media (max-width: 1024px) {
-    .comodidades-booking {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .rules-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 900px) {
-    .grid-2 {
-        grid-template-columns: 1fr;
-    }
-
-    .comodidades-booking {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .composicao-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .rules-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .comodidades-booking,
-    .composicao-grid,
-    .rules-grid {
-        grid-template-columns: 1fr;
-    }
-}
-/* ============================================================
-   9. CARDS PEQUENOS — BELLEVIEW PREMIUM
-   ============================================================ */
-
-/* Card base (versão branca) */
 .cb-item {
     background: #ffffff;
     border-radius: 14px;
-    padding: 22px 20px;
-    border: 1px solid #e6e6e6;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* sombra média */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+    padding: 26px 20px;
     text-align: center;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Hover premium */
 .cb-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.10);
 }
 
-/* Ícone (comodidades) */
 .cb-icon {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     stroke: #005c99;
-    stroke-width: 2.8;
+    stroke-width: 2.8; /* ⭐ BOLD OUTLINE */
     fill: none;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
-/* Texto principal */
 .cb-item span {
     font-family: "Poppins", sans-serif;
     font-size: 1.05rem;
     font-weight: 600;
-    color: #005c99;
-    display: block;
+    color: #005c99; /* ✔ agora está igual ao sistema */
 }
 
-/* Texto secundário (distâncias, metros, etc.) */
-.cb-item small {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #666;
+/* Responsivo Comodidades */
+@media (max-width: 900px) {
+    .comodidades-booking {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .comodidades-booking {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ============================================================
-   VERSÃO AZUL — CARDS PEQUENOS
+   INTRO E DESCRIÇÃO — CARDS FULL-WIDTH
    ============================================================ */
 
+.intro-alojamento,
+.descricao-alojamento {
+    background: #ffffff;
+    padding: 30px 20px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    border: 1px solid #e6e6e6;
+    margin-bottom: 40px;
+}
+
+/* Títulos dos cards (O Apartamento, Composição, etc.) */
+.descricao-alojamento h3 {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #005c99; /* azul sistema */
+    margin-bottom: 15px;
+}
+
+/* Texto dos cards intro + descrição */
+.intro-alojamento .subtitulo,
+.descricao-alojamento p {
+    width: 100%;                
+    text-align: justify;        
+    text-justify: inter-word;   
+    hyphens: auto;              
+    line-height: 1.6;           
+    font-size: 1.2rem;          /* tamanho unificado */
+    color: #444;
+    margin-bottom: 16px;        
+}
+
+/* ============================================================
+   GRELLHA DE COMPOSIÇÃO (CARDS PEQUENOS)
+   ============================================================ */
+
+.composicao-grid {
+    margin-top: 20px;
+}
+
+/* Cards pequenos — versão branca (herdada de .cb-item) */
+.composicao-grid .cb-item span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #003d66;
+}
+
+/* ============================================================
+   VERSÃO AZUL — CARDS DE COMPOSIÇÃO (FUNDO AZUL + TEXTO BRANCO)
+   ============================================================ */
+
+.composicao-grid .cb-item.azul {
+    background: #005c99; /* azul sistema */
+    border: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+}
+
+.composicao-grid .cb-item.azul span {
+    color: #ffffff; /* texto branco */
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+/* ============================================================
+   FOOTER BELLEVIEW — PREMIUM
+   ============================================================ */
+
+.footer-content p,
+.footer-content a {
+    color: #ffffff !important; /* força texto branco */
+}
+
+.footer-content p {
+    margin: 6px 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.footer-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.reclamacoes-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-weight: 600;
+    text-decoration: underline;
+    color: #ffffff !important; /* link branco */
+    transition: opacity 0.2s ease;
+}
+
+.reclamacoes-link:hover {
+    opacity: 0.75;
+}
+
+.footer-copy {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+/* ============================================================
+   CARDS FULL-WIDTH — ESTILO PREMIUM BELLEVIEW
+   ============================================================ */
+
+/* Títulos dos cards */
+.descricao-alojamento h3 {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #005c99; /* azul sistema */
+    margin-bottom: 15px;
+}
+
+/* Texto dos cards */
+.descricao-alojamento p {
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #444;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    margin-bottom: 16px;
+}
+
+/* Destaque das perguntas */
+.descricao-alojamento p strong {
+    color: #005c99;
+    font-weight: 700;
+}
+
+.map-container {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 14px;
+    margin-top: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* Subtítulo das categorias */
+.subtitulo-categoria {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #005c99;
+    margin: 25px 0 10px;
+}
+
+/* Grelha responsiva */
+.proximidades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+/* Card azul sistema */
 .cb-item.azul {
     background: #005c99;
-    border: none;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-    padding: 18px 20px;
-    flex-direction: row;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
@@ -685,182 +788,197 @@ header nav a:hover {
     font-weight: 600;
 }
 
-/* ============================================================
-   RESPONSIVO — CARDS PEQUENOS
-   ============================================================ */
-
-@media (max-width: 600px) {
-    .cb-item {
-        padding: 18px 16px;
-    }
-
-    .cb-item.azul {
-        flex-direction: column;
-        gap: 6px;
-        text-align: center;
-    }
-}
-/* ============================================================
-   10. FAQ — BELLEVIEW PREMIUM
-   ============================================================ */
-
-.faq-container {
-    width: 100%;
-    margin: 50px 0;
-    padding: 0 10px;
-}
-
-/* Título da secção FAQ */
-.faq-container h2,
-.faq-container h3 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #005c99;
-    margin-bottom: 25px;
-    text-align: left;
-}
-
-/* Cada item da FAQ */
-.faq-item {
-    background: #ffffff;
-    border-radius: 14px;
-    border: 1px solid #e6e6e6;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    padding: 0;
-    margin-bottom: 18px;
-    overflow: hidden;
-    transition: box-shadow 0.25s ease;
-}
-
-/* Hover premium */
-.faq-item:hover {
-    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
-}
-
-/* Botão da pergunta */
-.faq-question {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 20px 22px;
-    text-align: left;
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #005c99;
-    cursor: pointer;
+.logo {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    transition: color 0.25s ease;
+    gap: 10px;
+    text-decoration: none; /* remove o sublinhado */
+    color: inherit;        /* mantém a cor original */
 }
 
-/* Ícone + / - */
-.faq-question::after {
-    content: "+";
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #005c99;
-    transition: transform 0.25s ease;
-}
-
-/* Quando ativo, vira "-" */
-.faq-item.active .faq-question::after {
-    content: "–";
-    transform: rotate(180deg);
-}
-
-/* Hover */
-.faq-question:hover {
-    color: #003d66;
-}
-
-/* Resposta */
-.faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 22px;
-    font-size: 1rem;
-    color: #444;
-    line-height: 1.6;
-    text-align: justify;
-    transition: max-height 0.35s ease, padding 0.35s ease;
-}
-
-/* Quando ativo, abre */
-.faq-item.active .faq-answer {
-    padding: 0 22px 20px 22px;
-    max-height: 500px; /* suficiente para qualquer resposta */
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-    .faq-question {
-        font-size: 1.05rem;
-        padding: 18px;
-    }
-
-    .faq-answer {
-        padding: 0 18px;
-    }
-
-    .faq-item.active .faq-answer {
-        padding: 0 18px 18px 18px;
-    }
-}
 /* ============================================================
-   11. REGRAS DA CASA — BELLEVIEW PREMIUM
+   COOKIE — ESTILO PREMIUM BELLEVIEW
    ============================================================ */
 
-/* Secção principal */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 20px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 9999;
+  animation: slideUp 0.4s ease-out;
+  font-family: 'Arial', sans-serif;
+}
+
+.cookie-box {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cookie-text {
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: #333;
+}
+
+.cookie-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cookie-btn {
+  padding: 10px 22px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.cookie-btn.accept {
+  background: #0057b8; /* Azul Belleview */
+  color: white;
+}
+
+.cookie-btn.reject {
+  background: #e0e0e0;
+  color: #333;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ============================================================
+   RODAPÉ — ESTILO PREMIUM BELLEVIEW (com azul #005c99)
+   ============================================================ */
+
+footer {
+    background: #005c99;
+    padding: 40px 20px;
+    margin-top: 40px;
+    color: #fff;
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;   /* ← NECESSÁRIO */
+    text-align: center;    /* ← NECESSÁRIO */
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+.footer-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.footer-content p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #f1f1f1;
+}
+
+.footer-links {
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.footer-links a {
+    color: #f1f1f1;
+    text-decoration: none;
+    margin: 0 6px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.reclamacoes-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.footer-copy {
+    margin-top: 25px;
+    font-size: 13px;
+    color: #e0e0e0;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    padding-top: 15px;
+}
+
+/* ============================================================
+   REGRAS DA CASA — PREMIUM BELLEVIEW (VERSÃO REFINADA)
+   ============================================================ */
+
 .rules-section {
     width: 100%;
-    background: #005c99; /* azul sistema */
-    padding: 40px 30px;
+    padding: 30px 20px; /* igual ao card acima */
+    margin: 40px 0;
+    background: #005c99;
     border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    margin: 50px 0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    border: 1px solid #e6e6e6;
 }
 
-/* Título da secção */
 .rules-section h3 {
     font-size: 2rem;
-    font-weight: 700;
     color: #ffffff;
+    font-weight: 700;
     margin-bottom: 35px;
     text-align: left;
 }
 
-/* Grelha das regras (usa o sistema unificado) */
+/* Grelha uniforme */
 .rules-grid {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
+    gap: 25px;
 }
 
 /* Cada regra como card premium */
 .rule-item {
     background: #ffffff;
     border-radius: 14px;
-    padding: 26px 20px;
+    padding: 25px 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
     border: 1px solid #e6e6e6;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 14px;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Hover premium */
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
 .rule-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.10);
 }
 
 /* Ícone */
 .rule-icon {
-    font-size: 38px;
+    font-size: 34px;
     color: #005c99;
     display: block;
 }
@@ -870,10 +988,9 @@ header nav a:hover {
     font-size: 1rem;
     color: #444;
     line-height: 1.55;
-    max-width: 90%;
+    max-width: 90%;             /* ← mantém o texto mais estreito e elegante */
 }
 
-/* Destaque do título dentro do texto */
 .rule-text strong {
     display: block;
     font-size: 1.15rem;
@@ -882,289 +999,83 @@ header nav a:hover {
 }
 
 /* ============================================================
-   RESPONSIVO — REGRAS DA CASA
+   FAQ´S
    ============================================================ */
 
-@media (max-width: 1024px) {
-    .rules-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 900px) {
-    .rules-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .rules-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .rules-section {
-        padding: 30px 20px;
-    }
-
-    .rules-section h3 {
-        text-align: center;
-        font-size: 1.7rem;
-    }
-}
-/* ============================================================
-   12. MAPA — BELLEVIEW PREMIUM
-   ============================================================ */
-
-/* Container do mapa */
-.map-container {
+.faq-container {
     width: 100%;
-    height: 380px;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid #e6e6e6;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* sombra média */
-    margin: 35px 0;
+    padding: 0 20px; /* igual ao card acima */
+    margin: 40px 0;
 }
 
-/* O iframe do Google Maps */
-.map-container iframe {
+
+.faq-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.faq-question {
     width: 100%;
-    height: 100%;
+    background: none;
     border: none;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-    .map-container {
-        height: 300px;
-        margin: 30px 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .map-container {
-        height: 260px;
-    }
-}
-/* ============================================================
-   13. FOOTER — BELLEVIEW PREMIUM
-   ============================================================ */
-
-footer {
-    width: 100%;
-    background: #003d66; /* azul sistema mais profundo */
-    color: #ffffff;
-    padding: 50px 40px;
-    margin-top: 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 26px;
-    text-align: center;
-    border-top: 4px solid #005c99;
-}
-
-/* Texto principal */
-footer p {
-    font-size: 1rem;
-    line-height: 1.6;
-    max-width: 700px;
-    opacity: 0.95;
-}
-
-/* Links */
-footer a {
-    color: #ffffff;
-    font-weight: 600;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-footer a:hover {
-    opacity: 0.75;
-    transform: translateY(-2px);
-}
-
-/* Linha inferior */
-.footer-bottom {
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-/* Responsivo */
-@media (max-width: 600px) {
-    footer {
-        padding: 40px 20px;
-        gap: 20px;
-    }
-
-    footer p {
-        font-size: 0.95rem;
-    }
-}
-/* ============================================================
-   14. COOKIE BANNER — BELLEVIEW PREMIUM
-   ============================================================ */
-
-.cookie-banner {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(90%, 600px);
-    background: #ffffff;
-    padding: 22px 26px;
-    border-radius: 14px;
-    border: 1px solid #e6e6e6;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12); /* sombra média */
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    z-index: 9999;
-    animation: fadeInUp 0.45s ease forwards;
-}
-
-/* Texto */
-.cookie-banner p {
-    font-size: 1rem;
-    color: #444;
-    line-height: 1.55;
     text-align: left;
-}
-
-/* Botão */
-.cookie-banner button {
-    align-self: flex-end;
-    padding: 10px 20px;
-    background: #005c99;
-    color: #ffffff;
-    border: none;
-    border-radius: 999px;
-    font-size: 0.95rem;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 12px 0;
     cursor: pointer;
-    transition: background 0.25s ease, transform 0.25s ease;
+    color: #005c99;
 }
 
-.cookie-banner button:hover {
-    background: #004d80;
-    transform: translateY(-2px);
+.faq-question:hover {
+    color: #003d66;
 }
 
-/* Animação */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translate(-50%, 20px);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
+.faq-answer {
+    display: none;
+    padding: 0 0 15px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #444;
+    text-align: justify; /* ADICIONAR ESTA LINHA */
 }
 
-/* Responsivo */
-@media (max-width: 480px) {
-    .cookie-banner {
-        padding: 18px 20px;
-        gap: 12px;
-    }
-
-    .cookie-banner p {
-        font-size: 0.95rem;
-        text-align: center;
-    }
-
-    .cookie-banner button {
-        align-self: center;
-        width: 100%;
-        padding: 12px;
-    }
-}
-/* ============================================================
-   15. MEDIA QUERIES FINAIS — BELLEVIEW PREMIUM
-   ============================================================ */
-
-/* Tablets médios */
-@media (max-width: 1024px) {
-
-    /* Ajuste global de títulos */
-    h1 { font-size: 2.4rem; }
-    h2 { font-size: 2rem; }
-    h3 { font-size: 1.6rem; }
-
-    /* Secções com menos padding */
-    .secao {
-        padding: 50px 30px;
-    }
+.faq-item.active .faq-answer {
+    display: block;
 }
 
-/* Tablets pequenos */
-@media (max-width: 900px) {
-
-    /* Ajuste global de parágrafos */
-    p {
-        font-size: 1.05rem;
-    }
-
-    /* Cards full-width com menos margem */
-    .intro-alojamento,
-    .descricao-alojamento {
-        margin-bottom: 35px;
-    }
-
-    /* Ajuste de imagens */
-    img {
-        border-radius: 12px;
-    }
+.faq-container h3 {
+    color: #005c99;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
 }
 
-/* Telemóveis grandes */
-@media (max-width: 768px) {
-
-    /* Títulos mais compactos */
-    h1 { font-size: 2rem; }
-    h2 { font-size: 1.8rem; }
-    h3 { font-size: 1.4rem; }
-
-    /* Secções mais compactas */
-    .secao {
-        padding: 35px 20px;
-        margin: 25px 0;
-    }
-
-    /* Cards pequenos */
-    .cb-item {
-        padding: 18px 16px;
-    }
+.comodidades-booking .cb-item span {
+    display: block;
+    text-align: center;
 }
 
-/* Telemóveis pequenos */
-@media (max-width: 480px) {
+.cb-item.azul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 60px;
+    padding: 12px;
+}
 
-    /* Tipografia global */
-    body {
-        font-size: 0.95rem;
-    }
+h2 {
+    color: #005c99;
+}
 
-    /* Títulos */
-    h1 { font-size: 1.7rem; }
-    h2 { font-size: 1.5rem; }
-    h3 { font-size: 1.25rem; }
+#alojamento,
+#localizacao,
+#comodidades {
+    scroll-margin-top: 100px; /* altura aproximada do header */
+}
 
-    /* Espaçamentos */
-    .secao {
-        padding: 30px 16px;
-    }
-
-    /* Cards */
-    .intro-alojamento,
-    .descricao-alojamento {
-        padding: 22px 16px;
-    }
-
-    /* Botões */
-    button {
-        padding: 10px 14px;
-        font-size: 0.95rem;
-    }
+#localizacao {
+    padding: 50px 40px;
+    margin: 40px 0;
+    scroll-margin-top: 100px;
 }
