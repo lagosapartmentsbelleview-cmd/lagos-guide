@@ -1125,4 +1125,20 @@ h2 {
     color: #005c99;
     font-weight: 700;
 }
+/* Garantir que TODOS os cards azuis têm a mesma altura */
+.cb-item.azul {
+    height: 130px; /* podes ajustar para 120, 140, 150... */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centra verticalmente */
+    align-items: center;     /* centra horizontalmente */
+    text-align: center;
+    padding: 20px 15px;
+    box-sizing: border-box;
+}
+
+/* Ajuste opcional para textos maiores em traduções */
+.cb-item.azul span {
+    line-height: 1.25;
+}
 
