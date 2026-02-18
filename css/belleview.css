@@ -1526,6 +1526,13 @@ h2 {
         font-size: 1rem;
     }
 }
+
+.secao {
+    padding: 50px 0;
+    margin-top: 40px;
+    margin-bottom: 0;
+}
+
 footer {
     margin-bottom: 0 !important;
     padding-bottom: 40px; /* mantém o espaçamento interno */
