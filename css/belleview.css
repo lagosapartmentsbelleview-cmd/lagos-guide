@@ -1229,3 +1229,88 @@ h2 {
     border-radius: 14px;
     box-shadow: 0 4px 18px rgba(0,0,0,0.12);
 }
+/* ============================================================
+   SECÇÃO REGRAS — TÍTULO CONSISTENTE
+   ============================================================ */
+
+#regras h3 {
+    color: #005c99;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 40px 0 20px;
+    text-align: left;
+}
+
+/* ============================================================
+   GRID DE REGRAS — ESTILO PREMIUM
+   ============================================================ */
+
+.rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin: 20px 0 50px;
+    padding: 0 20px;
+}
+
+.rule-item {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px 18px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.rule-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+}
+
+.rule-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.rule-text strong {
+    color: #005c99;
+    font-size: 1.05rem;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.rule-text {
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+/* ============================================================
+   RESPONSIVO — TELEMÓVEL
+   ============================================================ */
+
+@media (max-width: 600px) {
+    #regras h3 {
+        text-align: center;
+        font-size: 1.6rem;
+    }
+
+    .rules-grid {
+        padding: 0 10px;
+        gap: 14px;
+    }
+
+    .rule-item {
+        padding: 18px 14px;
+        flex-direction: row;
+    }
+
+    .rule-icon {
+        font-size: 1.6rem;
+    }
+
+    .rule-text {
+        font-size: 0.9rem;
+    }
+}
