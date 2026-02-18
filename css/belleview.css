@@ -840,6 +840,53 @@ header nav a:hover {
 }
 
 /* ============================================================
+   12.1 LISTAS PREMIUM — COMPOSIÇÃO + DESTAQUES
+   ============================================================ */
+
+.comodidades-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0 40px;
+    padding: 0 20px;
+}
+
+.comodidade-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #ffffff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comodidade-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+}
+
+.comodidade-nome {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #005c99;
+    line-height: 1.4;
+    max-width: 85%;
+}
+
+.comodidade-check {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2ecc71;
+    margin-left: 10px;
+}
+
+
+/* ============================================================
    13. COOKIE — ESTILO PREMIUM BELLEVIEW
    ============================================================ */
 
