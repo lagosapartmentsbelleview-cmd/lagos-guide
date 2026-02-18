@@ -1177,3 +1177,52 @@ h2 {
     width: 100%;
     box-sizing: border-box;
 }
+
+/* Galerias (escolha da galeria A B ou C)
+/* Galeria tipo A — 1 grande + 2 pequenas */
+.galeria-a {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.galeria-a img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
+
+/* Galeria tipo B — 3 iguais */
+.galeria-b {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.galeria-b img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
+
+/* Galeria tipo C — 2 grandes */
+.galeria-c {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.galeria-c img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
