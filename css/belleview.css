@@ -1471,3 +1471,59 @@ h2 {
         font-size: 0.95rem;
     }
 }
+/* ============================================================
+   COMODIDADES — LISTA PREMIUM (ESTILO BOOKING)
+   ============================================================ */
+
+.comodidades-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0 40px;
+    padding: 0 20px;
+}
+
+.comodidade-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    border: 1px solid #e6e6e6;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comodidade-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+}
+
+.comodidade-nome {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #005c99;
+    max-width: 75%;
+}
+
+.comodidade-check {
+    font-size: 1.2rem;
+    color: #2ecc71;
+    font-weight: 700;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .comodidade-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 16px 16px;
+    }
+
+    .comodidade-check {
+        font-size: 1rem;
+    }
+}
+
