@@ -1382,3 +1382,92 @@ h2 {
         font-size: 0.9rem;
     }
 }
+
+/* ============================================================
+   O QUE HÁ POR PERTO — LISTA PREMIUM (OPÇÃO 1)
+   ============================================================ */
+
+.perto-section h3 {
+    color: #005c99;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    padding: 0 20px;
+}
+
+/* Títulos das categorias */
+.subtitulo-categoria {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #005c99;
+    margin: 30px 0 12px;
+    padding: 0 20px;
+}
+
+/* Lista vertical premium */
+.proximidades-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0 40px;
+    padding: 0 20px;
+}
+
+/* Cada linha (item) */
+.perto-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    border: 1px solid #e6e6e6;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.perto-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+}
+
+/* Nome do local */
+.perto-nome {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #005c99;
+    max-width: 75%;
+    line-height: 1.4;
+}
+
+/* Distância */
+.perto-dist {
+    font-size: 0.95rem;
+    color: #333;
+    opacity: 0.85;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ============================================================
+   RESPONSIVO — TELEMÓVEL
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .perto-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 16px 16px;
+    }
+
+    .perto-dist {
+        opacity: 0.9;
+        font-size: 0.9rem;
+    }
+
+    .perto-nome {
+        font-size: 0.95rem;
+    }
+}
