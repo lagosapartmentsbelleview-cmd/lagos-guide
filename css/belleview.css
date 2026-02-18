@@ -1002,56 +1002,110 @@ footer {
 }
 
 /* ============================================================
-   FAQ´S
+   FAQ — ESTILO PREMIUM BELLEVIEW
    ============================================================ */
 
 .faq-container {
-    width: 100%;
-    padding: 0 20px; /* igual ao card acima */
-    margin: 40px 0;
-}
-
-
-.faq-item {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-}
-
-.faq-question {
-    width: 100%;
-    background: none;
-    border: none;
-    text-align: left;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 12px 0;
-    cursor: pointer;
-    color: #005c99;
-}
-
-.faq-question:hover {
-    color: #003d66;
-}
-
-.faq-answer {
-    display: none;
-    padding: 0 0 15px 0;
-    font-size: 15px;
-    line-height: 1.6;
-    color: #444;
-    text-align: justify; /* ADICIONAR ESTA LINHA */
-}
-
-.faq-item.active .faq-answer {
-    display: block;
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 20px;
 }
 
 .faq-container h3 {
     color: #005c99;
+    font-size: 1.9rem;
     font-weight: 700;
-    margin-bottom: 20px;
-    letter-spacing: 0.5px;
+    margin-bottom: 25px;
 }
+
+/* Cada item */
+.faq-item {
+    background: #ffffff;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: box-shadow 0.25s ease;
+}
+
+.faq-item:hover {
+    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+}
+
+/* Botão da pergunta */
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 18px 20px;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    color: #005c99;
+}
+
+/* Símbolo + / – */
+.faq-question::after {
+    content: "+";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #005c99;
+    transition: transform 0.25s ease;
+}
+
+/* Quando aberto → vira um “–” */
+.faq-item.active .faq-question::after {
+    content: "–";
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Resposta escondida */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    transition: max-height 0.35s ease;
+}
+
+/* Resposta aberta */
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    padding-bottom: 18px;
+}
+
+.faq-answer p {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: #333;
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+    .faq-container h3 {
+        text-align: center;
+        font-size: 1.6rem;
+    }
+
+    .faq-question {
+        font-size: 1rem;
+        padding: 16px;
+    }
+
+    .faq-question::after {
+        right: 16px;
+    }
+
+    .faq-answer p {
+        font-size: 0.95rem;
+    }
+}
+
 
 .comodidades-booking .cb-item span {
     display: block;
