@@ -870,6 +870,9 @@ footer {
     justify-content: center;
     align-items: center;   /* ← NECESSÁRIO */
     text-align: center;    /* ← NECESSÁRIO */
+
+    border-top-left-radius: 26px;
+    border-top-right-radius: 26px;
 }
 
 .footer-content {
