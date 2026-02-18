@@ -1002,13 +1002,14 @@ footer {
 }
 
 /* ============================================================
-   FAQ — ESTILO PREMIUM BELLEVIEW
+   FAQ — ESTILO PREMIUM BELLEVIEW (FULL WIDTH)
    ============================================================ */
 
 .faq-container {
+    width: 100%;
     max-width: 1100px;
     margin: 60px auto;
-    padding: 0 20px;
+    padding: 0; /* FULL WIDTH como os outros cards */
 }
 
 .faq-container h3 {
@@ -1016,16 +1017,18 @@ footer {
     font-size: 1.9rem;
     font-weight: 700;
     margin-bottom: 25px;
+    padding: 0 20px; /* mantém alinhamento com o resto do site */
 }
 
 /* Cada item */
 .faq-item {
     background: #ffffff;
     border-radius: 14px;
-    margin-bottom: 14px;
+    margin-bottom: 18px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     overflow: hidden;
     transition: box-shadow 0.25s ease;
+    width: 100%;
 }
 
 .faq-item:hover {
@@ -1037,9 +1040,9 @@ footer {
     width: 100%;
     background: none;
     border: none;
-    padding: 18px 20px;
+    padding: 20px 24px;
     text-align: left;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 600;
     cursor: pointer;
     position: relative;
@@ -1050,10 +1053,10 @@ footer {
 .faq-question::after {
     content: "+";
     position: absolute;
-    right: 20px;
+    right: 24px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #005c99;
     transition: transform 0.25s ease;
@@ -1069,40 +1072,51 @@ footer {
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    padding: 0 20px;
+    padding: 0 24px;
     transition: max-height 0.35s ease;
 }
 
 /* Resposta aberta */
 .faq-item.active .faq-answer {
-    max-height: 500px;
-    padding-bottom: 18px;
+    max-height: 600px;
+    padding-bottom: 20px;
 }
 
 .faq-answer p {
     font-size: 1rem;
     line-height: 1.55;
     color: #333;
+    text-align: justify; /* JUSTIFICAÇÃO DO TEXTO */
 }
 
-/* RESPONSIVO */
+/* ============================================================
+   RESPONSIVO — TELEMÓVEL
+   ============================================================ */
+
 @media (max-width: 600px) {
+
     .faq-container h3 {
         text-align: center;
         font-size: 1.6rem;
+        padding: 0 14px;
     }
 
     .faq-question {
         font-size: 1rem;
-        padding: 16px;
+        padding: 16px 18px;
     }
 
     .faq-question::after {
-        right: 16px;
+        right: 18px;
+    }
+
+    .faq-answer {
+        padding: 0 18px;
     }
 
     .faq-answer p {
         font-size: 0.95rem;
+        text-align: justify;
     }
 }
 
