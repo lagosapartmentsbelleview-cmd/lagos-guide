@@ -853,14 +853,18 @@ header nav a:hover {
 
 .comodidade-item {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* agora é vertical */
+    justify-content: center;
+    align-items: center; /* centra tudo */
 
     background: #ffffff;
-    padding: 14px 18px;
+    padding: 18px 20px;
     border-radius: 12px;
     border: 1px solid #e6e6e6;
     box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+
+    text-align: center; /* centra o texto */
+    gap: 6px; /* espaço entre texto e check */
 
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -875,15 +879,15 @@ header nav a:hover {
     font-weight: 600;
     color: #005c99;
     line-height: 1.4;
-    max-width: 85%;
+    width: 100%; /* garante alinhamento perfeito */
 }
 
 .comodidade-check {
     font-size: 1.3rem;
     font-weight: 700;
     color: #2ecc71;
-    margin-left: 10px;
 }
+
 
 
 /* ============================================================
