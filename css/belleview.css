@@ -92,6 +92,17 @@ body {
     padding-top: 70px;
 }
 
+@media (max-width: 768px) {
+    header {
+        height: 60px;
+        padding: 0 20px;
+    }
+
+    body {
+        padding-top: 60px;
+    }
+}
+
 
 .logo {
     display: flex;
