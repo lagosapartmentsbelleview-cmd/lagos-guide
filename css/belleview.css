@@ -1315,45 +1315,54 @@ footer,
     hyphens: auto;
 }
 /* ============================================================
-   REGRAS DA CASA — ÍCONE EM CIMA + TEXTO JUSTIFICADO
+   REGRAS DA CASA — LAYOUT VERTICAL PREMIUM (FORÇADO)
    ============================================================ */
 
+/* Remove padding lateral da grelha */
+.rules-grid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Card vertical com ícone centrado */
 .rule-item {
-    background: #ffffff;
-    border-radius: 14px;
-    padding: 24px 22px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
-    display: flex;
-    flex-direction: column; /* ÍCONE EM CIMA, TEXTO EM BAIXO */
-    align-items: center;    /* CENTRA O ÍCONE */
-    text-align: center;     /* CENTRA O TÍTULO */
-    gap: 14px;
+    display: flex !important;
+    flex-direction: column !important; /* ÍCONE EM CIMA */
+    align-items: center !important;    /* CENTRA O ÍCONE */
+    justify-content: flex-start !important;
+    text-align: center !important;
+    gap: 14px !important;
+
+    background: #ffffff !important;
+    border-radius: 14px !important;
+    padding: 26px 22px !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10) !important;
 }
 
 /* Ícone centrado e consistente */
 .rule-icon {
-    font-size: 2.2rem;
-    line-height: 1;
-    display: block;
-    margin-bottom: 6px;
+    font-size: 2.3rem !important;
+    line-height: 1 !important;
+    margin-bottom: 6px !important;
+    display: block !important;
 }
 
 /* Texto justificado */
 .rule-text {
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: auto;
-    font-size: 1rem;
-    line-height: 1.55;
-    color: #333;
-    width: 100%; /* garante alinhamento perfeito */
+    width: 100% !important;
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+    line-height: 1.55 !important;
+    font-size: 1rem !important;
+    color: #333 !important;
 }
 
 /* Título dentro do card */
 .rule-text strong {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 1.15rem;
-    color: #005c99;
-    text-align: center; /* título centrado */
+    display: block !important;
+    margin-bottom: 6px !important;
+    font-size: 1.15rem !important;
+    color: #005c99 !important;
+    text-align: center !important;
 }
