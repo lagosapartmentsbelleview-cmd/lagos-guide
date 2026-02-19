@@ -1366,3 +1366,137 @@ footer,
     color: #005c99 !important;
     text-align: center !important;
 }
+
+/* ============================================================
+   PATCH PREMIUM BELLEVIEW — MELHORIAS FORTES SEM REESCREVER
+   ============================================================ */
+
+/* 1) SOMBRA E RADIUS UNIFICADOS PARA TODOS OS CARDS */
+.card,
+.cb-item,
+.perto-item,
+.rule-item,
+.faq-item,
+.intro-alojamento,
+.descricao-alojamento,
+.comodidade-item {
+    border-radius: 14px !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10) !important;
+    border: 1px solid #e6e6e6 !important;
+}
+
+/* 2) TIPOGRAFIA MAIS EQUILIBRADA NOS TÍTULOS */
+h2 {
+    font-weight: 600 !important;
+    letter-spacing: -0.3px;
+}
+
+h3 {
+    font-weight: 600 !important;
+}
+
+/* 3) GRELHAS MAIS PROFISSIONAIS (2–3 COLUNAS ONDE FAZ SENTIDO) */
+
+/* Comodidades — 3 colunas desktop */
+@media (min-width: 900px) {
+    .comodidades-booking {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 26px !important;
+    }
+}
+
+/* O que há por perto — 2 colunas desktop */
+@media (min-width: 900px) {
+    .proximidades-lista {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 18px !important;
+    }
+}
+
+/* Regras — 2 colunas desktop */
+@media (min-width: 900px) {
+    .rules-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+}
+
+/* FAQ — largura mais elegante */
+.faq-container {
+    max-width: 900px !important;
+}
+
+/* 4) ESPAÇAMENTO MAIS PREMIUM ENTRE SECÇÕES */
+.secao {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+}
+
+/* 5) CARDS MAIS RESPIRADOS */
+.card,
+.cb-item,
+.perto-item,
+.rule-item,
+.faq-item {
+    padding: 22px 20px !important;
+}
+
+/* 6) TEXTO MAIS PREMIUM E LEGÍVEL */
+p {
+    line-height: 1.6 !important;
+    font-size: 1.05rem !important;
+}
+
+/* 7) IMAGENS COM SOMBRA E RADIUS CONSISTENTES */
+img {
+    border-radius: 14px !important;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.10) !important;
+}
+
+/* 8) HERO MAIS LIMPO NO MOBILE */
+@media (max-width: 768px) {
+    .hero {
+        padding: 40px 20px !important;
+        gap: 20px !important;
+    }
+}
+
+/* 9) CARDS FULL-WIDTH NO MOBILE (SEM ESMAGAR) */
+@media (max-width: 768px) {
+    .card,
+    .cb-item,
+    .perto-item,
+    .rule-item,
+    .faq-item,
+    .intro-alojamento,
+    .descricao-alojamento {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+
+/* 10) AJUSTE PREMIUM NOS TÍTULOS DE SECÇÃO */
+.secao h2 {
+    margin-bottom: 20px !important;
+    font-size: 2rem !important;
+}
+
+/* 11) LISTAS MAIS ELEGANTES */
+ul li {
+    line-height: 1.55 !important;
+    margin-bottom: 6px !important;
+}
+
+/* 12) BOTÕES MAIS PREMIUM */
+button,
+.btn {
+    transition: 0.25s ease !important;
+}
+
+button:hover,
+.btn:hover {
+    transform: translateY(-2px) !important;
+    opacity: 0.9;
+}
