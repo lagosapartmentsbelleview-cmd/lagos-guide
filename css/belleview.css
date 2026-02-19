@@ -1500,3 +1500,50 @@ button:hover,
     transform: translateY(-2px) !important;
     opacity: 0.9;
 }
+
+/* ============================================================
+   PATCH — PRINCIPAIS COMODIDADES EM 2–3 COLUNAS PREMIUM
+   ============================================================ */
+
+/* Mobile mantém 1 coluna (já está bom) */
+
+/* Tablet: 2 colunas */
+@media (min-width: 600px) {
+    .comodidades-lista {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 18px !important;
+        padding: 0 !important;
+    }
+}
+
+/* Desktop: 3 colunas */
+@media (min-width: 900px) {
+    .comodidades-lista {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 22px !important;
+    }
+}
+
+/* Ajuste visual dos cards */
+.comodidade-item {
+    padding: 20px 18px !important;
+    border-radius: 14px !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10) !important;
+    border: 1px solid #e6e6e6 !important;
+    text-align: center !important;
+}
+
+/* Nome da comodidade mais premium */
+.comodidade-nome {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #005c99 !important;
+}
+
+/* Check verde mais elegante */
+.comodidade-check {
+    font-size: 1.3rem !important;
+    color: #2ecc71 !important;
+    font-weight: 700 !important;
+}
