@@ -1200,3 +1200,28 @@ html, body {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
+/* CORREÇÃO GLOBAL DE FULL-WIDTH — BELLEVIEW */
+
+.comodidades-lista,
+.proximidades-lista,
+.rules-grid,
+.subtitulo-categoria,
+.perto-section h3,
+.faq-container h3 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.faq-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+}
+
+footer,
+.footer-content {
+    width: 100% !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
