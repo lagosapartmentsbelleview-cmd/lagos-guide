@@ -1188,3 +1188,15 @@ html, body {
     overflow-x: hidden;
     overflow-y: visible;
 }
+
+/* CORREÇÃO DE FULL-WIDTH PARA SECÇÕES QUE ESTAVAM A ENCOLHER O LAYOUT */
+
+.comodidades-lista,
+.proximidades-lista,
+.rules-grid,
+.faq-container h3,
+.subtitulo-categoria,
+.perto-section h3 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
