@@ -1065,6 +1065,103 @@ it: `
 };
 
 // -----------------------------------------
+// --- ATMS (Caixas Multibanco e Bancos) ---
+// -----------------------------------------
+
+const atms = {
+pt: `
+<div class="category-card">
+<h3>Caixa Multibanco – Avenida dos Descobrimentos</h3>
+<p>Multibanco disponível 24h.</p>
+<p><strong>Distância:</strong> 700 m</p>
+<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Banco Santander</h3>
+<p>Serviços bancários completos.</p>
+<p><strong>Distância:</strong> 1,1 km</p>
+<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 Ver no mapa</a></p>
+</div>
+`,
+en: `
+<div class="category-card">
+<h3>ATM – Avenida dos Descobrimentos</h3>
+<p>24h cash machine.</p>
+<p><strong>Distance:</strong> 700 m</p>
+<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 View on map</a></p>
+</div>
+
+<div class="category-card">
+<h3>Santander Bank</h3>
+<p>Full banking services.</p>
+<p><strong>Distance:</strong> 1.1 km</p>
+<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 View on map</a></p>
+</div>
+`,
+es: `
+<div class="category-card">
+<h3>Cajero – Avenida dos Descobrimentos</h3>
+<p>Cajero automático 24h.</p>
+<p><strong>Distancia:</strong> 700 m</p>
+<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Banco Santander</h3>
+<p>Servicios bancarios completos.</p>
+<p><strong>Distancia:</strong> 1,1 km</p>
+<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 Ver en el mapa</a></p>
+</div>
+`,
+fr: `
+<div class="category-card">
+<h3>Distributeur – Avenida dos Descobrimentos</h3>
+<p>Distributeur automatique 24h.</p>
+<p><strong>Distance :</strong> 700 m</p>
+<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card">
+<h3>Banque Santander</h3>
+<p>Services bancaires complets.</p>
+<p><strong>Distance :</strong> 1,1 km</p>
+<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 Voir sur la carte</a></p>
+</div>
+`,
+it: `
+<div class="category-card">
+<h3>Bancomat – Avenida dos Descobrimentos</h3>
+<p>Sportello automatico 24h.</p>
+<p><strong>Distanza:</strong> 700 m</p>
+<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Banca Santander</h3>
+<p>Servizi bancari completi.</p>
+<p><strong>Distanza:</strong> 1,1 km</p>
+<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+`,
+de: `
+<div class="category-card">
+<h3>Geldautomat – Avenida dos Descobrimentos</h3>
+<p>24h Geldautomat.</p>
+<p><strong>Entfernung:</strong> 700 m</p>
+<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 Karte anzeigen</a></p>
+</div>
+
+<div class="category-card">
+<h3>Santander Bank</h3>
+<p>Vollständige Bankdienstleistungen.</p>
+<p><strong>Entfernung:</strong> 1,1 km</p>
+<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 Karte anzeigen</a></p>
+</div>
+`
+};
+
+// -----------------------------------------
 // --- TRAILS (Trilhos e Caminhadas) ---
 // -----------------------------------------
 
