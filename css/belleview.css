@@ -1264,3 +1264,47 @@ footer,
         max-width: none !important;
     }
 }
+/* ============================================================
+   CORREÇÃO MOBILE — REMOVER O PADDING QUE ESMAGA O LAYOUT
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    /* Remove o padding lateral global que estava a encolher tudo */
+    .secao {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Remove padding lateral das secções específicas */
+    #alojamento,
+    .perto-section,
+    .faq-container,
+    .rules-grid,
+    .comodidades-lista,
+    .proximidades-lista {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Cards full width */
+    .comodidade-item,
+    .perto-item,
+    .rule-item,
+    .faq-item,
+    .intro-alojamento,
+    .descricao-alojamento {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Footer full width real */
+    footer,
+    .footer-content {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+}
