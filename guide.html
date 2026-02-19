@@ -1,66 +1,21 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Belleview Apartments – Guia</title>
+<a href="#topo" class="logo">
+    <svg width="40" height="40" viewBox="0 0 100 100" class="belleview-logo">
 
-  <!-- Fonte usada no site (ajusta se necessário) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <!-- Círculo azul sistema -->
+        <circle cx="50" cy="50" r="46" 
+                fill="#005c99" 
+                stroke="#005c99" 
+                stroke-width="6"/>
 
-  <!-- CSS do guia -->
-  <link rel="stylesheet" href="css/guide.css">
-</head>
+        <!-- Letra B azul sistema -->
+        <text x="50" y="67"
+              text-anchor="middle"
+              font-family="Poppins, sans-serif"
+              font-size="42"
+              font-weight="700"
+              fill="#ffffff">
+            B
+        </text>
+    </svg>
 
-<body>
-
-  <!-- HEADER -->
-  <header class="guide-header">
-    <img src="images/logo-belleview.png" alt="Belleview Logo" class="guide-logo">
-    <h1 id="title">Guia Belleview Apartments</h1>
-  </header>
-
-  <!-- ESCOLHA DE IDIOMA -->
-  <section id="languageMenu" class="language-section">
-    <h2 id="choose">Escolha o idioma</h2>
-    <div class="language-buttons">
-      <button onclick="setLanguage('pt')">🇵🇹 Português</button>
-      <button onclick="setLanguage('en')">🇬🇧 English</button>
-      <button onclick="setLanguage('es')">🇪🇸 Español</button>
-      <button onclick="setLanguage('fr')">🇫🇷 Français</button>
-      <button onclick="setLanguage('it')">🇮🇹 Italiano</button>
-      <button onclick="setLanguage('de')">🇩🇪 Deutsch</button>
-    </div>
-  </section>
-
-  <!-- LISTA DE CATEGORIAS -->
-  <section id="categories" class="hidden">
-    <h2 id="categoriesTitle"></h2>
-    <ul id="categoriesList"></ul>
-
-    <div class="top-buttons">
-      <button id="catBackTop"></button>
-      <button id="catPrintTop"></button>
-      <button id="catShareTop" onclick="shareGuide()"></button>
-    </div>
-  </section>
-
-  <!-- CONTEÚDO DA CATEGORIA -->
-  <section id="categoryContent" class="hidden">
-    <h2 id="categoryTitle"></h2>
-
-    <div id="categoryText" class="category-text"></div>
-
-    <div class="top-buttons">
-      <button id="catBackTopContent" onclick="showCategories()"></button>
-      <button id="catPrintContent" onclick="window.print()"></button>
-      <button id="catShareContent" onclick="shareGuide()"></button>
-    </div>
-
-    <button id="catBackBottomContent" class="back-bottom" onclick="showCategories()"></button>
-  </section>
-
-  <!-- JS -->
-  <script src="js/guide.js"></script>
-</body>
-</html>
+    <span>Apartments Belleview Lagos</span>
