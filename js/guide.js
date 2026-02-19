@@ -280,144 +280,313 @@ const emergency = {
 `
 };
 
-// -----------------------------------------
-// --- BEACHES (Praias) ---
-// -----------------------------------------
-
-const beaches = {
 pt: `
-<div class="category-card">
-<h3>Praia Dona Ana</h3>
-<p>Uma das praias mais bonitas do Algarve, com falésias impressionantes e águas cristalinas.</p>
-<p><strong>Distância:</strong> 1,5 km</p>
-<p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos">📍 Ver no mapa</a></p>
-</div>
+<h3>Praias de Lagos (10 praias)</h3>
 
-<div class="category-card">
-<h3>Praia do Camilo</h3>
-<p>Famosa pela sua escadaria e vistas deslumbrantes. Ideal para fotos e mergulho.</p>
-<p><strong>Distância:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>Meia Praia</h3><p>Extensa, ampla e com areal enorme. Excelente para caminhadas longas, desportos náuticos e famílias.</p><p>Distância: 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
 
-<div class="category-card">
-<h3>Meia Praia</h3>
-<p>A maior praia de Lagos, perfeita para caminhadas longas e desportos aquáticos.</p>
-<p><strong>Distância:</strong> 2,0 km</p>
-<p><a href="https://maps.google.com/?q=Meia+Praia+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>Praia da Batata</h3><p>Pequena praia urbana, muito próxima do centro de Lagos. Abrigada e com águas calmas.</p><p>Distância: 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Famosa pelo arco romano entre rochas. Pequena e muito fotogénica.</p><p>Distância: 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Praia pequena e tranquila, rodeada por falésias altas. Ideal para relaxar.</p><p>Distância: 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinhão+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia Dona Ana</h3><p>Uma das praias mais bonitas do Algarve, falésias douradas e águas calmas.</p><p>Distância: 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Camilo</h3><p>Acesso por escadaria icónica. Belíssima água azul-turquesa e formações rochosas.</p><p>Distância: 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Selvagem e menos frequentada. Ideal para quem procura sossego junto às falésias da Ponta da Piedade.</p><p>Distância: 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Canavial</h3><p>Uma praia escondida entre falésias altas, muito tranquila e com ambiente natural.</p><p>Distância: 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Grande areal, ótima para dias de praia com serviços e restaurantes. Muito procurada para surf.</p><p>Distância: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Luz</h3><p>Praia ampla, familiar e com uma vila turística acolhedora. Águas calmas e boa infraestrutura.</p><p>Distância: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Ver no mapa</a></p></div>
+
+<h3>Praias de Portimão (6 praias)</h3>
+
+<div class="category-card"><h3>Praia de Alvor</h3><p>Areal extenso e dunas naturais. Muito procurada para passeios e desportos náuticos.</p><p>Distância: 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Vau</h3><p>Falésias bonitas e mar calmo. Muito popular entre famílias.</p><p>Distância: 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Pequenas enseadas entre rochas, águas claras e ótimas vistas.</p><p>Distância: 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Paisagem incrível com enormes formações rochosas. Ótima para fotografias.</p><p>Distância: 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Rocha</h3><p>Das praias mais famosas de Portugal. Grande areal e muita oferta turística.</p><p>Distância: 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Praia pequena junto a falésia, ambiente sofisticado e restaurante icónico.</p><p>Distância: 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 Ver no mapa</a></p></div>
+
+<h3>Praias de Vila do Bispo (6 praias)</h3>
+
+<div class="category-card"><h3>Praia do Burgau</h3><p>Pequena enseada pitoresca com vila de pescadores. Ótima para famílias.</p><p>Distância: 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Salema</h3><p>Vila tranquila e muito charmosa, praia familiar e com falésias bonitas.</p><p>Distância: 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Figueira</h3><p>Acesso mais selvagem e areal protegido entre falésias. Muito sossegada.</p><p>Distância: 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia das Furnas</h3><p>Praia isolada, perfeita para quem quer tranquilidade total.</p><p>Distância: 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Zavial</h3><p>Muito apreciada por surfistas, águas limpas e falésias altas.</p><p>Distância: 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Baía calma e semicircular, ótima para snorkeling e famílias.</p><p>Distância: 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Ver no mapa</a></p></div>
 `,
 en: `
-<div class="category-card">
-<h3>Dona Ana Beach</h3>
-<p>One of the most beautiful beaches in the Algarve, with stunning cliffs and crystal-clear waters.</p>
-<p><strong>Distance:</strong> 1.5 km</p>
-<p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos">📍 View on map</a></p>
-</div>
+<h3>Beaches of Lagos (10 beaches)</h3>
 
-<div class="category-card">
-<h3>Camilo Beach</h3>
-<p>Famous for its wooden staircase and breathtaking views. Perfect for photos and swimming.</p>
-<p><strong>Distance:</strong> 1.8 km</p>
-<p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos">📍 View on map</a></p>
-</div>
+<div class="category-card"><h3>Meia Praia</h3><p>Long, wide beach with vast sand. Great for long walks, water sports, and families.</p><p>Distance: 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 View on map</a></p></div>
 
-<div class="category-card">
-<h3>Meia Praia</h3>
-<p>The largest beach in Lagos, ideal for long walks and water sports.</p>
-<p><strong>Distance:</strong> 2.0 km</p>
-<p><a href="https://maps.google.com/?q=Meia+Praia+Lagos">📍 View on map</a></p>
-</div>
+<div class="category-card"><h3>Praia da Batata</h3><p>Small urban beach near Lagos center. Sheltered with calm waters.</p><p>Distance: 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Famous for the Roman arch between rocks. Small and very photogenic.</p><p>Distance: 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Small, peaceful beach surrounded by high cliffs. Ideal to relax.</p><p>Distance: 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinh%C3%A3o+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia Dona Ana</h3><p>One of Algarve’s most beautiful beaches, golden cliffs and calm waters.</p><p>Distance: 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia do Camilo</h3><p>Iconic stairway access. Gorgeous turquoise waters and rock formations.</p><p>Distance: 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Wild and less crowded. Perfect for tranquility near Ponta da Piedade cliffs.</p><p>Distance: 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia do Canavial</h3><p>Hidden between tall cliffs, very peaceful and natural.</p><p>Distance: 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Large sandy beach, great for full beach days with services and restaurants. Popular for surfing.</p><p>Distance: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia da Luz</h3><p>Wide family beach with a welcoming tourist village. Calm waters and good infrastructure.</p><p>Distance: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 View on map</a></p></div>
+
+<h3>Beaches of Portimão (6 beaches)</h3>
+
+<div class="category-card"><h3>Praia de Alvor</h3><p>Extensive sand and natural dunes. Popular for walks and water sports.</p><p>Distance: 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia do Vau</h3><p>Beautiful cliffs and calm sea. Very popular among families.</p><p>Distance: 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Small coves among rocks, clear waters and great views.</p><p>Distance: 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Incredible scenery with huge rock formations. Great for photos.</p><p>Distance: 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia da Rocha</h3><p>One of the most famous beaches in Portugal. Large sand and lots of tourist offer.</p><p>Distance: 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Small beach by a cliff, sophisticated vibe and iconic restaurant.</p><p>Distance: 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 View on map</a></p></div>
+
+<h3>Beaches of Vila do Bispo (6 beaches)</h3>
+
+<div class="category-card"><h3>Praia do Burgau</h3><p>Picturesque small cove with a fishing village. Great for families.</p><p>Distance: 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia da Salema</h3><p>Quiet and charming village, family beach with beautiful cliffs.</p><p>Distance: 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia da Figueira</h3><p>Wilder access and protected sand among cliffs. Very peaceful.</p><p>Distance: 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia das Furnas</h3><p>Isolated beach, perfect for total tranquility.</p><p>Distance: 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia do Zavial</h3><p>Highly appreciated by surfers, clean waters and high cliffs.</p><p>Distance: 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Calm semicircular bay, great for snorkeling and families.</p><p>Distance: 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 View on map</a></p></div>
 `,
 es: `
-<div class="category-card">
-<h3>Praia Dona Ana</h3>
-<p>Una de las playas más hermosas del Algarve, con acantilados impresionantes y aguas cristalinas.</p>
-<p><strong>Distancia:</strong> 1,5 km</p>
-<p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos">📍 Ver en el mapa</a></p>
-</div>
+<h3>Playas de Lagos (10 playas)</h3>
 
-<div class="category-card">
-<h3>Praia do Camilo</h3>
-<p>Famosa por su escalera de madera y vistas espectaculares. Ideal para fotos y baño.</p>
-<p><strong>Distancia:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos">📍 Ver en el mapa</a></p>
-</div>
+<div class="category-card"><h3>Meia Praia</h3><p>Extensa y amplia, con gran arenal. Excelente para paseos largos, deportes acuáticos y familias.</p><p>Distancia: 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
 
-<div class="category-card">
-<h3>Meia Praia</h3>
-<p>La playa más grande de Lagos, perfecta para largas caminatas y deportes acuáticos.</p>
-<p><strong>Distancia:</strong> 2,0 km</p>
-<p><a href="https://maps.google.com/?q=Meia+Praia+Lagos">📍 Ver en el mapa</a></p>
-</div>
+<div class="category-card"><h3>Praia da Batata</h3><p>Pequeña playa urbana, muy cerca del centro de Lagos. Resguardada y con aguas tranquilas.</p><p>Distancia: 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Famosa por el arco romano entre rocas. Pequeña y muy fotogénica.</p><p>Distancia: 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Playa pequeña y tranquila, rodeada de altos acantilados. Ideal para relajarse.</p><p>Distancia: 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinh%C3%A3o+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia Dona Ana</h3><p>Una de las playas más bonitas del Algarve, acantilados dorados y aguas tranquilas.</p><p>Distancia: 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Camilo</h3><p>Acceso por escalinata icónica. Aguas turquesas bellísimas y formaciones rocosas.</p><p>Distancia: 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Salvaje y menos frecuentada. Ideal para quien busca tranquilidad junto a los acantilados de Ponta da Piedade.</p><p>Distancia: 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Canavial</h3><p>Playa escondida entre altos acantilados, muy tranquila y natural.</p><p>Distancia: 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Gran arenal, ideal para día de playa con servicios y restaurantes. Muy buscada para surf.</p><p>Distancia: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Luz</h3><p>Playa amplia y familiar con una acogedora villa turística. Aguas tranquilas y buena infraestructura.</p><p>Distancia: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<h3>Playas de Portimão (6 playas)</h3>
+
+<div class="category-card"><h3>Praia de Alvor</h3><p>Arenal extenso y dunas naturales. Muy buscada para paseos y deportes acuáticos.</p><p>Distancia: 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Vau</h3><p>Bonitos acantilados y mar tranquilo. Muy popular entre familias.</p><p>Distancia: 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Pequeñas calas entre rocas, aguas claras y grandes vistas.</p><p>Distancia: 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Paisaje increíble con grandes formaciones rocosas. Ideal para fotos.</p><p>Distancia: 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Rocha</h3><p>De las playas más famosas de Portugal. Gran arenal y mucha oferta turística.</p><p>Distancia: 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Playa pequeña junto a un acantilado, ambiente sofisticado y restaurante icónico.</p><p>Distancia: 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<h3>Playas de Vila do Bispo (6 playas)</h3>
+
+<div class="category-card"><h3>Praia do Burgau</h3><p>Pequeña cala pintoresca con villa pesquera. Ideal para familias.</p><p>Distancia: 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Salema</h3><p>Villa tranquila y encantadora, playa familiar y acantilados bonitos.</p><p>Distancia: 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Figueira</h3><p>Acceso más salvaje y arenal protegido entre acantilados. Muy tranquila.</p><p>Distancia: 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia das Furnas</h3><p>Playa aislada, perfecta para tranquilidad total.</p><p>Distancia: 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia do Zavial</h3><p>Muy apreciada por surfistas, aguas limpias y altos acantilados.</p><p>Distancia: 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Bahía semicircular y calma, ideal para snorkel y familias.</p><p>Distancia: 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Ver en el mapa</a></p></div>
 `,
 fr: `
-<div class="category-card">
-<h3>Praia Dona Ana</h3>
-<p>L’une des plus belles plages de l’Algarve, avec des falaises impressionnantes et des eaux cristallines.</p>
-<p><strong>Distance :</strong> 1,5 km</p>
-<p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<h3>Plages de Lagos (10 plages)</h3>
 
-<div class="category-card">
-<h3>Praia do Camilo</h3>
-<p>Célèbre pour son escalier en bois et ses vues spectaculaires. Parfaite pour les photos et la baignade.</p>
-<p><strong>Distance :</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<div class="category-card"><h3>Meia Praia</h3><p>Plage longue et large, grand sable. Excellent pour les longues promenades, les sports nautiques et les familles.</p><p>Distance : 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
 
-<div class="category-card">
-<h3>Meia Praia</h3>
-<p>La plus grande plage de Lagos, idéale pour les longues promenades et les sports nautiques.</p>
-<p><strong>Distance :</strong> 2,0 km</p>
-<p><a href="https://maps.google.com/?q=Meia+Praia+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<div class="category-card"><h3>Praia da Batata</h3><p>Petite plage urbaine, très proche du centre de Lagos. Abritée, eaux calmes.</p><p>Distance : 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Célèbre pour l’arc romain entre les rochers. Petite et très photogénique.</p><p>Distance : 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Petite plage paisible entourée de hautes falaises. Idéale pour se détendre.</p><p>Distance : 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinh%C3%A3o+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia Dona Ana</h3><p>Une des plus belles plages de l’Algarve, falaises dorées et eaux calmes.</p><p>Distance : 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia do Camilo</h3><p>Accès par escalier iconique. Magnifiques eaux turquoise et formations rocheuses.</p><p>Distance : 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Sauvage et moins fréquentée. Parfaite pour la tranquillité près des falaises de Ponta da Piedade.</p><p>Distance : 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia do Canavial</h3><p>Cachée entre hautes falaises, très paisible et naturelle.</p><p>Distance : 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Grand sable, idéale pour une journée avec services et restaurants. Très prisée pour le surf.</p><p>Distance : 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia da Luz</h3><p>Plage large et familiale avec village touristique accueillant. Eaux calmes et bonne infrastructure.</p><p>Distance : 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<h3>Plages de Portimão (6 plages)</h3>
+
+<div class="category-card"><h3>Praia de Alvor</h3><p>Grand sable et dunes naturelles. Très fréquentée pour promenades et sports nautiques.</p><p>Distance : 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia do Vau</h3><p>Belles falaises et mer calme. Très populaire auprès des familles.</p><p>Distance : 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Petites criques entre rochers, eaux claires et superbes vues.</p><p>Distance : 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Décor incroyable avec grandes formations rocheuses. Idéale pour photos.</p><p>Distance : 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia da Rocha</h3><p>Parmi les plages les plus célèbres du Portugal. Grand sable et offre touristique importante.</p><p>Distance : 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Petite plage au pied d’une falaise, ambiance sophistiquée et restaurant iconique.</p><p>Distance : 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<h3>Plages de Vila do Bispo (6 plages)</h3>
+
+<div class="category-card"><h3>Praia do Burgau</h3><p>Petite crique pittoresque avec village de pêcheurs. Idéale pour familles.</p><p>Distance : 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia da Salema</h3><p>Village calme et charmant, plage familiale et falaises magnifiques.</p><p>Distance : 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia da Figueira</h3><p>Accès plus sauvage, sable protégé entre falaises. Très tranquille.</p><p>Distance : 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia das Furnas</h3><p>Plage isolée, parfaite pour une tranquillité totale.</p><p>Distance : 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia do Zavial</h3><p>Très appréciée des surfeurs, eaux limpides et hautes falaises.</p><p>Distance : 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Baie calme et semi-circulaire, idéale pour le snorkeling et les familles.</p><p>Distance : 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Voir sur la carte</a></p></div>
 `,
 it: `
-<div class="category-card">
-<h3>Praia Dona Ana</h3>
-<p>Una delle spiagge più belle dell’Algarve, con scogliere impressionanti e acque cristalline.</p>
-<p><strong>Distanza:</strong> 1,5 km</p>
-<p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<h3>Spiagge di Lagos (10 spiagge)</h3>
 
-<div class="category-card">
-<h3>Praia do Camilo</h3>
-<p>Famosa per la sua scalinata in legno e le viste mozzafiato. Perfetta per foto e nuoto.</p>
-<p><strong>Distanza:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<div class="category-card"><h3>Meia Praia</h3><p>Lunga e ampia, grande arenile. Ottima per lunghe passeggiate, sport acquatici e famiglie.</p><p>Distanza: 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
 
-<div class="category-card">
-<h3>Meia Praia</h3>
-<p>La spiaggia più grande di Lagos, ideale per lunghe passeggiate e sport acquatici.</p>
-<p><strong>Distanza:</strong> 2,0 km</p>
-<p><a href="https://maps.google.com/?q=Meia+Praia+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<div class="category-card"><h3>Praia da Batata</h3><p>Piccola spiaggia urbana, vicina al centro di Lagos. Riparata, acque calme.</p><p>Distanza: 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Famosa per l’arco romano tra le rocce. Piccola e molto fotogenica.</p><p>Distanza: 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Piccola spiaggia tranquilla, circondata da alte scogliere. Ideale per rilassarsi.</p><p>Distanza: 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinh%C3%A3o+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia Dona Ana</h3><p>Una delle spiagge più belle dell’Algarve, scogliere dorate e acque calme.</p><p>Distanza: 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia do Camilo</h3><p>Accesso tramite iconica scalinata. Splendide acque turchesi e formazioni rocciose.</p><p>Distanza: 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Selvaggia e meno affollata. Perfetta per la tranquillità vicino alle scogliere di Ponta da Piedade.</p><p>Distanza: 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia do Canavial</h3><p>Nascosta tra alte scogliere, molto tranquilla e naturale.</p><p>Distanza: 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Ampio arenile, ideale per giornate di mare con servizi e ristoranti. Molto ricercata per il surf.</p><p>Distanza: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia da Luz</h3><p>Spiaggia ampia e familiare con un accogliente villaggio turistico. Acque calme e buona infrastruttura.</p><p>Distanza: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<h3>Spiagge di Portimão (6 spiagge)</h3>
+
+<div class="category-card"><h3>Praia de Alvor</h3><p>Arenile esteso e dune naturali. Molto ricercata per passeggiate e sport acquatici.</p><p>Distanza: 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia do Vau</h3><p>Belle scogliere e mare calmo. Molto popolare tra le famiglie.</p><p>Distanza: 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Piccole cale tra rocce, acque limpide e ottime viste.</p><p>Distanza: 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Paisaggio incredibile con grandi formazioni rocciose. Ottima per fotografie.</p><p>Distanza: 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia da Rocha</h3><p>Tra le spiagge più famose del Portogallo. Ampio arenile e grande offerta turistica.</p><p>Distanza: 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Piccola spiaggia ai piedi di una scogliera, ambiente sofisticato e ristorante iconico.</p><p>Distanza: 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<h3>Spiagge di Vila do Bispo (6 spiagge)</h3>
+
+<div class="category-card"><h3>Praia do Burgau</h3><p>Piccola cala pittoresca con villaggio di pescatori. Ottima per famiglie.</p><p>Distanza: 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia da Salema</h3><p>Villaggio tranquillo e molto affascinante, spiaggia familiare con belle scogliere.</p><p>Distanza: 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia da Figueira</h3><p>Accesso più selvaggio e arenile protetto tra scogliere. Molto tranquilla.</p><p>Distanza: 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia das Furnas</h3><p>Spiaggia isolata, perfetta per totale tranquillità.</p><p>Distanza: 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia do Zavial</h3><p>Molto apprezzata dai surfisti, acque limpide e alte scogliere.</p><p>Distanza: 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Baia calma e semicircolare, ideale per snorkeling e famiglie.</p><p>Distanza: 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Vedi sulla mappa</a></p></div>
 `,
 de: `
-<div class="category-card">
-<h3>Praia Dona Ana</h3>
-<p>Eine der schönsten Strände der Algarve, mit beeindruckenden Klippen und kristallklarem Wasser.</p>
-<p><strong>Entfernung:</strong> 1,5 km</p>
-<p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos">📍 Karte anzeigen</a></p>
-</div>
+<h3>Strände von Lagos (10 Strände)</h3>
 
-<div class="category-card">
-<h3>Praia do Camilo</h3>
-<p>Berühmt für seine Holztreppe und atemberaubenden Ausblicke. Perfekt für Fotos und Schwimmen.</p>
-<p><strong>Entfernung:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos">📍 Karte anzeigen</a></p>
-</div>
+<div class="category-card"><h3>Meia Praia</h3><p>Langer, breiter Strand mit großem Sandbereich. Ideal für lange Spaziergänge, Wassersport und Familien.</p><p>Entfernung: 1.76 km</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
 
-<div class="category-card">
-<h3>Meia Praia</h3>
-<p>Der größte Strand in Lagos, ideal für lange Spaziergänge und Wassersport.</p>
-<p><strong>Entfernung:</strong> 2,0 km</p>
-<p><a href="https://maps.google.com/?q=Meia+Praia+Lagos">📍 Karte anzeigen</a></p>
-</div>
-`
-};
+<div class="category-card"><h3>Praia da Batata</h3><p>Kleiner Stadtstrand, sehr nah am Zentrum von Lagos. Geschützt und mit ruhigem Wasser.</p><p>Entfernung: 1.91 km</p><p><a href="https://maps.google.com/?q=Praia+da+Batata+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia dos Estudantes</h3><p>Berühmt für den römischen Bogen zwischen den Felsen. Klein und sehr fotogen.</p><p>Entfernung: 2.13 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Estudantes+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia do Pinhão</h3><p>Kleiner, ruhiger Strand, umgeben von hohen Klippen. Ideal zum Entspannen.</p><p>Entfernung: 2.31 km</p><p><a href="https://maps.google.com/?q=Praia+do+Pinh%C3%A3o+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia Dona Ana</h3><p>Einer der schönsten Strände der Algarve, goldene Klippen und ruhiges Wasser.</p><p>Entfernung: 2.66 km</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia do Camilo</h3><p>Zugang über eine ikonische Treppe. Wunderschönes türkisfarbenes Wasser und Felsformationen.</p><p>Entfernung: 3.15 km</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia dos Pinheiros</h3><p>Wild und weniger besucht. Perfekt für Ruhe in der Nähe der Klippen von Ponta da Piedade.</p><p>Entfernung: 3.49 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Pinheiros+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia do Canavial</h3><p>Versteckt zwischen hohen Klippen, sehr ruhig und naturbelassen.</p><p>Entfernung: 3.57 km</p><p><a href="https://maps.google.com/?q=Praia+do+Canavial+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia do Porto de Mós</h3><p>Großer Sandstrand, ideal für Strandtage mit Restaurants und Service. Beliebt zum Surfen.</p><p>Entfernung: 3.58 km</p><p><a href="https://maps.google.com/?q=Praia+do+Porto+de+M%C3%B3s+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia da Luz</h3><p>Breiter Familienstrand mit einem gemütlichen Touristenort. Ruhiges Wasser und gute Infrastruktur.</p><p>Entfernung: 5.83 km</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<h3>Strände von Portimão (6 Strände)</h3>
+
+<div class="category-card"><h3>Praia de Alvor</h3><p>Langer Sandstrand mit natürlichen Dünen. Beliebt für Spaziergänge und Wassersport.</p><p>Entfernung: 6.43 km</p><p><a href="https://maps.google.com/?q=Praia+de+Alvor" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia do Vau</h3><p>Schöne Klippen und ruhiges Meer. Sehr beliebt bei Familien.</p><p>Entfernung: 9.95 km</p><p><a href="https://maps.google.com/?q=Praia+do+Vau" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia dos Careanos</h3><p>Kleine Buchten zwischen Felsen, klares Wasser und tolle Aussicht.</p><p>Entfernung: 10.32 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Careanos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia dos Três Castelos</h3><p>Beeindruckende Landschaft mit großen Felsformationen. Ideal für Fotos.</p><p>Entfernung: 11.08 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Tr%C3%AAs+Castelos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia da Rocha</h3><p>Einer der berühmtesten Strände Portugals. Großer Sandstrand und viele touristische Angebote.</p><p>Entfernung: 12.23 km</p><p><a href="https://maps.google.com/?q=Praia+da+Rocha" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia dos Caneiros</h3><p>Kleiner Strand am Fuß einer Klippe, gehobenes Ambiente und ikonisches Restaurant.</p><p>Entfernung: 14.01 km</p><p><a href="https://maps.google.com/?q=Praia+dos+Caneiros" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<h3>Strände von Vila do Bispo (6 Strände)</h3>
+
+<div class="category-card"><h3>Praia do Burgau</h3><p>Malereische kleine Bucht mit Fischerdorf. Ideal für Familien.</p><p>Entfernung: 10.42 km</p><p><a href="https://maps.google.com/?q=Praia+do+Burgau" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia da Salema</h3><p>Ruhiges und charmantes Dorf, Familienstrand mit schönen Klippen.</p><p>Entfernung: 14.68 km</p><p><a href="https://maps.google.com/?q=Praia+da+Salema" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia da Figueira</h3><p>Wilder Zugang und geschützter Sand zwischen Klippen. Sehr ruhig.</p><p>Entfernung: 16.10 km</p><p><a href="https://maps.google.com/?q=Praia+da+Figueira" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia das Furnas</h3><p>Abgelegener Strand, perfekt für totale Ruhe.</p><p>Entfernung: 17.55 km</p><p><a href="https://maps.google.com/?q=Praia+das+Furnas" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia do Zavial</h3><p>Sehr beliebt bei Surfern, klares Wasser und hohe Klippen.</p><p>Entfernung: 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Praia da Ingrina</h3><p>Ruhige, halbkreisförmige Bucht, ideal zum Schnorcheln und für Familien.</p><p>Entfernung: 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Karte anzeigen</a></p></div>
+`,
+
 // -----------------------------------------
 // --- RESTAURANTS (Restaurantes) ---
 // -----------------------------------------
