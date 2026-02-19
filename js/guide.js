@@ -165,68 +165,120 @@ const rules = {
 // -----------------------------------------
 
 const emergency = {
-pt: `
-<div class="category-card">
-<h3>Contactos de Emergência</h3>
-<p><strong>Emergência Geral:</strong> 112</p>
-<p><strong>Polícia:</strong> 112</p>
-<p><strong>Bombeiros:</strong> 112</p>
-<p><strong>Centro de Saúde Lagos:</strong> +351 282 780 000</p>
-<p><strong>Hospital de Portimão:</strong> +351 282 450 300</p>
+  pt: `
+<div class="category-card"><h3>🚨 Emergência Geral</h3><p><a href="tel:112">📞 112</a></p></div>
+
+<div class="category-card"><h3>👮 PSP Lagos</h3>
+<p><a href="tel:+351282762930">📞 +351 282 762 930</a></p>
+<p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card"><h3>🚒 Bombeiros Lagos</h3>
+<p><a href="tel:+351282770010">📞 +351 282 770 010</a></p>
+<p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card"><h3>🏨 Apartments Belleview</h3>
+<p><a href="tel:+351910051588">📞 +351 910 051 588</a></p>
+<p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Ver no mapa</a></p>
 </div>
 `,
-en: `
-<div class="category-card">
-<h3>Emergency Contacts</h3>
-<p><strong>General Emergency:</strong> 112</p>
-<p><strong>Police:</strong> 112</p>
-<p><strong>Fire Department:</strong> 112</p>
-<p><strong>Lagos Health Center:</strong> +351 282 780 000</p>
-<p><strong>Portimão Hospital:</strong> +351 282 450 300</p>
+
+  en: `
+<div class="category-card"><h3>🚨 General Emergency</h3><p><a href="tel:112">📞 112</a></p></div>
+
+<div class="category-card"><h3>👮 PSP Lagos (Police)</h3>
+<p><a href="tel:+351282762930">📞 +351 282 762 930</a></p>
+<p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 View on map</a></p>
+</div>
+
+<div class="category-card"><h3>🚒 Lagos Fire Department</h3>
+<p><a href="tel:+351282770010">📞 +351 282 770 010</a></p>
+<p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 View on map</a></p>
+</div>
+
+<div class="category-card"><h3>🏨 Apartments Belleview</h3>
+<p><a href="tel:+351910051588">📞 +351 910 051 588</a></p>
+<p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 View on map</a></p>
 </div>
 `,
-es: `
-<div class="category-card">
-<h3>Contactos de Emergencia</h3>
-<p><strong>Emergencia General:</strong> 112</p>
-<p><strong>Policía:</strong> 112</p>
-<p><strong>Bomberos:</strong> 112</p>
-<p><strong>Centro de Salud Lagos:</strong> +351 282 780 000</p>
-<p><strong>Hospital de Portimão:</strong> +351 282 450 300</p>
+
+  es: `
+<div class="category-card"><h3>🚨 Emergencia General</h3><p><a href="tel:112">📞 112</a></p></div>
+
+<div class="category-card"><h3>👮 PSP Lagos (Policía)</h3>
+<p><a href="tel:+351282762930">📞 +351 282 762 930</a></p>
+<p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card"><h3>🚒 Bomberos de Lagos</h3>
+<p><a href="tel:+351282770010">📞 +351 282 770 010</a></p>
+<p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card"><h3>🏨 Apartments Belleview</h3>
+<p><a href="tel:+351910051588">📞 +351 910 051 588</a></p>
+<p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Ver en el mapa</a></p>
 </div>
 `,
-fr: `
-<div class="category-card">
-<h3>Contacts d'Urgence</h3>
-<p><strong>Urgence Générale:</strong> 112</p>
-<p><strong>Police:</strong> 112</p>
-<p><strong>Pompier:</strong> 112</p>
-<p><strong>Centre de Santé de Lagos:</strong> +351 282 780 000</p>
-<p><strong>Hôpital de Portimão:</strong> +351 282 450 300</p>
+
+  fr: `
+<div class="category-card"><h3>🚨 Urgence Générale</h3><p><a href="tel:112">📞 112</a></p></div>
+
+<div class="category-card"><h3>👮 PSP Lagos (Police)</h3>
+<p><a href="tel:+351282762930">📞 +351 282 762 930</a></p>
+<p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card"><h3>🚒 Pompiers de Lagos</h3>
+<p><a href="tel:+351282770010">📞 +351 282 770 010</a></p>
+<p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card"><h3>🏨 Apartments Belleview</h3>
+<p><a href="tel:+351910051588">📞 +351 910 051 588</a></p>
+<p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Voir sur la carte</a></p>
 </div>
 `,
-it: `
-<div class="category-card">
-<h3>Contatti di Emergenza</h3>
-<p><strong>Emergenza Generale:</strong> 112</p>
-<p><strong>Polizia:</strong> 112</p>
-<p><strong>Vigili del Fuoco:</strong> 112</p>
-<p><strong>Centro Salute Lagos:</strong> +351 282 780 000</p>
-<p><strong>Ospedale di Portimão:</strong> +351 282 450 300</p>
+
+  it: `
+<div class="category-card"><h3>🚨 Emergenza Generale</h3><p><a href="tel:112">📞 112</a></p></div>
+
+<div class="category-card"><h3>👮 PSP Lagos (Polizia)</h3>
+<p><a href="tel:+351282762930">📞 +351 282 762 930</a></p>
+<p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card"><h3>🚒 Vigili del Fuoco di Lagos</h3>
+<p><a href="tel:+351282770010">📞 +351 282 770 010</a></p>
+<p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card"><h3>🏨 Apartments Belleview</h3>
+<p><a href="tel:+351910051588">📞 +351 910 051 588</a></p>
+<p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Vedi sulla mappa</a></p>
 </div>
 `,
-de: `
-<div class="category-card">
-<h3>Notfallkontakte</h3>
-<p><strong>Allgemeiner Notruf:</strong> 112</p>
-<p><strong>Polizei:</strong> 112</p>
-<p><strong>Feuerwehr:</strong> 112</p>
-<p><strong>Gesundheitszentrum Lagos:</strong> +351 282 780 000</p>
-<p><strong>Krankenhaus Portimão:</strong> +351 282 450 300</p>
+
+  de: `
+<div class="category-card"><h3>🚨 Allgemeiner Notfall</h3><p><a href="tel:112">📞 112</a></p></div>
+
+<div class="category-card"><h3>👮 PSP Lagos (Polizei)</h3>
+<p><a href="tel:+351282762930">📞 +351 282 762 930</a></p>
+<p><a href="https://maps.google.com/?q=PSP+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p>
+</div>
+
+<div class="category-card"><h3>🚒 Feuerwehr Lagos</h3>
+<p><a href="tel:+351282770010">📞 +351 282 770 010</a></p>
+<p><a href="https://maps.google.com/?q=Bombeiros+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p>
+</div>
+
+<div class="category-card"><h3>🏨 Apartments Belleview</h3>
+<p><a href="tel:+351910051588">📞 +351 910 051 588</a></p>
+<p><a href="https://maps.google.com/?q=Apartments+Belleview+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p>
 </div>
 `
 };
-
 
 // -----------------------------------------
 // --- BEACHES (Praias) ---
