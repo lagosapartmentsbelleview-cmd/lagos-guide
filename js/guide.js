@@ -1503,6 +1503,14 @@ const buttonTexts = {
     fr: "🔗 Partager",
     it: "🔗 Condividi",
     de: "🔗 Teilen"
+  },
+  backToStart: {
+    pt: "🏠 Voltar ao início",
+    en: "🏠 Back to start",
+    es: "🏠 Volver al inicio",
+    fr: "🏠 Retour au début",
+    it: "🏠 Torna all'inizio",
+    de: "🏠 Zur Startseite"
   }
 };
 
