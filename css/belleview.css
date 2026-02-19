@@ -1225,3 +1225,42 @@ footer,
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
+/* ============================================================
+   CORREÇÃO MOBILE — REMOVER PADDING QUE ESTAVA A ESMAGAR OS CARDS
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    /* Remove padding lateral das secções com cards */
+    .secao,
+    #alojamento,
+    .perto-section,
+    .faq-container,
+    .rules-grid,
+    .comodidades-lista,
+    .proximidades-lista {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Cards full width no mobile */
+    .comodidade-item,
+    .perto-item,
+    .rule-item,
+    .faq-item,
+    .intro-alojamento,
+    .descricao-alojamento {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Footer full width real */
+    footer,
+    .footer-content {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+}
