@@ -1676,6 +1676,7 @@ function setLanguage(lang) {
   document.getElementById("catShareContent").innerText = buttonTexts.share[lang];
   document.getElementById("catBackBottomContent").innerText = buttonTexts.back[lang];
   document.getElementById("backToLanguageFromCategories").innerText = translations.backToLanguage[lang];
+  document.getElementById("backToStartButton").innerText = buttonTexts.backToStart[lang];
 
 }
 
