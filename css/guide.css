@@ -2,134 +2,158 @@
    ESTILO GERAL
 --------------------------------*/
 body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: #f7f9fc;
-  color: #333;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: #ffffff;
+    color: #333;
 }
 
 /* ------------------------------
-   HEADER
+   HEADER FIXO
 --------------------------------*/
 .guide-header {
-  text-align: center;
-  padding: 25px 10px;
-  background: #005c99;
-  color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    z-index: 999;
 }
 
-.guide-logo {
-  width: 120px;
-  margin-bottom: 10px;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #005c99;
 }
 
 /* ------------------------------
-   SEÇÃO DE IDIOMA
+   MAIN CONTENT
 --------------------------------*/
-.language-section {
-  text-align: center;
-  padding: 30px 20px;
+main {
+    padding: 100px 20px 40px;
+    max-width: 900px;
+    margin: auto;
 }
 
-.language-buttons button {
-  margin: 8px;
-  padding: 12px 18px;
-  border: none;
-  border-radius: 8px;
-  background: #005c99;
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.2s;
+.center-box {
+    text-align: center;
 }
 
-.language-buttons button:hover {
-  background: #004b80;
+.main-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #005c99;
 }
 
 /* ------------------------------
-   CATEGORIAS
+   BOTÕES DE IDIOMA
+--------------------------------*/
+.lang-buttons button {
+    margin: 8px;
+    padding: 12px 20px;
+    border: none;
+    background: #005c99;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.lang-buttons button:hover {
+    background: #004b80;
+}
+
+/* ------------------------------
+   LISTA DE CATEGORIAS
 --------------------------------*/
 #categoriesList {
-  list-style: none;
-  padding: 0;
-  margin: 20px auto;
-  max-width: 600px;
+    list-style: none;
+    padding: 0;
 }
 
 #categoriesList li {
-  background: white;
-  padding: 14px 18px;
-  margin: 10px 0;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 17px;
-  border-left: 5px solid #005c99;
-  transition: 0.2s;
+    padding: 14px 18px;
+    margin: 10px 0;
+    background: #f5f7fa;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 17px;
+    border-left: 4px solid #005c99;
 }
 
 #categoriesList li:hover {
-  background: #eef6ff;
+    background: #e9f2fa;
 }
 
 /* ------------------------------
-   CARTÕES DE CONTEÚDO
+   CONTEÚDO DA CATEGORIA
+--------------------------------*/
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.back-btn,
+.print-btn,
+.share-btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #005c99;
+    color: #fff;
+    font-size: 14px;
+}
+
+.back-btn.bottom {
+    margin-top: 30px;
+    width: 100%;
+}
+
+/* ------------------------------
+   CARDS
 --------------------------------*/
 .category-card {
-  background: white;
-  padding: 18px;
-  margin: 15px 0;
-  border-radius: 12px;
-  border-left: 5px solid #005c99;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    background: #f7f9fc;
+    padding: 18px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    border-left: 4px solid #005c99;
 }
 
 .category-card h3 {
-  margin-top: 0;
-  color: #005c99;
+    margin-top: 0;
+    color: #005c99;
 }
 
 .category-card a {
-  color: #005c99;
-  font-weight: 600;
+    color: #005c99;
+    font-weight: 600;
 }
 
 /* ------------------------------
-   BOTÕES SUPERIORES
+   RESPONSIVO
 --------------------------------*/
-.top-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 25px 0;
-}
+@media (max-width: 600px) {
+    .logo span {
+        font-size: 15px;
+    }
 
-.top-buttons button,
-.back-bottom {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #005c99;
-  color: white;
-  cursor: pointer;
-  font-size: 15px;
-  transition: 0.2s;
-}
-
-.top-buttons button:hover,
-.back-bottom:hover {
-  background: #004b80;
-}
-
-/* ------------------------------
-   UTILIDADES
---------------------------------*/
-.hidden {
-  display: none;
-}
-
-.category-text {
-  max-width: 900px;
-  margin: auto;
-  padding: 0 20px;
+    .category-header {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
