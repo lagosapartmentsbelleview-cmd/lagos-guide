@@ -1,21 +1,70 @@
-<a href="#topo" class="logo">
-    <svg width="40" height="40" viewBox="0 0 100 100" class="belleview-logo">
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Belleview Apartments</title>
 
-        <!-- Círculo azul sistema -->
-        <circle cx="50" cy="50" r="46" 
-                fill="#005c99" 
-                stroke="#005c99" 
-                stroke-width="6"/>
+    <!-- Fonte Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-        <!-- Letra B azul sistema -->
-        <text x="50" y="67"
-              text-anchor="middle"
-              font-family="Poppins, sans-serif"
-              font-size="42"
-              font-weight="700"
-              fill="#ffffff">
-            B
-        </text>
-    </svg>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/guide.css">
+</head>
 
-    <span>Apartments Belleview Lagos</span>
+<body>
+
+    <!-- HEADER FIXO -->
+    <header class="guide-header">
+        <a href="#topo" class="logo">
+            <svg width="36" height="36" viewBox="0 0 100 100" class="belleview-logo">
+                <circle cx="50" cy="50" r="46" fill="#005c99" stroke="#005c99" stroke-width="6"/>
+                <text x="50" y="67" text-anchor="middle"
+                      font-family="Poppins, sans-serif"
+                      font-size="42" font-weight="700" fill="#ffffff">B</text>
+            </svg>
+            <span>Apartments Belleview Lagos</span>
+        </a>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main id="topo">
+        <section id="languageMenu" class="center-box">
+            <h1 class="main-title">Guia Belleview Apartments</h1>
+            <p>Escolha o idioma:</p>
+
+            <div class="lang-buttons">
+                <button onclick="setLanguage('pt')">🇵🇹 Português</button>
+                <button onclick="setLanguage('en')">🇬🇧 English</button>
+                <button onclick="setLanguage('es')">🇪🇸 Español</button>
+                <button onclick="setLanguage('fr')">🇫🇷 Français</button>
+                <button onclick="setLanguage('it')">🇮🇹 Italiano</button>
+                <button onclick="setLanguage('de')">🇩🇪 Deutsch</button>
+            </div>
+        </section>
+
+        <!-- LISTA DE CATEGORIAS -->
+        <section id="categories" style="display:none;">
+            <h2 id="categoriesTitle"></h2>
+            <ul id="categoriesList"></ul>
+        </section>
+
+        <!-- CONTEÚDO DA CATEGORIA -->
+        <section id="categoryContent" style="display:none;">
+            <div class="category-header">
+                <button id="catBackTopContent" class="back-btn" onclick="showCategories()"></button>
+                <button id="catPrintContent" class="print-btn" onclick="window.print()"></button>
+                <button id="catShareContent" class="share-btn" onclick="shareGuide()"></button>
+            </div>
+
+            <h2 id="categoryTitle"></h2>
+            <div id="categoryText"></div>
+
+            <button id="catBackBottomContent" class="back-btn bottom" onclick="showCategories()"></button>
+        </section>
+    </main>
+
+    <!-- JS -->
+    <script src="js/guide.js"></script>
+</body>
+</html>
