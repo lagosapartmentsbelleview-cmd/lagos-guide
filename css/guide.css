@@ -195,3 +195,19 @@ main {
     object-fit: cover;
     border-radius: 3px;
 }
+
+/* Botão para voltar à escolha de idioma */
+.lang-btn {
+    background: #005c99;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.lang-btn:hover {
+    background: #004b80;
+}
