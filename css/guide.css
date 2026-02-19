@@ -157,3 +157,19 @@ main {
         gap: 10px;
     }
 }
+
+/* ------------------------------
+   PARA BANDEIRAS DE LINGUAGEM
+--------------------------------*/
+
+.lang-buttons button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lang-buttons button img {
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+}
