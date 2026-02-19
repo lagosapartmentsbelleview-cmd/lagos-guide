@@ -1315,47 +1315,45 @@ footer,
     hyphens: auto;
 }
 /* ============================================================
-   CORREÇÃO — REGRAS DA CASA (UNIFORMIZAÇÃO TOTAL)
+   REGRAS DA CASA — ÍCONE EM CIMA + TEXTO JUSTIFICADO
    ============================================================ */
 
-/* Remove padding lateral da grelha */
-.rules-grid {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-/* Cards uniformes e alinhados */
 .rule-item {
-    display: flex;
-    align-items: flex-start; /* mantém ícone no topo */
-    gap: 16px;
-    padding: 22px 20px !important;
-    border-radius: 14px;
     background: #ffffff;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    border-radius: 14px;
+    padding: 24px 22px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    display: flex;
+    flex-direction: column; /* ÍCONE EM CIMA, TEXTO EM BAIXO */
+    align-items: center;    /* CENTRA O ÍCONE */
+    text-align: center;     /* CENTRA O TÍTULO */
+    gap: 14px;
 }
 
-/* Ícone com tamanho consistente */
+/* Ícone centrado e consistente */
 .rule-icon {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     line-height: 1;
-    margin-top: 2px; /* corrige desalinhamento visual */
+    display: block;
+    margin-bottom: 6px;
 }
 
-/* Texto justificado e uniforme */
+/* Texto justificado */
 .rule-text {
     text-align: justify;
     text-justify: inter-word;
     hyphens: auto;
-    line-height: 1.55;
     font-size: 1rem;
+    line-height: 1.55;
     color: #333;
+    width: 100%; /* garante alinhamento perfeito */
 }
 
 /* Título dentro do card */
 .rule-text strong {
     display: block;
     margin-bottom: 6px;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: #005c99;
+    text-align: center; /* título centrado */
 }
