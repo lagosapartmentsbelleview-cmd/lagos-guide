@@ -589,7 +589,8 @@ de: `
 <div class="category-card"><h3>Praia do Zavial</h3><p>Sehr beliebt bei Surfern, klares Wasser und hohe Klippen.</p><p>Entfernung: 19.40 km</p><p><a href="https://maps.google.com/?q=Praia+do+Zavial" target="_blank">📍 Karte anzeigen</a></p></div>
 
 <div class="category-card"><h3>Praia da Ingrina</h3><p>Ruhige, halbkreisförmige Bucht, ideal zum Schnorcheln und für Familien.</p><p>Entfernung: 19.97 km</p><p><a href="https://maps.google.com/?q=Praia+da+Ingrina" target="_blank">📍 Karte anzeigen</a></p></div>
-`,
+`
+};
 
 // -----------------------------------------
 // --- RESTAURANTS (Restaurantes) ---
