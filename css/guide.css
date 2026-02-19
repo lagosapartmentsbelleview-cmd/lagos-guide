@@ -211,3 +211,17 @@ main {
 .lang-btn:hover {
     background: #004b80;
 }
+
+/* -----------------------------------------
+   RETIRA O SUBLINHADO DOS LINKS E TELEFONES
+--------------------------------------------*/
+
+.category-card a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+}
+
+.category-card a:hover {
+    text-decoration: underline;
+}
