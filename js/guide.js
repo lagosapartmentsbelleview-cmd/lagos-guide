@@ -1042,7 +1042,28 @@ it: `
 <div class="category-card">
 <h3>Centro Salute Lagos</h3>
 <p>Assistenza medica generale.</p>
-<p><strong>Distanza:</strong
+<p><strong>Distanza:</strong> 1,3 km</p>
+<p><a href="https://maps.google.com/?q=Centro+de+Saúde+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+`,
+
+  de: `
+<div class="category-card">
+<h3>Farmácia Lagos</h3>
+<p>Apotheke mit täglichem Service.</p>
+<p><strong>Entfernung:</strong> 600 m</p>
+<p><a href="https://maps.google.com/?q=Farmácia+Lagos">📍 Karte anzeigen</a></p>
+</div>
+
+<div class="category-card">
+<h3>Gesundheitszentrum Lagos</h3>
+<p>Allgemeine medizinische Versorgung.</p>
+<p><strong>Entfernung:</strong> 1,3 km</p>
+<p><a href="https://maps.google.com/?q=Centro+de+Saúde+Lagos">📍 Karte anzeigen</a></p>
+</div>
+`
+};
+
 // -----------------------------------------
 // --- TRAILS (Trilhos e Caminhadas) ---
 // -----------------------------------------
