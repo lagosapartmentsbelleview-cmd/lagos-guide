@@ -1699,6 +1699,26 @@ function showCategories() {
   document.getElementById("categories").style.display = "block";
 }
 
+// -----------------------------------------
+// --- FUNÇÃO: VOLTAR À ESCOLHA IDIOMA ---
+// -----------------------------------------
+
+function showLanguageMenu() {
+    // Mostrar o menu de idiomas
+    document.getElementById("languageMenu").style.display = "block";
+
+    // Esconder categorias
+    document.getElementById("categories").style.display = "none";
+
+    // Esconder conteúdo da categoria (caso estivesse aberto)
+    document.getElementById("categoryContent").style.display = "none";
+
+    // Limpar textos
+    document.getElementById("categoriesTitle").innerHTML = "";
+    document.getElementById("categoryTitle").innerHTML = "";
+    document.getElementById("categoryText").innerHTML = "";
+}
+
 
 // -----------------------------------------
 // --- FUNÇÃO: PARTILHAR GUIA ---
