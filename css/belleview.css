@@ -1,227 +1,173 @@
 /* ============================================================
-   BELLEVIEW — CSS PREMIUM CONTEMPORÂNEO (PARTE 1/3)
-   Mobile‑first • Cantos suaves • Sombra média • Max-width 1200px
+   1. RESET + BASE
    ============================================================ */
-
-
-/* ============================================================
-   1. DESIGN TOKENS — Variáveis Globais
-   ============================================================ */
-
-:root {
-
-    /* Cores principais */
-    --cor-primaria: #005c99;
-    --cor-secundaria: #003d66;
-    --cor-texto: #333;
-    --cor-texto-suave: #555;
-    --cor-fundo: #f7f7f7;
-    --cor-card: #ffffff;
-
-    /* Tipografia */
-    --font-titulo: "Poppins", sans-serif;
-    --font-texto: "Inter", sans-serif;
-
-    /* Espaçamentos */
-    --space-section: 60px;              /* espaçamento médio */
-    --space-section-mobile: 40px;
-    --space-card: 26px;
-
-    /* Layout */
-    --max-width: 1200px;
-
-    /* Radius e sombras */
-    --radius-card: 14px;
-    --shadow-card: 0 6px 20px rgba(0,0,0,0.10); /* sombra média */
-}
-
-
-/* ============================================================
-   2. RESET PREMIUM (mobile-first)
-   ============================================================ */
-
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 html, body {
-    width: 100%;
     height: 100%;
-    overflow-x: hidden;
-    background: var(--cor-fundo);
-    font-family: var(--font-texto);
-    color: var(--cor-texto);
-    line-height: 1.55;
+    margin: 0;
 }
 
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: #f7f7f7;
+    color: #333;
+    line-height: 1.55;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Wrapper global para sticky footer */
+.page-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
 
 /* ============================================================
-   3. TIPOGRAFIA PREMIUM — Hierarquia equilibrada
+   2. TIPOGRAFIA BELLEVIEW — Premium
    ============================================================ */
 
+/* Títulos globais */
 h1, h2, h3 {
-    font-family: var(--font-titulo);
-    color: var(--cor-secundaria);
-    font-weight: 600; /* equilíbrio perfeito */
-    line-height: 1.2;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    color: #003d66;
+    margin: 0 0 12px 0;
 }
 
 h1 {
-    font-size: 2.2rem; /* mobile-first */
-    margin-bottom: 14px;
+    font-size: 2.8rem;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
 }
 
 h2 {
-    font-size: 1.8rem;
-    margin-bottom: 12px;
-    color: var(--cor-primaria);
+    font-size: 2.2rem;
+    color: #005c99;
 }
 
 h3 {
-    font-size: 1.3rem;
-    margin-bottom: 10px;
+    font-size: 1.35rem;
 }
 
+/* Parágrafos */
 p {
-    font-size: 1rem;
-    color: var(--cor-texto);
-    margin-bottom: 14px;
+    font-size: 1.05rem;
+    color: #444;
 }
 
-small {
+/* Labels */
+small, label {
     font-size: 0.85rem;
-    color: var(--cor-texto-suave);
+    color: #555;
+    font-weight: 500;
 }
-
 
 /* ============================================================
-   4. SISTEMA DE LAYOUT — Containers, Secções, Grids
+   3. HEADER
    ============================================================ */
-
-/* Container centralizado (desktop) */
-.container {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Secções com espaçamento vertical consistente */
-.section {
-    padding: var(--space-section-mobile) 0;
-}
-
-/* Grelha base (mobile-first: 1 coluna) */
-.grid {
-    display: grid;
-    gap: 20px;
-}
-
-/* Flex base */
-.flex {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Full-width real */
-.full-width {
-    width: 100%;
-}
-
-
-/* ============================================================
-   5. SISTEMA DE CARDS — Base unificada
-   ============================================================ */
-
-.card {
-    background: var(--cor-card);
-    border-radius: var(--radius-card);
-    padding: var(--space-card);
-    box-shadow: var(--shadow-card);
-    border: 1px solid #e6e6e6;
-}
-
-/* Títulos dentro de cards */
-.card h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--cor-primaria);
-    margin-bottom: 12px;
-}
-
-/* Texto dentro de cards */
-.card p {
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: auto;
-}
-
-
-/* ============================================================
-   6. HEADER — Premium, leve e sticky
-   ============================================================ */
-
 header {
-    width: 100%;
-    background: rgba(255,255,255,0.95);
-    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background: rgba(255, 255, 255, 0.95);
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 10;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+}
+
+body {
+    padding-top: 0; /* remove compensação */
 }
 
 .logo {
-    font-family: var(--font-titulo);
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--cor-primaria);
-    text-decoration: none;
-}
-
-nav {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 12px;
-    justify-content: center;
-}
-
-nav a {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #005c99;
+    letter-spacing: 0.03em;
     text-decoration: none;
-    color: var(--cor-primaria);
+}
+
+.logo span {
+    color: #005c99 !important;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+}
+
+header nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #005c99;
+    font-size: 1.05rem;
     font-weight: 600;
-    font-size: 1rem;
-    padding: 6px 10px;
-    transition: 0.25s ease;
+    padding: 6px 12px;
+    position: relative;
+    transition: all 0.25s ease-in-out;
+    letter-spacing: 0.02em;
 }
 
-nav a:hover {
+header nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    background-color: #005c99;
+    transition: width 0.25s ease-in-out;
+    border-radius: 2px;
+}
+
+header nav a:hover::after {
+    width: 100%;
+}
+
+header nav a:hover {
     transform: translateY(-2px);
-    color: var(--cor-secundaria);
 }
 
+/* Bandeiras */
+.lang-switch {
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.lang-switch img {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lang-switch img:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 6px rgba(0,0,0,0.3);
+}
 
 /* ============================================================
-   7. HERO — Mobile-first premium
+   4. HERO
    ============================================================ */
-
 .hero {
-    width: 100%;
-    min-height: 70vh;
-    padding: 40px 20px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    padding: 60px 40px;
+    align-items: center;
+    background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
     background-position: center;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+    color: white;
 }
 
 .hero::before {
@@ -229,227 +175,606 @@ nav a:hover {
     position: absolute;
     inset: 0;
     background: rgba(0,0,0,0.25);
+    z-index: 0;
 }
 
-.hero > * {
+.hero-texto,
+.booking-card {
     position: relative;
-    z-index: 2;
+    z-index: 1;
 }
 
-.hero h1 {
-    color: #fff;
-    font-size: 2rem;
+/* Tipografia específica do HERO */
+.hero-local {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #f8f8f8;
+    opacity: 0.95;
+    margin-bottom: 6px;
+}
+
+.hero-texto h1 {
+    color: #ffffff;
+    font-size: 2.8rem;
     text-shadow: 0 3px 10px rgba(0,0,0,0.35);
 }
 
-.hero p {
+.hero_sub {
+    font-size: 1.2rem;
     color: #f2f2f2;
-    font-size: 1.1rem;
+    line-height: 1.45;
     max-width: 480px;
-    margin: 0 auto;
     opacity: 0.95;
 }
 
 /* ============================================================
-   BELLEVIEW — CSS PREMIUM CONTEMPORÂNEO (PARTE 2/3)
-   Componentes principais
+   5. BOOKING CARD
    ============================================================ */
-
-
-/* ============================================================
-   8. BOOKING CARD — Premium, compacto e mobile-first
-   ============================================================ */
-
 .booking-card {
-    background: var(--cor-card);
-    border-radius: var(--radius-card);
-    padding: 22px;
-    box-shadow: var(--shadow-card);
-    border: 1px solid #e6e6e6;
-    max-width: 340px;
-    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
+    max-width: 280px;
 }
 
 .booking-card h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--cor-primaria);
-    margin-bottom: 6px;
+    font-size: 1.2rem;
+    color: #005c99;
 }
 
 .booking-card label {
-    font-size: 0.9rem;
-    color: var(--cor-secundaria);
-    font-weight: 600;
+    font-size: 0.85rem;
+    color: #003d66;
 }
 
 .booking-card input,
 .booking-card select {
-    padding: 10px 12px;
-    border-radius: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
     border: 1px solid #d0d7de;
-    font-size: 1rem;
-    color: var(--cor-secundaria);
-    background: #fff;
+    font-size: 0.95rem;
+    color: #005c99;
+    background-color: #ffffff;
 }
 
 .booking-card button {
     margin-top: 8px;
-    padding: 12px 16px;
+    padding: 10px 14px;
     border-radius: 999px;
     border: none;
-    background: var(--cor-primaria);
+    background: #005c99;
     color: #fff;
     font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.25s ease;
 }
 
-.booking-card button:hover {
-    background: var(--cor-secundaria);
+/* DISPLAY DISPONIBILIDADE (mantido como pediste) */
+#resultadoDisponibilidade {
+    margin-top: 10px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    background: #eef6fb;
+    border: 1px solid #cfe4f2;
+    width: 100%;
+    color: #005c99;
+    display: none;
 }
 
+/* ✔ Disponível */
+#resultadoDisponibilidade.disponivel::before {
+    content: "✔ ";
+    color: #2ecc71;
+    font-weight: 700;
+}
+
+/* ✖ Indisponível */
+#resultadoDisponibilidade.indisponivel::before {
+    content: "✖ ";
+    color: #e74c3c;
+    font-weight: 700;
+}
 
 /* ============================================================
-   9. ALOJAMENTO — Secção premium com texto respirado
+   6. CONTADORES
+   ============================================================ */
+.apartamento-bloco {
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #d0d7de;
+    background: #f9fafb;
+}
+
+.apartamento-bloco h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+    color: #005c99;
+    font-weight: 600;
+}
+
+.contador {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 6px 0 12px;
+}
+
+.contador label {
+    font-size: 0.9rem;
+    color: #005c99;
+    width: 120px;
+}
+
+.contador button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #005c99;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contador span {
+    font-size: 1rem;
+    font-weight: 600;
+    width: 28px;
+    text-align: center;
+    color: #005c99;
+}
+
+#extraCampos {
+    display: none;
+}
+
+/* ============================================================
+   7. SECÇÕES GERAIS
+   ============================================================ */
+.secao {
+    padding: 50px 0;
+    margin: 40px 0 0 0; /* sem margem inferior global */
+    background: transparent;
+}
+
+.secao h2 {
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 12px;
+}
+
+/* Scroll suave para âncoras */
+#alojamento,
+#localizacao,
+#comodidades {
+    scroll-margin-top: 100px;
+}
+
+/* ============================================================
+   8. ALOJAMENTO — BOOKING PREMIUM + AZUL PRAIA BELLEVIEW
    ============================================================ */
 
 #alojamento {
     background: #f5f7fa;
-    padding: var(--space-section) 20px;
+    padding: 80px 40px;
     border-radius: 0 0 20px 20px;
 }
 
+/* Título principal da secção */
 #alojamento h2 {
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--cor-primaria);
+    font-family: "Poppins", sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #005c99;
     margin-bottom: 20px;
 }
 
+/* Subtítulo introdutório */
 #alojamento .subtitulo {
-    font-size: 1.15rem;
-    line-height: 1.6;
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: auto;
+    font-size: 1.2rem;
     color: #444;
     margin-bottom: 40px;
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.6;
 }
 
-
-/* ============================================================
-   10. GALERIAS — Premium, com sombras suaves e radius
-   ============================================================ */
-
+/* Galeria tipo A (default) */
 .galeria-a,
-.galeria-b,
-.galeria-c,
 #alojamento .galeria {
     display: grid;
-    gap: 14px;
-    margin-bottom: 40px;
-}
-
-.galeria-a {
     grid-template-columns: 2fr 1fr 1fr;
-}
-
-.galeria-b {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.galeria-c {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
 }
 
 .galeria-a img,
-.galeria-b img,
-.galeria-c img,
 #alojamento .galeria img {
     width: 100%;
     height: 260px;
     object-fit: cover;
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
 }
 
+/* Galeria tipo B — 3 iguais */
+.galeria-b {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+}
 
-/* ============================================================
-   11. CARDS DE ALOJAMENTO (grid 2 colunas)
-   ============================================================ */
+.galeria-b img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
 
+/* Galeria tipo C — 2 grandes */
+.galeria-c {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.galeria-c img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
+
+/* Grelha 2 colunas */
 #alojamento .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    gap: 40px;
 }
 
+/* Cartões gerais da grelha */
 #alojamento .card {
-    background: var(--cor-card);
-    border-radius: var(--radius-card);
-    padding: var(--space-card);
-    box-shadow: var(--shadow-card);
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     border: 1px solid #e6e6e6;
 }
 
+/* Títulos dos cartões da grelha */
 #alojamento .card h3 {
     font-size: 1.35rem;
     font-weight: 600;
-    color: var(--cor-primaria);
+    color: #005c99;
+    margin-bottom: 18px;
+}
+
+/* Listas */
+#alojamento ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#alojamento ul li {
+    padding: 8px 0;
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Ícones das listas */
+#alojamento ul li::before {
+    content: "•";
+    color: #005c99;
+    font-size: 1.4rem;
+    line-height: 0;
+}
+
+/* FAQ dentro de alojamento */
+#alojamento .faq p {
+    background: #eef6fb;
+    border: 1px solid #cfe4f2;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+/* Regras dentro de alojamento */
+#alojamento .regras ul li {
+    background: #fff8e6;
+    border: 1px solid #ffe2a8;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Cards full-width (intro + descrição) */
+.intro-alojamento,
+.descricao-alojamento {
+    background: #ffffff;
+    padding: 32px 26px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e6e6e6;
+    margin: 40px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Títulos dos cards */
+.descricao-alojamento h3 {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #005c99;
+    margin-bottom: 15px;
+}
+
+/* Texto dos cards */
+.intro-alojamento .subtitulo,
+.descricao-alojamento p {
+    width: 100%;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    color: #444;
     margin-bottom: 16px;
 }
 
+/* Destaque das perguntas */
+.descricao-alojamento p strong {
+    color: #005c99;
+    font-weight: 700;
+}
+
+/* Mapa */
+.map-container {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 14px;
+    margin-top: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
 
 /* ============================================================
-   12. COMODIDADES — Premium contemporâneo
+   9. COMODIDADES — ÍCONES OUTLINE BOLD (ESTILO BOOKING)
    ============================================================ */
 
 .comodidades-booking {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* mobile-first */
-    gap: 20px;
-    margin: 40px 0;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    margin: 50px 0;
 }
 
 .cb-item {
-    background: var(--cor-card);
-    border-radius: var(--radius-card);
-    padding: 22px 18px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 26px 20px;
     text-align: center;
     border: 1px solid #e6e6e6;
-    box-shadow: var(--shadow-card);
-    transition: 0.25s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cb-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.10);
 }
 
 .cb-icon {
-    width: 42px;
-    height: 42px;
-    stroke: var(--cor-primaria);
-    stroke-width: 2.6;
+    width: 40px;
+    height: 40px;
+    stroke: #005c99;
+    stroke-width: 2.8;
     fill: none;
     margin-bottom: 12px;
 }
 
 .cb-item span {
-    font-family: var(--font-titulo);
+    font-family: "Poppins", sans-serif;
     font-size: 1.05rem;
     font-weight: 600;
-    color: var(--cor-primaria);
+    color: #005c99;
 }
 
 
+/* Cards azuis — altura uniforme (140px) */
+.cb-item.azul {
+    background: #005c99;
+    border-radius: 14px;
+    color: #ffffff;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 140px;
+    padding: 20px 15px;
+    box-sizing: border-box;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cb-item.azul:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+}
+
+.cb-item.azul span {
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.cb-item.azul small {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
 /* ============================================================
-   13. O QUE HÁ POR PERTO — Lista premium
+   10. REGRAS DA CASA — PREMIUM BELLEVIEW
+   ============================================================ */
+
+#regras h3 {
+    color: #005c99;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 40px 0 20px;
+    text-align: left;
+}
+
+/* Grid de regras */
+.rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin: 20px 0 50px;
+    padding: 0 20px;
+}
+
+.rule-item {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px 18px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.rule-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+}
+
+.rule-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    color: #005c99;
+}
+
+.rule-text {
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+.rule-text strong {
+    color: #005c99;
+    font-size: 1.05rem;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* ============================================================
+   11. FAQ — ESTILO PREMIUM BELLEVIEW (FULL WIDTH)
+   ============================================================ */
+
+.faq-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0;
+}
+
+.faq-container h3 {
+    color: #005c99;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    padding: 0 20px;
+}
+
+/* Cada item */
+.faq-item {
+    background: #ffffff;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: box-shadow 0.25s ease;
+    width: 100%;
+}
+
+.faq-item:hover {
+    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+}
+
+/* Botão da pergunta */
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 20px 24px;
+    text-align: left;
+    font-size: 1.15rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    color: #005c99;
+}
+
+/* Símbolo + / – */
+.faq-question::after {
+    content: "+";
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #005c99;
+    transition: transform 0.25s ease;
+}
+
+/* Quando aberto → “–” */
+.faq-item.active .faq-question::after {
+    content: "–";
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Resposta escondida */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 24px;
+    transition: max-height 0.35s ease;
+}
+
+/* Resposta aberta */
+.faq-item.active .faq-answer {
+    max-height: 600px;
+    padding-bottom: 20px;
+}
+
+.faq-answer p {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: #333;
+    text-align: justify;
+}
+
+/* ============================================================
+   12. O QUE HÁ POR PERTO — LISTA PREMIUM
    ============================================================ */
 
 .perto-section {
@@ -457,28 +782,42 @@ nav a:hover {
 }
 
 .perto-section h3 {
-    font-size: 1.7rem;
-    font-weight: 600;
-    color: var(--cor-primaria);
-    margin-bottom: 20px;
+    color: #005c99;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    padding: 0 20px;
 }
 
+/* Títulos das categorias */
+.subtitulo-categoria {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #005c99;
+    margin: 30px 0 12px;
+    padding: 0 20px;
+}
+
+/* Lista vertical premium */
 .proximidades-lista {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
+    margin: 20px 0 40px;
+    padding: 0 20px;
 }
 
+/* Cada linha (item) */
 .perto-item {
-    background: var(--cor-card);
-    border-radius: var(--radius-card);
-    padding: 16px 20px;
-    box-shadow: var(--shadow-card);
-    border: 1px solid #e6e6e6;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: 0.25s ease;
+    background: #ffffff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    border: 1px solid #e6e6e6;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .perto-item:hover {
@@ -486,389 +825,544 @@ nav a:hover {
     box-shadow: 0 10px 26px rgba(0,0,0,0.12);
 }
 
+/* Nome do local */
 .perto-nome {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--cor-primaria);
+    color: #005c99;
     max-width: 75%;
+    line-height: 1.4;
 }
 
+/* Distância */
 .perto-dist {
     font-size: 0.95rem;
-    color: #444;
+    color: #333;
     opacity: 0.85;
+    font-weight: 500;
+    white-space: nowrap;
 }
-
 
 /* ============================================================
-   14. REGRAS DA CASA — Cards verticais premium
+   12.1 LISTAS PREMIUM — COMPOSIÇÃO + DESTAQUES
    ============================================================ */
 
-.rules-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* mobile-first */
-    gap: 18px;
-    margin: 30px 0;
-}
-
-.rule-item {
-    background: var(--cor-card);
-    border-radius: var(--radius-card);
-    padding: 24px 20px;
-    box-shadow: var(--shadow-card);
-    border: 1px solid #e6e6e6;
+.comodidades-lista {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 12px;
-    text-align: center;
-}
-
-.rule-icon {
-    font-size: 2.2rem;
-    color: var(--cor-primaria);
-}
-
-.rule-text {
-    font-size: 1rem;
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: auto;
-}
-
-.rule-text strong {
-    display: block;
-    font-size: 1.15rem;
-    color: var(--cor-primaria);
-    margin-bottom: 6px;
-}
-
-
-/* ============================================================
-   15. FAQ — Premium, elegante e respirado
-   ============================================================ */
-
-.faq-container {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 50px auto;
+    margin: 20px 0 40px;
     padding: 0 20px;
 }
 
-.faq-container h3 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--cor-primaria);
-    margin-bottom: 20px;
-}
+.comodidade-item {
+    display: flex;
+    flex-direction: column; /* agora é vertical */
+    justify-content: center;
+    align-items: center; /* centra tudo */
 
-.faq-item {
-    background: var(--cor-card);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
+    background: #ffffff;
+    padding: 18px 20px;
+    border-radius: 12px;
     border: 1px solid #e6e6e6;
-    margin-bottom: 16px;
-    overflow: hidden;
-    transition: 0.25s ease;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+
+    text-align: center; /* centra o texto */
+    gap: 6px; /* espaço entre texto e check */
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.faq-item:hover {
-    box-shadow: 0 10px 26px rgba(0,0,0,0.12);
-}
-
-.faq-question {
-    width: 100%;
-    padding: 18px 22px;
-    background: none;
-    border: none;
-    text-align: left;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--cor-primaria);
-    cursor: pointer;
-    position: relative;
-}
-
-.faq-question::after {
-    content: "+";
-    position: absolute;
-    right: 22px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: var(--cor-primaria);
-}
-
-.faq-item.active .faq-question::after {
-    content: "–";
-}
-
-.faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 22px;
-    transition: max-height 0.35s ease;
-}
-
-.faq-item.active .faq-answer {
-    max-height: 600px;
-    padding-bottom: 18px;
-}
-
-.faq-answer p {
-    font-size: 1rem;
-    line-height: 1.55;
-    text-align: justify;
-}
-
-/* ============================================================
-   BELLEVIEW — CSS PREMIUM CONTEMPORÂNEO (PARTE 3/3)
-   Footer + Responsivo Desktop + Ajustes Finais
-   ============================================================ */
-
-
-/* ============================================================
-   16. FOOTER — Premium, limpo e elegante
-   ============================================================ */
-
-footer {
-    background: var(--cor-secundaria);
-    color: #fff;
-    padding: 40px 20px;
-    margin-top: 60px;
-    text-align: center;
-}
-
-footer h3 {
-    font-family: var(--font-titulo);
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 14px;
-    color: #fff;
-}
-
-footer p {
-    font-size: 1rem;
-    opacity: 0.9;
-    margin-bottom: 10px;
-}
-
-footer a {
-    color: #fff;
-    font-weight: 600;
-    text-decoration: underline;
-    transition: 0.25s ease;
-}
-
-footer a:hover {
-    opacity: 0.7;
-}
-
-
-/* ============================================================
-   17. BOTÕES GERAIS — Premium e consistentes
-   ============================================================ */
-
-.btn {
-    display: inline-block;
-    padding: 12px 20px;
-    background: var(--cor-primaria);
-    color: #fff;
-    border-radius: 999px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: 0.25s ease;
-}
-
-.btn:hover {
-    background: var(--cor-secundaria);
-    transform: translateY(-2px);
-}
-
-
-/* ============================================================
-   18. AJUSTES DE TEXTO — Justificação premium
-   ============================================================ */
-
-.texto-justificado,
-.texto-justificado p {
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: auto;
-}
-
-
-/* ============================================================
-   19. AJUSTES DE IMAGENS — Radius e sombra uniformes
-   ============================================================ */
-
-img {
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
-}
-
-
-/* ============================================================
-   20. AJUSTES DE LINKS — Premium e discretos
-   ============================================================ */
-
-a {
-    color: var(--cor-primaria);
-    transition: 0.25s ease;
-}
-
-a:hover {
-    color: var(--cor-secundaria);
-}
-
-
-/* ============================================================
-   21. RESPONSIVO DESKTOP — max-width 1200px
-   ============================================================ */
-
-@media (min-width: 768px) {
-
-    /* Secções com mais respiro */
-    .section {
-        padding: var(--space-section) 0;
-    }
-
-    /* Títulos maiores */
-    h1 {
-        font-size: 2.8rem;
-    }
-
-    h2 {
-        font-size: 2.2rem;
-    }
-
-    /* Header horizontal */
-    header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 18px 40px;
-    }
-
-    nav {
-        gap: 20px;
-    }
-
-    /* Hero mais impactante */
-    .hero {
-        min-height: 75vh;
-        padding: 80px 20px;
-    }
-
-    .hero h1 {
-        font-size: 3rem;
-    }
-
-    .hero p {
-        font-size: 1.25rem;
-    }
-
-    /* Booking card alinhado à direita */
-    .booking-card {
-        position: relative;
-        right: 0;
-        margin-left: auto;
-    }
-
-    /* Alojamento — grid 2 colunas */
-    #alojamento .grid-2 {
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-    }
-
-    /* Comodidades — 3 colunas */
-    .comodidades-booking {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    /* Perto — 2 colunas */
-    .proximidades-lista {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 18px;
-    }
-
-    /* Regras — 2 colunas */
-    .rules-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    /* FAQ — largura maior */
-    .faq-container {
-        max-width: 900px;
-    }
-}
-
-
-/* ============================================================
-   22. RESPONSIVO DESKTOP GRANDE — 1200px+
-   ============================================================ */
-
-@media (min-width: 1200px) {
-
-    /* Hero ainda mais premium */
-    .hero h1 {
-        font-size: 3.4rem;
-    }
-
-    .hero p {
-        font-size: 1.3rem;
-        max-width: 600px;
-    }
-
-    /* Comodidades — 4 colunas */
-    .comodidades-booking {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    /* Perto — 3 colunas */
-    .proximidades-lista {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    /* Regras — 3 colunas */
-    .rules-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-
-/* ============================================================
-   23. AJUSTES FINAIS PREMIUM
-   ============================================================ */
-
-/* Scroll suave */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Margem para âncoras (evita header cortar títulos) */
-[id] {
-    scroll-margin-top: 90px;
-}
-
-/* Hover premium em cards */
-.card:hover,
-.perto-item:hover,
-.cb-item:hover,
-.rule-item:hover {
+.comodidade-item:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 26px rgba(0,0,0,0.12);
 }
 
-/* Uniformização de listas */
-ul {
-    padding-left: 20px;
-    margin-bottom: 16px;
+.comodidade-nome {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #005c99;
+    line-height: 1.4;
+    width: 100%; /* garante alinhamento perfeito */
 }
 
-ul li {
-    margin-bottom: 6px;
+.comodidade-check {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2ecc71;
+}
+
+
+
+/* ============================================================
+   13. COOKIE — ESTILO PREMIUM BELLEVIEW
+   ============================================================ */
+
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 20px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 9999;
+  animation: slideUp 0.4s ease-out;
+  font-family: 'Arial', sans-serif;
+}
+
+.cookie-box {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cookie-text {
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: #333;
+}
+
+.cookie-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cookie-btn {
+  padding: 10px 22px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.cookie-btn.accept {
+  background: #0057b8;
+  color: white;
+}
+
+.cookie-btn.reject {
+  background: #e0e0e0;
+  color: #333;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ============================================================
+   14. FOOTER BELLEVIEW — PREMIUM (AZUL #005c99)
+   ============================================================ */
+
+footer {
+    background: #005c99;
+    padding: 40px 20px;
+    margin-top: auto; /* cola ao fundo da page-wrapper */
+    color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-top-left-radius: 26px;
+    border-top-right-radius: 26px;
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-content p,
+.footer-content a {
+    color: #ffffff !important;
+}
+
+.footer-content p {
+    margin: 6px 0;
+    font-size: 1rem;
     line-height: 1.5;
+}
+
+.footer-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.footer-links {
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.footer-links a {
+    color: #f1f1f1;
+    text-decoration: none;
+    margin: 0 6px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.reclamacoes-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-weight: 600;
+    text-decoration: underline;
+    color: #ffffff !important;
+    transition: opacity 0.2s ease;
+}
+
+.reclamacoes-link:hover {
+    opacity: 0.75;
+}
+
+.footer-copy {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    opacity: 0.85;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    padding-top: 15px;
+}
+
+/* ============================================================
+   15. RESPONSIVO — TABLET & MOBILE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    #alojamento .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    #alojamento .galeria,
+    .galeria-a,
+    .galeria-b,
+    .galeria-c {
+        grid-template-columns: 1fr;
+    }
+
+    #alojamento .galeria img,
+    .galeria-a img,
+    .galeria-b img,
+    .galeria-c img {
+        height: 200px;
+    }
+
+    .comodidades-booking {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        gap: 14px;
+        padding: 16px;
+        text-align: center;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 30px 20px;
+        text-align: center;
+        gap: 24px;
+        min-height: 70vh;
+    }
+
+    .hero-texto h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-texto p {
+        font-size: 1rem;
+    }
+
+    .booking-card {
+        max-width: 330px;
+        margin: 0 auto;
+        padding: 18px;
+    }
+
+    .secao {
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    footer {
+        padding: 20px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .comodidades-booking {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-container h3 {
+        text-align: center;
+        font-size: 1.6rem;
+        padding: 0 14px;
+    }
+
+    .faq-question {
+        font-size: 1rem;
+        padding: 16px 18px;
+    }
+
+    .faq-question::after {
+        right: 18px;
+    }
+
+    .faq-answer {
+        padding: 0 18px;
+    }
+
+    .faq-answer p {
+        font-size: 0.95rem;
+        text-align: justify;
+    }
+
+    .perto-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 16px 16px;
+    }
+
+    .perto-dist {
+        opacity: 0.9;
+        font-size: 0.9rem;
+    }
+
+    .perto-nome {
+        font-size: 0.95rem;
+    }
+
+    #regras h3 {
+        text-align: center;
+        font-size: 1.6rem;
+    }
+
+    .rules-grid {
+        padding: 0 10px;
+        gap: 14px;
+    }
+
+    .rule-item {
+        padding: 18px 14px;
+        flex-direction: row;
+    }
+
+    .rule-icon {
+        font-size: 1.6rem;
+    }
+
+    .rule-text {
+        font-size: 0.9rem;
+    }
+}
+header {
+    position: sticky;
+    top: 0;
+    z-index: 99999;
+}
+
+html, body {
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+/* CORREÇÃO DE FULL-WIDTH PARA SECÇÕES QUE ESTAVAM A ENCOLHER O LAYOUT */
+
+.comodidades-lista,
+.proximidades-lista,
+.rules-grid,
+.faq-container h3,
+.subtitulo-categoria,
+.perto-section h3 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+/* CORREÇÃO GLOBAL DE FULL-WIDTH — BELLEVIEW */
+
+.comodidades-lista,
+.proximidades-lista,
+.rules-grid,
+.subtitulo-categoria,
+.perto-section h3,
+.faq-container h3 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.faq-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+}
+
+footer,
+.footer-content {
+    width: 100% !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+/* ============================================================
+   CORREÇÃO MOBILE — REMOVER PADDING QUE ESTAVA A ESMAGAR OS CARDS
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    /* Remove padding lateral das secções com cards */
+    .secao,
+    #alojamento,
+    .perto-section,
+    .faq-container,
+    .rules-grid,
+    .comodidades-lista,
+    .proximidades-lista {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Cards full width no mobile */
+    .comodidade-item,
+    .perto-item,
+    .rule-item,
+    .faq-item,
+    .intro-alojamento,
+    .descricao-alojamento {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Footer full width real */
+    footer,
+    .footer-content {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+}
+/* ============================================================
+   CORREÇÃO MOBILE — REMOVER O PADDING QUE ESMAGA O LAYOUT
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    /* Remove o padding lateral global que estava a encolher tudo */
+    .secao {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Remove padding lateral das secções específicas */
+    #alojamento,
+    .perto-section,
+    .faq-container,
+    .rules-grid,
+    .comodidades-lista,
+    .proximidades-lista {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Cards full width */
+    .comodidade-item,
+    .perto-item,
+    .rule-item,
+    .faq-item,
+    .intro-alojamento,
+    .descricao-alojamento {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Footer full width real */
+    footer,
+    .footer-content {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+}
+/* Justificação para textos introdutórios em Comodidades */
+#comodidades .intro-alojamento p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+}
+/* ============================================================
+   REGRAS DA CASA — LAYOUT VERTICAL PREMIUM (FORÇADO)
+   ============================================================ */
+
+/* Remove padding lateral da grelha */
+.rules-grid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Card vertical com ícone centrado */
+.rule-item {
+    display: flex !important;
+    flex-direction: column !important; /* ÍCONE EM CIMA */
+    align-items: center !important;    /* CENTRA O ÍCONE */
+    justify-content: flex-start !important;
+    text-align: center !important;
+    gap: 14px !important;
+
+    background: #ffffff !important;
+    border-radius: 14px !important;
+    padding: 26px 22px !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10) !important;
+}
+
+/* Ícone centrado e consistente */
+.rule-icon {
+    font-size: 2.3rem !important;
+    line-height: 1 !important;
+    margin-bottom: 6px !important;
+    display: block !important;
+}
+
+/* Texto justificado */
+.rule-text {
+    width: 100% !important;
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+    line-height: 1.55 !important;
+    font-size: 1rem !important;
+    color: #333 !important;
+}
+
+/* Título dentro do card */
+.rule-text strong {
+    display: block !important;
+    margin-bottom: 6px !important;
+    font-size: 1.15rem !important;
+    color: #005c99 !important;
+    text-align: center !important;
 }
