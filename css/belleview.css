@@ -1308,3 +1308,9 @@ footer,
         max-width: none !important;
     }
 }
+/* Justificação para textos introdutórios em Comodidades */
+#comodidades .intro-alojamento p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+}
