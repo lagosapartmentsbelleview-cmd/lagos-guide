@@ -1547,3 +1547,18 @@ button:hover,
     color: #2ecc71 !important;
     font-weight: 700 !important;
 }
+
+/* FOOTER SEM ESPAÇO BRANCO — FIX PROFISSIONAL */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* garante que o footer cola ao fundo */
+}
+
+.page-wrapper {
+    flex: 1; /* empurra o footer para baixo */
+}
