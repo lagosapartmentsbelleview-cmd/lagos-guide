@@ -1314,3 +1314,48 @@ footer,
     text-justify: inter-word;
     hyphens: auto;
 }
+/* ============================================================
+   CORREÇÃO — REGRAS DA CASA (UNIFORMIZAÇÃO TOTAL)
+   ============================================================ */
+
+/* Remove padding lateral da grelha */
+.rules-grid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Cards uniformes e alinhados */
+.rule-item {
+    display: flex;
+    align-items: flex-start; /* mantém ícone no topo */
+    gap: 16px;
+    padding: 22px 20px !important;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* Ícone com tamanho consistente */
+.rule-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+    margin-top: 2px; /* corrige desalinhamento visual */
+}
+
+/* Texto justificado e uniforme */
+.rule-text {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    line-height: 1.55;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Título dentro do card */
+.rule-text strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 1.1rem;
+    color: #005c99;
+}
