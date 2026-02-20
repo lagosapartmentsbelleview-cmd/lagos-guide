@@ -2263,10 +2263,26 @@ let leafletMap = null;
 
 async function openInternalMap(url) {
   const modal = document.getElementById("mapModal");
-  const mapContainer = document.getElementById("leafletMap");
 
-  // Extrair texto da pesquisa do link Google Maps
-  const query = decodeURIComponent(url.split("?q=")[1]);
+  // Extrair nome do local de QUALQUER link Google Maps
+  let query = "";
+
+  // Caso 1: links com ?q=
+  if (url.includes("?q=")) {
+    query = decodeURIComponent(url.split("?q=")[1].split("&")[0]);
+  }
+
+  // Caso 2: links com /place/
+  else if (url.includes("/place/")) {
+    query = decodeURIComponent(
+      url.split("/place/")[1].split("/")[0].replace(/\+/g, " ")
+    );
+  }
+
+  // Caso 3: fallback — usa tudo
+  else {
+    query = url;
+  }
 
   // Chamada à API Nominatim
   const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
@@ -2315,7 +2331,6 @@ async function openInternalMap(url) {
 document.getElementById("closeMap").onclick = () => {
   document.getElementById("mapModal").style.display = "none";
 
-  // Limpar mapa Leaflet ao fechar
   if (leafletMap !== null) {
     leafletMap.remove();
     leafletMap = null;
