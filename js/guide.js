@@ -2255,3 +2255,31 @@ function shareGuide() {
     alert("Link copiado!");
   }
 }
+function openInternalMap(url) {
+  const modal = document.getElementById("mapModal");
+  const iframe = document.getElementById("mapFrame");
+
+  // Extrair o endereço do link Google Maps
+  const query = decodeURIComponent(url.split("?q=")[1]);
+
+  // Criar URL do OpenStreetMap
+  const osmUrl = `https://www.openstreetmap.org/export/embed.html?search=${encodeURIComponent(query)}`;
+
+  iframe.src = osmUrl;
+  modal.style.display = "block";
+}
+
+// Fechar modal ao clicar no X
+document.getElementById("closeMap").onclick = () => {
+  document.getElementById("mapModal").style.display = "none";
+  document.getElementById("mapFrame").src = "";
+};
+
+// Fechar modal ao clicar fora
+window.onclick = function(e) {
+  const modal = document.getElementById("mapModal");
+  if (e.target === modal) {
+    modal.style.display = "none";
+    document.getElementById("mapFrame").src = "";
+  }
+};
