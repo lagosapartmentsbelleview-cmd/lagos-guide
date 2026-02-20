@@ -2309,9 +2309,9 @@ async function openInternalMap(url) {
       leafletMap = L.map('leafletMap').setView([lat, lon], 16);
 
       // Adicionar tiles OSM
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap & Carto'
+      L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png', {
+      maxZoom: 20,
+      attribution: '&copy; OpenStreetMap & Stadia Maps'
     }).addTo(leafletMap);
 
       // Marcador
