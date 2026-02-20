@@ -2256,59 +2256,70 @@ function shareGuide() {
   }
 }
 // -----------------------------------------
-// --- FUNÇÃO: ABRIR MAPA INTERNO (CORRIGIDA) ---
+// --- FUNÇÃO: ABRIR MAPA INTERNO (LEAFLET) ---
 // -----------------------------------------
+
+let leafletMap = null;
 
 async function openInternalMap(url) {
   const modal = document.getElementById("mapModal");
-  const iframe = document.getElementById("mapFrame");
+  const mapContainer = document.getElementById("leafletMap");
 
   // Extrair texto da pesquisa do link Google Maps
   const query = decodeURIComponent(url.split("?q=")[1]);
 
-  // Chamada à API Nominatim (OpenStreetMap)
+  // Chamada à API Nominatim
   const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
 
   try {
     const response = await fetch(apiUrl, {
-      headers: {
-        "User-Agent": "BelleviewGuide/1.0"
-      }
+      headers: { "User-Agent": "BelleviewGuide/1.0" }
     });
 
     const data = await response.json();
 
     if (data.length > 0) {
-      const lat = data[0].lat;
-      const lon = data[0].lon;
+      const lat = parseFloat(data[0].lat);
+      const lon = parseFloat(data[0].lon);
 
-      // FORMATO QUE FUNCIONA SEMPRE COM ZOOM 16
-      const embedUrl =
-        `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=16/${lat}/${lon}`;
+      modal.style.display = "block";
 
-      iframe.src = embedUrl;
+      // Se já existir mapa, remove-o antes de criar outro
+      if (leafletMap !== null) {
+        leafletMap.remove();
+      }
+
+      // Criar mapa Leaflet
+      leafletMap = L.map('leafletMap').setView([lat, lon], 16);
+
+      // Adicionar tiles OSM
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(leafletMap);
+
+      // Marcador
+      L.marker([lat, lon]).addTo(leafletMap);
+
     } else {
-      // Fallback: pesquisa normal
-      iframe.src =
-        `https://www.openstreetmap.org/search?query=${encodeURIComponent(query)}`;
+      alert("Local não encontrado.");
     }
-
-    modal.style.display = "block";
 
   } catch (error) {
     console.error("Erro ao obter coordenadas:", error);
-
-    // Fallback total
-    iframe.src =
-      `https://www.openstreetmap.org/search?query=${encodeURIComponent(query)}`;
-    modal.style.display = "block";
+    alert("Erro ao carregar o mapa.");
   }
 }
 
 // Fechar modal ao clicar no X
 document.getElementById("closeMap").onclick = () => {
   document.getElementById("mapModal").style.display = "none";
-  document.getElementById("mapFrame").src = "";
+
+  // Limpar mapa Leaflet ao fechar
+  if (leafletMap !== null) {
+    leafletMap.remove();
+    leafletMap = null;
+  }
 };
 
 // Fechar modal ao clicar fora
@@ -2316,6 +2327,10 @@ window.onclick = function(e) {
   const modal = document.getElementById("mapModal");
   if (e.target === modal) {
     modal.style.display = "none";
-    document.getElementById("mapFrame").src = "";
+
+    if (leafletMap !== null) {
+      leafletMap.remove();
+      leafletMap = null;
+    }
   }
 };
