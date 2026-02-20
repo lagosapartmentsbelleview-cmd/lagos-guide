@@ -2073,7 +2073,8 @@ else if (
         cat.includes("Salud") ||
         cat.includes("Santé") ||
         cat.includes("Salute") ||
-        cat.includes("Gesund")
+        cat.includes("Gesund") ||
+        cat.includes("Salute e Farmacie") 
       ) {
         key = "health";
       }
