@@ -1215,100 +1215,90 @@ const supermarkets = {
 `
 };
 
-// -----------------------------------------
-// --- TRANSPORT (Transportes) ---
-// -----------------------------------------
-
+// --- transport (cartões, todos idiomas) ---   
 const transport = {
-pt: `
-<div class="category-card">
-<h3>Estação de Comboios de Lagos</h3>
-<p>Comboios para Portimão, Faro e Lisboa.</p>
-<p><strong>Distância:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Estação+de+Comboios+de+Lagos">📍 Ver no mapa</a></p>
-</div>
+  pt: `
+<div class="category-card"><h3>Transportes Urbanos – A Onda</h3><p>Autocarros urbanos dentro da cidade, ligação a praias, centro histórico e zonas residenciais.</p><p>Telefone: +351 282 763 242</p><p><a href="https://maps.google.com/?q=Estacao+Rodoviaria+de+Lagos" target="_blank">📍 Ver no Mapa</a> | <a href="https://aonda.pt" target="_blank">🌐 aonda.pt</a></p></div>
 
-<div class="category-card">
-<h3>Terminal Rodoviário</h3>
-<p>Autocarros regionais e expressos.</p>
-<p><strong>Distância:</strong> 1,2 km</p>
-<p><a href="https://maps.google.com/?q=Terminal+Rodoviário+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>Autocarros Regionais – EVA Transportes</h3><p>Ligações regionais no Algarve para Faro, Portimão, Albufeira e Tavira.</p><p>Telefone: +351 289 899 700</p><p><a href="https://maps.google.com/?q=Estacao+Rodoviaria+de+Lagos" target="_blank">📍 Ver no Mapa</a> | <a href="https://eva-bus.com" target="_blank">🌐 eva-bus.com</a></p></div>
+
+<div class="category-card"><h3>Comboios – CP (Comboios de Portugal)</h3><p>Ligações regionais (Linha do Algarve) e conexão a Faro.</p><p>Telefone: +351 210 900 032</p><p><a href="https://maps.google.com/?q=Estacao+de+Comboios+de+Lagos" target="_blank">📍 Ver no Mapa</a> | <a href="https://www.cp.pt" target="_blank">🌐 cp.pt</a></p></div>
+
+<div class="category-card"><h3>Táxis – Táxis de Lagos</h3><p>Serviço 24h, transporte local e transfer para o aeroporto. Praças: Estação de Comboios, Marina e Centro Histórico.</p><p>Telefone: +351 282 764 830</p><p><a href="https://maps.google.com/?q=Taxi+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Ride-Sharing – Uber e Bolt</h3><p>Aplicações de transporte disponíveis em Lagos, pagamento pela app.</p><p><a href="https://www.uber.com" target="_blank">🌐 uber.com</a> | <a href="https://bolt.eu" target="_blank">🌐 bolt.eu</a></p></div>
+
+<div class="category-card"><h3>Aeroporto de Faro</h3><p>Principal aeroporto da região, com ligações internacionais.</p><p>Telefone: +351 288 800 800</p><p><a href="https://maps.google.com/?q=Aeroporto+de+Faro" target="_blank">📍 Ver no Mapa</a></p></div>
 `,
-en: `
-<div class="category-card">
-<h3>Lagos Train Station</h3>
-<p>Trains to Portimão, Faro and Lisbon.</p>
-<p><strong>Distance:</strong> 1.8 km</p>
-<p><a href="https://maps.google.com/?q=Estação+de+Comboios+de+Lagos">📍 View on map</a></p>
-</div>
 
-<div class="category-card">
-<h3>Bus Terminal</h3>
-<p>Regional and express buses.</p>
-<p><strong>Distance:</strong> 1.2 km</p>
-<p><a href="https://maps.google.com/?q=Terminal+Rodoviário+Lagos">📍 View on map</a></p>
-</div>
+  en: `
+<div class="category-card"><h3>Urban Transport – A Onda</h3><p>City buses connecting beaches, historic center and residential areas.</p><p>Phone: +351 282 763 242</p><p><a href="https://maps.google.com/?q=Estacao+Rodoviaria+de+Lagos" target="_blank">📍 View on Map</a> | <a href="https://aonda.pt" target="_blank">🌐 aonda.pt</a></p></div>
+
+<div class="category-card"><h3>Regional Buses – EVA Transportes</h3><p>Regional connections in the Algarve to Faro, Portimão, Albufeira and Tavira.</p><p>Phone: +351 289 899 700</p><p><a href="https://maps.google.com/?q=Estacao+Rodoviaria+de+Lagos" target="_blank">📍 View on Map</a> | <a href="https://eva-bus.com" target="_blank">🌐 eva-bus.com</a></p></div>
+
+<div class="category-card"><h3>Trains – CP (Comboios de Portugal)</h3><p>Regional connections (Algarve Line) and link to Faro.</p><p>Phone: +351 210 900 032</p><p><a href="https://maps.google.com/?q=Estacao+de+Comboios+de+Lagos" target="_blank">📍 View on Map</a> | <a href="https://www.cp.pt" target="_blank">🌐 cp.pt</a></p></div>
+
+<div class="category-card"><h3>Taxis – Lagos Taxis</h3><p>24h service, local transport and airport transfers. Stands: Train Station, Marina and Historic Center.</p><p>Phone: +351 282 764 830</p><p><a href="https://maps.google.com/?q=Taxi+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Ride-Sharing – Uber & Bolt</h3><p>Transport apps available in Lagos, payment via app.</p><p><a href="https://www.uber.com" target="_blank">🌐 uber.com</a> | <a href="https://bolt.eu" target="_blank">🌐 bolt.eu</a></p></div>
+
+<div class="category-card"><h3>Faro Airport</h3><p>Main airport in the region, with international connections.</p><p>Phone: +351 288 800 800</p><p><a href="https://maps.google.com/?q=Aeroporto+de+Faro" target="_blank">📍 View on Map</a></p></div>
 `,
-es: `
-<div class="category-card">
-<h3>Estación de Tren de Lagos</h3>
-<p>Trenes hacia Portimão, Faro y Lisboa.</p>
-<p><strong>Distancia:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Estação+de+Comboios+de+Lagos">📍 Ver en el mapa</a></p>
-</div>
 
-<div class="category-card">
-<h3>Terminal de Autobuses</h3>
-<p>Autobuses regionales y expresos.</p>
-<p><strong>Distancia:</strong> 1,2 km</p>
-<p><a href="https://maps.google.com/?q=Terminal+Rodoviário+Lagos">📍 Ver en el mapa</a></p>
-</div>
+  es: `
+<div class="category-card"><h3>Transporte Urbano – A Onda</h3><p>Autobuses urbanos dentro de la ciudad, conexión a playas, centro histórico y zonas residenciales.</p><p>Teléfono: +351 282 763 242</p><p><a href="https://maps.google.com/?q=Estacion+Rodoviaria+de+Lagos" target="_blank">📍 Ver en el Mapa</a> | <a href="https://aonda.pt" target="_blank">🌐 aonda.pt</a></p></div>
+
+<div class="category-card"><h3>Autobuses Regionales – EVA Transportes</h3><p>Conexiones regionales en el Algarve hacia Faro, Portimão, Albufeira y Tavira.</p><p>Teléfono: +351 289 899 700</p><p><a href="https://maps.google.com/?q=Estacion+Rodoviaria+de+Lagos" target="_blank">📍 Ver en el Mapa</a> | <a href="https://eva-bus.com" target="_blank">🌐 eva-bus.com</a></p></div>
+
+<div class="category-card"><h3>Trenes – CP (Comboios de Portugal)</h3><p>Conexiones regionales (Línea del Algarve) y enlace a Faro.</p><p>Teléfono: +351 210 900 032</p><p><a href="https://maps.google.com/?q=Estacion+de+Comboios+de+Lagos" target="_blank">📍 Ver en el Mapa</a> | <a href="https://www.cp.pt" target="_blank">🌐 cp.pt</a></p></div>
+
+<div class="category-card"><h3>Taxis – Taxis de Lagos</h3><p>Servicio 24h, transporte local y traslado al aeropuerto. Paradas: Estación de tren, Marina y Centro Histórico.</p><p>Teléfono: +351 282 764 830</p><p><a href="https://maps.google.com/?q=Taxi+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Ride-Sharing – Uber y Bolt</h3><p>Aplicaciones de transporte disponibles en Lagos, pago mediante la app.</p><p><a href="https://www.uber.com" target="_blank">🌐 uber.com</a> | <a href="https://bolt.eu" target="_blank">🌐 bolt.eu</a></p></div>
+
+<div class="category-card"><h3>Aeropuerto de Faro</h3><p>Principal aeropuerto de la región, con conexiones internacionales.</p><p>Teléfono: +351 288 800 800</p><p><a href="https://maps.google.com/?q=Aeroporto+de+Faro" target="_blank">📍 Ver en el Mapa</a></p></div>
 `,
-fr: `
-<div class="category-card">
-<h3>Gare de Lagos</h3>
-<p>Trains pour Portimão, Faro et Lisbonne.</p>
-<p><strong>Distance :</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Estação+de+Comboios+de+Lagos">📍 Voir sur la carte</a></p>
-</div>
 
-<div class="category-card">
-<h3>Terminal Routier</h3>
-<p>Bus régionaux et express.</p>
-<p><strong>Distance :</strong> 1,2 km</p>
-<p><a href="https://maps.google.com/?q=Terminal+Rodoviário+Lagos">📍 Voir sur la carte</a></p>
-</div>
+  fr: `
+<div class="category-card"><h3>Transports Urbains – A Onda</h3><p>Bus urbains reliant plages, centre historique et zones résidentielles.</p><p>Téléphone : +351 282 763 242</p><p><a href="https://maps.google.com/?q=Station+Routiere+de+Lagos" target="_blank">📍 Voir sur la Carte</a> | <a href="https://aonda.pt" target="_blank">🌐 aonda.pt</a></p></div>
+
+<div class="category-card"><h3>Bus Régionaux – EVA Transportes</h3><p>Liaisons régionales en Algarve vers Faro, Portimão, Albufeira et Tavira.</p><p>Téléphone : +351 289 899 700</p><p><a href="https://maps.google.com/?q=Station+Routiere+de+Lagos" target="_blank">📍 Voir sur la Carte</a> | <a href="https://eva-bus.com" target="_blank">🌐 eva-bus.com</a></p></div>
+
+<div class="category-card"><h3>Trains – CP (Comboios de Portugal)</h3><p>Liaisons régionales (Ligne de l’Algarve) et connexion à Faro.</p><p>Téléphone : +351 210 900 032</p><p><a href="https://maps.google.com/?q=Gare+de+Lagos" target="_blank">📍 Voir sur la Carte</a> | <a href="https://www.cp.pt" target="_blank">🌐 cp.pt</a></p></div>
+
+<div class="category-card"><h3>Taxis – Taxis de Lagos</h3><p>Service 24h, transport local et transferts vers l’aéroport. Stations : Gare, Marina et Centre Historique.</p><p>Téléphone : +351 282 764 830</p><p><a href="https://maps.google.com/?q=Taxi+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Ride-Sharing – Uber & Bolt</h3><p>Applications de transport disponibles à Lagos, paiement via l’app.</p><p><a href="https://www.uber.com" target="_blank">🌐 uber.com</a> | <a href="https://bolt.eu" target="_blank">🌐 bolt.eu</a></p></div>
+
+<div class="category-card"><h3>Aéroport de Faro</h3><p>Principal aéroport de la région, avec des liaisons internationales.</p><p>Téléphone : +351 288 800 800</p><p><a href="https://maps.google.com/?q=Aeroporto+de+Faro" target="_blank">📍 Voir sur la Carte</a></p></div>
 `,
-it: `
-<div class="category-card">
-<h3>Stazione Ferroviaria di Lagos</h3>
-<p>Treni per Portimão, Faro e Lisbona.</p>
-<p><strong>Distanza:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Estação+de+Comboios+de+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
 
-<div class="category-card">
-<h3>Terminal degli Autobus</h3>
-<p>Autobus regionali ed express.</p>
-<p><strong>Distanza:</strong> 1,2 km</p>
-<p><a href="https://maps.google.com/?q=Terminal+Rodoviário+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+  it: `
+<div class="category-card"><h3>Trasporti Urbani – A Onda</h3><p>Autobus urbani che collegano spiagge, centro storico e zone residenziali.</p><p>Telefono: +351 282 763 242</p><p><a href="https://maps.google.com/?q=Stazione+Autobus+Lagos" target="_blank">📍 Vedi sulla Mappa</a> | <a href="https://aonda.pt" target="_blank">🌐 aonda.pt</a></p></div>
+
+<div class="category-card"><h3>Autobus Regionali – EVA Transportes</h3><p>Collegamenti regionali in Algarve per Faro, Portimão, Albufeira e Tavira.</p><p>Telefono: +351 289 899 700</p><p><a href="https://maps.google.com/?q=Stazione+Autobus+Lagos" target="_blank">📍 Vedi sulla Mappa</a> | <a href="https://eva-bus.com" target="_blank">🌐 eva-bus.com</a></p></div>
+
+<div class="category-card"><h3>Treni – CP (Comboios de Portugal)</h3><p>Collegamenti regionali (Linea dell’Algarve) e connessione a Faro.</p><p>Telefono: +351 210 900 032</p><p><a href="https://maps.google.com/?q=Stazione+Ferroviaria+Lagos" target="_blank">📍 Vedi sulla Mappa</a> | <a href="https://www.cp.pt" target="_blank">🌐 cp.pt</a></p></div>
+
+<div class="category-card"><h3>Taxi – Taxi di Lagos</h3><p>Servizio 24h, trasporto locale e transfer per l’aeroporto. Piazzole: Stazione, Marina e Centro Storico.</p><p>Telefono: +351 282 764 830</p><p><a href="https://maps.google.com/?q=Taxi+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Ride-Sharing – Uber & Bolt</h3><p>App di trasporto disponibili a Lagos, pagamento tramite app.</p><p><a href="https://www.uber.com" target="_blank">🌐 uber.com</a> | <a href="https://bolt.eu" target="_blank">🌐 bolt.eu</a></p></div>
+
+<div class="category-card"><h3>Aeroporto di Faro</h3><p>Principale aeroporto della regione, con collegamenti internazionali.</p><p>Telefono: +351 288 800 800</p><p><a href="https://maps.google.com/?q=Aeroporto+de+Faro" target="_blank">📍 Vedi sulla Mappa</a></p></div>
 `,
-de: `
-<div class="category-card">
-<h3>Lagos Bahnhof</h3>
-<p>Züge nach Portimão, Faro und Lissabon.</p>
-<p><strong>Entfernung:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Estação+de+Comboios+de+Lagos">📍 Karte anzeigen</a></p>
-</div>
 
-<div class="category-card">
-<h3>Busbahnhof</h3>
-<p>Regionale und Expressbusse.</p>
-<p><strong>Entfernung:</strong> 1,2 km</p>
-<p><a href="https://maps.google.com/?q=Terminal+Rodoviário+Lagos">📍 Karte anzeigen</a></p>
-</div>
+  de: `
+<div class="category-card"><h3>Stadtverkehr – A Onda</h3><p>Stadtbusse mit Verbindung zu Stränden, Altstadt und Wohngebieten.</p><p>Telefon: +351 282 763 242</p><p><a href="https://maps.google.com/?q=Busbahnhof+Lagos" target="_blank">📍 Auf der Karte ansehen</a> | <a href="https://aonda.pt" target="_blank">🌐 aonda.pt</a></p></div>
+
+<div class="category-card"><h3>Regionale Busse – EVA Transportes</h3><p>Regionale Verbindungen in der Algarve nach Faro, Portimão, Albufeira und Tavira.</p><p>Telefon: +351 289 899 700</p><p><a href="https://maps.google.com/?q=Busbahnhof+Lagos" target="_blank">📍 Auf der Karte ansehen</a> | <a href="https://eva-bus.com" target="_blank">🌐 eva-bus.com</a></p></div>
+
+<div class="category-card"><h3>Züge – CP (Comboios de Portugal)</h3><p>Regionale Verbindungen (Algarve-Linie) und Anschluss nach Faro.</p><p>Telefon: +351 210 900 032</p><p><a href="https://maps.google.com/?q=Bahnhof+Lagos" target="_blank">📍 Auf der Karte ansehen</a> | <a href="https://www.cp.pt" target="_blank">🌐 cp.pt</a></p></div>
+
+<div class="category-card"><h3>Taxis – Taxis Lagos</h3><p>24h-Service, lokaler Transport und Flughafentransfers. Stände: Bahnhof, Marina und Altstadt.</p><p>Telefon: +351 282 764 830</p><p><a href="https://maps.google.com/?q=Taxi+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Ride-Sharing – Uber & Bolt</h3><p>Transport-Apps verfügbar in Lagos, Bezahlung über die App.</p><p><a href="https://www.uber.com" target="_blank">🌐 uber.com</a> | <a href="https://bolt.eu" target="_blank">🌐 bolt.eu</a></p></div>
+
+<div class="category-card"><h3>Flughafen Faro</h3><p>Hauptflughafen der Region mit internationalen Verbindungen.</p><p>Telefon: +351 288 800 800</p><p><a href="https://maps.google.com/?q=Aeroporto+de+Faro" target="_blank">📍 Auf der Karte ansehen</a></p></div>
 `
 };
 
