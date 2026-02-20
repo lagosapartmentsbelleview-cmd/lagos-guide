@@ -2086,6 +2086,7 @@ else if (
         cat.includes("Nacht") ||
         cat.includes("Nuit") ||
         cat.includes("Vie Nocturne") ||
+        cat.includes("Vita Notturna") ||
         cat.includes("Notte")
       ) {
         key = "nightlife";
