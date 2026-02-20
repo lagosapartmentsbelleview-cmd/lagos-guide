@@ -2256,7 +2256,7 @@ function shareGuide() {
   }
 }
 // -----------------------------------------
-// --- FUNÇÃO: ABRIR MAPA INTERNO (AUTOMÁTICO) ---
+// --- FUNÇÃO: ABRIR MAPA INTERNO (CORRIGIDA) ---
 // -----------------------------------------
 
 async function openInternalMap(url) {
@@ -2282,28 +2282,15 @@ async function openInternalMap(url) {
       const lat = data[0].lat;
       const lon = data[0].lon;
 
-      // Criar embed com zoom 16 e marcador
-      // Criar bounding box pequeno para forçar zoom correto
-const delta = 0.002; // ~200m em cada direção
-
-const bbox = [
-  lon - delta,
-  lat - delta,
-  lon + delta,
-  lat + delta
-].join(',');
-
-const embedUrl =
-  `https://www.openstreetmap.org/export/embed.html?` +
-  `layer=mapnik&marker=${lat},${lon}#map=16/${lat}/${lon}`;
-
-
+      // FORMATO QUE FUNCIONA SEMPRE COM ZOOM 16
+      const embedUrl =
+        `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=16/${lat}/${lon}`;
 
       iframe.src = embedUrl;
     } else {
       // Fallback: pesquisa normal
       iframe.src =
-        `https://www.openstreetmap.org/export/embed.html?search=${encodeURIComponent(query)}`;
+        `https://www.openstreetmap.org/search?query=${encodeURIComponent(query)}`;
     }
 
     modal.style.display = "block";
@@ -2313,7 +2300,7 @@ const embedUrl =
 
     // Fallback total
     iframe.src =
-      `https://www.openstreetmap.org/export/embed.html?search=${encodeURIComponent(query)}`;
+      `https://www.openstreetmap.org/search?query=${encodeURIComponent(query)}`;
     modal.style.display = "block";
   }
 }
