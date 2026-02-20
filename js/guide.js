@@ -1855,29 +1855,119 @@ function setLanguage(lang) {
   list.innerHTML = "";
 
   categories[lang].forEach(cat => {
-    const li = document.createElement("li");
-    li.innerText = cat;
+  const li = document.createElement("li");
+  li.innerText = cat;
 
-    li.onclick = () => {
-      let key = "";
+  li.onclick = () => {
+    let key = "";
 
-      if (cat.includes("Regras") || cat.includes("House") || cat.includes("Reglas") || cat.includes("Règles") || cat.includes("Regole") || cat.includes("Haus")) key = "rules";
-      else if (cat.includes("Emerg")) key = "emergency";
-      else if (cat.includes("Praia") || cat.includes("Beach") || cat.includes("Playa") || cat.includes("Plage") || cat.includes("Spiagge") || cat.includes("Strand")) key = "beaches";
-      else if (cat.includes("Rest")) key = "restaurants";
-      else if (cat.includes("Hist")) key = "historicalSites";
-      else if (cat.includes("Muse")) key = "museums";
-      else if (cat.includes("Vida") || cat.includes("Night") || cat.includes("Nacht")) key = "nightlife";
-      else if (cat.includes("Super")) key = "supermarkets";
-      else if (cat.includes("Trans")) key = "transport";
-      else if (cat.includes("Saú") || cat.includes("Health") || cat.includes("Salud") || cat.includes("Santé") || cat.includes("Salute") || cat.includes("Gesund")) key = "health";
-      else if (cat.includes("ATM") || cat.includes("Banco") || cat.includes("Bank")) key = "atms";
-      else if (cat.includes("Tril") || cat.includes("Hik") || cat.includes("Sender") || cat.includes("Rand") || cat.includes("Sent") || cat.includes("Wand")) key = "trails";
-      else if (cat.includes("Barco") || cat.includes("Boat") || cat.includes("Bateau") || cat.includes("Barca") || cat.includes("Boot")) key = "boatTours";
-      else if (cat.includes("Golf")) key = "golf";
+    // Regras / House Rules
+    if (
+      cat.includes("Regras") ||
+      cat.includes("House") ||
+      cat.includes("Reglas") ||
+      cat.includes("Règles") ||
+      cat.includes("Regole") ||
+      cat.includes("Haus")
+    ) key = "rules";
 
-      showCategory(lang, key, cat);
-    };
+    // Emergência / Emergency
+    else if (
+      cat.includes("Emerg") ||   // Emergência, Emergency, Emergencia, Emergency (FR/IT)
+      cat.includes("Urg") ||     // Urgences, Urgenze
+      cat.includes("Notfall")    // DE
+    ) key = "emergency";
+
+    // Praias / Beaches
+    else if (
+      cat.includes("Praia") ||   // PT
+      cat.includes("Beach") ||   // EN
+      cat.includes("Playa") ||   // ES
+      cat.includes("Plage") ||   // FR
+      cat.includes("Spiagge") || // IT
+      cat.includes("Strand")     // DE (Strand / Strände)
+    ) key = "beaches";
+
+    // Restaurantes / Restaurants
+    else if (
+      cat.includes("Rest") ||    // Restaurante, Restaurant, Restaurants, Restaurantes
+      cat.includes("Rist")       // Ristoranti (IT)
+    ) key = "restaurants";
+
+    // Locais Históricos / Historical Sites
+    else if (
+      cat.includes("Hist") ||    // Histórico, Historical, Históricos, Historiques
+      cat.includes("Stor")       // Storici (IT)
+    ) key = "historicalSites";
+
+    // Museus / Museums
+    else if (
+      cat.includes("Muse")       // Museus, Museums, Museos, Musées, Musei, Museen
+    ) key = "museums";
+
+    // Vida Noturna / Nightlife
+    else if (
+      cat.includes("Vida") ||    // Vida Noturna (PT/ES)
+      cat.includes("Night") ||   // Nightlife (EN)
+      cat.includes("Nacht") ||   // Nachtleben (DE)
+      cat.includes("Nuit") ||    // Vie nocturne (FR)
+      cat.includes("Notte")      // Vita notturna (IT)
+    ) key = "nightlife";
+
+    // Supermercados / Supermarkets
+    else if (
+      cat.includes("Super")      // Supermercados, Supermarkets, Supermarchés, Supermercati, Supermärkte
+    ) key = "supermarkets";
+
+    // Transportes / Transport
+    else if (
+      cat.includes("Trans") ||   // Transportes, Transport, Transporte, Transports
+      cat.includes("Tras") ||    // Trasporti (IT)
+      cat.includes("Verk")       // Verkehr (DE)
+    ) key = "transport";
+
+    // Saúde / Health
+    else if (
+      cat.includes("Saú") ||     // Saúde
+      cat.includes("Health") ||  // Health
+      cat.includes("Salud") ||   // Salud
+      cat.includes("Santé") ||   // Santé
+      cat.includes("Salute") ||  // Salute
+      cat.includes("Gesund")     // Gesundheit
+    ) key = "health";
+
+    // ATMs / Bancos
+    else if (
+      cat.includes("ATM") ||
+      cat.includes("Banco") ||   // Banco / Bancos
+      cat.includes("Bank")       // Bank / Banken
+    ) key = "atms";
+
+    // Trilhos / Trails / Hiking
+    else if (
+      cat.includes("Tril") ||    // Trilhos
+      cat.includes("Hik") ||     // Hiking
+      cat.includes("Sender") ||  // Senderos
+      cat.includes("Rand") ||    // Randonnées
+      cat.includes("Sent") ||    // Sentieri
+      cat.includes("Wand")       // Wanderwege
+    ) key = "trails";
+
+    // Passeios de Barco / Boat Tours
+    else if (
+      cat.includes("Barco") ||   // Passeios de Barco
+      cat.includes("Boat") ||    // Boat Tours
+      cat.includes("Bateau") ||  // FR
+      cat.includes("Barca") ||   // IT
+      cat.includes("Boot")       // DE
+    ) key = "boatTours";
+
+    // Golf
+    else if (cat.includes("Golf")) key = "golf";
+
+    showCategory(lang, key, cat);
+  };
+});
 
     list.appendChild(li);
   });
