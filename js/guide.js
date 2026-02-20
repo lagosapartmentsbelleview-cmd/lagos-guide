@@ -686,8 +686,8 @@ de: `
 <div class="category-card"><h3>Casa Chico Zé</h3><p>Traditionelle Taverne, berühmt für gegrillten Fisch und Fleisch; einfache und gemütliche Atmosphäre.</p><p>Entfernung: 4–5 km</p><p><a href="https://maps.google.com/?q=Casa+Chico+Z%C3%A9+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
 
 <div class="category-card"><h3>Pizzaria Oliva</h3><p>Informelle Pizzeria mit großzügigen Pizzen und erschwinglichen Preisen — ideal für Gruppen oder schnelle Mahlzeiten.</p><p>Entfernung: 1.0 km</p><p><a href="https://maps.google.com/?q=Pizzaria+Oliva+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
-`,
-
+`
+};
 
 // -----------------------------------------
 // --- HISTORICAL SITES (Locais Históricos) ---
