@@ -598,138 +598,95 @@ de: `
 
 const restaurants = {
 pt: `
-<div class="category-card">
-<h3>Restaurante dos Artistas</h3>
-<p>Cozinha contemporânea com ingredientes frescos e ambiente sofisticado.</p>
-<p><strong>Distância:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+dos+Artistas+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>Adega da Marina</h3><p>Restaurante rústico junto à marina; peixe e marisco grelhados, ambiente informal e acolhedor.</p><p>Distância: 1.0 km</p><p><a href="https://maps.google.com/?q=Adega+da+Marina+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
 
-<div class="category-card">
-<h3>A Forja</h3>
-<p>Restaurante tradicional português com excelentes pratos de peixe e carne.</p>
-<p><strong>Distância:</strong> 900 m</p>
-<p><a href="https://maps.google.com/?q=A+Forja+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>O Camilo</h3><p>Restaurante sobre falésias (Praia do Camilo) — marisco e cozinha local com vista mar.</p><p>Distância: 3.2 km</p><p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
 
-<div class="category-card">
-<h3>O Camilo</h3>
-<p>Famoso pelos pratos de peixe fresco e vista incrível sobre a Praia do Camilo.</p>
-<p><strong>Distância:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>A Barrigada</h3><p>Restaurante tradicional fora do centro; peixe fresco diário e ambiente descontraído.</p><p>Distância: 3–4 km</p><p><a href="https://maps.google.com/?q=A+Barrigada+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>A Forja</h3><p>Tasca simples no centro, cozinha portuguesa tradicional — opção prática e honesta.</p><p>Distância: 0.9 km</p><p><a href="https://maps.google.com/?q=A+Forja+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>O Cantinho Algarvio</h3><p>Restaurante local centrado em marisco e cozinha do mar, excelente relação qualidade-preço.</p><p>Distância: 1.2 km</p><p><a href="https://maps.google.com/?q=O+Cantinho+Algarvio+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Casa Chico Zé</h3><p>Taberna tradicional, famosa pelos grelhados de peixe e carne; ambiente simples e acolhedor.</p><p>Distância: 4–5 km</p><p><a href="https://maps.google.com/?q=Casa+Chico+Z%C3%A9+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
+
+<div class="category-card"><h3>Pizzaria Oliva</h3><p>Pizzaria informal com pizzas generosas e preços acessíveis — ideal para grupos ou refeições rápidas.</p><p>Distância: 1.0 km</p><p><a href="https://maps.google.com/?q=Pizzaria+Oliva+Lagos" target="_blank">📍 Ver no mapa</a></p></div>
 `,
 en: `
-<div class="category-card">
-<h3>Restaurante dos Artistas</h3>
-<p>Contemporary cuisine with fresh ingredients and a sophisticated atmosphere.</p>
-<p><strong>Distance:</strong> 1.0 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+dos+Artistas+Lagos">📍 View on map</a></p>
-</div>
+<div class="category-card"><h3>Adega da Marina</h3><p>Rustic restaurant by the marina; grilled fish and seafood, informal and cozy atmosphere.</p><p>Distance: 1.0 km</p><p><a href="https://maps.google.com/?q=Adega+da+Marina+Lagos" target="_blank">📍 View on map</a></p></div>
 
-<div class="category-card">
-<h3>A Forja</h3>
-<p>Traditional Portuguese restaurant with excellent fish and meat dishes.</p>
-<p><strong>Distance:</strong> 900 m</p>
-<p><a href="https://maps.google.com/?q=A+Forja+Lagos">📍 View on map</a></p>
-</div>
+<div class="category-card"><h3>O Camilo</h3><p>Restaurant on the cliffs (Camilo Beach) — seafood and local cuisine with sea views.</p><p>Distance: 3.2 km</p><p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos" target="_blank">📍 View on map</a></p></div>
 
-<div class="category-card">
-<h3>O Camilo</h3>
-<p>Famous for fresh fish dishes and stunning views over Camilo Beach.</p>
-<p><strong>Distance:</strong> 1.8 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos">📍 View on map</a></p>
-</div>
+<div class="category-card"><h3>A Barrigada</h3><p>Traditional restaurant outside the center; daily fresh fish and a relaxed atmosphere.</p><p>Distance: 3–4 km</p><p><a href="https://maps.google.com/?q=A+Barrigada+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>A Forja</h3><p>Simple tavern downtown, traditional Portuguese food — practical and honest option.</p><p>Distance: 0.9 km</p><p><a href="https://maps.google.com/?q=A+Forja+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>O Cantinho Algarvio</h3><p>Local restaurant focused on seafood and ocean cuisine, great value for money.</p><p>Distance: 1.2 km</p><p><a href="https://maps.google.com/?q=O+Cantinho+Algarvio+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Casa Chico Zé</h3><p>Traditional tavern, famous for grilled fish and meat; simple and welcoming atmosphere.</p><p>Distance: 4–5 km</p><p><a href="https://maps.google.com/?q=Casa+Chico+Z%C3%A9+Lagos" target="_blank">📍 View on map</a></p></div>
+
+<div class="category-card"><h3>Pizzaria Oliva</h3><p>Informal pizzeria with generous pizzas and affordable prices — ideal for groups or quick meals.</p><p>Distance: 1.0 km</p><p><a href="https://maps.google.com/?q=Pizzaria+Oliva+Lagos" target="_blank">📍 View on map</a></p></div>
 `,
 es: `
-<div class="category-card">
-<h3>Restaurante dos Artistas</h3>
-<p>Cocina contemporánea con ingredientes frescos y ambiente sofisticado.</p>
-<p><strong>Distancia:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+dos+Artistas+Lagos">📍 Ver en el mapa</a></p>
-</div>
+<div class="category-card"><h3>Adega da Marina</h3><p>Restaurante rústico junto a la marina; pescado y marisco a la parrilla, ambiente informal y acogedor.</p><p>Distancia: 1.0 km</p><p><a href="https://maps.google.com/?q=Adega+da+Marina+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
 
-<div class="category-card">
-<h3>A Forja</h3>
-<p>Restaurante tradicional portugués con excelentes platos de pescado y carne.</p>
-<p><strong>Distancia:</strong> 900 m</p>
-<p><a href="https://maps.google.com/?q=A+Forja+Lagos">📍 Ver en el mapa</a></p>
-</div>
+<div class="category-card"><h3>O Camilo</h3><p>Restaurante sobre acantilados (playa Camilo) — mariscos y cocina local con vistas al mar.</p><p>Distancia: 3.2 km</p><p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
 
-<div class="category-card">
-<h3>O Camilo</h3>
-<p>Famoso por sus platos de pescado fresco y vistas impresionantes sobre la Praia do Camilo.</p>
-<p><strong>Distancia:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos">📍 Ver en el mapa</a></p>
-</div>
+<div class="category-card"><h3>A Barrigada</h3><p>Restaurante tradicional fuera del centro; pescado fresco diario y ambiente relajado.</p><p>Distancia: 3–4 km</p><p><a href="https://maps.google.com/?q=A+Barrigada+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>A Forja</h3><p>Tasca sencilla en el centro, cocina portuguesa tradicional — opción práctica y honesta.</p><p>Distancia: 0.9 km</p><p><a href="https://maps.google.com/?q=A+Forja+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>O Cantinho Algarvio</h3><p>Restaurante local centrado en mariscos y cocina del mar, buena relación calidad-precio.</p><p>Distancia: 1.2 km</p><p><a href="https://maps.google.com/?q=O+Cantinho+Algarvio+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Casa Chico Zé</h3><p>Taberna tradicional, famosa por pescados y carnes a la parrilla; ambiente sencillo y acogedor.</p><p>Distancia: 4–5 km</p><p><a href="https://maps.google.com/?q=Casa+Chico+Z%C3%A9+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
+
+<div class="category-card"><h3>Pizzaria Oliva</h3><p>Pizzería informal con pizzas generosas y precios accesibles — ideal para grupos o comidas rápidas.</p><p>Distancia: 1.0 km</p><p><a href="https://maps.google.com/?q=Pizzaria+Oliva+Lagos" target="_blank">📍 Ver en el mapa</a></p></div>
 `,
 fr: `
-<div class="category-card">
-<h3>Restaurante dos Artistas</h3>
-<p>Cuisine contemporaine avec ingrédients frais et ambiance sophistiquée.</p>
-<p><strong>Distance :</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+dos+Artistas+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<div class="category-card"><h3>Adega da Marina</h3><p>Restaurant rustique près de la marina ; poissons et fruits de mer grillés, ambiance informelle et conviviale.</p><p>Distance : 1.0 km</p><p><a href="https://maps.google.com/?q=Adega+da+Marina+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
 
-<div class="category-card">
-<h3>A Forja</h3>
-<p>Restaurant portugais traditionnel avec d’excellents plats de poisson et de viande.</p>
-<p><strong>Distance :</strong> 900 m</p>
-<p><a href="https://maps.google.com/?q=A+Forja+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<div class="category-card"><h3>O Camilo</h3><p>Restaurant sur les falaises (plage Camilo) — fruits de mer et cuisine locale avec vue sur la mer.</p><p>Distance : 3.2 km</p><p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
 
-<div class="category-card">
-<h3>O Camilo</h3>
-<p>Célèbre pour ses plats de poisson frais et sa vue magnifique sur la plage de Camilo.</p>
-<p><strong>Distance :</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<div class="category-card"><h3>A Barrigada</h3><p>Restaurant traditionnel hors du centre ; poisson frais quotidien et atmosphère détendue.</p><p>Distance : 3–4 km</p><p><a href="https://maps.google.com/?q=A+Barrigada+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>A Forja</h3><p>Petite taverne simple au centre, cuisine portugaise traditionnelle — option pratique et honnête.</p><p>Distance : 0.9 km</p><p><a href="https://maps.google.com/?q=A+Forja+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>O Cantinho Algarvio</h3><p>Restaurant local centré sur les fruits de mer et la cuisine marine, excellent rapport qualité-prix.</p><p>Distance : 1.2 km</p><p><a href="https://maps.google.com/?q=O+Cantinho+Algarvio+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Casa Chico Zé</h3><p>Taverne traditionnelle, célèbre pour ses grillades de poisson et de viande ; ambiance simple et accueillante.</p><p>Distance : 4–5 km</p><p><a href="https://maps.google.com/?q=Casa+Chico+Z%C3%A9+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
+
+<div class="category-card"><h3>Pizzaria Oliva</h3><p>Pizzeria informelle avec pizzas généreuses et prix abordables — idéale pour groupes ou repas rapides.</p><p>Distance : 1.0 km</p><p><a href="https://maps.google.com/?q=Pizzaria+Oliva+Lagos" target="_blank">📍 Voir sur la carte</a></p></div>
 `,
 it: `
-<div class="category-card">
-<h3>Restaurante dos Artistas</h3>
-<p>Cucina contemporanea con ingredienti freschi e atmosfera sofisticata.</p>
-<p><strong>Distanza:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+dos+Artistas+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<div class="category-card"><h3>Adega da Marina</h3><p>Ristorante rustico vicino alla marina; pesce e frutti di mare alla griglia, atmosfera informale e accogliente.</p><p>Distanza: 1.0 km</p><p><a href="https://maps.google.com/?q=Adega+da+Marina+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
 
-<div class="category-card">
-<h3>A Forja</h3>
-<p>Ristorante portoghese tradizionale con ottimi piatti di pesce e carne.</p>
-<p><strong>Distanza:</strong> 900 m</p>
-<p><a href="https://maps.google.com/?q=A+Forja+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<div class="category-card"><h3>O Camilo</h3><p>Ristorante sulle scogliere (spiaggia Camilo) — frutti di mare e cucina locale con vista mare.</p><p>Distanza: 3.2 km</p><p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
 
-<div class="category-card">
-<h3>O Camilo</h3>
-<p>Famoso per i piatti di pesce fresco e la vista mozzafiato sulla Praia do Camilo.</p>
-<p><strong>Distanza:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<div class="category-card"><h3>A Barrigada</h3><p>Ristorante tradizionale fuori dal centro; pesce fresco quotidiano e atmosfera rilassata.</p><p>Distanza: 3–4 km</p><p><a href="https://maps.google.com/?q=A+Barrigada+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>A Forja</h3><p>Piccola taverna semplice in centro, cucina portoghese tradizionale — opzione pratica e onesta.</p><p>Distanza: 0.9 km</p><p><a href="https://maps.google.com/?q=A+Forja+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>O Cantinho Algarvio</h3><p>Ristorante locale incentrato su frutti di mare e cucina di mare, ottimo rapporto qualità-prezzo.</p><p>Distanza: 1.2 km</p><p><a href="https://maps.google.com/?q=O+Cantinho+Algarvio+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Casa Chico Zé</h3><p>Taverna tradizionale, famosa per grigliate di pesce e carne; atmosfera semplice e accogliente.</p><p>Distanza: 4–5 km</p><p><a href="https://maps.google.com/?q=Casa+Chico+Z%C3%A9+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
+
+<div class="category-card"><h3>Pizzaria Oliva</h3><p>Pizzeria informale con pizze generose e prezzi accessibili — ideale per gruppi o pasti veloci.</p><p>Distanza: 1.0 km</p><p><a href="https://maps.google.com/?q=Pizzaria+Oliva+Lagos" target="_blank">📍 Vedi sulla mappa</a></p></div>
 `,
 de: `
-<div class="category-card">
-<h3>Restaurante dos Artistas</h3>
-<p>Moderne Küche mit frischen Zutaten und gehobenem Ambiente.</p>
-<p><strong>Entfernung:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+dos+Artistas+Lagos">📍 Karte anzeigen</a></p>
-</div>
+<div class="category-card"><h3>Adega da Marina</h3><p>Rustikales Restaurant an der Marina; gegrillter Fisch und Meeresfrüchte, informelle und gemütliche Atmosphäre.</p><p>Entfernung: 1.0 km</p><p><a href="https://maps.google.com/?q=Adega+da+Marina+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
 
-<div class="category-card">
-<h3>A Forja</h3>
-<p>Traditionelles portugiesisches Restaurant mit hervorragenden Fisch- und Fleischgerichten.</p>
-<p><strong>Entfernung:</strong> 900 m</p>
-<p><a href="https://maps.google.com/?q=A+Forja+Lagos">📍 Karte anzeigen</a></p>
-</div>
+<div class="category-card"><h3>O Camilo</h3><p>Restaurant auf Klippen (Camilo-Strand) — Meeresfrüchte und lokale Küche mit Meerblick.</p><p>Entfernung: 3.2 km</p><p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
 
-<div class="category-card">
-<h3>O Camilo</h3>
-<p>Berühmt für frischen Fisch und atemberaubende Aussicht auf den Camilo-Strand.</p>
-<p><strong>Entfernung:</strong> 1,8 km</p>
-<p><a href="https://maps.google.com/?q=Restaurante+O+Camilo+Lagos">📍 Karte anzeigen</a></p>
-</div>
-`
-};
+<div class="category-card"><h3>A Barrigada</h3><p>Traditionelles Restaurant außerhalb des Zentrums; täglich frischer Fisch und entspannte Atmosphäre.</p><p>Entfernung: 3–4 km</p><p><a href="https://maps.google.com/?q=A+Barrigada+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>A Forja</h3><p>Einfache Taverne im Zentrum, traditionelle portugiesische Küche — praktische und ehrliche Option.</p><p>Entfernung: 0.9 km</p><p><a href="https://maps.google.com/?q=A+Forja+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>O Cantinho Algarvio</h3><p>Lokales Restaurant mit Schwerpunkt auf Meeresfrüchten und Meeresküche, gutes Preis-Leistungs-Verhältnis.</p><p>Entfernung: 1.2 km</p><p><a href="https://maps.google.com/?q=O+Cantinho+Algarvio+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Casa Chico Zé</h3><p>Traditionelle Taverne, berühmt für gegrillten Fisch und Fleisch; einfache und gemütliche Atmosphäre.</p><p>Entfernung: 4–5 km</p><p><a href="https://maps.google.com/?q=Casa+Chico+Z%C3%A9+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Pizzaria Oliva</h3><p>Informelle Pizzeria mit großzügigen Pizzen und erschwinglichen Preisen — ideal für Gruppen oder schnelle Mahlzeiten.</p><p>Entfernung: 1.0 km</p><p><a href="https://maps.google.com/?q=Pizzaria+Oliva+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+`,
 
 
 // -----------------------------------------
