@@ -978,102 +978,57 @@ de: `
 `,
 };
 
-// -----------------------------------------
-// --- MUSEUMS (Museus) ---
-// -----------------------------------------
-
+// --- museums (cartões, todos idiomas) ---
 const museums = {
-pt: `
-<div class="category-card">
-<h3>Museu de Lagos</h3>
-<p>Exposições sobre a história local, arqueologia e arte sacra.</p>
-<p><strong>Distância:</strong> 1,3 km</p>
-<p><a href="https://maps.google.com/?q=Museu+de+Lagos">📍 Ver no mapa</a></p>
-</div>
+  pt: `
+<div class="category-card"><h3>Museu de Lagos</h3><p>Museu municipal polinucleado com núcleos de arqueologia, história local, etnografia e arte sacra. Abrange o património de Lagos desde épocas antigas até à atualidade.</p><p>Distância: 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 
-<div class="category-card">
-<h3>Centro Ciência Viva</h3>
-<p>Museu interativo dedicado à ciência, ideal para famílias.</p>
-<p><strong>Distância:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Centro+Ciência+Viva+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>Museu Municipal Dr. José Formosinho</h3><p>Núcleo do Museu de Lagos com coleções de arqueologia, arte sacra, numismática e etnografia. A visita inclui acesso à Igreja de Santo António, com interior barroco notável.</p><p>Distância: 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jose+Formosinho+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Centro Ciência Viva de Lagos</h3><p>Espaço educativo e interativo que combina ciência, navegação e história local. Ideal para famílias.</p><p>Telefone: +351 282 770 000</p><p>Distância: 1.5 km</p><p><a href="https://maps.google.com/?q=Centro+Ciencia+Viva+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 `,
-en: `
-<div class="category-card">
-<h3>Lagos Museum</h3>
-<p>Exhibitions on local history, archaeology and sacred art.</p>
-<p><strong>Distance:</strong> 1.3 km</p>
-<p><a href="https://maps.google.com/?q=Museu+de+Lagos">📍 View on map</a></p>
-</div>
 
-<div class="category-card">
-<h3>Centro Ciência Viva</h3>
-<p>Interactive science museum, ideal for families.</p>
-<p><strong>Distance:</strong> 1.0 km</p>
-<p><a href="https://maps.google.com/?q=Centro+Ciência+Viva+Lagos">📍 View on map</a></p>
-</div>
+  en: `
+<div class="category-card"><h3>Lagos Museum</h3><p>Municipal multi‑nucleus museum including archaeology, local history, ethnography and sacred art. Covers Lagos heritage from ancient times to the present.</p><p>Distance: 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+de+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Dr. José Formosinho Municipal Museum</h3><p>Part of the Lagos Museum with collections of archaeology, sacred art, numismatics and ethnography. The visit includes the Church of St. Anthony with a remarkable baroque interior.</p><p>Distance: 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jose+Formosinho+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Lagos Ciência Viva Center</h3><p>Educational and interactive science center combining local history, science and navigation/discoveries. Ideal for families.</p><p>Phone: +351 282 770 000</p><p>Distance: 1.5 km</p><p><a href="https://maps.google.com/?q=Centro+Ciencia+Viva+Lagos" target="_blank">📍 View on Map</a></p></div>
 `,
-es: `
-<div class="category-card">
-<h3>Museo de Lagos</h3>
-<p>Exposiciones sobre historia local, arqueología y arte sacro.</p>
-<p><strong>Distancia:</strong> 1,3 km</p>
-<p><a href="https://maps.google.com/?q=Museu+de+Lagos">📍 Ver en el mapa</a></p>
-</div>
 
-<div class="category-card">
-<h3>Centro Ciência Viva</h3>
-<p>Museo interactivo dedicado a la ciencia, ideal para familias.</p>
-<p><strong>Distancia:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Centro+Ciência+Viva+Lagos">📍 Ver en el mapa</a></p>
-</div>
+  es: `
+<div class="category-card"><h3>Museo de Lagos</h3><p>Museo municipal polinucleado con arqueología, historia local, etnografía y arte sacro. Reúne el patrimonio de Lagos desde épocas antiguas hasta la actualidad.</p><p>Distancia: 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+de+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Museo Municipal Dr. José Formosinho</h3><p>Núcleo del Museo de Lagos con colecciones de arqueología, arte sacro, numismática y etnografía. La visita incluye la Iglesia de San Antonio, con notable interior barroco.</p><p>Distancia: 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jose+Formosinho+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Centro Ciência Viva de Lagos</h3><p>Espacio educativo e interactivo que combina ciencia, navegación e historia local. Ideal para familias.</p><p>Teléfono: +351 282 770 000</p><p>Distancia: 1.5 km</p><p><a href="https://maps.google.com/?q=Centro+Ciencia+Viva+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
 `,
-fr: `
-<div class="category-card">
-<h3>Musée de Lagos</h3>
-<p>Expositions sur l’histoire locale, l’archéologie et l’art sacré.</p>
-<p><strong>Distance :</strong> 1,3 km</p>
-<p><a href="https://maps.google.com/?q=Museu+de+Lagos">📍 Voir sur la carte</a></p>
-</div>
 
-<div class="category-card">
-<h3>Centro Ciência Viva</h3>
-<p>Musée interactif dédié à la science, idéal pour les familles.</p>
-<p><strong>Distance :</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Centro+Ciência+Viva+Lagos">📍 Voir sur la carte</a></p>
-</div>
+  fr: `
+<div class="category-card"><h3>Musée de Lagos</h3><p>Musée municipal multi‑sites comprenant archéologie, histoire locale, ethnographie et art sacré. Présente le patrimoine de Lagos de l’antiquité à nos jours.</p><p>Distance : 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+de+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Musée Municipal Dr. José Formosinho</h3><p>Section du Musée de Lagos avec collections d’archéologie, art sacré, numismatique et ethnographie. La visite inclut l’Église Saint‑Antoine, au remarquable intérieur baroque.</p><p>Distance : 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jose+Formosinho+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Centre Ciência Viva de Lagos</h3><p>Espace éducatif et interactif alliant science, navigation et histoire locale. Idéal pour les familles.</p><p>Téléphone : +351 282 770 000</p><p>Distance : 1.5 km</p><p><a href="https://maps.google.com/?q=Centro+Ciencia+Viva+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
 `,
-it: `
-<div class="category-card">
-<h3>Museo di Lagos</h3>
-<p>Mostre sulla storia locale, archeologia e arte sacra.</p>
-<p><strong>Distanza:</strong> 1,3 km</p>
-<p><a href="https://maps.google.com/?q=Museu+de+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
 
-<div class="category-card">
-<h3>Centro Ciência Viva</h3>
-<p>Museo interattivo dedicato alla scienza, ideale per famiglie.</p>
-<p><strong>Distanza:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Centro+Ciência+Viva+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+  it: `
+<div class="category-card"><h3>Museo di Lagos</h3><p>Museo municipale polinucleato con archeologia, storia locale, etnografia e arte sacra. Copre il patrimonio di Lagos dall’antichità ai giorni nostri.</p><p>Distanza: 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Museo Municipale Dr. José Formosinho</h3><p>Sezione del Museo di Lagos con collezioni di archeologia, arte sacra, numismatica ed etnografia. La visita include la Chiesa di Sant’Antonio, con notevole interno barocco.</p><p>Distanza: 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jose+Formosinho+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Centro Ciência Viva di Lagos</h3><p>Centro educativo e interattivo che combina scienza, navigazione e storia locale. Ideale per famiglie.</p><p>Telefono: +351 282 770 000</p><p>Distanza: 1.5 km</p><p><a href="https://maps.google.com/?q=Centro+Ciencia+Viva+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
 `,
-de: `
-<div class="category-card">
-<h3>Lagos Museum</h3>
-<p>Ausstellungen über lokale Geschichte, Archäologie und sakrale Kunst.</p>
-<p><strong>Entfernung:</strong> 1,3 km</p>
-<p><a href="https://maps.google.com/?q=Museu+de+Lagos">📍 Karte anzeigen</a></p>
-</div>
 
-<div class="category-card">
-<h3>Centro Ciência Viva</h3>
-<p>Interaktives Wissenschaftsmuseum, ideal für Familien.</p>
-<p><strong>Entfernung:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Centro+Ciência+Viva+Lagos">📍 Karte anzeigen</a></p>
-</div>
+  de: `
+<div class="category-card"><h3>Museum von Lagos</h3><p>Kommunales Mehrfachmuseum mit Archäologie, lokaler Geschichte, Ethnographie und sakraler Kunst. Deckt das Erbe von Lagos von der Antike bis heute ab.</p><p>Entfernung: 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+de+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Städtisches Museum Dr. José Formosinho</h3><p>Teil des Lagos‑Museums mit Sammlungen aus Archäologie, sakraler Kunst, Numismatik und Ethnographie. Der Besuch umfasst auch die Kirche des Heiligen Antonius mit bemerkenswertem barocken Innenraum.</p><p>Entfernung: 1.2 km</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jose+Formosinho+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Centro Ciência Viva Lagos</h3><p>Bildungs‑ und Wissenschaftszentrum, das lokale Geschichte, Wissenschaft und Navigation verbindet. Ideal für Familien.</p><p>Telefon: +351 282 770 000</p><p>Entfernung: 1.5 km</p><p><a href="https://maps.google.com/?q=Centro+Ciencia+Viva+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
 `
 };
+
 // -----------------------------------------
 // --- NIGHTLIFE (Vida Noturna) ---
 // -----------------------------------------
@@ -1170,7 +1125,6 @@ de: `
 </div>
 `
 };
-
 
 // -----------------------------------------
 // --- SUPERMARKETS (Supermercados) ---
