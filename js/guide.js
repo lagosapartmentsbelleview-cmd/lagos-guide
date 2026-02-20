@@ -2255,18 +2255,55 @@ function shareGuide() {
     alert("Link copiado!");
   }
 }
-function openInternalMap(url) {
+// -----------------------------------------
+// --- FUNÇÃO: ABRIR MAPA INTERNO (AUTOMÁTICO) ---
+// -----------------------------------------
+
+async function openInternalMap(url) {
   const modal = document.getElementById("mapModal");
   const iframe = document.getElementById("mapFrame");
 
-  // Extrair o endereço do link Google Maps
+  // Extrair texto da pesquisa do link Google Maps
   const query = decodeURIComponent(url.split("?q=")[1]);
 
-  // Criar URL do OpenStreetMap
-  const osmUrl = `https://www.openstreetmap.org/export/embed.html?search=${encodeURIComponent(query)}`;
+  // Chamada à API Nominatim (OpenStreetMap)
+  const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
 
-  iframe.src = osmUrl;
-  modal.style.display = "block";
+  try {
+    const response = await fetch(apiUrl, {
+      headers: {
+        "User-Agent": "BelleviewGuide/1.0"
+      }
+    });
+
+    const data = await response.json();
+
+    if (data.length > 0) {
+      const lat = data[0].lat;
+      const lon = data[0].lon;
+
+      // Criar embed com zoom 16 e marcador
+      const embedUrl =
+        `https://www.openstreetmap.org/export/embed.html?` +
+        `layer=mapnik&marker=${lat},${lon}&zoom=16`;
+
+      iframe.src = embedUrl;
+    } else {
+      // Fallback: pesquisa normal
+      iframe.src =
+        `https://www.openstreetmap.org/export/embed.html?search=${encodeURIComponent(query)}`;
+    }
+
+    modal.style.display = "block";
+
+  } catch (error) {
+    console.error("Erro ao obter coordenadas:", error);
+
+    // Fallback total
+    iframe.src =
+      `https://www.openstreetmap.org/export/embed.html?search=${encodeURIComponent(query)}`;
+    modal.style.display = "block";
+  }
 }
 
 // Fechar modal ao clicar no X
