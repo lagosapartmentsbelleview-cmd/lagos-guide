@@ -1392,6 +1392,50 @@ const health = {
 
 <div class="category-card"><h3>Clinique Marina Lagus</h3><p>Centre d’imagerie et de diagnostic médical. Distance : ~1,2 km • 3 min en voiture</p><p><a href="https://maps.google.com/?q=Clinica+Marina+Lagus+Lagos" target="_blank">📍 Voir sur la Carte</a> | <a href="http://marinalagus.pt/" target="_blank">🌐 marinalagus.pt</a></p></div>
 `,
+
+it: `
+<div class="category-card"><h3>Farmacia di Turno a Lagos</h3><p>Farmacia aperta con orari estesi o notturni, garantendo l’accesso ai farmaci fuori orario.</p><p><a href="https://www.farmaciasdeservico.net/localidade/faro/lagos" target="_blank">🌐 farmaciasdeservico.net</a></p></div>
+
+<div class="category-card"><h3>Farmacia Centrale di Lagos</h3><p>Distanza: ~600 m • 8-10 min a piedi | 2-3 min in auto</p><p><a href="https://maps.google.com/?q=Farmacia+Central+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Farmacia Moderna</h3><p>Distanza: ~700 m • 9-11 min a piedi | 3 min in auto</p><p><a href="https://maps.google.com/?q=Farmacia+Moderna+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Farmacia Ribeiro Lopes</h3><p>Distanza: ~1,1 km • 14-16 min a piedi | 4 min in auto</p><p><a href="https://maps.google.com/?q=Farmacia+Ribeiro+Lopes+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Ospedale di Lagos – Terras do Infante</h3><p>Ospedale pubblico, aperto 24h. Distanza: ~2 km • 5 min in auto</p><p><a href="https://maps.google.com/?q=Hospital+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a> | <a href="https://www.chualgarve.min-saude.pt/" target="_blank">🌐 chualgarve.min-saude.pt</a></p></div>
+
+<div class="category-card"><h3>Clinica São Gonçalo – Gruppo HPA Salute</h3><p>Clinica privata con varie specialità mediche. Distanza: ~1,8 km • 5 min in auto</p><p><a href="https://maps.google.com/?q=Clinica+Sao+Goncalo+Lagos" target="_blank">📍 Vedi sulla Mappa</a> | <a href="https://www.grupohpa.com/it/unita/cliniche/clinica-sao-goncalo-lagos/" target="_blank">🌐 grupohpa.com</a></p></div>
+
+<div class="category-card"><h3>Clinica Privata di Lagos – Gruppo HPA Salute</h3><p>Clinica privata con consulti ed esami. Distanza: ~2,2 km • 6 min in auto</p><p><a href="https://maps.google.com/?q=Clinica+Particular+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a> | <a href="https://www.grupohpa.com/it/unita/cliniche/clinica-particular-de-lagos/" target="_blank">🌐 grupohpa.com</a></p></div>
+
+<div class="category-card"><h3>Centro di Salute di Lagos</h3><p>Servizio sanitario pubblico. Distanza: ~2 km • 5 min in auto</p><p><a href="https://maps.google.com/?q=Centro+de+Saude+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Clinica A Lacobrigense</h3><p>Clinica privata con varie specialità. Distanza: ~1,5 km • 4 min in auto</p><p><a href="https://maps.google.com/?q=Clinica+A+Lacobrigense+Lagos" target="_blank">📍 Vedi sulla Mappa</a> | <a href="http://alacobrigense.pt/" target="_blank">🌐 alacobrigense.pt</a></p></div>
+
+<div class="category-card"><h3>Clinica Marina Lagus</h3><p>Centro di diagnostica e imaging medico. Distanza: ~1,2 km • 3 min in auto</p><p><a href="https://maps.google.com/?q=Clinica+Marina+Lagus+Lagos" target="_blank">📍 Vedi sulla Mappa</a> | <a href="http://marinalagus.pt/" target="_blank">🌐 marinalagus.pt</a></p></div>
+`,
+
+de: `
+<div class="category-card"><h3>Apotheke im Bereitschaftsdienst in Lagos</h3><p>Apotheke mit verlängerten oder Nachtöffnungszeiten, gewährleistet Zugang zu Medikamenten außerhalb der normalen Zeiten.</p><p><a href="https://www.farmaciasdeservico.net/localidade/faro/lagos" target="_blank">🌐 farmaciasdeservico.net</a></p></div>
+
+<div class="category-card"><h3>Zentralapotheke von Lagos</h3><p>Entfernung: ~600 m • 8-10 Min zu Fuß | 2-3 Min mit dem Auto</p><p><a href="https://maps.google.com/?q=Farmacia+Central+de+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Moderna Apotheke</h3><p>Entfernung: ~700 m • 9-11 Min zu Fuß | 3 Min mit dem Auto</p><p><a href="https://maps.google.com/?q=Farmacia+Moderna+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Ribeiro Lopes Apotheke</h3><p>Entfernung: ~1,1 km • 14-16 Min zu Fuß | 4 Min mit dem Auto</p><p><a href="https://maps.google.com/?q=Farmacia+Ribeiro+Lopes+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Krankenhaus von Lagos – Terras do Infante</h3><p>Öffentliches Krankenhaus, 24h geöffnet. Entfernung: ~2 km • 5 Min mit dem Auto</p><p><a href="https://maps.google.com/?q=Hospital+de+Lagos" target="_blank">📍 Auf der Karte ansehen</a> | <a href="https://www.chualgarve.min-saude.pt/" target="_blank">🌐 chualgarve.min-saude.pt</a></p></div>
+
+<div class="category-card"><h3>Klinik São Gonçalo – HPA Gesundheitsgruppe</h3><p>Private Klinik mit mehreren medizinischen Fachrichtungen. Entfernung: ~1,8 km • 5 Min mit dem Auto</p><p><a href="https://maps.google.com/?q=Clinica+Sao+Goncalo+Lagos" target="_blank">📍 Auf der Karte ansehen</a> | <a href="https://www.grupohpa.com/de/einheiten/kliniken/clinica-sao-goncalo-lagos/" target="_blank">🌐 grupohpa.com</a></p></div>
+
+<div class="category-card"><h3>Private Klinik von Lagos – HPA Gesundheitsgruppe</h3><p>Private Klinik mit Konsultationen und Untersuchungen. Entfernung: ~2,2 km • 6 Min mit dem Auto</p><p><a href="https://maps.google.com/?q=Clinica+Particular+de+Lagos" target="_blank">📍 Auf der Karte ansehen</a> | <a href="https://www.grupohpa.com/de/einheiten/kliniken/clinica-particular-de-lagos/" target="_blank">🌐 grupohpa.com</a></p></div>
+
+<div class="category-card"><h3>Gesundheitszentrum Lagos</h3><p>Öffentlicher Gesundheitsdienst. Entfernung: ~2 km • 5 Min mit dem Auto</p><p><a href="https://maps.google.com/?q=Centro+de+Saude+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Klinik A Lacobrigense</h3><p>Private Klinik mit mehreren Fachrichtungen. Entfernung: ~1,5 km • 4 Min mit dem Auto</p><p><a href="https://maps.google.com/?q=Clinica+A+Lacobrigense+Lagos" target="_blank">📍 Auf der Karte ansehen</a> | <a href="http://alacobrigense.pt/" target="_blank">🌐 alacobrigense.pt</a></p></div>
+
+<div class="category-card"><h3>Klinik Marina Lagus</h3><p>Zentrum für medizinische Bildgebung und Diagnostik. Entfernung: ~1,2 km • 3 Min mit dem Auto</p><p><a href="https://maps.google.com/?q=Clinica+Marina+Lagus+Lagos" target="_blank">📍 Auf der Karte ansehen</a> | <a href="http://marinalagus.pt/" target="_blank">🌐 marinalagus.pt</a></p></div>
+`,
 };
 
 // -----------------------------------------
