@@ -2255,6 +2255,7 @@ function shareGuide() {
     alert("Link copiado!");
   }
 }
+
 // -----------------------------------------
 // --- FUNÇÃO: ABRIR MAPA INTERNO (LEAFLET) ---
 // -----------------------------------------
@@ -2264,7 +2265,6 @@ let leafletMap = null;
 async function openInternalMap(url) {
   const modal = document.getElementById("mapModal");
 
-  // Extrair nome do local de QUALQUER link Google Maps
   let query = "";
 
   // Caso 1: links com ?q=
@@ -2279,10 +2279,17 @@ async function openInternalMap(url) {
     );
   }
 
-  // Caso 3: fallback — usa tudo
+  // Caso 3: fallback
   else {
     query = url;
   }
+
+  // Melhorar a pesquisa automaticamente
+  query = query
+    .replace(/\+/g, " ")
+    .replace(/Dr /gi, "Dr. ")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remover acentos
+    + " Lagos Portugal";
 
   // Chamada à API Nominatim
   const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
@@ -2308,13 +2315,11 @@ async function openInternalMap(url) {
       // Criar mapa Leaflet
       leafletMap = L.map('leafletMap').setView([lat, lon], 16);
 
-      // Adicionar tiles OSM
+      // Estilo claro tipo Booking (Carto Light)
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap & Carto'
-    }).addTo(leafletMap);
-
-
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap & Carto'
+      }).addTo(leafletMap);
 
       // Marcador
       L.marker([lat, lon]).addTo(leafletMap);
@@ -2329,7 +2334,10 @@ async function openInternalMap(url) {
   }
 }
 
-// Fechar modal ao clicar no X
+// -----------------------------------------
+// --- FECHAR MODAL (X) ---
+// -----------------------------------------
+
 document.getElementById("closeMap").onclick = () => {
   document.getElementById("mapModal").style.display = "none";
 
@@ -2339,7 +2347,10 @@ document.getElementById("closeMap").onclick = () => {
   }
 };
 
-// Fechar modal ao clicar fora
+// -----------------------------------------
+// --- FECHAR MODAL AO CLICAR FORA ---
+// -----------------------------------------
+
 window.onclick = function(e) {
   const modal = document.getElementById("mapModal");
   if (e.target === modal) {
