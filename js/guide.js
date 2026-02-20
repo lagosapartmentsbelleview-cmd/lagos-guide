@@ -1869,101 +1869,125 @@ function setLanguage(lang) {
       cat.includes("Règles") ||
       cat.includes("Regole") ||
       cat.includes("Haus")
-    ) key = "rules";
+    ) {
+      key = "rules";
+    }
 
     // Emergência / Emergency
     else if (
-      cat.includes("Emerg") ||   // Emergência, Emergency, Emergencia, Emergency (FR/IT)
-      cat.includes("Urg") ||     // Urgences, Urgenze
-      cat.includes("Notfall")    // DE
-    ) key = "emergency";
+      cat.includes("Emerg") ||
+      cat.includes("Urg") ||
+      cat.includes("Notfall")
+    ) {
+      key = "emergency";
+    }
 
     // Praias / Beaches
     else if (
-      cat.includes("Praia") ||   // PT
-      cat.includes("Beach") ||   // EN
-      cat.includes("Playa") ||   // ES
-      cat.includes("Plage") ||   // FR
-      cat.includes("Spiagge") || // IT
-      cat.includes("Strand")     // DE (Strand / Strände)
-    ) key = "beaches";
+      cat.includes("Praia") ||
+      cat.includes("Beach") ||
+      cat.includes("Playa") ||
+      cat.includes("Plage") ||
+      cat.includes("Spiagge") ||
+      cat.includes("Strand")
+    ) {
+      key = "beaches";
+    }
 
     // Restaurantes / Restaurants
     else if (
-      cat.includes("Rest") ||    // Restaurante, Restaurant, Restaurants, Restaurantes
-      cat.includes("Rist")       // Ristoranti (IT)
-    ) key = "restaurants";
+      cat.includes("Rest") ||
+      cat.includes("Rist")
+    ) {
+      key = "restaurants";
+    }
 
     // Locais Históricos / Historical Sites
     else if (
-      cat.includes("Hist") ||    // Histórico, Historical, Históricos, Historiques
-      cat.includes("Stor")       // Storici (IT)
-    ) key = "historicalSites";
+      cat.includes("Hist") ||
+      cat.includes("Stor")
+    ) {
+      key = "historicalSites";
+    }
 
     // Museus / Museums
-    else if (
-      cat.includes("Muse")       // Museus, Museums, Museos, Musées, Musei, Museen
-    ) key = "museums";
+    else if (cat.includes("Muse")) {
+      key = "museums";
+    }
 
     // Vida Noturna / Nightlife
     else if (
-      cat.includes("Vida") ||    // Vida Noturna (PT/ES)
-      cat.includes("Night") ||   // Nightlife (EN)
-      cat.includes("Nacht") ||   // Nachtleben (DE)
-      cat.includes("Nuit") ||    // Vie nocturne (FR)
-      cat.includes("Notte")      // Vita notturna (IT)
-    ) key = "nightlife";
+      cat.includes("Vida") ||
+      cat.includes("Night") ||
+      cat.includes("Nacht") ||
+      cat.includes("Nuit") ||
+      cat.includes("Notte")
+    ) {
+      key = "nightlife";
+    }
 
     // Supermercados / Supermarkets
-    else if (
-      cat.includes("Super")      // Supermercados, Supermarkets, Supermarchés, Supermercati, Supermärkte
-    ) key = "supermarkets";
+    else if (cat.includes("Super")) {
+      key = "supermarkets";
+    }
 
     // Transportes / Transport
     else if (
-      cat.includes("Trans") ||   // Transportes, Transport, Transporte, Transports
-      cat.includes("Tras") ||    // Trasporti (IT)
-      cat.includes("Verk")       // Verkehr (DE)
-    ) key = "transport";
+      cat.includes("Trans") ||
+      cat.includes("Tras") ||
+      cat.includes("Verk")
+    ) {
+      key = "transport";
+    }
 
     // Saúde / Health
     else if (
-      cat.includes("Saú") ||     // Saúde
-      cat.includes("Health") ||  // Health
-      cat.includes("Salud") ||   // Salud
-      cat.includes("Santé") ||   // Santé
-      cat.includes("Salute") ||  // Salute
-      cat.includes("Gesund")     // Gesundheit
-    ) key = "health";
+      cat.includes("Saú") ||
+      cat.includes("Health") ||
+      cat.includes("Salud") ||
+      cat.includes("Santé") ||
+      cat.includes("Salute") ||
+      cat.includes("Gesund")
+    ) {
+      key = "health";
+    }
 
     // ATMs / Bancos
     else if (
       cat.includes("ATM") ||
-      cat.includes("Banco") ||   // Banco / Bancos
-      cat.includes("Bank")       // Bank / Banken
-    ) key = "atms";
+      cat.includes("Banco") ||
+      cat.includes("Bank")
+    ) {
+      key = "atms";
+    }
 
-    // Trilhos / Trails / Hiking
+    // Trilhos / Trails
     else if (
-      cat.includes("Tril") ||    // Trilhos
-      cat.includes("Hik") ||     // Hiking
-      cat.includes("Sender") ||  // Senderos
-      cat.includes("Rand") ||    // Randonnées
-      cat.includes("Sent") ||    // Sentieri
-      cat.includes("Wand")       // Wanderwege
-    ) key = "trails";
+      cat.includes("Tril") ||
+      cat.includes("Hik") ||
+      cat.includes("Sender") ||
+      cat.includes("Rand") ||
+      cat.includes("Sent") ||
+      cat.includes("Wand")
+    ) {
+      key = "trails";
+    }
 
     // Passeios de Barco / Boat Tours
     else if (
-      cat.includes("Barco") ||   // Passeios de Barco
-      cat.includes("Boat") ||    // Boat Tours
-      cat.includes("Bateau") ||  // FR
-      cat.includes("Barca") ||   // IT
-      cat.includes("Boot")       // DE
-    ) key = "boatTours";
+      cat.includes("Barco") ||
+      cat.includes("Boat") ||
+      cat.includes("Bateau") ||
+      cat.includes("Barca") ||
+      cat.includes("Boot")
+    ) {
+      key = "boatTours";
+    }
 
     // Golf
-    else if (cat.includes("Golf")) key = "golf";
+    else if (cat.includes("Golf")) {
+      key = "golf";
+    }
 
     showCategory(lang, key, cat);
   };
