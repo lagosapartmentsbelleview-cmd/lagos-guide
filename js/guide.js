@@ -2058,7 +2058,10 @@ else if (
       }
 
       // Museus / Museums
-      else if (cat.includes("Muse")) {
+      else if (
+        cat.includes("Muse") || 
+        cat.includes("Musées")
+        ) {
         key = "museums";
       }
 
