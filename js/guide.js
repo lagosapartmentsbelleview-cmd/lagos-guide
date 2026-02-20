@@ -695,97 +695,288 @@ de: `
 
 const historicalSites = {
 pt: `
-<div class="category-card">
-<h3>Forte da Ponta da Bandeira</h3>
-<p>Fortaleza do século XVII com vista para o mar e exposições históricas.</p>
-<p><strong>Distância:</strong> 1,6 km</p>
-<p><a href="https://maps.google.com/?q=Forte+da+Ponta+da+Bandeira+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>Explorar a Ponta da Piedade</h3><p>Cartão-postal de Lagos, famoso pelas formações rochosas, grutas e arcos naturais. Passadiços no topo das falésias oferecem vistas panorâmicas; escadaria leva ao nível do mar.</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 
-<div class="category-card">
-<h3>Muralhas de Lagos</h3>
-<p>Antigas muralhas que protegiam a cidade durante a época dos Descobrimentos.</p>
-<p><strong>Distância:</strong> 1,2 km</p>
-<p><a href="https://maps.google.com/?q=Muralhas+de+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>Passeio de Barco às Grutas</h3><p>Partindo da Marina de Lagos, permite entrar em grutas inacessíveis por terra. Opções em barcos tradicionais, catamarãs ou caiaques.</p><p><a href="https://maps.google.com/?q=Marina+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Relaxar na Praia de Dona Ana ou Praia do Camilo</h3><p>Praias consideradas das mais belas do mundo, cercadas por falésias douradas e águas cristalinas. Acesso ao Camilo por longa escadaria de madeira.</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Dona Ana</a> | <a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Camilo</a></p></div>
+
+<div class="category-card"><h3>Caminhada pelo Centro Histórico</h3><p>Ruas de calçada portuguesa com muralhas, Igreja de Santo António e Mercado de Escravos. Ideal para jantar e vida noturna.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Gil+Eanes+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Parque Zoológico de Lagos</h3><p>Jardim zoológico focado em conservação e educação, com aves, primatas e répteis.</p><p><a href="https://maps.google.com/?q=Zoo+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Parque Aventura Lagos</h3><p>Arborismo e paintball em plena natureza para quem procura adrenalina.</p><p><a href="https://maps.google.com/?q=Parque+Aventura+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Mercado Municipal de Lagos</h3><p>Peixe fresco, frutas locais e artesanato. Terraço com vista sobre a Marina.</p><p><a href="https://maps.google.com/?q=Mercado+Municipal+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Museu Dr. José Formosinho</h3><p>Museu municipal com arqueologia, arte sacra e etnografia.</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jos%C3%A9+Formosinho+Lagos" target="_blank">📍 Ver no Mapa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Mercado de Escravos</h3><p>Antigo mercado, hoje museu sobre o comércio transatlântico.</p><p><a href="https://maps.google.com/?q=Mercado+de+Escravos+Lagos" target="_blank">📍 Ver no Mapa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Museu de Cera dos Descobrimentos</h3><p>Exposições interativas sobre a Era dos Descobrimentos.</p><p><a href="https://maps.google.com/?q=Museu+de+Cera+dos+Descobrimentos+Lagos" target="_blank">📍 Ver no Mapa</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Centro Ciência Viva de Lagos</h3><p>Exposições interativas sobre ciência, natureza e história local.</p><p><a href="https://maps.google.com/?q=Centro+Ci%C3%AAncia+Viva+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Forte Ponta da Bandeira</h3><p>Fortificação do século XVII com capela e exposições.</p><p><a href="https://maps.google.com/?q=Forte+Ponta+da+Bandeira+Lagos" target="_blank">📍 Ver no Mapa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Castelo de Lagos</h3><p>Castelo do século XV ligado à história militar e aos Descobrimentos.</p><p><a href="https://maps.google.com/?q=Castelo+de+Lagos" target="_blank">📍 Ver no Mapa</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Muralhas e Torreões</h3><p>Vestígios das muralhas que protegiam a cidade.</p><p><a href="https://maps.google.com/?q=Muralhas+de+Lagos" target="_blank">📍 Ver no Mapa</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Fortaleza de Nossa Senhora da Luz</h3><p>Arquitetura militar costeira do século XVII.</p><p><a href="https://maps.google.com/?q=Fortaleza+de+Nossa+Senhora+da+Luz" target="_blank">📍 Ver no Mapa</a></p><p><a href="https://cm-lagos.pt" target="_blank">🌐 cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Igreja de Santo António</h3><p>Monumento nacional com interior ricamente decorado.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santo+Ant%C3%B3nio+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Igreja de Santa Maria</h3><p>Igreja paroquial do centro histórico.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santa+Maria+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Igreja São Sebastião</h3><p>Igreja dos séculos XIV–XVI com elementos históricos.</p><p><a href="https://maps.google.com/?q=Igreja+de+S%C3%A3o+Sebasti%C3%A3o+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Igreja de Nossa Senhora da Luz</h3><p>Igreja com elementos góticos, manuelinos e barrocos.</p><p><a href="https://maps.google.com/?q=Igreja+de+Nossa+Senhora+da+Luz+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Ermida de Santo Amaro</h3><p>Ruínas de capela do século XIV, sobrevivente ao terramoto de 1755.</p><p><a href="https://maps.google.com/?q=Ermida+de+Santo+Amaro+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Convento de Nossa Senhora do Loreto</h3><p>Ruínas do convento do século XVI, hoje espaço cultural.</p><p><a href="https://maps.google.com/?q=Convento+de+Nossa+Senhora+do+Loreto+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Armazém Regimental</h3><p>Edifício histórico do século XVII ligado à vida militar e comercial.</p><p><a href="https://maps.google.com/?q=Armaz%C3%A9m+Regimental+Lagos" target="_blank">📍 Ver no Mapa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Praça Infante Dom Henrique</h3><p>Centro histórico com estátuas e edifícios ligados aos Descobrimentos.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Infante+Dom+Henrique+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 `,
 en: `
-<div class="category-card">
-<h3>Ponta da Bandeira Fort</h3>
-<p>17th-century fortress overlooking the sea with historical exhibitions.</p>
-<p><strong>Distance:</strong> 1.6 km</p>
-<p><a href="https://maps.google.com/?q=Forte+da+Ponta+da+Bandeira+Lagos">📍 View on map</a></p>
-</div>
+<div class="category-card"><h3>Explore Ponta da Piedade</h3><p>Postcard of Lagos, famous for rock formations, caves and natural arches. Walkways on the cliffs offer panoramic views; stairs lead down to sea level.</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 View on Map</a></p></div>
 
-<div class="category-card">
-<h3>Lagos City Walls</h3>
-<p>Ancient walls that protected the city during the Age of Discoveries.</p>
-<p><strong>Distance:</strong> 1.2 km</p>
-<p><a href="https://maps.google.com/?q=Muralhas+de+Lagos">📍 View on map</a></p>
-</div>
+<div class="category-card"><h3>Boat Tour to the Caves</h3><p>Departing from Lagos Marina, these tours enter caves inaccessible by land. Options include traditional boats, catamarans or kayaks.</p><p><a href="https://maps.google.com/?q=Marina+de+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Relax at Dona Ana or Camilo Beach</h3><p>Among the most beautiful beaches in the world, surrounded by golden cliffs and crystal waters. Camilo access via long wooden staircase.</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Dona Ana</a> | <a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Camilo</a></p></div>
+
+<div class="category-card"><h3>Walk through the Historic Center</h3><p>Cobbled streets with ancient walls, Santo António Church and the Slave Market. Perfect for dining and nightlife.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Gil+Eanes+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Lagos Zoo</h3><p>Zoo focused on conservation and education, hosting birds, primates and reptiles.</p><p><a href="https://maps.google.com/?q=Zoo+de+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Lagos Adventure Park</h3><p>Tree-top courses and paintball in nature for adrenaline seekers.</p><p><a href="https://maps.google.com/?q=Parque+Aventura+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Lagos Municipal Market</h3><p>Fresh fish, local fruits and crafts. Terrace with view over the Marina.</p><p><a href="https://maps.google.com/?q=Mercado+Municipal+de+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Dr. José Formosinho Museum</h3><p>Municipal museum with archaeology, sacred art and ethnography.</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jos%C3%A9+Formosinho+Lagos" target="_blank">📍 View on Map</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Slave Market Museum</h3><p>Former slave market, now a museum about the transatlantic trade.</p><p><a href="https://maps.google.com/?q=Mercado+de+Escravos+Lagos" target="_blank">📍 View on Map</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Wax Museum of the Discoveries</h3><p>Interactive exhibitions about the Portuguese Age of Discoveries.</p><p><a href="https://maps.google.com/?q=Museu+de+Cera+dos+Descobrimentos+Lagos" target="_blank">📍 View on Map</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Lagos Science Center</h3><p>Interactive exhibitions about science, nature and local history.</p><p><a href="https://maps.google.com/?q=Centro+Ci%C3%AAncia+Viva+de+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Ponta da Bandeira Fort</h3><p>17th-century fort with chapel and exhibitions.</p><p><a href="https://maps.google.com/?q=Forte+Ponta+da+Bandeira+Lagos" target="_blank">📍 View on Map</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Lagos Castle</h3><p>15th-century castle linked to military history and the Discoveries.</p><p><a href="https://maps.google.com/?q=Castelo+de+Lagos" target="_blank">📍 View on Map</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Walls and Towers</h3><p>Remains of the ancient walls that protected the city.</p><p><a href="https://maps.google.com/?q=Muralhas+de+Lagos" target="_blank">📍 View on Map</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Fortress of Nossa Senhora da Luz</h3><p>17th-century coastal military architecture.</p><p><a href="https://maps.google.com/?q=Fortaleza+de+Nossa+Senhora+da+Luz" target="_blank">📍 View on Map</a></p><p><a href="https://cm-lagos.pt" target="_blank">🌐 cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Church of Santo António</h3><p>National monument with richly decorated interior.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santo+Ant%C3%B3nio+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Church of Santa Maria</h3><p>Parish church in the historic center.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santa+Maria+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Church of São Sebastião</h3><p>Church built between the 14th–16th centuries with historic elements.</p><p><a href="https://maps.google.com/?q=Igreja+de+S%C3%A3o+Sebasti%C3%A3o+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Church of Nossa Senhora da Luz</h3><p>Church with Gothic, Manueline and Baroque elements.</p><p><a href="https://maps.google.com/?q=Igreja+de+Nossa+Senhora+da+Luz+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Hermitage of Santo Amaro</h3><p>Ruins of a 14th-century chapel, survivor of the 1755 earthquake.</p><p><a href="https://maps.google.com/?q=Ermida+de+Santo+Amaro+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Convent of Nossa Senhora do Loreto</h3><p>Ruins of the 16th-century convent, now a cultural space.</p><p><a href="https://maps.google.com/?q=Convento+de+Nossa+Senhora+do+Loreto+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Regimental Warehouse</h3><p>17th-century building linked to the military and commercial life of the city.</p><p><a href="https://maps.google.com/?q=Armaz%C3%A9m+Regimental+Lagos" target="_blank">📍 View on Map</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Infante Dom Henrique Square</h3><p>Historic square with statues and buildings linked to the Discoveries.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Infante+Dom+Henrique+Lagos" target="_blank">📍 View on Map</a></p></div>
 `,
 es: `
-<div class="category-card">
-<h3>Forte da Ponta da Bandeira</h3>
-<p>Fortaleza del siglo XVII con vistas al mar y exposiciones históricas.</p>
-<p><strong>Distancia:</strong> 1,6 km</p>
-<p><a href="https://maps.google.com/?q=Forte+da+Ponta+da+Bandeira+Lagos">📍 Ver en el mapa</a></p>
-</div>
+<div class="category-card"><h3>Explorar la Ponta da Piedade</h3><p>Postal de Lagos, famoso por formaciones rocosas, cuevas y arcos naturales. Pasarelas en los acantilados ofrecen vistas panorámicas; escaleras bajan al nivel del mar.</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
 
-<div class="category-card">
-<h3>Murallas de Lagos</h3>
-<p>Antiguas murallas que protegían la ciudad durante la era de los Descubrimientos.</p>
-<p><strong>Distancia:</strong> 1,2 km</p>
-<p><a href="https://maps.google.com/?q=Muralhas+de+Lagos">📍 Ver en el mapa</a></p>
-</div>
+<div class="category-card"><h3>Paseo en Barco a las Cuevas</h3><p>Desde la Marina de Lagos, permite entrar en cuevas inaccesibles por tierra. Opciones en barcos tradicionales, catamaranes o kayaks.</p><p><a href="https://maps.google.com/?q=Marina+de+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Relajarse en la Playa de Dona Ana o Playa do Camilo</h3><p>Entre las más bellas del mundo, rodeadas de acantilados dorados y aguas cristalinas. Acceso a Camilo por larga escalera de madera.</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Dona Ana</a> | <a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Camilo</a></p></div>
+
+<div class="category-card"><h3>Paseo por el Centro Histórico</h3><p>Calles empedradas con murallas antiguas, Iglesia de Santo António y Mercado de Esclavos. Perfecto para cenar y disfrutar de la vida nocturna.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Gil+Eanes+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Zoológico de Lagos</h3><p>Jardín zoológico centrado en conservación y educación, con aves, primates y reptiles.</p><p><a href="https://maps.google.com/?q=Zoo+de+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Parque Aventura Lagos</h3><p>Recorridos entre árboles y paintball en plena naturaleza para los que buscan adrenalina.</p><p><a href="https://maps.google.com/?q=Parque+Aventura+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Mercado Municipal de Lagos</h3><p>Pescado fresco, frutas locales y artesanía. Terraza con vista sobre la Marina.</p><p><a href="https://maps.google.com/?q=Mercado+Municipal+de+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Museo Dr. José Formosinho</h3><p>Museo municipal con arqueología, arte sacro y etnografía.</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jos%C3%A9+Formosinho+Lagos" target="_blank">📍 Ver en el Mapa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Mercado de Esclavos</h3><p>Antiguo mercado, hoy museo sobre el comercio transatlántico.</p><p><a href="https://maps.google.com/?q=Mercado+de+Escravos+Lagos" target="_blank">📍 Ver en el Mapa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Museo de Cera de los Descubrimientos</h3><p>Exposiciones interactivas sobre la Era de los Descubrimientos.</p><p><a href="https://maps.google.com/?q=Museu+de+Cera+dos+Descobrimentos+Lagos" target="_blank">📍 Ver en el Mapa</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Centro Ciência Viva de Lagos</h3><p>Exposiciones interactivas sobre ciencia, naturaleza e historia local.</p><p><a href="https://maps.google.com/?q=Centro+Ci%C3%AAncia+Viva+de+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Fuerte Ponta da Bandeira</h3><p>Fortificación del siglo XVII con capilla y exposiciones.</p><p><a href="https://maps.google.com/?q=Forte+Ponta+da+Bandeira+Lagos" target="_blank">📍 Ver en el Mapa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Castillo de Lagos</h3><p>Castillo del siglo XV ligado a la historia militar y a los Descubrimientos.</p><p><a href="https://maps.google.com/?q=Castelo+de+Lagos" target="_blank">📍 Ver en el Mapa</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Murallas y Torreones</h3><p>Restos de las murallas antiguas que protegían la ciudad.</p><p><a href="https://maps.google.com/?q=Muralhas+de+Lagos" target="_blank">📍 Ver en el Mapa</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Fortaleza de Nossa Senhora da Luz</h3><p>Arquitectura militar costera del siglo XVII.</p><p><a href="https://maps.google.com/?q=Fortaleza+de+Nossa+Senhora+da+Luz" target="_blank">📍 Ver en el Mapa</a></p><p><a href="https://cm-lagos.pt" target="_blank">🌐 cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Iglesia de Santo António</h3><p>Monumento nacional con interior ricamente decorado.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santo+Ant%C3%B3nio+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Iglesia de Santa María</h3><p>Iglesia parroquial del centro histórico.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santa+Maria+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Iglesia de São Sebastião</h3><p>Iglesia de los siglos XIV–XVI con elementos históricos.</p><p><a href="https://maps.google.com/?q=Igreja+de+S%C3%A3o+Sebasti%C3%A3o+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Iglesia de Nossa Senhora da Luz</h3><p>Iglesia con elementos góticos, manuelinos y barrocos.</p><p><a href="https://maps.google.com/?q=Igreja+de+Nossa+Senhora+da+Luz+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Ermita de Santo Amaro</h3><p>Ruinas de capilla del siglo XIV, superviviente del terremoto de 1755.</p><p><a href="https://maps.google.com/?q=Ermida+de+Santo+Amaro+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Convento de Nossa Senhora do Loreto</h3><p>Ruinas del convento del siglo XVI, hoy espacio cultural.</p><p><a href="https://maps.google.com/?q=Convento+de+Nossa+Senhora+do+Loreto+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Almacén Regimental</h3><p>Edificio histórico del siglo XVII vinculado a la vida militar y comercial.</p><p><a href="https://maps.google.com/?q=Armaz%C3%A9m+Regimental+Lagos" target="_blank">📍 Ver en el Mapa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Plaza Infante Dom Henrique</h3><p>Centro histórico con estatuas y edificios ligados a los Descubrimientos.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Infante+Dom+Henrique+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
 `,
 fr: `
-<div class="category-card">
-<h3>Fort de Ponta da Bandeira</h3>
-<p>Forteresse du XVIIe siècle surplombant la mer, avec expositions historiques.</p>
-<p><strong>Distance :</strong> 1,6 km</p>
-<p><a href="https://maps.google.com/?q=Forte+da+Ponta+da+Bandeira+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<div class="category-card"><h3>Explorer la Ponta da Piedade</h3><p>Carte postale de Lagos, célèbre pour ses formations rocheuses, grottes et arcs naturels. Des passerelles au sommet des falaises offrent des vues panoramiques ; des escaliers descendent au niveau de la mer.</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
 
-<div class="category-card">
-<h3>Murailles de Lagos</h3>
-<p>Anciennes murailles qui protégeaient la ville à l’époque des Grandes Découvertes.</p>
-<p><strong>Distance :</strong> 1,2 km</p>
-<p><a href="https://maps.google.com/?q=Muralhas+de+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<div class="category-card"><h3>Excursion en Bateau vers les Grottes</h3><p>Depuis la Marina de Lagos, ces excursions permettent d’entrer dans des grottes inaccessibles par terre. Options en bateaux traditionnels, catamarans ou kayaks.</p><p><a href="https://maps.google.com/?q=Marina+de+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Se détendre à la plage de Dona Ana ou du Camilo</h3><p>Parmi les plus belles plages du monde, entourées de falaises dorées et d’eaux cristallines. Accès à Camilo par un long escalier en bois.</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Dona Ana</a> | <a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Camilo</a></p></div>
+
+<div class="category-card"><h3>Balade dans le Centre Historique</h3><p>Rues pavées avec anciennes murailles, Église de Santo António et Marché aux Esclaves. Parfait pour dîner et profiter de la vie nocturne.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Gil+Eanes+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Zoo de Lagos</h3><p>Jardin zoologique axé sur la conservation et l’éducation, avec oiseaux, primates et reptiles.</p><p><a href="https://maps.google.com/?q=Zoo+de+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Parque Aventura Lagos</h3><p>Parcours dans les arbres et paintball en pleine nature pour les amateurs d’adrénaline.</p><p><a href="https://maps.google.com/?q=Parque+Aventura+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Marché Municipal de Lagos</h3><p>Poisson frais, fruits locaux et artisanat. Terrasse avec vue sur la Marina.</p><p><a href="https://maps.google.com/?q=Mercado+Municipal+de+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Musée Dr. José Formosinho</h3><p>Musée municipal avec archéologie, art sacré et ethnographie.</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jos%C3%A9+Formosinho+Lagos" target="_blank">📍 Voir sur la Carte</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Marché des Esclaves</h3><p>Ancien marché, aujourd’hui musée sur le commerce transatlantique.</p><p><a href="https://maps.google.com/?q=Mercado+de+Escravos+Lagos" target="_blank">📍 Voir sur la Carte</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Musée de Cire des Découvertes</h3><p>Expositions interactives sur l’Ère des Découvertes.</p><p><a href="https://maps.google.com/?q=Museu+de+Cera+dos+Descobrimentos+Lagos" target="_blank">📍 Voir sur la Carte</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Centre Ciência Viva de Lagos</h3><p>Expositions interactives sur la science, la nature et l’histoire locale.</p><p><a href="https://maps.google.com/?q=Centro+Ci%C3%AAncia+Viva+de+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Fort de Ponta da Bandeira</h3><p>Fortification du XVIIe siècle avec chapelle et expositions.</p><p><a href="https://maps.google.com/?q=Forte+Ponta+da+Bandeira+Lagos" target="_blank">📍 Voir sur la Carte</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Château de Lagos</h3><p>Château du XVe siècle lié à l’histoire militaire et aux Découvertes.</p><p><a href="https://maps.google.com/?q=Castelo+de+Lagos" target="_blank">📍 Voir sur la Carte</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Murailles et Tours</h3><p>Vestiges des anciennes murailles qui protégeaient la ville.</p><p><a href="https://maps.google.com/?q=Muralhas+de+Lagos" target="_blank">📍 Voir sur la Carte</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Forteresse de Nossa Senhora da Luz</h3><p>Architecture militaire côtière du XVIIe siècle.</p><p><a href="https://maps.google.com/?q=Fortaleza+de+Nossa+Senhora+da+Luz" target="_blank">📍 Voir sur la Carte</a></p><p><a href="https://cm-lagos.pt" target="_blank">🌐 cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Église de Santo António</h3><p>Monument national avec intérieur richement décoré.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santo+Ant%C3%B3nio+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Église de Santa Maria</h3><p>Église paroissiale du centre historique.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santa+Maria+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Église de São Sebastião</h3><p>Église des XIVe–XVIe siècles avec éléments historiques.</p><p><a href="https://maps.google.com/?q=Igreja+de+S%C3%A3o+Sebasti%C3%A3o+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Église de Nossa Senhora da Luz</h3><p>Église avec éléments gothiques, manuélin et baroque.</p><p><a href="https://maps.google.com/?q=Igreja+de+Nossa+Senhora+da+Luz+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Ermitage de Santo Amaro</h3><p>Ruines d’une chapelle du XIVe siècle, survivante du tremblement de terre de 1755.</p><p><a href="https://maps.google.com/?q=Ermida+de+Santo+Amaro+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Couvent de Nossa Senhora do Loreto</h3><p>Ruines du couvent du XVIe siècle, aujourd’hui espace culturel.</p><p><a href="https://maps.google.com/?q=Convento+de+Nossa+Senhora+do+Loreto+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Entrepôt Régimental</h3><p>Bâtiment historique du XVIIe siècle lié à la vie militaire et commerciale.</p><p><a href="https://maps.google.com/?q=Armaz%C3%A9m+Regimental+Lagos" target="_blank">📍 Voir sur la Carte</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Place Infante Dom Henrique</h3><p>Centre historique avec statues et bâtiments liés aux Découvertes.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Infante+Dom+Henrique+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
 `,
 it: `
-<div class="category-card">
-<h3>Forte da Ponta da Bandeira</h3>
-<p>Fortezza del XVII secolo con vista sul mare ed esposizioni storiche.</p>
-<p><strong>Distanza:</strong> 1,6 km</p>
-<p><a href="https://maps.google.com/?q=Forte+da+Ponta+da+Bandeira+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<div class="category-card"><h3>Esplorare Ponta da Piedade</h3><p>Cartolina di Lagos, famosa per formazioni rocciose, grotte e archi naturali. Passerelle sulle scogliere offrono viste panoramiche; scale portano al livello del mare.</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
 
-<div class="category-card">
-<h3>Mura di Lagos</h3>
-<p>Antiche mura che proteggevano la città durante l’epoca delle Scoperte.</p>
-<p><strong>Distanza:</strong> 1,2 km</p>
-<p><a href="https://maps.google.com/?q=Muralhas+de+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<div class="category-card"><h3>Tour in Barca alle Grotte</h3><p>Dalla Marina di Lagos, consente di entrare in grotte inaccessibili da terra. Opzioni in barche tradizionali, catamarani o kayak.</p><p><a href="https://maps.google.com/?q=Marina+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Relax alla Spiaggia di Dona Ana o Camilo</h3><p>Tra le spiagge più belle al mondo, circondate da scogliere dorate e acque cristalline. Accesso a Camilo tramite lunga scalinata in legno.</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Dona Ana</a> | <a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Camilo</a></p></div>
+
+<div class="category-card"><h3>Passeggiata nel Centro Storico</h3><p>Strade lastricate con antiche mura, Chiesa di Santo António e Mercato degli Schiavi. Perfetto per cenare e vivere la vita notturna.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Gil+Eanes+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Zoo di Lagos</h3><p>Giardino zoologico incentrato su conservazione ed educazione, con uccelli, primati e rettili.</p><p><a href="https://maps.google.com/?q=Zoo+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Parque Aventura Lagos</h3><p>Percorsi sugli alberi e paintball nella natura per chi cerca adrenalina.</p><p><a href="https://maps.google.com/?q=Parque+Aventura+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Mercato Municipale di Lagos</h3><p>Pesce fresco, frutta locale e artigianato. Terrazza con vista sulla Marina.</p><p><a href="https://maps.google.com/?q=Mercado+Municipal+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Museo Dr. José Formosinho</h3><p>Museo municipale con archeologia, arte sacra ed etnografia.</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jos%C3%A9+Formosinho+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Mercato degli Schiavi</h3><p>Antico mercato, oggi museo dedicato al commercio transatlantico.</p><p><a href="https://maps.google.com/?q=Mercado+de+Escravos+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Museo delle Cere delle Scoperte</h3><p>Mostre interattive dedicate all’Età delle Scoperte portoghese.</p><p><a href="https://maps.google.com/?q=Museu+de+Cera+dos+Descobrimentos+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Centro Ciência Viva di Lagos</h3><p>Mostre interattive su scienza, natura e storia locale.</p><p><a href="https://maps.google.com/?q=Centro+Ci%C3%AAncia+Viva+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Forte Ponta da Bandeira</h3><p>Fortificazione del XVII secolo con cappella e mostre.</p><p><a href="https://maps.google.com/?q=Forte+Ponta+da+Bandeira+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Castello di Lagos</h3><p>Castello del XV secolo legato alla storia militare e alle Scoperte.</p><p><a href="https://maps.google.com/?q=Castelo+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Mura e Torri</h3><p>Resti delle antiche mura che proteggevano la città.</p><p><a href="https://maps.google.com/?q=Muralhas+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Fortezza di Nossa Senhora da Luz</h3><p>Architettura militare costiera del XVII secolo.</p><p><a href="https://maps.google.com/?q=Fortaleza+de+Nossa+Senhora+da+Luz" target="_blank">📍 Vedi sulla Mappa</a></p><p><a href="https://cm-lagos.pt" target="_blank">🌐 cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Chiesa di Santo António</h3><p>Monumento nazionale con interno riccamente decorato.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santo+Ant%C3%B3nio+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Chiesa di Santa Maria</h3><p>Chiesa parrocchiale nel centro storico.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santa+Maria+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Chiesa di São Sebastião</h3><p>Chiesa costruita tra il XIV e il XVI secolo con elementi storici.</p><p><a href="https://maps.google.com/?q=Igreja+de+S%C3%A3o+Sebasti%C3%A3o+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Chiesa di Nossa Senhora da Luz</h3><p>Chiesa con elementi gotici, manuelini e barocchi.</p><p><a href="https://maps.google.com/?q=Igreja+de+Nossa+Senhora+da+Luz+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Eremo di Santo Amaro</h3><p>Rovine di una cappella del XIV secolo, sopravvissuta al terremoto del 1755.</p><p><a href="https://maps.google.com/?q=Ermida+de+Santo+Amaro+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Convento di Nossa Senhora do Loreto</h3><p>Rovine del convento del XVI secolo, oggi spazio culturale.</p><p><a href="https://maps.google.com/?q=Convento+de+Nossa+Senhora+do+Loreto+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Magazzino Reggimentale</h3><p>Edificio storico del XVII secolo legato alla vita militare e commerciale.</p><p><a href="https://maps.google.com/?q=Armaz%C3%A9m+Regimental+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Piazza Infante Dom Henrique</h3><p>Piazza storica con statue ed edifici legati alle Scoperte.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Infante+Dom+Henrique+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
 `,
 de: `
-<div class="category-card">
-<h3>Forte da Ponta da Bandeira</h3>
-<p>Festung aus dem 17. Jahrhundert mit Meerblick und historischen Ausstellungen.</p>
-<p><strong>Entfernung:</strong> 1,6 km</p>
-<p><a href="https://maps.google.com/?q=Forte+da+Ponta+da+Bandeira+Lagos">📍 Karte anzeigen</a></p>
-</div>
+<div class="category-card"><h3>Ponta da Piedade erkunden</h3><p>Postkartenmotiv von Lagos, berühmt für Felsformationen, Grotten und natürliche Bögen. Stege entlang der Klippen bieten Panoramablicke; Treppen führen hinunter bis zum Meer.</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
 
-<div class="category-card">
-<h3>Lagos Stadtmauern</h3>
-<p>Alte Mauern, die die Stadt während des Zeitalters der Entdeckungen schützten.</p>
-<p><strong>Entfernung:</strong> 1,2 km</p>
-<p><a href="https://maps.google.com/?q=Muralhas+de+Lagos">📍 Karte anzeigen</a></p>
-</div>
-`
+<div class="category-card"><h3>Bootstour zu den Grotten</h3><p>Abfahrt von der Marina de Lagos, Zugang zu Grotten, die zu Land nicht erreichbar sind. Optionen: traditionelle Boote, Katamarane oder Kajaks.</p><p><a href="https://maps.google.com/?q=Marina+de+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Entspannen am Strand Dona Ana oder Camilo</h3><p>Zu den schönsten Stränden der Welt gehörend, umgeben von goldenen Klippen und kristallklarem Wasser. Zugang zum Camilo über eine lange Holztreppe.</p><p><a href="https://maps.google.com/?q=Praia+Dona+Ana+Lagos" target="_blank">📍 Dona Ana</a> | <a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Camilo</a></p></div>
+
+<div class="category-card"><h3>Spaziergang durch die Altstadt</h3><p>Kopfsteinpflasterstraßen mit alten Mauern, Kirche Santo António und Sklavenmarkt. Ideal zum Abendessen und für das Nachtleben.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Gil+Eanes+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Lagos Zoo</h3><p>Zoologischer Garten mit Fokus auf Naturschutz und Bildung, mit Vögeln, Primaten und Reptilien.</p><p><a href="https://maps.google.com/?q=Zoo+de+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Parque Aventura Lagos</h3><p>Kletterparcours in den Bäumen und Paintball in der Natur für Adrenalinliebhaber.</p><p><a href="https://maps.google.com/?q=Parque+Aventura+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Städtischer Markt von Lagos</h3><p>Frischer Fisch, lokale Früchte und Kunsthandwerk. Terrasse mit Blick auf die Marina.</p><p><a href="https://maps.google.com/?q=Mercado+Municipal+de+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Museum Dr. José Formosinho</h3><p>Stadtmuseum mit Archäologie, sakraler Kunst und Ethnografie.</p><p><a href="https://maps.google.com/?q=Museu+Dr+Jos%C3%A9+Formosinho+Lagos" target="_blank">📍 Karte anzeigen</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Sklavenmarkt-Museum</h3><p>Ehemaliger Sklavenmarkt, heute Museum über den transatlantischen Handel.</p><p><a href="https://maps.google.com/?q=Mercado+de+Escravos+Lagos" target="_blank">📍 Karte anzeigen</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Wachsmuseum der Entdeckungen</h3><p>Interaktive Ausstellungen über das portugiesische Zeitalter der Entdeckungen.</p><p><a href="https://maps.google.com/?q=Museu+de+Cera+dos+Descobrimentos+Lagos" target="_blank">📍 Karte anzeigen</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Wissenschaftszentrum Lagos</h3><p>Interaktive Ausstellungen über Wissenschaft, Natur und lokale Geschichte.</p><p><a href="https://maps.google.com/?q=Centro+Ci%C3%AAncia+Viva+de+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Festung Ponta da Bandeira</h3><p>Festung aus dem 17. Jahrhundert mit Kapelle und Ausstellungen.</p><p><a href="https://maps.google.com/?q=Forte+Ponta+da+Bandeira+Lagos" target="_blank">📍 Karte anzeigen</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Burg von Lagos</h3><p>Burg aus dem 15. Jahrhundert, verbunden mit Militärgeschichte und den Entdeckungen.</p><p><a href="https://maps.google.com/?q=Castelo+de+Lagos" target="_blank">📍 Karte anzeigen</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Mauern und Türme</h3><p>Überreste der alten Stadtmauern, die Lagos einst schützten.</p><p><a href="https://maps.google.com/?q=Muralhas+de+Lagos" target="_blank">📍 Karte anzeigen</a></p><p><a href="https://lagosvivecultura.pt" target="_blank">🌐 lagosvivecultura.pt</a></p></div>
+
+<div class="category-card"><h3>Festung Nossa Senhora da Luz</h3><p>Küstennahe Militärarchitektur aus dem 17. Jahrhundert.</p><p><a href="https://maps.google.com/?q=Fortaleza+de+Nossa+Senhora+da+Luz" target="_blank">📍 Karte anzeigen</a></p><p><a href="https://cm-lagos.pt" target="_blank">🌐 cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Kirche Santo António</h3><p>Nationaldenkmal mit reich verziertem Innenraum.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santo+Ant%C3%B3nio+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Kirche Santa Maria</h3><p>Pfarrkirche im historischen Zentrum.</p><p><a href="https://maps.google.com/?q=Igreja+de+Santa+Maria+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Kirche São Sebastião</h3><p>Kirche aus dem 14.–16. Jahrhundert mit historischen Elementen.</p><p><a href="https://maps.google.com/?q=Igreja+de+S%C3%A3o+Sebasti%C3%A3o+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Kirche Nossa Senhora da Luz</h3><p>Kirche mit gotischen, manuelinischen und barocken Elementen.</p><p><a href="https://maps.google.com/?q=Igreja+de+Nossa+Senhora+da+Luz+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Einsiedelei Santo Amaro</h3><p>Ruinen einer Kapelle aus dem 14. Jahrhundert, Überlebende des Erdbebens von 1755.</p><p><a href="https://maps.google.com/?q=Ermida+de+Santo+Amaro+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Kloster Nossa Senhora do Loreto</h3><p>Ruinen eines Klosters aus dem 16. Jahrhundert, heute ein Kulturraum.</p><p><a href="https://maps.google.com/?q=Convento+de+Nossa+Senhora+do+Loreto+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+
+<div class="category-card"><h3>Regimentslager</h3><p>Historisches Gebäude aus dem 17. Jahrhundert, verbunden mit Militär- und Handelsgeschichte.</p><p><a href="https://maps.google.com/?q=Armaz%C3%A9m+Regimental+Lagos" target="_blank">📍 Karte anzeigen</a></p><p><a href="https://museu.cm-lagos.pt" target="_blank">🌐 museu.cm-lagos.pt</a></p></div>
+
+<div class="category-card"><h3>Platz Infante Dom Henrique</h3><p>Historischer Platz mit Statuen und Gebäuden, die mit den Entdeckungen verbunden sind.</p><p><a href="https://maps.google.com/?q=Pra%C3%A7a+Infante+Dom+Henrique+Lagos" target="_blank">📍 Karte anzeigen</a></p></div>
+`,
 };
-
 
 // -----------------------------------------
 // --- MUSEUMS (Museus) ---
