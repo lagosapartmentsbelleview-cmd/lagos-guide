@@ -2309,10 +2309,11 @@ async function openInternalMap(url) {
       leafletMap = L.map('leafletMap').setView([lat, lon], 16);
 
       // Adicionar tiles OSM
-      L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png', {
-      maxZoom: 20,
-      attribution: '&copy; OpenStreetMap & Stadia Maps'
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+      attribution: 'Tiles © Esri — Source: Esri, DeLorme, NAVTEQ'
     }).addTo(leafletMap);
+
 
       // Marcador
       L.marker([lat, lon]).addTo(leafletMap);
