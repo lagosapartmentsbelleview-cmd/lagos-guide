@@ -2265,73 +2265,81 @@ let leafletMap = null;
 async function openInternalMap(url) {
   const modal = document.getElementById("mapModal");
 
-  let query = "";
+  let rawQuery = "";
 
   // Caso 1: links com ?q=
   if (url.includes("?q=")) {
-    query = decodeURIComponent(url.split("?q=")[1].split("&")[0]);
+    rawQuery = decodeURIComponent(url.split("?q=")[1].split("&")[0]);
   }
 
   // Caso 2: links com /place/
   else if (url.includes("/place/")) {
-    query = decodeURIComponent(
+    rawQuery = decodeURIComponent(
       url.split("/place/")[1].split("/")[0].replace(/\+/g, " ")
     );
   }
 
   // Caso 3: fallback
   else {
-    query = url;
+    rawQuery = url;
   }
 
-  // Melhorar a pesquisa automaticamente
-  query = query
+  // Normalizar texto
+  rawQuery = rawQuery
     .replace(/\+/g, " ")
-    .replace(/Dr /gi, "Dr. ")
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remover acentos
-    + " Lagos Portugal";
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-  // Chamada à API Nominatim
-  const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
+  // Lista de tentativas de pesquisa (fallbacks)
+  const queries = [
+    rawQuery + " Lagos Portugal",
+    rawQuery + " Algarve Portugal",
+    rawQuery + " Lagos",
+    rawQuery
+  ];
 
-  try {
-    const response = await fetch(apiUrl, {
-      headers: { "User-Agent": "BelleviewGuide/1.0" }
-    });
+  let data = [];
 
-    const data = await response.json();
+  // Tentar várias pesquisas até encontrar resultados
+  for (const q of queries) {
+    const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`;
 
-    if (data.length > 0) {
-      const lat = parseFloat(data[0].lat);
-      const lon = parseFloat(data[0].lon);
+    try {
+      const response = await fetch(apiUrl, {
+        headers: { "User-Agent": "BelleviewGuide/1.0" }
+      });
 
-      modal.style.display = "block";
+      data = await response.json();
 
-      // Se já existir mapa, remove-o antes de criar outro
-      if (leafletMap !== null) {
-        leafletMap.remove();
-      }
+      if (data.length > 0) break;
 
-      // Criar mapa Leaflet
-      leafletMap = L.map('leafletMap').setView([lat, lon], 16);
-
-      // Estilo claro tipo Booking (Carto Light)
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap & Carto'
-      }).addTo(leafletMap);
-
-      // Marcador
-      L.marker([lat, lon]).addTo(leafletMap);
-
-    } else {
-      alert("Local não encontrado.");
+    } catch (error) {
+      console.error("Erro ao obter coordenadas:", error);
     }
-
-  } catch (error) {
-    console.error("Erro ao obter coordenadas:", error);
-    alert("Erro ao carregar o mapa.");
   }
+
+  if (data.length === 0) {
+    alert("Local não encontrado.");
+    return;
+  }
+
+  const lat = parseFloat(data[0].lat);
+  const lon = parseFloat(data[0].lon);
+
+  modal.style.display = "block";
+
+  if (leafletMap !== null) {
+    leafletMap.remove();
+  }
+
+  leafletMap = L.map('leafletMap').setView([lat, lon], 16);
+
+  // Estilo claro tipo Booking (Carto Light)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap & Carto'
+  }).addTo(leafletMap);
+
+  L.marker([lat, lon]).addTo(leafletMap);
 }
 
 // -----------------------------------------
