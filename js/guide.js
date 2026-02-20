@@ -2295,7 +2295,8 @@ const bbox = [
 
 const embedUrl =
   `https://www.openstreetmap.org/export/embed.html?` +
-  `bbox=${bbox}&layer=mapnik&marker=${lat},${lon}&zoom=16`;
+  `layer=mapnik&marker=${lat},${lon}#map=16/${lat}/${lon}`;
+
 
 
       iframe.src = embedUrl;
