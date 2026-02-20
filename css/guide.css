@@ -260,4 +260,8 @@ main {
   top: 10px;
   font-size: 28px;
   cursor: pointer;
+  z-index: 99999; /* garante que fica acima do mapa */
+  color: #333;
+  font-weight: bold;
 }
+
