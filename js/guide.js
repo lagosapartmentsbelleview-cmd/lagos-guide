@@ -2188,6 +2188,17 @@ function showCategory(lang, key, catName) {
   document.getElementById("categoryText").innerHTML =
     contents[key] ? contents[key][lang] : "<p>Conteúdo indisponível.</p>";
 
+  // -----------------------------------------
+  // INTERCEPTAR LINKS DO GOOGLE MAPS
+  // -----------------------------------------
+
+  document.querySelectorAll('.category-card a[href*="maps.google.com"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      openInternalMap(link.href);
+    });
+  });
+  
   document.getElementById("catBackTopContent").innerText = buttonTexts.back[lang];
   document.getElementById("catPrintContent").innerText = buttonTexts.print[lang];
   document.getElementById("catShareContent").innerText = buttonTexts.share[lang];
