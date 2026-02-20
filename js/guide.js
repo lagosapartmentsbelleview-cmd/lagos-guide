@@ -1855,143 +1855,142 @@ function setLanguage(lang) {
   list.innerHTML = "";
 
   categories[lang].forEach(cat => {
-  const li = document.createElement("li");
-  li.innerText = cat;
+    const li = document.createElement("li");
+    li.innerText = cat;
 
-  li.onclick = () => {
-    let key = "";
+    li.onclick = () => {
+      let key = "";
 
-    // Regras / House Rules
-    if (
-      cat.includes("Regras") ||
-      cat.includes("House") ||
-      cat.includes("Reglas") ||
-      cat.includes("Règles") ||
-      cat.includes("Regole") ||
-      cat.includes("Haus")
-    ) {
-      key = "rules";
-    }
+      // Regras / House Rules
+      if (
+        cat.includes("Regras") ||
+        cat.includes("House") ||
+        cat.includes("Reglas") ||
+        cat.includes("Règles") ||
+        cat.includes("Regole") ||
+        cat.includes("Haus")
+      ) {
+        key = "rules";
+      }
 
-    // Emergência / Emergency
-    else if (
-      cat.includes("Emerg") ||
-      cat.includes("Urg") ||
-      cat.includes("Notfall")
-    ) {
-      key = "emergency";
-    }
+      // Emergência / Emergency
+      else if (
+        cat.includes("Emerg") ||
+        cat.includes("Urg") ||
+        cat.includes("Notfall")
+      ) {
+        key = "emergency";
+      }
 
-    // Praias / Beaches
-    else if (
-      cat.includes("Praia") ||
-      cat.includes("Beach") ||
-      cat.includes("Playa") ||
-      cat.includes("Plage") ||
-      cat.includes("Spiagge") ||
-      cat.includes("Strand")
-    ) {
-      key = "beaches";
-    }
+      // Praias / Beaches
+      else if (
+        cat.includes("Praia") ||
+        cat.includes("Beach") ||
+        cat.includes("Playa") ||
+        cat.includes("Plage") ||
+        cat.includes("Spiagge") ||
+        cat.includes("Strand")
+      ) {
+        key = "beaches";
+      }
 
-    // Restaurantes / Restaurants
-    else if (
-      cat.includes("Rest") ||
-      cat.includes("Rist")
-    ) {
-      key = "restaurants";
-    }
+      // Restaurantes / Restaurants
+      else if (
+        cat.includes("Rest") ||
+        cat.includes("Rist")
+      ) {
+        key = "restaurants";
+      }
 
-    // Locais Históricos / Historical Sites
-    else if (
-      cat.includes("Hist") ||
-      cat.includes("Stor")
-    ) {
-      key = "historicalSites";
-    }
+      // Locais Históricos / Historical Sites
+      else if (
+        cat.includes("Hist") ||
+        cat.includes("Stor")
+      ) {
+        key = "historicalSites";
+      }
 
-    // Museus / Museums
-    else if (cat.includes("Muse")) {
-      key = "museums";
-    }
+      // Museus / Museums
+      else if (cat.includes("Muse")) {
+        key = "museums";
+      }
 
-    // Vida Noturna / Nightlife
-    else if (
-      cat.includes("Vida") ||
-      cat.includes("Night") ||
-      cat.includes("Nacht") ||
-      cat.includes("Nuit") ||
-      cat.includes("Notte")
-    ) {
-      key = "nightlife";
-    }
+      // Vida Noturna / Nightlife
+      else if (
+        cat.includes("Vida") ||
+        cat.includes("Night") ||
+        cat.includes("Nacht") ||
+        cat.includes("Nuit") ||
+        cat.includes("Notte")
+      ) {
+        key = "nightlife";
+      }
 
-    // Supermercados / Supermarkets
-    else if (cat.includes("Super")) {
-      key = "supermarkets";
-    }
+      // Supermercados / Supermarkets
+      else if (cat.includes("Super")) {
+        key = "supermarkets";
+      }
 
-    // Transportes / Transport
-    else if (
-      cat.includes("Trans") ||
-      cat.includes("Tras") ||
-      cat.includes("Verk")
-    ) {
-      key = "transport";
-    }
+      // Transportes / Transport
+      else if (
+        cat.includes("Trans") ||
+        cat.includes("Tras") ||
+        cat.includes("Verk")
+      ) {
+        key = "transport";
+      }
 
-    // Saúde / Health
-    else if (
-      cat.includes("Saú") ||
-      cat.includes("Health") ||
-      cat.includes("Salud") ||
-      cat.includes("Santé") ||
-      cat.includes("Salute") ||
-      cat.includes("Gesund")
-    ) {
-      key = "health";
-    }
+      // Saúde / Health
+      else if (
+        cat.includes("Saú") ||
+        cat.includes("Health") ||
+        cat.includes("Salud") ||
+        cat.includes("Santé") ||
+        cat.includes("Salute") ||
+        cat.includes("Gesund")
+      ) {
+        key = "health";
+      }
 
-    // ATMs / Bancos
-    else if (
-      cat.includes("ATM") ||
-      cat.includes("Banco") ||
-      cat.includes("Bank")
-    ) {
-      key = "atms";
-    }
+      // ATMs / Bancos
+      else if (
+        cat.includes("ATM") ||
+        cat.includes("Banco") ||
+        cat.includes("Bank")
+      ) {
+        key = "atms";
+      }
 
-    // Trilhos / Trails
-    else if (
-      cat.includes("Tril") ||
-      cat.includes("Hik") ||
-      cat.includes("Sender") ||
-      cat.includes("Rand") ||
-      cat.includes("Sent") ||
-      cat.includes("Wand")
-    ) {
-      key = "trails";
-    }
+      // Trilhos / Trails
+      else if (
+        cat.includes("Tril") ||
+        cat.includes("Hik") ||
+        cat.includes("Sender") ||
+        cat.includes("Rand") ||
+        cat.includes("Sent") ||
+        cat.includes("Wand")
+      ) {
+        key = "trails";
+      }
 
-    // Passeios de Barco / Boat Tours
-    else if (
-      cat.includes("Barco") ||
-      cat.includes("Boat") ||
-      cat.includes("Bateau") ||
-      cat.includes("Barca") ||
-      cat.includes("Boot")
-    ) {
-      key = "boatTours";
-    }
+      // Passeios de Barco / Boat Tours
+      else if (
+        cat.includes("Barco") ||
+        cat.includes("Boat") ||
+        cat.includes("Bateau") ||
+        cat.includes("Barca") ||
+        cat.includes("Boot")
+      ) {
+        key = "boatTours";
+      }
 
-    // Golf
-    else if (cat.includes("Golf")) {
-      key = "golf";
-    }
+      // Golf
+      else if (cat.includes("Golf")) {
+        key = "golf";
+      }
 
-    showCategory(lang, key, cat);
-  };
-});
+      showCategory(lang, key, cat);
+    };
 
     list.appendChild(li);
   });
@@ -2001,8 +2000,8 @@ function setLanguage(lang) {
   document.getElementById("catShareContent").innerText = buttonTexts.share[lang];
   document.getElementById("catBackBottomContent").innerText = buttonTexts.back[lang];
   document.getElementById("backToStartButton").innerText = buttonTexts.backToStart[lang];
-
 }
+
 
 
 // -----------------------------------------
