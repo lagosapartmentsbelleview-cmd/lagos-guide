@@ -2283,9 +2283,20 @@ async function openInternalMap(url) {
       const lon = data[0].lon;
 
       // Criar embed com zoom 16 e marcador
-      const embedUrl =
-        `https://www.openstreetmap.org/export/embed.html?` +
-        `layer=mapnik&marker=${lat},${lon}&zoom=16`;
+      // Criar bounding box pequeno para forçar zoom correto
+const delta = 0.002; // ~200m em cada direção
+
+const bbox = [
+  lon - delta,
+  lat - delta,
+  lon + delta,
+  lat + delta
+].join(',');
+
+const embedUrl =
+  `https://www.openstreetmap.org/export/embed.html?` +
+  `bbox=${bbox}&layer=mapnik&marker=${lat},${lon}&zoom=16`;
+
 
       iframe.src = embedUrl;
     } else {
