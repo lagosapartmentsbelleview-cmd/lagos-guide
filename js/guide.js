@@ -1883,16 +1883,18 @@ function setLanguage(lang) {
       }
 
       // Praias / Beaches
-      else if (
-        cat.includes("Praia") ||
-        cat.includes("Beach") ||
-        cat.includes("Playa") ||
-        cat.includes("Plage") ||
-        cat.includes("Spiagge") ||
-        cat.includes("Strand")
-      ) {
-        key = "beaches";
-      }
+else if (
+  cat.includes("Praia") ||   // PT
+  cat.includes("Beach") ||   // EN
+  cat.includes("Playa") ||   // ES
+  cat.includes("Plage") ||   // FR
+  cat.includes("Spiagge") || // IT
+  cat.includes("Strand") ||  // DE singular
+  cat.includes("Strände")    // DE plural (o que tu usas)
+) {
+  key = "beaches";
+}
+
 
       // Restaurantes / Restaurants
       else if (
