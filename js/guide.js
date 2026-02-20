@@ -1140,103 +1140,80 @@ de: `
 `,
 };
 
-// -----------------------------------------
-// --- SUPERMARKETS (Supermercados) ---
-// -----------------------------------------
-
+// --- supermarkets (cartões, todos idiomas) ---   
 const supermarkets = {
-pt: `
-<div class="category-card">
-<h3>Pingo Doce</h3>
-<p>Supermercado completo com produtos frescos e preços acessíveis.</p>
-<p><strong>Distância:</strong> 850 m</p>
-<p><a href="https://maps.google.com/?q=Pingo+Doce+Lagos">📍 Ver no mapa</a></p>
-</div>
+  pt: `
+<div class="category-card"><h3>Minimercado Amanhecer Marina Park</h3><p>Ideal para compras rápidas, pão fresco, bebidas e produtos essenciais.</p><p>Distância: 0 metros (na própria urbanização) • 1-2 minutos a pé</p><p><a href="https://maps.google.com/?q=Amanhecer+Marina+Park+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 
-<div class="category-card">
-<h3>Intermarché</h3>
-<p>Grande variedade de produtos, incluindo padaria e talho.</p>
-<p><strong>Distância:</strong> 1,4 km</p>
-<p><a href="https://maps.google.com/?q=Intermarché+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>Pingo Doce Marina de Lagos</h3><p>Boa variedade de produtos, refeições prontas e padaria.</p><p>Distância: ~ 800 metros • 10-12 minutos a pé | 3 minutos de carro</p><p><a href="https://maps.google.com/?q=Pingo+Doce+Marina+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Intermarché Lagos</h3><p>Supermercado completo, com talho, peixaria e padaria.</p><p>Distância: ~ 650 metros • 8-10 minutos a pé | 2-3 minutos de carro</p><p><a href="https://maps.google.com/?q=Intermarch%C3%A9+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Lidl Lagos</h3><p>Distância: ~ 1,5 km • 18-20 minutos a pé | 5 minutos de carro</p><p><a href="https://maps.google.com/?q=Lidl+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Continente Modelo Lagos</h3><p>Distância: ~ 1,6 km • 20-22 minutos a pé | 5 minutos de carro</p><p><a href="https://maps.google.com/?q=Continente+Modelo+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 `,
-en: `
-<div class="category-card">
-<h3>Pingo Doce</h3>
-<p>Full supermarket with fresh products and affordable prices.</p>
-<p><strong>Distance:</strong> 850 m</p>
-<p><a href="https://maps.google.com/?q=Pingo+Doce+Lagos">📍 View on map</a></p>
-</div>
 
-<div class="category-card">
-<h3>Intermarché</h3>
-<p>Large supermarket with bakery and butcher.</p>
-<p><strong>Distance:</strong> 1.4 km</p>
-<p><a href="https://maps.google.com/?q=Intermarché+Lagos">📍 View on map</a></p>
-</div>
+  en: `
+<div class="category-card"><h3>Amanhecer Marina Park Mini Market</h3><p>Ideal for quick shopping, fresh bread, drinks and essentials.</p><p>Distance: 0 meters (inside the complex) • 1-2 minutes walk</p><p><a href="https://maps.google.com/?q=Amanhecer+Marina+Park+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Pingo Doce Marina de Lagos</h3><p>Good variety of products, ready meals and bakery.</p><p>Distance: ~ 800 m • 10-12 minutes walk | 3 minutes drive</p><p><a href="https://maps.google.com/?q=Pingo+Doce+Marina+de+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Intermarché Lagos</h3><p>Full supermarket with butcher, fishmonger and bakery.</p><p>Distance: ~ 650 m • 8-10 minutes walk | 2-3 minutes drive</p><p><a href="https://maps.google.com/?q=Intermarch%C3%A9+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Lidl Lagos</h3><p>Distance: ~ 1.5 km • 18-20 minutes walk | 5 minutes drive</p><p><a href="https://maps.google.com/?q=Lidl+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Continente Modelo Lagos</h3><p>Distance: ~ 1.6 km • 20-22 minutes walk | 5 minutes drive</p><p><a href="https://maps.google.com/?q=Continente+Modelo+Lagos" target="_blank">📍 View on Map</a></p></div>
 `,
-es: `
-<div class="category-card">
-<h3>Pingo Doce</h3>
-<p>Supermercado completo con productos frescos y precios accesibles.</p>
-<p><strong>Distancia:</strong> 850 m</p>
-<p><a href="https://maps.google.com/?q=Pingo+Doce+Lagos">📍 Ver en el mapa</a></p>
-</div>
 
-<div class="category-card">
-<h3>Intermarché</h3>
-<p>Gran variedad de productos, incluyendo panadería y carnicería.</p>
-<p><strong>Distancia:</strong> 1,4 km</p>
-<p><a href="https://maps.google.com/?q=Intermarché+Lagos">📍 Ver en el mapa</a></p>
-</div>
+  es: `
+<div class="category-card"><h3>Minimercado Amanhecer Marina Park</h3><p>Ideal para compras rápidas, pan fresco, bebidas y productos esenciales.</p><p>Distancia: 0 metros (en la urbanización) • 1-2 minutos a pie</p><p><a href="https://maps.google.com/?q=Amanhecer+Marina+Park+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Pingo Doce Marina de Lagos</h3><p>Buena variedad de productos, comidas preparadas y panadería.</p><p>Distancia: ~ 800 m • 10-12 minutos a pie | 3 minutos en coche</p><p><a href="https://maps.google.com/?q=Pingo+Doce+Marina+de+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Intermarché Lagos</h3><p>Supermercado completo, con carnicería, pescadería y panadería.</p><p>Distancia: ~ 650 m • 8-10 minutos a pie | 2-3 minutos en coche</p><p><a href="https://maps.google.com/?q=Intermarch%C3%A9+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Lidl Lagos</h3><p>Distancia: ~ 1,5 km • 18-20 minutos a pie | 5 minutos en coche</p><p><a href="https://maps.google.com/?q=Lidl+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Continente Modelo Lagos</h3><p>Distancia: ~ 1,6 km • 20-22 minutos a pie | 5 minutos en coche</p><p><a href="https://maps.google.com/?q=Continente+Modelo+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
 `,
-fr: `
-<div class="category-card">
-<h3>Pingo Doce</h3>
-<p>Supermarché complet avec produits frais et prix abordables.</p>
-<p><strong>Distance :</strong> 850 m</p>
-<p><a href="https://maps.google.com/?q=Pingo+Doce+Lagos">📍 Voir sur la carte</a></p>
-</div>
 
-<div class="category-card">
-<h3>Intermarché</h3>
-<p>Grande variété de produits, incluant boulangerie et boucherie.</p>
-<p><strong>Distance :</strong> 1,4 km</p>
-<p><a href="https://maps.google.com/?q=Intermarché+Lagos">📍 Voir sur la carte</a></p>
-</div>
+  fr: `
+<div class="category-card"><h3>Minimercado Amanhecer Marina Park</h3><p>Idéal pour des achats rapides : pain frais, boissons et produits essentiels.</p><p>Distance : 0 m (dans la résidence) • 1-2 minutes à pied</p><p><a href="https://maps.google.com/?q=Amanhecer+Marina+Park+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Pingo Doce Marina de Lagos</h3><p>Bonne variété de produits, plats préparés et boulangerie.</p><p>Distance : ~ 800 m • 10-12 minutes à pied | 3 minutes en voiture</p><p><a href="https://maps.google.com/?q=Pingo+Doce+Marina+de+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Intermarché Lagos</h3><p>Supermarché complet avec boucherie, poissonnerie et boulangerie.</p><p>Distance : ~ 650 m • 8-10 minutes à pied | 2-3 minutes en voiture</p><p><a href="https://maps.google.com/?q=Intermarch%C3%A9+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Lidl Lagos</h3><p>Distance : ~ 1,5 km • 18-20 minutes à pied | 5 minutes en voiture</p><p><a href="https://maps.google.com/?q=Lidl+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Continente Modelo Lagos</h3><p>Distance : ~ 1,6 km • 20-22 minutes à pied | 5 minutes en voiture</p><p><a href="https://maps.google.com/?q=Continente+Modelo+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
 `,
-it: `
-<div class="category-card">
-<h3>Pingo Doce</h3>
-<p>Supermercato completo con prodotti freschi e prezzi accessibili.</p>
-<p><strong>Distanza:</strong> 850 m</p>
-<p><a href="https://maps.google.com/?q=Pingo+Doce+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
 
-<div class="category-card">
-<h3>Intermarché</h3>
-<p>Ampia varietà di prodotti, inclusi panetteria e macelleria.</p>
-<p><strong>Distanza:</strong> 1,4 km</p>
-<p><a href="https://maps.google.com/?q=Intermarché+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+  it: `
+<div class="category-card"><h3>Minimercato Amanhecer Marina Park</h3><p>Ideale per acquisti veloci: pane fresco, bevande e prodotti essenziali.</p><p>Distanza: 0 metri (nel complesso) • 1-2 minuti a piedi</p><p><a href="https://maps.google.com/?q=Amanhecer+Marina+Park+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Pingo Doce Marina de Lagos</h3><p>Buona varietà di prodotti, piatti pronti e panetteria.</p><p>Distanza: ~ 800 m • 10-12 minuti a piedi | 3 minuti in auto</p><p><a href="https://maps.google.com/?q=Pingo+Doce+Marina+de+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Intermarché Lagos</h3><p>Supermercato completo con macelleria, pescheria e panetteria.</p><p>Distanza: ~ 650 m • 8-10 minuti a piedi | 2-3 minuti in auto</p><p><a href="https://maps.google.com/?q=Intermarch%C3%A9+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Lidl Lagos</h3><p>Distanza: ~ 1,5 km • 18-20 minuti a piedi | 5 minuti in auto</p><p><a href="https://maps.google.com/?q=Lidl+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Continente Modelo Lagos</h3><p>Distanza: ~ 1,6 km • 20-22 minuti a piedi | 5 minuti in auto</p><p><a href="https://maps.google.com/?q=Continente+Modelo+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
 `,
-de: `
-<div class="category-card">
-<h3>Pingo Doce</h3>
-<p>Vollsortiment-Supermarkt mit frischen Produkten und günstigen Preisen.</p>
-<p><strong>Entfernung:</strong> 850 m</p>
-<p><a href="https://maps.google.com/?q=Pingo+Doce+Lagos">📍 Karte anzeigen</a></p>
-</div>
 
-<div class="category-card">
-<h3>Intermarché</h3>
-<p>Große Produktvielfalt, einschließlich Bäckerei und Metzgerei.</p>
-<p><strong>Entfernung:</strong> 1,4 km</p>
-<p><a href="https://maps.google.com/?q=Intermarché+Lagos">📍 Karte anzeigen</a></p>
-</div>
+  de: `
+<div class="category-card"><h3>Minimarkt Amanhecer Marina Park</h3><p>Ideal für schnelle Einkäufe: frisches Brot, Getränke und wichtige Produkte.</p><p>Entfernung: 0 m (in der Wohnanlage) • 1-2 Minuten zu Fuß</p><p><a href="https://maps.google.com/?q=Amanhecer+Marina+Park+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Pingo Doce Marina de Lagos</h3><p>Gute Auswahl an Produkten, Fertiggerichten und Bäckerei.</p><p>Entfernung: ~ 800 m • 10-12 Minuten zu Fuß | 3 Minuten mit dem Auto</p><p><a href="https://maps.google.com/?q=Pingo+Doce+Marina+de+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Intermarché Lagos</h3><p>Vollständiger Supermarkt mit Metzgerei, Fischtheke und Bäckerei.</p><p>Entfernung: ~ 650 m • 8-10 Minuten zu Fuß | 2-3 Minuten mit dem Auto</p><p><a href="https://maps.google.com/?q=Intermarch%C3%A9+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Lidl Lagos</h3><p>Entfernung: ~ 1,5 km • 18-20 Minuten zu Fuß | 5 Minuten mit dem Auto</p><p><a href="https://maps.google.com/?q=Lidl+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Continente Modelo Lagos</h3><p>Entfernung: ~ 1,6 km • 20-22 Minuten zu Fuß | 5 Minuten mit dem Auto</p><p><a href="https://maps.google.com/?q=Continente+Modelo+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
 `
 };
-
 
 // -----------------------------------------
 // --- TRANSPORT (Transportes) ---
