@@ -1029,101 +1029,115 @@ const museums = {
 `
 };
 
-// -----------------------------------------
-// --- NIGHTLIFE (Vida Noturna) ---
-// -----------------------------------------
-
+// --- nightlife (cartões, todos idiomas) ---
 const nightlife = {
-pt: `
-<div class="category-card">
-<h3>Bon Vivant</h3>
-<p>Bar animado com cocktails criativos e música ao vivo.</p>
-<p><strong>Distância:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos">📍 Ver no mapa</a></p>
-</div>
+  pt: `
+<div class="category-card"><h3>Three Monkeys Bar</h3><p>Ambiente descontraído, música ao vivo e cocktails. Popular entre turistas e locais.</p><p>Morada: Rua António Barbosa, 8600-746 Lagos</p><p>Contacto: +351 927 050 491</p><p><a href="https://maps.google.com/?q=Three+Monkeys+Bar+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 
-<div class="category-card">
-<h3>Three Monkeys</h3>
-<p>Bar popular entre turistas, com ambiente descontraído e boa música.</p>
-<p><strong>Distância:</strong> 1,1 km</p>
-<p><a href="https://maps.google.com/?q=Three+Monkeys+Lagos">📍 Ver no mapa</a></p>
-</div>
-`,
-en: `
-<div class="category-card">
-<h3>Bon Vivant</h3>
-<p>Lively bar with creative cocktails and live music.</p>
-<p><strong>Distance:</strong> 1.0 km</p>
-<p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos">📍 View on map</a></p>
-</div>
+<div class="category-card"><h3>The Tavern</h3><p>Pub acolhedor com variedade de cervejas artesanais e ambiente britânico. Ideal para petiscos.</p><p>Morada: R. Gil Vicente 20, 8600-780 Lagos</p><p>Contacto: +351 282 764 459</p><p><a href="https://maps.google.com/?q=The+Tavern+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 
-<div class="category-card">
-<h3>Three Monkeys</h3>
-<p>Popular bar among tourists, relaxed atmosphere and great music.</p>
-<p><strong>Distance:</strong> 1.1 km</p>
-<p><a href="https://maps.google.com/?q=Three+Monkeys+Lagos">📍 View on map</a></p>
-</div>
-`,
-es: `
-<div class="category-card">
-<h3>Bon Vivant</h3>
-<p>Bar animado con cócteles creativos y música en vivo.</p>
-<p><strong>Distancia:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos">📍 Ver en el mapa</a></p>
-</div>
+<div class="category-card"><h3>Skylbar</h3><p>Localizado no topo de um hotel, com vistas panorâmicas sobre Lagos. Ideal para cocktails ao pôr do sol.</p><p>Morada: R. Nova da Aldeia, 8600-606 Lagos</p><p><a href="https://maps.google.com/?q=Skylbar+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 
-<div class="category-card">
-<h3>Three Monkeys</h3>
-<p>Bar popular entre turistas, ambiente relajado y buena música.</p>
-<p><strong>Distancia:</strong> 1,1 km</p>
-<p><a href="https://maps.google.com/?q=Three+Monkeys+Lagos">📍 Ver en el mapa</a></p>
-</div>
-`,
-fr: `
-<div class="category-card">
-<h3>Bon Vivant</h3>
-<p>Bar animé avec cocktails créatifs et musique live.</p>
-<p><strong>Distance :</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<div class="category-card"><h3>Lava Bar</h3><p>Atmosfera animada e música rock. Local popular para dançar e beber.</p><p>Morada: R. Infante de Sagres 66, 8600-746 Lagos</p><p>Contacto: +351 961 748 764</p><p><a href="https://maps.google.com/?q=Lava+Bar+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 
-<div class="category-card">
-<h3>Three Monkeys</h3>
-<p>Bar populaire auprès des touristes, ambiance détendue et bonne musique.</p>
-<p><strong>Distance :</strong> 1,1 km</p>
-<p><a href="https://maps.google.com/?q=Three+Monkeys+Lagos">📍 Voir sur la carte</a></p>
-</div>
-`,
-it: `
-<div class="category-card">
-<h3>Bon Vivant</h3>
-<p>Bar vivace con cocktail creativi e musica dal vivo.</p>
-<p><strong>Distanza:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<div class="category-card"><h3>Bon Vivant</h3><p>Bar com esplanada espaçosa e vista fantástica para a Marina. Conhecido pelos cocktails e ambiente elegante.</p><p>Morada: Marina de Lagos, Edifício da Capitania, 8600-780 Lagos</p><p>Contacto: +351 282 788 333</p><p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 
-<div class="category-card">
-<h3>Three Monkeys</h3>
-<p>Bar popolare tra i turisti, atmosfera rilassata e ottima musica.</p>
-<p><strong>Distanza:</strong> 1,1 km</p>
-<p><a href="https://maps.google.com/?q=Three+Monkeys+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<div class="category-card"><h3>Quay Lagos</h3><p>Bar/restaurante moderno na Marina de Lagos, com esplanada e vista para os barcos. Bom para tapas e refeições leves.</p><p>Morada: Marina de Lagos, Passeio dos Descobrimentos, Edifício C, Loja 1, 8600-780 Lagos</p><p>Contacto: +351 282 760 178</p><p><a href="https://maps.google.com/?q=Quay+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>The Star</h3><p>Pub tradicional inglês, conhecido pelo ambiente amigável e desportos ao vivo na TV.</p><p>Morada: R. Lançarote de Freitas 18, 8600-760 Lagos</p><p>Contacto: +351 282 761 140</p><p><a href="https://maps.google.com/?q=The+Star+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Forbidden Door</h3><p>Bar com conceito único e decoração intrigante. Conhecido pelos cocktails especiais.</p><p>Morada: R. Lançarote de Freitas 44, 8600-760 Lagos</p><p><a href="https://maps.google.com/?q=Forbidden+Door+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 `,
+
+  en: `
+<div class="category-card"><h3>Three Monkeys Bar</h3><p>Relaxed atmosphere, live music and cocktails. Popular among tourists and locals.</p><p>Address: Rua António Barbosa, 8600-746 Lagos</p><p>Contact: +351 927 050 491</p><p><a href="https://maps.google.com/?q=Three+Monkeys+Bar+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>The Tavern</h3><p>Cozy pub with a variety of craft beers and a British-style atmosphere. Ideal for snacks.</p><p>Address: R. Gil Vicente 20, 8600-780 Lagos</p><p>Contact: +351 282 764 459</p><p><a href="https://maps.google.com/?q=The+Tavern+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Skylbar</h3><p>Located on top of a hotel, offering panoramic views over Lagos. Perfect for sunset cocktails.</p><p>Address: R. Nova da Aldeia, 8600-606 Lagos</p><p><a href="https://maps.google.com/?q=Skylbar+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Lava Bar</h3><p>Lively atmosphere and rock music. Popular spot for dancing and drinking.</p><p>Address: R. Infante de Sagres 66, 8600-746 Lagos</p><p>Contact: +351 961 748 764</p><p><a href="https://maps.google.com/?q=Lava+Bar+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Bon Vivant</h3><p>Bar with a spacious terrace and fantastic views of the Marina. Known for cocktails and an elegant vibe.</p><p>Address: Marina de Lagos, Edifício da Capitania, 8600-780 Lagos</p><p>Contact: +351 282 788 333</p><p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Quay Lagos</h3><p>Modern bar/restaurant at the Marina with terrace and boat views. Great for tapas and light meals.</p><p>Address: Marina de Lagos, Passeio dos Descobrimentos, Edifício C, Loja 1, 8600-780 Lagos</p><p>Contact: +351 282 760 178</p><p><a href="https://maps.google.com/?q=Quay+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>The Star</h3><p>Traditional English pub known for its friendly atmosphere and live sports on TV.</p><p>Address: R. Lançarote de Freitas 18, 8600-760 Lagos</p><p>Contact: +351 282 761 140</p><p><a href="https://maps.google.com/?q=The+Star+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Forbidden Door</h3><p>Bar with a unique concept and intriguing decor. Famous for its special cocktails.</p><p>Address: R. Lançarote de Freitas 44, 8600-760 Lagos</p><p><a href="https://maps.google.com/?q=Forbidden+Door+Lagos" target="_blank">📍 View on Map</a></p></div>
+`,
+
+  es: `
+<div class="category-card"><h3>Three Monkeys Bar</h3><p>Ambiente relajado, música en vivo y cócteles. Popular entre turistas y locales.</p><p>Dirección: Rua António Barbosa, 8600-746 Lagos</p><p>Contacto: +351 927 050 491</p><p><a href="https://maps.google.com/?q=Three+Monkeys+Bar+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>The Tavern</h3><p>Pub acogedor con variedad de cervezas artesanales y ambiente británico. Ideal para tapas.</p><p>Dirección: R. Gil Vicente 20, 8600-780 Lagos</p><p>Contacto: +351 282 764 459</p><p><a href="https://maps.google.com/?q=The+Tavern+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Skylbar</h3><p>Ubicado en la azotea de un hotel, con vistas panorámicas sobre Lagos. Perfecto para cócteles al atardecer.</p><p>Dirección: R. Nova da Aldeia, 8600-606 Lagos</p><p><a href="https://maps.google.com/?q=Skylbar+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Lava Bar</h3><p>Ambiente animado y música rock. Lugar popular para bailar y beber.</p><p>Dirección: R. Infante de Sagres 66, 8600-746 Lagos</p><p>Contacto: +351 961 748 764</p><p><a href="https://maps.google.com/?q=Lava+Bar+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Bon Vivant</h3><p>Bar con amplia terraza y fantástica vista a la Marina. Conocido por sus cócteles y ambiente elegante.</p><p>Dirección: Marina de Lagos, Edifício da Capitania, 8600-780 Lagos</p><p>Contacto: +351 282 788 333</p><p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Quay Lagos</h3><p>Bar/restaurante moderno en la Marina, con terraza y vista a los barcos. Ideal para tapas y comidas ligeras.</p><p>Dirección: Marina de Lagos, Passeio dos Descobrimentos, Edifício C, Loja 1, 8600-780 Lagos</p><p>Contacto: +351 282 760 178</p><p><a href="https://maps.google.com/?q=Quay+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>The Star</h3><p>Pub inglés tradicional, conocido por su ambiente amigable y deportes en vivo en TV.</p><p>Dirección: R. Lançarote de Freitas 18, 8600-760 Lagos</p><p>Contacto: +351 282 761 140</p><p><a href="https://maps.google.com/?q=The+Star+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+
+<div class="category-card"><h3>Forbidden Door</h3><p>Bar con concepto único y decoración intrigante. Conocido por sus cócteles especiales.</p><p>Dirección: R. Lançarote de Freitas 44, 8600-760 Lagos</p><p><a href="https://maps.google.com/?q=Forbidden+Door+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+`,
+
+  fr: `
+<div class="category-card"><h3>Three Monkeys Bar</h3><p>Ambiance détendue, musique live et cocktails. Populaire auprès des touristes et des locaux.</p><p>Adresse : Rua António Barbosa, 8600-746 Lagos</p><p>Contact : +351 927 050 491</p><p><a href="https://maps.google.com/?q=Three+Monkeys+Bar+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>The Tavern</h3><p>Pub chaleureux avec une variété de bières artisanales et une ambiance britannique. Idéal pour des encas.</p><p>Adresse : R. Gil Vicente 20, 8600-780 Lagos</p><p>Contact : +351 282 764 459</p><p><a href="https://maps.google.com/?q=The+Tavern+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Skylbar</h3><p>Situé au sommet d’un hôtel, offrant des vues panoramiques sur Lagos. Parfait pour des cocktails au coucher du soleil.</p><p>Adresse : R. Nova da Aldeia, 8600-606 Lagos</p><p><a href="https://maps.google.com/?q=Skylbar+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Lava Bar</h3><p>Atmosphère animée et musique rock. Lieu populaire pour danser et boire.</p><p>Adresse : R. Infante de Sagres 66, 8600-746 Lagos</p><p>Contact : +351 961 748 764</p><p><a href="https://maps.google.com/?q=Lava+Bar+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Bon Vivant</h3><p>Bar avec grande terrasse et vue fantastique sur la Marina. Connu pour ses cocktails et son ambiance élégante.</p><p>Adresse : Marina de Lagos, Edifício da Capitania, 8600-780 Lagos</p><p>Contact : +351 282 788 333</p><p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Quay Lagos</h3><p>Bar/restaurant moderne à la Marina, avec terrasse et vue sur les bateaux. Idéal pour tapas et repas légers.</p><p>Adresse : Marina de Lagos, Passeio dos Descobrimentos, Edifício C, Loja 1, 8600-780 Lagos</p><p>Contact : +351 282 760 178</p><p><a href="https://maps.google.com/?q=Quay+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>The Star</h3><p>Pub anglais traditionnel, connu pour son ambiance conviviale et les sports en direct à la TV.</p><p>Adresse : R. Lançarote de Freitas 18, 8600-760 Lagos</p><p>Contact : +351 282 761 140</p><p><a href="https://maps.google.com/?q=The+Star+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+
+<div class="category-card"><h3>Forbidden Door</h3><p>Bar au concept unique et décoration intrigante. Connu pour ses cocktails spéciaux.</p><p>Adresse : R. Lançarote de Freitas 44, 8600-760 Lagos</p><p><a href="https://maps.google.com/?q=Forbidden+Door+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+`,
+
+  it: `
+<div class="category-card"><h3>Three Monkeys Bar</h3><p>Atmosfera rilassata, musica dal vivo e cocktail. Popolare tra turisti e locali.</p><p>Indirizzo: Rua António Barbosa, 8600-746 Lagos</p><p>Contatto: +351 927 050 491</p><p><a href="https://maps.google.com/?q=Three+Monkeys+Bar+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>The Tavern</h3><p>Pub accogliente con varietà di birre artigianali e atmosfera britannica. Ideale per spuntini.</p><p>Indirizzo: R. Gil Vicente 20, 8600-780 Lagos</p><p>Contatto: +351 282 764 459</p><p><a href="https://maps.google.com/?q=The+Tavern+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Skylbar</h3><p>Situato in cima a un hotel, con viste panoramiche su Lagos. Perfetto per cocktail al tramonto.</p><p>Indirizzo: R. Nova da Aldeia, 8600-606 Lagos</p><p><a href="https://maps.google.com/?q=Skylbar+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Lava Bar</h3><p>Atmosfera vivace e musica rock. Luogo popolare per ballare e bere.</p><p>Indirizzo: R. Infante de Sagres 66, 8600-746 Lagos</p><p>Contatto: +351 961 748 764</p><p><a href="https://maps.google.com/?q=Lava+Bar+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Bon Vivant</h3><p>Bar con ampia terrazza e splendida vista sulla Marina. Conosciuto per cocktail e atmosfera elegante.</p><p>Indirizzo: Marina de Lagos, Edifício da Capitania, 8600-780 Lagos</p><p>Contatto: +351 282 788 333</p><p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Quay Lagos</h3><p>Bar/ristorante moderno alla Marina, terrazza con vista sulle barche. Ottimo per tapas e pasti leggeri.</p><p>Indirizzo: Marina de Lagos, Passeio dos Descobrimentos, Edifício C, Loja 1, 8600-780 Lagos</p><p>Contatto: +351 282 760 178</p><p><a href="https://maps.google.com/?q=Quay+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>The Star</h3><p>Pub tradizionale inglese, noto per l’atmosfera amichevole e gli sport in diretta TV.</p><p>Indirizzo: R. Lançarote de Freitas 18, 8600-760 Lagos</p><p>Contatto: +351 282 761 140</p><p><a href="https://maps.google.com/?q=The+Star+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+
+<div class="category-card"><h3>Forbidden Door</h3><p>Bar dal concept unico e decorazione intrigante. Famoso per i cocktail speciali.</p><p>Indirizzo: R. Lançarote de Freitas 44, 8600-760 Lagos</p><p><a href="https://maps.google.com/?q=Forbidden+Door+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+`,
+
 de: `
-<div class="category-card">
-<h3>Bon Vivant</h3>
-<p>Lebhafte Bar mit kreativen Cocktails und Live-Musik.</p>
-<p><strong>Entfernung:</strong> 1,0 km</p>
-<p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos">📍 Karte anzeigen</a></p>
-</div>
+<div class="category-card"><h3>Three Monkeys Bar</h3><p>Entspannte Atmosphäre, Livemusik und Cocktails. Beliebt bei Touristen und Einheimischen.</p><p>Adresse: Rua António Barbosa, 8600-746 Lagos</p><p>Kontakt: +351 927 050 491</p><p><a href="https://maps.google.com/?q=Three+Monkeys+Bar+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
 
-<div class="category-card">
-<h3>Three Monkeys</h3>
-<p>Beliebte Bar bei Touristen, entspannte Atmosphäre und gute Musik.</p>
-<p><strong>Entfernung:</strong> 1,1 km</p>
-<p><a href="https://maps.google.com/?q=Three+Monkeys+Lagos">📍 Karte anzeigen</a></p>
-</div>
-`
+<div class="category-card"><h3>The Tavern</h3><p>Gemütlicher Pub mit einer Vielzahl an Craft-Bieren und britischem Ambiente. Ideal für Snacks.</p><p>Adresse: R. Gil Vicente 20, 8600-780 Lagos</p><p>Kontakt: +351 282 764 459</p><p><a href="https://maps.google.com/?q=The+Tavern+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Skylbar</h3><p>Auf dem Dach eines Hotels gelegen, mit Panoramablick über Lagos. Perfekt für Cocktails bei Sonnenuntergang.</p><p>Adresse: R. Nova da Aldeia, 8600-606 Lagos</p><p><a href="https://maps.google.com/?q=Skylbar+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Lava Bar</h3><p>Lebhafte Atmosphäre und Rockmusik. Beliebter Ort zum Tanzen und Trinken.</p><p>Adresse: R. Infante de Sagres 66, 8600-746 Lagos</p><p>Kontakt: +351 961 748 764</p><p><a href="https://maps.google.com/?q=Lava+Bar+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Bon Vivant</h3><p>Bar mit großer Terrasse und fantastischem Blick auf die Marina. Bekannt für Cocktails und elegantes Ambiente.</p><p>Adresse: Marina de Lagos, Edifício da Capitania, 8600-780 Lagos</p><p>Kontakt: +351 282 788 333</p><p><a href="https://maps.google.com/?q=Bon+Vivant+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Quay Lagos</h3><p>Modernes Bar/Restaurant in der Marina, Terrasse mit Blick auf die Boote. Gut für Tapas und leichte Mahlzeiten.</p><p>Adresse: Marina de Lagos, Passeio dos Descobrimentos, Edifício C, Loja 1, 8600-780 Lagos</p><p>Kontakt: +351 282 760 178</p><p><a href="https://maps.google.com/?q=Quay+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>The Star</h3><p>Traditioneller englischer Pub, bekannt für freundliche Atmosphäre und Live-Sport im Fernsehen.</p><p>Adresse: R. Lançarote de Freitas 18, 8600-760 Lagos</p><p>Kontakt: +351 282 761 140</p><p><a href="https://maps.google.com/?q=The+Star+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+
+<div class="category-card"><h3>Forbidden Door</h3><p>Bar mit einzigartigem Konzept und faszinierender Dekoration. Bekannt für besondere Cocktails.</p><p>Adresse: R. Lançarote de Freitas 44, 8600-760 Lagos</p><p><a href="https://maps.google.com/?q=Forbidden+Door+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+`,
 };
 
 // -----------------------------------------
