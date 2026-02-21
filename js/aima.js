@@ -839,7 +839,7 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
 
 <p>Offizielle Informationen: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
 `,
-}
+};
 
 function loadFaq() {
   faqContent.innerHTML = faqTexts[currentLang];
