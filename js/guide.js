@@ -1615,97 +1615,1727 @@ de: `
 const boatTours = {
 pt: `
 <div class="category-card">
-<h3>Passeio às Grutas de Ponta da Piedade</h3>
-<p>Passeio de barco pelas formações rochosas e grutas naturais.</p>
-<p><strong>Duração:</strong> 1h</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Boat+Tour">📍 Ver no mapa</a></p>
+<h3>Passeio às Grutas – Ponta da Piedade</h3>
+<p>Um dos passeios mais famosos de Lagos, explorando formações rochosas únicas, túneis naturais e águas cristalinas.</p>
+
+<p><strong>BlueFleet</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km do Marina Park<br>
+Preço aproximado: desde 25–30 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Algarve Grotto Trips</strong><br>
+Localização: Cais da Solaria<br>
+Distância: 2,0 km do Marina Park<br>
+Preço aproximado: desde 20–25 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km do Marina Park<br>
+Preço aproximado: desde 25–30 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Passeio às Grutas de Benagil</h3>
+<p>Visita à famosa gruta de Benagil, uma das mais impressionantes do Algarve, com o seu icónico buraco no topo.</p>
+
+<p><strong>BlueFleet</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–45 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–45 €<br>
+Contacto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Lagos Grotto Trips</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 35–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
 </div>
 
 <div class="category-card">
 <h3>Observação de Golfinhos</h3>
-<p>Experiência emocionante para ver golfinhos no seu habitat natural.</p>
-<p><strong>Duração:</strong> 1h30</p>
-<p><a href="https://maps.google.com/?q=Dolphin+Watching+Lagos">📍 Ver no mapa</a></p>
+<p>Passeio emocionante em mar aberto para observar golfinhos no seu habitat natural.</p>
+
+<p><strong>Sealife</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–45 €<br>
+Contacto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–45 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Observação de Vida Marinha</h3>
+<p>Passeio dedicado à observação de aves marinhas, peixes, tartarugas e outras espécies costeiras.</p>
+
+<p><strong>Sealife</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–50 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–50 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–50 €<br>
+Contacto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Passeios de Pesca</h3>
+<p>Pesca costeira ou de alto mar, ideal para iniciantes e pescadores experientes.</p>
+
+<p><strong>Lagos Fishing Trips</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 75–85 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Blue Shark Fishing</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 75–90 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Seawolf Fishing</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 75–90 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Kayak nas Grutas</h3>
+<p>Passeio ativo e divertido, ideal para explorar as grutas e formações rochosas de perto, com paragens para mergulho.</p>
+
+<p><strong>Kayak Adventures Lagos</strong><br>
+Localização: Praia de Batata<br>
+Distância: 1,8 km do Marina Park<br>
+Preço aproximado: desde 40–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>BlueFleet Kayak</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–45 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Coastline Kayak</strong><br>
+Localização: Praia do Cais da Solaria<br>
+Distância: 2,0 km<br>
+Preço aproximado: desde 40–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Stand Up Paddle (SUP)</h3>
+<p>Experiência tranquila e relaxante, ideal para explorar a costa ao ritmo das ondas, com acesso a pequenas grutas.</p>
+
+<p><strong>SUP Lagos</strong><br>
+Localização: Praia de Batata<br>
+Distância: 1,8 km<br>
+Preço aproximado: desde 35–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>BlueFleet SUP</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 35–45 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Coastline SUP</strong><br>
+Localização: Praia do Cais da Solaria<br>
+Distância: 2,0 km<br>
+Preço aproximado: desde 35–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Cruzeiro Costeiro</h3>
+<p>Passeio relaxado ao longo da costa de Lagos, com vistas panorâmicas das falésias, praias e formações rochosas.</p>
+
+<p><strong>BlueFleet</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 30–35 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 30–35 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 30–35 €<br>
+Contacto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Passeio ao Pôr-do-Sol</h3>
+<p>Passeio romântico e relaxante ao final da tarde, com vistas deslumbrantes das falésias iluminadas pelo pôr-do-sol.</p>
+
+<p><strong>BlueFleet Sunset</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 55–65 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Lagos Boat Tours Sunset</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 50–60 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Coastline Cruises</strong><br>
+Localização: Cais da Solaria<br>
+Distância: 2,0 km<br>
+Preço aproximado: desde 50–60 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Passeios Privados / Charter</h3>
+<p>Passeios exclusivos para grupos, famílias ou eventos especiais, com total flexibilidade de rota e duração.</p>
+
+<p><strong>BlueFleet Private</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 250–350 € por grupo<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Lagos Private Tours</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 250–350 € por grupo<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Coastline Private</strong><br>
+Localização: Cais da Solaria<br>
+Distância: 2,0 km<br>
+Preço aproximado: desde 250–350 € por grupo<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver no mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Passeios em Catamarã</h3>
+<p>Passeio confortável e espaçoso, ideal para relaxar, apanhar sol e desfrutar da costa com estabilidade e conforto.</p>
+
+<p><strong>BlueFleet Catamarã</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–50 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Lagos Catamaran Cruises</strong><br>
+Localização: Marina de Lagos<br>
+Distância: 1,2 km<br>
+Preço aproximado: desde 40–50 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Coastline Catamarã</strong><br>
+Localização: Cais da Solaria<br>
+Distância: 2,0 km<br>
+Preço aproximado: desde 40–50 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver no mapa</a></p>
 </div>
 `,
 en: `
 <div class="category-card">
-<h3>Ponta da Piedade Caves Tour</h3>
-<p>Boat tour through stunning rock formations and natural caves.</p>
-<p><strong>Duration:</strong> 1h</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Boat+Tour">📍 View on map</a></p>
+<h3>Grotto Tour – Ponta da Piedade</h3>
+<p>One of Lagos’ most iconic tours, exploring unique rock formations, natural tunnels and crystal-clear waters.</p>
+
+<p><strong>BlueFleet</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km from Marina Park<br>
+Approx. price: from 25–30 €<br>
+Contact: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Algarve Grotto Trips</strong><br>
+Location: Cais da Solaria<br>
+Distance: 2.0 km from Marina Park<br>
+Approx. price: from 20–25 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 View on map</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 25–30 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+</div>
+
+<div class="category-card">
+<h3>Benagil Cave Tour</h3>
+<p>A spectacular trip to the famous Benagil Cave, known for its impressive dome-shaped ceiling and natural skylight.</p>
+
+<p><strong>BlueFleet</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–45 €<br>
+Contact: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Seafaris</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–45 €<br>
+Contact: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Lagos Grotto Trips</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 35–45 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
 </div>
 
 <div class="category-card">
 <h3>Dolphin Watching</h3>
-<p>Exciting experience to see dolphins in their natural habitat.</p>
-<p><strong>Duration:</strong> 1h30</p>
-<p><a href="https://maps.google.com/?q=Dolphin+Watching+Lagos">📍 View on map</a></p>
+<p>An exciting open-sea experience to observe dolphins in their natural habitat.</p>
+
+<p><strong>Sealife</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–45 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Seafaris</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–45 €<br>
+Contact: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–45 €<br>
+Contact: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+</div>
+
+<div class="category-card">
+<h3>Marine Wildlife Watching</h3>
+<p>A dedicated tour to observe seabirds, fish, turtles and other coastal species in their natural environment.</p>
+
+<p><strong>Sealife</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–50 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–50 €<br>
+Contact: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Seafaris</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–50 €<br>
+Contact: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+</div>
+
+<div class="category-card">
+<h3>Fishing Trips</h3>
+<p>Coastal or deep-sea fishing, suitable for beginners and experienced anglers.</p>
+
+<p><strong>Lagos Fishing Trips</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 75–85 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Blue Shark Fishing</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 75–90 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Seawolf Fishing</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 75–90 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+</div>
+
+<div class="category-card">
+<h3>Kayak in the Caves</h3>
+<p>An active and fun experience, ideal for exploring the caves and rock formations up close, with stops for swimming.</p>
+
+<p><strong>Kayak Adventures Lagos</strong><br>
+Location: Praia da Batata<br>
+Distance: 1.8 km from Marina Park<br>
+Approx. price: from 40–45 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 View on map</a></p>
+
+<p><strong>BlueFleet Kayak</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–45 €<br>
+Contact: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Coastline Kayak</strong><br>
+Location: Cais da Solaria<br>
+Distance: 2.0 km<br>
+Approx. price: from 40–45 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 View on map</a></p>
+</div>
+
+<div class="category-card">
+<h3>Stand Up Paddle (SUP)</h3>
+<p>A calm and relaxing experience, perfect for exploring the coastline at your own pace, with access to small caves.</p>
+
+<p><strong>SUP Lagos</strong><br>
+Location: Praia da Batata<br>
+Distance: 1.8 km<br>
+Approx. price: from 35–45 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 View on map</a></p>
+
+<p><strong>BlueFleet SUP</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 35–45 €<br>
+Contact: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Coastline SUP</strong><br>
+Location: Cais da Solaria<br>
+Distance: 2.0 km<br>
+Approx. price: from 35–45 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 View on map</a></p>
+</div>
+
+<div class="category-card">
+<h3>Coastal Cruise</h3>
+<p>A relaxed boat trip along the Lagos coastline, offering panoramic views of cliffs, beaches and rock formations.</p>
+
+<p><strong>BlueFleet</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 30–35 €<br>
+Contact: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 30–35 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Seafaris</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 30–35 €<br>
+Contact: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+</div>
+
+<div class="category-card">
+<h3>Sunset Cruise</h3>
+<p>A romantic and relaxing late-afternoon cruise with stunning views of the cliffs glowing under the sunset light.</p>
+
+<p><strong>BlueFleet Sunset</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 55–65 €<br>
+Contact: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Lagos Boat Tours Sunset</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 50–60 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Coastline Cruises</strong><br>
+Location: Cais da Solaria<br>
+Distance: 2.0 km<br>
+Approx. price: from 50–60 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 View on map</a></p>
+</div>
+
+<div class="category-card">
+<h3>Private Tours / Charter</h3>
+<p>Exclusive private trips for families, groups or special occasions, with full flexibility of route and duration.</p>
+
+<p><strong>BlueFleet Private</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 250–350 € per group<br>
+Contact: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Lagos Private Tours</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 250–350 € per group<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Coastline Private</strong><br>
+Location: Cais da Solaria<br>
+Distance: 2.0 km<br>
+Approx. price: from 250–350 € per group<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 View on map</a></p>
+</div>
+
+<div class="category-card">
+<h3>Catamaran Tours</h3>
+<p>A comfortable and spacious experience, ideal for relaxing, sunbathing and enjoying the coastline with great stability.</p>
+
+<p><strong>BlueFleet Catamaran</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–50 €<br>
+Contact: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Lagos Catamaran Cruises</strong><br>
+Location: Lagos Marina<br>
+Distance: 1.2 km<br>
+Approx. price: from 40–50 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Lagos+Marina">📍 View on map</a></p>
+
+<p><strong>Coastline Catamaran</strong><br>
+Location: Cais da Solaria<br>
+Distance: 2.0 km<br>
+Approx. price: from 40–50 €<br>
+Contact: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 View on map</a></p>
 </div>
 `,
 es: `
 <div class="category-card">
-<h3>Paseo por las Grutas de Ponta da Piedade</h3>
-<p>Paseo en barco por formaciones rocosas y cuevas naturales.</p>
-<p><strong>Duración:</strong> 1h</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Boat+Tour">📍 Ver en el mapa</a></p>
+<h3>Paseo a las Grutas – Ponta da Piedade</h3>
+<p>Uno de los paseos más emblemáticos de Lagos, explorando formaciones rocosas únicas, túneles naturales y aguas cristalinas.</p>
+
+<p><strong>BlueFleet</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km desde Marina Park<br>
+Precio aproximado: desde 25–30 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Algarve Grotto Trips</strong><br>
+Ubicación: Cais da Solaria<br>
+Distancia: 2,0 km desde Marina Park<br>
+Precio aproximado: desde 20–25 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 25–30 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Paseo a la Cueva de Benagil</h3>
+<p>Un recorrido espectacular a la famosa cueva de Benagil, conocida por su impresionante techo en forma de cúpula y su abertura natural.</p>
+
+<p><strong>BlueFleet</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–45 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–45 €<br>
+Contacto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Lagos Grotto Trips</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 35–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
 </div>
 
 <div class="category-card">
 <h3>Avistamiento de Delfines</h3>
-<p>Experiencia emocionante para ver delfines en su hábitat natural.</p>
-<p><strong>Duración:</strong> 1h30</p>
-<p><a href="https://maps.google.com/?q=Dolphin+Watching+Lagos">📍 Ver en el mapa</a></p>
+<p>Una emocionante experiencia en mar abierto para observar delfines en su hábitat natural.</p>
+
+<p><strong>Sealife</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–45 €<br>
+Contacto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–45 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Observación de Vida Marina</h3>
+<p>Un paseo dedicado a observar aves marinas, peces, tortugas y otras especies costeras en su entorno natural.</p>
+
+<p><strong>Sealife</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–50 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–50 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–50 €<br>
+Contacto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Paseos de Pesca</h3>
+<p>Pesca costera o de alta mar, ideal tanto para principiantes como para pescadores experimentados.</p>
+
+<p><strong>Lagos Fishing Trips</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 75–85 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Blue Shark Fishing</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 75–90 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Seawolf Fishing</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 75–90 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Kayak en las Cuevas</h3>
+<p>Una experiencia activa y divertida, ideal para explorar las cuevas y formaciones rocosas de cerca, con paradas para nadar.</p>
+
+<p><strong>Kayak Adventures Lagos</strong><br>
+Ubicación: Praia da Batata<br>
+Distancia: 1,8 km desde Marina Park<br>
+Precio aproximado: desde 40–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>BlueFleet Kayak</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–45 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Coastline Kayak</strong><br>
+Ubicación: Cais da Solaria<br>
+Distancia: 2,0 km<br>
+Precio aproximado: desde 40–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Stand Up Paddle (SUP)</h3>
+<p>Una experiencia tranquila y relajante, perfecta para explorar la costa a tu propio ritmo, con acceso a pequeñas cuevas.</p>
+
+<p><strong>SUP Lagos</strong><br>
+Ubicación: Praia da Batata<br>
+Distancia: 1,8 km<br>
+Precio aproximado: desde 35–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>BlueFleet SUP</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 35–45 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Coastline SUP</strong><br>
+Ubicación: Cais da Solaria<br>
+Distancia: 2,0 km<br>
+Precio aproximado: desde 35–45 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Crucero Costero</h3>
+<p>Un paseo relajado por la costa de Lagos, con vistas panorámicas de acantilados, playas y formaciones rocosas.</p>
+
+<p><strong>BlueFleet</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 30–35 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 30–35 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 30–35 €<br>
+Contacto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Paseo al Atardecer</h3>
+<p>Un paseo romántico y relajante al final de la tarde, con vistas impresionantes de los acantilados iluminados por el sol poniente.</p>
+
+<p><strong>BlueFleet Sunset</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 55–65 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Lagos Boat Tours Sunset</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 50–60 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Coastline Cruises</strong><br>
+Ubicación: Cais da Solaria<br>
+Distancia: 2,0 km<br>
+Precio aproximado: desde 50–60 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Paseos Privados / Charter</h3>
+<p>Paseos exclusivos para familias, grupos o eventos especiales, con total flexibilidad de ruta y duración.</p>
+
+<p><strong>BlueFleet Private</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 250–350 € por grupo<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Lagos Private Tours</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 250–350 € por grupo<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Coastline Private</strong><br>
+Ubicación: Cais da Solaria<br>
+Distancia: 2,0 km<br>
+Precio aproximado: desde 250–350 € por grupo<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver en el mapa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Paseos en Catamarán</h3>
+<p>Una experiencia cómoda y espaciosa, ideal para relajarse, tomar el sol y disfrutar de la costa con gran estabilidad.</p>
+
+<p><strong>BlueFleet Catamarán</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–50 €<br>
+Contacto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Lagos Catamaran Cruises</strong><br>
+Ubicación: Marina de Lagos<br>
+Distancia: 1,2 km<br>
+Precio aproximado: desde 40–50 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Coastline Catamarán</strong><br>
+Ubicación: Cais da Solaria<br>
+Distancia: 2,0 km<br>
+Precio aproximado: desde 40–50 €<br>
+Contacto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Ver en el mapa</a></p>
 </div>
 `,
 fr: `
 <div class="category-card">
-<h3>Visite des Grottes de Ponta da Piedade</h3>
-<p>Excursion en bateau à travers les formations rocheuses et grottes naturelles.</p>
-<p><strong>Durée :</strong> 1h</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Boat+Tour">📍 Voir sur la carte</a></p>
+<h3>Visite des Grottes – Ponta da Piedade</h3>
+<p>L’une des excursions les plus emblématiques de Lagos, explorant des formations rocheuses uniques, des tunnels naturels et des eaux cristallines.</p>
+
+<p><strong>BlueFleet</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km depuis Marina Park<br>
+Prix approximatif : à partir de 25–30 €<br>
+Contact : +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Algarve Grotto Trips</strong><br>
+Localisation : Cais da Solaria<br>
+Distance : 2,0 km depuis Marina Park<br>
+Prix approximatif : à partir de 20–25 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 25–30 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card">
+<h3>Visite de la Grotte de Benagil</h3>
+<p>Une excursion spectaculaire vers la célèbre grotte de Benagil, connue pour son plafond en forme de dôme et son ouverture naturelle.</p>
+
+<p><strong>BlueFleet</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–45 €<br>
+Contact : +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Seafaris</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–45 €<br>
+Contact : +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Lagos Grotto Trips</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 35–45 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
 </div>
 
 <div class="category-card">
 <h3>Observation des Dauphins</h3>
-<p>Expérience passionnante pour voir des dauphins dans leur habitat naturel.</p>
-<p><strong>Durée :</strong> 1h30</p>
-<p><a href="https://maps.google.com/?q=Dolphin+Watching+Lagos">📍 Voir sur la carte</a></p>
+<p>Une expérience passionnante en pleine mer pour observer les dauphins dans leur habitat naturel.</p>
+
+<p><strong>Sealife</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–45 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Seafaris</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–45 €<br>
+Contact : +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–45 €<br>
+Contact : +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card">
+<h3>Observation de la Faune Marine</h3>
+<p>Une excursion dédiée à l’observation des oiseaux marins, poissons, tortues et autres espèces côtières.</p>
+
+<p><strong>Sealife</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–50 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–50 €<br>
+Contact : +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Seafaris</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–50 €<br>
+Contact : +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card">
+<h3>Sorties de Pêche</h3>
+<p>Pêche côtière ou en haute mer, idéale pour les débutants comme pour les pêcheurs expérimentés.</p>
+
+<p><strong>Lagos Fishing Trips</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 75–85 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Blue Shark Fishing</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 75–90 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Seawolf Fishing</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 75–90 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card">
+<h3>Kayak dans les Grottes</h3>
+<p>Une activité sportive et amusante, idéale pour explorer les grottes et formations rocheuses de près, avec des arrêts pour nager.</p>
+
+<p><strong>Kayak Adventures Lagos</strong><br>
+Localisation : Praia da Batata<br>
+Distance : 1,8 km<br>
+Prix approximatif : à partir de 40–45 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>BlueFleet Kayak</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–45 €<br>
+Contact : +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Coastline Kayak</strong><br>
+Localisation : Cais da Solaria<br>
+Distance : 2,0 km<br>
+Prix approximatif : à partir de 40–45 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card">
+<h3>Stand Up Paddle (SUP)</h3>
+<p>Une expérience calme et relaxante, parfaite pour explorer la côte à votre rythme, avec accès à de petites grottes.</p>
+
+<p><strong>SUP Lagos</strong><br>
+Localisation : Praia da Batata<br>
+Distance : 1,8 km<br>
+Prix approximatif : à partir de 35–45 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>BlueFleet SUP</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 35–45 €<br>
+Contact : +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Coastline SUP</strong><br>
+Localisation : Cais da Solaria<br>
+Distance : 2,0 km<br>
+Prix approximatif : à partir de 35–45 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card">
+<h3>Croisière Côtière</h3>
+<p>Une promenade détendue le long de la côte de Lagos, offrant des vues panoramiques sur les falaises, plages et formations rocheuses.</p>
+
+<p><strong>BlueFleet</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 30–35 €<br>
+Contact : +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 30–35 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Seafaris</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 30–35 €<br>
+Contact : +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card">
+<h3>Croisière au Coucher du Soleil</h3>
+<p>Une promenade romantique et relaxante en fin d’après-midi, avec des vues magnifiques sur les falaises illuminées par le soleil couchant.</p>
+
+<p><strong>BlueFleet Sunset</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 55–65 €<br>
+Contact : +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Lagos Boat Tours Sunset</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 50–60 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Coastline Cruises</strong><br>
+Localisation : Cais da Solaria<br>
+Distance : 2,0 km<br>
+Prix approximatif : à partir de 50–60 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card">
+<h3>Excursions Privées / Charter</h3>
+<p>Excursions exclusives pour familles, groupes ou occasions spéciales, avec une flexibilité totale de parcours et de durée.</p>
+
+<p><strong>BlueFleet Private</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 250–350 € par groupe<br>
+Contact : +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Lagos Private Tours</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 250–350 € par groupe<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Coastline Private</strong><br>
+Localisation : Cais da Solaria<br>
+Distance : 2,0 km<br>
+Prix approximatif : à partir de 250–350 € par groupe<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Voir sur la carte</a></p>
+</div>
+
+<div class="category-card">
+<h3>Excursions en Catamaran</h3>
+<p>Une expérience confortable et spacieuse, idéale pour se détendre, bronzer et profiter de la côte avec une grande stabilité.</p>
+
+<p><strong>BlueFleet Catamaran</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–50 €<br>
+Contact : +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Lagos Catamaran Cruises</strong><br>
+Localisation : Marina de Lagos<br>
+Distance : 1,2 km<br>
+Prix approximatif : à partir de 40–50 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Coastline Catamaran</strong><br>
+Localisation : Cais da Solaria<br>
+Distance : 2,0 km<br>
+Prix approximatif : à partir de 40–50 €<br>
+Contact : +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Voir sur la carte</a></p>
 </div>
 `,
 it: `
 <div class="category-card">
-<h3>Tour delle Grotte di Ponta da Piedade</h3>
-<p>Giro in barca tra formazioni rocciose e grotte naturali.</p>
-<p><strong>Durata:</strong> 1h</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Boat+Tour">📍 Vedi sulla mappa</a></p>
+<h3>Tour delle Grotte – Ponta da Piedade</h3>
+<p>Una delle escursioni più iconiche di Lagos, esplorando formazioni rocciose uniche, tunnel naturali e acque cristalline.</p>
+
+<p><strong>BlueFleet</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km da Marina Park<br>
+Prezzo approssimativo: da 25–30 €<br>
+Contatto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Algarve Grotto Trips</strong><br>
+Località: Cais da Solaria<br>
+Distanza: 2,0 km da Marina Park<br>
+Prezzo approssimativo: da 20–25 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 25–30 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
 </div>
 
 <div class="category-card">
-<h3>Avvistamento Delfini</h3>
-<p>Esperienza emozionante per vedere i delfini nel loro habitat naturale.</p>
-<p><strong>Durata:</strong> 1h30</p>
-<p><a href="https://maps.google.com/?q=Dolphin+Watching+Lagos">📍 Vedi sulla mappa</a></p>
+<h3>Tour della Grotta di Benagil</h3>
+<p>Un’escursione spettacolare alla famosa grotta di Benagil, nota per il suo soffitto a cupola e la sua apertura naturale.</p>
+
+<p><strong>BlueFleet</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–45 €<br>
+Contatto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–45 €<br>
+Contatto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Lagos Grotto Trips</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 35–45 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Avvistamento dei Delfini</h3>
+<p>Un’emozionante esperienza in mare aperto per osservare i delfini nel loro habitat naturale.</p>
+
+<p><strong>Sealife</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–45 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–45 €<br>
+Contatto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–45 €<br>
+Contatto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Osservazione della Fauna Marina</h3>
+<p>Un tour dedicato all’osservazione di uccelli marini, pesci, tartarughe e altre specie costiere.</p>
+
+<p><strong>Sealife</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–50 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–50 €<br>
+Contatto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–50 €<br>
+Contatto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Escursioni di Pesca</h3>
+<p>Pesca costiera o d’altura, ideale sia per principianti che per pescatori esperti.</p>
+
+<p><strong>Lagos Fishing Trips</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 75–85 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Blue Shark Fishing</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 75–90 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Seawolf Fishing</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 75–90 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Kayak nelle Grotte</h3>
+<p>Un’attività dinamica e divertente, ideale per esplorare da vicino le grotte e le formazioni rocciose, con soste per nuotare.</p>
+
+<p><strong>Kayak Adventures Lagos</strong><br>
+Località: Praia da Batata<br>
+Distanza: 1,8 km<br>
+Prezzo approssimativo: da 40–45 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>BlueFleet Kayak</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–45 €<br>
+Contatto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Coastline Kayak</strong><br>
+Località: Cais da Solaria<br>
+Distanza: 2,0 km<br>
+Prezzo approssimativo: da 40–45 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Stand Up Paddle (SUP)</h3>
+<p>Un’esperienza tranquilla e rilassante, perfetta per esplorare la costa al proprio ritmo, con accesso a piccole grotte.</p>
+
+<p><strong>SUP Lagos</strong><br>
+Località: Praia da Batata<br>
+Distanza: 1,8 km<br>
+Prezzo approssimativo: da 35–45 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>BlueFleet SUP</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 35–45 €<br>
+Contatto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Coastline SUP</strong><br>
+Località: Cais da Solaria<br>
+Distanza: 2,0 km<br>
+Prezzo approssimativo: da 35–45 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Crociera Costiera</h3>
+<p>Un tour rilassante lungo la costa di Lagos, con viste panoramiche su scogliere, spiagge e formazioni rocciose.</p>
+
+<p><strong>BlueFleet</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 30–35 €<br>
+Contatto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 30–35 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Seafaris</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 30–35 €<br>
+Contatto: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Crociera al Tramonto</h3>
+<p>Un tour romantico e rilassante nel tardo pomeriggio, con viste mozzafiato sulle scogliere illuminate dal sole al tramonto.</p>
+
+<p><strong>BlueFleet Sunset</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 55–65 €<br>
+Contatto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Lagos Boat Tours Sunset</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 50–60 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Coastline Cruises</strong><br>
+Località: Cais da Solaria<br>
+Distanza: 2,0 km<br>
+Prezzo approssimativo: da 50–60 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Tour Privati / Charter</h3>
+<p>Escursioni esclusive per famiglie, gruppi o occasioni speciali, con totale flessibilità di percorso e durata.</p>
+
+<p><strong>BlueFleet Private</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 250–350 € per gruppo<br>
+Contatto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Lagos Private Tours</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 250–350 € per gruppo<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Coastline Private</strong><br>
+Località: Cais da Solaria<br>
+Distanza: 2,0 km<br>
+Prezzo approssimativo: da 250–350 € per gruppo<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Vedi sulla mappa</a></p>
+</div>
+
+<div class="category-card">
+<h3>Tour in Catamarano</h3>
+<p>Un’esperienza confortevole e spaziosa, ideale per rilassarsi, prendere il sole e godersi la costa con grande stabilità.</p>
+
+<p><strong>BlueFleet Catamaran</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–50 €<br>
+Contatto: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Lagos Catamaran Cruises</strong><br>
+Località: Marina di Lagos<br>
+Distanza: 1,2 km<br>
+Prezzo approssimativo: da 40–50 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Coastline Catamaran</strong><br>
+Località: Cais da Solaria<br>
+Distanza: 2,0 km<br>
+Prezzo approssimativo: da 40–50 €<br>
+Contatto: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Vedi sulla mappa</a></p>
 </div>
 `,
 de: `
 <div class="category-card">
-<h3>Ponta da Piedade Grotten Tour</h3>
-<p>Bootstour durch beeindruckende Felsformationen und natürliche Höhlen.</p>
-<p><strong>Dauer:</strong> 1h</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Boat+Tour">📍 Karte anzeigen</a></p>
+<h3>Höhlentour – Ponta da Piedade</h3>
+<p>Eine der bekanntesten Touren in Lagos, bei der einzigartige Felsformationen, natürliche Tunnel und kristallklares Wasser erkundet werden.</p>
+
+<p><strong>BlueFleet</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km vom Marina Park<br>
+Ungefährer Preis: ab 25–30 €<br>
+Kontakt: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Algarve Grotto Trips</strong><br>
+Standort: Cais da Solaria<br>
+Entfernung: 2,0 km vom Marina Park<br>
+Ungefährer Preis: ab 20–25 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 25–30 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+</div>
+
+<div class="category-card">
+<h3>Benagil-Höhlentour</h3>
+<p>Ein spektakulärer Ausflug zur berühmten Benagil-Höhle, bekannt für ihre kuppelförmige Decke und das natürliche Oberlicht.</p>
+
+<p><strong>BlueFleet</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–45 €<br>
+Kontakt: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Seafaris</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–45 €<br>
+Kontakt: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Lagos Grotto Trips</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 35–45 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
 </div>
 
 <div class="category-card">
 <h3>Delfinbeobachtung</h3>
-<p>Spannende Erfahrung, Delfine in ihrem natürlichen Lebensraum zu sehen.</p>
-<p><strong>Dauer:</strong> 1h30</p>
-<p><a href="https://maps.google.com/?q=Dolphin+Watching+Lagos">📍 Karte anzeigen</a></p>
+<p>Ein aufregender Ausflug auf offener See, um Delfine in ihrem natürlichen Lebensraum zu beobachten.</p>
+
+<p><strong>Sealife</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–45 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Seafaris</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–45 €<br>
+Kontakt: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–45 €<br>
+Kontakt: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
 </div>
-`
+
+<div class="category-card">
+<h3>Beobachtung der Meeresfauna</h3>
+<p>Eine Tour zur Beobachtung von Seevögeln, Fischen, Schildkröten und anderen Küstenarten.</p>
+
+<p><strong>Sealife</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–50 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>BlueFleet</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–50 €<br>
+Kontakt: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Seafaris</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–50 €<br>
+Kontakt: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+</div>
+
+<div class="category-card">
+<h3>Angelausflüge</h3>
+<p>Küsten- oder Hochseefischen, geeignet für Anfänger und erfahrene Angler.</p>
+
+<p><strong>Lagos Fishing Trips</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 75–85 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Blue Shark Fishing</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 75–90 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Seawolf Fishing</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 75–90 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+</div>
+
+<div class="category-card">
+<h3>Kajak in den Höhlen</h3>
+<p>Eine aktive und unterhaltsame Tour, ideal um Höhlen und Felsformationen aus nächster Nähe zu erkunden, mit Stopps zum Schwimmen.</p>
+
+<p><strong>Kayak Adventures Lagos</strong><br>
+Standort: Praia da Batata<br>
+Entfernung: 1,8 km<br>
+Ungefährer Preis: ab 40–45 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>BlueFleet Kayak</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–45 €<br>
+Kontakt: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Coastline Kayak</strong><br>
+Standort: Cais da Solaria<br>
+Entfernung: 2,0 km<br>
+Ungefährer Preis: ab 40–45 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Karte anzeigen</a></p>
+</div>
+
+<div class="category-card">
+<h3>Stand Up Paddle (SUP)</h3>
+<p>Eine ruhige und entspannende Aktivität, ideal um die Küste in eigenem Tempo zu erkunden, mit Zugang zu kleinen Höhlen.</p>
+
+<p><strong>SUP Lagos</strong><br>
+Standort: Praia da Batata<br>
+Entfernung: 1,8 km<br>
+Ungefährer Preis: ab 35–45 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Praia+da+Batata+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>BlueFleet SUP</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 35–45 €<br>
+Kontakt: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Coastline SUP</strong><br>
+Standort: Cais da Solaria<br>
+Entfernung: 2,0 km<br>
+Ungefährer Preis: ab 35–45 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Karte anzeigen</a></p>
+</div>
+
+<div class="category-card">
+<h3>Küstenkreuzfahrt</h3>
+<p>Eine entspannte Bootsfahrt entlang der Küste von Lagos mit Panoramablick auf Klippen, Strände und Felsformationen.</p>
+
+<p><strong>BlueFleet</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 30–35 €<br>
+Kontakt: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Lagos Boat Tours</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 30–35 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Seafaris</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 30–35 €<br>
+Kontakt: +351 282 798 180<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+</div>
+
+<div class="category-card">
+<h3>Sonnenuntergangs-Bootstour</h3>
+<p>Eine romantische und entspannte Tour am späten Nachmittag mit atemberaubenden Ausblicken auf die von der Abendsonne beleuchteten Klippen.</p>
+
+<p><strong>BlueFleet Sunset</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 55–65 €<br>
+Kontakt: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Lagos Boat Tours Sunset</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 50–60 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Coastline Cruises</strong><br>
+Standort: Cais da Solaria<br>
+Entfernung: 2,0 km<br>
+Ungefährer Preis: ab 50–60 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Karte anzeigen</a></p>
+</div>
+
+<div class="category-card">
+<h3>Private Touren / Charter</h3>
+<p>Exklusive Ausflüge für Familien, Gruppen oder besondere Anlässe mit vollständiger Flexibilität bei Route und Dauer.</p>
+
+<p><strong>BlueFleet Private</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 250–350 € pro Gruppe<br>
+Kontakt: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Lagos Private Tours</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 250–350 € pro Gruppe<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Coastline Private</strong><br>
+Standort: Cais da Solaria<br>
+Entfernung: 2,0 km<br>
+Ungefährer Preis: ab 250–350 € pro Gruppe<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Karte anzeigen</a></p>
+</div>
+
+<div class="category-card">
+<h3>Katamaran-Touren</h3>
+<p>Eine komfortable und geräumige Erfahrung, ideal zum Entspannen, Sonnenbaden und Genießen der Küste mit hoher Stabilität.</p>
+
+<p><strong>BlueFleet Katamaran</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–50 €<br>
+Kontakt: +351 918 779 155<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Lagos Catamaran Cruises</strong><br>
+Standort: Marina de Lagos<br>
+Entfernung: 1,2 km<br>
+Ungefährer Preis: ab 40–50 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Marina+de+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Coastline Katamaran</strong><br>
+Standort: Cais da Solaria<br>
+Entfernung: 2,0 km<br>
+Ungefährer Preis: ab 40–50 €<br>
+Kontakt: +351 913 070 746<br>
+<a href="https://maps.google.com/?q=Cais+da+Solaria+Lagos">📍 Karte anzeigen</a></p>
+</div>
+`,
 };
-
-
 // -----------------------------------------
 // --- GOLF (Campos de Golfe) ---
 // -----------------------------------------
