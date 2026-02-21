@@ -4,7 +4,7 @@
 // TEXTOS POR IDIOMA
 // ------------------------------
 const texts = {
-  pt: {
+ pt: {
     subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).",
     legalHtml: `
     <h3><strong>Aviso Legal Obrigatório — Registo de Hóspedes (AIMA/SIBA)</strong></h3>
@@ -76,6 +76,7 @@ const texts = {
     },
     submit: "Enviar Boletim de Alojamento"
 },
+
 
 
   en: {
