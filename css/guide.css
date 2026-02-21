@@ -60,7 +60,17 @@ main {
 /* ------------------------------
    BOTÕES DE IDIOMA
 --------------------------------*/
+.lang-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
 .lang-buttons button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin: 8px;
     padding: 12px 20px;
     border: none;
@@ -72,6 +82,29 @@ main {
 }
 
 .lang-buttons button:hover {
+    background: #004b80;
+}
+
+.lang-buttons button img {
+    width: 26px;
+    height: 18px;
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+/* Botão para voltar à escolha de idioma */
+.lang-btn {
+    background: #005c99;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.lang-btn:hover {
     background: #004b80;
 }
 
@@ -140,8 +173,13 @@ main {
 }
 
 .category-card a {
+    text-decoration: none;
     color: #005c99;
     font-weight: 600;
+}
+
+.category-card a:hover {
+    text-decoration: underline;
 }
 
 /* ------------------------------
@@ -156,74 +194,6 @@ main {
         flex-direction: column;
         gap: 10px;
     }
-}
-
-/* ------------------------------
-   PARA BANDEIRAS DE LINGUAGEM
---------------------------------*/
-
-/* Layout horizontal dos botões */
-.lang-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-}
-
-/* Botões com bandeiras */
-.lang-buttons button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 20px;
-    background: #005c99;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.lang-buttons button:hover {
-    background: #004b80;
-}
-
-/* Bandeiras */
-.lang-buttons button img {
-    width: 26px;
-    height: 18px;
-    object-fit: cover;
-    border-radius: 3px;
-}
-
-/* Botão para voltar à escolha de idioma */
-.lang-btn {
-    background: #005c99;
-    color: #fff;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 15px;
-    margin-bottom: 15px;
-}
-
-.lang-btn:hover {
-    background: #004b80;
-}
-
-/* -----------------------------------------
-   RETIRA O SUBLINHADO DOS LINKS E TELEFONES
---------------------------------------------*/
-
-.category-card a {
-    text-decoration: none;
-    color: inherit;
-    font-weight: 600;
-}
-
-.category-card a:hover {
-    text-decoration: underline;
 }
 
 /* -----------------------------------------
