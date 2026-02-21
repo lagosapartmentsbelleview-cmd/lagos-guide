@@ -434,8 +434,9 @@ const texts = {
     docTypeID: "Personalausweis",
     docCountry: "Ausstellungsland:"
   },
-  submit: "Formular absenden"
-},
+    submit: "Formular absenden"
+}
+}; 
 
 // ------------------------------
 // FAQ POR IDIOMA — CONTEÚDO HTML
