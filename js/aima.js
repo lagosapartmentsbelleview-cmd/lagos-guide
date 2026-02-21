@@ -439,6 +439,19 @@ const texts = {
 }; 
 
 // ------------------------------
+// FAQ TITULO DO MODAL POR IDIOMA
+// ------------------------------
+
+const faqTitles = {
+  pt: "Perguntas Frequentes (FAQ)",
+  en: "Frequently Asked Questions (FAQ)",
+  es: "Preguntas Frecuentes (FAQ)",
+  fr: "Foire aux Questions (FAQ)",
+  it: "Domande Frequenti (FAQ)",
+  de: "Häufig gestellte Fragen (FAQ)"
+};
+
+// ------------------------------
 // FAQ POR IDIOMA — CONTEÚDO HTML
 // ------------------------------
 const faqTexts = {
@@ -906,9 +919,10 @@ function setLanguage(lang) {
   const openFaqBtn = document.getElementById("openFaqModal");
   if (openFaqBtn) {
     openFaqBtn.addEventListener("click", () => {
-      loadFaq();
-      faqModal.style.display = "block";
-    });
+  document.getElementById("faqTitle").textContent = faqTitles[currentLang];
+  loadFaq();
+  faqModal.style.display = "block";
+});
   }
 }
 
