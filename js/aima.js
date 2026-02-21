@@ -899,7 +899,19 @@ function setLanguage(lang) {
   submitBtnEl.textContent = t.submit;
 
   generateGuestFields();
+
+  // -----------------------------------------
+  // REAPLICAR EVENTO DO LINK FAQ APÓS MUDAR IDIOMA
+  // -----------------------------------------
+  const openFaqBtn = document.getElementById("openFaqModal");
+  if (openFaqBtn) {
+    openFaqBtn.addEventListener("click", () => {
+      loadFaq();
+      faqModal.style.display = "block";
+    });
+  }
 }
+
 
 // ------------------------------
 // GERAR CAMPOS PARA HÓSPEDES
