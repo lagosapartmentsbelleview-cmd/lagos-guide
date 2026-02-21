@@ -1533,96 +1533,78 @@ de: `
 // -----------------------------------------
 
 const trails = {
-pt: `
-<div class="category-card">
-<h3>Ponta da Piedade</h3>
-<p>Trilho costeiro com vistas deslumbrantes sobre falésias e formações rochosas.</p>
-<p><strong>Distância:</strong> 2,2 km</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos">📍 Ver no mapa</a></p>
-</div>
-
-<div class="category-card">
-<h3>Rocha Negra</h3>
-<p>Trilho moderado com paisagens naturais e vista panorâmica sobre Lagos.</p>
-<p><strong>Distância:</strong> 3,5 km</p>
-<p><a href="https://maps.google.com/?q=Rocha+Negra+Lagos">📍 Ver no mapa</a></p>
-</div>
+ pt: `
+<div class="category-card"><h3>Lagos → Ponta da Piedade</h3><p>Um dos trilhos mais bonitos do Algarve, com falésias douradas, miradouros incríveis e mar azul-turquesa. Perfeito para fotos e caminhadas relaxadas.</p><p>Distância desde Marina Park: ~ 2,5 km • 30 minutos a pé</p><p>Extensão do trilho: 3,8 km • Dificuldade: Fácil</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Ponta da Piedade – Percurso Circular</h3><p>Um circuito curto e panorâmico que passa pelos melhores miradouros da Ponta da Piedade. Ideal para quem quer vistas incríveis sem grande esforço.</p><p>Distância desde Marina Park: ~ 2,5 km • 30 minutos a pé</p><p>Extensão do trilho: 2,2 km • Dificuldade: Fácil</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Lagos → Praia do Camilo e Dona Ana</h3><p>Trilho costeiro muito fotogénico, passando por praias icónicas e escadarias impressionantes. Um dos percursos mais populares entre visitantes.</p><p>Distância desde Marina Park: ~ 1,8 km • 20 minutos a pé</p><p>Extensão do trilho: 3,0 km • Dificuldade: Fácil</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Lagos → Porto de Mós (via falésias)</h3><p>Um trilho costeiro com vistas amplas sobre o Atlântico, falésias altas e paisagens dramáticas. Perfeito para quem gosta de aventura leve.</p><p>Distância desde Marina Park: ~ 2,2 km • 25 minutos a pé</p><p>Extensão do trilho: 4,5 km • Dificuldade: Moderada</p><p><a href="https://maps.google.com/?q=Praia+de+Porto+de+Mós" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Porto de Mós → Praia da Luz</h3><p>Um dos trilhos mais impressionantes do Algarve, com falésias altas, vistas infinitas e cenários perfeitos para fotografia.</p><p>Distância desde Marina Park: ~ 3,5 km • 40 minutos a pé</p><p>Extensão do trilho: 6,0 km • Dificuldade: Moderada</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Lagos → Praia da Luz (completo)</h3><p>Trilho longo e muito procurado, combinando falésias, praias e paisagens naturais. Uma caminhada inesquecível.</p><p>Distância desde Marina Park: ~ 2,0 km • 25 minutos a pé</p><p>Extensão do trilho: 10 km • Dificuldade: Moderada</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Burgau → Praia da Luz (Trilho dos Pescadores)</h3><p>Um dos segmentos mais bonitos da Rota Vicentina, com falésias selvagens e paisagens naturais impressionantes.</p><p>Distância desde Marina Park: ~ 9 km • 12 minutos de carro</p><p>Extensão do trilho: 6,5 km • Dificuldade: Difícil</p><p><a href="https://maps.google.com/?q=Burgau" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Mata Nacional de Barão de São João</h3><p>Um trilho tranquilo no meio da natureza, com sombra, pinheiros e percursos fáceis. Ideal para famílias e caminhadas relaxadas.</p><p>Distância desde Marina Park: ~ 10 km • 12 minutos de carro</p><p>Extensão do trilho: 3,5 km • Dificuldade: Fácil</p><p><a href="https://maps.google.com/?q=Mata+Nacional+de+Barão+de+São+João" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Trilho da Meia Praia</h3><p>Caminhada plana junto ao mar, perfeita para quem gosta de caminhar na areia ou correr ao longo da costa.</p><p>Distância desde Marina Park: ~ 1,2 km • 15 minutos a pé</p><p>Extensão do trilho: 4,0 km • Dificuldade: Fácil</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+<div class="category-card"><h3>Lagos → Alvor (via costa e passadiços)</h3><p>Trilho longo e variado, passando por praias, dunas, falésias e passadiços. Um percurso épico para quem gosta de caminhadas maiores.</p><p>Distância desde Marina Park: ~ 1,2 km • 15 minutos a pé</p><p>Extensão do trilho: 13 km • Dificuldade: Moderada</p><p><a href="https://maps.google.com/?q=Alvor" target="_blank">📍 Ver no Mapa</a></p></div>
 `,
-en: `
-<div class="category-card">
-<h3>Ponta da Piedade</h3>
-<p>Coastal trail with stunning views of cliffs and rock formations.</p>
-<p><strong>Distance:</strong> 2.2 km</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos">📍 View on map</a></p>
-</div>
-
-<div class="category-card">
-<h3>Rocha Negra</h3>
-<p>Moderate trail with natural landscapes and panoramic views over Lagos.</p>
-<p><strong>Distance:</strong> 3.5 km</p>
-<p><a href="https://maps.google.com/?q=Rocha+Negra+Lagos">📍 View on map</a></p>
-</div>
+  en: `
+<div class="category-card"><h3>Lagos → Ponta da Piedade</h3><p>One of the most beautiful trails in the Algarve, with golden cliffs, stunning viewpoints and turquoise waters. Perfect for photos and relaxed walks.</p><p>Distance from Marina Park: ~ 2.5 km • 30 min walk</p><p>Trail length: 3.8 km • Difficulty: Easy</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Ponta da Piedade – Circular Route</h3><p>A short and panoramic loop passing through the best viewpoints of Ponta da Piedade. Ideal for amazing views with little effort.</p><p>Distance from Marina Park: ~ 2.5 km • 30 min walk</p><p>Trail length: 2.2 km • Difficulty: Easy</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Lagos → Camilo & Dona Ana Beaches</h3><p>A very photogenic coastal trail passing iconic beaches and impressive stairways. One of the most popular routes for visitors.</p><p>Distance from Marina Park: ~ 1.8 km • 20 min walk</p><p>Trail length: 3.0 km • Difficulty: Easy</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Lagos → Porto de Mós (cliff route)</h3><p>A coastal trail with wide Atlantic views, high cliffs and dramatic landscapes. Perfect for light adventure lovers.</p><p>Distance from Marina Park: ~ 2.2 km • 25 min walk</p><p>Trail length: 4.5 km • Difficulty: Moderate</p><p><a href="https://maps.google.com/?q=Praia+de+Porto+de+Mós" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Porto de Mós → Praia da Luz</h3><p>One of the most impressive trails in the Algarve, with high cliffs, endless views and perfect photography spots.</p><p>Distance from Marina Park: ~ 3.5 km • 40 min walk</p><p>Trail length: 6.0 km • Difficulty: Moderate</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Lagos → Praia da Luz (full route)</h3><p>A long and popular trail combining cliffs, beaches and natural landscapes. An unforgettable walk.</p><p>Distance from Marina Park: ~ 2.0 km • 25 min walk</p><p>Trail length: 10 km • Difficulty: Moderate</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Burgau → Praia da Luz (Fishermen’s Trail)</h3><p>One of the most beautiful segments of the Rota Vicentina, with wild cliffs and stunning natural scenery.</p><p>Distance from Marina Park: ~ 9 km • 12 min drive</p><p>Trail length: 6.5 km • Difficulty: Hard</p><p><a href="https://maps.google.com/?q=Burgau" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Barão de São João National Forest</h3><p>A peaceful nature trail with shade, pine trees and easy paths. Ideal for families and relaxed walks.</p><p>Distance from Marina Park: ~ 10 km • 12 min drive</p><p>Trail length: 3.5 km • Difficulty: Easy</p><p><a href="https://maps.google.com/?q=Mata+Nacional+de+Barão+de+São+João" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Meia Praia Trail</h3><p>A flat seaside walk, perfect for beach lovers, runners or anyone who enjoys long coastal strolls.</p><p>Distance from Marina Park: ~ 1.2 km • 15 min walk</p><p>Trail length: 4.0 km • Difficulty: Easy</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 View on Map</a></p></div>
+<div class="category-card"><h3>Lagos → Alvor (coastal & boardwalk route)</h3><p>A long and varied trail passing beaches, dunes, cliffs and wooden walkways. A fantastic route for longer hikes.</p><p>Distance from Marina Park: ~ 1.2 km • 15 min walk</p><p>Trail length: 13 km • Difficulty: Moderate</p><p><a href="https://maps.google.com/?q=Alvor" target="_blank">📍 View on Map</a></p></div>
 `,
-es: `
-<div class="category-card">
-<h3>Ponta da Piedade</h3>
-<p>Sendero costero con vistas impresionantes de acantilados y formaciones rocosas.</p>
-<p><strong>Distancia:</strong> 2,2 km</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos">📍 Ver en el mapa</a></p>
-</div>
-
-<div class="category-card">
-<h3>Rocha Negra</h3>
-<p>Sendero moderado con paisajes naturales y vistas panorámicas de Lagos.</p>
-<p><strong>Distancia:</strong> 3,5 km</p>
-<p><a href="https://maps.google.com/?q=Rocha+Negra+Lagos">📍 Ver en el mapa</a></p>
-</div>
+  es: `
+<div class="category-card"><h3>Lagos → Ponta da Piedade</h3><p>Uno de los senderos más bonitos del Algarve, con acantilados dorados, miradores increíbles y aguas turquesas. Perfecto para fotos y paseos relajados.</p><p>Distancia desde Marina Park: ~ 2,5 km • 30 min a pie</p><p>Longitud del sendero: 3,8 km • Dificultad: Fácil</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Ponta da Piedade – Ruta Circular</h3><p>Un circuito corto y panorámico que pasa por los mejores miradores de Ponta da Piedade. Ideal para disfrutar de vistas increíbles sin mucho esfuerzo.</p><p>Distancia desde Marina Park: ~ 2,5 km • 30 min a pie</p><p>Longitud del sendero: 2,2 km • Dificultad: Fácil</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Lagos → Playa de Camilo y Dona Ana</h3><p>Un sendero costero muy fotogénico que pasa por playas icónicas y escaleras impresionantes. Muy popular entre los visitantes.</p><p>Distancia desde Marina Park: ~ 1,8 km • 20 min a pie</p><p>Longitud del sendero: 3,0 km • Dificultad: Fácil</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Lagos → Porto de Mós (por los acantilados)</h3><p>Un sendero costero con vistas amplias del Atlántico, acantilados altos y paisajes dramáticos. Perfecto para quienes buscan aventura ligera.</p><p>Distancia desde Marina Park: ~ 2,2 km • 25 min a pie</p><p>Longitud del sendero: 4,5 km • Dificultad: Moderada</p><p><a href="https://maps.google.com/?q=Praia+de+Porto+de+Mós" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Porto de Mós → Playa da Luz</h3><p>Uno de los senderos más impresionantes del Algarve, con acantilados altos, vistas infinitas y paisajes perfectos para fotos.</p><p>Distancia desde Marina Park: ~ 3,5 km • 40 min a pie</p><p>Longitud del sendero: 6,0 km • Dificultad: Moderada</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Lagos → Playa da Luz (completo)</h3><p>Un sendero largo y muy buscado, combinando acantilados, playas y paisajes naturales. Una caminata inolvidable.</p><p>Distancia desde Marina Park: ~ 2,0 km • 25 min a pie</p><p>Longitud del sendero: 10 km • Dificultad: Moderada</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Burgau → Playa da Luz (Trilho dos Pescadores)</h3><p>Uno de los segmentos más bonitos de la Rota Vicentina, con acantilados salvajes y paisajes naturales impresionantes.</p><p>Distancia desde Marina Park: ~ 9 km • 12 min en coche</p><p>Longitud del sendero: 6,5 km • Dificultad: Difícil</p><p><a href="https://maps.google.com/?q=Burgau" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Bosque Nacional de Barão de São João</h3><p>Un sendero tranquilo en plena naturaleza, con sombra, pinos y caminos fáciles. Ideal para familias.</p><p>Distancia desde Marina Park: ~ 10 km • 12 min en coche</p><p>Longitud del sendero: 3,5 km • Dificultad: Fácil</p><p><a href="https://maps.google.com/?q=Mata+Nacional+de+Barão+de+São+João" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Sendero de Meia Praia</h3><p>Un paseo plano junto al mar, perfecto para caminar por la arena o correr a lo largo de la costa.</p><p>Distancia desde Marina Park: ~ 1,2 km • 15 min a pie</p><p>Longitud del sendero: 4,0 km • Dificultad: Fácil</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Ver en el Mapa</a></p></div>
+<div class="category-card"><h3>Lagos → Alvor (costa y pasarelas)</h3><p>Un sendero largo y variado que pasa por playas, dunas, acantilados y pasarelas de madera. Perfecto para caminatas largas y paisajes inolvidables.</p><p>Distancia desde Marina Park: ~ 1,2 km • 15 min a pie</p><p>Longitud del sendero: 13 km • Dificultad: Moderada</p><p><a href="https://maps.google.com/?q=Alvor" target="_blank">📍 Ver en el Mapa</a></p></div> 
 `,
 fr: `
-<div class="category-card">
-<h3>Ponta da Piedade</h3>
-<p>Sentier côtier avec vues magnifiques sur les falaises et formations rocheuses.</p>
-<p><strong>Distance :</strong> 2,2 km</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos">📍 Voir sur la carte</a></p>
-</div>
-
-<div class="category-card">
-<h3>Rocha Negra</h3>
-<p>Sentier modéré avec paysages naturels et vue panoramique sur Lagos.</p>
-<p><strong>Distance :</strong> 3,5 km</p>
-<p><a href="https://maps.google.com/?q=Rocha+Negra+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<div class="category-card"><h3>Lagos → Ponta da Piedade</h3><p>L’un des plus beaux sentiers de l’Algarve, avec des falaises dorées, des points de vue spectaculaires et une mer bleu turquoise. Parfait pour les photos et les promenades tranquilles.</p><p>Distance depuis Marina Park : ~ 2,5 km • 30 min à pied</p><p>Longueur du sentier : 3,8 km • Difficulté : Facile</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Ponta da Piedade – Circuit</h3><p>Un petit circuit panoramique passant par les plus beaux points de vue de Ponta da Piedade. Idéal pour profiter du paysage sans effort.</p><p>Distance depuis Marina Park : ~ 2,5 km • 30 min à pied</p><p>Longueur du sentier : 2,2 km • Difficulté : Facile</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Lagos → Plages Camilo & Dona Ana</h3><p>Un sentier côtier très photogénique passant par des plages emblématiques et des escaliers impressionnants. Très apprécié des visiteurs.</p><p>Distance depuis Marina Park : ~ 1,8 km • 20 min à pied</p><p>Longueur du sentier : 3,0 km • Difficulté : Facile</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Lagos → Porto de Mós (falaises)</h3><p>Un sentier côtier avec de larges vues sur l’Atlantique, des falaises hautes et des paysages spectaculaires. Parfait pour une aventure légère.</p><p>Distance depuis Marina Park : ~ 2,2 km • 25 min à pied</p><p>Longueur du sentier : 4,5 km • Difficulté : Modérée</p><p><a href="https://maps.google.com/?q=Praia+de+Porto+de+Mós" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Porto de Mós → Praia da Luz</h3><p>L’un des sentiers les plus impressionnants de l’Algarve, avec des falaises majestueuses et des vues infinies. Parfait pour les amateurs de photographie.</p><p>Distance depuis Marina Park : ~ 3,5 km • 40 min à pied</p><p>Longueur du sentier : 6,0 km • Difficulté : Modérée</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Lagos → Praia da Luz (complet)</h3><p>Un long sentier très apprécié, combinant falaises, plages et paysages naturels. Une promenade inoubliable.</p><p>Distance depuis Marina Park : ~ 2,0 km • 25 min à pied</p><p>Longueur du sentier : 10 km • Difficulté : Modérée</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Burgau → Praia da Luz (Fishermen’s Trail)</h3><p>L’un des plus beaux segments de la Rota Vicentina, avec des falaises sauvages et des paysages naturels impressionnants.</p><p>Distance depuis Marina Park : ~ 9 km • 12 min en voiture</p><p>Longueur du sentier : 6,5 km • Difficulté : Difficile</p><p><a href="https://maps.google.com/?q=Burgau" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Forêt Nationale de Barão de São João</h3><p>Un sentier paisible en pleine nature, avec de l’ombre, des pins et des chemins faciles. Idéal pour les familles.</p><p>Distance depuis Marina Park : ~ 10 km • 12 min en voiture</p><p>Longueur du sentier : 3,5 km • Difficulté : Facile</p><p><a href="https://maps.google.com/?q=Mata+Nacional+de+Barão+de+São+João" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Sentier de Meia Praia</h3><p>Une promenade plate au bord de la mer, parfaite pour marcher sur le sable ou courir le long de la côte.</p><p>Distance depuis Marina Park : ~ 1,2 km • 15 min à pied</p><p>Longueur du sentier : 4,0 km • Difficulté : Facile</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Voir sur la Carte</a></p></div>
+<div class="category-card"><h3>Lagos → Alvor (côte & passerelles)</h3><p>Un long sentier varié passant par des plages, dunes, falaises et passerelles en bois. Idéal pour les longues randonnées.</p><p>Distance depuis Marina Park : ~ 1,2 km • 15 min à pied</p><p>Longueur du sentier : 13 km • Difficulté : Modérée</p><p><a href="https://maps.google.com/?q=Alvor" target="_blank">📍 Voir sur la Carte</a></p></div>
 `,
 it: `
-<div class="category-card">
-<h3>Ponta da Piedade</h3>
-<p>Sentiero costiero con viste mozzafiato su scogliere e formazioni rocciose.</p>
-<p><strong>Distanza:</strong> 2,2 km</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
-
-<div class="category-card">
-<h3>Rocha Negra</h3>
-<p>Sentiero moderato con paesaggi naturali e vista panoramica su Lagos.</p>
-<p><strong>Distanza:</strong> 3,5 km</p>
-<p><a href="https://maps.google.com/?q=Rocha+Negra+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<div class="category-card"><h3>Lagos → Ponta da Piedade</h3><p>Uno dei sentieri più belli dell’Algarve, con scogliere dorate, panorami spettacolari e acque turchesi. Perfetto per foto e passeggiate rilassanti.</p><p>Distanza da Marina Park: ~ 2,5 km • 30 min a piedi</p><p>Lunghezza del sentiero: 3,8 km • Difficoltà: Facile</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Ponta da Piedade – Percorso Circolare</h3><p>Un breve circuito panoramico che passa dai migliori punti di osservazione della zona. Ideale per godersi il paesaggio senza fatica.</p><p>Distanza da Marina Park: ~ 2,5 km • 30 min a piedi</p><p>Lunghezza del sentiero: 2,2 km • Difficoltà: Facile</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Lagos → Spiagge Camilo & Dona Ana</h3><p>Un sentiero costiero molto fotogenico che passa da spiagge iconiche e scale impressionanti. Molto popolare tra i visitatori.</p><p>Distanza da Marina Park: ~ 1,8 km • 20 min a piedi</p><p>Lunghezza del sentiero: 3,0 km • Difficoltà: Facile</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Lagos → Porto de Mós (scogliere)</h3><p>Un sentiero costiero con ampie viste sull’Atlantico, scogliere alte e paesaggi drammatici. Perfetto per chi ama l’avventura leggera.</p><p>Distanza da Marina Park: ~ 2,2 km • 25 min a piedi</p><p>Lunghezza del sentiero: 4,5 km • Difficoltà: Moderata</p><p><a href="https://maps.google.com/?q=Praia+de+Porto+de+Mós" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Porto de Mós → Praia da Luz</h3><p>Uno dei sentieri più impressionanti dell’Algarve, con scogliere alte e panorami infiniti. Perfetto per gli amanti della fotografia.</p><p>Distanza da Marina Park: ~ 3,5 km • 40 min a piedi</p><p>Lunghezza del sentiero: 6,0 km • Difficoltà: Moderata</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Lagos → Praia da Luz (completo)</h3><p>Un sentiero lungo e molto apprezzato che combina scogliere, spiagge e paesaggi naturali. Una passeggiata indimenticabile.</p><p>Distanza da Marina Park: ~ 2,0 km • 25 min a piedi</p><p>Lunghezza del sentiero: 10 km • Difficoltà: Moderata</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Burgau → Praia da Luz (Trilho dos Pescadores)</h3><p>Uno dei segmenti più belli della Rota Vicentina, con scogliere selvagge e paesaggi naturali impressionanti.</p><p>Distanza da Marina Park: ~ 9 km • 12 min in auto</p><p>Lunghezza del sentiero: 6,5 km • Difficoltà: Difficile</p><p><a href="https://maps.google.com/?q=Burgau" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Foresta Nazionale di Barão de São João</h3><p>Un sentiero tranquillo immerso nella natura, con ombra, pini e percorsi facili. Ideale per famiglie.</p><p>Distanza da Marina Park: ~ 10 km • 12 min in auto</p><p>Lunghezza del sentiero: 3,5 km • Difficoltà: Facile</p><p><a href="https://maps.google.com/?q=Mata+Nacional+de+Barão+de+São+João" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Sentiero di Meia Praia</h3><p>Una passeggiata pianeggiante lungo il mare, perfetta per camminare sulla sabbia o correre lungo la costa.</p><p>Distanza da Marina Park: ~ 1,2 km • 15 min a piedi</p><p>Lunghezza del sentiero: 4,0 km • Difficoltà: Facile</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Vedi sulla Mappa</a></p></div>
+<div class="category-card"><h3>Lagos → Alvor (costa e passerelle)</h3><p>Un sentiero lungo e vario che passa da spiagge, dune, scogliere e passerelle in legno. Perfetto per escursioni più lunghe.</p><p>Distanza da Marina Park: ~ 1,2 km • 15 min a piedi</p><p>Lunghezza del sentiero: 13 km • Difficoltà: Moderata</p><p><a href="https://maps.google.com/?q=Alvor" target="_blank">📍 Vedi sulla Mappa</a></p></div>
 `,
 de: `
-<div class="category-card">
-<h3>Ponta da Piedade</h3>
-<p>Küstenweg mit atemberaubenden Ausblicken auf Klippen und Felsformationen.</p>
-<p><strong>Entfernung:</strong> 2,2 km</p>
-<p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos">📍 Karte anzeigen</a></p>
-</div>
-
-<div class="category-card">
-<h3>Rocha Negra</h3>
-<p>Mittelmäßiger Wanderweg mit Naturlandschaften und Panoramablick über Lagos.</p>
-<p><strong>Entfernung:</strong> 3,5 km</p>
-<p><a href="https://maps.google.com/?q=Rocha+Negra+Lagos">📍 Karte anzeigen</a></p>
-</div>
-`
+<div class="category-card"><h3>Lagos → Ponta da Piedade</h3><p>Einer der schönsten Wanderwege an der Algarve, mit goldenen Klippen, atemberaubenden Aussichtspunkten und türkisfarbenem Wasser. Perfekt für Fotos und entspannte Spaziergänge.</p><p>Entfernung vom Marina Park: ~ 2,5 km • 30 Min zu Fuß</p><p>Streckenlänge: 3,8 km • Schwierigkeit: Leicht</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Ponta da Piedade – Rundweg</h3><p>Ein kurzer, panoramischer Rundweg, der an den schönsten Aussichtspunkten vorbeiführt. Ideal für großartige Ausblicke ohne große Anstrengung.</p><p>Entfernung vom Marina Park: ~ 2,5 km • 30 Min zu Fuß</p><p>Streckenlänge: 2,2 km • Schwierigkeit: Leicht</p><p><a href="https://maps.google.com/?q=Ponta+da+Piedade+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Lagos → Camilo- & Dona-Ana-Strände</h3><p>Ein sehr fotogener Küstenweg, der an ikonischen Stränden und beeindruckenden Treppen vorbeiführt. Sehr beliebt bei Besuchern.</p><p>Entfernung vom Marina Park: ~ 1,8 km • 20 Min zu Fuß</p><p>Streckenlänge: 3,0 km • Schwierigkeit: Leicht</p><p><a href="https://maps.google.com/?q=Praia+do+Camilo+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Lagos → Porto de Mós (Klippenroute)</h3><p>Ein Küstenweg mit weitem Blick über den Atlantik, hohen Klippen und dramatischen Landschaften. Perfekt für leichte Abenteuer.</p><p>Entfernung vom Marina Park: ~ 2,2 km • 25 Min zu Fuß</p><p>Streckenlänge: 4,5 km • Schwierigkeit: Mittel</p><p><a href="https://maps.google.com/?q=Praia+de+Porto+de+Mós" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Porto de Mós → Praia da Luz</h3><p>Einer der beeindruckendsten Wege der Algarve, mit hohen Klippen und endlosen Ausblicken. Perfekt für Fotografie.</p><p>Entfernung vom Marina Park: ~ 3,5 km • 40 Min zu Fuß</p><p>Streckenlänge: 6,0 km • Schwierigkeit: Mittel</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Lagos → Praia da Luz (komplette Route)</h3><p>Ein langer und beliebter Weg, der Klippen, Strände und Natur vereint. Ein unvergesslicher Spaziergang.</p><p>Entfernung vom Marina Park: ~ 2,0 km • 25 Min zu Fuß</p><p>Streckenlänge: 10 km • Schwierigkeit: Mittel</p><p><a href="https://maps.google.com/?q=Praia+da+Luz" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Burgau → Praia da Luz (Fischerpfad)</h3><p>Einer der schönsten Abschnitte der Rota Vicentina, mit wilden Klippen und beeindruckender Natur.</p><p>Entfernung vom Marina Park: ~ 9 km • 12 Min mit dem Auto</p><p>Streckenlänge: 6,5 km • Schwierigkeit: Schwer</p><p><a href="https://maps.google.com/?q=Burgau" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Nationalwald Barão de São João</h3><p>Ein ruhiger Naturweg mit Schatten, Pinien und einfachen Wegen. Ideal für Familien und entspannte Spaziergänge.</p><p>Entfernung vom Marina Park: ~ 10 km • 12 Min mit dem Auto</p><p>Streckenlänge: 3,5 km • Schwierigkeit: Leicht</p><p><a href="https://maps.google.com/?q=Mata+Nacional+de+Barão+de+São+João" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Meia Praia Wanderweg</h3><p>Ein flacher Spazierweg entlang des Meeres, perfekt für Strandliebhaber, Läufer oder entspannte Küstenwanderungen.</p><p>Entfernung vom Marina Park: ~ 1,2 km • 15 Min zu Fuß</p><p>Streckenlänge: 4,0 km • Schwierigkeit: Leicht</p><p><a href="https://maps.google.com/?q=Meia+Praia+Lagos" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+<div class="category-card"><h3>Lagos → Alvor (Küste & Holzstege)</h3><p>Ein langer und abwechslungsreicher Weg entlang von Stränden, Dünen, Klippen und Holzstegen. Ideal für längere Wanderungen.</p><p>Entfernung vom Marina Park: ~ 1,2 km • 15 Min zu Fuß</p><p>Streckenlänge: 13 km • Schwierigkeit: Mittel</p><p><a href="https://maps.google.com/?q=Alvor" target="_blank">📍 Auf der Karte ansehen</a></p></div>
+`,
 };
 
 
