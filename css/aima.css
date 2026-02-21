@@ -247,3 +247,30 @@ footer {
         font-size: 15px;
     }
 }
+/* ------------------------------
+   CARD LEGAL INTRODUTÓRIO
+--------------------------------*/
+.intro-legal-card {
+    background: #f7f9fc;
+    border-left: 4px solid #005c99;
+    border-radius: 8px;
+    padding: 22px;
+    margin-bottom: 30px;
+    text-align: justify;
+    line-height: 1.55;
+    font-size: 15px;
+}
+
+.intro-legal-card strong {
+    color: #005c99;
+}
+
+.intro-legal-card a {
+    color: #005c99;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.intro-legal-card a:hover {
+    text-decoration: underline;
+}
