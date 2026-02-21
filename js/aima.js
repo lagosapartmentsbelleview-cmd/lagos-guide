@@ -438,91 +438,408 @@ const texts = {
 },
 
 // ------------------------------
-// FAQ EM PORTUGUÊS — CONTEÚDO HTML
+// FAQ POR IDIOMA — CONTEÚDO HTML
 // ------------------------------
 const faqTexts = {
   pt: `
 <h3>1. Obrigatoriedade e finalidade</h3>
-
 <p><strong>Porque tenho de fornecer os meus dados ao alojamento?</strong><br>
 A lei portuguesa obriga todos os alojamentos a comunicar à AIMA a entrada e saída de cidadãos estrangeiros. É uma medida de segurança nacional e proteção do hóspede.</p>
-
 <p><strong>O que é o SIBA?</strong><br>
 O SIBA é o sistema oficial onde os alojamentos registam eletronicamente os dados dos hóspedes estrangeiros.</p>
-
 <p><strong>Sou cidadão europeu. Também tenho de preencher o boletim?</strong><br>
 Sim. A obrigação aplica-se a todos os cidadãos que não tenham nacionalidade portuguesa.</p>
-
 <p><strong>Bebés e crianças também têm de ser comunicados?</strong><br>
 Sim. A comunicação é obrigatória para todas as idades.</p>
-
 <p><strong>O que acontece se eu me recusar a fornecer os meus dados?</strong><br>
 O alojamento não pode legalmente realizar o check-in. A reserva pode ser anulada sem reembolso.</p>
 
 <h3>2. Documentos de identificação</h3>
-
 <p><strong>Que documentos são aceites?</strong><br>
 Passaporte, Bilhete de Identidade/Cartão de Cidadão, título de residência, laissez-passer, documentos de tripulantes e boletim de nascimento (menores).</p>
-
 <p><strong>Posso alojar-me sem documento?</strong><br>
 Não. É obrigatório apresentar um documento válido.</p>
-
 <p><strong>E se os meus filhos não tiverem documento?</strong><br>
 Podem ser usados boletins de nascimento ou equivalentes.</p>
-
 <p><strong>O alojamento pode ficar com o meu documento?</strong><br>
 Só com o seu consentimento. Apenas autoridades policiais podem reter documentos sem consentimento.</p>
-
 <p><strong>Quem assina o boletim no caso de menores?</strong><br>
 O progenitor, o responsável do grupo ou um dos cônjuges.</p>
 
 <h3>3. Privacidade e proteção de dados</h3>
-
 <p><strong>Como são tratados os meus dados pessoais?</strong><br>
 Com total confidencialidade e em conformidade com o RGPD.</p>
-
 <p><strong>Os meus dados são partilhados?</strong><br>
 Não. São enviados apenas para a AIMA.</p>
-
 <p><strong>Durante quanto tempo ficam guardados?</strong><br>
 Até 1 ano, salvo exceções legais.</p>
-
 <p><strong>Os meus dados são usados para fins comerciais?</strong><br>
 Nunca.</p>
-
 <p><strong>O alojamento pode alterar os meus dados depois de enviados?</strong><br>
 Não. Apenas pode visualizar o que foi submetido.</p>
 
 <h3>4. Situações especiais</h3>
-
 <p><strong>Ficar em casa de amigos ou familiares também obriga a comunicação?</strong><br>
 Não, desde que a estadia seja gratuita.</p>
-
 <p><strong>Posso alojar-me se estiver em situação irregular?</strong><br>
 Sim. Mas a comunicação é sempre obrigatória.</p>
-
 <p><strong>Se fizer parte de um grupo, basta um preencher?</strong><br>
 Não. Todos os hóspedes estrangeiros devem ser comunicados individualmente.</p>
-
 <p><strong>Se o alojamento for oferecido, também é obrigatório comunicar?</strong><br>
 Sim.</p>
 
 <h3>5. Questões práticas</h3>
-
 <p><strong>O que acontece se um hóspede sair sem pagar?</strong><br>
 O alojamento deve apresentar queixa à PSP ou GNR.</p>
-
 <p><strong>Quem é responsável pela comunicação?</strong><br>
 O alojamento. O hóspede apenas fornece os dados.</p>
-
 <p><strong>O que acontece se houver um erro nos meus dados?</strong><br>
 Pode ser corrigido antes do envio. Depois, só a AIMA pode intervir.</p>
 
 <h3>6. Informação adicional</h3>
-
 <p>Informação oficial completa: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
-`
-};
+`,
+
+  en: `
+<h3>1. Obligation and purpose</h3>
+<p><strong>Why do I have to provide my personal data?</strong><br>
+Portuguese law requires all accommodations to report the entry and exit of foreign citizens to AIMA. This is a national security and guest‑protection measure.</p>
+<p><strong>What is SIBA?</strong><br>
+SIBA is the official platform where accommodations register guest information electronically.</p>
+<p><strong>I am an EU citizen. Do I still need to fill this form?</strong><br>
+Yes. The obligation applies to all non‑Portuguese citizens.</p>
+<p><strong>Are babies and children also reported?</strong><br>
+Yes. Reporting is mandatory for all ages.</p>
+<p><strong>What happens if I refuse to provide my data?</strong><br>
+The accommodation cannot legally complete your check‑in. The reservation may be cancelled without refund.</p>
+
+<h3>2. Identification documents</h3>
+<p><strong>Which documents are accepted?</strong><br>
+Passport, ID card, residence permit, laissez‑passer, crew documents and birth certificates (minors).</p>
+<p><strong>Can I stay without a valid document?</strong><br>
+No. A valid identification document is required.</p>
+<p><strong>What if my children do not have documents?</strong><br>
+Birth certificates or equivalent documents may be used.</p>
+<p><strong>Can the accommodation keep my document?</strong><br>
+Only with your consent. Only police authorities may retain documents without consent.</p>
+<p><strong>Who signs the form for minors?</strong><br>
+A parent, group leader or one of the spouses.</p>
+
+<h3>3. Privacy and data protection</h3>
+<p><strong>How is my data handled?</strong><br>
+With full confidentiality and in compliance with GDPR.</p>
+<p><strong>Is my data shared?</strong><br>
+No. It is sent only to AIMA.</p>
+<p><strong>How long is my data stored?</strong><br>
+Up to 1 year, except in specific legal situations.</p>
+<p><strong>Is my data used for commercial purposes?</strong><br>
+Never.</p>
+<p><strong>Can the accommodation change my data after submission?</strong><br>
+No. They can only view what was submitted.</p>
+
+<h3>4. Special situations</h3>
+<p><strong>Do I need to be reported if I stay with friends or family?</strong><br>
+No, as long as the stay is free of charge.</p>
+<p><strong>Can I stay if I am in an irregular situation?</strong><br>
+Yes, but reporting is still mandatory.</p>
+<p><strong>If I am part of a group, does only one person need to fill the form?</strong><br>
+No. Each foreign guest must be reported individually.</p>
+<p><strong>If the stay is offered, is reporting still required?</strong><br>
+Yes.</p>
+
+<h3>5. Practical questions</h3>
+<p><strong>What happens if a guest leaves without paying?</strong><br>
+The accommodation must report it to the police (PSP or GNR).</p>
+<p><strong>Who is responsible for reporting?</strong><br>
+The accommodation. The guest only provides the data.</p>
+<p><strong>What if there is an error in my data?</strong><br>
+It can be corrected before submission. After that, only AIMA can intervene.</p>
+
+<h3>6. Additional information</h3>
+<p>Official information: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
+`,
+
+  es: `
+<h3>1. Obligación y finalidad</h3>
+<p><strong>¿Por qué debo proporcionar mis datos?</strong><br>
+La ley portuguesa exige que todos los alojamientos comuniquen a AIMA la entrada y salida de ciudadanos extranjeros. Es una medida de seguridad nacional y protección del huésped.</p>
+<p><strong>¿Qué es SIBA?</strong><br>
+SIBA es la plataforma oficial donde los alojamientos registran electrónicamente los datos de los huéspedes extranjeros.</p>
+<p><strong>Soy ciudadano de la UE. ¿También debo rellenar el formulario?</strong><br>
+Sí. La obligación se aplica a todos los ciudadanos sin nacionalidad portuguesa.</p>
+<p><strong>¿Los bebés y niños también deben ser comunicados?</strong><br>
+Sí. La comunicación es obligatoria para todas las edades.</p>
+<p><strong>¿Qué ocurre si me niego a proporcionar mis datos?</strong><br>
+El alojamiento no puede legalmente realizar el check‑in. La reserva puede ser cancelada sin reembolso.</p>
+
+<h3>2. Documentos de identificación</h3>
+<p><strong>¿Qué documentos se aceptan?</strong><br>
+Pasaporte, DNI, permiso de residencia, laissez‑passer, documentos de tripulación y certificados de nacimiento (menores).</p>
+<p><strong>¿Puedo alojarme sin documento válido?</strong><br>
+No. Es obligatorio presentar un documento válido.</p>
+<p><strong>¿Y si mis hijos no tienen documentos?</strong><br>
+Pueden utilizarse certificados de nacimiento o equivalentes.</p>
+<p><strong>¿El alojamiento puede quedarse con mi documento?</strong><br>
+Solo con su consentimiento. Solo la policía puede retener documentos sin consentimiento.</p>
+<p><strong>¿Quién firma el formulario en caso de menores?</strong><br>
+Un progenitor, el responsable del grupo o uno de los cónyuges.</p>
+
+<h3>3. Privacidad y protección de datos</h3>
+<p><strong>¿Cómo se tratan mis datos personales?</strong><br>
+Con total confidencialidad y conforme al RGPD.</p>
+<p><strong>¿Se comparten mis datos?</strong><br>
+No. Solo se envían a AIMA.</p>
+<p><strong>¿Durante cuánto tiempo se almacenan?</strong><br>
+Hasta 1 año, salvo excepciones legales.</p>
+<p><strong>¿Se utilizan mis datos con fines comerciales?</strong><br>
+Nunca.</p>
+<p><strong>¿El alojamiento puede modificar mis datos después del envío?</strong><br>
+No. Solo puede visualizar lo enviado.</p>
+
+<h3>4. Situaciones especiales</h3>
+<p><strong>¿Alojamiento en casa de amigos o familiares también debe comunicarse?</strong><br>
+No, siempre que la estancia sea gratuita.</p>
+<p><strong>¿Puedo alojarme si estoy en situación irregular?</strong><br>
+Sí, pero la comunicación sigue siendo obligatoria.</p>
+<p><strong>¿Si viajo en grupo, basta con que uno rellene el formulario?</strong><br>
+No. Cada huésped extranjero debe ser comunicado individualmente.</p>
+<p><strong>¿Si el alojamiento es gratuito, también es obligatorio comunicarlo?</strong><br>
+Sí.</p>
+
+<h3>5. Preguntas prácticas</h3>
+<p><strong>¿Qué ocurre si un huésped se marcha sin pagar?</strong><br>
+El alojamiento debe denunciarlo a la policía (PSP o GNR).</p>
+<p><strong>¿Quién es responsable de la comunicación?</strong><br>
+El alojamiento. El huésped solo proporciona los datos.</p>
+<p><strong>¿Qué ocurre si hay un error en mis datos?</strong><br>
+Puede corregirse antes del envío. Después, solo AIMA puede intervenir.</p>
+
+<h3>6. Información adicional</h3>
+<p>Información oficial: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
+`,
+
+  fr: `
+<h3>1. Obligation et finalité</h3>
+<p><strong>Pourquoi dois‑je fournir mes données ?</strong><br>
+La loi portugaise oblige tous les hébergements à communiquer à l’AIMA l’entrée et la sortie des citoyens étrangers. C’est une mesure de sécurité nationale et de protection des hôtes.</p>
+<p><strong>Qu’est‑ce que le SIBA ?</strong><br>
+Le SIBA est la plateforme officielle où les hébergements enregistrent les données des hôtes étrangers.</p>
+<p><strong>Je suis citoyen de l’UE. Dois‑je remplir ce formulaire ?</strong><br>
+Oui. L’obligation s’applique à toute personne n’ayant pas la nationalité portugaise.</p>
+<p><strong>Les bébés et enfants doivent‑ils aussi être déclarés ?</strong><br>
+Oui. La déclaration est obligatoire pour tous les âges.</p>
+<p><strong>Que se passe‑t‑il si je refuse de fournir mes données ?</strong><br>
+L’hébergement ne peut légalement pas effectuer votre check‑in. La réservation peut être annulée sans remboursement.</p>
+
+<h3>2. Documents d’identification</h3>
+<p><strong>Quels documents sont acceptés ?</strong><br>
+Passeport, carte d’identité, titre de séjour, laissez‑passer, documents d’équipage et certificats de naissance (mineurs).</p>
+<p><strong>Puis‑je séjourner sans document valide ?</strong><br>
+Non. Un document d’identification valide est obligatoire.</p>
+<p><strong>Et si mes enfants n’ont pas de documents ?</strong><br>
+Les certificats de naissance ou équivalents peuvent être utilisés.</p>
+<p><strong>L’hébergement peut‑il garder mon document ?</strong><br>
+Seulement avec votre consentement. Seules les autorités policières peuvent retenir un document sans consentement.</p>
+<p><strong>Qui signe pour les mineurs ?</strong><br>
+Un parent, le responsable du groupe ou l’un des conjoints.</p>
+
+<h3>3. Confidentialité et protection des données</h3>
+<p><strong>Comment mes données sont‑elles traitées ?</strong><br>
+Avec une confidentialité totale et conformément au RGPD.</p>
+<p><strong>Mes données sont‑elles partagées ?</strong><br>
+Non. Elles sont envoyées uniquement à l’AIMA.</p>
+<p><strong>Combien de temps sont‑elles conservées ?</strong><br>
+Jusqu’à 1 an, sauf exceptions légales.</p>
+<p><strong>Mes données sont‑elles utilisées à des fins commerciales ?</strong><br>
+Jamais.</p>
+<p><strong>L’hébergement peut‑il modifier mes données après l’envoi ?</strong><br>
+Non. Il ne peut que consulter les données soumises.</p>
+
+<h3>4. Situations particulières</h3>
+<p><strong>Un séjour chez des amis ou de la famille doit‑il être déclaré ?</strong><br>
+Non, tant que le séjour est gratuit.</p>
+<p><strong>Puis‑je séjourner si je suis en situation irrégulière ?</strong><br>
+Oui, mais la déclaration reste obligatoire.</p>
+<p><strong>Si je fais partie d’un groupe, une seule déclaration suffit‑elle ?</strong><br>
+Non. Chaque hôte étranger doit être déclaré individuellement.</p>
+<p><strong>Si le séjour est offert, la déclaration est‑elle obligatoire ?</strong><br>
+Oui.</p>
+
+<h3>5. Questions pratiques</h3>
+<p><strong>Que se passe‑t‑il si un hôte part sans payer ?</strong><br>
+L’hébergement doit le signaler à la police (PSP ou GNR).</p>
+<p><strong>Qui est responsable de la déclaration ?</strong><br>
+L’hébergement. L’hôte ne fait que fournir les données.</p>
+<p><strong>Que faire en cas d’erreur dans mes données ?</strong><br>
+Elles peuvent être corrigées avant l’envoi. Après, seule l’AIMA peut intervenir.</p>
+
+<h3>6. Informations supplémentaires</h3>
+<p>Informations officielles : <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
+`,
+
+  it: `
+<h3>1. Obbligatorietà e finalità</h3>
+
+<p><strong>Perché devo fornire i miei dati?</strong><br>
+La legge portoghese obbliga tutte le strutture ricettive a comunicare ad AIMA l’ingresso e l’uscita dei cittadini stranieri. È una misura di sicurezza nazionale e di protezione degli ospiti.</p>
+
+<p><strong>Che cos’è il SIBA?</strong><br>
+SIBA è la piattaforma ufficiale in cui le strutture registrano elettronicamente i dati degli ospiti stranieri.</p>
+
+<p><strong>Sono cittadino dell’UE. Devo comunque compilare il modulo?</strong><br>
+Sì. L’obbligo si applica a tutti i cittadini che non hanno la nazionalità portoghese.</p>
+
+<p><strong>Bambini e neonati devono essere comunicati?</strong><br>
+Sì. La comunicazione è obbligatoria per tutte le età.</p>
+
+<p><strong>Cosa succede se rifiuto di fornire i miei dati?</strong><br>
+La struttura non può legalmente effettuare il check‑in. La prenotazione può essere annullata senza rimborso.</p>
+
+<h3>2. Documenti di identificazione</h3>
+
+<p><strong>Quali documenti sono accettati?</strong><br>
+Passaporto, carta d’identità, permesso di soggiorno, laissez‑passer, documenti di equipaggio e certificati di nascita (minori).</p>
+
+<p><strong>Posso soggiornare senza un documento valido?</strong><br>
+No. È obbligatorio presentare un documento valido.</p>
+
+<p><strong>E se i miei figli non hanno documenti?</strong><br>
+Si possono usare certificati di nascita o documenti equivalenti.</p>
+
+<p><strong>La struttura può trattenere il mio documento?</strong><br>
+Solo con il tuo consenso. Solo le autorità di polizia possono trattenere documenti senza consenso.</p>
+
+<p><strong>Chi firma il modulo per i minori?</strong><br>
+Un genitore, il responsabile del gruppo o uno dei coniugi.</p>
+
+<h3>3. Privacy e protezione dei dati</h3>
+
+<p><strong>Come vengono trattati i miei dati personali?</strong><br>
+Con totale riservatezza e in conformità al GDPR.</p>
+
+<p><strong>I miei dati vengono condivisi?</strong><br>
+No. Sono inviati esclusivamente ad AIMA.</p>
+
+<p><strong>Per quanto tempo vengono conservati?</strong><br>
+Fino a 1 anno, salvo eccezioni previste dalla legge.</p>
+
+<p><strong>I miei dati vengono utilizzati per fini commerciali?</strong><br>
+Mai.</p>
+
+<p><strong>La struttura può modificare i miei dati dopo l’invio?</strong><br>
+No. Può solo visualizzare ciò che è stato inviato.</p>
+
+<h3>4. Situazioni speciali</h3>
+
+<p><strong>Alloggiare presso amici o familiari deve essere comunicato?</strong><br>
+No, purché il soggiorno sia gratuito.</p>
+
+<p><strong>Posso soggiornare se sono in situazione irregolare?</strong><br>
+Sì, ma la comunicazione è comunque obbligatoria.</p>
+
+<p><strong>Se faccio parte di un gruppo, basta che uno compili il modulo?</strong><br>
+No. Ogni ospite straniero deve essere comunicato individualmente.</p>
+
+<p><strong>Se il soggiorno è offerto, è comunque obbligatorio comunicarlo?</strong><br>
+Sì.</p>
+
+<h3>5. Domande pratiche</h3>
+
+<p><strong>Cosa succede se un ospite va via senza pagare?</strong><br>
+La struttura deve segnalarlo alla polizia (PSP o GNR).</p>
+
+<p><strong>Chi è responsabile della comunicazione?</strong><br>
+La struttura. L’ospite fornisce solo i dati.</p>
+
+<p><strong>Cosa succede se c’è un errore nei miei dati?</strong><br>
+Può essere corretto prima dell’invio. Dopo, solo AIMA può intervenire.</p>
+
+<h3>6. Informazioni aggiuntive</h3>
+
+<p>Informazioni ufficiali: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
+`,
+de: `
+<h3>1. Verpflichtung und Zweck</h3>
+
+<p><strong>Warum muss ich meine Daten angeben?</strong><br>
+Das portugiesische Gesetz verpflichtet alle Unterkünfte, den Ein‑ und Ausstieg ausländischer Staatsbürger an AIMA zu melden. Dies ist eine Maßnahme der nationalen Sicherheit und des Gästeschutzes.</p>
+
+<p><strong>Was ist SIBA?</strong><br>
+SIBA ist die offizielle Plattform, auf der Unterkünfte die Daten ausländischer Gäste elektronisch registrieren.</p>
+
+<p><strong>Ich bin EU‑Bürger. Muss ich das Formular trotzdem ausfüllen?</strong><br>
+Ja. Die Verpflichtung gilt für alle Personen ohne portugiesische Staatsangehörigkeit.</p>
+
+<p><strong>Müssen auch Babys und Kinder gemeldet werden?</strong><br>
+Ja. Die Meldung ist für alle Altersgruppen verpflichtend.</p>
+
+<p><strong>Was passiert, wenn ich mich weigere, meine Daten anzugeben?</strong><br>
+Die Unterkunft darf den Check‑in rechtlich nicht durchführen. Die Reservierung kann ohne Erstattung storniert werden.</p>
+
+<h3>2. Ausweisdokumente</h3>
+
+<p><strong>Welche Dokumente werden akzeptiert?</strong><br>
+Reisepass, Personalausweis, Aufenthaltstitel, Laissez‑Passer, Crew‑Dokumente und Geburtsurkunden (Minderjährige).</p>
+
+<p><strong>Kann ich ohne gültiges Dokument übernachten?</strong><br>
+Nein. Ein gültiges Ausweisdokument ist erforderlich.</p>
+
+<p><strong>Was ist, wenn meine Kinder keine Dokumente haben?</strong><br>
+Geburtsurkunden oder gleichwertige Dokumente können verwendet werden.</p>
+
+<p><strong>Darf die Unterkunft mein Dokument behalten?</strong><br>
+Nur mit deiner Zustimmung. Nur die Polizei darf Dokumente ohne Zustimmung einbehalten.</p>
+
+<p><strong>Wer unterschreibt das Formular für Minderjährige?</strong><br>
+Ein Elternteil, der Gruppenverantwortliche oder einer der Ehepartner.</p>
+
+<h3>3. Datenschutz</h3>
+
+<p><strong>Wie werden meine Daten verarbeitet?</strong><br>
+Mit vollständiger Vertraulichkeit und gemäß DSGVO.</p>
+
+<p><strong>Werden meine Daten weitergegeben?</strong><br>
+Nein. Sie werden ausschließlich an AIMA übermittelt.</p>
+
+<p><strong>Wie lange werden meine Daten gespeichert?</strong><br>
+Bis zu 1 Jahr, außer in gesetzlich vorgesehenen Fällen.</p>
+
+<p><strong>Werden meine Daten zu kommerziellen Zwecken verwendet?</strong><br>
+Niemals.</p>
+
+<p><strong>Kann die Unterkunft meine Daten nach der Übermittlung ändern?</strong><br>
+Nein. Sie kann nur einsehen, was übermittelt wurde.</p>
+
+<h3>4. Besondere Situationen</h3>
+
+<p><strong>Muss ein Aufenthalt bei Freunden oder Familie gemeldet werden?</strong><br>
+Nein, solange der Aufenthalt kostenlos ist.</p>
+
+<p><strong>Darf ich übernachten, wenn ich mich in einer irregulären Situation befinde?</strong><br>
+Ja, aber die Meldung ist dennoch verpflichtend.</p>
+
+<p><strong>Wenn ich Teil einer Gruppe bin, reicht eine Meldung?</strong><br>
+Nein. Jeder ausländische Gast muss einzeln gemeldet werden.</p>
+
+<p><strong>Muss ein kostenloser Aufenthalt ebenfalls gemeldet werden?</strong><br>
+Ja.</p>
+
+<h3>5. Praktische Fragen</h3>
+
+<p><strong>Was passiert, wenn ein Gast abreist, ohne zu bezahlen?</strong><br>
+Die Unterkunft muss dies der Polizei (PSP oder GNR) melden.</p>
+
+<p><strong>Wer ist für die Meldung verantwortlich?</strong><br>
+Die Unterkunft. Der Gast stellt lediglich die Daten bereit.</p>
+
+<p><strong>Was passiert, wenn ein Fehler in meinen Daten vorliegt?</strong><br>
+Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen.</p>
+
+<h3>6. Weitere Informationen</h3>
+
+<p>Offizielle Informationen: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
+`,
+}
 
 function loadFaq() {
   faqContent.innerHTML = faqTexts[currentLang];
