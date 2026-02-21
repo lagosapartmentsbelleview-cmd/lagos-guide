@@ -7,54 +7,52 @@ const texts = {
   pt: {
     subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).",
     legalHtml: `
-    <h3><strong>Aviso Legal Obrigatório e Segurança: Registo de Hóspedes</strong></h3>
+    <h3><strong>Aviso Legal Obrigatório — Registo de Hóspedes (AIMA/SIBA)</strong></h3>
 
-    <p>Este formulário destina-se à recolha dos dados obrigatórios de todos os hóspedes,
-    conforme exigido pela lei portuguesa para comunicação à AIMA (antigo SEF).</p>
+    <p>Este formulário recolhe os dados obrigatórios de identificação de todos os hóspedes,
+    conforme exigido pela legislação portuguesa para comunicação à AIMA (Agência para a
+    Integração, Migrações e Asilo), através da plataforma SIBA.</p>
 
-    <h4><strong>Por que solicitamos os seus dados?</strong></h4>
-    <p>De acordo com a legislação portuguesa (<strong>Artigo 45.º da Lei n.º 23/2007</strong>),
-    todos os exploradores de Alojamento Local são legalmente obrigados a registar a estadia
-    de cidadãos não portugueses junto das autoridades de fronteira (AIMA/SIBA) num prazo de
-    3 dias úteis.</p>
+    <h4><strong>Por que motivo os seus dados são obrigatórios?</strong></h4>
+    <p>Nos termos do <strong>Artigo 45.º da Lei n.º 23/2007</strong>, todos os estabelecimentos
+    de Alojamento Local são legalmente obrigados a comunicar às autoridades de fronteira
+    a entrada, permanência e saída de cidadãos estrangeiros no território nacional.</p>
 
-    <p><strong>É obrigatório por lei</strong> que o alojamento recolha os dados de
-    <strong>todos os hóspedes</strong>, incluindo crianças e bebés.</p>
+    <p>Esta obrigação aplica-se a <strong>todos os hóspedes sem nacionalidade portuguesa</strong>,
+    incluindo <strong>crianças e bebés</strong>, sem exceção.</p>
 
-    <h4><strong>Para que serve esta informação?</strong></h4>
+    <h4><strong>Para que servem estes dados?</strong></h4>
     <ul>
-        <li><strong>Segurança Nacional:</strong> Ajuda na prevenção de crimes graves,
-        terrorismo e crime organizado transfronteiriço.</li>
+        <li><strong>Segurança Nacional:</strong> Apoiam a prevenção e investigação de crimes
+        graves, terrorismo e redes transfronteiriças.</li>
 
-        <li><strong>Proteção do Hóspede em Emergências:</strong> Em caso de acidente,
-        catástrofe natural ou desaparecimento, permite às autoridades e embaixadas
-        localizar rapidamente os cidadãos.</li>
+        <li><strong>Proteção do Hóspede:</strong> Em caso de acidente, emergência médica,
+        catástrofe natural ou desaparecimento, permitem às autoridades e embaixadas
+        identificar e localizar rapidamente os cidadãos.</li>
 
-        <li><strong>Controlo Estatístico:</strong> Apoia a gestão das políticas de turismo
-        e migração do país.</li>
+        <li><strong>Gestão Pública:</strong> Contribuem para estatísticas oficiais e políticas
+        de migração e turismo.</li>
     </ul>
 
-    <h4><strong>Consequências e Obrigatoriedade</strong></h4>
-    <p><strong>A entrega destes dados é estritamente obrigatória.</strong> A recusa em fornecer
-    as informações necessárias constitui um impedimento legal à prestação do serviço,
-    resultando na impossibilidade de realizar o check-in e na anulação da estadia
-    <strong>sem direito a reembolso</strong>.</p>
+    <h4><strong>Obrigatoriedade e consequências da recusa</strong></h4>
+    <p>A prestação destes dados é <strong>estritamente obrigatória por lei</strong>. A recusa
+    em fornecer as informações necessárias impede legalmente a realização do check-in e
+    implica a <strong>anulação imediata da reserva sem direito a reembolso</strong>, por
+    incumprimento das normas legais aplicáveis.</p>
 
-    <p>A não comunicação destes dados constitui uma contraordenação grave para o proprietário,
-    punível com coimas elevadas.</p>
+    <p>Para o proprietário do alojamento, a não comunicação destes dados constitui uma
+    <strong>contraordenação grave</strong>, punível com coimas significativas.</p>
 
-    <h4><strong>Privacidade e Confidencialidade</strong></h4>
-    <p>Os seus dados são recolhidos exclusivamente para este fim legal e tratados de acordo
-    com o RGPD. São comunicados à AIMA apenas para controlo de fronteiras e segurança interna,
-    não sendo partilhados com terceiros para fins comerciais.</p>
+    <h4><strong>Privacidade e proteção dos seus dados</strong></h4>
+    <p>Os dados recolhidos são utilizados exclusivamente para cumprimento desta obrigação
+    legal e tratados em conformidade com o <strong>Regulamento Geral sobre a Proteção de
+    Dados (RGPD)</strong>. Não são partilhados com terceiros para fins comerciais.</p>
 
-    <h4><strong>Informação Detalhada e Legislação</strong></h4>
+    <h4><strong>Informação adicional e legislação</strong></h4>
     <p><a href="#" target="_blank">Perguntas Frequentes (FAQ)</a></p>
     <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
        Lei n.º 23/2007 — Diário da República (PDF)</a></p>
-`
-
-    `,
+`,
     formTitle: "Boletim de Alojamento",
     stayDataTitle: "Dados da Estadia",
     checkinLabel: "Data de Check-in:",
@@ -76,7 +74,8 @@ const texts = {
       docCountry: "País Emissor do Documento:"
     },
     submit: "Enviar Boletim de Alojamento"
-  },
+},
+
 
   en: {
     subtitle: "Mandatory Guest Registration Form (AIMA, former SEF) required by Portuguese law.",
