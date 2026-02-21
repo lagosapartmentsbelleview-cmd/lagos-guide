@@ -436,3 +436,28 @@ document.getElementById("aimaForm").addEventListener("submit", function (e) {
 // IDIOMA INICIAL
 // ------------------------------
 setLanguage("pt");
+
+// ------------------------------
+// MODAL FAQ — ABRIR E FECHAR
+// ------------------------------
+const faqModal = document.getElementById("faqModal");
+const faqContent = document.getElementById("faqContent");
+const openFaqBtn = document.getElementById("openFaqModal");
+const closeFaqBtn = document.getElementById("closeFaqModal");
+
+// Abrir modal
+openFaqBtn.addEventListener("click", () => {
+  faqModal.style.display = "block";
+});
+
+// Fechar modal (botão X)
+closeFaqBtn.addEventListener("click", () => {
+  faqModal.style.display = "none";
+});
+
+// Fechar modal ao clicar fora da caixa
+window.addEventListener("click", (e) => {
+  if (e.target === faqModal) {
+    faqModal.style.display = "none";
+  }
+});
