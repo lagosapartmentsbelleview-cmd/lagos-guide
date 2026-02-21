@@ -3343,94 +3343,166 @@ Kontakt: +351 913 070 746<br>
 const golf = {
 pt: `
 <div class="category-card">
-<h3>Palmares Golf</h3>
-<p>Campo de golfe de 27 buracos com vista para a baía de Lagos.</p>
-<p><strong>Distância:</strong> 4,5 km</p>
-<p><a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 Ver no mapa</a></p>
-</div>
+<h3>Campos de Golfe</h3>
+<p>Os melhores campos de golfe perto de Lagos, ideais para jogadores iniciantes e experientes, com vistas deslumbrantes sobre o mar e a serra.</p>
 
-<div class="category-card">
-<h3>Boavista Golf</h3>
-<p>Campo desafiante com paisagens naturais e excelente infraestrutura.</p>
-<p><strong>Distância:</strong> 3,8 km</p>
-<p><a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 Ver no mapa</a></p>
+<p><strong>Palmares Ocean & Golf Resort</strong><br>
+Localização: Meia Praia, Lagos<br>
+Distância: 4,5 km do Marina Park<br>
+Preço aproximado: green fee desde 90–120 €<br>
+Contacto: +351 282 790 500<br>
+<a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 Ver no mapa</a></p>
+
+<p><strong>Espiche Golf</strong><br>
+Localização: Espiche<br>
+Distância: 10 km do Marina Park<br>
+Preço aproximado: green fee desde 60–90 €<br>
+Contacto: +351 282 688 250<br>
+<a href="https://maps.google.com/?q=Espiche+Golf">📍 Ver no mapa</a></p>
+
+<p><strong>Boavista Golf & Spa</strong><br>
+Localização: Lagos<br>
+Distância: 3,5 km do Marina Park<br>
+Preço aproximado: green fee desde 70–100 €<br>
+Contacto: +351 282 000 100<br>
+<a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 Ver no mapa</a></p>
 </div>
 `,
 en: `
 <div class="category-card">
-<h3>Palmares Golf</h3>
-<p>27-hole golf course overlooking Lagos Bay.</p>
-<p><strong>Distance:</strong> 4.5 km</p>
-<p><a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 View on map</a></p>
-</div>
+<h3>Golf Courses</h3>
+<p>The best golf courses near Lagos, offering stunning ocean and countryside views, suitable for both beginners and experienced players.</p>
 
-<div class="category-card">
-<h3>Boavista Golf</h3>
-<p>Challenging course with natural landscapes and great facilities.</p>
-<p><strong>Distance:</strong> 3.8 km</p>
-<p><a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 View on map</a></p>
+<p><strong>Palmares Ocean & Golf Resort</strong><br>
+Location: Meia Praia, Lagos<br>
+Distance: 4.5 km from Marina Park<br>
+Approx. price: green fee from 90–120 €<br>
+Contact: +351 282 790 500<br>
+<a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 View on map</a></p>
+
+<p><strong>Espiche Golf</strong><br>
+Location: Espiche<br>
+Distance: 10 km from Marina Park<br>
+Approx. price: green fee from 60–90 €<br>
+Contact: +351 282 688 250<br>
+<a href="https://maps.google.com/?q=Espiche+Golf">📍 View on map</a></p>
+
+<p><strong>Boavista Golf & Spa</strong><br>
+Location: Lagos<br>
+Distance: 3.5 km from Marina Park<br>
+Approx. price: green fee from 70–100 €<br>
+Contact: +351 282 000 100<br>
+<a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 View on map</a></p>
 </div>
 `,
 es: `
 <div class="category-card">
-<h3>Palmares Golf</h3>
-<p>Campo de golf de 27 hoyos con vistas a la bahía de Lagos.</p>
-<p><strong>Distancia:</strong> 4,5 km</p>
-<p><a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 Ver en el mapa</a></p>
-</div>
+<h3>Campos de Golf</h3>
+<p>Los mejores campos de golf cerca de Lagos, ideales para jugadores principiantes y avanzados, con vistas impresionantes al mar y al campo.</p>
 
-<div class="category-card">
-<h3>Boavista Golf</h3>
-<p>Campo desafiante con paisajes naturales y excelentes instalaciones.</p>
-<p><strong>Distancia:</strong> 3,8 km</p>
-<p><a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 Ver en el mapa</a></p>
+<p><strong>Palmares Ocean & Golf Resort</strong><br>
+Ubicación: Meia Praia, Lagos<br>
+Distancia: 4,5 km desde Marina Park<br>
+Precio aproximado: green fee desde 90–120 €<br>
+Contacto: +351 282 790 500<br>
+<a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 Ver en el mapa</a></p>
+
+<p><strong>Espiche Golf</strong><br>
+Ubicación: Espiche<br>
+Distancia: 10 km desde Marina Park<br>
+Precio aproximado: green fee desde 60–90 €<br>
+Contacto: +351 282 688 250<br>
+<a href="https://maps.google.com/?q=Espiche+Golf">📍 Ver en el mapa</a></p>
+
+<p><strong>Boavista Golf & Spa</strong><br>
+Ubicación: Lagos<br>
+Distancia: 3,5 km desde Marina Park<br>
+Precio aproximado: green fee desde 70–100 €<br>
+Contacto: +351 282 000 100<br>
+<a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 Ver en el mapa</a></p>
 </div>
 `,
 fr: `
 <div class="category-card">
-<h3>Palmares Golf</h3>
-<p>Parcours de 27 trous avec vue sur la baie de Lagos.</p>
-<p><strong>Distance :</strong> 4,5 km</p>
-<p><a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 Voir sur la carte</a></p>
-</div>
+<h3>Terrains de Golf</h3>
+<p>Les meilleurs terrains de golf près de Lagos, parfaits pour débutants et joueurs confirmés, avec de superbes vues sur l’océan et la campagne.</p>
 
-<div class="category-card">
-<h3>Boavista Golf</h3>
-<p>Parcours exigeant avec paysages naturels et excellentes infrastructures.</p>
-<p><strong>Distance :</strong> 3,8 km</p>
-<p><a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 Voir sur la carte</a></p>
+<p><strong>Palmares Ocean & Golf Resort</strong><br>
+Localisation : Meia Praia, Lagos<br>
+Distance : 4,5 km depuis Marina Park<br>
+Prix approximatif : green fee à partir de 90–120 €<br>
+Contact : +351 282 790 500<br>
+<a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 Voir sur la carte</a></p>
+
+<p><strong>Espiche Golf</strong><br>
+Localisation : Espiche<br>
+Distance : 10 km depuis Marina Park<br>
+Prix approximatif : green fee à partir de 60–90 €<br>
+Contact : +351 282 688 250<br>
+<a href="https://maps.google.com/?q=Espiche+Golf">📍 Voir sur la carte</a></p>
+
+<p><strong>Boavista Golf & Spa</strong><br>
+Localisation : Lagos<br>
+Distance : 3,5 km depuis Marina Park<br>
+Prix approximatif : green fee à partir de 70–100 €<br>
+Contact : +351 282 000 100<br>
+<a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 Voir sur la carte</a></p>
 </div>
 `,
 it: `
 <div class="category-card">
-<h3>Palmares Golf</h3>
-<p>Percorso da 27 buche con vista sulla baia di Lagos.</p>
-<p><strong>Distanza:</strong> 4,5 km</p>
-<p><a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
+<h3>Campi da Golf</h3>
+<p>I migliori campi da golf vicino a Lagos, ideali per principianti e giocatori esperti, con splendide viste sull’oceano e sulle colline.</p>
 
-<div class="category-card">
-<h3>Boavista Golf</h3>
-<p>Percorso impegnativo con paesaggi naturali e ottime strutture.</p>
-<p><strong>Distanza:</strong> 3,8 km</p>
-<p><a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 Vedi sulla mappa</a></p>
+<p><strong>Palmares Ocean & Golf Resort</strong><br>
+Località: Meia Praia, Lagos<br>
+Distanza: 4,5 km da Marina Park<br>
+Prezzo approssimativo: green fee da 90–120 €<br>
+Contatto: +351 282 790 500<br>
+<a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Espiche Golf</strong><br>
+Località: Espiche<br>
+Distanza: 10 km da Marina Park<br>
+Prezzo approssimativo: green fee da 60–90 €<br>
+Contatto: +351 282 688 250<br>
+<a href="https://maps.google.com/?q=Espiche+Golf">📍 Vedi sulla mappa</a></p>
+
+<p><strong>Boavista Golf & Spa</strong><br>
+Località: Lagos<br>
+Distanza: 3,5 km da Marina Park<br>
+Prezzo approssimativo: green fee da 70–100 €<br>
+Contatto: +351 282 000 100<br>
+<a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 Vedi sulla mappa</a></p>
 </div>
 `,
 de: `
 <div class="category-card">
-<h3>Palmares Golf</h3>
-<p>27-Loch-Golfplatz mit Blick auf die Bucht von Lagos.</p>
-<p><strong>Entfernung:</strong> 4,5 km</p>
-<p><a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 Karte anzeigen</a></p>
-</div>
+<h3>Golfplätze</h3>
+<p>Die besten Golfplätze in der Nähe von Lagos, ideal für Anfänger und erfahrene Spieler, mit herrlichem Blick auf Meer und Landschaft.</p>
 
-<div class="category-card">
-<h3>Boavista Golf</h3>
-<p>Herausfordernder Platz mit Naturlandschaften und hervorragenden Einrichtungen.</p>
-<p><strong>Entfernung:</strong> 3,8 km</p>
-<p><a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 Karte anzeigen</a></p>
+<p><strong>Palmares Ocean & Golf Resort</strong><br>
+Standort: Meia Praia, Lagos<br>
+Entfernung: 4,5 km vom Marina Park<br>
+Ungefährer Preis: Greenfee ab 90–120 €<br>
+Kontakt: +351 282 790 500<br>
+<a href="https://maps.google.com/?q=Palmares+Golf+Lagos">📍 Karte anzeigen</a></p>
+
+<p><strong>Espiche Golf</strong><br>
+Standort: Espiche<br>
+Entfernung: 10 km vom Marina Park<br>
+Ungefährer Preis: Greenfee ab 60–90 €<br>
+Kontakt: +351 282 688 250<br>
+<a href="https://maps.google.com/?q=Espiche+Golf">📍 Karte anzeigen</a></p>
+
+<p><strong>Boavista Golf & Spa</strong><br>
+Standort: Lagos<br>
+Entfernung: 3,5 km vom Marina Park<br>
+Ungefährer Preis: Greenfee ab 70–100 €<br>
+Kontakt: +351 282 000 100<br>
+<a href="https://maps.google.com/?q=Boavista+Golf+Lagos">📍 Karte anzeigen</a></p>
 </div>
-`
+`,
 };
 // -----------------------------------------
 // --- CONTENTS (Mapa de Conteúdos) ---
