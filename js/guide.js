@@ -2102,6 +2102,7 @@ else if (
       else if (
         cat.includes("ATM") ||
         cat.includes("Banco") ||
+        cat.includes("Distributeurs & Banques") ||
         cat.includes("Bank")
       ) {
         key = "atms";
