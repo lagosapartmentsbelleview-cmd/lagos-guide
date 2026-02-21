@@ -917,13 +917,14 @@ function setLanguage(lang) {
   // REAPLICAR EVENTO DO LINK FAQ APÓS MUDAR IDIOMA
   // -----------------------------------------
   const openFaqBtn = document.getElementById("openFaqModal");
-  if (openFaqBtn) {
-    openFaqBtn.addEventListener("click", () => {
-  document.getElementById("faqTitle").textContent = faqTitles[currentLang];
-  loadFaq();
-  faqModal.style.display = "block";
-});
-  }
+if (openFaqBtn) {
+  openFaqBtn.addEventListener("click", () => {
+    document.getElementById("faqTitle").textContent = faqTitles[currentLang];
+    loadFaq();
+    faqModal.style.display = "block";
+  });
+}
+
 }
 
 
