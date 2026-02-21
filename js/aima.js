@@ -54,7 +54,7 @@ const texts = {
        Lei n.º 23/2007 — Diário da República (PDF)</a></p>
 `,
     formTitle: "Boletim de Alojamento",
-    requiredNotice: "Preenchimento obrigatório",
+    requiredNotice: "Preenchimento e envio obrigatório",
     stayDataTitle: "Dados da Estadia",
     checkinLabel: "Data de Check-in:",
     checkoutLabel: "Data de Check-out:",
