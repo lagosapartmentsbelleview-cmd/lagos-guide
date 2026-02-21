@@ -5,8 +5,10 @@
   <title>Apartments Belleview Lagos — Boletim de Alojamento</title>
   <link rel="stylesheet" href="css/aima.css">
 </head>
+
 <body>
 
+<!-- HEADER IGUAL AO GUIDE -->
 <header class="guide-header">
     <a href="#" class="logo">
         <svg width="36" height="36" viewBox="0 0 100 100" class="belleview-logo">
@@ -19,84 +21,92 @@
     </a>
 </header>
 
-
+<!-- MAIN -->
 <main class="aima-main">
-  <section class="lang-section">
-    <h1 class="main-title">Boletim de Alojamento / Guest Registration Form</h1>
-    <p class="subtitle" id="subtitle-text"></p>
 
-    <div class="lang-buttons">
-    <button onclick="setLanguage('pt')">
-        <img src="https://flagcdn.com/w40/pt.png" alt="PT"> Português
-    </button>
+    <section class="lang-section">
+        <h1 class="main-title">Boletim de Alojamento / Guest Registration Form</h1>
+        <p class="subtitle" id="subtitle-text"></p>
 
-    <button onclick="setLanguage('en')">
-        <img src="https://flagcdn.com/w40/gb.png" alt="GB"> English
-    </button>
+        <!-- BOTÕES DE IDIOMA IGUAIS AO GUIDE -->
+        <div class="lang-buttons">
+            <button onclick="setLanguage('pt')">
+                <img src="https://flagcdn.com/w40/pt.png" alt="PT"> Português
+            </button>
 
-    <button onclick="setLanguage('es')">
-        <img src="https://flagcdn.com/w40/es.png" alt="ES"> Español
-    </button>
+            <button onclick="setLanguage('en')">
+                <img src="https://flagcdn.com/w40/gb.png" alt="GB"> English
+            </button>
 
-    <button onclick="setLanguage('fr')">
-        <img src="https://flagcdn.com/w40/fr.png" alt="FR"> Français
-    </button>
+            <button onclick="setLanguage('es')">
+                <img src="https://flagcdn.com/w40/es.png" alt="ES"> Español
+            </button>
 
-    <button onclick="setLanguage('it')">
-        <img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano
-    </button>
+            <button onclick="setLanguage('fr')">
+                <img src="https://flagcdn.com/w40/fr.png" alt="FR"> Français
+            </button>
 
-    <button onclick="setLanguage('de')">
-        <img src="https://flagcdn.com/w40/de.png" alt="DE"> Deutsch
-    </button>
-</div>
+            <button onclick="setLanguage('it')">
+                <img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano
+            </button>
 
-  </section>
-
-  <section id="legalInfo" class="legal-info"></section>
-
-  <section id="aimaFormSection" class="form-section" style="display:none;">
-    <form id="aimaForm">
-      <h2 id="formTitle"></h2>
-
-      <!-- DADOS DA ESTADIA -->
-      <div class="form-card">
-        <h3 id="stayDataTitle"></h3>
-        <div class="form-row">
-          <label for="checkinDate" id="checkinLabel"></label>
-          <input type="date" id="checkinDate" name="checkinDate" required>
+            <button onclick="setLanguage('de')">
+                <img src="https://flagcdn.com/w40/de.png" alt="DE"> Deutsch
+            </button>
         </div>
-        <div class="form-row">
-          <label for="checkoutDate" id="checkoutLabel"></label>
-          <input type="date" id="checkoutDate" name="checkoutDate" required>
-        </div>
-        <div class="form-row">
-          <label for="adults" id="adultsLabel"></label>
-          <input type="number" id="adults" name="adults" min="1" value="1" required>
-        </div>
-        <div class="form-row">
-          <label for="children" id="childrenLabel"></label>
-          <input type="number" id="children" name="children" min="0" value="0" required>
-        </div>
-      </div>
+    </section>
 
-      <!-- HÓSPEDES GERADOS DINAMICAMENTE -->
-      <div id="guestsContainer"></div>
+    <!-- TEXTO LEGAL -->
+    <section id="legalInfo" class="legal-info"></section>
 
-      <button type="submit" class="submit-btn" id="submitLabel"></button>
-    </form>
-  </section>
+    <!-- FORMULÁRIO -->
+    <section id="aimaFormSection" class="form-section" style="display:none;">
+        <form id="aimaForm">
+
+            <h2 id="formTitle"></h2>
+
+            <div class="form-card">
+                <h3 id="stayDataTitle"></h3>
+
+                <div class="form-row">
+                    <label id="checkinLabel"></label>
+                    <input type="date" id="checkinDate" name="checkinDate" required>
+                </div>
+
+                <div class="form-row">
+                    <label id="checkoutLabel"></label>
+                    <input type="date" id="checkoutDate" name="checkoutDate" required>
+                </div>
+
+                <div class="form-row">
+                    <label id="adultsLabel"></label>
+                    <input type="number" id="adults" name="adults" min="1" value="1" required>
+                </div>
+
+                <div class="form-row">
+                    <label id="childrenLabel"></label>
+                    <input type="number" id="children" name="children" min="0" value="0" required>
+                </div>
+            </div>
+
+            <!-- HÓSPEDES GERADOS DINAMICAMENTE -->
+            <div id="guestsContainer"></div>
+
+            <button type="submit" class="submit-btn" id="submitLabel"></button>
+        </form>
+    </section>
+
 </main>
 
+<!-- FOOTER IGUAL AO GUIDE -->
 <footer>
   <div class="footer-content">
+
     <svg width="50" height="50" viewBox="0 0 100 100" class="footer-logo">
       <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#ffffff" stroke-width="6"/>
       <text x="50" y="67" text-anchor="middle"
             font-family="Poppins, sans-serif"
-            font-size="42" font-weight="700" fill="#005c99">
-        B
-      </text>
+            font-size="42" font-weight="700" fill="#005c99">B</text>
     </svg>
 
     <p class="footer-title">Apartments Belleview Lagos</p>
@@ -121,12 +131,13 @@
       <a href="/politica-de-privacidade.html">Política de Privacidade</a> |
       <a href="/politica-de-cookies.html">Política de Cookies</a> |
       <a href="/termos-e-condicoes.html">Termos e Condições</a> |
-      <a href="https://www.livroreclamacoes.pt/INICIO/" target="_blank">Livro de Reclamções Online</a>
+      <a href="https://www.livroreclamacoes.pt/INICIO/" target="_blank">Livro de Reclamações Online</a>
     </div>
 
     <p class="footer-copy">
       © 2025 Apartments Belleview Lagos — Todos os direitos reservados.
     </p>
+
   </div>
 </footer>
 
