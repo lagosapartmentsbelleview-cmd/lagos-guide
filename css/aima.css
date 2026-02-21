@@ -285,3 +285,68 @@ footer {
     color: #663c00;
     font-weight: 600;
 }
+
+/* MODAL FAQ */
+.faq-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+}
+
+.faq-modal-content {
+  background: #ffffff;
+  width: 90%;
+  max-width: 850px;
+  margin: 60px auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  animation: fadeIn 0.3s ease;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.faq-close {
+  float: right;
+  font-size: 32px;
+  cursor: pointer;
+  color: #005c99;
+  font-weight: bold;
+}
+
+.faq-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #005c99;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.faq-content h3 {
+  margin-top: 20px;
+  color: #005c99;
+}
+
+.faq-content p {
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.faq-link {
+  color: #005c99;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
