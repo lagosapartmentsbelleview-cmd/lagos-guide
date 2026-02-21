@@ -306,6 +306,9 @@ function setLanguage(lang) {
   formSectionEl.style.display = "block";
 
   formTitleEl.textContent = t.formTitle;
+
+  document.getElementById("requiredNotice").textContent = t.requiredNotice;
+ 
   stayDataTitleEl.textContent = t.stayDataTitle;
   checkinLabelEl.textContent = t.checkinLabel;
   checkoutLabelEl.textContent = t.checkoutLabel;
