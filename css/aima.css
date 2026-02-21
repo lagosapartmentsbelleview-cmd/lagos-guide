@@ -1,225 +1,79 @@
+/* ------------------------------
+   ESTILO GERAL
+--------------------------------*/
 body {
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", sans-serif;
-  background: #ffffff;
-  color: #333;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: #ffffff;
+    color: #333;
 }
 
-/* HEADER */
-.aima-header {
-  position: sticky;
-  top: 0;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e5e5;
-  padding: 10px 18px;
-  display: flex;
-  align-items: center;
-  z-index: 999;
+/* ------------------------------
+   HEADER IGUAL AO GUIDE
+--------------------------------*/
+.guide-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    z-index: 999;
 }
 
-.aima-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
 }
 
-.aima-logo span {
-  font-size: 18px;
-  font-weight: 600;
-  color: #005c99;
+.logo span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #005c99;
 }
 
-.logo-svg {
-    background: #005c99;
+.belleview-logo {
     border-radius: 50%;
-    padding: 4px; /* opcional, igual ao guide */
 }
 
-
-/* MAIN */
+/* ------------------------------
+   MAIN
+--------------------------------*/
 .aima-main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 30px 20px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 20px 60px;
 }
 
 .main-title {
-  text-align: center;
-  font-size: 26px;
-  font-weight: 700;
-  color: #005c99;
-  margin-bottom: 10px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #005c99;
+    margin-bottom: 10px;
 }
 
 .subtitle {
-  text-align: center;
-  color: #555;
-  margin-bottom: 20px;
+    text-align: center;
+    color: #555;
+    margin-bottom: 20px;
 }
 
-/* LANG BUTTONS */
+/* ------------------------------
+   BOTÕES DE IDIOMA IGUAIS AO GUIDE
+--------------------------------*/
 .lang-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 25px;
-}
-
-.lang-buttons button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: #005c99;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 15px;
-}
-
-.lang-buttons button:hover {
-  background: #004b80;
-}
-
-/* LEGAL INFO */
-.legal-info {
-  background: #f7f9fc;
-  border-left: 4px solid #005c99;
-  border-radius: 8px;
-  padding: 18px;
-  margin-bottom: 25px;
-  font-size: 14px;
-}
-
-.legal-info a {
-  color: #005c99;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.legal-info a:hover {
-  text-decoration: underline;
-}
-
-/* FORM */
-.form-section {
-  margin-top: 10px;
-}
-
-.form-card {
-  background: #f7f9fc;
-  border-radius: 8px;
-  border-left: 4px solid #005c99;
-  padding: 18px;
-  margin-bottom: 18px;
-}
-
-.form-card h3 {
-  margin-top: 0;
-  color: #005c99;
-}
-
-.form-row {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 12px;
-}
-
-.form-row label {
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.form-row input,
-.form-row select {
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid #ccd4e0;
-  font-size: 14px;
-}
-
-/* GUEST CARDS */
-.guest-card {
-  background: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #dde4f0;
-  padding: 15px;
-  margin-bottom: 15px;
-}
-
-.guest-card h4 {
-  margin-top: 0;
-  color: #005c99;
-}
-
-/* SUBMIT */
-.submit-btn {
-  background: #005c99;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 12px 20px;
-  font-size: 15px;
-  cursor: pointer;
-  width: 100%;
-}
-
-.submit-btn:hover {
-  background: #004b80;
-}
-
-/* FOOTER */
-footer {
-  background: #005c99;
-  padding: 40px 20px;
-  margin-top: 40px;
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
-  color: #ffffff;
-}
-
-.footer-content {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.footer-logo {
-  margin-bottom: 15px;
-}
-
-.footer-title {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #ffffff;
-}
-
-.footer-links a {
-  color: #cfe8ff;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-
-.footer-copy {
-  margin-top: 20px;
-  font-size: 14px;
-  color: #e6f2ff;
-}
-
-/* RESPONSIVO */
-@media (max-width: 600px) {
-  .aima-logo span {
-    font-size: 15px;
-  }
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
 }
 
 .lang-buttons button {
@@ -235,8 +89,161 @@ footer {
     font-size: 16px;
 }
 
+.lang-buttons button:hover {
+    background: #004b80;
+}
+
 .lang-buttons button img {
     width: 26px;
     height: 18px;
     border-radius: 3px;
+}
+
+/* ------------------------------
+   TEXTO LEGAL
+--------------------------------*/
+.legal-info {
+    background: #f7f9fc;
+    border-left: 4px solid #005c99;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.legal-info a {
+    color: #005c99;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.legal-info a:hover {
+    text-decoration: underline;
+}
+
+/* ------------------------------
+   FORMULÁRIO
+--------------------------------*/
+.form-section {
+    margin-top: 10px;
+}
+
+.form-card {
+    background: #f7f9fc;
+    border-radius: 8px;
+    border-left: 4px solid #005c99;
+    padding: 18px;
+    margin-bottom: 18px;
+}
+
+.form-card h3 {
+    margin-top: 0;
+    color: #005c99;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.form-row label {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.form-row input,
+.form-row select {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccd4e0;
+    font-size: 15px;
+}
+
+/* ------------------------------
+   HÓSPEDES
+--------------------------------*/
+.guest-card {
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #dde4f0;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.guest-card h4 {
+    margin-top: 0;
+    color: #005c99;
+}
+
+/* ------------------------------
+   BOTÃO SUBMIT
+--------------------------------*/
+.submit-btn {
+    background: #005c99;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 14px 20px;
+    font-size: 17px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background: #004b80;
+}
+
+/* ------------------------------
+   FOOTER IGUAL AO GUIDE
+--------------------------------*/
+footer {
+    background: #005c99;
+    padding: 40px 20px;
+    margin-top: 40px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    color: #ffffff;
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-logo {
+    margin-bottom: 15px;
+}
+
+.footer-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.footer-links a {
+    color: #cfe8ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-copy {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #e6f2ff;
+}
+
+/* ------------------------------
+   RESPONSIVO
+--------------------------------*/
+@media (max-width: 600px) {
+    .logo span {
+        font-size: 15px;
+    }
 }
