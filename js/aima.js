@@ -76,194 +76,366 @@ const texts = {
     },
     submit: "Enviar Boletim de Alojamento"
 },
-
-
-
   en: {
-    subtitle: "Mandatory Guest Registration Form (AIMA, former SEF) required by Portuguese law.",
-    legalHtml: `
-      <p>This form is used to collect the mandatory data of all guests,
-      as required by Portuguese law for communication to AIMA (former SEF).</p>
-      <p><strong>By law</strong>, the accommodation must collect the data of
-      <strong>all guests</strong>, including children.</p>
-      <p>The data is sent to AIMA exclusively for border control and internal security
-      purposes, under the applicable Portuguese legislation for local accommodation.</p>
-      <p>For more detailed information, please see
-      <a href="https://www.sef.pt/en/pages/conteudo-detalhe.aspx?nID=25" target="_blank">
-      this page about the legal obligation and use of the data</a>.
-      </p>
-    `,
-    formTitle: "Guest Registration Form",
-    stayDataTitle: "Stay Details",
-    checkinLabel: "Check-in Date:",
-    checkoutLabel: "Check-out Date:",
-    adultsLabel: "Number of Adult Guests:",
-    childrenLabel: "Number of Child Guests:",
-    guestTitle: i => `Guest ${i}`,
-    fields: {
-      fullName: "Full Name:",
-      birthDate: "Date of Birth:",
-      birthPlace: "Place of Birth:",
-      nationality: "Nationality:",
-      residencePlace: "Place of Residence:",
-      residenceCountry: "Country of Residence:",
-      docNumber: "Document Number:",
-      docType: "Document Type:",
-      docTypePassport: "Passport",
-      docTypeID: "Identity Card",
-      docCountry: "Issuing Country:"
-    },
-    submit: "Submit Guest Registration"
+  subtitle: "Mandatory Accommodation Registration Form (AIMA, formerly SEF).",
+  legalHtml: `
+    <h3><strong>Mandatory Legal Notice — Guest Registration (AIMA/SIBA)</strong></h3>
+
+    <p>This form collects the mandatory identification data of all guests,
+    as required by Portuguese law for communication to AIMA (Agency for
+    Integration, Migration and Asylum) through the SIBA platform.</p>
+
+    <h4><strong>Why is this information mandatory?</strong></h4>
+    <p>Under <strong>Article 45 of Law 23/2007</strong>, all accommodation
+    establishments are legally required to report the entry, stay and exit
+    of foreign citizens in Portugal.</p>
+
+    <p>This obligation applies to <strong>all guests without Portuguese nationality</strong>,
+    including <strong>children and infants</strong>, without exception.</p>
+
+    <h4><strong>What is this information used for?</strong></h4>
+    <ul>
+        <li><strong>National Security:</strong> Supports the prevention and investigation
+        of serious crimes, terrorism and cross‑border networks.</li>
+
+        <li><strong>Guest Protection:</strong> In case of accident, medical emergency,
+        natural disaster or disappearance, it allows authorities and embassies
+        to quickly identify and locate citizens.</li>
+
+        <li><strong>Public Administration:</strong> Contributes to official statistics
+        and migration/tourism policies.</li>
+    </ul>
+
+    <h4><strong>Obligation and consequences of refusal</strong></h4>
+    <p>Providing this information is <strong>strictly mandatory by law</strong>. Refusing
+    to provide the required data legally prevents check‑in and results in the
+    <strong>immediate cancellation of the reservation without refund</strong>.</p>
+
+    <p>For the accommodation owner, failure to report this data constitutes a
+    <strong>serious administrative offence</strong>, punishable by significant fines.</p>
+
+    <h4><strong>Privacy and data protection</strong></h4>
+    <p>The collected data is used exclusively to comply with this legal obligation
+    and is processed in accordance with the <strong>General Data Protection Regulation (GDPR)</strong>.
+    It is not shared with third parties for commercial purposes.</p>
+
+    <h4><strong>Additional information and legislation</strong></h4>
+    <a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a>
+    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
+       Law 23/2007 — Official Gazette (PDF)</a></p>
+  `,
+  formTitle: "Accommodation Registration Form",
+  requiredNotice: "Mandatory completion and submission",
+  stayDataTitle: "Stay Information",
+  checkinLabel: "Check‑in Date:",
+  checkoutLabel: "Check‑out Date:",
+  adultsLabel: "Number of Adult Guests:",
+  childrenLabel: "Number of Child Guests:",
+  guestTitle: i => `Guest ${i}`,
+  fields: {
+    fullName: "Full Name:",
+    birthDate: "Date of Birth:",
+    birthPlace: "Place of Birth:",
+    nationality: "Nationality:",
+    residencePlace: "Place of Residence:",
+    residenceCountry: "Country of Residence:",
+    docNumber: "Document Number:",
+    docType: "Document Type:",
+    docTypePassport: "Passport",
+    docTypeID: "Identity Card",
+    docCountry: "Issuing Country:"
   },
+  submit: "Submit Accommodation Form"
+},
 
   es: {
-    subtitle: "Formulario obligatorio de Boletín de Alojamiento (AIMA, antiguo SEF).",
-    legalHtml: `
-      <p>Este formulario se utiliza para recoger los datos obligatorios de todos los huéspedes,
-      según exige la ley portuguesa para la comunicación a AIMA (antiguo SEF).</p>
-      <p><strong>Es obligatorio por ley</strong> que el alojamiento recoja los datos de
-      <strong>todos los huéspedes</strong>, incluidos los niños.</p>
-      <p>Los datos se comunican a AIMA exclusivamente con fines de control de fronteras
-      y seguridad interna, de acuerdo con la legislación portuguesa aplicable al alojamiento local.</p>
-      <p>Para más información detallada, consulte
-      <a href="https://www.sef.pt/pt/pages/conteudo-detalhe.aspx?nID=25" target="_blank">
-      esta página sobre la obligatoriedad legal y el uso de los datos</a>.
-      </p>
-    `,
-    formTitle: "Boletín de Alojamiento",
-    stayDataTitle: "Datos de la Estancia",
-    checkinLabel: "Fecha de Check-in:",
-    checkoutLabel: "Fecha de Check-out:",
-    adultsLabel: "Nº de Huéspedes Adultos:",
-    childrenLabel: "Nº de Huéspedes Niños:",
-    guestTitle: i => `Huésped ${i}`,
-    fields: {
-      fullName: "Nombre Completo:",
-      birthDate: "Fecha de Nacimiento:",
-      birthPlace: "Lugar de Nacimiento:",
-      nationality: "Nacionalidad:",
-      residencePlace: "Lugar de Residencia:",
-      residenceCountry: "País de Residencia:",
-      docNumber: "Número de Documento:",
-      docType: "Tipo de Documento:",
-      docTypePassport: "Pasaporte",
-      docTypeID: "Documento de Identidad",
-      docCountry: "País Emisor del Documento:"
-    },
-    submit: "Enviar Boletín de Alojamiento"
+  subtitle: "Formulario obligatorio de Registro de Alojamiento (AIMA, antiguo SEF).",
+  legalHtml: `
+    <h3><strong>Aviso Legal Obligatorio — Registro de Huéspedes (AIMA/SIBA)</strong></h3>
+
+    <p>Este formulario recoge los datos obligatorios de identificación de todos los huéspedes,
+    según lo exige la legislación portuguesa para su comunicación a AIMA (Agencia para la
+    Integración, Migraciones y Asilo) a través de la plataforma SIBA.</p>
+
+    <h4><strong>¿Por qué son obligatorios estos datos?</strong></h4>
+    <p>Según el <strong>Artículo 45 de la Ley n.º 23/2007</strong>, todos los alojamientos
+    están legalmente obligados a comunicar a las autoridades fronterizas la entrada,
+    estancia y salida de ciudadanos extranjeros en territorio portugués.</p>
+
+    <p>Esta obligación se aplica a <strong>todos los huéspedes sin nacionalidad portuguesa</strong>,
+    incluidos <strong>niños y bebés</strong>, sin excepción.</p>
+
+    <h4><strong>¿Para qué se utilizan estos datos?</strong></h4>
+    <ul>
+        <li><strong>Seguridad Nacional:</strong> Ayudan a prevenir e investigar delitos graves,
+        terrorismo y redes transfronterizas.</li>
+
+        <li><strong>Protección del Huésped:</strong> En caso de accidente, emergencia médica,
+        catástrofe natural o desaparición, permiten a las autoridades y embajadas identificar
+        y localizar rápidamente a los ciudadanos.</li>
+
+        <li><strong>Gestión Pública:</strong> Contribuyen a estadísticas oficiales y políticas
+        de migración y turismo.</li>
+    </ul>
+
+    <h4><strong>Obligatoriedad y consecuencias de la negativa</strong></h4>
+    <p>La entrega de estos datos es <strong>estrictamente obligatoria por ley</strong>. Negarse
+    a proporcionar la información necesaria impide legalmente realizar el check‑in y puede
+    implicar la <strong>cancelación inmediata de la reserva sin derecho a reembolso</strong>.</p>
+
+    <p>Para el propietario del alojamiento, no comunicar estos datos constituye una
+    <strong>infracción grave</strong>, sancionada con multas significativas.</p>
+
+    <h4><strong>Privacidad y protección de datos</strong></h4>
+    <p>Los datos recogidos se utilizan exclusivamente para cumplir esta obligación legal y se
+    tratan conforme al <strong>Reglamento General de Protección de Datos (RGPD)</strong>.
+    No se comparten con terceros con fines comerciales.</p>
+
+    <h4><strong>Información adicional y legislación</strong></h4>
+    <a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a>
+    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
+       Ley n.º 23/2007 — Diario Oficial (PDF)</a></p>
+  `,
+  formTitle: "Registro de Alojamiento",
+  requiredNotice: "Cumplimentación y envío obligatorios",
+  stayDataTitle: "Datos de la Estancia",
+  checkinLabel: "Fecha de Check‑in:",
+  checkoutLabel: "Fecha de Check‑out:",
+  adultsLabel: "Número de Huéspedes Adultos:",
+  childrenLabel: "Número de Huéspedes Niños:",
+  guestTitle: i => `Huésped ${i}`,
+  fields: {
+    fullName: "Nombre Completo:",
+    birthDate: "Fecha de Nacimiento:",
+    birthPlace: "Lugar de Nacimiento:",
+    nationality: "Nacionalidad:",
+    residencePlace: "Lugar de Residencia:",
+    residenceCountry: "País de Residencia:",
+    docNumber: "Número del Documento:",
+    docType: "Tipo de Documento:",
+    docTypePassport: "Pasaporte",
+    docTypeID: "Documento de Identidad",
+    docCountry: "País Emisor del Documento:"
   },
+  submit: "Enviar Registro de Alojamiento"
+},
 
   fr: {
-    subtitle: "Formulaire obligatoire de Fiche d’Hébergement (AIMA, ex-SEF).",
-    legalHtml: `
-      <p>Ce formulaire sert à recueillir les données obligatoires de tous les hôtes,
-      comme l’exige la loi portugaise pour la communication à l’AIMA (ancien SEF).</p>
-      <p><strong>Il est obligatoire par la loi</strong> que l’hébergement collecte les données de
-      <strong>tous les hôtes</strong>, y compris les enfants.</p>
-      <p>Les données sont transmises à l’AIMA exclusivement à des fins de contrôle des frontières
-      et de sécurité intérieure, conformément à la législation portugaise applicable à l’hébergement local.</p>
-      <p>Pour plus d’informations détaillées, veuillez consulter
-      <a href="https://www.sef.pt/pt/pages/conteudo-detalhe.aspx?nID=25" target="_blank">
-      cette page sur l’obligation légale et l’utilisation des données</a>.
-      </p>
-    `,
-    formTitle: "Fiche d’Hébergement",
-    stayDataTitle: "Données du Séjour",
-    checkinLabel: "Date d’arrivée :",
-    checkoutLabel: "Date de départ :",
-    adultsLabel: "Nombre d’adultes :",
-    childrenLabel: "Nombre d’enfants :",
-    guestTitle: i => `Hôte ${i}`,
-    fields: {
-      fullName: "Nom complet :",
-      birthDate: "Date de naissance :",
-      birthPlace: "Lieu de naissance :",
-      nationality: "Nationalité :",
-      residencePlace: "Lieu de résidence :",
-      residenceCountry: "Pays de résidence :",
-      docNumber: "Numéro du document :",
-      docType: "Type de document :",
-      docTypePassport: "Passeport",
-      docTypeID: "Carte d’identité",
-      docCountry: "Pays émetteur du document :"
-    },
-    submit: "Envoyer la fiche d’hébergement"
+  subtitle: "Formulaire obligatoire d’Enregistrement des Hébergements (AIMA, ancien SEF).",
+  legalHtml: `
+    <h3><strong>Avis Légal Obligatoire — Enregistrement des Hôtes (AIMA/SIBA)</strong></h3>
+
+    <p>Ce formulaire recueille les données d’identification obligatoires de tous les hôtes,
+    conformément à la législation portugaise pour la communication à l’AIMA (Agence pour
+    l’Intégration, les Migrations et l’Asile) via la plateforme SIBA.</p>
+
+    <h4><strong>Pourquoi ces informations sont-elles obligatoires ?</strong></h4>
+    <p>Selon <strong>l’Article 45 de la Loi n.º 23/2007</strong>, tous les établissements
+    d’hébergement sont légalement tenus de déclarer l’entrée, le séjour et la sortie
+    des citoyens étrangers sur le territoire portugais.</p>
+
+    <p>Cette obligation s’applique à <strong>tous les hôtes n’ayant pas la nationalité portugaise</strong>,
+    y compris <strong>les enfants et les bébés</strong>, sans exception.</p>
+
+    <h4><strong>À quoi servent ces données ?</strong></h4>
+    <ul>
+        <li><strong>Sécurité Nationale :</strong> Aident à prévenir et enquêter les crimes graves,
+        le terrorisme et les réseaux transfrontaliers.</li>
+
+        <li><strong>Protection de l’Hôte :</strong> En cas d’accident, d’urgence médicale,
+        de catastrophe naturelle ou de disparition, elles permettent aux autorités et
+        ambassades d’identifier et de localiser rapidement les citoyens.</li>
+
+        <li><strong>Gestion Publique :</strong> Contribuent aux statistiques officielles et aux
+        politiques de migration et de tourisme.</li>
+    </ul>
+
+    <h4><strong>Obligation et conséquences du refus</strong></h4>
+    <p>La fourniture de ces données est <strong>strictement obligatoire par la loi</strong>.
+    Le refus de fournir les informations nécessaires empêche légalement l’enregistrement
+    (check‑in) et peut entraîner <strong>l’annulation immédiate de la réservation sans remboursement</strong>.</p>
+
+    <p>Pour le propriétaire de l’hébergement, le non-respect de cette obligation constitue
+    une <strong>infraction grave</strong>, passible d’amendes importantes.</p>
+
+    <h4><strong>Confidentialité et protection des données</strong></h4>
+    <p>Les données recueillies sont utilisées exclusivement pour respecter cette obligation
+    légale et sont traitées conformément au <strong>Règlement Général sur la Protection des
+    Données (RGPD)</strong>. Elles ne sont pas partagées avec des tiers à des fins commerciales.</p>
+
+    <h4><strong>Informations supplémentaires et législation</strong></h4>
+    <a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a>
+    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
+       Loi n.º 23/2007 — Journal Officiel (PDF)</a></p>
+  `,
+  formTitle: "Formulaire d’Enregistrement",
+  requiredNotice: "Remplissage et envoi obligatoires",
+  stayDataTitle: "Données du Séjour",
+  checkinLabel: "Date d’Arrivée :",
+  checkoutLabel: "Date de Départ :",
+  adultsLabel: "Nombre d’Adultes :",
+  childrenLabel: "Nombre d’Enfants :",
+  guestTitle: i => `Hôte ${i}`,
+  fields: {
+    fullName: "Nom Complet :",
+    birthDate: "Date de Naissance :",
+    birthPlace: "Lieu de Naissance :",
+    nationality: "Nationalité :",
+    residencePlace: "Lieu de Résidence :",
+    residenceCountry: "Pays de Résidence :",
+    docNumber: "Numéro du Document :",
+    docType: "Type de Document :",
+    docTypePassport: "Passeport",
+    docTypeID: "Carte d’Identité",
+    docCountry: "Pays Émetteur :"
   },
+  submit: "Envoyer le Formulaire"
+},
 
   it: {
-    subtitle: "Modulo obbligatorio di Scheda di Alloggio (AIMA, ex SEF).",
-    legalHtml: `
-      <p>Questo modulo viene utilizzato per raccogliere i dati obbligatori di tutti gli ospiti,
-      come richiesto dalla legge portoghese per la comunicazione all’AIMA (ex SEF).</p>
-      <p><strong>È obbligatorio per legge</strong> che la struttura raccolga i dati di
-      <strong>tutti gli ospiti</strong>, inclusi i bambini.</p>
-      <p>I dati vengono comunicati all’AIMA esclusivamente per finalità di controllo delle frontiere
-      e sicurezza interna, in conformità con la legislazione portoghese applicabile agli alloggi locali.</p>
-      <p>Per maggiori informazioni dettagliate, consultare
-      <a href="https://www.sef.pt/pt/pages/conteudo-detalhe.aspx?nID=25" target="_blank">
-      questa pagina sull’obbligo legale e l’utilizzo dei dati</a>.
-      </p>
-    `,
-    formTitle: "Scheda di Alloggio",
-    stayDataTitle: "Dati del Soggiorno",
-    checkinLabel: "Data di Check-in:",
-    checkoutLabel: "Data di Check-out:",
-    adultsLabel: "Numero di Ospiti Adulti:",
-    childrenLabel: "Numero di Ospiti Bambini:",
-    guestTitle: i => `Ospite ${i}`,
-    fields: {
-      fullName: "Nome completo:",
-      birthDate: "Data di nascita:",
-      birthPlace: "Luogo di nascita:",
-      nationality: "Nazionalità:",
-      residencePlace: "Luogo di residenza:",
-      residenceCountry: "Paese di residenza:",
-      docNumber: "Numero del documento:",
-      docType: "Tipo di documento:",
-      docTypePassport: "Passaporto",
-      docTypeID: "Carta d’identità",
-      docCountry: "Paese emittente del documento:"
-    },
-    submit: "Invia scheda di alloggio"
+  subtitle: "Modulo obbligatorio di Registrazione degli Ospiti (AIMA, ex SEF).",
+  legalHtml: `
+    <h3><strong>Avviso Legale Obbligatorio — Registrazione degli Ospiti (AIMA/SIBA)</strong></h3>
+
+    <p>Questo modulo raccoglie i dati identificativi obbligatori di tutti gli ospiti,
+    come richiesto dalla legislazione portoghese per la comunicazione ad AIMA
+    (Agenzia per l’Integrazione, le Migrazioni e l’Asilo) tramite la piattaforma SIBA.</p>
+
+    <h4><strong>Perché questi dati sono obbligatori?</strong></h4>
+    <p>Ai sensi dell’<strong>Articolo 45 della Legge n.º 23/2007</strong>, tutte le strutture
+    ricettive sono legalmente obbligate a comunicare alle autorità di frontiera
+    l’ingresso, il soggiorno e l’uscita dei cittadini stranieri in Portogallo.</p>
+
+    <p>Questo obbligo si applica a <strong>tutti gli ospiti senza cittadinanza portoghese</strong>,
+    inclusi <strong>bambini e neonati</strong>, senza eccezioni.</p>
+
+    <h4><strong>A cosa servono questi dati?</strong></h4>
+    <ul>
+        <li><strong>Sicurezza Nazionale:</strong> Aiutano a prevenire e investigare reati gravi,
+        terrorismo e reti transfrontaliere.</li>
+
+        <li><strong>Protezione dell’Ospite:</strong> In caso di incidente, emergenza medica,
+        catastrofe naturale o scomparsa, permettono alle autorità e alle ambasciate
+        di identificare e localizzare rapidamente i cittadini.</li>
+
+        <li><strong>Gestione Pubblica:</strong> Contribuiscono alle statistiche ufficiali e alle
+        politiche di migrazione e turismo.</li>
+    </ul>
+
+    <h4><strong>Obbligatorietà e conseguenze del rifiuto</strong></h4>
+    <p>Il conferimento di questi dati è <strong>strettamente obbligatorio per legge</strong>.
+    Il rifiuto di fornire le informazioni necessarie impedisce legalmente il check‑in
+    e può comportare <strong>l’annullamento immediato della prenotazione senza rimborso</strong>.</p>
+
+    <p>Per il proprietario dell’alloggio, la mancata comunicazione di questi dati costituisce
+    una <strong>infrazione grave</strong>, punibile con sanzioni significative.</p>
+
+    <h4><strong>Privacy e protezione dei dati</strong></h4>
+    <p>I dati raccolti vengono utilizzati esclusivamente per adempiere a questo obbligo legale
+    e sono trattati in conformità al <strong>Regolamento Generale sulla Protezione dei Dati (GDPR)</strong>.
+    Non vengono condivisi con terzi per scopi commerciali.</p>
+
+    <h4><strong>Informazioni aggiuntive e legislazione</strong></h4>
+    <a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a>
+    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
+       Legge n.º 23/2007 — Gazzetta Ufficiale (PDF)</a></p>
+  `,
+  formTitle: "Modulo di Registrazione",
+  requiredNotice: "Compilazione e invio obbligatori",
+  stayDataTitle: "Dati del Soggiorno",
+  checkinLabel: "Data di Check‑in:",
+  checkoutLabel: "Data di Check‑out:",
+  adultsLabel: "Numero di Ospiti Adulti:",
+  childrenLabel: "Numero di Ospiti Bambini:",
+  guestTitle: i => `Ospite ${i}`,
+  fields: {
+    fullName: "Nome Completo:",
+    birthDate: "Data di Nascita:",
+    birthPlace: "Luogo di Nascita:",
+    nationality: "Nazionalità:",
+    residencePlace: "Luogo di Residenza:",
+    residenceCountry: "Paese di Residenza:",
+    docNumber: "Numero del Documento:",
+    docType: "Tipo di Documento:",
+    docTypePassport: "Passaporto",
+    docTypeID: "Carta d’Identità",
+    docCountry: "Paese di Emissione:"
   },
+  submit: "Invia Modulo di Registrazione"
+},
 
   de: {
-    subtitle: "Pflichtformular für das Gästeblatt (AIMA, ehemals SEF).",
-    legalHtml: `
-      <p>Dieses Formular dient zur Erfassung der Pflichtdaten aller Gäste,
-      wie nach portugiesischem Recht für die Meldung an AIMA (ehemals SEF) vorgeschrieben.</p>
-      <p><strong>Es ist gesetzlich vorgeschrieben</strong>, dass die Unterkunft die Daten
-      <strong>aller Gäste</strong> erfasst, einschließlich Kinder.</p>
-      <p>Die Daten werden ausschließlich zu Zwecken der Grenzkontrolle und inneren Sicherheit
-      an AIMA übermittelt, gemäß der geltenden portugiesischen Gesetzgebung für lokale Unterkünfte.</p>
-      <p>Für detailliertere Informationen siehe
-      <a href="https://www.sef.pt/pt/pages/conteudo-detalhe.aspx?nID=25" target="_blank">
-      diese Seite über die gesetzliche Verpflichtung und Datennutzung</a>.
-      </p>
-    `,
-    formTitle: "Gästeblatt",
-    stayDataTitle: "Angaben zum Aufenthalt",
-    checkinLabel: "Check-in-Datum:",
-    checkoutLabel: "Check-out-Datum:",
-    adultsLabel: "Anzahl erwachsener Gäste:",
-    childrenLabel: "Anzahl Kinder:",
-    guestTitle: i => `Gast ${i}`,
-    fields: {
-      fullName: "Vollständiger Name:",
-      birthDate: "Geburtsdatum:",
-      birthPlace: "Geburtsort:",
-      nationality: "Staatsangehörigkeit:",
-      residencePlace: "Wohnort:",
-      residenceCountry: "Wohnsitzland:",
-      docNumber: "Dokumentnummer:",
-      docType: "Dokumenttyp:",
-      docTypePassport: "Reisepass",
-      docTypeID: "Personalausweis",
-      docCountry: "Ausstellungsland:"
-    },
-    submit: "Gästeblatt absenden"
-  }
-};
+  subtitle: "Pflichtformular zur Gästeanmeldung (AIMA, ehemals SEF).",
+  legalHtml: `
+    <h3><strong>Gesetzlich vorgeschriebener Hinweis — Gästeanmeldung (AIMA/SIBA)</strong></h3>
+
+    <p>Dieses Formular erfasst die obligatorischen Identifikationsdaten aller Gäste,
+    wie es das portugiesische Gesetz für die Meldung an AIMA (Agentur für Integration,
+    Migration und Asyl) über die SIBA‑Plattform vorschreibt.</p>
+
+    <h4><strong>Warum sind diese Daten verpflichtend?</strong></h4>
+    <p>Gemäß <strong>Artikel 45 des Gesetzes Nr. 23/2007</strong> sind alle
+    Beherbergungsbetriebe gesetzlich verpflichtet, den Eintritt, Aufenthalt und
+    die Abreise ausländischer Staatsbürger in Portugal zu melden.</p>
+
+    <p>Diese Verpflichtung gilt für <strong>alle Gäste ohne portugiesische Staatsangehörigkeit</strong>,
+    einschließlich <strong>Kinder und Babys</strong>, ohne Ausnahme.</p>
+
+    <h4><strong>Wofür werden diese Daten verwendet?</strong></h4>
+    <ul>
+        <li><strong>Nationale Sicherheit:</strong> Unterstützung bei der Verhinderung und
+        Aufklärung schwerer Straftaten, Terrorismus und grenzüberschreitender Netzwerke.</li>
+
+        <li><strong>Gästeschutz:</strong> Im Falle eines Unfalls, medizinischen Notfalls,
+        einer Naturkatastrophe oder eines Verschwindens ermöglichen sie den Behörden
+        und Botschaften eine schnelle Identifizierung und Lokalisierung.</li>
+
+        <li><strong>Öffentliche Verwaltung:</strong> Beitrag zu offiziellen Statistiken
+        sowie zu Migrations‑ und Tourismuspolitiken.</li>
+    </ul>
+
+    <h4><strong>Verpflichtung und Folgen einer Weigerung</strong></h4>
+    <p>Die Bereitstellung dieser Daten ist <strong>gesetzlich zwingend vorgeschrieben</strong>.
+    Eine Weigerung macht den Check‑in rechtlich unmöglich und kann zur
+    <strong>sofortigen Stornierung der Reservierung ohne Erstattung</strong> führen.</p>
+
+    <p>Für den Unterkunftsbetreiber stellt die Nichtmeldung dieser Daten eine
+    <strong>schwere Ordnungswidrigkeit</strong> dar, die mit erheblichen Geldbußen
+    geahndet werden kann.</p>
+
+    <h4><strong>Datenschutz und Privatsphäre</strong></h4>
+    <p>Die erhobenen Daten werden ausschließlich zur Erfüllung dieser gesetzlichen
+    Verpflichtung verwendet und gemäß der <strong>Datenschutz‑Grundverordnung (DSGVO)</strong>
+    verarbeitet. Sie werden nicht zu kommerziellen Zwecken an Dritte weitergegeben.</p>
+
+    <h4><strong>Zusätzliche Informationen und Gesetzgebung</strong></h4>
+    <a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a>
+    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
+       Gesetz Nr. 23/2007 — Amtsblatt (PDF)</a></p>
+  `,
+  formTitle: "Gästeanmeldeformular",
+  requiredNotice: "Pflicht zur Ausfüllung und Übermittlung",
+  stayDataTitle: "Angaben zum Aufenthalt",
+  checkinLabel: "Check‑in‑Datum:",
+  checkoutLabel: "Check‑out‑Datum:",
+  adultsLabel: "Anzahl der erwachsenen Gäste:",
+  childrenLabel: "Anzahl der Kinder:",
+  guestTitle: i => `Gast ${i}`,
+  fields: {
+    fullName: "Vollständiger Name:",
+    birthDate: "Geburtsdatum:",
+    birthPlace: "Geburtsort:",
+    nationality: "Staatsangehörigkeit:",
+    residencePlace: "Wohnort:",
+    residenceCountry: "Wohnsitzland:",
+    docNumber: "Dokumentnummer:",
+    docType: "Dokumenttyp:",
+    docTypePassport: "Reisepass",
+    docTypeID: "Personalausweis",
+    docCountry: "Ausstellungsland:"
+  },
+  submit: "Formular absenden"
+},
 
 // ------------------------------
 // FAQ EM PORTUGUÊS — CONTEÚDO HTML
