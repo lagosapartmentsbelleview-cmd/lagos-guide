@@ -221,3 +221,22 @@ footer {
     font-size: 15px;
   }
 }
+
+.lang-buttons button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: #005c99;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.lang-buttons button img {
+    width: 26px;
+    height: 18px;
+    border-radius: 3px;
+}
