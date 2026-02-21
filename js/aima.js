@@ -266,6 +266,98 @@ const texts = {
 };
 
 // ------------------------------
+// FAQ EM PORTUGUÊS — CONTEÚDO HTML
+// ------------------------------
+const faqTexts = {
+  pt: `
+<h3>1. Obrigatoriedade e finalidade</h3>
+
+<p><strong>Porque tenho de fornecer os meus dados ao alojamento?</strong><br>
+A lei portuguesa obriga todos os alojamentos a comunicar à AIMA a entrada e saída de cidadãos estrangeiros. É uma medida de segurança nacional e proteção do hóspede.</p>
+
+<p><strong>O que é o SIBA?</strong><br>
+O SIBA é o sistema oficial onde os alojamentos registam eletronicamente os dados dos hóspedes estrangeiros.</p>
+
+<p><strong>Sou cidadão europeu. Também tenho de preencher o boletim?</strong><br>
+Sim. A obrigação aplica-se a todos os cidadãos que não tenham nacionalidade portuguesa.</p>
+
+<p><strong>Bebés e crianças também têm de ser comunicados?</strong><br>
+Sim. A comunicação é obrigatória para todas as idades.</p>
+
+<p><strong>O que acontece se eu me recusar a fornecer os meus dados?</strong><br>
+O alojamento não pode legalmente realizar o check-in. A reserva pode ser anulada sem reembolso.</p>
+
+<h3>2. Documentos de identificação</h3>
+
+<p><strong>Que documentos são aceites?</strong><br>
+Passaporte, Bilhete de Identidade/Cartão de Cidadão, título de residência, laissez-passer, documentos de tripulantes e boletim de nascimento (menores).</p>
+
+<p><strong>Posso alojar-me sem documento?</strong><br>
+Não. É obrigatório apresentar um documento válido.</p>
+
+<p><strong>E se os meus filhos não tiverem documento?</strong><br>
+Podem ser usados boletins de nascimento ou equivalentes.</p>
+
+<p><strong>O alojamento pode ficar com o meu documento?</strong><br>
+Só com o seu consentimento. Apenas autoridades policiais podem reter documentos sem consentimento.</p>
+
+<p><strong>Quem assina o boletim no caso de menores?</strong><br>
+O progenitor, o responsável do grupo ou um dos cônjuges.</p>
+
+<h3>3. Privacidade e proteção de dados</h3>
+
+<p><strong>Como são tratados os meus dados pessoais?</strong><br>
+Com total confidencialidade e em conformidade com o RGPD.</p>
+
+<p><strong>Os meus dados são partilhados?</strong><br>
+Não. São enviados apenas para a AIMA.</p>
+
+<p><strong>Durante quanto tempo ficam guardados?</strong><br>
+Até 1 ano, salvo exceções legais.</p>
+
+<p><strong>Os meus dados são usados para fins comerciais?</strong><br>
+Nunca.</p>
+
+<p><strong>O alojamento pode alterar os meus dados depois de enviados?</strong><br>
+Não. Apenas pode visualizar o que foi submetido.</p>
+
+<h3>4. Situações especiais</h3>
+
+<p><strong>Ficar em casa de amigos ou familiares também obriga a comunicação?</strong><br>
+Não, desde que a estadia seja gratuita.</p>
+
+<p><strong>Posso alojar-me se estiver em situação irregular?</strong><br>
+Sim. Mas a comunicação é sempre obrigatória.</p>
+
+<p><strong>Se fizer parte de um grupo, basta um preencher?</strong><br>
+Não. Todos os hóspedes estrangeiros devem ser comunicados individualmente.</p>
+
+<p><strong>Se o alojamento for oferecido, também é obrigatório comunicar?</strong><br>
+Sim.</p>
+
+<h3>5. Questões práticas</h3>
+
+<p><strong>O que acontece se um hóspede sair sem pagar?</strong><br>
+O alojamento deve apresentar queixa à PSP ou GNR.</p>
+
+<p><strong>Quem é responsável pela comunicação?</strong><br>
+O alojamento. O hóspede apenas fornece os dados.</p>
+
+<p><strong>O que acontece se houver um erro nos meus dados?</strong><br>
+Pode ser corrigido antes do envio. Depois, só a AIMA pode intervir.</p>
+
+<h3>6. Informação adicional</h3>
+
+<p>Informação oficial completa: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
+`
+};
+
+function loadFaq() {
+  faqContent.innerHTML = faqTexts[currentLang];
+}
+
+
+// ------------------------------
 // LISTA SIMPLES DE PAÍSES (PODE SER EXPANDIDA)
 // ------------------------------
 const countries = [
@@ -447,8 +539,10 @@ const closeFaqBtn = document.getElementById("closeFaqModal");
 
 // Abrir modal
 openFaqBtn.addEventListener("click", () => {
+  loadFaq(); // ← carrega a FAQ do idioma atual
   faqModal.style.display = "block";
 });
+
 
 // Fechar modal (botão X)
 closeFaqBtn.addEventListener("click", () => {
