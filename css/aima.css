@@ -32,9 +32,11 @@ body {
 }
 
 .logo-svg {
-  border-radius: 50%;
-  background: #005c99;
+    background: #005c99;
+    border-radius: 50%;
+    padding: 4px; /* opcional, igual ao guide */
 }
+
 
 /* MAIN */
 .aima-main {
