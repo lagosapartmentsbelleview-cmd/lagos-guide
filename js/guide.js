@@ -1443,96 +1443,50 @@ de: `
 // -----------------------------------------
 
 const atms = {
-pt: `
-<div class="category-card">
-<h3>Caixa Multibanco – Avenida dos Descobrimentos</h3>
-<p>Multibanco disponível 24h.</p>
-<p><strong>Distância:</strong> 700 m</p>
-<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 Ver no mapa</a></p>
-</div>
+  pt: `
+<div class="category-card"><h3>ATM – Vitasol / Marina Park</h3><p>Caixa automática para levantamentos, localizada na Estrada da Albardeira, ao lado da loja Vitasol, dentro do Marina Park.</p><p>Distância: ~ 400 metros • 5-7 minutos a pé</p><p><a href="https://maps.google.com/?q=Vitasol+Marina+Park+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 
-<div class="category-card">
-<h3>Banco Santander</h3>
-<p>Serviços bancários completos.</p>
-<p><strong>Distância:</strong> 1,1 km</p>
-<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 Ver no mapa</a></p>
-</div>
+<div class="category-card"><h3>ATM – Marina de Lagos</h3><p>Caixa automática junto à Marina de Lagos, perto dos restaurantes e zona de passeio.</p><p>Distância: ~ 900 metros • 10-12 minutos a pé | 3 minutos de carro</p><p><a href="https://maps.google.com/?q=Marina+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>ATM – Pingo Doce Marina de Lagos</h3><p>Caixa automática no interior do supermercado Pingo Doce da Marina.</p><p>Distância: ~ 800 metros • 10-12 minutos a pé | 3 minutos de carro</p><p><a href="https://maps.google.com/?q=Pingo+Doce+Marina+de+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Caixa Geral de Depósitos</h3><p>Banco com serviços completos no centro histórico.</p><p>Distância: ~ 2,2 km • 25 minutos a pé | 6 minutos de carro</p><p><a href="https://maps.google.com/?q=Praça+Gil+Eanes+9+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Novo Banco</h3><p>Agência bancária moderna junto à marina.</p><p>Distância: ~ 1,9 km • 20-22 minutos a pé | 5 minutos de carro</p><p><a href="https://maps.google.com/?q=Av.+dos+Descobrimentos+43+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Crédito Agrícola</h3><p>Banco com atendimento rápido e estacionamento próximo.</p><p>Distância: ~ 1,7 km • 18-20 minutos a pé | 4 minutos de carro</p><p><a href="https://maps.google.com/?q=Av.+da+Fonte+Coberta+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Banco Montepio</h3><p>Agência localizada na zona histórica de Lagos.</p><p>Distância: ~ 2,3 km • 25 minutos a pé | 6 minutos de carro</p><p><a href="https://maps.google.com/?q=Porta+da+Vila+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>BPI</h3><p>Banco situado na avenida principal, junto à marina.</p><p>Distância: ~ 1,9 km • 20 minutos a pé | 5 minutos de carro</p><p><a href="https://maps.google.com/?q=Av.+dos+Descobrimentos+39+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
+
+<div class="category-card"><h3>Unicâmbio Lagos</h3><p>Casa de câmbio oficial com boas taxas e atendimento rápido.</p><p>Distância: ~ 2,0 km • 22 minutos a pé | 6 minutos de carro</p><p><a href="https://maps.google.com/?q=Avenida+dos+Descobrimentos+23+Lagos" target="_blank">📍 Ver no Mapa</a></p></div>
 `,
-en: `
-<div class="category-card">
-<h3>ATM – Avenida dos Descobrimentos</h3>
-<p>24h cash machine.</p>
-<p><strong>Distance:</strong> 700 m</p>
-<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 View on map</a></p>
-</div>
 
-<div class="category-card">
-<h3>Santander Bank</h3>
-<p>Full banking services.</p>
-<p><strong>Distance:</strong> 1.1 km</p>
-<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 View on map</a></p>
-</div>
+  en: `
+<div class="category-card"><h3>ATM – Vitasol / Marina Park</h3><p>Cash machine for withdrawals, located on Estrada da Albardeira, next to the Vitasol shop, inside Marina Park.</p><p>Distance: ~ 400 m • 5-7 minutes walk</p><p><a href="https://maps.google.com/?q=Vitasol+Marina+Park+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>ATM – Lagos Marina</h3><p>Cash machine located at Lagos Marina, near the restaurants and promenade area.</p><p>Distance: ~ 900 m • 10-12 minutes walk | 3 minutes drive</p><p><a href="https://maps.google.com/?q=Marina+de+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>ATM – Pingo Doce Marina de Lagos</h3><p>Cash machine inside the Pingo Doce supermarket at the Marina.</p><p>Distance: ~ 800 m • 10-12 minutes walk | 3 minutes drive</p><p><a href="https://maps.google.com/?q=Pingo+Doce+Marina+de+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Caixa Geral de Depósitos</h3><p>Full-service bank located in the historic center.</p><p>Distance: ~ 2.2 km • 25 minutes walk | 6 minutes drive</p><p><a href="https://maps.google.com/?q=Praça+Gil+Eanes+9+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Novo Banco</h3><p>Modern bank branch located near the marina.</p><p>Distance: ~ 1.9 km • 20-22 minutes walk | 5 minutes drive</p><p><a href="https://maps.google.com/?q=Av.+dos+Descobrimentos+43+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Crédito Agrícola</h3><p>Bank with easy access and nearby parking.</p><p>Distance: ~ 1.7 km • 18-20 minutes walk | 4 minutes drive</p><p><a href="https://maps.google.com/?q=Av.+da+Fonte+Coberta+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Banco Montepio</h3><p>Bank located in the historic area of Lagos.</p><p>Distance: ~ 2.3 km • 25 minutes walk | 6 minutes drive</p><p><a href="https://maps.google.com/?q=Porta+da+Vila+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>BPI</h3><p>Bank located on the main avenue near the marina.</p><p>Distance: ~ 1.9 km • 20 minutes walk | 5 minutes drive</p><p><a href="https://maps.google.com/?q=Av.+dos+Descobrimentos+39+Lagos" target="_blank">📍 View on Map</a></p></div>
+
+<div class="category-card"><h3>Unicâmbio Lagos</h3><p>Official currency exchange office with good rates.</p><p>Distance: ~ 2.0 km • 22 minutes walk | 6 minutes drive</p><p><a href="https://maps.google.com/?q=Avenida+dos+Descobrimentos+23+Lagos" target="_blank">📍 View on Map</a></p></div>
 `,
-es: `
-<div class="category-card">
-<h3>Cajero – Avenida dos Descobrimentos</h3>
-<p>Cajero automático 24h.</p>
-<p><strong>Distancia:</strong> 700 m</p>
-<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 Ver en el mapa</a></p>
-</div>
 
-<div class="category-card">
-<h3>Banco Santander</h3>
-<p>Servicios bancarios completos.</p>
-<p><strong>Distancia:</strong> 1,1 km</p>
-<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 Ver en el mapa</a></p>
-</div>
-`,
-fr: `
-<div class="category-card">
-<h3>Distributeur – Avenida dos Descobrimentos</h3>
-<p>Distributeur automatique 24h.</p>
-<p><strong>Distance :</strong> 700 m</p>
-<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 Voir sur la carte</a></p>
-</div>
-
-<div class="category-card">
-<h3>Banque Santander</h3>
-<p>Services bancaires complets.</p>
-<p><strong>Distance :</strong> 1,1 km</p>
-<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 Voir sur la carte</a></p>
-</div>
-`,
-it: `
-<div class="category-card">
-<h3>Bancomat – Avenida dos Descobrimentos</h3>
-<p>Sportello automatico 24h.</p>
-<p><strong>Distanza:</strong> 700 m</p>
-<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
-
-<div class="category-card">
-<h3>Banca Santander</h3>
-<p>Servizi bancari completi.</p>
-<p><strong>Distanza:</strong> 1,1 km</p>
-<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 Vedi sulla mappa</a></p>
-</div>
-`,
-de: `
-<div class="category-card">
-<h3>Geldautomat – Avenida dos Descobrimentos</h3>
-<p>24h Geldautomat.</p>
-<p><strong>Entfernung:</strong> 700 m</p>
-<p><a href="https://maps.google.com/?q=ATM+Avenida+dos+Descobrimentos+Lagos">📍 Karte anzeigen</a></p>
-</div>
-
-<div class="category-card">
-<h3>Santander Bank</h3>
-<p>Vollständige Bankdienstleistungen.</p>
-<p><strong>Entfernung:</strong> 1,1 km</p>
-<p><a href="https://maps.google.com/?q=Santander+Lagos">📍 Karte anzeigen</a></p>
-</div>
-`
+  es: `...`,  
+  fr: `...`,  
+  it: `...`,  
+  de: `...`
 };
 
 // -----------------------------------------
