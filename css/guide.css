@@ -225,3 +225,50 @@ main {
 .category-card a:hover {
     text-decoration: underline;
 }
+
+/* -----------------------------------------
+   FOOTER
+--------------------------------------------*/
+
+footer {
+    background: #005c99; /* azul sistema */
+    padding: 40px 20px;
+    margin-top: 40px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    color: #ffffff;
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: Poppins, sans-serif;
+}
+
+.footer-logo {
+    margin-bottom: 15px;
+}
+
+.footer-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.footer-links a {
+    color: #cfe8ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-copy {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #e6f2ff;
+}
