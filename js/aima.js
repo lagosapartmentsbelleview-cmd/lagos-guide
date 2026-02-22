@@ -1063,52 +1063,69 @@ function generateGuestFields() {
     card.innerHTML = `
       <h4>${t.guestTitle(i)}</h4>
 
+      <!-- Nome completo -->
       <div class="form-row">
         <label>${t.fields.fullName}</label>
         <input type="text" name="guest_${i}_fullName" required>
       </div>
 
+      <!-- Data de nascimento (vazia até clicar) -->
       <div class="form-row">
         <label>${t.fields.birthDate}</label>
-        <input type="text" name="guest_${i}_birthDate" placeholder="dd/mm/aaaa" required>
+        <input type="text"
+               name="guest_${i}_birthDate"
+               placeholder="dd/mm/aaaa"
+               onfocus="this.type='date'"
+               onblur="if(!this.value) this.type='text';"
+               required>
       </div>
 
+      <!-- Nacionalidade -->
       <div class="form-row">
         <label>${t.fields.nationality}</label>
         <select name="guest_${i}_nationality" required>
+          <option value="">Selecione...</option>
           ${countries.map(c => `<option value="${c}">${c}</option>`).join("")}
         </select>
       </div>
 
+      <!-- País de residência -->
       <div class="form-row">
         <label>${t.fields.residenceCountry}</label>
         <select name="guest_${i}_residenceCountry" required>
+          <option value="">Selecione...</option>
           ${countries.map(c => `<option value="${c}">${c}</option>`).join("")}
         </select>
       </div>
 
+      <!-- Número do documento -->
       <div class="form-row">
         <label>${t.fields.docNumber}</label>
         <input type="text" name="guest_${i}_docNumber" required>
       </div>
 
+      <!-- Tipo de documento (vazio até clicar) -->
       <div class="form-row">
         <label>${t.fields.docType}</label>
         <select name="guest_${i}_docType" id="docType_${i}" required>
+          <option value="">Selecione...</option>
           <option value="passport">${t.fields.docTypePassport}</option>
           <option value="id">${t.fields.docTypeID}</option>
           <option value="other">Outro</option>
         </select>
       </div>
 
+      <!-- Campo "Outro → Qual?" -->
       <div class="form-row" id="otherDocField_${i}" style="display:none;">
         <label>Qual?</label>
         <input type="text" name="guest_${i}_docOther">
       </div>
 
+      <!-- País emissor -->
       <div class="form-row">
         <label>${t.fields.docCountry}</label>
         <select name="guest_${i}_docCountry" required>
+          <option value="">Selecione...</option>
           ${countries.map(c => `<option value="${c}">${c}</option>`).join("")}
         </select>
       </div>
@@ -1133,17 +1150,33 @@ adultsInput.addEventListener("input", generateGuestFields);
 childrenInput.addEventListener("input", generateGuestFields);
 
 // ------------------------------
-// SUBMISSÃO DO FORMULÁRIO
+// SUBMISSÃO DO FORMULÁRIO (COM VALIDAÇÃO)
 // ------------------------------
 document.getElementById("aimaForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
+  // Verificar todos os campos obrigatórios
+  const invalid = [...this.querySelectorAll("[required]")].some(input => {
+    return !input.value || input.value.trim() === "";
+  });
+
+  if (invalid) {
+    alert("Por favor preencha todos os campos obrigatórios antes de enviar.");
+    return;
+  }
+
+  // Se estiver tudo preenchido → continua
   const formData = new FormData(this);
   const data = Object.fromEntries(formData.entries());
   data.lang = currentLang;
   data.timestamp = new Date().toISOString();
 
   console.log("Boletim AIMA:", data);
+
+  alert(texts[currentLang].submit);
+  this.reset();
+  generateGuestFields();
+});
 
   // ------------------------------
   // AQUI ENTRA O FIREBASE (FIRESTORE/REALTIME DB)
