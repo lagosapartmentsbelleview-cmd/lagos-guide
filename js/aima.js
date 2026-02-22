@@ -135,9 +135,24 @@ const texts = {
     It is not shared with third parties for commercial purposes.</p>
 
     <h4><strong>Additional information and legislation</strong></h4>
-    <a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a>
-    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
-       Law 23/2007 — Official Gazette (PDF)</a></p>
+
+<p>
+  <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
+    View information in PDF
+  </a>
+</p>
+
+<p>
+  <a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a>
+</p>
+
+<p>
+  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+     target="_blank" class="pdf-link">
+     Law 23/2007 — Official Gazette (PDF)
+  </a>
+</p>
+
   `,
   formTitle: "Accommodation Registration Form",
   requiredNotice: "Mandatory completion and submission",
@@ -207,9 +222,24 @@ const texts = {
     No se comparten con terceros con fines comerciales.</p>
 
     <h4><strong>Información adicional y legislación</strong></h4>
-    <a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a>
-    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
-       Ley n.º 23/2007 — Diario Oficial (PDF)</a></p>
+
+<p>
+  <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
+    Ver información en PDF
+  </a>
+</p>
+
+<p>
+  <a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a>
+</p>
+
+<p>
+  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+     target="_blank" class="pdf-link">
+     Ley n.º 23/2007 — Diario Oficial (PDF)
+  </a>
+</p>
+
   `,
   formTitle: "Registro de Alojamiento",
   requiredNotice: "Cumplimentación y envío obligatorios",
@@ -279,9 +309,24 @@ const texts = {
     Données (RGPD)</strong>. Elles ne sont pas partagées avec des tiers à des fins commerciales.</p>
 
     <h4><strong>Informations supplémentaires et législation</strong></h4>
-    <a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a>
-    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
-       Loi n.º 23/2007 — Journal Officiel (PDF)</a></p>
+
+<p>
+  <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
+    Consulter les informations en PDF
+  </a>
+</p>
+
+<p>
+  <a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a>
+</p>
+
+<p>
+  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+     target="_blank" class="pdf-link">
+     Loi n.º 23/2007 — Journal Officiel (PDF)
+  </a>
+</p>
+
   `,
   formTitle: "Formulaire d’Enregistrement",
   requiredNotice: "Remplissage et envoi obligatoires",
@@ -351,9 +396,24 @@ const texts = {
     Non vengono condivisi con terzi per scopi commerciali.</p>
 
     <h4><strong>Informazioni aggiuntive e legislazione</strong></h4>
-    <a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a>
-    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
-       Legge n.º 23/2007 — Gazzetta Ufficiale (PDF)</a></p>
+
+<p>
+  <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
+    Visualizza le informazioni in PDF
+  </a>
+</p>
+
+<p>
+  <a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a>
+</p>
+
+<p>
+  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+     target="_blank" class="pdf-link">
+     Legge n.º 23/2007 — Gazzetta Ufficiale (PDF)
+  </a>
+</p>
+
   `,
   formTitle: "Modulo di Registrazione",
   requiredNotice: "Compilazione e invio obbligatori",
@@ -424,9 +484,24 @@ const texts = {
     verarbeitet. Sie werden nicht zu kommerziellen Zwecken an Dritte weitergegeben.</p>
 
     <h4><strong>Zusätzliche Informationen und Gesetzgebung</strong></h4>
-    <a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a>
-    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
-       Gesetz Nr. 23/2007 — Amtsblatt (PDF)</a></p>
+
+<p>
+  <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
+    Informationen als PDF ansehen
+  </a>
+</p>
+
+<p>
+  <a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a>
+</p>
+
+<p>
+  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+     target="_blank" class="pdf-link">
+     Gesetz Nr. 23/2007 — Amtsblatt (PDF)
+  </a>
+</p>
+
   `,
   formTitle: "Gästeanmeldeformular",
   requiredNotice: "Pflicht zur Ausfüllung und Übermittlung",
