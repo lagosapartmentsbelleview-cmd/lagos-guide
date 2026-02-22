@@ -61,11 +61,12 @@ const texts = {
 </p>
 
 <p>
-  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+  <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
      target="_blank" class="pdf-link">
-     Lei n.º 23/2007 — Diário da República (PDF)
+     Lei n.º 23/2007 — Versão Consolidada (Diário da República)
   </a>
 </p>
+
 
 `,
     formTitle: "Boletim de Alojamento",
@@ -147,11 +148,12 @@ const texts = {
 </p>
 
 <p>
-  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+  <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
      target="_blank" class="pdf-link">
-     Law 23/2007 — Official Gazette (PDF)
+     Law 23/2007 — Consolidated Version (Official Gazette)
   </a>
 </p>
+
 
   `,
   formTitle: "Accommodation Registration Form",
@@ -221,7 +223,7 @@ const texts = {
     tratan conforme al <strong>Reglamento General de Protección de Datos (RGPD)</strong>.
     No se comparten con terceros con fines comerciales.</p>
 
-    <h4><strong>Información adicional y legislación</strong></h4>
+    <<h4><strong>Información adicional y legislación</strong></h4>
 
 <p>
   <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
@@ -234,11 +236,12 @@ const texts = {
 </p>
 
 <p>
-  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+  <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
      target="_blank" class="pdf-link">
-     Ley n.º 23/2007 — Diario Oficial (PDF)
+     Ley n.º 23/2007 — Versión Consolidada (Diario Oficial)
   </a>
 </p>
+
 
   `,
   formTitle: "Registro de Alojamiento",
@@ -321,11 +324,12 @@ const texts = {
 </p>
 
 <p>
-  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+  <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
      target="_blank" class="pdf-link">
-     Loi n.º 23/2007 — Journal Officiel (PDF)
+     Loi n.º 23/2007 — Version Consolidée (Journal Officiel)
   </a>
 </p>
+
 
   `,
   formTitle: "Formulaire d’Enregistrement",
@@ -395,7 +399,7 @@ const texts = {
     e sono trattati in conformità al <strong>Regolamento Generale sulla Protezione dei Dati (GDPR)</strong>.
     Non vengono condivisi con terzi per scopi commerciali.</p>
 
-    <h4><strong>Informazioni aggiuntive e legislazione</strong></h4>
+   <h4><strong>Informazioni aggiuntive e legislazione</strong></h4>
 
 <p>
   <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
@@ -408,11 +412,12 @@ const texts = {
 </p>
 
 <p>
-  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+  <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
      target="_blank" class="pdf-link">
-     Legge n.º 23/2007 — Gazzetta Ufficiale (PDF)
+     Legge n.º 23/2007 — Versione Consolidata (Gazzetta Ufficiale)
   </a>
 </p>
+
 
   `,
   formTitle: "Modulo di Registrazione",
@@ -496,11 +501,12 @@ const texts = {
 </p>
 
 <p>
-  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+  <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
      target="_blank" class="pdf-link">
-     Gesetz Nr. 23/2007 — Amtsblatt (PDF)
+     Gesetz Nr. 23/2007 — Konsolidierte Fassung (Amtsblatt)
   </a>
 </p>
+
 
   `,
   formTitle: "Gästeanmeldeformular",
