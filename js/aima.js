@@ -1150,12 +1150,12 @@ adultsInput.addEventListener("input", generateGuestFields);
 childrenInput.addEventListener("input", generateGuestFields);
 
 // ------------------------------
-// SUBMISSÃO DO FORMULÁRIO (COM VALIDAÇÃO)
+// SUBMISSÃO DO FORMULÁRIO (COM VALIDAÇÕES COMPLETAS)
 // ------------------------------
 document.getElementById("aimaForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  // Verificar todos os campos obrigatórios
+  // Validar campos obrigatórios
   const invalid = [...this.querySelectorAll("[required]")].some(input => {
     return !input.value || input.value.trim() === "";
   });
@@ -1165,7 +1165,46 @@ document.getElementById("aimaForm").addEventListener("submit", function (e) {
     return;
   }
 
-  // Se estiver tudo preenchido → continua
+  // Validar check-in < check-out
+  const checkin = document.getElementById("checkin").value;
+  const checkout = document.getElementById("checkout").value;
+
+  if (!checkin || !checkout) {
+    alert("Por favor preencha as datas de check-in e check-out.");
+    return;
+  }
+
+  if (new Date(checkin) >= new Date(checkout)) {
+    alert("A data de check-out deve ser posterior à data de check-in.");
+    return;
+  }
+
+  // Validar datas de nascimento
+  const birthDates = [...document.querySelectorAll("input[name$='_birthDate']")];
+
+  for (const bd of birthDates) {
+    const value = bd.value;
+
+    if (!value) {
+      alert("Por favor preencha todas as datas de nascimento.");
+      return;
+    }
+
+    const birth = new Date(value);
+    const today = new Date();
+
+    if (birth > today) {
+      alert("A data de nascimento não pode ser no futuro.");
+      return;
+    }
+
+    if (birth.getFullYear() < 1900) {
+      alert("A data de nascimento é inválida.");
+      return;
+    }
+  }
+
+  // Se tudo estiver válido → enviar
   const formData = new FormData(this);
   const data = Object.fromEntries(formData.entries());
   data.lang = currentLang;
@@ -1177,6 +1216,7 @@ document.getElementById("aimaForm").addEventListener("submit", function (e) {
   this.reset();
   generateGuestFields();
 });
+
 
 // ------------------------------
 // IDIOMA INICIAL
