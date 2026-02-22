@@ -49,9 +49,24 @@ const texts = {
     Dados (RGPD)</strong>. Não são partilhados com terceiros para fins comerciais.</p>
 
     <h4><strong>Informação adicional e legislação</strong></h4>
-    <a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a>
-    <p><a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" target="_blank">
-       Lei n.º 23/2007 — Diário da República (PDF)</a></p>
+
+<p>
+  <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
+    Verificar a informação em PDF
+  </a>
+</p>
+
+<p>
+  <a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a>
+</p>
+
+<p>
+  <a href="https://files.dre.pt/1s/2007/07/13800/0446504498.pdf" 
+     target="_blank" class="pdf-link">
+     Lei n.º 23/2007 — Diário da República (PDF)
+  </a>
+</p>
+
 `,
     formTitle: "Boletim de Alojamento",
     requiredNotice: "Preenchimento e envio obrigatório",
