@@ -1178,25 +1178,6 @@ document.getElementById("aimaForm").addEventListener("submit", function (e) {
   generateGuestFields();
 });
 
-  // ------------------------------
-  // AQUI ENTRA O FIREBASE (FIRESTORE/REALTIME DB)
-  // Exemplo (pseudo-código):
-  //
-  // import { initializeApp } from "firebase/app";
-  // import { getFirestore, collection, addDoc } from "firebase/firestore";
-  //
-  // const app = initializeApp(firebaseConfig);
-  // const db = getFirestore(app);
-  //
-  // await addDoc(collection(db, "aima_boletins"), data);
-  //
-  // ------------------------------
-
-  alert(texts[currentLang].submit);
-  this.reset();
-  generateGuestFields();
-});
-
 // ------------------------------
 // IDIOMA INICIAL
 // ------------------------------
