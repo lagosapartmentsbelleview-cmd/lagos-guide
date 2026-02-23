@@ -88,7 +88,8 @@ const texts = {
       docType: "Tipo de Documento:",
       docTypePassport: "Passaporte",
       docTypeID: "Bilhete de Identidade / Cartão de Cidadão",
-      docCountry: "País Emissor do Documento:"
+      docCountry: "País Emissor do Documento:",
+      summaryTitle: "Resumo do formulário"
     },
     submit: "Enviar Boletim de Alojamento"
 },
@@ -175,7 +176,8 @@ const texts = {
     docType: "Document Type:",
     docTypePassport: "Passport",
     docTypeID: "Identity Card",
-    docCountry: "Issuing Country:"
+    docCountry: "Issuing Country:",
+    summaryTitle: "Form Summary"
   },
   submit: "Submit Accommodation Form"
 },
@@ -263,7 +265,8 @@ const texts = {
     docType: "Tipo de Documento:",
     docTypePassport: "Pasaporte",
     docTypeID: "Documento de Identidad",
-    docCountry: "País Emisor del Documento:"
+    docCountry: "País Emisor del Documento:",
+    summaryTitle: "Resumen del formulario"
   },
   submit: "Enviar Registro de Alojamiento"
 },
@@ -351,7 +354,8 @@ const texts = {
     docType: "Type de Document :",
     docTypePassport: "Passeport",
     docTypeID: "Carte d’Identité",
-    docCountry: "Pays Émetteur :"
+    docCountry: "Pays Émetteur :",
+    summaryTitle: "Résumé du formulaire"
   },
   submit: "Envoyer le Formulaire"
 },
@@ -439,7 +443,8 @@ const texts = {
     docType: "Tipo di Documento:",
     docTypePassport: "Passaporto",
     docTypeID: "Carta d’Identità",
-    docCountry: "Paese di Emissione:"
+    docCountry: "Paese di Emissione:",
+    summaryTitle: "Riepilogo del modulo"
   },
   submit: "Invia Modulo di Registrazione"
 },
@@ -528,7 +533,8 @@ const texts = {
     docType: "Dokumenttyp:",
     docTypePassport: "Reisepass",
     docTypeID: "Personalausweis",
-    docCountry: "Ausstellungsland:"
+    docCountry: "Ausstellungsland:",
+    summaryTitle: "Formularübersicht"
   },
     submit: "Formular absenden"
 }
