@@ -1355,6 +1355,7 @@ summaryModal.innerHTML = `
       font-size:15px;
       line-height:1.55;
       color:#333;
+      margin-bottom: 20px;   /* ADICIONAR ESTA LINHA */
     "></div>
 
     <div style="margin-top:20px; text-align:right;">
