@@ -1155,6 +1155,9 @@ childrenInput.addEventListener("input", generateGuestFields);
 function generateSummary() {
   const t = texts[currentLang];
 
+  const box = document.getElementById("summaryContent");
+  box.innerHTML = ""; // limpa antes de gerar
+
   let html = `
     <h3>${t.formTitle}</h3>
     <p><strong>${t.checkinLabel}:</strong> ${document.getElementById("checkinDate").value}</p>
@@ -1164,7 +1167,6 @@ function generateSummary() {
     <hr>
   `;
 
-  // Número total de hóspedes
   const totalGuests =
     parseInt(document.getElementById("adults").value || 0) +
     parseInt(document.getElementById("children").value || 0);
@@ -1183,7 +1185,7 @@ function generateSummary() {
     `;
   }
 
-  document.getElementById("summaryContent").innerHTML = html;
+  box.insertAdjacentHTML("beforeend", html);
 }
 
 
