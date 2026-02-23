@@ -1300,6 +1300,7 @@ try {
   submitBtn.disabled = false;
 }
 
+}); 
 
 // ------------------------------
 // IDIOMA INICIAL
