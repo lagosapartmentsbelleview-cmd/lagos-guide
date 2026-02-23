@@ -452,6 +452,7 @@ footer {
 .btn-primary:hover {
   background: #004b80;
 }
+
 @media print {
 
   /* Esconde tudo */
@@ -464,13 +465,16 @@ footer {
     visibility: visible !important;
   }
 
-  /* Remove overlay e fixed */
+  /* O modal deixa de existir como container */
   #summaryModal {
     position: static !important;
     inset: auto !important;
     background: none !important;
     padding: 0 !important;
-    display: block !important;
+    margin: 0 !important;
+    height: auto !important;
+    width: auto !important;
+    display: contents !important; /* AQUI ESTÁ A CHAVE */
   }
 
   #summaryBox {
@@ -482,7 +486,7 @@ footer {
     border-radius: 0 !important;
   }
 
-  /* Esconde botões */
+  /* Esconder botões */
   #closeSummary,
   #printSummaryBtn {
     display: none !important;
