@@ -1252,61 +1252,60 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     }
   }
 
-// ------------------------------
-// ENVIO VIA WEB3FORMS
-// ------------------------------
+  // ------------------------------
+  // ENVIO VIA WEB3FORMS
+  // ------------------------------
 
-const formData = new FormData(this);
+  const formData = new FormData(this);
 
-// Access Key do teu formulário
-formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
+  // Access Key do teu formulário
+  formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
 
-// Email de destino
-formData.append("to", "belleview@sapo.pt");
+  // Email de destino
+  formData.append("to", "belleview@sapo.pt");
 
-// Assunto do email
-formData.append("subject", "Novo Formulário AIMA Recebido");
+  // Assunto do email
+  formData.append("subject", "Novo Formulário AIMA Recebido");
 
-// Botão de submit
-const submitBtn = this.querySelector('button[type="submit"]');
-const originalText = submitBtn.textContent;
+  // Botão de submit
+  const submitBtn = this.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
 
-// Texto "A enviar..." no idioma atual
-submitBtn.textContent = texts[currentLang].sending || "A enviar...";
-submitBtn.disabled = true;
+  // Texto "A enviar..." no idioma atual
+  submitBtn.textContent = texts[currentLang].sending || "A enviar...";
+  submitBtn.disabled = true;
 
-try {
-  const response = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    body: formData
-  });
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
 
-  const result = await response.json();
+    const result = await response.json();
 
-  if (response.ok) {
-    // Mensagem de sucesso no idioma atual
-    alert(texts[currentLang].submit);
-    generateSummary();
-    document.getElementById("summaryModal").style.display = "flex";
+    if (response.ok) {
+      // Mensagem de sucesso no idioma atual
+      alert(texts[currentLang].submit);
 
-    this.reset();
-    generateGuestFields();
-    
+      // Gerar resumo e abrir modal PDF
+      generateSummary();
+      document.getElementById("summaryModal").style.display = "flex";
 
-  } else {
-    alert("Erro: " + result.message);
+      // Reset do formulário
+      this.reset();
+      generateGuestFields();
+
+    } else {
+      alert("Erro: " + result.message);
+    }
+
+  } catch (error) {
+    alert("Erro de comunicação. Tente novamente.");
+  } finally {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
   }
-
-} catch (error) {
-  alert("Erro de comunicação. Tente novamente.");
-} finally {
-  submitBtn.textContent = originalText;
-  submitBtn.disabled = false;
-}
-
-}); 
-
-window.addEventListener("DOMContentLoaded", () => {
+});
 
   // ------------------------------
   // MODAL FAQ — ABRIR E FECHAR
