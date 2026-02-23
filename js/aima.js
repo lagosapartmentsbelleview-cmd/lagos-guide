@@ -1263,8 +1263,11 @@ const wantsCopy = document.getElementById("sendCopy").checked;
 const copyEmail = document.getElementById("copyEmail").value.trim();
 
 if (wantsCopy && copyEmail !== "") {
-    formData.append("cc", copyEmail);
+    formData.append("cc_email", copyEmail);
+    formData.append("from_email", copyEmail); 
+    formData.append("from_name", "Hóspede");
 }
+
 
 // Botão de submit
 const submitBtn = this.querySelector('button[type="submit"]');
