@@ -1150,6 +1150,44 @@ adultsInput.addEventListener("input", generateGuestFields);
 childrenInput.addEventListener("input", generateGuestFields);
 
 // ------------------------------
+// GERAR RESUMO DO FORMULÁRIO
+// ------------------------------
+function generateSummary() {
+  const t = texts[currentLang];
+
+  let html = `
+    <h3>${t.formTitle}</h3>
+    <p><strong>${t.checkinLabel}:</strong> ${document.getElementById("checkinDate").value}</p>
+    <p><strong>${t.checkoutLabel}:</strong> ${document.getElementById("checkoutDate").value}</p>
+    <p><strong>${t.adultsLabel}:</strong> ${document.getElementById("adults").value}</p>
+    <p><strong>${t.childrenLabel}:</strong> ${document.getElementById("children").value}</p>
+    <hr>
+  `;
+
+  // Número total de hóspedes
+  const totalGuests =
+    parseInt(document.getElementById("adults").value || 0) +
+    parseInt(document.getElementById("children").value || 0);
+
+  for (let i = 1; i <= totalGuests; i++) {
+    html += `
+      <h4>${t.guestTitle(i)}</h4>
+      <p><strong>${t.fields.fullName}:</strong> ${document.querySelector(`[name="guest_${i}_fullName"]`).value}</p>
+      <p><strong>${t.fields.birthDate}:</strong> ${document.querySelector(`[name="guest_${i}_birthDate"]`).value}</p>
+      <p><strong>${t.fields.nationality}:</strong> ${document.querySelector(`[name="guest_${i}_nationality"]`).value}</p>
+      <p><strong>${t.fields.residenceCountry}:</strong> ${document.querySelector(`[name="guest_${i}_residenceCountry"]`).value}</p>
+      <p><strong>${t.fields.docNumber}:</strong> ${document.querySelector(`[name="guest_${i}_docNumber"]`).value}</p>
+      <p><strong>${t.fields.docType}:</strong> ${document.querySelector(`[name="guest_${i}_docType"]`).value}</p>
+      <p><strong>${t.fields.docCountry}:</strong> ${document.querySelector(`[name="guest_${i}_docCountry"]`).value}</p>
+      <hr>
+    `;
+  }
+
+  document.getElementById("summaryContent").innerHTML = html;
+}
+
+
+// ------------------------------
 // SUBMISSÃO DO FORMULÁRIO (COM VALIDAÇÕES COMPLETAS)
 // ------------------------------
 document.getElementById("aimaForm").addEventListener("submit", async function (e) {
@@ -1238,6 +1276,9 @@ try {
   if (response.ok) {
     // Mensagem de sucesso no idioma atual
     alert(texts[currentLang].submit);
+    generateSummary();
+    document.getElementById("summaryModal").style.display = "flex";
+
     this.reset();
     generateGuestFields();
     
@@ -1254,6 +1295,54 @@ try {
 }
 
 }); 
+
+// ------------------------------
+// CRIAR MODAL DE RESUMO VIA JS
+// ------------------------------
+const summaryModal = document.createElement("div");
+summaryModal.id = "summaryModal";
+summaryModal.style.display = "none";
+summaryModal.style.position = "fixed";
+summaryModal.style.inset = "0";
+summaryModal.style.background = "rgba(0,0,0,0.5)";
+summaryModal.style.zIndex = "9999";
+summaryModal.style.display = "none";
+summaryModal.style.justifyContent = "center";
+summaryModal.style.alignItems = "center";
+
+summaryModal.innerHTML = `
+  <div id="summaryBox" style="
+    background:#fff;
+    max-width:800px;
+    width:90%;
+    max-height:80vh;
+    overflow:auto;
+    padding:24px;
+    border-radius:8px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    font-family:inherit;
+  ">
+    <button id="closeSummary" style="
+      float:right;
+      border:none;
+      background:none;
+      font-size:20px;
+      cursor:pointer;
+    ">&times;</button>
+    <h2 id="summaryTitle" style="margin-top:0; margin-bottom:16px;">
+      Resumo do formulário
+    </h2>
+    <div id="summaryContent" style="font-size:14px; line-height:1.5;"></div>
+    <div style="margin-top:16px; text-align:right;">
+      <button id="printSummaryBtn" class="btn-primary">
+        Guardar / Imprimir
+      </button>
+    </div>
+  </div>
+`;
+
+document.body.appendChild(summaryModal);
+
 
 // ------------------------------
 // IDIOMA INICIAL
@@ -1284,4 +1373,18 @@ window.addEventListener("click", (e) => {
   if (e.target === faqModal) {
     faqModal.style.display = "none";
   }
+});
+
+// ------------------------------
+// FECHAR MODAL DE RESUMO
+// ------------------------------
+document.getElementById("closeSummary").addEventListener("click", () => {
+  document.getElementById("summaryModal").style.display = "none";
+});
+
+// ------------------------------
+// GUARDAR / IMPRIMIR PDF
+// ------------------------------
+document.getElementById("printSummaryBtn").addEventListener("click", () => {
+  window.print();
 });
