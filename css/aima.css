@@ -355,7 +355,7 @@ footer {
    ============================ */
 
 #summaryModal {
-  display: none !important;
+  display: none;
   position: fixed !important;
   inset: 0 !important;
   background: rgba(0,0,0,0.45) !important;
