@@ -1376,4 +1376,3 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   // ------------------------------
   setLanguage("pt");
 
-});
