@@ -1305,7 +1305,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
   }
-}
+});
 
   // ------------------------------
   // MODAL FAQ — ABRIR E FECHAR
