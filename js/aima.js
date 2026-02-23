@@ -1307,7 +1307,34 @@ try {
 }); 
 
 // ------------------------------
-// CRIAR MODAL DE RESUMO VIA JS (AGORA COM CSS EXTERNO)
+// MODAL FAQ — ABRIR E FECHAR
+// ------------------------------
+const faqModal = document.getElementById("faqModal");
+const faqContent = document.getElementById("faqContent");
+const openFaqBtn = document.getElementById("openFaqModal");
+const closeFaqBtn = document.getElementById("closeFaqModal");
+
+// Abrir modal FAQ
+openFaqBtn.addEventListener("click", () => {
+  loadFaq(); // carrega a FAQ do idioma atual
+  faqModal.style.display = "block";
+});
+
+// Fechar modal FAQ (botão X)
+closeFaqBtn.addEventListener("click", () => {
+  faqModal.style.display = "none";
+});
+
+// Fechar modal FAQ ao clicar fora da caixa
+window.addEventListener("click", (e) => {
+  if (e.target === faqModal) {
+    faqModal.style.display = "none";
+  }
+});
+
+
+// ------------------------------
+// CRIAR MODAL DE RESUMO VIA JS (CSS EXTERNO)
 // ------------------------------
 const summaryModal = document.createElement("div");
 summaryModal.id = "summaryModal";
@@ -1330,36 +1357,6 @@ summaryModal.innerHTML = `
 
 document.body.appendChild(summaryModal);
 
-// ------------------------------
-// IDIOMA INICIAL
-// ------------------------------
-setLanguage("pt");
-
-// ------------------------------
-// MODAL FAQ — ABRIR E FECHAR
-// ------------------------------
-const faqModal = document.getElementById("faqModal");
-const faqContent = document.getElementById("faqContent");
-const openFaqBtn = document.getElementById("openFaqModal");
-const closeFaqBtn = document.getElementById("closeFaqModal");
-
-// Abrir modal
-openFaqBtn.addEventListener("click", () => {
-  loadFaq(); // ← carrega a FAQ do idioma atual
-  faqModal.style.display = "block";
-});
-
-// Fechar modal (botão X)
-closeFaqBtn.addEventListener("click", () => {
-  faqModal.style.display = "none";
-});
-
-// Fechar modal ao clicar fora da caixa
-window.addEventListener("click", (e) => {
-  if (e.target === faqModal) {
-    faqModal.style.display = "none";
-  }
-});
 
 // ------------------------------
 // FECHAR MODAL DE RESUMO
@@ -1374,3 +1371,9 @@ document.getElementById("closeSummary").addEventListener("click", () => {
 document.getElementById("printSummaryBtn").addEventListener("click", () => {
   window.print();
 });
+
+
+// ------------------------------
+// IDIOMA INICIAL
+// ------------------------------
+setLanguage("pt");
