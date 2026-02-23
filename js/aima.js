@@ -1029,8 +1029,7 @@ function setLanguage(lang) {
   submitBtnEl.textContent = t.submit;
 
   generateGuestFields();
-  generateCopyFields();
-
+  
   // -----------------------------------------
   // REAPLICAR EVENTO DO LINK FAQ APÓS MUDAR IDIOMA
   // -----------------------------------------
@@ -1145,42 +1144,6 @@ function generateGuestFields() {
 }
 
 // ------------------------------
-// PARA CÓPIA DO FORM
-// ------------------------------
-
-function generateCopyFields() {
-  const t = texts[currentLang];
-
-  // Remover bloco anterior (evita duplicações)
-  const oldBlock = document.getElementById("copyBlock");
-  if (oldBlock) oldBlock.remove();
-
-  // Criar novo bloco
-  const block = document.createElement("div");
-  block.className = "form-card";
-  block.id = "copyBlock";
-
-  block.innerHTML = `
-    <div class="form-row">
-      <label>Email para receber cópia (opcional)</label>
-      <input type="email" id="copyEmail" name="copyEmail" placeholder="email@example.com">
-    </div>
-
-    <div class="form-row">
-      <label>
-        <input type="checkbox" id="sendCopy" name="sendCopy">
-        Quero receber uma cópia do envio
-      </label>
-    </div>
-  `;
-
-  // Inserir ANTES do botão de submit
-  const submitBtn = document.querySelector("#aimaForm button[type='submit']");
-  submitBtn.parentNode.insertBefore(block, submitBtn);
-}
-
-
-// ------------------------------
 // EVENTOS PARA ATUALIZAR HÓSPEDES
 // ------------------------------
 adultsInput.addEventListener("input", generateGuestFields);
@@ -1256,19 +1219,6 @@ formData.append("to", "belleview@sapo.pt");
 // Assunto do email
 formData.append("subject", "Novo Formulário AIMA Recebido");
 
-// -----------------------------------------
-// NOVO: enviar cópia ao hóspede (se quiser)
-// -----------------------------------------
-const wantsCopy = document.getElementById("sendCopy").checked;
-const copyEmail = document.getElementById("copyEmail").value.trim();
-
-if (wantsCopy && copyEmail !== "") {
-    formData.append("cc_email", copyEmail);
-    formData.append("from_email", copyEmail); 
-    formData.append("from_name", "Hóspede");
-}
-
-
 // Botão de submit
 const submitBtn = this.querySelector('button[type="submit"]');
 const originalText = submitBtn.textContent;
@@ -1290,7 +1240,7 @@ try {
     alert(texts[currentLang].submit);
     this.reset();
     generateGuestFields();
-    generateCopyFields();
+    
 
   } else {
     alert("Erro: " + result.message);
