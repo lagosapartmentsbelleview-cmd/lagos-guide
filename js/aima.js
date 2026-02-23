@@ -1338,20 +1338,21 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   summaryModal.id = "summaryModal";
 
   summaryModal.innerHTML = `
-    <div id="summaryBox">
-      <button id="closeSummary">&times;</button>
+  <div id="summaryBox">
+    <button id="closeSummary">&times;</button>
 
-      <h2 id="summaryTitle">Resumo do formulário</h2>
+    <h2 id="summaryTitle">Resumo do formulário</h2>
 
-      <div id="summaryContent"></div>
+    <div id="summaryContent"></div>
 
-      <div style="text-align:right;">
-        <button id="printSummaryBtn" class="btn-primary">
-          Guardar / Imprimir
-        </button>
-      </div>
+    <div style="text-align:right;">
+      <button id="printSummaryBtn" class="btn-primary">
+        Guardar / Imprimir
+      </button>
     </div>
-  `;
+  </div>
+`;
+
 
   document.body.appendChild(summaryModal);
 
