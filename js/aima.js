@@ -1300,15 +1300,17 @@ try {
 // CRIAR MODAL DE RESUMO VIA JS
 // ------------------------------
 const summaryModal = document.createElement("div");
-summaryModal.id = "summaryModal"; // CSS trata do resto
+summaryModal.id = "summaryModal"; // CSS controla tudo
 
 summaryModal.innerHTML = `
   <div id="summaryBox">
     <button id="closeSummary">&times;</button>
+
     <h2 id="summaryTitle">Resumo do formulário</h2>
+
     <div id="summaryContent"></div>
 
-    <div style="margin-top:16px; text-align:right;">
+    <div class="summary-actions">
       <button id="printSummaryBtn" class="btn-primary">
         Guardar / Imprimir
       </button>
