@@ -225,7 +225,7 @@ const texts = {
     tratan conforme al <strong>Reglamento General de Protección de Datos (RGPD)</strong>.
     No se comparten con terceros con fines comerciales.</p>
 
-    <<h4><strong>Información adicional y legislación</strong></h4>
+    <h4><strong>Información adicional y legislación</strong></h4>
 
 <p>
   <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
