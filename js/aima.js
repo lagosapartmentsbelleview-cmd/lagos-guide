@@ -1307,58 +1307,20 @@ try {
 }); 
 
 // ------------------------------
-// CRIAR MODAL DE RESUMO VIA JS (ESTILO BELLEVIEW)
+// CRIAR MODAL DE RESUMO VIA JS (AGORA COM CSS EXTERNO)
 // ------------------------------
 const summaryModal = document.createElement("div");
 summaryModal.id = "summaryModal";
-summaryModal.style.display = "none";
-summaryModal.style.position = "fixed";
-summaryModal.style.inset = "0";
-summaryModal.style.background = "rgba(0,0,0,0.45)";
-summaryModal.style.zIndex = "9999";
-summaryModal.style.justifyContent = "center";
-summaryModal.style.alignItems = "center";
 
 summaryModal.innerHTML = `
-  <div id="summaryBox" style="
-    background:#ffffff;
-    max-width:750px;
-    width:92%;
-    max-height:85vh;
-    overflow-y:auto;
-    padding:28px;
-    border-radius:10px;
-    box-shadow:0 8px 28px rgba(0,0,0,0.25);
-    font-family:inherit;
-    position:relative;
-  ">
-    <button id="closeSummary" style="
-      position:absolute;
-      top:12px;
-      right:12px;
-      border:none;
-      background:none;
-      font-size:26px;
-      cursor:pointer;
-      color:#444;
-    ">&times;</button>
+  <div id="summaryBox">
+    <button id="closeSummary">&times;</button>
 
-    <h2 id="summaryTitle" style="
-      margin-top:0;
-      margin-bottom:20px;
-      font-size:22px;
-      font-weight:600;
-      color:#222;
-    ">Resumo do formulário</h2>
+    <h2 id="summaryTitle">Resumo do formulário</h2>
 
-    <div id="summaryContent" style="
-      font-size:15px;
-      line-height:1.55;
-      color:#333;
-      margin-bottom: 20px;   /* ADICIONAR ESTA LINHA */
-    "></div>
+    <div id="summaryContent"></div>
 
-    <div style="margin-top:20px; text-align:right;">
+    <div style="text-align:right;">
       <button id="printSummaryBtn" class="btn-primary">
         Guardar / Imprimir
       </button>
