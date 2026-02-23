@@ -1152,7 +1152,7 @@ childrenInput.addEventListener("input", generateGuestFields);
 // ------------------------------
 // SUBMISSÃO DO FORMULÁRIO (COM VALIDAÇÕES COMPLETAS)
 // ------------------------------
-document.getElementById("aimaForm").addEventListener("submit", function (e) {
+document.getElementById("aimaForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   // Validar campos obrigatórios
@@ -1166,8 +1166,8 @@ document.getElementById("aimaForm").addEventListener("submit", function (e) {
   }
 
   // Validar check-in < check-out
-  const checkin = document.getElementById("checkin").value;
-  const checkout = document.getElementById("checkout").value;
+  const checkin = document.getElementById("checkinDate").value;
+  const checkout = document.getElementById("checkoutDate").value;
 
   if (!checkin || !checkout) {
     alert("Por favor preencha as datas de check-in e check-out.");
@@ -1204,17 +1204,53 @@ document.getElementById("aimaForm").addEventListener("submit", function (e) {
     }
   }
 
-  // Se tudo estiver válido → enviar
+  // ------------------------------
+  // ENVIO VIA WEB3FORMS
+  // ------------------------------
+
   const formData = new FormData(this);
-  const data = Object.fromEntries(formData.entries());
-  data.lang = currentLang;
-  data.timestamp = new Date().toISOString();
 
-  console.log("Boletim AIMA:", data);
+  // Access Key do teu formulário
+  formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
 
-  alert(texts[currentLang].submit);
-  this.reset();
-  generateGuestFields();
+  // Email de destino
+  formData.append("to", "belleview@sapo.pt");
+
+  // Assunto do email
+  formData.append("subject", "Novo Formulário AIMA Recebido");
+
+  // Botão de submit
+  const submitBtn = this.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
+
+  // Texto "A enviar..." no idioma atual
+  submitBtn.textContent = texts[currentLang].sending || "A enviar...";
+  submitBtn.disabled = true;
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      // Mensagem de sucesso no idioma atual
+      alert(texts[currentLang].submit);
+
+      this.reset();
+      generateGuestFields();
+    } else {
+      alert("Erro: " + result.message);
+    }
+
+  } catch (error) {
+    alert("Erro de comunicação. Tente novamente.");
+  } finally {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  }
 });
 
 
@@ -1236,7 +1272,6 @@ openFaqBtn.addEventListener("click", () => {
   loadFaq(); // ← carrega a FAQ do idioma atual
   faqModal.style.display = "block";
 });
-
 
 // Fechar modal (botão X)
 closeFaqBtn.addEventListener("click", () => {
