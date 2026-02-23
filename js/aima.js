@@ -88,8 +88,7 @@ const texts = {
       docType: "Tipo de Documento:",
       docTypePassport: "Passaporte",
       docTypeID: "Bilhete de Identidade / Cartão de Cidadão",
-      docCountry: "País Emissor do Documento:",
-      summaryTitle: "Resumo do formulário"
+      docCountry: "País Emissor do Documento:"
     },
     submit: "Enviar Boletim de Alojamento"
 },
@@ -176,8 +175,7 @@ const texts = {
     docType: "Document Type:",
     docTypePassport: "Passport",
     docTypeID: "Identity Card",
-    docCountry: "Issuing Country:",
-    summaryTitle: "Form Summary"
+    docCountry: "Issuing Country:"
   },
   submit: "Submit Accommodation Form"
 },
@@ -225,7 +223,7 @@ const texts = {
     tratan conforme al <strong>Reglamento General de Protección de Datos (RGPD)</strong>.
     No se comparten con terceros con fines comerciales.</p>
 
-    <h4><strong>Información adicional y legislación</strong></h4>
+    <<h4><strong>Información adicional y legislación</strong></h4>
 
 <p>
   <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
@@ -265,8 +263,7 @@ const texts = {
     docType: "Tipo de Documento:",
     docTypePassport: "Pasaporte",
     docTypeID: "Documento de Identidad",
-    docCountry: "País Emisor del Documento:",
-    summaryTitle: "Resumen del formulario"
+    docCountry: "País Emisor del Documento:"
   },
   submit: "Enviar Registro de Alojamiento"
 },
@@ -354,8 +351,7 @@ const texts = {
     docType: "Type de Document :",
     docTypePassport: "Passeport",
     docTypeID: "Carte d’Identité",
-    docCountry: "Pays Émetteur :",
-    summaryTitle: "Résumé du formulaire"
+    docCountry: "Pays Émetteur :"
   },
   submit: "Envoyer le Formulaire"
 },
@@ -443,8 +439,7 @@ const texts = {
     docType: "Tipo di Documento:",
     docTypePassport: "Passaporto",
     docTypeID: "Carta d’Identità",
-    docCountry: "Paese di Emissione:",
-    summaryTitle: "Riepilogo del modulo"
+    docCountry: "Paese di Emissione:"
   },
   submit: "Invia Modulo di Registrazione"
 },
@@ -533,8 +528,7 @@ const texts = {
     docType: "Dokumenttyp:",
     docTypePassport: "Reisepass",
     docTypeID: "Personalausweis",
-    docCountry: "Ausstellungsland:",
-    summaryTitle: "Formularübersicht"
+    docCountry: "Ausstellungsland:"
   },
     submit: "Formular absenden"
 }
@@ -1156,48 +1150,6 @@ adultsInput.addEventListener("input", generateGuestFields);
 childrenInput.addEventListener("input", generateGuestFields);
 
 // ------------------------------
-// GERAR RESUMO DO FORMULÁRIO
-// ------------------------------
-function generateSummary() {
-  const t = texts[currentLang];
-
- // Atualizar o título do modal conforme o idioma
-
- document.getElementById("summaryTitle").textContent = t.fields.summaryTitle;
-
-  let html = `
-    <h3>${t.formTitle}</h3>
-    <p><strong>${t.checkinLabel}:</strong> ${document.getElementById("checkinDate").value}</p>
-    <p><strong>${t.checkoutLabel}:</strong> ${document.getElementById("checkoutDate").value}</p>
-    <p><strong>${t.adultsLabel}:</strong> ${document.getElementById("adults").value}</p>
-    <p><strong>${t.childrenLabel}:</strong> ${document.getElementById("children").value}</p>
-    <hr>
-  `;
-
-  // Número total de hóspedes
-  const totalGuests =
-    parseInt(document.getElementById("adults").value || 0) +
-    parseInt(document.getElementById("children").value || 0);
-
-  for (let i = 1; i <= totalGuests; i++) {
-    html += `
-      <h4>${t.guestTitle(i)}</h4>
-      <p><strong>${t.fields.fullName}:</strong> ${document.querySelector(`[name="guest_${i}_fullName"]`).value}</p>
-      <p><strong>${t.fields.birthDate}:</strong> ${document.querySelector(`[name="guest_${i}_birthDate"]`).value}</p>
-      <p><strong>${t.fields.nationality}:</strong> ${document.querySelector(`[name="guest_${i}_nationality"]`).value}</p>
-      <p><strong>${t.fields.residenceCountry}:</strong> ${document.querySelector(`[name="guest_${i}_residenceCountry"]`).value}</p>
-      <p><strong>${t.fields.docNumber}:</strong> ${document.querySelector(`[name="guest_${i}_docNumber"]`).value}</p>
-      <p><strong>${t.fields.docType}:</strong> ${document.querySelector(`[name="guest_${i}_docType"]`).value}</p>
-      <p><strong>${t.fields.docCountry}:</strong> ${document.querySelector(`[name="guest_${i}_docCountry"]`).value}</p>
-      <hr>
-    `;
-  }
-
-  document.getElementById("summaryContent").innerHTML = html;
-}
-
-
-// ------------------------------
 // SUBMISSÃO DO FORMULÁRIO (COM VALIDAÇÕES COMPLETAS)
 // ------------------------------
 document.getElementById("aimaForm").addEventListener("submit", async function (e) {
@@ -1252,128 +1204,84 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     }
   }
 
-  // ------------------------------
-  // ENVIO VIA WEB3FORMS
-  // ------------------------------
+// ------------------------------
+// ENVIO VIA WEB3FORMS
+// ------------------------------
 
-  const formData = new FormData(this);
+const formData = new FormData(this);
 
-  // Access Key do teu formulário
-  formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
+// Access Key do teu formulário
+formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
 
-  // Email de destino
-  formData.append("to", "belleview@sapo.pt");
+// Email de destino
+formData.append("to", "belleview@sapo.pt");
 
-  // Assunto do email
-  formData.append("subject", "Novo Formulário AIMA Recebido");
+// Assunto do email
+formData.append("subject", "Novo Formulário AIMA Recebido");
 
-  // Botão de submit
-  const submitBtn = this.querySelector('button[type="submit"]');
-  const originalText = submitBtn.textContent;
+// Botão de submit
+const submitBtn = this.querySelector('button[type="submit"]');
+const originalText = submitBtn.textContent;
 
-  // Texto "A enviar..." no idioma atual
-  submitBtn.textContent = texts[currentLang].sending || "A enviar...";
-  submitBtn.disabled = true;
+// Texto "A enviar..." no idioma atual
+submitBtn.textContent = texts[currentLang].sending || "A enviar...";
+submitBtn.disabled = true;
 
-  try {
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData
-    });
+try {
+  const response = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    body: formData
+  });
 
-    const result = await response.json();
+  const result = await response.json();
 
-    if (response.ok) {
-      // Mensagem de sucesso no idioma atual
-      alert(texts[currentLang].submit);
+  if (response.ok) {
+    // Mensagem de sucesso no idioma atual
+    alert(texts[currentLang].submit);
+    this.reset();
+    generateGuestFields();
+    
 
-      // Gerar resumo e abrir modal PDF
-      generateSummary();
-      document.getElementById("summaryModal").style.display = "flex";
-
-      // Reset do formulário
-      this.reset();
-      generateGuestFields();
-
-    } else {
-      alert("Erro: " + result.message);
-    }
-
-  } catch (error) {
-    alert("Erro de comunicação. Tente novamente.");
-  } finally {
-    submitBtn.textContent = originalText;
-    submitBtn.disabled = false;
+  } else {
+    alert("Erro: " + result.message);
   }
+
+} catch (error) {
+  alert("Erro de comunicação. Tente novamente.");
+} finally {
+  submitBtn.textContent = originalText;
+  submitBtn.disabled = false;
+}
+
+}); 
+
+// ------------------------------
+// IDIOMA INICIAL
+// ------------------------------
+setLanguage("pt");
+
+// ------------------------------
+// MODAL FAQ — ABRIR E FECHAR
+// ------------------------------
+const faqModal = document.getElementById("faqModal");
+const faqContent = document.getElementById("faqContent");
+const openFaqBtn = document.getElementById("openFaqModal");
+const closeFaqBtn = document.getElementById("closeFaqModal");
+
+// Abrir modal
+openFaqBtn.addEventListener("click", () => {
+  loadFaq(); // ← carrega a FAQ do idioma atual
+  faqModal.style.display = "block";
 });
 
-  // ------------------------------
-  // MODAL FAQ — ABRIR E FECHAR
-  // ------------------------------
-  const faqModal = document.getElementById("faqModal");
-  const faqContent = document.getElementById("faqContent");
-  const openFaqBtn = document.getElementById("openFaqModal");
-  const closeFaqBtn = document.getElementById("closeFaqModal");
+// Fechar modal (botão X)
+closeFaqBtn.addEventListener("click", () => {
+  faqModal.style.display = "none";
+});
 
-  openFaqBtn.addEventListener("click", () => {
-    loadFaq();
-    faqModal.style.display = "block";
-  });
-
-  closeFaqBtn.addEventListener("click", () => {
+// Fechar modal ao clicar fora da caixa
+window.addEventListener("click", (e) => {
+  if (e.target === faqModal) {
     faqModal.style.display = "none";
-  });
-
-  window.addEventListener("click", (e) => {
-    if (e.target === faqModal) {
-      faqModal.style.display = "none";
-    }
-  });
-
-
-  // ------------------------------
-  // CRIAR MODAL DE RESUMO VIA JS (CSS EXTERNO)
-  // ------------------------------
-  const summaryModal = document.createElement("div");
-  summaryModal.id = "summaryModal";
-
-  summaryModal.innerHTML = `
-  <div id="summaryBox">
-    <button id="closeSummary">&times;</button>
-
-    <h2 id="summaryTitle">Resumo do formulário</h2>
-
-    <div id="summaryContent"></div>
-
-    <div style="text-align:right;">
-      <button id="printSummaryBtn" class="btn-primary">
-        Guardar / Imprimir
-      </button>
-    </div>
-  </div>
-`;
-
-
-  document.body.appendChild(summaryModal);
-
-
-  // ------------------------------
-  // FECHAR MODAL DE RESUMO
-  // ------------------------------
-  document.getElementById("closeSummary").addEventListener("click", () => {
-    document.getElementById("summaryModal").style.display = "none";
-  });
-
-  // ------------------------------
-  // GUARDAR / IMPRIMIR PDF
-  // ------------------------------
-  document.getElementById("printSummaryBtn").addEventListener("click", () => {
-    window.print();
-  });
-
-
-  // ------------------------------
-  // IDIOMA INICIAL
-  // ------------------------------
-  setLanguage("pt");
-
+  }
+});
