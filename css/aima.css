@@ -452,3 +452,39 @@ footer {
 .btn-primary:hover {
   background: #004b80;
 }
+@media print {
+
+  /* Esconde tudo */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Mostra apenas o conteúdo do resumo */
+  #summaryBox, #summaryBox * {
+    visibility: visible !important;
+  }
+
+  /* Remove overlay e fixed */
+  #summaryModal {
+    position: static !important;
+    inset: auto !important;
+    background: none !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  #summaryBox {
+    box-shadow: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    max-height: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  /* Esconde botões */
+  #closeSummary,
+  #printSummaryBtn {
+    display: none !important;
+  }
+}
