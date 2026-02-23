@@ -1161,6 +1161,10 @@ childrenInput.addEventListener("input", generateGuestFields);
 function generateSummary() {
   const t = texts[currentLang];
 
+ // Atualizar o título do modal conforme o idioma
+
+ document.getElementById("summaryTitle").textContent = t.fields.summaryTitle;
+
   let html = `
     <h3>${t.formTitle}</h3>
     <p><strong>${t.checkinLabel}:</strong> ${document.getElementById("checkinDate").value}</p>
@@ -1303,43 +1307,57 @@ try {
 }); 
 
 // ------------------------------
-// CRIAR MODAL DE RESUMO VIA JS
+// CRIAR MODAL DE RESUMO VIA JS (ESTILO BELLEVIEW)
 // ------------------------------
 const summaryModal = document.createElement("div");
 summaryModal.id = "summaryModal";
 summaryModal.style.display = "none";
 summaryModal.style.position = "fixed";
 summaryModal.style.inset = "0";
-summaryModal.style.background = "rgba(0,0,0,0.5)";
+summaryModal.style.background = "rgba(0,0,0,0.45)";
 summaryModal.style.zIndex = "9999";
-summaryModal.style.display = "none";
 summaryModal.style.justifyContent = "center";
 summaryModal.style.alignItems = "center";
 
 summaryModal.innerHTML = `
   <div id="summaryBox" style="
-    background:#fff;
-    max-width:800px;
-    width:90%;
-    max-height:80vh;
-    overflow:auto;
-    padding:24px;
-    border-radius:8px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    background:#ffffff;
+    max-width:750px;
+    width:92%;
+    max-height:85vh;
+    overflow-y:auto;
+    padding:28px;
+    border-radius:10px;
+    box-shadow:0 8px 28px rgba(0,0,0,0.25);
     font-family:inherit;
+    position:relative;
   ">
     <button id="closeSummary" style="
-      float:right;
+      position:absolute;
+      top:12px;
+      right:12px;
       border:none;
       background:none;
-      font-size:20px;
+      font-size:26px;
       cursor:pointer;
+      color:#444;
     ">&times;</button>
-    <h2 id="summaryTitle" style="margin-top:0; margin-bottom:16px;">
-      Resumo do formulário
-    </h2>
-    <div id="summaryContent" style="font-size:14px; line-height:1.5;"></div>
-    <div style="margin-top:16px; text-align:right;">
+
+    <h2 id="summaryTitle" style="
+      margin-top:0;
+      margin-bottom:20px;
+      font-size:22px;
+      font-weight:600;
+      color:#222;
+    ">Resumo do formulário</h2>
+
+    <div id="summaryContent" style="
+      font-size:15px;
+      line-height:1.55;
+      color:#333;
+    "></div>
+
+    <div style="margin-top:20px; text-align:right;">
       <button id="printSummaryBtn" class="btn-primary">
         Guardar / Imprimir
       </button>
@@ -1348,7 +1366,6 @@ summaryModal.innerHTML = `
 `;
 
 document.body.appendChild(summaryModal);
-
 
 // ------------------------------
 // IDIOMA INICIAL
