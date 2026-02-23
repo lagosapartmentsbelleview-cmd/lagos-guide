@@ -1306,74 +1306,75 @@ try {
 
 }); 
 
-// ------------------------------
-// MODAL FAQ — ABRIR E FECHAR
-// ------------------------------
-const faqModal = document.getElementById("faqModal");
-const faqContent = document.getElementById("faqContent");
-const openFaqBtn = document.getElementById("openFaqModal");
-const closeFaqBtn = document.getElementById("closeFaqModal");
+window.addEventListener("DOMContentLoaded", () => {
 
-// Abrir modal FAQ
-openFaqBtn.addEventListener("click", () => {
-  loadFaq(); // carrega a FAQ do idioma atual
-  faqModal.style.display = "block";
-});
+  // ------------------------------
+  // MODAL FAQ — ABRIR E FECHAR
+  // ------------------------------
+  const faqModal = document.getElementById("faqModal");
+  const faqContent = document.getElementById("faqContent");
+  const openFaqBtn = document.getElementById("openFaqModal");
+  const closeFaqBtn = document.getElementById("closeFaqModal");
 
-// Fechar modal FAQ (botão X)
-closeFaqBtn.addEventListener("click", () => {
-  faqModal.style.display = "none";
-});
+  openFaqBtn.addEventListener("click", () => {
+    loadFaq();
+    faqModal.style.display = "block";
+  });
 
-// Fechar modal FAQ ao clicar fora da caixa
-window.addEventListener("click", (e) => {
-  if (e.target === faqModal) {
+  closeFaqBtn.addEventListener("click", () => {
     faqModal.style.display = "none";
-  }
-});
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === faqModal) {
+      faqModal.style.display = "none";
+    }
+  });
 
 
-// ------------------------------
-// CRIAR MODAL DE RESUMO VIA JS (CSS EXTERNO)
-// ------------------------------
-const summaryModal = document.createElement("div");
-summaryModal.id = "summaryModal";
+  // ------------------------------
+  // CRIAR MODAL DE RESUMO VIA JS (CSS EXTERNO)
+  // ------------------------------
+  const summaryModal = document.createElement("div");
+  summaryModal.id = "summaryModal";
 
-summaryModal.innerHTML = `
-  <div id="summaryBox">
-    <button id="closeSummary">&times;</button>
+  summaryModal.innerHTML = `
+    <div id="summaryBox">
+      <button id="closeSummary">&times;</button>
 
-    <h2 id="summaryTitle">Resumo do formulário</h2>
+      <h2 id="summaryTitle">Resumo do formulário</h2>
 
-    <div id="summaryContent"></div>
+      <div id="summaryContent"></div>
 
-    <div style="text-align:right;">
-      <button id="printSummaryBtn" class="btn-primary">
-        Guardar / Imprimir
-      </button>
+      <div style="text-align:right;">
+        <button id="printSummaryBtn" class="btn-primary">
+          Guardar / Imprimir
+        </button>
+      </div>
     </div>
-  </div>
-`;
+  `;
 
-document.body.appendChild(summaryModal);
+  document.body.appendChild(summaryModal);
 
 
-// ------------------------------
-// FECHAR MODAL DE RESUMO
-// ------------------------------
-document.getElementById("closeSummary").addEventListener("click", () => {
-  document.getElementById("summaryModal").style.display = "none";
+  // ------------------------------
+  // FECHAR MODAL DE RESUMO
+  // ------------------------------
+  document.getElementById("closeSummary").addEventListener("click", () => {
+    document.getElementById("summaryModal").style.display = "none";
+  });
+
+  // ------------------------------
+  // GUARDAR / IMPRIMIR PDF
+  // ------------------------------
+  document.getElementById("printSummaryBtn").addEventListener("click", () => {
+    window.print();
+  });
+
+
+  // ------------------------------
+  // IDIOMA INICIAL
+  // ------------------------------
+  setLanguage("pt");
+
 });
-
-// ------------------------------
-// GUARDAR / IMPRIMIR PDF
-// ------------------------------
-document.getElementById("printSummaryBtn").addEventListener("click", () => {
-  window.print();
-});
-
-
-// ------------------------------
-// IDIOMA INICIAL
-// ------------------------------
-setLanguage("pt");
