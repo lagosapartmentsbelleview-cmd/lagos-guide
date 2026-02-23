@@ -1300,39 +1300,14 @@ try {
 // CRIAR MODAL DE RESUMO VIA JS
 // ------------------------------
 const summaryModal = document.createElement("div");
-summaryModal.id = "summaryModal";
-summaryModal.style.display = "none";
-summaryModal.style.position = "fixed";
-summaryModal.style.inset = "0";
-summaryModal.style.background = "rgba(0,0,0,0.5)";
-summaryModal.style.zIndex = "9999";
-summaryModal.style.display = "none";
-summaryModal.style.justifyContent = "center";
-summaryModal.style.alignItems = "center";
+summaryModal.id = "summaryModal"; // CSS trata do resto
 
 summaryModal.innerHTML = `
-  <div id="summaryBox" style="
-    background:#fff;
-    max-width:800px;
-    width:90%;
-    max-height:80vh;
-    overflow:auto;
-    padding:24px;
-    border-radius:8px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
-    font-family:inherit;
-  ">
-    <button id="closeSummary" style="
-      float:right;
-      border:none;
-      background:none;
-      font-size:20px;
-      cursor:pointer;
-    ">&times;</button>
-    <h2 id="summaryTitle" style="margin-top:0; margin-bottom:16px;">
-      Resumo do formulário
-    </h2>
-    <div id="summaryContent" style="font-size:14px; line-height:1.5;"></div>
+  <div id="summaryBox">
+    <button id="closeSummary">&times;</button>
+    <h2 id="summaryTitle">Resumo do formulário</h2>
+    <div id="summaryContent"></div>
+
     <div style="margin-top:16px; text-align:right;">
       <button id="printSummaryBtn" class="btn-primary">
         Guardar / Imprimir
@@ -1342,7 +1317,6 @@ summaryModal.innerHTML = `
 `;
 
 document.body.appendChild(summaryModal);
-
 
 // ------------------------------
 // IDIOMA INICIAL
