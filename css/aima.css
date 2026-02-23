@@ -247,6 +247,7 @@ footer {
         font-size: 15px;
     }
 }
+
 /* ------------------------------
    CARD LEGAL INTRODUTÓRIO
 --------------------------------*/
@@ -286,7 +287,9 @@ footer {
     font-weight: 600;
 }
 
-/* MODAL FAQ */
+/* ------------------------------
+   MODAL FAQ
+--------------------------------*/
 .faq-modal {
   display: none;
   position: fixed;
@@ -352,74 +355,74 @@ footer {
 
 /* ============================
    MODAL DE RESUMO (BELLEVIEW)
-   ============================ */
+=============================== */
 
 #summaryModal {
   display: none;
-  position: fixed !important;
-  inset: 0 !important;
-  background: rgba(0,0,0,0.45) !important;
-  z-index: 9999 !important;
-  justify-content: center !important;
-  align-items: center !important;
-  padding: 20px !important;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 #summaryBox {
-  background: #ffffff !important;
-  max-width: 750px !important;
-  width: 92% !important;
-  max-height: 85vh !important;
-  overflow-y: auto !important;
-  padding: 28px !important;
-  border-radius: 10px !important;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.25) !important;
-  font-family: inherit !important;
-  position: relative !important;
+  background: #ffffff;
+  max-width: 750px;
+  width: 92%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 28px;
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+  font-family: inherit;
+  position: relative;
 }
 
 #closeSummary {
-  position: absolute !important;
-  top: 12px !important;
-  right: 12px !important;
-  border: none !important;
-  background: none !important;
-  font-size: 26px !important;
-  cursor: pointer !important;
-  color: #444 !important;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #444;
 }
 
 #summaryTitle {
-  margin-top: 0 !important;
-  margin-bottom: 20px !important;
-  font-size: 22px !important;
-  font-weight: 600 !important;
-  color: #222 !important;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
 }
 
 #summaryContent {
-  font-size: 15px !important;
-  line-height: 1.55 !important;
-  color: #333 !important;
-  margin-bottom: 20px !important;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 #summaryContent hr {
-  border: none !important;
-  border-top: 1px solid #ddd !important;
-  margin: 16px 0 !important;
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 16px 0;
 }
 
 /* ============================
-   MODAL DE CÓPIA (PRIORIDADE)
-   ============================ */
+   MODAL DE CÓPIA
+=============================== */
 
 #copyModal {
   display: none;
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.45);
-  z-index: 10000; /* acima do summary */
+  z-index: 10000;
   justify-content: center;
   align-items: center;
   padding: 20px;
