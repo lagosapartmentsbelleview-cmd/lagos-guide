@@ -1297,30 +1297,6 @@ try {
 }); 
 
 // ------------------------------
-// CRIAR MODAL DE RESUMO VIA JS
-// ------------------------------
-const summaryModal = document.createElement("div");
-summaryModal.id = "summaryModal"; // CSS controla tudo
-
-summaryModal.innerHTML = `
-  <div id="summaryBox">
-    <button id="closeSummary">&times;</button>
-
-    <h2 id="summaryTitle">Resumo do formulário</h2>
-
-    <div id="summaryContent"></div>
-
-    <div class="summary-actions">
-      <button id="printSummaryBtn" class="btn-primary">
-        Guardar / Imprimir
-      </button>
-    </div>
-  </div>
-`;
-
-document.body.appendChild(summaryModal);
-
-// ------------------------------
 // IDIOMA INICIAL
 // ------------------------------
 setLanguage("pt");
@@ -1352,15 +1328,21 @@ window.addEventListener("click", (e) => {
 });
 
 // ------------------------------
-// FECHAR MODAL DE RESUMO
+// MODAL DE RESUMO — REFERÊNCIAS
 // ------------------------------
-document.getElementById("closeSummary").addEventListener("click", () => {
-  document.getElementById("summaryModal").style.display = "none";
+const summaryModal = document.getElementById("summaryModal");
+const closeSummaryBtn = document.getElementById("closeSummary");
+const printSummaryBtn = document.getElementById("printSummaryBtn");
+
+// Fechar modal
+closeSummaryBtn.addEventListener("click", () => {
+  summaryModal.style.display = "none";
 });
 
-// ------------------------------
-// GUARDAR / IMPRIMIR PDF
-// ------------------------------
-document.getElementById("printSummaryBtn").addEventListener("click", () => {
+// Imprimir / Guardar
+printSummaryBtn.addEventListener("click", () => {
   window.print();
 });
+
+
+
