@@ -389,8 +389,10 @@ footer {
   background: none;
   font-size: 26px;
   cursor: pointer;
-  color: #444;
+  color: #005c99; /* azul Belleview */
+  font-weight: bold;
 }
+
 
 #summaryTitle {
   margin-top: 0;
@@ -436,4 +438,17 @@ footer {
   border-radius: 10px;
   box-shadow: 0 8px 28px rgba(0,0,0,0.25);
   position: relative;
+}
+.btn-primary {
+  background: #005c99;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #004b80;
 }
