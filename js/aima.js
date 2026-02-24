@@ -1,4 +1,5 @@
 // js/aima.js
+let hospedesPDF = [];
 
 // ------------------------------
 // TEXTOS POR IDIOMA
@@ -1278,11 +1279,28 @@ try {
   if (response.ok) {
     // Mensagem de sucesso no idioma atual
     alert(texts[currentLang].submit);
-    generateSummary();
-    document.getElementById("summaryModal").style.display = "flex";
+    // 1) Guardar dados para PDF
+hospedesPDF = [];
 
-    this.reset();
-    generateGuestFields();
+for (let i = 1; i <= totalGuests; i++) {
+  hospedesPDF.push({
+    fullName: document.querySelector(`[name="guest_${i}_fullName"]`).value,
+    birthDate: document.querySelector(`[name="guest_${i}_birthDate"]`).value,
+    nationality: document.querySelector(`[name="guest_${i}_nationality"]`).value,
+    residenceCountry: document.querySelector(`[name="guest_${i}_residenceCountry"]`).value,
+    docNumber: document.querySelector(`[name="guest_${i}_docNumber"]`).value,
+    docType: document.querySelector(`[name="guest_${i}_docType"]`).value,
+    docCountry: document.querySelector(`[name="guest_${i}_docCountry"]`).value
+  });
+}
+
+// 2) Mostrar resumo
+generateSummary();
+document.getElementById("summaryModal").style.display = "flex";
+
+// 3) Reset só depois do PDF ser gerado
+// (vamos mover isto para o exportarPDF)
+
     
 
   } else {
@@ -1394,38 +1412,22 @@ window.exportarPDF = function () {
 
     const t = texts[currentLang];
 
-    const totalGuests =
-        parseInt(document.getElementById("adults").value || 0) +
-        parseInt(document.getElementById("children").value || 0);
-
-    // WRAPPER VISÍVEL PARA html2pdf CONSEGUIR LER
     const wrapper = document.createElement("div");
     wrapper.style.position = "absolute";
-    wrapper.style.top = "-9999px";   // fora do ecrã mas visível
+    wrapper.style.top = "-9999px";
     wrapper.style.left = "-9999px";
     wrapper.style.width = "100%";
     wrapper.style.background = "white";
     wrapper.style.zIndex = "999999";
 
-    document.body.appendChild(wrapper); // ← ADICIONADO ANTES DO LOOP
+    document.body.appendChild(wrapper);
 
-    for (let i = 1; i <= totalGuests; i++) {
-
-        const dados = {
-            fullName: document.querySelector(`[name="guest_${i}_fullName"]`)?.value || "",
-            birthDate: document.querySelector(`[name="guest_${i}_birthDate"]`)?.value || "",
-            nationality: document.querySelector(`[name="guest_${i}_nationality"]`)?.value || "",
-            residenceCountry: document.querySelector(`[name="guest_${i}_residenceCountry"]`)?.value || "",
-            docNumber: document.querySelector(`[name="guest_${i}_docNumber"]`)?.value || "",
-            docType: document.querySelector(`[name="guest_${i}_docType"]`)?.value || "",
-            docCountry: document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || ""
-        };
-
+    hospedesPDF.forEach((dados, index) => {
         wrapper.insertAdjacentHTML(
             "beforeend",
-            gerarPaginaHospede(t, i, dados)
+            gerarPaginaHospede(t, index + 1, dados)
         );
-    }
+    });
 
     const opt = {
         margin: 10,
@@ -1440,7 +1442,12 @@ window.exportarPDF = function () {
         .from(wrapper)
         .save()
         .then(() => {
-            wrapper.remove(); // limpar
+            wrapper.remove();
+
+            // Agora sim, reset ao formulário
+            document.getElementById("aimaForm").reset();
+            generateGuestFields();
         });
 };
+
 
