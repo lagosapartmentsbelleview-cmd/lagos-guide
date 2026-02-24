@@ -1404,14 +1404,15 @@ window.exportarPDF = function () {
 
     for (let i = 1; i <= totalGuests; i++) {
 
+        // LER OS VALORES COMO TEXTO (NÃO COMO INPUT)
         const dados = {
-            fullName: document.querySelector(`[name="guest_${i}_fullName"]`).value,
-            birthDate: document.querySelector(`[name="guest_${i}_birthDate"]`).value,
-            nationality: document.querySelector(`[name="guest_${i}_nationality"]`).value,
-            residenceCountry: document.querySelector(`[name="guest_${i}_residenceCountry"]`).value,
-            docNumber: document.querySelector(`[name="guest_${i}_docNumber"]`).value,
-            docType: document.querySelector(`[name="guest_${i}_docType"]`).value,
-            docCountry: document.querySelector(`[name="guest_${i}_docCountry"]`).value
+            fullName: document.querySelector(`[name="guest_${i}_fullName"]`).value || "",
+            birthDate: document.querySelector(`[name="guest_${i}_birthDate"]`).value || "",
+            nationality: document.querySelector(`[name="guest_${i}_nationality"]`).value || "",
+            residenceCountry: document.querySelector(`[name="guest_${i}_residenceCountry"]`).value || "",
+            docNumber: document.querySelector(`[name="guest_${i}_docNumber"]`).value || "",
+            docType: document.querySelector(`[name="guest_${i}_docType"]`).value || "",
+            docCountry: document.querySelector(`[name="guest_${i}_docCountry"]`).value || ""
         };
 
         wrapper.insertAdjacentHTML(
