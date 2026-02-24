@@ -1,13 +1,11 @@
-/* WRAPPER */
 .legal-wrapper {
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-/* HERO SIMPLES */
 .legal-hero-simple {
-  background: #1976d2;
+  background: #005c99;
   padding: 40px 20px;
   text-align: center;
   border-radius: 6px;
@@ -20,9 +18,8 @@
   font-size: 28px;
 }
 
-/* BOTÃO VOLTAR */
 .legal-back-btn {
-  background: #1976d2;
+  background: #005c99;
   color: white;
   border: none;
   padding: 10px 18px;
@@ -34,54 +31,15 @@
 }
 
 .legal-back-btn:hover {
-  background: #0d47a1;
+  background: #004b80;
 }
 
-/* BOTÕES DE IDIOMA */
-.legal-lang-switch {
-  margin-bottom: 20px;
-}
-
-.legal-lang-btn {
-  padding: 8px 14px;
-  margin-right: 6px;
-  border-radius: 6px;
-  background: #1976d2;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.legal-lang-btn.active {
-  background: #0d47a1;
-}
-
-/* CONTEÚDO */
 .legal-content h2 {
   margin-top: 25px;
-  color: #1976d2;
+  color: #005c99;
 }
 
 .legal-content p {
   line-height: 1.7;
   margin-bottom: 14px;
-}
-
-/* RODAPÉ */
-.rodape-belleview {
-  background: #f5f5f5;
-  padding: 40px 20px;
-  text-align: center;
-  margin-top: 60px;
-  font-size: 14px;
-}
-
-.rodape-belleview a {
-  color: #1976d2;
-  text-decoration: none;
-}
-
-.rodape-belleview a:hover {
-  text-decoration: underline;
 }
