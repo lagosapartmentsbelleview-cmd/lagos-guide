@@ -8,29 +8,14 @@
   <!-- CSS Global -->
   <link rel="stylesheet" href="/css/global.css">
 
+  <!-- CSS do AIMA/Guide (inclui rodapé) -->
+  <link rel="stylesheet" href="/aima/css/style.css">
+
   <!-- CSS Legal -->
   <link rel="stylesheet" href="/css/legal.css">
 </head>
 
 <body>
-
-  <!-- MENU OFICIAL BELLEVIEW -->
-  <header class="menu-principal">
-    <div class="menu-container">
-      <div class="menu-esquerda">
-        <a href="/#alojamento">Alojamento</a>
-        <a href="/#comodidades">Comodidades</a>
-        <a href="/#localizacao">Localização</a>
-        <a href="/#contactos">Contactos</a>
-      </div>
-
-      <div class="menu-direita">
-        <a href="?from=site&lang=pt">PT</a>
-        <a href="?from=site&lang=en">EN</a>
-        <a href="?from=site&lang=es">ES</a>
-      </div>
-    </div>
-  </header>
 
   <main class="legal-wrapper">
 
@@ -39,50 +24,89 @@
 
     <!-- HERO SIMPLES -->
     <section class="legal-hero-simple">
-      <h1 id="reservationPolicyTitle">Política de Reservas</h1>
+      <h1>Política de Reservas</h1>
     </section>
 
-    <!-- BOTÕES MULTILÍNGUA -->
-    <div class="legal-lang-switch">
-      <button class="legal-lang-btn" data-lang="pt">🇵🇹 PT</button>
-      <button class="legal-lang-btn" data-lang="en">🇬🇧 EN</button>
-      <button class="legal-lang-btn" data-lang="es">🇪🇸 ES</button>
-      <button class="legal-lang-btn" data-lang="fr">🇫🇷 FR</button>
-      <button class="legal-lang-btn" data-lang="de">🇩🇪 DE</button>
-      <button class="legal-lang-btn" data-lang="it">🇮🇹 IT</button>
-    </div>
+    <!-- CONTEÚDO LEGAL -->
+    <section class="legal-content">
 
-    <!-- CONTEÚDO INJETADO VIA JS -->
-    <section id="reservationPolicyContent" class="legal-content"></section>
+      <h2>1. Introdução</h2>
+      <p>A presente Política de Reservas regula o processo de reserva, pagamento, cancelamento e utilização dos serviços de alojamento disponibilizados pela Apartments Belleview Lagos. Ao efetuar uma reserva através do nosso website, guia digital ou plataformas externas, o hóspede aceita integralmente os termos aqui descritos.</p>
+
+      <h2>2. Processo de Reserva</h2>
+      <p>As reservas podem ser realizadas através de plataformas externas (Booking.com, Airbnb, etc.) ou diretamente com a Apartments Belleview Lagos. A confirmação da reserva é enviada por email após validação da disponibilidade. O hóspede é responsável por garantir que os dados fornecidos são verdadeiros, completos e atualizados.</p>
+
+      <h2>3. Pagamentos</h2>
+      <p>As condições de pagamento variam conforme a plataforma utilizada. Reservas diretas podem exigir pagamento parcial ou total antecipado. Todos os valores incluem IVA à taxa legal em vigor. Os métodos de pagamento aceites são indicados no momento da reserva.</p>
+
+      <h2>4. Cancelamentos e Alterações</h2>
+      <p>As condições de cancelamento são apresentadas no momento da reserva e podem variar conforme a tarifa escolhida. Alterações à reserva dependem da disponibilidade e podem implicar custos adicionais. Em caso de não comparência (“no-show”), poderá ser cobrado o valor total da reserva, conforme a política aplicável.</p>
+
+      <h2>5. Check-in e Check-out</h2>
+      <p>O horário de check-in e check-out é o indicado na confirmação da reserva. Check-in antecipado ou check-out tardio dependem de disponibilidade e podem ter custos adicionais. O hóspede deve comunicar previamente qualquer alteração ao horário previsto.</p>
+
+      <h2>6. Identificação Obrigatória (AIMA/SEF)</h2>
+      <p>Nos termos da legislação portuguesa, todos os hóspedes estrangeiros devem fornecer dados de identificação para comunicação obrigatória à AIMA (antigo SEF). O hóspede compromete-se a fornecer nome completo, data de nascimento, nacionalidade, documento de identificação e datas de entrada e saída. A falta destes dados pode impedir o check-in.</p>
+
+      <h2>7. Utilização do Alojamento</h2>
+      <p>O hóspede compromete-se a respeitar as regras de convivência e silêncio, utilizar o alojamento de forma adequada, não exceder o número máximo de ocupantes, não realizar atividades ilícitas e comunicar danos ou problemas detetados durante a estadia. A Apartments Belleview Lagos reserva-se o direito de cobrar danos causados ao imóvel ou ao seu conteúdo.</p>
+
+      <h2>8. Limitação de Responsabilidade</h2>
+      <p>A Apartments Belleview Lagos não se responsabiliza por perdas, danos ou furtos de bens pessoais, por interrupções temporárias de serviços externos (água, eletricidade, internet) ou por danos resultantes de uso indevido do alojamento.</p>
+
+      <h2>9. Alterações à Política</h2>
+      <p>A Apartments Belleview Lagos pode atualizar esta Política de Reservas sempre que necessário. A versão mais recente estará sempre disponível no website e no guia digital.</p>
+
+      <h2>10. Contacto</h2>
+      <p>Para esclarecimentos relacionados com reservas: <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a></p>
+
+    </section>
 
   </main>
 
-  <!-- RODAPÉ OFICIAL BELLEVIEW -->
-  <footer class="rodape-belleview">
-    <p>Apartments Belleview Lagos<br>
-    Rua Quinta do Landeiro Lote 22, 23<br>
-    Urbanização Marina Park<br>
-    8600-302 Lagos, Algarve - Portugal</p>
+  <!-- RODAPÉ OFICIAL (copiado do AIMA/Guide) -->
+  <footer>
+    <div class="footer-content">
 
-    <p>Tel: +351 910 051 588<br>
-    Whatsapp: +351 910 051 588<br>
-    Email: belleview@sapo.pt</p>
+      <svg width="50" height="50" viewBox="0 0 100 100" class="footer-logo">
+        <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#ffffff" stroke-width="6"/>
+        <text x="50" y="67" text-anchor="middle"
+              font-family="Poppins, sans-serif"
+              font-size="42" font-weight="700" fill="#005c99">B</text>
+      </svg>
 
-    <p>Nº de Registos AL: 26313/AL, 116670/AL, 116671/AL<br>
-    Entidade Exploradora: Luís Ferreira.</p>
+      <p class="footer-title">Apartments Belleview Lagos</p>
 
-    <p>
-      <a href="/legal/politica-de-reservas.html?from=site">Política de Reservas</a> |
-      <a href="/legal/politica-de-privacidade.html?from=site">Política de Privacidade</a> |
-      <a href="/legal/politica-de-cookies.html?from=site">Política de Cookies</a> |
-      <a href="/legal/termos-e-condicoes.html?from=site">Termos e Condições</a> |
-      <a href="https://www.livroreclamacoes.pt/Inicio/">Livro de Reclamações Online</a>
-    </p>
+      <p>
+        Rua Quinta do Landeiro Lote 22, 23<br>
+        Urbanização Marina Park<br>
+        8600-302 Lagos, Algarve - Portugal<br>
+        Tel: +351 910 051 588<br>
+        (Chamada para a rede fixa nacional)<br>
+        Whatsapp: +351 910 051 588<br>
+        Email: belleview@sapo.pt
+      </p>
 
-    <p>© 2025 Apartments Belleview Lagos — Todos os direitos reservados.</p>
+      <p>
+        Nº de Registos AL: 26313/AL, 116670/AL, 116671/AL<br>
+        Entidade Exploradora: Luís Ferreira.
+      </p>
+
+      <div class="footer-links">
+        <a href="/legal/politica-de-reservas.html">Política de Reservas</a> |
+        <a href="/legal/politica-de-privacidade.html">Política de Privacidade</a> |
+        <a href="/legal/politica-de-cookies.html">Política de Cookies</a> |
+        <a href="/legal/termos-e-condicoes.html">Termos e Condições</a> |
+        <a href="https://www.livroreclamacoes.pt/INICIO/" target="_blank">Livro de Reclamações Online</a>
+      </div>
+
+      <p class="footer-copy">
+        © 2025 Apartments Belleview Lagos — Todos os direitos reservados.
+      </p>
+
+    </div>
   </footer>
 
-  <!-- JS Multilíngua + Botão Voltar -->
   <script src="/js/legal.js"></script>
 
 </body>
