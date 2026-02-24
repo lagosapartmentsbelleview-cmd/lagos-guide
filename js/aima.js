@@ -1407,7 +1407,7 @@ document.getElementById("closeFaqModal").addEventListener("click", () => {
 
 
 // INICIAR EM PT
-
+setLanguage("pt");
 
 // ⭐⭐⭐ RODAPÉ PARA MULTILIGUA POLITICAS TITULOS ⭐⭐⭐ 
   updateFooterLinksAIMA();
