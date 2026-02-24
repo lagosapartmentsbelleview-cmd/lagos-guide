@@ -1266,14 +1266,6 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
 
   const t = texts[currentLang];
 
-// ------------------------------
-// SUBMISSÃO DO FORMULÁRIO (SEM MODAL, ALERTAS TRADUZIDOS)
-// ------------------------------
-document.getElementById("aimaForm").addEventListener("submit", async function (e) {
-  e.preventDefault();
-
-  const t = texts[currentLang];
-
   // 1️⃣ Atualizar subject dinamicamente antes de enviar
   const firstGuestName =
     document.querySelector('input[name="guest_1_fullName"]')?.value || t.defaultGuestName || "Hóspede";
