@@ -455,37 +455,32 @@ footer {
 
 @media print {
 
-  /* Esconde tudo no site */
+  /* Remove completamente o layout do site */
   body * {
     visibility: hidden !important;
-  }
-
-  /* Mostra apenas o conteúdo do resumo */
-  #summaryBox, #summaryBox * {
-    visibility: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
   }
 
   /* O modal deixa de existir como caixa */
   #summaryModal {
     display: contents !important;
-    position: static !important;
-    inset: auto !important;
-    background: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    height: auto !important;
-    width: auto !important;
   }
 
-  /* O summaryBox torna-se o único bloco real */
+  /* O summaryBox torna-se o único elemento impresso */
+  #summaryBox, #summaryBox * {
+    visibility: visible !important;
+  }
+
   #summaryBox {
-    box-shadow: none !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    max-height: none !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
+    position: static !important;
     margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
   }
 
   /* Esconder botões */
