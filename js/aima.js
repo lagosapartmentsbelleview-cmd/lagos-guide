@@ -1106,6 +1106,9 @@ if (openFaqBtn) {
     loadFaq();
     faqModal.style.display = "block";
   });
+
+// ⭐⭐⭐ RODAPÉ PARA MULTILIGUA POLITICAS TITULOS ⭐⭐⭐ 
+  updateFooterLinksAIMA();
 }
 
 // ------------------------------
