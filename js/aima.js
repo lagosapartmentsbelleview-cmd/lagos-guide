@@ -1069,17 +1069,33 @@ function setLanguage(lang) {
   document.getElementById("checkinDate").placeholder = t.placeholder_checkin;
   document.getElementById("checkoutDate").placeholder = t.placeholder_checkout;
 
-  // 1️⃣ Primeiro gerar os campos dos hóspedes
+  // 1️⃣ Gerar campos dos hóspedes
   generateGuestFields();
 
-  // 2️⃣ Depois traduzir o "Selecione" de TODOS os selects
+  // 2️⃣ Traduzir o "Selecione" de TODOS os selects
   document.querySelectorAll("select").forEach(sel => {
     const firstOption = sel.querySelector("option[value='']");
-    if (firstOption) firstOption.textContent = t.placeholder_select;
+    if (firstOption) {
+      firstOption.textContent = t.placeholder_select;
+      firstOption.disabled = true;
+      firstOption.hidden = true;
+      firstOption.selected = true;
+    }
   });
+
+  // 3️⃣ Reaplicar evento do FAQ (DEVE SER SEMPRE NO FIM)
+  setTimeout(() => {
+    const openFaqBtn = document.getElementById("openFaqModal");
+    if (openFaqBtn) {
+      openFaqBtn.onclick = () => {
+        document.getElementById("faqTitle").textContent = faqTitles[currentLang];
+        loadFaq();
+        faqModal.style.display = "block";
+      };
+    }
+  }, 0);
 }
 
-  
   // -----------------------------------------
   // REAPLICAR EVENTO DO LINK FAQ APÓS MUDAR IDIOMA
   // -----------------------------------------
