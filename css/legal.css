@@ -2,7 +2,13 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
-  line-height: 1.6;
+  line-height: 1.7;
+  color: #333;
+}
+
+.legal-hero {
+  position: relative;
+  margin-bottom: 30px;
 }
 
 .legal-hero-image {
@@ -10,6 +16,24 @@
   height: 260px;
   object-fit: cover;
   border-radius: 6px;
+}
+
+.legal-hero-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.45);
+  padding: 10px 20px;
+  border-radius: 6px;
+}
+
+.legal-hero-overlay h1 {
+  color: white;
+  margin: 0;
+}
+
+.legal-lang-switch {
+  margin-bottom: 20px;
 }
 
 .legal-lang-btn {
@@ -24,4 +48,9 @@
 
 .legal-lang-btn.active {
   background: #0d47a1;
+}
+
+.legal-content h2 {
+  margin-top: 25px;
+  color: #1976d2;
 }
