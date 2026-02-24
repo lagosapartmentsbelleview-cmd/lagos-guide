@@ -1,21 +1,57 @@
-<section id="reservation-policy" class="legal-section">
-  <div class="legal-hero">
-    <img src="/images/belleview-hero.jpg" alt="Apartments Belleview Lagos" class="legal-hero-image">
-    <div class="legal-hero-overlay">
-      <h1 id="reservationPolicyTitle">Política de Reservas</h1>
-    </div>
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Reservas | Apartments Belleview Lagos</title>
+
+  <!-- CSS Global -->
+  <link rel="stylesheet" href="/css/global.css">
+
+  <!-- CSS Legal -->
+  <link rel="stylesheet" href="/css/legal.css">
+</head>
+
+<body>
+
+  <!-- MENU SUPERIOR (igual ao site) -->
+  <div class="top-menu">
+    <button class="menu-button" onclick="window.location.href='/'">Início</button>
+    <button class="menu-button" onclick="window.location.href='/guide'">Guia</button>
+    <button class="menu-button" onclick="window.location.href='/aima'">AIMA</button>
   </div>
 
-  <div class="legal-lang-switch">
-    <button type="button" class="legal-lang-btn" data-lang="pt">PT</button>
-    <button type="button" class="legal-lang-btn" data-lang="en">EN</button>
-    <button type="button" class="legal-lang-btn" data-lang="es">ES</button>
-    <button type="button" class="legal-lang-btn" data-lang="fr">FR</button>
-    <button type="button" class="legal-lang-btn" data-lang="de">DE</button>
-    <button type="button" class="legal-lang-btn" data-lang="it">IT</button>
+  <div class="content">
+
+    <section id="reservation-policy" class="legal-section">
+
+      <!-- HERO COM IMAGEM -->
+      <div class="legal-hero">
+        <img src="/images/belleview-hero.jpg" alt="Apartments Belleview Lagos" class="legal-hero-image">
+        <div class="legal-hero-overlay">
+          <h1 id="reservationPolicyTitle">Política de Reservas</h1>
+        </div>
+      </div>
+
+      <!-- BOTÕES DE IDIOMA -->
+      <div class="legal-lang-switch">
+        <button type="button" class="legal-lang-btn" data-lang="pt">PT</button>
+        <button type="button" class="legal-lang-btn" data-lang="en">EN</button>
+        <button type="button" class="legal-lang-btn" data-lang="es">ES</button>
+        <button type="button" class="legal-lang-btn" data-lang="fr">FR</button>
+        <button type="button" class="legal-lang-btn" data-lang="de">DE</button>
+        <button type="button" class="legal-lang-btn" data-lang="it">IT</button>
+      </div>
+
+      <!-- CONTEÚDO INJETADO VIA JS -->
+      <div id="reservationPolicyContent" class="legal-content"></div>
+
+    </section>
+
   </div>
 
-  <div id="reservationPolicyContent" class="legal-content">
-    <!-- Conteúdo é injetado via JS -->
-  </div>
-</section>
+  <!-- JS Multilíngua -->
+  <script src="/js/legal.js"></script>
+
+</body>
+</html>
