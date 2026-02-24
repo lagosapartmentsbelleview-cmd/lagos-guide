@@ -47,3 +47,9 @@
   line-height: 1.7;
   margin-bottom: 14px;
 }
+
+/* JUSTIFICAÇÃO DO TEXTO LEGAL */
+.legal-content {
+  text-align: justify;
+  text-justify: inter-word;
+}
