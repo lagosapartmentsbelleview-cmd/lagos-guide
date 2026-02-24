@@ -1,37 +1,43 @@
-.legal-section {
+/* WRAPPER */
+.legal-wrapper {
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
-  line-height: 1.7;
-  color: #333;
 }
 
-.legal-hero {
-  position: relative;
+/* HERO SIMPLES */
+.legal-hero-simple {
+  background: #1976d2;
+  padding: 40px 20px;
+  text-align: center;
+  border-radius: 6px;
   margin-bottom: 30px;
 }
 
-.legal-hero-image {
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-.legal-hero-overlay {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background: rgba(0,0,0,0.45);
-  padding: 10px 20px;
-  border-radius: 6px;
-}
-
-.legal-hero-overlay h1 {
+.legal-hero-simple h1 {
   color: white;
   margin: 0;
+  font-size: 28px;
 }
 
+/* BOTÃO VOLTAR */
+.legal-back-btn {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.legal-back-btn:hover {
+  background: #0d47a1;
+}
+
+/* BOTÕES DE IDIOMA */
 .legal-lang-switch {
   margin-bottom: 20px;
 }
@@ -44,13 +50,38 @@
   color: white;
   border: none;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .legal-lang-btn.active {
   background: #0d47a1;
 }
 
+/* CONTEÚDO */
 .legal-content h2 {
   margin-top: 25px;
   color: #1976d2;
+}
+
+.legal-content p {
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+/* RODAPÉ */
+.rodape-belleview {
+  background: #f5f5f5;
+  padding: 40px 20px;
+  text-align: center;
+  margin-top: 60px;
+  font-size: 14px;
+}
+
+.rodape-belleview a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.rodape-belleview a:hover {
+  text-decoration: underline;
 }
