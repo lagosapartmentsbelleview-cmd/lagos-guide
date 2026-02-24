@@ -1398,21 +1398,27 @@ window.exportarPDF = function () {
         parseInt(document.getElementById("adults").value || 0) +
         parseInt(document.getElementById("children").value || 0);
 
+    // WRAPPER VISÍVEL PARA html2pdf CONSEGUIR LER
     const wrapper = document.createElement("div");
+    wrapper.style.position = "absolute";
+    wrapper.style.top = "-9999px";   // fora do ecrã mas visível
+    wrapper.style.left = "-9999px";
     wrapper.style.width = "100%";
-    wrapper.style.boxSizing = "border-box";
+    wrapper.style.background = "white";
+    wrapper.style.zIndex = "999999";
+
+    document.body.appendChild(wrapper); // ← ADICIONADO ANTES DO LOOP
 
     for (let i = 1; i <= totalGuests; i++) {
 
-        // LER OS VALORES COMO TEXTO (NÃO COMO INPUT)
         const dados = {
-            fullName: document.querySelector(`[name="guest_${i}_fullName"]`).value || "",
-            birthDate: document.querySelector(`[name="guest_${i}_birthDate"]`).value || "",
-            nationality: document.querySelector(`[name="guest_${i}_nationality"]`).value || "",
-            residenceCountry: document.querySelector(`[name="guest_${i}_residenceCountry"]`).value || "",
-            docNumber: document.querySelector(`[name="guest_${i}_docNumber"]`).value || "",
-            docType: document.querySelector(`[name="guest_${i}_docType"]`).value || "",
-            docCountry: document.querySelector(`[name="guest_${i}_docCountry"]`).value || ""
+            fullName: document.querySelector(`[name="guest_${i}_fullName"]`)?.value || "",
+            birthDate: document.querySelector(`[name="guest_${i}_birthDate"]`)?.value || "",
+            nationality: document.querySelector(`[name="guest_${i}_nationality"]`)?.value || "",
+            residenceCountry: document.querySelector(`[name="guest_${i}_residenceCountry"]`)?.value || "",
+            docNumber: document.querySelector(`[name="guest_${i}_docNumber"]`)?.value || "",
+            docType: document.querySelector(`[name="guest_${i}_docType"]`)?.value || "",
+            docCountry: document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || ""
         };
 
         wrapper.insertAdjacentHTML(
@@ -1420,8 +1426,6 @@ window.exportarPDF = function () {
             gerarPaginaHospede(t, i, dados)
         );
     }
-
-    document.body.appendChild(wrapper);
 
     const opt = {
         margin: 10,
@@ -1436,6 +1440,7 @@ window.exportarPDF = function () {
         .from(wrapper)
         .save()
         .then(() => {
-            document.body.removeChild(wrapper);
+            wrapper.remove(); // limpar
         });
 };
+
