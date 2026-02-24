@@ -353,3 +353,43 @@ footer {
   text-decoration: underline;
 }
 
+/* -----------------------------------------
+   PLACEHOLDERS DOS INPUTS (datas, textos)
+----------------------------------------- */
+input::placeholder {
+  color: #999;
+  opacity: 1; /* Safari fix */
+}
+
+/* -----------------------------------------
+   PLACEHOLDER DOS SELECTS (estado inicial)
+----------------------------------------- */
+select:invalid {
+  color: #999; /* cinzento igual ao placeholder */
+}
+
+/* Opções normais dos selects */
+select option {
+  color: #000;
+}
+
+/* Placeholder do select (disabled/hidden) */
+select option[disabled] {
+  color: #999;
+}
+
+/* -----------------------------------------
+   ESTILO CONSISTENTE PARA INPUTS DE DATA
+----------------------------------------- */
+input[type="text"][name*="birthDate"],
+#checkinDate,
+#checkoutDate {
+  color: #000; /* texto normal */
+}
+
+/* Quando o input está vazio (placeholder visível) */
+input[type="text"][name*="birthDate"]:placeholder-shown,
+#checkinDate:placeholder-shown,
+#checkoutDate:placeholder-shown {
+  color: #999;
+}
