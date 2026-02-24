@@ -1266,12 +1266,22 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
 
   const t = texts[currentLang];
 
-  // 1️⃣ Atualizar subject dinamicamente antes de enviar
-  const firstGuestName =
-    document.querySelector('input[name="guest_1_fullName"]')?.value || t.defaultGuestName || "Hóspede";
+  // 1️⃣ Garantir que o input hidden "subject" existe
+let subjectInput = document.querySelector('input[name="subject"]');
 
-  document.querySelector('input[name="subject"]').value =
-    `Novo Formulário AIMA Recebido de ${firstGuestName}`;
+if (!subjectInput) {
+  subjectInput = document.createElement("input");
+  subjectInput.type = "hidden";
+  subjectInput.name = "subject";
+  this.appendChild(subjectInput); // adiciona ao form dinamicamente
+}
+
+// 2️⃣ Atualizar subject dinamicamente
+const firstGuestName =
+  document.querySelector('input[name="guest_1_fullName"]')?.value || "Hóspede";
+
+subjectInput.value = `Novo Formulário AIMA Recebido de ${firstGuestName}`;
+
 
   // ------------------------------
   // VALIDAR CAMPOS OBRIGATÓRIOS
