@@ -1307,3 +1307,8 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     submitBtn.disabled = false;
   }
 });
+
+// ------------------------------
+// INICIAR EM PORTUGUÊS
+// ------------------------------
+setLanguage("pt");
