@@ -1013,6 +1013,7 @@ const childrenInput = document.getElementById("children");
 function setLanguage(lang) {
   currentLang = lang;
   const t = texts[lang];
+  document.documentElement.lang = lang;
 
   subtitleEl.textContent = t.subtitle;
   legalInfoEl.innerHTML = t.legalHtml;
