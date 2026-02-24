@@ -68,3 +68,7 @@ function updateFooterLinksAIMA() {
 document.addEventListener("DOMContentLoaded", () => {
   setTimeout(updateFooterLinksAIMA, 50);
 });
+
+// Torna a função global para o AIMA conseguir chamá-la
+window.updateFooterLinksAIMA = updateFooterLinksAIMA;
+
