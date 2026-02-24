@@ -1341,10 +1341,100 @@ closeSummaryBtn.addEventListener("click", () => {
   summaryModal.style.display = "none";
 });
 
-// Imprimir / Guardar
+// Guardar / Imprimir → AGORA USA PDF PROFISSIONAL
 printSummaryBtn.addEventListener("click", () => {
-  window.print();
+  exportarPDF();
 });
 
 
+// ======================================================================
+// PDF PROFISSIONAL — 1 HÓSPEDE POR PÁGINA (ESTILO B — CABEÇALHO BELLEVIEW)
+// ======================================================================
 
+// Template de cada página do PDF
+function gerarPaginaHospede(t, index, dados) {
+    return `
+        <div class="pagina-hospede" style="
+            width: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        ">
+
+            <!-- Cabeçalho Belleview -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h1 style="margin: 0; font-size: 26px; color: #005c99;">
+                    APARTMENTS BELLEVIEW LAGOS
+                </h1>
+                <h2 style="margin: 5px 0 0 0; font-size: 20px;">
+                    Boletim de Alojamento
+                </h2>
+            </div>
+
+            <!-- Dados do hóspede -->
+            <h3 style="margin-top: 20px;">Hóspede ${index}</h3>
+
+            <p><strong>Nome Completo:</strong> ${dados.fullName}</p>
+            <p><strong>Data de Nascimento:</strong> ${dados.birthDate}</p>
+            <p><strong>Nacionalidade:</strong> ${dados.nationality}</p>
+            <p><strong>País de Residência:</strong> ${dados.residenceCountry}</p>
+            <p><strong>Número do Documento:</strong> ${dados.docNumber}</p>
+            <p><strong>Tipo de Documento:</strong> ${dados.docType}</p>
+            <p><strong>País Emissor:</strong> ${dados.docCountry}</p>
+
+        </div>
+
+        <div style="page-break-before: always;"></div>
+    `;
+}
+
+
+// Função principal — gerar PDF
+window.exportarPDF = function () {
+
+    const t = texts[currentLang];
+
+    const totalGuests =
+        parseInt(document.getElementById("adults").value || 0) +
+        parseInt(document.getElementById("children").value || 0);
+
+    const wrapper = document.createElement("div");
+    wrapper.style.width = "100%";
+    wrapper.style.boxSizing = "border-box";
+
+    for (let i = 1; i <= totalGuests; i++) {
+
+        const dados = {
+            fullName: document.querySelector(`[name="guest_${i}_fullName"]`).value,
+            birthDate: document.querySelector(`[name="guest_${i}_birthDate"]`).value,
+            nationality: document.querySelector(`[name="guest_${i}_nationality"]`).value,
+            residenceCountry: document.querySelector(`[name="guest_${i}_residenceCountry"]`).value,
+            docNumber: document.querySelector(`[name="guest_${i}_docNumber"]`).value,
+            docType: document.querySelector(`[name="guest_${i}_docType"]`).value,
+            docCountry: document.querySelector(`[name="guest_${i}_docCountry"]`).value
+        };
+
+        wrapper.insertAdjacentHTML(
+            "beforeend",
+            gerarPaginaHospede(t, i, dados)
+        );
+    }
+
+    document.body.appendChild(wrapper);
+
+    const opt = {
+        margin: 10,
+        filename: "boletim_alojamento.pdf",
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        pagebreak: { mode: ['css', 'legacy'] }
+    };
+
+    html2pdf()
+        .set(opt)
+        .from(wrapper)
+        .save()
+        .then(() => {
+            document.body.removeChild(wrapper);
+        });
+};
