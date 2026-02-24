@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (link.external) {
         return `<a href="${link.href}" target="_blank" rel="noopener noreferrer">${link.label}</a>`;
       }
-      return `<a href="${link.href}?lang=${lang}">${link.label}</a>`;
+      return `<a href="${link.href}?lang=${lang}&from=aima">${link.label}</a>`;
     })
     .join(" | ");
 });
