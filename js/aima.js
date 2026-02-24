@@ -1093,7 +1093,7 @@ if (openFaqBtn) {
 }
 
 // ------------------------------
-// GERAR CAMPOS PARA HÓSPEDES (ATUALIZADO)
+// GERAR CAMPOS PARA HÓSPEDES (ATUALIZADO E CORRIGIDO)
 // ------------------------------
 function generateGuestFields() {
   const t = texts[currentLang];
@@ -1116,14 +1116,12 @@ function generateGuestFields() {
         <input type="text" name="guest_${i}_fullName" required>
       </div>
 
-      <!-- Data de nascimento (vazia até clicar) -->
+      <!-- Data de nascimento -->
       <div class="form-row">
         <label>${t.fields.birthDate}</label>
         <input type="text"
                name="guest_${i}_birthDate"
                placeholder="${t.placeholder_checkin}"
-               onfocus="this.type='date'"
-               onblur="if(!this.value) this.type='text';"
                required>
       </div>
 
@@ -1131,7 +1129,7 @@ function generateGuestFields() {
       <div class="form-row">
         <label>${t.fields.nationality}</label>
         <select name="guest_${i}_nationality" required>
-          <option value="">Selecione...</option>
+          <option value="" disabled selected hidden>${t.placeholder_select}</option>
           ${countries.map(c => `<option value="${c}">${c}</option>`).join("")}
         </select>
       </div>
@@ -1140,7 +1138,7 @@ function generateGuestFields() {
       <div class="form-row">
         <label>${t.fields.residenceCountry}</label>
         <select name="guest_${i}_residenceCountry" required>
-          <option value="">Selecione...</option>
+          <option value="" disabled selected hidden>${t.placeholder_select}</option>
           ${countries.map(c => `<option value="${c}">${c}</option>`).join("")}
         </select>
       </div>
@@ -1151,20 +1149,20 @@ function generateGuestFields() {
         <input type="text" name="guest_${i}_docNumber" required>
       </div>
 
-      <!-- Tipo de documento (vazio até clicar) -->
+      <!-- Tipo de documento -->
       <div class="form-row">
         <label>${t.fields.docType}</label>
         <select name="guest_${i}_docType" id="docType_${i}" required>
-          <option value="">Selecione...</option>
+          <option value="" disabled selected hidden>${t.placeholder_select}</option>
           <option value="passport">${t.fields.docTypePassport}</option>
           <option value="id">${t.fields.docTypeID}</option>
-          <option value="other">Outro</option>
+          <option value="other">${t.fields.docTypeOther || "Outro"}</option>
         </select>
       </div>
 
       <!-- Campo "Outro → Qual?" -->
       <div class="form-row" id="otherDocField_${i}" style="display:none;">
-        <label>Qual?</label>
+        <label>${t.fields.docTypeOtherLabel || "Qual?"}</label>
         <input type="text" name="guest_${i}_docOther">
       </div>
 
@@ -1172,7 +1170,7 @@ function generateGuestFields() {
       <div class="form-row">
         <label>${t.fields.docCountry}</label>
         <select name="guest_${i}_docCountry" required>
-          <option value="">Selecione...</option>
+          <option value="" disabled selected hidden>${t.placeholder_select}</option>
           ${countries.map(c => `<option value="${c}">${c}</option>`).join("")}
         </select>
       </div>
@@ -1186,6 +1184,14 @@ function generateGuestFields() {
 
     docTypeSelect.addEventListener("change", () => {
       otherField.style.display = docTypeSelect.value === "other" ? "block" : "none";
+    });
+
+    // Corrigir comportamento da data de nascimento (placeholder multilíngue)
+    const birthInput = card.querySelector(`input[name="guest_${i}_birthDate"]`);
+    birthInput.type = "text";
+    birthInput.addEventListener("focus", () => birthInput.type = "date");
+    birthInput.addEventListener("blur", () => {
+      if (!birthInput.value) birthInput.type = "text";
     });
   }
 }
