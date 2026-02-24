@@ -75,7 +75,7 @@ const texts = {
 
 `,
     formTitle: "Boletim de Alojamento",
-    requiredNotice: "Preenchimento e envio obrigatório",
+    requiredNotice: "Preenchimento e envio obrigatório dos dados de todos os hóspedes adultos e crianças",
     stayDataTitle: "Dados da Estadia",
     checkinLabel: "Data de Check-in:",
     checkoutLabel: "Data de Check-out:",
@@ -162,7 +162,7 @@ const texts = {
 
   `,
   formTitle: "Accommodation Registration Form",
-  requiredNotice: "Mandatory completion and submission",
+  requiredNotice: "Mandatory completion and submission of all data for every adult and child guest",
   stayDataTitle: "Stay Information",
   checkinLabel: "Check‑in Date:",
   checkoutLabel: "Check‑out Date:",
@@ -250,7 +250,7 @@ const texts = {
 
   `,
   formTitle: "Registro de Alojamiento",
-  requiredNotice: "Cumplimentación y envío obligatorios",
+  requiredNotice: "Relleno y envío obligatorios de los datos de todos los huéspedes adultos y niños",
   stayDataTitle: "Datos de la Estancia",
   checkinLabel: "Fecha de Check‑in:",
   checkoutLabel: "Fecha de Check‑out:",
@@ -338,7 +338,7 @@ const texts = {
 
   `,
   formTitle: "Formulaire d’Enregistrement",
-  requiredNotice: "Remplissage et envoi obligatoires",
+  requiredNotice: "Remplissage et envoi obligatoires des données de tous les hôtes, adultes et enfants",
   stayDataTitle: "Données du Séjour",
   checkinLabel: "Date d’Arrivée :",
   checkoutLabel: "Date de Départ :",
@@ -426,7 +426,7 @@ const texts = {
 
   `,
   formTitle: "Modulo di Registrazione",
-  requiredNotice: "Compilazione e invio obbligatori",
+  requiredNotice: "Compilazione e invio obbligatori dei dati di tutti gli ospiti adulti e bambini",
   stayDataTitle: "Dati del Soggiorno",
   checkinLabel: "Data di Check‑in:",
   checkoutLabel: "Data di Check‑out:",
@@ -515,7 +515,7 @@ const texts = {
 
   `,
   formTitle: "Gästeanmeldeformular",
-  requiredNotice: "Pflicht zur Ausfüllung und Übermittlung",
+  requiredNotice: "Pflichtangabe und Übermittlung der Daten aller erwachsenen Gäste und Kinder",
   stayDataTitle: "Angaben zum Aufenthalt",
   checkinLabel: "Check‑in‑Datum:",
   checkoutLabel: "Check‑out‑Datum:",
