@@ -1094,12 +1094,6 @@ function setLanguage(lang) {
       };
     }
   }, 0);
-
- // 4️⃣ ATUALIZAR O URL PARA ATIVAR O RODAPÉ MULTILÍNGUA
-  const url = new URL(window.location.href);
-  url.searchParams.set("lang", lang);
-  url.searchParams.set("from", "aima");
-  window.location.href = url.toString();
 }
 
   // -----------------------------------------
