@@ -1092,9 +1092,6 @@ if (openFaqBtn) {
   });
 }
 
-}
-
-
 // ------------------------------
 // GERAR CAMPOS PARA HÓSPEDES (ATUALIZADO)
 // ------------------------------
