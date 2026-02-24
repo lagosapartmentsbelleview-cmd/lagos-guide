@@ -1196,7 +1196,13 @@ function generateSummary() {
 document.getElementById("aimaForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  // Validar campos obrigatórios
+  const totalGuests =
+    parseInt(document.getElementById("adults").value || 0) +
+    parseInt(document.getElementById("children").value || 0);
+
+  // ------------------------------
+  // VALIDAR CAMPOS OBRIGATÓRIOS
+  // ------------------------------
   const invalid = [...this.querySelectorAll("[required]")].some(input => {
     return !input.value || input.value.trim() === "";
   });
@@ -1206,7 +1212,9 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     return;
   }
 
-  // Validar check-in < check-out
+  // ------------------------------
+  // VALIDAR CHECK-IN < CHECK-OUT
+  // ------------------------------
   const checkin = document.getElementById("checkinDate").value;
   const checkout = document.getElementById("checkoutDate").value;
 
@@ -1220,7 +1228,9 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     return;
   }
 
-  // Validar datas de nascimento
+  // ------------------------------
+  // VALIDAR DATAS DE NASCIMENTO
+  // ------------------------------
   const birthDates = [...document.querySelectorAll("input[name$='_birthDate']")];
 
   for (const bd of birthDates) {
@@ -1245,76 +1255,68 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     }
   }
 
-// ------------------------------
-// ENVIO VIA WEB3FORMS
-// ------------------------------
+  // ============================================================
+  // 1) GUARDAR DADOS PARA PDF (ANTES DO RESET)
+  // ============================================================
+  hospedesPDF = [];
 
-const formData = new FormData(this);
-
-// Access Key do teu formulário
-formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
-
-// Email de destino
-formData.append("to", "belleview@sapo.pt");
-
-// Assunto do email
-formData.append("subject", "Novo Formulário AIMA Recebido");
-
-// Botão de submit
-const submitBtn = this.querySelector('button[type="submit"]');
-const originalText = submitBtn.textContent;
-
-// Texto "A enviar..." no idioma atual
-submitBtn.textContent = texts[currentLang].sending || "A enviar...";
-submitBtn.disabled = true;
-
-try {
-  const response = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    body: formData
-  });
-
-  const result = await response.json();
-
-  if (response.ok) {
-    // Mensagem de sucesso no idioma atual
-    alert(texts[currentLang].submit);
-    // 1) Guardar dados para PDF
-hospedesPDF = [];
-
-for (let i = 1; i <= totalGuests; i++) {
-  hospedesPDF.push({
-    fullName: document.querySelector(`[name="guest_${i}_fullName"]`).value,
-    birthDate: document.querySelector(`[name="guest_${i}_birthDate"]`).value,
-    nationality: document.querySelector(`[name="guest_${i}_nationality"]`).value,
-    residenceCountry: document.querySelector(`[name="guest_${i}_residenceCountry"]`).value,
-    docNumber: document.querySelector(`[name="guest_${i}_docNumber"]`).value,
-    docType: document.querySelector(`[name="guest_${i}_docType"]`).value,
-    docCountry: document.querySelector(`[name="guest_${i}_docCountry"]`).value
-  });
-}
-
-// 2) Mostrar resumo
-generateSummary();
-document.getElementById("summaryModal").style.display = "flex";
-
-// 3) Reset só depois do PDF ser gerado
-// (vamos mover isto para o exportarPDF)
-
-    
-
-  } else {
-    alert("Erro: " + result.message);
+  for (let i = 1; i <= totalGuests; i++) {
+    hospedesPDF.push({
+      fullName: document.querySelector(`[name="guest_${i}_fullName"]`).value,
+      birthDate: document.querySelector(`[name="guest_${i}_birthDate"]`).value,
+      nationality: document.querySelector(`[name="guest_${i}_nationality"]`).value,
+      residenceCountry: document.querySelector(`[name="guest_${i}_residenceCountry"]`).value,
+      docNumber: document.querySelector(`[name="guest_${i}_docNumber"]`).value,
+      docType: document.querySelector(`[name="guest_${i}_docType"]`).value,
+      docCountry: document.querySelector(`[name="guest_${i}_docCountry"]`).value
+    });
   }
 
-} catch (error) {
-  alert("Erro de comunicação. Tente novamente.");
-} finally {
-  submitBtn.textContent = originalText;
-  submitBtn.disabled = false;
-}
+  // ============================================================
+  // 2) ENVIAR VIA WEB3FORMS (SEM RESET AQUI!)
+  // ============================================================
+  const formData = new FormData(this);
 
-}); 
+  formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
+  formData.append("to", "belleview@sapo.pt");
+  formData.append("subject", "Novo Formulário AIMA Recebido");
+
+  const submitBtn = this.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
+
+  submitBtn.textContent = texts[currentLang].sending || "A enviar...";
+  submitBtn.disabled = true;
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert(texts[currentLang].submit);
+
+      // Mostrar resumo
+      generateSummary();
+      document.getElementById("summaryModal").style.display = "flex";
+
+      // ❗ NÃO FAZER RESET AQUI
+      // O reset acontece APÓS o PDF ser gerado
+
+    } else {
+      alert("Erro: " + result.message);
+    }
+
+  } catch (error) {
+    alert("Erro de comunicação. Tente novamente.");
+  } finally {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  }
+});
+
 
 // ------------------------------
 // IDIOMA INICIAL
@@ -1329,18 +1331,15 @@ const faqContent = document.getElementById("faqContent");
 const openFaqBtn = document.getElementById("openFaqModal");
 const closeFaqBtn = document.getElementById("closeFaqModal");
 
-// Abrir modal
 openFaqBtn.addEventListener("click", () => {
-  loadFaq(); // ← carrega a FAQ do idioma atual
+  loadFaq();
   faqModal.style.display = "block";
 });
 
-// Fechar modal (botão X)
 closeFaqBtn.addEventListener("click", () => {
   faqModal.style.display = "none";
 });
 
-// Fechar modal ao clicar fora da caixa
 window.addEventListener("click", (e) => {
   if (e.target === faqModal) {
     faqModal.style.display = "none";
@@ -1354,22 +1353,19 @@ const summaryModal = document.getElementById("summaryModal");
 const closeSummaryBtn = document.getElementById("closeSummary");
 const printSummaryBtn = document.getElementById("printSummaryBtn");
 
-// Fechar modal
 closeSummaryBtn.addEventListener("click", () => {
   summaryModal.style.display = "none";
 });
 
-// Guardar / Imprimir → AGORA USA PDF PROFISSIONAL
 printSummaryBtn.addEventListener("click", () => {
   exportarPDF();
 });
 
 
 // ======================================================================
-// PDF PROFISSIONAL — 1 HÓSPEDE POR PÁGINA (ESTILO B — CABEÇALHO BELLEVIEW)
+// PDF PROFISSIONAL — 1 HÓSPEDE POR PÁGINA (ESTILO B)
 // ======================================================================
 
-// Template de cada página do PDF
 function gerarPaginaHospede(t, index, dados) {
     return `
         <div class="pagina-hospede" style="
@@ -1378,8 +1374,6 @@ function gerarPaginaHospede(t, index, dados) {
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         ">
-
-            <!-- Cabeçalho Belleview -->
             <div style="text-align: center; margin-bottom: 20px;">
                 <h1 style="margin: 0; font-size: 26px; color: #005c99;">
                     APARTMENTS BELLEVIEW LAGOS
@@ -1389,7 +1383,6 @@ function gerarPaginaHospede(t, index, dados) {
                 </h2>
             </div>
 
-            <!-- Dados do hóspede -->
             <h3 style="margin-top: 20px;">Hóspede ${index}</h3>
 
             <p><strong>Nome Completo:</strong> ${dados.fullName}</p>
@@ -1399,15 +1392,12 @@ function gerarPaginaHospede(t, index, dados) {
             <p><strong>Número do Documento:</strong> ${dados.docNumber}</p>
             <p><strong>Tipo de Documento:</strong> ${dados.docType}</p>
             <p><strong>País Emissor:</strong> ${dados.docCountry}</p>
-
         </div>
 
         <div style="page-break-before: always;"></div>
     `;
 }
 
-
-// Função principal — gerar PDF
 window.exportarPDF = function () {
 
     const t = texts[currentLang];
@@ -1443,11 +1433,7 @@ window.exportarPDF = function () {
         .save()
         .then(() => {
             wrapper.remove();
-
-            // Agora sim, reset ao formulário
             document.getElementById("aimaForm").reset();
             generateGuestFields();
         });
 };
-
-
