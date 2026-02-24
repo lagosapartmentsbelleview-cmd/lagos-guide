@@ -1358,6 +1358,17 @@ document.getElementById("closeFaqModal").addEventListener("click", () => {
   document.getElementById("faqModal").style.display = "none";
 });
 
+// Corrigir inputs de data para permitir placeholder
+["checkinDate", "checkoutDate"].forEach(id => {
+  const el = document.getElementById(id);
+  el.type = "text";
+  el.addEventListener("focus", () => el.type = "date");
+  el.addEventListener("blur", () => {
+    if (!el.value) el.type = "text";
+  });
+});
+
+
 // INICIAR EM PT
 setLanguage("pt");
 
