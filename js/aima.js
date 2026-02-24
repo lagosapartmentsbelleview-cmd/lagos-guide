@@ -1,5 +1,9 @@
 // js/aima.js
-let hospedesPDF = [];
+// Remover todos os required para evitar alertas do browser
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
+});
+
 
 // ------------------------------
 // TEXTOS POR IDIOMA
