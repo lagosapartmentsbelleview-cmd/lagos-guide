@@ -1121,7 +1121,7 @@ function generateGuestFields() {
         <label>${t.fields.birthDate}</label>
         <input type="text"
                name="guest_${i}_birthDate"
-               placeholder="dd/mm/aaaa"
+               placeholder="${t.placeholder_checkin}"
                onfocus="this.type='date'"
                onblur="if(!this.value) this.type='text';"
                required>
