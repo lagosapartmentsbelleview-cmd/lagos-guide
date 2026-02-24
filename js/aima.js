@@ -1191,14 +1191,12 @@ function generateSummary() {
 
 
 // ------------------------------
-// SUBMISSÃO DO FORMULÁRIO (COM VALIDAÇÕES COMPLETAS)
+// SUBMISSÃO DO FORMULÁRIO (LIMPO E SIMPLES)
 // ------------------------------
 document.getElementById("aimaForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  const totalGuests =
-    parseInt(document.getElementById("adults").value || 0) +
-    parseInt(document.getElementById("children").value || 0);
+  const t = texts[currentLang];
 
   // ------------------------------
   // VALIDAR CAMPOS OBRIGATÓRIOS
@@ -1208,7 +1206,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   });
 
   if (invalid) {
-    alert("Por favor preencha todos os campos obrigatórios antes de enviar.");
+    alert(t.fillRequired || "Por favor preencha todos os campos obrigatórios.");
     return;
   }
 
@@ -1219,12 +1217,12 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   const checkout = document.getElementById("checkoutDate").value;
 
   if (!checkin || !checkout) {
-    alert("Por favor preencha as datas de check-in e check-out.");
+    alert(t.fillDates || "Por favor preencha as datas de check-in e check-out.");
     return;
   }
 
   if (new Date(checkin) >= new Date(checkout)) {
-    alert("A data de check-out deve ser posterior à data de check-in.");
+    alert(t.invalidCheckout || "A data de check-out deve ser posterior à data de check-in.");
     return;
   }
 
@@ -1237,7 +1235,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     const value = bd.value;
 
     if (!value) {
-      alert("Por favor preencha todas as datas de nascimento.");
+      alert(t.fillBirthdates || "Por favor preencha todas as datas de nascimento.");
       return;
     }
 
@@ -1245,36 +1243,19 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     const today = new Date();
 
     if (birth > today) {
-      alert("A data de nascimento não pode ser no futuro.");
+      alert(t.birthFuture || "A data de nascimento não pode ser no futuro.");
       return;
     }
 
     if (birth.getFullYear() < 1900) {
-      alert("A data de nascimento é inválida.");
+      alert(t.birthInvalid || "A data de nascimento é inválida.");
       return;
     }
   }
 
-  // ============================================================
-  // 1) GUARDAR DADOS PARA PDF (ANTES DO RESET)
-  // ============================================================
-  hospedesPDF = [];
-
-  for (let i = 1; i <= totalGuests; i++) {
-    hospedesPDF.push({
-      fullName: document.querySelector(`[name="guest_${i}_fullName"]`).value,
-      birthDate: document.querySelector(`[name="guest_${i}_birthDate"]`).value,
-      nationality: document.querySelector(`[name="guest_${i}_nationality"]`).value,
-      residenceCountry: document.querySelector(`[name="guest_${i}_residenceCountry"]`).value,
-      docNumber: document.querySelector(`[name="guest_${i}_docNumber"]`).value,
-      docType: document.querySelector(`[name="guest_${i}_docType"]`).value,
-      docCountry: document.querySelector(`[name="guest_${i}_docCountry"]`).value
-    });
-  }
-
-  // ============================================================
-  // 2) ENVIAR VIA WEB3FORMS (SEM RESET AQUI!)
-  // ============================================================
+  // ------------------------------
+  // ENVIO VIA WEB3FORMS
+  // ------------------------------
   const formData = new FormData(this);
 
   formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
@@ -1284,7 +1265,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   const submitBtn = this.querySelector('button[type="submit"]');
   const originalText = submitBtn.textContent;
 
-  submitBtn.textContent = texts[currentLang].sending || "A enviar...";
+  submitBtn.textContent = t.sending || "A enviar...";
   submitBtn.disabled = true;
 
   try {
@@ -1296,14 +1277,22 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     const result = await response.json();
 
     if (response.ok) {
-      alert(texts[currentLang].submit);
+      // ------------------------------
+      // MENSAGEM FINAL POR IDIOMA
+      // ------------------------------
+      const successMessages = {
+        pt: "Formulário enviado com sucesso!",
+        en: "Form submitted successfully!",
+        es: "Formulario enviado con éxito!",
+        fr: "Formulaire envoyé avec succès!",
+        de: "Formular erfolgreich gesendet!",
+        it: "Modulo inviato con successo!"
+      };
 
-      // Mostrar resumo
-      generateSummary();
-      document.getElementById("summaryModal").style.display = "flex";
+      alert(successMessages[currentLang] || "Formulário enviado com sucesso!");
 
-      // ❗ NÃO FAZER RESET AQUI
-      // O reset acontece APÓS o PDF ser gerado
+      this.reset();
+      generateGuestFields();
 
     } else {
       alert("Erro: " + result.message);
@@ -1316,124 +1305,3 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     submitBtn.disabled = false;
   }
 });
-
-
-// ------------------------------
-// IDIOMA INICIAL
-// ------------------------------
-setLanguage("pt");
-
-// ------------------------------
-// MODAL FAQ — ABRIR E FECHAR
-// ------------------------------
-const faqModal = document.getElementById("faqModal");
-const faqContent = document.getElementById("faqContent");
-const openFaqBtn = document.getElementById("openFaqModal");
-const closeFaqBtn = document.getElementById("closeFaqModal");
-
-openFaqBtn.addEventListener("click", () => {
-  loadFaq();
-  faqModal.style.display = "block";
-});
-
-closeFaqBtn.addEventListener("click", () => {
-  faqModal.style.display = "none";
-});
-
-window.addEventListener("click", (e) => {
-  if (e.target === faqModal) {
-    faqModal.style.display = "none";
-  }
-});
-
-// ------------------------------
-// MODAL DE RESUMO — REFERÊNCIAS
-// ------------------------------
-const summaryModal = document.getElementById("summaryModal");
-const closeSummaryBtn = document.getElementById("closeSummary");
-const printSummaryBtn = document.getElementById("printSummaryBtn");
-
-closeSummaryBtn.addEventListener("click", () => {
-  summaryModal.style.display = "none";
-});
-
-printSummaryBtn.addEventListener("click", () => {
-  exportarPDF();
-});
-
-
-// ======================================================================
-// PDF PROFISSIONAL — 1 HÓSPEDE POR PÁGINA (ESTILO B)
-// ======================================================================
-
-function gerarPaginaHospede(t, index, dados) {
-    return `
-        <div class="pagina-hospede" style="
-            width: 100%;
-            padding: 30px;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        ">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <h1 style="margin: 0; font-size: 26px; color: #005c99;">
-                    APARTMENTS BELLEVIEW LAGOS
-                </h1>
-                <h2 style="margin: 5px 0 0 0; font-size: 20px;">
-                    Boletim de Alojamento
-                </h2>
-            </div>
-
-            <h3 style="margin-top: 20px;">Hóspede ${index}</h3>
-
-            <p><strong>Nome Completo:</strong> ${dados.fullName}</p>
-            <p><strong>Data de Nascimento:</strong> ${dados.birthDate}</p>
-            <p><strong>Nacionalidade:</strong> ${dados.nationality}</p>
-            <p><strong>País de Residência:</strong> ${dados.residenceCountry}</p>
-            <p><strong>Número do Documento:</strong> ${dados.docNumber}</p>
-            <p><strong>Tipo de Documento:</strong> ${dados.docType}</p>
-            <p><strong>País Emissor:</strong> ${dados.docCountry}</p>
-        </div>
-
-        <div style="page-break-before: always;"></div>
-    `;
-}
-
-window.exportarPDF = function () {
-
-    const t = texts[currentLang];
-
-    const wrapper = document.createElement("div");
-    wrapper.style.position = "absolute";
-    wrapper.style.top = "-9999px";
-    wrapper.style.left = "-9999px";
-    wrapper.style.width = "100%";
-    wrapper.style.background = "white";
-    wrapper.style.zIndex = "999999";
-
-    document.body.appendChild(wrapper);
-
-    hospedesPDF.forEach((dados, index) => {
-        wrapper.insertAdjacentHTML(
-            "beforeend",
-            gerarPaginaHospede(t, index + 1, dados)
-        );
-    });
-
-    const opt = {
-        margin: 10,
-        filename: "boletim_alojamento.pdf",
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        pagebreak: { mode: ['css', 'legacy'] }
-    };
-
-    html2pdf()
-        .set(opt)
-        .from(wrapper)
-        .save()
-        .then(() => {
-            wrapper.remove();
-            document.getElementById("aimaForm").reset();
-            generateGuestFields();
-        });
-};
