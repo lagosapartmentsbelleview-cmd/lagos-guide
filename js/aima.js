@@ -1191,7 +1191,7 @@ function generateSummary() {
 
 
 // ------------------------------
-// SUBMISSÃO DO FORMULÁRIO (LIMPO E SIMPLES)
+// SUBMISSÃO DO FORMULÁRIO (SEM MODAL, ALERTAS TRADUZIDOS)
 // ------------------------------
 document.getElementById("aimaForm").addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -1206,7 +1206,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   });
 
   if (invalid) {
-    alert(t.fillRequired || "Por favor preencha todos os campos obrigatórios.");
+    alert(t.alert_required || "Por favor preencha todos os campos obrigatórios.");
     return;
   }
 
@@ -1217,12 +1217,12 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   const checkout = document.getElementById("checkoutDate").value;
 
   if (!checkin || !checkout) {
-    alert(t.fillDates || "Por favor preencha as datas de check-in e check-out.");
+    alert(t.alert_dates_missing || "Por favor preencha as datas de check-in e check-out.");
     return;
   }
 
   if (new Date(checkin) >= new Date(checkout)) {
-    alert(t.invalidCheckout || "A data de check-out deve ser posterior à data de check-in.");
+    alert(t.alert_checkout_invalid || "A data de check-out deve ser posterior à data de check-in.");
     return;
   }
 
@@ -1235,7 +1235,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     const value = bd.value;
 
     if (!value) {
-      alert(t.fillBirthdates || "Por favor preencha todas as datas de nascimento.");
+      alert(t.alert_birth_missing || "Por favor preencha todas as datas de nascimento.");
       return;
     }
 
@@ -1243,12 +1243,12 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     const today = new Date();
 
     if (birth > today) {
-      alert(t.birthFuture || "A data de nascimento não pode ser no futuro.");
+      alert(t.alert_birth_future || "A data de nascimento não pode ser no futuro.");
       return;
     }
 
     if (birth.getFullYear() < 1900) {
-      alert(t.birthInvalid || "A data de nascimento é inválida.");
+      alert(t.alert_birth_invalid || "A data de nascimento é inválida.");
       return;
     }
   }
@@ -1277,8 +1277,9 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     const result = await response.json();
 
     if (response.ok) {
+
       // ------------------------------
-      // MENSAGEM FINAL POR IDIOMA
+      // MENSAGEM FINAL TRADUZIDA
       // ------------------------------
       const successMessages = {
         pt: "Formulário enviado com sucesso!",
@@ -1289,17 +1290,17 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
         it: "Modulo inviato con successo!"
       };
 
-      alert(successMessages[currentLang] || "Formulário enviado com sucesso!");
+      alert(successMessages[currentLang] || successMessages.pt);
 
       this.reset();
       generateGuestFields();
 
     } else {
-      alert("Erro: " + result.message);
+      alert(t.alert_error || ("Erro: " + result.message));
     }
 
   } catch (error) {
-    alert("Erro de comunicação. Tente novamente.");
+    alert(t.alert_comm_error || "Erro de comunicação. Tente novamente.");
   } finally {
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
