@@ -95,6 +95,12 @@ const texts = {
       docTypeID: "Bilhete de Identidade / Cartão de Cidadão",
       docCountry: "País Emissor do Documento:"
     },
+
+   // Placeholders PT 
+   placeholder_checkin: "dd/mm/aaaa", 
+   placeholder_checkout: "dd/mm/aaaa", 
+   placeholder_select: "Selecione",
+     
     submit: "Enviar Boletim de Alojamento"
 },
   en: {
@@ -182,6 +188,11 @@ const texts = {
     docTypeID: "Identity Card",
     docCountry: "Issuing Country:"
   },
+
+  placeholder_checkin: "dd/mm/yyyy", 
+  placeholder_checkout: "dd/mm/yyyy", 
+  placeholder_select: "Select",
+    
   submit: "Submit Accommodation Form"
 },
 
@@ -270,6 +281,11 @@ const texts = {
     docTypeID: "Documento de Identidad",
     docCountry: "País Emisor del Documento:"
   },
+
+  placeholder_checkin: "dd/mm/aaaa", 
+  placeholder_checkout: "dd/mm/aaaa", 
+  placeholder_select: "Seleccionar",
+    
   submit: "Enviar Registro de Alojamiento"
 },
 
@@ -358,6 +374,11 @@ const texts = {
     docTypeID: "Carte d’Identité",
     docCountry: "Pays Émetteur :"
   },
+
+  placeholder_checkin: "jj/mm/aaaa", 
+  placeholder_checkout: "jj/mm/aaaa", 
+  placeholder_select: "Sélectionner",
+    
   submit: "Envoyer le Formulaire"
 },
 
@@ -446,6 +467,11 @@ const texts = {
     docTypeID: "Carta d’Identità",
     docCountry: "Paese di Emissione:"
   },
+
+  placeholder_checkin: "gg/mm/aaaa", 
+  placeholder_checkout: "gg/mm/aaaa", 
+  placeholder_select: "Seleziona",
+  
   submit: "Invia Modulo di Registrazione"
 },
 
@@ -535,6 +561,11 @@ const texts = {
     docTypeID: "Personalausweis",
     docCountry: "Ausstellungsland:"
   },
+
+    placeholder_checkin: "TT/MM/JJJJ", 
+    placeholder_checkout: "TT/MM/JJJJ", 
+    placeholder_select: "Auswählen",
+    
     submit: "Formular absenden"
 }
 }; 
@@ -1019,14 +1050,11 @@ function setLanguage(lang) {
   const t = texts[lang];
   document.documentElement.lang = lang;
 
+  // Títulos e textos principais
   subtitleEl.textContent = t.subtitle;
   legalInfoEl.innerHTML = t.legalHtml;
   formSectionEl.style.display = "block";
-
   formTitleEl.textContent = t.formTitle;
-
-  document.getElementById("requiredNotice").textContent = t.requiredNotice;
- 
   stayDataTitleEl.textContent = t.stayDataTitle;
   checkinLabelEl.textContent = t.checkinLabel;
   checkoutLabelEl.textContent = t.checkoutLabel;
@@ -1034,7 +1062,23 @@ function setLanguage(lang) {
   childrenLabelEl.textContent = t.childrenLabel;
   submitBtnEl.textContent = t.submit;
 
+  // Aviso obrigatório
+  document.getElementById("requiredNotice").textContent = t.requiredNotice;
+
+  // Placeholders das datas
+  document.getElementById("checkinDate").placeholder = t.placeholder_checkin;
+  document.getElementById("checkoutDate").placeholder = t.placeholder_checkout;
+
+  // 1️⃣ Primeiro gerar os campos dos hóspedes
   generateGuestFields();
+
+  // 2️⃣ Depois traduzir o "Selecione" de TODOS os selects
+  document.querySelectorAll("select").forEach(sel => {
+    const firstOption = sel.querySelector("option[value='']");
+    if (firstOption) firstOption.textContent = t.placeholder_select;
+  });
+}
+
   
   // -----------------------------------------
   // REAPLICAR EVENTO DO LINK FAQ APÓS MUDAR IDIOMA
