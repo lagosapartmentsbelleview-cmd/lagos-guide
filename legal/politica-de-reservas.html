@@ -14,43 +14,75 @@
 
 <body>
 
-  <!-- MENU SUPERIOR (igual ao site) -->
-  <div class="top-menu">
-    <button class="menu-button" onclick="window.location.href='/'">Início</button>
-    <button class="menu-button" onclick="window.location.href='/guide'">Guia</button>
-    <button class="menu-button" onclick="window.location.href='/aima'">AIMA</button>
-  </div>
-
-  <div class="content">
-
-    <section id="reservation-policy" class="legal-section">
-
-      <!-- HERO COM IMAGEM -->
-      <div class="legal-hero">
-        <img src="/images/belleview-hero.jpg" alt="Apartments Belleview Lagos" class="legal-hero-image">
-        <div class="legal-hero-overlay">
-          <h1 id="reservationPolicyTitle">Política de Reservas</h1>
-        </div>
+  <!-- MENU OFICIAL BELLEVIEW -->
+  <header class="menu-principal">
+    <div class="menu-container">
+      <div class="menu-esquerda">
+        <a href="/#alojamento">Alojamento</a>
+        <a href="/#comodidades">Comodidades</a>
+        <a href="/#localizacao">Localização</a>
+        <a href="/#contactos">Contactos</a>
       </div>
 
-      <!-- BOTÕES DE IDIOMA -->
-      <div class="legal-lang-switch">
-        <button type="button" class="legal-lang-btn" data-lang="pt">PT</button>
-        <button type="button" class="legal-lang-btn" data-lang="en">EN</button>
-        <button type="button" class="legal-lang-btn" data-lang="es">ES</button>
-        <button type="button" class="legal-lang-btn" data-lang="fr">FR</button>
-        <button type="button" class="legal-lang-btn" data-lang="de">DE</button>
-        <button type="button" class="legal-lang-btn" data-lang="it">IT</button>
+      <div class="menu-direita">
+        <a href="?from=site&lang=pt">PT</a>
+        <a href="?from=site&lang=en">EN</a>
+        <a href="?from=site&lang=es">ES</a>
       </div>
+    </div>
+  </header>
 
-      <!-- CONTEÚDO INJETADO VIA JS -->
-      <div id="reservationPolicyContent" class="legal-content"></div>
+  <main class="legal-wrapper">
 
+    <!-- BOTÃO VOLTAR -->
+    <button id="btnBack" class="legal-back-btn">← Voltar</button>
+
+    <!-- HERO SIMPLES -->
+    <section class="legal-hero-simple">
+      <h1 id="reservationPolicyTitle">Política de Reservas</h1>
     </section>
 
-  </div>
+    <!-- BOTÕES MULTILÍNGUA -->
+    <div class="legal-lang-switch">
+      <button class="legal-lang-btn" data-lang="pt">🇵🇹 PT</button>
+      <button class="legal-lang-btn" data-lang="en">🇬🇧 EN</button>
+      <button class="legal-lang-btn" data-lang="es">🇪🇸 ES</button>
+      <button class="legal-lang-btn" data-lang="fr">🇫🇷 FR</button>
+      <button class="legal-lang-btn" data-lang="de">🇩🇪 DE</button>
+      <button class="legal-lang-btn" data-lang="it">🇮🇹 IT</button>
+    </div>
 
-  <!-- JS Multilíngua -->
+    <!-- CONTEÚDO INJETADO VIA JS -->
+    <section id="reservationPolicyContent" class="legal-content"></section>
+
+  </main>
+
+  <!-- RODAPÉ OFICIAL BELLEVIEW -->
+  <footer class="rodape-belleview">
+    <p>Apartments Belleview Lagos<br>
+    Rua Quinta do Landeiro Lote 22, 23<br>
+    Urbanização Marina Park<br>
+    8600-302 Lagos, Algarve - Portugal</p>
+
+    <p>Tel: +351 910 051 588<br>
+    Whatsapp: +351 910 051 588<br>
+    Email: belleview@sapo.pt</p>
+
+    <p>Nº de Registos AL: 26313/AL, 116670/AL, 116671/AL<br>
+    Entidade Exploradora: Luís Ferreira.</p>
+
+    <p>
+      <a href="/legal/politica-de-reservas.html?from=site">Política de Reservas</a> |
+      <a href="/legal/politica-de-privacidade.html?from=site">Política de Privacidade</a> |
+      <a href="/legal/politica-de-cookies.html?from=site">Política de Cookies</a> |
+      <a href="/legal/termos-e-condicoes.html?from=site">Termos e Condições</a> |
+      <a href="https://www.livroreclamacoes.pt/Inicio/">Livro de Reclamações Online</a>
+    </p>
+
+    <p>© 2025 Apartments Belleview Lagos — Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- JS Multilíngua + Botão Voltar -->
   <script src="/js/legal.js"></script>
 
 </body>
