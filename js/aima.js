@@ -1106,9 +1106,6 @@ if (openFaqBtn) {
     loadFaq();
     faqModal.style.display = "block";
   });
-
-// ⭐⭐⭐ RODAPÉ PARA MULTILIGUA POLITICAS TITULOS ⭐⭐⭐ 
-  updateFooterLinksAIMA();
 }
 
 // ------------------------------
@@ -1412,3 +1409,5 @@ document.getElementById("closeFaqModal").addEventListener("click", () => {
 // INICIAR EM PT
 setLanguage("pt");
 
+// ⭐⭐⭐ RODAPÉ PARA MULTILIGUA POLITICAS TITULOS ⭐⭐⭐ 
+  updateFooterLinksAIMA();
