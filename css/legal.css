@@ -1,9 +1,11 @@
+/* Espaçamento para compensar o header fixo */
 .legal-wrapper {
   max-width: 900px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 100px 20px 40px;
 }
 
+/* HERO SIMPLES */
 .legal-hero-simple {
   background: #005c99;
   padding: 40px 20px;
@@ -18,6 +20,7 @@
   font-size: 28px;
 }
 
+/* BOTÃO VOLTAR */
 .legal-back-btn {
   background: #005c99;
   color: white;
@@ -34,6 +37,7 @@
   background: #004b80;
 }
 
+/* CONTEÚDO LEGAL */
 .legal-content h2 {
   margin-top: 25px;
   color: #005c99;
