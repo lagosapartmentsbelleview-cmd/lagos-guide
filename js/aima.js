@@ -1312,7 +1312,11 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   }
 });
 
-// ------------------------------
-// INICIAR EM PORTUGUÊS
-// ------------------------------
+// FECHAR FAQ
+document.getElementById("closeFaqModal").addEventListener("click", () => {
+  document.getElementById("faqModal").style.display = "none";
+});
+
+// INICIAR EM PT
 setLanguage("pt");
+
