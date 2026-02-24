@@ -1,3 +1,4 @@
+/* MULTILINGUA */
 const reservationPolicyTexts = {
   pt: {
     title: "Política de Reservas",
@@ -36,20 +37,23 @@ const reservationPolicyTexts = {
 
   en: {
     title: "Reservation Policy",
-    html: `
-      <h2>1. Introduction</h2>
-      <p>This Reservation Policy governs the booking, payment, cancellation...</p>
-    `
+    html: `<p>English version coming soon.</p>`
   },
 
-  es: { title: "Política de Reservas", html: "<p>Contenido en español...</p>" },
-  fr: { title: "Politique de Réservation", html: "<p>Contenu en français...</p>" },
-  de: { title: "Reservierungsrichtlinie", html: "<p>Inhalt auf Deutsch...</p>" },
-  it: { title: "Politica di Prenotazione", html: "<p>Contenuto in italiano...</p>" }
+  es: {
+    title: "Política de Reservas",
+    html: `<p>Versión en español próximamente.</p>`
+  },
+
+  fr: { title: "Politique de Réservation", html: `<p>Version française bientôt disponible.</p>` },
+  de: { title: "Reservierungsrichtlinie", html: `<p>Deutsche Version bald verfügbar.</p>` },
+  it: { title: "Politica di Prenotazione", html: `<p>Versione italiana presto disponibile.</p>` }
 };
 
+/* APLICAR IDIOMA */
 function setReservationPolicyLang(lang) {
   const data = reservationPolicyTexts[lang] || reservationPolicyTexts.pt;
+
   document.getElementById("reservationPolicyTitle").textContent = data.title;
   document.getElementById("reservationPolicyContent").innerHTML = data.html;
 
@@ -63,3 +67,17 @@ document.querySelectorAll(".legal-lang-btn").forEach(btn => {
 });
 
 setReservationPolicyLang("pt");
+
+/* BOTÃO VOLTAR */
+function getQueryParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}
+
+document.getElementById("btnBack").addEventListener("click", () => {
+  const from = getQueryParam("from");
+
+  if (from === "guide") return window.location.href = "/guide";
+  if (from === "aima") return window.location.href = "/aima";
+
+  window.location.href = "/";
+});
