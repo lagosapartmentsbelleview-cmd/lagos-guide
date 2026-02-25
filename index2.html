@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Apartments Belleview Lagos — Novo Layout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="css/belleview.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ============================================================
+     HEADER BELLEVIEW
+============================================================ -->
+<header>
+    <a href="#topo" class="logo">
+        <svg width="40" height="40" viewBox="0 0 100 100" class="belleview-logo">
+            <circle cx="50" cy="50" r="46" fill="#005c99" stroke="#005c99" stroke-width="6"/>
+            <text x="50" y="67" text-anchor="middle"
+                  font-family="Poppins, sans-serif"
+                  font-size="42" font-weight="700"
+                  fill="#ffffff">B</text>
+        </svg>
+        <span>Apartments Belleview Lagos</span>
+    </a>
+
+    <nav>
+        <a href="#alojamento" data-i18n="menu_alojamento"></a>
+        <a href="#comodidades" data-i18n="menu_comodidades"></a>
+        <a href="#localizacao" data-i18n="menu_localizacao"></a>
+        <a href="#contactos" data-i18n="menu_contactos"></a>
+    </nav>
+
+    <div class="lang-switch">
+        <img src="https://flagcdn.com/w40/pt.png" data-lang="pt">
+        <img src="https://flagcdn.com/w40/gb.png" data-lang="en">
+        <img src="https://flagcdn.com/w40/es.png" data-lang="es">
+    </div>
+</header>
+
+<!-- ============================================================
+     HERO BELLEVIEW PREMIUM
+============================================================ -->
+<section class="hero">
+
+    <div class="hero-texto">
+        <p class="hero-local" data-i18n="hero_local">Lagos, Algarve</p>
+
+        <h1 data-i18n="hero_title">
+            O seu refúgio moderno no coração do Algarve
+        </h1>
+
+        <p class="hero_sub" data-i18n="hero_sub">
+            Apartamentos luminosos, tranquilos e totalmente equipados — a minutos da Marina e da Meia‑Praia.
+        </p>
+
+        <button class="btn-disponibilidade" id="abrirModal">
+            <span data-i18n="reservar">Reservar</span>
+        </button>
+    </div>
+
+</section>
+
+<!-- ============================================================
+     MODAL PREMIUM BELLEVIEW
+============================================================ -->
+<div id="modalDisponibilidade" class="modal-bg">
+    <div class="modal-box">
+
+        <button class="modal-close" id="fecharModal">×</button>
+
+        <h2 class="modal-title" data-i18n="book_title">Reservar</h2>
+
+        <label data-i18n="checkin">Check‑in</label>
+        <input type="date" id="checkinModal">
+
+        <label data-i18n="checkout">Check‑out</label>
+        <input type="date" id="checkoutModal">
+
+        <label data-i18n="num_apartments">Nº de Apartamentos</label>
+        <select id="numAptModal">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+
+        <div id="extraCamposModal" class="hidden">
+            <div id="apartamentosContainerModal"></div>
+
+            <button id="btnDisponibilidadeModal" class="modal-btn">
+                <span data-i18n="reservar">Reservar</span>
+            </button>
+
+            <div id="resultadoDisponibilidadeModal"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ============================================================
+     SECÇÃO ALOJAMENTO (BASE PARA TESTES)
+============================================================ -->
+<section id="alojamento" class="secao">
+
+    <h2 data-i18n="aloj_title">Os Alojamentos</h2>
+
+    <div class="intro-alojamento">
+        <p class="subtitulo" data-i18n="aloj_subtitle_p1">
+            Os Apartments Belleview Lagos oferecem alojamentos T1 amplos, luminosos e cuidadosamente preparados...
+        </p>
+        <p class="subtitulo" data-i18n="aloj_subtitle_p2">
+            Com terraços generosos e envolventes zonas verdes, os alojamentos convidam a momentos de descontração...
+        </p>
+        <p class="subtitulo" data-i18n="aloj_subtitle_p3">
+            Perfeitos para casais, famílias ou viajantes independentes que valorizam qualidade e tranquilidade...
+        </p>
+    </div>
+
+    <div class="galeria">
+        <img src="img/alojamento/apt1.jpg" alt="Apartamento Belleview">
+        <img src="img/alojamento/apt2.jpg" alt="Apartamento Belleview">
+        <img src="img/alojamento/apt3.jpg" alt="Apartamento Belleview">
+    </div>
+
+</section>
+
+<!-- ============================================================
+     FOOTER BELLEVIEW
+============================================================ -->
+<footer>
+    <div class="footer-content">
+
+        <svg width="50" height="50" viewBox="0 0 100 100" class="footer-logo">
+            <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#ffffff" stroke-width="6"/>
+            <text x="50" y="67" text-anchor="middle"
+                  font-family="Poppins, sans-serif"
+                  font-size="42" font-weight="700"
+                  fill="#005c99">B</text>
+        </svg>
+
+        <p class="footer-title">Apartments Belleview Lagos</p>
+
+        <p>
+            Rua Quinta do Landeiro Lote 22, 23<br>
+            Urbanização Marina Park<br>
+            8600-302 Lagos, Algarve - Portugal<br>
+            Tel: <a href="tel:+351910051588" class="footer-link">+351 910 051 588</a><br>
+            Whatsapp: <a href="https://wa.me/351910051588" class="footer-link">+351 910 051 588</a><br>
+            Email: <a href="mailto:belleview@sapo.pt" class="footer-link">belleview@sapo.pt</a>
+        </p>
+
+        <p class="footer-copy">
+            © 2025 Apartments Belleview Lagos — Todos os direitos reservados.
+        </p>
+    </div>
+</footer>
+
+<!-- ============================================================
+     JS — MODAL
+============================================================ -->
+<script>
+// Abrir modal
+document.getElementById("abrirModal").addEventListener("click", () => {
+    document.getElementById("modalDisponibilidade").style.display = "flex";
+});
+
+// Fechar modal
+document.getElementById("fecharModal").addEventListener("click", () => {
+    document.getElementById("modalDisponibilidade").style.display = "none";
+});
+
+// Fechar ao clicar fora
+document.getElementById("modalDisponibilidade").addEventListener("click", (e) => {
+    if (e.target === e.currentTarget) {
+        e.currentTarget.style.display = "none";
+    }
+});
+</script>
+
+</body>
+</html>
