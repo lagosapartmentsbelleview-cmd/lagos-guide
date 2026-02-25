@@ -1602,3 +1602,88 @@ a[href^="https://wa.me"] {
     -webkit-text-fill-color: #ffffff !important;
 }
 
+/* ============================================================
+   FOOTER — NORMALIZAÇÃO PARA FICAR IGUAL AO GUIDE
+============================================================ */
+
+/* Fundo, padding e bordas iguais ao Guide */
+footer {
+    background: #005c99;
+    padding: 40px 20px;
+    margin-top: 40px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    color: #ffffff;
+}
+
+/* Conteúdo centralizado e largura igual ao Guide */
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Logo igual ao Guide */
+.footer-logo {
+    margin-bottom: 15px;
+}
+
+/* Título igual ao Guide */
+.footer-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+/* Texto geral — line-height igual ao Guide */
+footer p {
+    line-height: 1.45;
+    margin: 10px 0;
+}
+
+/* Links das políticas — cor azul claro igual ao Guide */
+.footer-links a {
+    color: #cfe8ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* Copyright igual ao Guide */
+.footer-copy {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #e6f2ff;
+}
+
+/* ============================================================
+   CONTACTOS CLICÁVEIS — IGUAL AO GUIDE E AIMA
+============================================================ */
+
+.footer-link {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-weight: 500;
+    -webkit-text-fill-color: #ffffff !important; /* Safari iOS */
+}
+
+/* Hover apenas em desktop */
+@media (hover: hover) {
+    .footer-link:hover {
+        text-decoration: underline !important;
+    }
+}
+
+/* Remover estilos automáticos de mobile (iOS + Android) */
+a[href^="tel"],
+a[href^="mailto"],
+a[href^="https://wa.me"] {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
