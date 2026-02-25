@@ -7,10 +7,15 @@ function getQueryParam(name) {
 
 const supportedLangs = ["pt", "en", "es", "fr", "de", "it"];
 
+/* 
+   O Guide NÃO deve assumir que o utilizador já escolheu idioma.
+   Por isso NÃO usamos setLanguage() aqui.
+   Apenas definimos o idioma inicial para o rodapé.
+*/
 let lang =
   (getQueryParam("lang") && supportedLangs.includes(getQueryParam("lang")))
     ? getQueryParam("lang")
-    : (window.currentLang || "pt");
+    : "pt"; // PT por defeito ao entrar
 
 if (!supportedLangs.includes(lang)) lang = "pt";
 
@@ -63,7 +68,7 @@ const footerLinksGuide = {
 };
 
 /* ============================================================
-   RENDERIZAR RODAPÉ
+   FUNÇÃO PARA ATUALIZAR O RODAPÉ
 ============================================================ */
 function updateFooterLinksGuide() {
   const container = document.querySelector(".footer-links");
@@ -81,7 +86,17 @@ function updateFooterLinksGuide() {
     .join(" | ");
 }
 
-updateFooterLinksGuide();
+/* ============================================================
+   INICIALIZAR APENAS O RODAPÉ EM PT AO ENTRAR
+============================================================ */
+function setFooterLanguage(initialLang) {
+  lang = initialLang;
+  window.currentLang = initialLang;
+  updateFooterLinksGuide();
+}
+
+// Rodapé aparece logo em PT ao entrar
+setFooterLanguage("pt");
 
 /* ============================================================
    INTERCEPTAR setLanguage() DO GUIDE
