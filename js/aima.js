@@ -5,8 +5,6 @@ document.querySelectorAll("[required]").forEach(el => el.removeAttribute("requir
   
 });
 
-const urlLang = new URLSearchParams(window.location.search).get("lang") || "pt";
-
 // ------------------------------
 // TEXTOS POR IDIOMA
 // ------------------------------
@@ -1409,9 +1407,4 @@ document.getElementById("closeFaqModal").addEventListener("click", () => {
 
 
 // INICIAR EM PT
-currentLang = urlLang;
-setLanguage(currentLang);
-
-
-// ⭐⭐⭐ RODAPÉ PARA MULTILIGUA POLITICAS TITULOS ⭐⭐⭐ 
-  updateFooterLinksAIMA();
+setLanguage("pt");
