@@ -1,7 +1,3 @@
-function getQueryParam(name) {
-  return new URLSearchParams(window.location.search).get(name);
-}
-
 // -----------------------------------------
 // --- RULES (Regras do Alojamento) ---
 // -----------------------------------------
@@ -3927,4 +3923,4 @@ function shareGuide() {
   }
 }
 
-setLanguage(window.currentLang || getQueryParam("lang") || "pt");
+
