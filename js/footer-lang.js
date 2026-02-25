@@ -90,3 +90,30 @@ updateFooterLinksSite();
 
 /* Guardar idioma globalmente para outras páginas */
 window.currentLang = lang;
+
+/* ============================================================
+   LIGAR BANDEIRAS DO SITE AO SISTEMA MULTILÍNGUA
+============================================================ */
+document.querySelectorAll('.lang-switch img').forEach(img => {
+    img.addEventListener('click', () => {
+        const newLang = img.dataset.lang;
+
+        if (!supportedLangs.includes(newLang)) return;
+
+        // Guardar idioma global
+        window.currentLang = newLang;
+        lang = newLang;
+
+        // Atualizar rodapé imediatamente
+        updateFooterLinksSite();
+
+        // Atualizar URL com ?lang=xx sem recarregar
+        const url = new URL(window.location);
+        url.searchParams.set("lang", newLang);
+        window.history.replaceState({}, "", url);
+
+        // Se quiseres recarregar a página inteira, ativa esta linha:
+        // location.reload();
+    });
+});
+
