@@ -393,3 +393,35 @@ input[type="text"][name*="birthDate"]:placeholder-shown,
 #checkoutDate:placeholder-shown {
   color: #999;
 }
+
+/* Links do footer sem sublinhado e com cor consistente */
+.footer-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+/* Remover estilos automáticos de links em mobile */
+a[href^="tel"],
+a[href^="mailto"],
+a[href^="https://wa.me"],
+.footer-link {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    -webkit-text-fill-color: #ffffff !important; /* Safari iOS */
+}
+
+/* Hover (apenas desktop) */
+@media (hover: hover) {
+    a[href^="tel"]:hover,
+    a[href^="mailto"]:hover,
+    a[href^="https://wa.me"]:hover,
+    .footer-link:hover {
+        text-decoration: underline !important;
+    }
+}
+
