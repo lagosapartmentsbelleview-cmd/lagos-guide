@@ -425,3 +425,27 @@ a[href^="https://wa.me"],
     }
 }
 
+/* BOTÕES DE IDIOMA — TAMANHO FIXO E UNIFORME (AIMA) */
+.aima-lang-buttons button,
+.lang-buttons button {
+    width: 180px;          /* largura fixa */
+    height: 55px;          /* altura fixa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 0;            /* remove padding variável */
+    box-sizing: border-box;
+    text-align: center;
+    white-space: nowrap;   /* impede quebra de linha */
+}
+
+/* Bandeiras com tamanho consistente */
+.aima-lang-buttons button img,
+.lang-buttons button img {
+    width: 28px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 3px;
+}
