@@ -1407,6 +1407,6 @@ document.getElementById("closeFaqModal").addEventListener("click", () => {
 
 
 // INICIAR EM PT
-// INICIAR NO IDIOMA DETETADO
-setLanguage(window.currentLang || getQueryParam("lang") || "pt");
+setLanguage("pt");
+
 
