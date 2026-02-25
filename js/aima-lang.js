@@ -11,9 +11,9 @@ function getQueryParam(name) {
 const supportedLangs = ["pt", "en", "es", "fr", "de", "it"];
 
 let lang =
-  (window.currentLang && supportedLangs.includes(window.currentLang))
-    ? window.currentLang
-    : (getQueryParam("lang") || "pt");
+  (getQueryParam("lang") && supportedLangs.includes(getQueryParam("lang")))
+    ? getQueryParam("lang")
+    : (window.currentLang || "pt");
 
 if (!supportedLangs.includes(lang)) lang = "pt";
 
