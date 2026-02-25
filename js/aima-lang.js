@@ -137,3 +137,22 @@ if (backBtn) {
     window.location.href = "/?lang=" + lang;
   });
 }
+
+// Intercepta o setLanguage do AIMA para expor o idioma globalmente
+if (typeof setLanguage === "function") {
+  const originalSetLanguage = setLanguage;
+
+  setLanguage = function(newLang) {
+    // chama o AIMA normalmente
+    originalSetLanguage(newLang);
+
+    // expõe o idioma globalmente
+    window.currentLang = newLang;
+
+    // atualiza o lang interno deste ficheiro
+    lang = newLang;
+
+    // atualiza o rodapé
+    updateFooterLinksAIMA();
+  };
+}
