@@ -1562,3 +1562,43 @@ body {
 .page-wrapper {
     flex: 1; /* empurra o footer para baixo */
 }
+
+/* -----------------------------------------
+   FOOTER MULTILINGUA + CONTACTOS CLICÁVEIS
+--------------------------------------------*/
+
+/* Links das políticas */
+.footer-links a {
+    color: #cfe8ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* Links de telefone, WhatsApp e email */
+.footer-link {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-weight: 500;
+    -webkit-text-fill-color: #ffffff !important; /* Safari iOS */
+}
+
+/* Hover apenas em desktop */
+@media (hover: hover) {
+    .footer-link:hover {
+        text-decoration: underline !important;
+    }
+}
+
+/* Remover estilos automáticos de mobile (iOS + Android) */
+a[href^="tel"],
+a[href^="mailto"],
+a[href^="https://wa.me"] {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
