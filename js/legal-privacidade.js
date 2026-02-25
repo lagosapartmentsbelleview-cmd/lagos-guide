@@ -109,7 +109,90 @@ const privacyPolicyTexts = {
     <p>O titular dos dados tem o direito de apresentar reclamação junto da Comissão Nacional de Proteção de Dados (CNPD), caso considere que o tratamento dos seus dados pessoais viola a legislação aplicável em matéria de proteção de dados.</p>
   `,
 
-  en: `<!-- TODO: inserir versão EN -->`,
+ en: `
+    <h2>1. Introduction</h2>
+    <p>Apartments Belleview Lagos values the privacy and protection of the personal data of its guests, visitors and users of the website and digital guide. This Privacy Policy describes how we collect, use, store and protect personal data, in accordance with the General Data Protection Regulation (GDPR) and applicable Portuguese legislation.</p>
+
+    <h2>2. Data Controller</h2>
+    <p>The data controller is Apartments Belleview Lagos. For any questions related to privacy or data protection, you may contact us at: <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a>.</p>
+
+    <h2>3. Personal Data Collected</h2>
+    <p>We may collect the following personal data:</p>
+    <ul>
+      <li><strong>Identification data:</strong> full name, date of birth, nationality, identification document.</li>
+      <li><strong>Contact details:</strong> email address, phone number.</li>
+      <li><strong>Booking information:</strong> stay dates, number of guests, accommodation preferences.</li>
+      <li><strong>Mandatory data for AIMA reporting:</strong> as required by Portuguese law.</li>
+      <li><strong>Technical data:</strong> IP address, device type, browser, website usage data.</li>
+    </ul>
+
+    <h2>4. Purposes of Processing</h2>
+    <p>Personal data is processed for the following purposes:</p>
+    <ul>
+      <li>Managing bookings and stays.</li>
+      <li>Complying with legal obligations, including mandatory reporting to AIMA.</li>
+      <li>Communicating with the guest before, during and after the stay.</li>
+      <li>Improving services and user experience.</li>
+      <li>Administrative, accounting and tax management.</li>
+    </ul>
+
+    <h2>5. Legal Basis for Processing</h2>
+    <p>The processing of personal data is based on:</p>
+    <ul>
+      <li><strong>Performance of a contract:</strong> managing the booking and providing accommodation services.</li>
+      <li><strong>Legal obligation:</strong> mandatory reporting to AIMA.</li>
+      <li><strong>Legitimate interest:</strong> improving services and ensuring the security of the accommodation.</li>
+      <li><strong>Consent:</strong> when applicable (e.g., marketing communications).</li>
+    </ul>
+
+    <h2>6. Data Sharing</h2>
+    <p>Personal data may be shared with:</p>
+    <ul>
+      <li>Portuguese authorities when required by law (e.g., AIMA).</li>
+      <li>Booking platforms (Booking.com, Airbnb, etc.) when the reservation is made through those platforms.</li>
+      <li>Essential service providers (e.g., cleaning, maintenance), always under confidentiality agreements.</li>
+    </ul>
+
+    <h2>7. Data Retention</h2>
+    <p>Personal data is retained only for the period necessary to fulfil the purposes for which it was collected, in accordance with applicable legal requirements. Data related to legal or fiscal obligations may be retained for longer periods.</p>
+
+    <h2>8. Rights of Data Subjects</h2>
+    <p>Data subjects may exercise the following rights at any time:</p>
+    <ul>
+      <li>Access to their personal data.</li>
+      <li>Rectification of inaccurate or incomplete data.</li>
+      <li>Erasure of data (“right to be forgotten”), when applicable.</li>
+      <li>Restriction of processing.</li>
+      <li>Data portability.</li>
+      <li>Objection to processing.</li>
+    </ul>
+    <p>To exercise these rights, please contact: <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a>.</p>
+
+    <h2>9. Data Security</h2>
+    <p>Apartments Belleview Lagos implements appropriate technical and organisational measures to protect personal data against loss, unauthorised access, alteration or improper disclosure.</p>
+
+    <h2>10. Cookies and Similar Technologies</h2>
+    <p>Our website may use cookies to improve the user experience. For more details, please refer to our Cookie Policy.</p>
+
+    <h2>11. Changes to this Policy</h2>
+    <p>Apartments Belleview Lagos may update this Privacy Policy whenever necessary. The most recent version will always be available on the website and in the digital guide.</p>
+
+    <h2>12. Contact</h2>
+    <p>For questions related to privacy or data protection: <a href="mailto:belleview@sapo.pt">belleview@sapo.pt</a></p>
+
+    <h2>13. Subprocessors and Service Providers</h2>
+    <p>Apartments Belleview Lagos may use external service providers acting as subprocessors in the processing of personal data, including website hosting services, booking engines, email services, maintenance or cleaning. These providers act strictly according to documented instructions, are bound by confidentiality obligations, and only process data to the extent necessary for the provision of their services.</p>
+
+    <h2>14. Personal Data of Third Parties</h2>
+    <p>When the user provides personal data of third parties (for example, other guests included in the booking), they declare that they are authorised to do so and that they have informed those individuals about the conditions under which their personal data will be processed in accordance with this Privacy Policy.</p>
+
+    <h2>15. International Data Transfers</h2>
+    <p>At present, Apartments Belleview Lagos does not transfer personal data to countries outside the European Economic Area. Should such transfers occur in the future, appropriate safeguards required by applicable legislation will be implemented to ensure an equivalent level of protection as required by the GDPR.</p>
+
+    <h2>16. Right to Lodge a Complaint</h2>
+    <p>Data subjects have the right to lodge a complaint with the Portuguese Data Protection Authority (CNPD) if they believe that the processing of their personal data violates applicable data protection legislation.</p>
+  `,
+
   es: `<!-- TODO: inserir versão ES -->`,
   fr: `<!-- TODO: inserir versão FR -->`,
   de: `<!-- TODO: inserir versão DE -->`,
