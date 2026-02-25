@@ -1768,3 +1768,31 @@ footer,
     padding-left: 20px !important;
     padding-right: 20px !important;
 }
+
+/* ============================================================
+   FOOTER FULL-WIDTH — IGUAL AO GUIDE
+   ============================================================ */
+
+/* O footer ocupa 100% da largura real da janela */
+footer {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* O content interno fica centrado e com largura controlada */
+footer .footer-content {
+    max-width: 900px !important; /* igual ao Guide */
+    margin: 0 auto !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+/* Remover qualquer regra global que esteja a encolher o footer */
+.page-wrapper footer,
+.page-wrapper .footer-content {
+    max-width: none !important;
+    width: 100% !important;
+}
+
