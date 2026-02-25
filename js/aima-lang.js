@@ -1,7 +1,51 @@
-// ---------------------------------------------------------
-// OBJETO GLOBAL COM OS LINKS DO RODAPÉ POR IDIOMA
-// ---------------------------------------------------------
-const footerLinksAIMA = {
+// Lê parâmetro da query string
+function getQueryParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}
+
+// Determina idioma (fallback: pt)
+// Se estiver no AIMA e existir window.currentLang, usa-o
+const supportedLangs = ["pt", "en", "es", "fr", "de", "it"];
+
+let lang =
+  (window.currentLang && supportedLangs.includes(window.currentLang))
+    ? window.currentLang
+    : (getQueryParam("lang") || "pt");
+
+if (!supportedLangs.includes(lang)) lang = "pt";
+
+// Títulos por idioma
+const policyTitle = {
+  pt: "Política de Reservas",
+  en: "Reservation Policy",
+  es: "Política de Reservas",
+  fr: "Politique de Réservation",
+  de: "Reservierungsrichtlinie",
+  it: "Politica di Prenotazione"
+};
+
+// Texto do botão Voltar
+const backButtonText = {
+  pt: "Voltar",
+  en: "Back",
+  es: "Volver",
+  fr: "Retour",
+  de: "Zurück",
+  it: "Indietro"
+};
+
+// Conteúdo legal por idioma (formal, fiel)
+const reservationPolicyTexts = {
+  pt: `... TODO O TEXTO PT ...`,
+  en: `... TODO O TEXTO EN ...`,
+  es: `... TODO O TEXTO ES ...`,
+  fr: `... TODO O TEXTO FR ...`,
+  de: `... TODO O TEXTO DE ...`,
+  it: `... TODO O TEXTO IT ...`
+};
+
+// Links de rodapé por idioma
+const footerLinks = {
   pt: [
     { href: "/legal/politica-de-reservas.html", label: "Política de Reservas" },
     { href: "/legal/politica-de-privacidade.html", label: "Política de Privacidade" },
@@ -46,19 +90,22 @@ const footerLinksAIMA = {
   ]
 };
 
+// Aplica título, botão e conteúdo
+const titleEl = document.getElementById("policyTitle");
+if (titleEl) titleEl.textContent = policyTitle[lang];
 
-// ---------------------------------------------------------
-// FUNÇÃO QUE ATUALIZA O RODAPÉ CONFORME O IDIOMA ATUAL
-// ---------------------------------------------------------
+const backBtn = document.getElementById("btnBack");
+if (backBtn) backBtn.textContent = backButtonText[lang];
+
+const contentEl = document.getElementById("policyContent");
+if (contentEl) contentEl.innerHTML = reservationPolicyTexts[lang];
+
+// Constrói rodapé multilíngua
 function updateFooterLinksAIMA() {
-  if (typeof currentLang === "undefined") return;
-
-  const lang = currentLang;
   const footerLinksContainer = document.querySelector(".footer-links");
   if (!footerLinksContainer) return;
 
-  const links = footerLinksAIMA[lang] || footerLinksAIMA["pt"];
-
+  const links = footerLinks[lang] || footerLinks["pt"];
   footerLinksContainer.innerHTML = links
     .map(link => {
       if (link.external) {
@@ -69,16 +116,24 @@ function updateFooterLinksAIMA() {
     .join(" | ");
 }
 
+// Atualiza rodapé ao carregar
+updateFooterLinksAIMA();
 
-// ---------------------------------------------------------
-// ATUALIZA O RODAPÉ NO LOAD INICIAL
-// ---------------------------------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(updateFooterLinksAIMA, 50);
-});
+// Lógica do botão Voltar
+if (backBtn) {
+  backBtn.addEventListener("click", () => {
+    const from = getQueryParam("from");
 
+    if (from === "guide") {
+      window.location.href = "/guide?lang=" + lang;
+      return;
+    }
 
-// ---------------------------------------------------------
-// TORNA A FUNÇÃO GLOBAL PARA O AIMA CONSEGUIR CHAMÁ-LA
-// ---------------------------------------------------------
-window.updateFooterLinksAIMA = updateFooterLinksAIMA;
+    if (from === "aima") {
+      window.location.href = "/aima?lang=" + lang;
+      return;
+    }
+
+    window.location.href = "/?lang=" + lang;
+  });
+}
