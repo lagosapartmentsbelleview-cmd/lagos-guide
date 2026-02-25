@@ -1,9 +1,11 @@
 // js/aima.js
 // Remover todos os required para evitar alertas do browser
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
+document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
+  
 });
 
+const urlLang = new URLSearchParams(window.location.search).get("lang") || "pt";
 
 // ------------------------------
 // TEXTOS POR IDIOMA
@@ -1407,7 +1409,9 @@ document.getElementById("closeFaqModal").addEventListener("click", () => {
 
 
 // INICIAR EM PT
-setLanguage("pt");
+currentLang = urlLang;
+setLanguage(currentLang);
+
 
 // ⭐⭐⭐ RODAPÉ PARA MULTILIGUA POLITICAS TITULOS ⭐⭐⭐ 
   updateFooterLinksAIMA();
