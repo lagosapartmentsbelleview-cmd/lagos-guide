@@ -148,23 +148,30 @@ body {
     cursor: pointer;
 }
 
-/* ===========================
-   BOTÃO FLUTUANTE
-=========================== */
+/* BOTÃO FLUTUANTE BELLEVIEW — VERSÃO PREMIUM */
 .btn-flutuante {
     position: fixed;
-    bottom: 26px;
-    right: 26px;
+    bottom: 32px;
+    right: 32px;
     background: #005c99;
-    color: #fff;
-    padding: 14px 26px;
+    color: #ffffff;
+    padding: 18px 34px;
     border-radius: 999px;
     font-family: "Poppins", sans-serif;
+    font-size: 1.15rem;
     font-weight: 600;
     border: none;
     cursor: pointer;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.28);
+    z-index: 999999;
+    transition: 0.25s ease;
 }
+
+.btn-flutuante:hover {
+    background: #0074c7;
+    transform: translateY(-3px);
+}
+
 
 /* ===========================
    FOOTER
