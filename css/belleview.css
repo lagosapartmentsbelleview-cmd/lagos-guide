@@ -1687,3 +1687,84 @@ a[href^="https://wa.me"] {
     text-decoration: none !important;
     -webkit-text-fill-color: #ffffff !important;
 }
+
+/* ============================================================
+   FOOTER — FORÇAR ESTILO DO GUIDE (OVERRIDE FINAL)
+============================================================ */
+
+footer {
+    background: #005c99 !important;
+    padding: 40px 20px !important;
+    margin-top: 40px !important;
+    border-top-left-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+    color: #ffffff !important;
+    text-align: center !important;
+}
+
+.footer-content {
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+}
+
+/* Remover overrides globais que estavam a estragar o footer */
+footer p,
+footer a {
+    color: inherit !important;
+    font-size: 1rem !important;
+    line-height: 1.45 !important;
+    margin: 8px 0 !important;
+}
+
+/* Título igual ao Guide */
+.footer-title {
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+    color: #ffffff !important;
+}
+
+/* LINKS DAS POLÍTICAS — azul claro como no Guide */
+.footer-links a {
+    color: #cfe8ff !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    margin: 0 6px !important;
+}
+
+.footer-links a:hover {
+    text-decoration: underline !important;
+}
+
+/* COPYRIGHT igual ao Guide */
+.footer-copy {
+    margin-top: 20px !important;
+    font-size: 14px !important;
+    color: #e6f2ff !important;
+}
+
+/* CONTACTOS CLICÁVEIS — igual ao Guide e AIMA */
+.footer-link,
+a[href^="tel"],
+a[href^="mailto"],
+a[href^="https://wa.me"] {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+@media (hover: hover) {
+    .footer-link:hover {
+        text-decoration: underline !important;
+    }
+}
+
+/* REMOVER FULL-WIDTH FORÇADO QUE ESTAVA A ESTRAGAR O FOOTER */
+footer,
+.footer-content {
+    width: auto !important;
+    max-width: 900px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
