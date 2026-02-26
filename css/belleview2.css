@@ -312,24 +312,24 @@ body {
 
     /* BOTÃO FLUTUANTE — CENTRADO E COM TAMANHO CORRETO */
       .btn-flutuante {
-        position: fixed;
-        bottom: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        right: auto;
+    position: fixed !important;
+    bottom: 80px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    right: auto !important;
 
-        display: inline-block;
-        padding: 6px 14px;
-        font-size: 0.8rem;
-        line-height: 1;
-        height: auto;
+    display: inline-block !important;
+    padding: 6px 14px !important;   /* altura pequena */
+    font-size: 0.8rem !important;   /* texto pequeno */
+    line-height: 1 !important;      /* impede altura gigante */
 
-        width: auto;
-        max-width: 200px;      /* NUNCA passa disto */
-        white-space: nowrap;
+    width: auto !important;
+    max-width: 180px !important;    /* limite duro */
+    white-space: nowrap !important; /* nunca quebra linha */
 
-        border-radius: 999px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.22);
-        z-index: 99999;
-    }
+    border-radius: 999px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.22) !important;
+    z-index: 99999 !important;
+}
+
 }
