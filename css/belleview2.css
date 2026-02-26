@@ -282,14 +282,14 @@ body {
         background-image: url("../img/hero/hero1.jpg");
         background-size: cover;
         background-position: center top;
-        background-position-y: -60px;   /* menos céu */
-        padding: 90px 20px 120px 20px;  /* espaço para texto + botão */
-        color: #ffffff;
+        background-position-y: -60px;
+        padding: 90px 20px 120px 20px;
+        min-height: 100vh; /* cobre o ecrã todo */
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        min-height: 100vh;              /* cobre o ecrã todo → elimina fundo azul */
+        color: #fff;
     }
 
     .hero::before {
@@ -330,7 +330,7 @@ body {
         margin: 0 auto;
     }
 
-    /* BOTÃO FLUTUANTE — MOBILE PEQUENO E CENTRADO */
+    /* BOTÃO FLUTUANTE — MOBILE */
     .btn-flutuante {
         position: fixed;
         bottom: 80px;
@@ -338,23 +338,18 @@ body {
         transform: translateX(-50%);
         right: auto;
 
-        display: inline-block;
-        padding: 6px 14px;
-        font-size: 0.8rem;
+        padding: 8px 18px;
+        font-size: 0.85rem;
         line-height: 1;
 
         width: auto;
-        max-width: 180px;
+        max-width: 200px;
         white-space: nowrap;
 
         border-radius: 999px;
+        background: #005c99;
+        color: #fff;
         box-shadow: 0 4px 10px rgba(0,0,0,0.22);
         z-index: 99999;
     }
-   
-    body {
-        background: red !important;
-    }
-}
-
 }
