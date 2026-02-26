@@ -248,7 +248,7 @@ body {
 
     .logo-circle {
         width: 34px;
-        aspect-ratio: 1 / 1; /* mantém círculo perfeito */
+        aspect-ratio: 1 / 1;
         font-size: 1.1rem;
         flex-shrink: 0;
     }
@@ -278,12 +278,12 @@ body {
 
     /* HERO */
     .hero {
-        padding: 70px 20px 90px 20px; /* menos altura */
-        min-height: 55vh; /* hero mais compacto */
+        padding: 70px 20px 90px 20px;
+        min-height: 55vh;
         text-align: center;
         justify-content: center;
         align-items: flex-start;
-        background-position-y: -60px; /* sobe a imagem no mobile */
+        background-position-y: -60px;
     }
 
     .hero-text {
@@ -310,29 +310,24 @@ body {
         margin: 0 auto;
     }
 
-    /* BOTÃO FLUTUANTE */
-  @media (max-width: 768px) {
-
+    /* BOTÃO FLUTUANTE — CENTRADO E COM TAMANHO CORRETO */
     .btn-flutuante {
         position: fixed;
-        bottom: 90px;              /* altura acima do fundo */
-        left: 50%;                 /* centra horizontalmente */
-        transform: translateX(-50%);
+        bottom: 90px;                 /* altura acima do fundo */
+        left: 50%;                    /* centra horizontalmente */
+        transform: translateX(-50%);  /* centra perfeitamente */
         right: auto;
 
-        padding: 10px 20px;        /* tamanho reduzido */
-        font-size: 0.95rem;        /* texto menor e elegante */
+        padding: 8px 18px;            /* altura reduzida */
+        font-size: 0.85rem;           /* texto menor e elegante */
+        line-height: 1;               /* impede altura exagerada */
+        height: auto;
+        width: auto;
+        max-width: 70%;               /* nunca ocupa demasiado espaço */
+        white-space: nowrap;          /* impede quebra de linha */
+
         border-radius: 999px;
-        box-shadow: 0 6px 16px rgba(0,0,0,0.22); /* sombra mais leve */
-        width: auto;               /* impede de ficar largo demais */
-        max-width: 80%;            /* nunca ultrapassa o ecrã */
-        white-space: nowrap;       /* impede quebra de linha */
+        box-shadow: 0 6px 16px rgba(0,0,0,0.22);
         z-index: 99999;
     }
 }
-
- 
-
-
-
-
