@@ -276,19 +276,39 @@ body {
         height: 24px;
     }
 
-    /* HERO */
+    /* HERO — CORRIGIDO */
     .hero {
-        padding: 70px 20px 90px 20px;
-        min-height: 55vh;
-        text-align: center;
-        justify-content: center;
-        align-items: flex-start;
-        background-position-y: -60px;
+        position: relative;
+        background-image: url("../img/hero/hero1.jpg");
+        background-size: cover;
+        background-position: center top;
+        background-position-y: -60px;   /* menos céu */
+        padding: 90px 20px 120px 20px;  /* espaço para texto + botão */
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        min-height: 100vh;              /* cobre o ecrã todo → elimina fundo azul */
+    }
+
+    .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            rgba(0,0,0,0.55),
+            rgba(0,0,0,0.25)
+        );
+        z-index: 0;
     }
 
     .hero-text {
-        margin: 0;
+        position: relative;
+        z-index: 2;
         max-width: 100%;
+        margin: 0;
+        text-align: center;
     }
 
     .hero-local {
@@ -310,7 +330,7 @@ body {
         margin: 0 auto;
     }
 
-        /* BOTÃO FLUTUANTE — MOBILE */
+    /* BOTÃO FLUTUANTE — MOBILE PEQUENO E CENTRADO */
     .btn-flutuante {
         position: fixed;
         bottom: 80px;
@@ -332,4 +352,3 @@ body {
         z-index: 99999;
     }
 }
-
