@@ -311,23 +311,24 @@ body {
     }
 
     /* BOTÃO FLUTUANTE — CENTRADO E COM TAMANHO CORRETO */
-    .btn-flutuante {
+   .btn-flutuante {
         position: fixed;
-        bottom: 90px;                 /* altura acima do fundo */
-        left: 50%;                    /* centra horizontalmente */
-        transform: translateX(-50%);  /* centra perfeitamente */
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
         right: auto;
 
-        padding: 8px 18px;            /* altura reduzida */
-        font-size: 0.85rem;           /* texto menor e elegante */
-        line-height: 1;               /* impede altura exagerada */
+        display: inline-block;
+        padding: 8px 16px;      /* bem mais pequeno */
+        font-size: 0.8rem;      /* texto discreto */
+        line-height: 1;
         height: auto;
-        width: auto;
-        max-width: 70%;               /* nunca ocupa demasiado espaço */
-        white-space: nowrap;          /* impede quebra de linha */
+
+        width: auto;            /* nunca estica */
+        max-width: none;        /* remove limite largo */
+        white-space: nowrap;    /* não quebra linha */
 
         border-radius: 999px;
-        box-shadow: 0 6px 16px rgba(0,0,0,0.22);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.22);
         z-index: 99999;
     }
-}
