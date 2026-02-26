@@ -51,7 +51,7 @@ body {
 }
 
 /* ===========================================================
-   HERO — BELLEVIEW PREMIUM (TEXTO MAIS ACIMA)
+   HERO — BELLEVIEW PREMIUM (TEXTO JUSTIFICADO + MAIS ACIMA)
    =========================================================== */
 
 .hero {
@@ -59,7 +59,7 @@ body {
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
     background-position: center;
-    padding: 120px 40px 160px 40px; /* topo menor, fundo maior */
+    padding: 140px 40px 180px 40px; /* topo mais curto, fundo mais longo */
     color: #ffffff;
     display: flex;
     align-items: flex-start; /* puxa o conteúdo para cima */
@@ -82,9 +82,9 @@ body {
 .hero-text {
     position: relative;
     z-index: 2;
-    max-width: 600px;
-    margin-top: 40px; /* força o texto a subir */
-    margin-left: 4vw;
+    max-width: 620px;
+    margin-top: 20px; /* sobe o texto */
+    margin-left: 4vw; /* afasta do canto esquerdo */
 }
 
 /* Localização */
@@ -93,7 +93,7 @@ body {
     font-weight: 600;
     opacity: 0.95;
     letter-spacing: 0.04em;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 /* Título principal */
@@ -101,17 +101,63 @@ body {
     font-family: "Poppins", sans-serif;
     font-size: 3.2rem;
     line-height: 1.22;
-    margin: 10px 0 20px 0;
+    margin: 10px 0 22px 0;
     text-shadow: 0 4px 14px rgba(0,0,0,0.45);
 }
 
-/* Subtítulo */
+/* Subtítulo — agora JUSTIFICADO */
 .hero-sub {
     font-size: 1.35rem;
-    line-height: 1.52;
+    line-height: 1.55;
     opacity: 0.96;
-    max-width: 540px;
+    max-width: 580px;
     text-shadow: 0 3px 10px rgba(0,0,0,0.35);
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+}
+
+/* ===========================================================
+   RESPONSIVO — HERO
+   =========================================================== */
+
+@media (max-width: 900px) {
+    .hero {
+        padding: 120px 24px 140px 24px;
+        text-align: center;
+        justify-content: center;
+        min-height: 70vh;
+    }
+
+    .hero-text {
+        margin-left: 0;
+        margin-top: 0;
+        max-width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 2.4rem;
+    }
+
+    .hero-sub {
+        font-size: 1.15rem;
+        text-align: center; /* mobile fica mais bonito centrado */
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        padding: 90px 20px 120px 20px;
+        min-height: 60vh;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .hero-sub {
+        font-size: 1rem;
+    }
 }
 
 
