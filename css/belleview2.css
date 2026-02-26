@@ -227,10 +227,11 @@ body {
 }
 
 /* ===========================================================
-   MOBILE — HEADER + HERO + BOTÃO
+   MOBILE — HEADER + HERO + BOTÃO (CORRIGIDO)
 =========================================================== */
 @media (max-width: 768px) {
 
+    /* HEADER */
     .header {
         flex-direction: column;
         justify-content: center;
@@ -240,31 +241,49 @@ body {
         text-align: center;
     }
 
+    .logo {
+        font-size: 1.15rem;
+        gap: 8px;
+    }
+
+    .logo-circle {
+        width: 34px;
+        aspect-ratio: 1 / 1; /* mantém círculo perfeito */
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
     .nav {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 12px;
+        gap: 10px;
+        margin-top: 4px;
     }
 
     .nav a {
         margin: 0;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         padding: 4px 8px;
     }
 
-    .lang-switch img {
-        width: 26px;
-        height: 26px;
+    .lang-switch {
+        gap: 6px;
     }
 
+    .lang-switch img {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* HERO */
     .hero {
-        padding: 90px 20px 120px 20px;
-        min-height: 65vh;
+        padding: 70px 20px 90px 20px; /* menos altura */
+        min-height: 55vh; /* hero mais compacto */
         text-align: center;
         justify-content: center;
         align-items: flex-start;
-        background-position-y: -10px; /* MENOS CÉU NO MOBILE */
+        background-position-y: -60px; /* sobe a imagem no mobile */
     }
 
     .hero-text {
@@ -272,21 +291,35 @@ body {
         max-width: 100%;
     }
 
+    .hero-local {
+        font-size: 0.95rem;
+        margin-bottom: 6px;
+    }
+
     .hero-text h1 {
-        font-size: 1.9rem;
+        font-size: 1.8rem;
+        line-height: 1.25;
+        margin-bottom: 10px;
     }
 
     .hero-sub {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        line-height: 1.4;
         text-align: center;
+        max-width: 100%;
+        margin: 0 auto;
     }
 
+    /* BOTÃO FLUTUANTE */
     .btn-flutuante {
+        position: fixed;
+        bottom: 20px;
+        right: 18px;
         top: auto;
-        bottom: 22px;
-        right: 20px;
         transform: none;
-        padding: 14px 24px;
-        font-size: 1rem;
+        padding: 12px 22px;
+        font-size: 0.95rem;
+        border-radius: 999px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
     }
 }
