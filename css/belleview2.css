@@ -197,11 +197,15 @@ body {
     cursor: pointer;
 }
 
-/* BOTÃO FLUTUANTE BELLEVIEW — VERSÃO PREMIUM */
+/* ===========================================================
+   BOTÃO FLUTUANTE — BELLEVIEW PREMIUM
+   =========================================================== */
+
 .btn-flutuante {
     position: fixed;
-    bottom: 32px;
-    right: 32px;
+    top: 55%; /* alinhado com o texto do hero */
+    right: 40px;
+    transform: translateY(-50%);
     background: #005c99;
     color: #ffffff;
     padding: 18px 34px;
@@ -212,14 +216,27 @@ body {
     border: none;
     cursor: pointer;
     box-shadow: 0 10px 28px rgba(0,0,0,0.28);
-    z-index: 999999;
+    z-index: 99999;
     transition: 0.25s ease;
 }
 
 .btn-flutuante:hover {
     background: #0074c7;
-    transform: translateY(-3px);
+    transform: translateY(-50%) translateY(-3px);
 }
+
+/* Mobile — desce para não tapar o hero */
+@media (max-width: 768px) {
+    .btn-flutuante {
+        top: auto;
+        bottom: 24px;
+        right: 20px;
+        transform: none;
+        padding: 14px 26px;
+        font-size: 1rem;
+    }
+}
+
 
 
 /* ===========================
