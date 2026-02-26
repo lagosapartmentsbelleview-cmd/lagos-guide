@@ -311,21 +311,26 @@ body {
     }
 
     /* BOTÃO FLUTUANTE */
-   @media (max-width: 768px) {
+  @media (max-width: 768px) {
 
     .btn-flutuante {
         position: fixed;
-        bottom: 90px;          /* altura acima do fundo (ajusta como quiseres) */
-        left: 50%;             /* centra horizontalmente */
-        right: auto;           /* remove alinhamento à direita */
-        transform: translateX(-50%); /* centra perfeitamente */
-        padding: 14px 26px;
-        font-size: 1.05rem;
+        bottom: 90px;              /* altura acima do fundo */
+        left: 50%;                 /* centra horizontalmente */
+        transform: translateX(-50%);
+        right: auto;
+
+        padding: 10px 20px;        /* tamanho reduzido */
+        font-size: 0.95rem;        /* texto menor e elegante */
         border-radius: 999px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.22); /* sombra mais leve */
+        width: auto;               /* impede de ficar largo demais */
+        max-width: 80%;            /* nunca ultrapassa o ecrã */
+        white-space: nowrap;       /* impede quebra de linha */
         z-index: 99999;
     }
 }
+
  
 
 
