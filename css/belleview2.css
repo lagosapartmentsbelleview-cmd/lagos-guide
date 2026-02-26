@@ -311,6 +311,8 @@ body {
     }
 
     /* BOTÃO FLUTUANTE */
+   @media (max-width: 768px) {
+
     .btn-flutuante {
         position: fixed;
         bottom: 90px;          /* altura acima do fundo (ajusta como quiseres) */
@@ -323,6 +325,9 @@ body {
         box-shadow: 0 8px 20px rgba(0,0,0,0.25);
         z-index: 99999;
     }
+}
+ 
+
 
 
 
