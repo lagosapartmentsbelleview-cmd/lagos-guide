@@ -282,7 +282,7 @@ body {
         background-image: url("../img/hero/hero1.jpg");
         background-size: cover;
         background-position: center top;
-        background-position-y: -60px;
+        background-position-y: 0 !important;
         padding: 90px 20px 120px 20px;
         min-height: 100vh; /* cobre o ecrã todo */
         display: flex;
@@ -335,7 +335,7 @@ body {
         position: fixed;
         bottom: 80px;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, 0);
         right: auto;
 
         padding: 8px 18px;
