@@ -87,7 +87,7 @@ body {
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
     background-position: center top;
-    background-position-y: -120px; /* mostra mais piscina */
+    background-position-y: -150px; /* mostra mais piscina */
     padding: 120px 40px 120px 40px; /* menos altura total */
     color: #ffffff;
     display: flex;
@@ -282,7 +282,7 @@ body {
         background-image: url("../img/hero/hero1.jpg");
         background-size: cover;
         background-position: center top;
-        background-position-y: 0 !important;
+        background-position-y: -150px; !important;
         padding: 90px 20px 120px 20px;
         min-height: 100vh;
         display: flex;
