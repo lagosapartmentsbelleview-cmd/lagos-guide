@@ -51,7 +51,7 @@ body {
 }
 
 /* ===========================================================
-   HERO — BELLEVIEW PREMIUM (CORRIGIDO)
+   HERO — BELLEVIEW PREMIUM (TEXTO MAIS ACIMA)
    =========================================================== */
 
 .hero {
@@ -59,11 +59,11 @@ body {
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
     background-position: center;
-    padding: 160px 40px 180px 40px; /* mais espaço para respirar */
+    padding: 120px 40px 160px 40px; /* topo menor, fundo maior */
     color: #ffffff;
     display: flex;
-    align-items: center;
-    min-height: 78vh; /* mais presença */
+    align-items: flex-start; /* puxa o conteúdo para cima */
+    min-height: 78vh;
 }
 
 /* Overlay premium */
@@ -83,7 +83,8 @@ body {
     position: relative;
     z-index: 2;
     max-width: 600px;
-    margin-left: 4vw; /* afasta do canto esquerdo */
+    margin-top: 40px; /* força o texto a subir */
+    margin-left: 4vw;
 }
 
 /* Localização */
@@ -113,13 +114,14 @@ body {
     text-shadow: 0 3px 10px rgba(0,0,0,0.35);
 }
 
+
 /* ===========================================================
    BOTÃO FLUTUANTE — ALINHADO COM O TEXTO
    =========================================================== */
 
 .btn-flutuante {
     position: fixed;
-    top: 48%; /* alinhado com o centro do texto */
+    top: 42%; /* antes 48% — agora sobe para acompanhar o texto */
     right: 48px;
     transform: translateY(-50%);
     background: #005c99;
@@ -141,17 +143,17 @@ body {
     transform: translateY(-50%) translateY(-4px);
 }
 
-/* ===========================================================
-   RESPONSIVO — HERO + BOTÃO
-   =========================================================== */
-
-@media (max-width: 900px) {
-    .hero {
-        padding: 120px 24px 140px 24px;
-        text-align: center;
-        justify-content: center;
-        min-height: 70vh;
+/* Mobile — desce para não tapar o hero */
+@media (max-width: 768px) {
+    .btn-flutuante {
+        top: auto;
+        bottom: 26px;
+        right: 20px;
+        transform: none;
+        padding: 14px 26px;
+        font-size: 1.05rem;
     }
+}
 
     .hero-text {
         margin-left: 0;
