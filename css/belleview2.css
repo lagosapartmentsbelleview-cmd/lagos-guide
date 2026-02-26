@@ -312,14 +312,15 @@ body {
 
     /* BOTÃO FLUTUANTE */
     .btn-flutuante {
-        position: fixed;
-        bottom: 20px;
-        right: 18px;
-        top: auto;
-        transform: none;
-        padding: 12px 22px;
-        font-size: 0.95rem;
-        border-radius: 999px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    }
-}
+    position: fixed;
+    bottom: 90px;   /* antes 22px — agora MUITO mais acima */
+    right: 20px;
+    top: auto;
+    transform: none;
+    padding: 14px 26px;
+    font-size: 1.05rem;
+    border-radius: 999px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+   }
+
+
