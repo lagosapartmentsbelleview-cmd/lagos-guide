@@ -1796,3 +1796,19 @@ footer .footer-content {
     width: 100% !important;
 }
 
+.lang-switch img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: 0.25s ease;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.lang-switch img:hover {
+    transform: scale(1.12);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+}
+
