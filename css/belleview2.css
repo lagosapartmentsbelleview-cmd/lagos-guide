@@ -50,59 +50,105 @@ body {
     font-weight: 600;
 }
 
-/* ===========================
-   HERO
-=========================== */
+/* ===========================================================
+   HERO — BELLEVIEW PREMIUM
+   =========================================================== */
+
 .hero {
+    position: relative;
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
     background-position: center;
-    padding: 120px 40px;
-    color: white;
-    position: relative;
+    padding: 140px 40px 160px 40px; /* mais espaço para texto respirar */
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    min-height: 70vh;
 }
 
+/* Overlay premium */
 .hero::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.35);
+    background: linear-gradient(
+        rgba(0,0,0,0.45),
+        rgba(0,0,0,0.25)
+    );
+    z-index: 0;
 }
 
+/* Wrapper do texto */
+.hero-text {
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
+}
+
+/* Localização */
+.hero-local {
+    font-size: 1.15rem;
+    font-weight: 600;
+    opacity: 0.95;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+}
+
+/* Título principal */
 .hero-text h1 {
     font-family: "Poppins", sans-serif;
-    font-size: 2.8rem;
-    line-height: 1.25;
-    margin: 12px 0 18px 0;
+    font-size: 3rem;
+    line-height: 1.22;
+    margin: 10px 0 18px 0;
+    text-shadow: 0 4px 14px rgba(0,0,0,0.35);
 }
 
-.hero-local {
-    font-size: 1.1rem;
-    opacity: 0.9;
-}
-
-.hero h1 {
-    font-family: "Poppins", sans-serif;
-    font-size: 2.6rem;
-    margin: 10px 0;
-}
-
+/* Subtítulo */
 .hero-sub {
-    font-size: 1.25rem;
-    line-height: 1.45;
-    opacity: 0.95;
+    font-size: 1.28rem;
+    line-height: 1.48;
+    opacity: 0.96;
+    max-width: 520px;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.25);
 }
 
-.btn-hero {
-    margin-top: 20px;
-    padding: 12px 26px;
-    background: #ffffff;
-    color: #005c99;
-    border-radius: 999px;
-    border: none;
-    font-weight: 600;
-    font-size: 1.1rem;
-    cursor: pointer;
+/* ===========================================================
+   RESPONSIVO — HERO
+   =========================================================== */
+
+@media (max-width: 900px) {
+    .hero {
+        padding: 100px 24px 120px 24px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .hero-text {
+        max-width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-sub {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        padding: 80px 20px 100px 20px;
+        min-height: 60vh;
+    }
+
+    .hero-text h1 {
+        font-size: 1.9rem;
+    }
+
+    .hero-sub {
+        font-size: 1rem;
+    }
 }
 
 /* ===========================
