@@ -1,6 +1,6 @@
-/* ===========================
+/* ===========================================================
    BASE
-=========================== */
+=========================================================== */
 body {
     margin: 0;
     font-family: "Inter", sans-serif;
@@ -8,16 +8,19 @@ body {
     color: #333;
 }
 
-/* ===========================
-   HEADER
-=========================== */
+/* ===========================================================
+   HEADER — BELLEVIEW PREMIUM
+=========================================================== */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 18px 40px;
-    background: #ffffff;
+    background: rgba(255,255,255,0.95);
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 9999;
 }
 
 .logo {
@@ -48,25 +51,48 @@ body {
     text-decoration: none;
     color: #005c99;
     font-weight: 600;
+    font-size: 1.05rem;
 }
 
 /* ===========================================================
-   HERO — BELLEVIEW PREMIUM (TEXTO JUSTIFICADO + MAIS ACIMA)
-   =========================================================== */
+   BANDEIRAS PREMIUM
+=========================================================== */
+.lang-switch {
+    display: flex;
+    gap: 10px;
+}
 
+.lang-switch img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.25s ease;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.lang-switch img:hover {
+    transform: scale(1.12);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+}
+
+/* ===========================================================
+   HERO — BELLEVIEW PREMIUM (IMAGEM PUXADA PARA CIMA)
+=========================================================== */
 .hero {
     position: relative;
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
-    background-position: center;
-    padding: 140px 40px 180px 40px; /* topo mais curto, fundo mais longo */
+    background-position: center top; /* MOSTRA MAIS PISCINA */
+    background-position-y: -40px;   /* AJUSTE FINO */
+    padding: 140px 40px 180px 40px;
     color: #ffffff;
     display: flex;
-    align-items: flex-start; /* puxa o conteúdo para cima */
+    align-items: flex-start;
     min-height: 78vh;
 }
 
-/* Overlay premium */
 .hero::before {
     content: "";
     position: absolute;
@@ -78,16 +104,14 @@ body {
     z-index: 0;
 }
 
-/* Wrapper do texto */
 .hero-text {
     position: relative;
     z-index: 2;
     max-width: 620px;
-    margin-top: 20px; /* sobe o texto */
-    margin-left: 4vw; /* afasta do canto esquerdo */
+    margin-top: 20px;
+    margin-left: 4vw;
 }
 
-/* Localização */
 .hero-local {
     font-size: 1.25rem;
     font-weight: 600;
@@ -96,7 +120,6 @@ body {
     margin-bottom: 12px;
 }
 
-/* Título principal */
 .hero-text h1 {
     font-family: "Poppins", sans-serif;
     font-size: 3.2rem;
@@ -105,7 +128,6 @@ body {
     text-shadow: 0 4px 14px rgba(0,0,0,0.45);
 }
 
-/* Subtítulo — agora JUSTIFICADO */
 .hero-sub {
     font-size: 1.35rem;
     line-height: 1.55;
@@ -118,56 +140,11 @@ body {
 }
 
 /* ===========================================================
-   RESPONSIVO — HERO
-   =========================================================== */
-
-@media (max-width: 900px) {
-    .hero {
-        padding: 120px 24px 140px 24px;
-        text-align: center;
-        justify-content: center;
-        min-height: 70vh;
-    }
-
-    .hero-text {
-        margin-left: 0;
-        margin-top: 0;
-        max-width: 100%;
-    }
-
-    .hero-text h1 {
-        font-size: 2.4rem;
-    }
-
-    .hero-sub {
-        font-size: 1.15rem;
-        text-align: center; /* mobile fica mais bonito centrado */
-    }
-}
-
-@media (max-width: 600px) {
-    .hero {
-        padding: 90px 20px 120px 20px;
-        min-height: 60vh;
-    }
-
-    .hero-text h1 {
-        font-size: 2rem;
-    }
-
-    .hero-sub {
-        font-size: 1rem;
-    }
-}
-
-
-/* ===========================================================
-   BOTÃO FLUTUANTE — ALINHADO COM O TEXTO
-   =========================================================== */
-
+   BOTÃO FLUTUANTE — BELLEVIEW PREMIUM
+=========================================================== */
 .btn-flutuante {
     position: fixed;
-    top: 42%; /* antes 48% — agora sobe para acompanhar o texto */
+    top: 42%;
     right: 48px;
     transform: translateY(-50%);
     background: #005c99;
@@ -189,59 +166,9 @@ body {
     transform: translateY(-50%) translateY(-4px);
 }
 
-/* Mobile — desce para não tapar o hero */
-@media (max-width: 768px) {
-    .btn-flutuante {
-        top: auto;
-        bottom: 26px;
-        right: 20px;
-        transform: none;
-        padding: 14px 26px;
-        font-size: 1.05rem;
-    }
-}
-
-    .hero-text {
-        margin-left: 0;
-        max-width: 100%;
-    }
-
-    .hero-text h1 {
-        font-size: 2.4rem;
-    }
-
-    .hero-sub {
-        font-size: 1.15rem;
-    }
-
-    .btn-flutuante {
-        top: auto;
-        bottom: 26px;
-        right: 20px;
-        transform: none;
-        padding: 14px 26px;
-        font-size: 1.05rem;
-    }
-}
-
-@media (max-width: 600px) {
-    .hero {
-        padding: 90px 20px 120px 20px;
-        min-height: 60vh;
-    }
-
-    .hero-text h1 {
-        font-size: 2rem;
-    }
-
-    .hero-sub {
-        font-size: 1rem;
-    }
-}
-
-/* ===========================
+/* ===========================================================
    MODAL
-=========================== */
+=========================================================== */
 .modal-bg {
     position: fixed;
     inset: 0;
@@ -250,6 +177,7 @@ body {
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(4px);
+    z-index: 999999;
 }
 
 .modal-box {
@@ -285,10 +213,9 @@ body {
     cursor: pointer;
 }
 
-
-/* ===========================
+/* ===========================================================
    FOOTER
-=========================== */
+=========================================================== */
 .footer {
     background: #005c99;
     color: #fff;
@@ -297,21 +224,67 @@ body {
     margin-top: 60px;
 }
 
-/* ===========================
-   BANDEIRAS
-=========================== */
-.lang-switch img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    margin-left: 10px;
-    transition: 0.25s ease;
-    border: 2px solid #ffffff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-}
+/* ===========================================================
+   MOBILE — HEADER + HERO + BOTÃO
+=========================================================== */
+@media (max-width: 768px) {
 
-.lang-switch img:hover {
-    transform: scale(1.12);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+    .header {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 14px 20px;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .nav a {
+        margin: 0;
+        font-size: 0.95rem;
+        padding: 4px 8px;
+    }
+
+    .lang-switch img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .hero {
+        padding: 90px 20px 120px 20px;
+        min-height: 65vh;
+        text-align: center;
+        justify-content: center;
+        align-items: flex-start;
+        background-position-y: -10px; /* MENOS CÉU NO MOBILE */
+    }
+
+    .hero-text {
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 1.9rem;
+    }
+
+    .hero-sub {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .btn-flutuante {
+        top: auto;
+        bottom: 22px;
+        right: 20px;
+        transform: none;
+        padding: 14px 24px;
+        font-size: 1rem;
+    }
 }
