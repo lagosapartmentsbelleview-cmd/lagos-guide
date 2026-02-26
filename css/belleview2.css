@@ -35,7 +35,7 @@ body {
 
 .logo-circle {
     width: 42px;
-    height: 42px;
+    aspect-ratio: 1 / 1; /* mantém sempre círculo perfeito */
     background: #005c99;
     color: #fff;
     border-radius: 50%;
@@ -44,7 +44,9 @@ body {
     align-items: center;
     font-weight: 700;
     font-size: 1.4rem;
+    flex-shrink: 0; /* impede de encolher */
 }
+
 
 .nav a {
     margin-left: 20px;
