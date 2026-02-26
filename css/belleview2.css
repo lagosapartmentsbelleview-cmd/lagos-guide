@@ -86,13 +86,13 @@ body {
     position: relative;
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
-    background-position: center top; /* MOSTRA MAIS PISCINA */
-    background-position-y: -120px;   /* AJUSTE FINO */
-    padding: 120px 40px 120px 40px;
+    background-position: center top;
+    background-position-y: -120px; /* mostra mais piscina */
+    padding: 120px 40px 120px 40px; /* menos altura total */
     color: #ffffff;
     display: flex;
     align-items: flex-start;
-    min-height: 65vh;
+    min-height: 65vh; /* hero mais compacto */
 }
 
 .hero::before {
@@ -110,7 +110,7 @@ body {
     position: relative;
     z-index: 2;
     max-width: 620px;
-    margin-top: 20px;
+    margin-top: 10px; /* sobe o texto */
     margin-left: 4vw;
 }
 
@@ -124,17 +124,17 @@ body {
 
 .hero-text h1 {
     font-family: "Poppins", sans-serif;
-    font-size: 3.2rem;
+    font-size: 3rem;
     line-height: 1.22;
-    margin: 10px 0 22px 0;
+    margin: 10px 0 18px 0;
     text-shadow: 0 4px 14px rgba(0,0,0,0.45);
 }
 
 .hero-sub {
-    font-size: 1.35rem;
-    line-height: 1.55;
+    font-size: 1.3rem;
+    line-height: 1.52;
     opacity: 0.96;
-    max-width: 580px;
+    max-width: 560px;
     text-shadow: 0 3px 10px rgba(0,0,0,0.35);
     text-align: justify;
     text-justify: inter-word;
