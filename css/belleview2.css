@@ -87,12 +87,12 @@ body {
     background-image: url("../img/hero/hero1.jpg");
     background-size: cover;
     background-position: center top; /* MOSTRA MAIS PISCINA */
-    background-position-y: -40px;   /* AJUSTE FINO */
-    padding: 140px 40px 180px 40px;
+    background-position-y: -120px;   /* AJUSTE FINO */
+    padding: 120px 40px 120px 40px;
     color: #ffffff;
     display: flex;
     align-items: flex-start;
-    min-height: 78vh;
+    min-height: 65vh;
 }
 
 .hero::before {
