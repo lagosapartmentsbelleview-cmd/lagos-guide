@@ -312,8 +312,8 @@ body {
 
     /* BOTÃO FLUTUANTE */
     .btn-flutuante {
-    position: fixed;
-    bottom: 90px;   /* antes 22px — agora MUITO mais acima */
+    position: center;
+    bottom: 110px;   /* antes 22px — agora MUITO mais acima */
     right: 20px;
     top: auto;
     transform: none;
