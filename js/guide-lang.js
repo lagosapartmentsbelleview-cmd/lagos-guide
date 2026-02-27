@@ -7,20 +7,15 @@ function getQueryParam(name) {
 
 const supportedLangs = ["pt", "en", "es", "fr", "de", "it"];
 
-/* 
-   O Guide NÃO deve assumir que o utilizador já escolheu idioma.
-   Por isso NÃO usamos setLanguage() aqui.
-   Apenas definimos o idioma inicial para o rodapé.
-*/
 let lang =
   (getQueryParam("lang") && supportedLangs.includes(getQueryParam("lang")))
     ? getQueryParam("lang")
-    : "pt"; // PT por defeito ao entrar
+    : "pt";
 
 if (!supportedLangs.includes(lang)) lang = "pt";
 
 /* ============================================================
-   LINKS DE RODAPÉ MULTILÍNGUA
+   LINKS DE RODAPÉ MULTILÍNGUA — GUIDE
 ============================================================ */
 const footerLinksGuide = {
   pt: [
@@ -68,7 +63,49 @@ const footerLinksGuide = {
 };
 
 /* ============================================================
-   FUNÇÃO PARA ATUALIZAR O RODAPÉ
+   FRASES FIXAS DO FOOTER — GUIDE
+============================================================ */
+const footerTextsGuide = {
+  pt: {
+    call: "(Chamada para a rede fixa nacional)",
+    reg: "Nº de Registos AL",
+    operator: "Entidade Exploradora",
+    rights: "Todos os direitos reservados."
+  },
+  en: {
+    call: "(Call to a national landline network)",
+    reg: "AL Registration Numbers",
+    operator: "Operating Entity",
+    rights: "All rights reserved."
+  },
+  es: {
+    call: "(Llamada a la red fija nacional)",
+    reg: "Números de Registro AL",
+    operator: "Entidad Operadora",
+    rights: "Todos los derechos reservados."
+  },
+  fr: {
+    call: "(Appel vers le réseau fixe national)",
+    reg: "Numéros d’Enregistrement AL",
+    operator: "Entité Exploitante",
+    rights: "Tous droits réservés."
+  },
+  de: {
+    call: "(Anruf ins nationale Festnetz)",
+    reg: "AL‑Registrierungsnummern",
+    operator: "Betreibende Einheit",
+    rights: "Alle Rechte vorbehalten."
+  },
+  it: {
+    call: "(Chiamata alla rete fissa nazionale)",
+    reg: "Numeri di Registrazione AL",
+    operator: "Entità Gestore",
+    rights: "Tutti i diritti riservati."
+  }
+};
+
+/* ============================================================
+   ATUALIZAR LINKS DO FOOTER
 ============================================================ */
 function updateFooterLinksGuide() {
   const container = document.querySelector(".footer-links");
@@ -87,16 +124,27 @@ function updateFooterLinksGuide() {
 }
 
 /* ============================================================
-   INICIALIZAR APENAS O RODAPÉ EM PT AO ENTRAR
+   ATUALIZAR FRASES FIXAS DO FOOTER
 ============================================================ */
-function setFooterLanguage(initialLang) {
-  lang = initialLang;
-  window.currentLang = initialLang;
-  updateFooterLinksGuide();
+function updateFooterTextsGuide() {
+  if (document.getElementById("footer-call"))
+    document.getElementById("footer-call").innerText = footerTextsGuide[lang].call;
+
+  if (document.getElementById("footer-reg"))
+    document.getElementById("footer-reg").innerText = footerTextsGuide[lang].reg;
+
+  if (document.getElementById("footer-operator"))
+    document.getElementById("footer-operator").innerText = footerTextsGuide[lang].operator;
+
+  if (document.getElementById("footer-rights"))
+    document.getElementById("footer-rights").innerText = footerTextsGuide[lang].rights;
 }
 
-// Rodapé aparece logo em PT ao entrar
-setFooterLanguage("pt");
+/* ============================================================
+   ATUALIZAR AO CARREGAR A PÁGINA
+============================================================ */
+updateFooterLinksGuide();
+updateFooterTextsGuide();
 
 /* ============================================================
    INTERCEPTAR setLanguage() DO GUIDE
@@ -111,5 +159,6 @@ if (typeof setLanguage === "function") {
     lang = newLang;
 
     updateFooterLinksGuide();
+    updateFooterTextsGuide();
   };
 }
