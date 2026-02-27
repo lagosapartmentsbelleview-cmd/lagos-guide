@@ -300,7 +300,7 @@ a[href^="https://wa.me"],
 }
 
 /* Reduzir todo o texto do footer exceto o título e o logo */
-.footer-content p,
+.footer-content p:not(.footer-title),
 .footer-address,
 .footer-reg,
 .footer-copy,
@@ -308,6 +308,7 @@ a[href^="https://wa.me"],
     font-size: 13px;
     line-height: 1.45;
 }
+
 
 /* Mobile ainda mais compacto */
 @media (max-width: 600px) {
