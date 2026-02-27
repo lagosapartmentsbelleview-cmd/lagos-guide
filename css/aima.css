@@ -569,3 +569,11 @@ footer .footer-content {
     margin: 0 auto;
 }
 
+/* Página inicial AIMA — garantir que o footer não fica limitado pelo <main> */
+body > main > footer {
+    width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding-left: 20px;
+    padding-right: 20px;
+}
