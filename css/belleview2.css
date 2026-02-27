@@ -649,3 +649,94 @@ a[href^="https://wa.me"],
         height: 200px;
     }
 }
+
+/* ===========================================================
+   COMODIDADES — BELLEVIEW 2.0 PREMIUM
+=========================================================== */
+
+#comodidades {
+    background: #f5f7fa;
+    padding: 80px 40px;
+    border-radius: 0 0 20px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Título */
+#comodidades .aloj-title {
+    text-align: center;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #005c99;
+    margin-bottom: 35px;
+    letter-spacing: -0.5px;
+}
+
+/* Intro */
+#comodidades .intro-alojamento {
+    background: #ffffff;
+    padding: 32px 28px;
+    border-radius: 16px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    margin-bottom: 50px;
+}
+
+#comodidades .intro-alojamento .subtitulo {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: #444;
+    text-align: justify;
+    text-justify: inter-word;
+    margin-bottom: 18px;
+}
+
+/* Subtítulos */
+#comodidades .subtitulo-categoria {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #005c99;
+    margin: 40px 0 20px;
+}
+
+/* Grelha de comodidades */
+#comodidades .aloj-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 22px;
+    margin-bottom: 50px;
+}
+
+/* Cards */
+#comodidades .cb-item {
+    background: #ffffff;
+    padding: 22px 18px;
+    border-radius: 14px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    font-weight: 600;
+    color: #005c99;
+    font-family: "Poppins", sans-serif;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#comodidades .cb-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    #comodidades {
+        padding: 50px 20px;
+    }
+
+    #comodidades .aloj-title {
+        font-size: 2.1rem;
+    }
+
+    #comodidades .intro-alojamento {
+        padding: 24px 20px;
+    }
+}
