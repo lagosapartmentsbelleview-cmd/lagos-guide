@@ -467,92 +467,185 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   ABA ALOJAMENTO
+   ALOJAMENTO — ESTILO PREMIUM BELLEVIEW
 =========================================================== */
+
+/* Secção geral */
+#alojamento {
+    background: #f5f7fa;
+    padding: 80px 40px;
+    border-radius: 0 0 20px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
 /* Título principal */
 .aloj-title {
     text-align: center;
-    font-size: 32px;
+    font-size: 2.6rem;
     font-weight: 700;
     color: #005c99;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
+    letter-spacing: -0.5px;
+    font-family: "Poppins", sans-serif;
 }
 
-/* Intro */
+/* INTRO — Card premium */
 .intro-alojamento {
-    background: #f7f9fc;
-    border-left: 4px solid #005c99;
-    padding: 25px;
-    border-radius: 10px;
-    margin-bottom: 35px;
+    background: #ffffff;
+    padding: 32px 28px;
+    border-radius: 16px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    margin-bottom: 50px;
 }
 
 .intro-alojamento .subtitulo {
-    font-size: 16px;
-    line-height: 1.55;
-    margin-bottom: 15px;
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: #444;
+    text-align: justify;
+    text-justify: inter-word;
+    margin-bottom: 18px;
 }
 
-/* Galerias */
+/* GALERIA — Fotos alinhadas e elegantes */
 .aloj-galeria {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 12px;
-    margin: 25px 0;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+    margin: 40px 0;
 }
 
 .aloj-galeria img {
     width: 100%;
-    border-radius: 10px;
+    height: 260px;
     object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Destaques */
+.aloj-galeria img:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+
+/* SUBTÍTULO DESTAQUES */
+.subtitulo-categoria {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #005c99;
+    margin: 40px 0 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+/* COMODIDADES — Ícones premium */
 .aloj-highlights {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 15px;
-    margin: 25px 0 40px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 22px;
+    margin-bottom: 50px;
 }
 
 .cb-item {
-    background: #eef5fb;
-    padding: 14px;
-    border-radius: 8px;
+    background: #ffffff;
+    padding: 22px 18px;
+    border-radius: 14px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     text-align: center;
     font-weight: 600;
     color: #005c99;
+    font-family: "Poppins", sans-serif;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Cards de descrição */
+.cb-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* DESCRIÇÃO — Cards premium */
 .descricao-alojamento {
-    background: #f7f9fc;
-    padding: 25px;
-    border-radius: 10px;
-    margin: 35px 0;
-    border-left: 4px solid #005c99;
+    background: #ffffff;
+    padding: 32px 28px;
+    border-radius: 16px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    margin: 50px 0;
 }
 
 .descricao-alojamento h3 {
+    font-size: 1.9rem;
+    font-weight: 700;
     color: #005c99;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
+    font-family: "Poppins", sans-serif;
 }
 
-/* Lista de composição */
+.descricao-alojamento p {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: #444;
+    text-align: justify;
+    text-justify: inter-word;
+    margin-bottom: 18px;
+}
+
+/* LISTA DE COMPOSIÇÃO — Premium vertical cards */
 .comodidades-lista {
-    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin: 30px 0 50px;
 }
 
 .comodidade-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #e5e5e5;
-    font-size: 16px;
+    background: #ffffff;
+    padding: 22px 20px;
+    border-radius: 14px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.comodidade-item span:last-child {
+.comodidade-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.comodidade-nome {
+    font-size: 1.05rem;
+    font-weight: 600;
     color: #005c99;
+    margin-bottom: 6px;
+    font-family: "Poppins", sans-serif;
+}
+
+.comodidade-check {
+    font-size: 1.4rem;
     font-weight: 700;
+    color: #2ecc71;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    #alojamento {
+        padding: 50px 20px;
+    }
+
+    .aloj-title {
+        font-size: 2.1rem;
+    }
+
+    .intro-alojamento,
+    .descricao-alojamento {
+        padding: 24px 20px;
+    }
+
+    .aloj-galeria img {
+        height: 200px;
+    }
 }
