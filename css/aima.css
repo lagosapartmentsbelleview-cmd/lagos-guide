@@ -553,14 +553,15 @@ a[href^="https://wa.me"],
     }
 }
 
-/* Forçar footer a sair do main na página inicial AIMA */
-.aima-main > footer {
+/* Full-bleed footer em qualquer situação */
+footer {
     width: 100vw !important;
     position: relative;
     left: 50%;
     right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+    margin-left: -50vw !important;
+    margin-right: -50vw !important;
     padding-left: 20px;
     padding-right: 20px;
 }
+
