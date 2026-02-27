@@ -284,7 +284,7 @@ body {
     background-repeat: no-repeat !important;
     background-position: center -150px !important;
     padding: 90px 20px 0 20px; /* sem cinzento */
-    min-height: 100vh !important;
+    min-height: 130vh !important;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
