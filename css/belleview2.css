@@ -312,7 +312,7 @@ a[href^="https://wa.me"],
 
 /* Mobile ainda mais compacto */
 @media (max-width: 600px) {
-    .footer-content p,
+    .footer-content p:not(.footer-title),
     .footer-address,
     .footer-reg,
     .footer-copy,
