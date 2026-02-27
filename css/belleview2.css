@@ -285,7 +285,7 @@ body {
        background-position: center top;
        background-position-y: -150px !important;
        padding: 90px 20px 120px 20px;
-       min-height: 90vh !important; /* aumenta para eliminar o cinzento */
+       min-height: 100vh !important; /* aumenta para eliminar o cinzento */
        display: flex;
        flex-direction: column;
        justify-content: flex-start;
