@@ -810,3 +810,194 @@ a[href^="https://wa.me"],
         margin-right: auto;
     }
 }
+
+/* ===========================================================
+   LOCALIZAÇÃO — BELLEVIEW 2.0 PREMIUM
+=========================================================== */
+
+#localizacao {
+    background: #f5f7fa;
+    padding: 80px 40px;
+    border-radius: 0 0 20px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Título */
+#localizacao .aloj-title {
+    text-align: center;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #005c99;
+    margin-bottom: 35px;
+    letter-spacing: -0.5px;
+}
+
+/* Intro */
+#localizacao .intro-alojamento {
+    background: #ffffff;
+    padding: 32px 28px;
+    border-radius: 16px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    margin-bottom: 50px;
+}
+
+#localizacao .intro-alojamento .subtitulo {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: #444;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    margin-bottom: 18px;
+}
+
+/* Mapa */
+#localizacao .map-container {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    margin-bottom: 50px;
+}
+
+/* Subtítulos */
+#localizacao .subtitulo-categoria {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #005c99;
+    margin: 40px 0 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Distâncias — lista premium */
+#localizacao .proximidades-lista {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 50px;
+}
+
+#localizacao .perto-item {
+    background: #ffffff;
+    padding: 18px 20px;
+    border-radius: 14px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#localizacao .perto-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+#localizacao .perto-nome {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #005c99;
+}
+
+#localizacao .perto-dist {
+    font-size: 0.95rem;
+    color: #333;
+    opacity: 0.85;
+}
+
+/* O que os hóspedes mais gostam — cards iguais aos de Comodidades */
+#localizacao .aloj-highlights {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-bottom: 50px;
+}
+
+#localizacao .cb-item {
+    background: #ffffff;
+    padding: 22px 18px;
+    border-radius: 14px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    font-weight: 600;
+    color: #005c99;
+    font-family: "Poppins", sans-serif;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#localizacao .cb-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* Galeria final */
+#localizacao .aloj-galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+    margin-top: 30px;
+}
+
+#localizacao .aloj-galeria img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#localizacao .aloj-galeria img:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+
+/* ===========================================================
+   MOBILE — AJUSTES PREMIUM
+=========================================================== */
+
+@media (max-width: 768px) {
+
+    #localizacao {
+        padding: 50px 20px;
+    }
+
+    #localizacao .aloj-title {
+        font-size: 2.1rem;
+    }
+
+    #localizacao .intro-alojamento {
+        padding: 24px 20px;
+    }
+
+    #localizacao .intro-alojamento .subtitulo {
+        font-size: 1.05rem;
+        line-height: 1.75;
+        margin-bottom: 20px;
+    }
+
+    #localizacao .proximidades-lista {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    #localizacao .aloj-highlights {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    #localizacao .aloj-galeria img {
+        height: 200px;
+    }
+}
+
+/* Mobile pequeno */
+@media (max-width: 480px) {
+    #localizacao .aloj-highlights {
+        grid-template-columns: 1fr;
+    }
+}
