@@ -740,3 +740,45 @@ a[href^="https://wa.me"],
         padding: 24px 20px;
     }
 }
+
+/* Grelha de comodidades — 4 colunas em desktop */
+#comodidades .aloj-highlights {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-bottom: 50px;
+}
+
+/* Cards premium */
+#comodidades .cb-item {
+    background: #ffffff;
+    padding: 22px 18px;
+    border-radius: 14px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    font-weight: 600;
+    color: #005c99;
+    font-family: "Poppins", sans-serif;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#comodidades .cb-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* Mobile — 2 colunas */
+@media (max-width: 768px) {
+    #comodidades .aloj-highlights {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+/* Mobile pequeno — 1 coluna */
+@media (max-width: 480px) {
+    #comodidades .aloj-highlights {
+        grid-template-columns: 1fr;
+    }
+}
