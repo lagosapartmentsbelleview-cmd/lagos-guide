@@ -299,6 +299,15 @@ a[href^="https://wa.me"],
     }
 }
 
+/* Reduzir todo o texto do footer exceto o título e o logo */
+.footer-content p,
+.footer-address,
+.footer-reg,
+.footer-copy,
+.footer-links {
+    font-size: 13px;
+    line-height: 1.45;
+}
 
 
 /* ===========================================================
