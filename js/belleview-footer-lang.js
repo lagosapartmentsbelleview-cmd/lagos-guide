@@ -168,3 +168,9 @@ if (typeof setLanguage === "function") {
     updateFooterTextsBelleview();
   };
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateFooterLinksBelleview();
+  updateFooterTextsBelleview();
+});
+
