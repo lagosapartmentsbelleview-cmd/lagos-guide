@@ -278,19 +278,20 @@ body {
 
     /* HERO — CORRIGIDO */
     .hero {
-       position: relative;
-       background-image: url("../img/hero/hero1.jpg");
-       background-size: cover !important;
-       background-repeat: no-repeat !important;
-       background-position: center -150px !important;
-       padding: 90px 20px 120px 20px;
-       min-height: 100vh !important; /* aumenta para eliminar o cinzento */
-       display: flex;
-       flex-direction: column;
-       justify-content: flex-start;
-       align-items: center;
-       color: #fff;
-   }
+    position: relative;
+    background-image: url("../img/hero/hero1.jpg");
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center -150px !important; /* CORRIGIDO */
+    padding: 90px 20px 120px 20px;
+    min-height: 100vh !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: #fff;
+}
+
 
 
     .hero::before {
