@@ -552,3 +552,15 @@ a[href^="https://wa.me"],
         text-decoration: underline !important;
     }
 }
+
+/* Garantir que o footer ocupa sempre a largura total */
+footer {
+    width: 100% !important;
+}
+
+/* Conteúdo interno continua centrado e com largura controlada */
+footer .footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
