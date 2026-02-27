@@ -298,3 +298,106 @@ a[href^="https://wa.me"],
         text-decoration: underline !important;
     }
 }
+
+/* ===========================================================
+   FOOTER — IGUAL AO BELLEVIEW 2.0
+=========================================================== */
+
+footer {
+    background: #005c99;
+    padding: 40px 20px;
+    margin-top: 40px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    color: #ffffff;
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-logo {
+    margin-bottom: 15px;
+}
+
+.footer-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+/* Links legais — versão premium */
+.footer-links {
+    font-size: 13px;
+    line-height: 1.4;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 16px;
+}
+
+.footer-links a {
+    color: #cfe8ff;
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* Reduzir todo o texto do footer exceto o título e o logo */
+.footer-content p:not(.footer-title),
+.footer-address,
+.footer-reg,
+.footer-copy,
+.footer-links {
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+/* Mobile ainda mais compacto */
+@media (max-width: 600px) {
+    .footer-content p:not(.footer-title),
+    .footer-address,
+    .footer-reg,
+    .footer-copy,
+    .footer-links {
+        font-size: 12px;
+    }
+}
+
+/* Contactos */
+.footer-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+/* Remover estilos automáticos de links em mobile */
+a[href^="tel"],
+a[href^="mailto"],
+a[href^="https://wa.me"],
+.footer-link {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Hover apenas desktop */
+@media (hover: hover) {
+    a[href^="tel"]:hover,
+    a[href^="mailto"]:hover,
+    a[href^="https://wa.me"]:hover,
+    .footer-link:hover {
+        text-decoration: underline !important;
+    }
+}
