@@ -309,6 +309,11 @@ a[href^="https://wa.me"],
     line-height: 1.45;
 }
 
+.footer-title {
+    font-size: 22px;
+    font-weight: 600;
+}
+
 
 /* ===========================================================
    MOBILE — HEADER + HERO + BOTÃO (CORRIGIDO)
