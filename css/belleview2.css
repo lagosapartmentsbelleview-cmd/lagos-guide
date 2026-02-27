@@ -465,3 +465,94 @@ a[href^="https://wa.me"],
         transform: translate(-50%, 0) !important;
     }
 }
+
+/* ===========================================================
+   ABA ALOJAMENTO
+=========================================================== */
+
+/* Título principal */
+.aloj-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #005c99;
+    margin-bottom: 25px;
+}
+
+/* Intro */
+.intro-alojamento {
+    background: #f7f9fc;
+    border-left: 4px solid #005c99;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 35px;
+}
+
+.intro-alojamento .subtitulo {
+    font-size: 16px;
+    line-height: 1.55;
+    margin-bottom: 15px;
+}
+
+/* Galerias */
+.aloj-galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 25px 0;
+}
+
+.aloj-galeria img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Destaques */
+.aloj-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    margin: 25px 0 40px;
+}
+
+.cb-item {
+    background: #eef5fb;
+    padding: 14px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    color: #005c99;
+}
+
+/* Cards de descrição */
+.descricao-alojamento {
+    background: #f7f9fc;
+    padding: 25px;
+    border-radius: 10px;
+    margin: 35px 0;
+    border-left: 4px solid #005c99;
+}
+
+.descricao-alojamento h3 {
+    color: #005c99;
+    margin-bottom: 15px;
+}
+
+/* Lista de composição */
+.comodidades-lista {
+    margin-top: 20px;
+}
+
+.comodidade-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 16px;
+}
+
+.comodidade-item span:last-child {
+    color: #005c99;
+    font-weight: 700;
+}
