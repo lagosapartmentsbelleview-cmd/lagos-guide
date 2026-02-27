@@ -782,3 +782,31 @@ a[href^="https://wa.me"],
         grid-template-columns: 1fr;
     }
 }
+
+/* ===========================================================
+   MOBILE — MELHORIA DE TEXTO PREMIUM BELLEVIEW
+=========================================================== */
+
+@media (max-width: 768px) {
+
+    /* Todos os textos descritivos */
+    .intro-alojamento .subtitulo,
+    .descricao-alojamento p,
+    #comodidades .intro-alojamento .subtitulo {
+        font-size: 1.05rem;              /* mais compacto */
+        line-height: 1.75;               /* mais respirado */
+        text-align: justify;
+        text-justify: inter-word;
+        hyphens: auto;                   /* quebra natural */
+        word-break: break-word;          /* evita buracos */
+        margin-bottom: 16px;
+    }
+
+    /* Limitar largura para leitura perfeita */
+    .intro-alojamento,
+    .descricao-alojamento {
+        max-width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
