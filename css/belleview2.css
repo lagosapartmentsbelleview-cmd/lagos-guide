@@ -309,10 +309,23 @@ a[href^="https://wa.me"],
     line-height: 1.45;
 }
 
+/* Mobile ainda mais compacto */
+@media (max-width: 600px) {
+    .footer-content p,
+    .footer-address,
+    .footer-reg,
+    .footer-copy,
+    .footer-links {
+        font-size: 12px;
+    }
+}
+
+
 .footer-title {
     font-size: 22px;
     font-weight: 600;
 }
+
 
 
 /* ===========================================================
