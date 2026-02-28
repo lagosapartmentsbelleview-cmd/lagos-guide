@@ -773,10 +773,9 @@
 
     <h3 class="contact-subtitle">Envie-nos uma mensagem</h3>
 
-    <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+   <form id="contactForm" class="contact-form">
 
     <input type="hidden" name="access_key" value="950b90bc-37f4-4f5b-9d69-3e56389a054d">
-
     <input type="checkbox" name="botcheck" style="display:none;">
 
     <div class="form-group">
@@ -794,11 +793,19 @@
         <textarea name="message" rows="5" required></textarea>
     </div>
 
-    <input type="hidden" name="redirect" value="https://apartmentsbelleview.com/sucesso.html">
-
     <button type="submit" class="btn-enviar">Enviar</button>
 
+    <!-- MENSAGEM DE SUCESSO -->
+    <div id="successMessage" class="success-card" style="display:none;">
+    <span class="success-icon">✔</span>
+    <p class="success-text" data-i18n="contact_success">
+        Mensagem enviada com sucesso! Obrigado pelo seu contacto.
+    </p>
+</div>
+
+
 </form>
+
 
 
     <h3 class="contact-subtitle">Informação Legal</h3>
@@ -888,6 +895,33 @@ document.querySelectorAll(".faq-question").forEach(btn => {
     });
 });
 </script>
+<script>
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        const msg = document.getElementById("successMessage");
+        msg.style.display = "flex";   // mostra o card
+        form.reset();
+
+        // Redireciona após 3 segundos
+        setTimeout(() => {
+            window.location.href = "index2.html";
+        }, 3000);
+    }
+});
+</script>
+
 
 <script src="js/belleview-lang.js"></script>
 <script src="js/belleview-footer-lang.js"></script>
