@@ -1391,3 +1391,15 @@ a[href^="https://wa.me"],
         padding: 24px 20px;
     }
 }
+
+#contactos input,
+#contactos textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid #cccccc;
+    font-size: 1rem;
+    font-family: "Poppins", sans-serif;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    box-sizing: border-box; /* ← AQUI ESTÁ A CURA */
+}
