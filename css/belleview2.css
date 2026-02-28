@@ -1001,3 +1001,128 @@ a[href^="https://wa.me"],
         grid-template-columns: 1fr;
     }
 }
+
+/* ===========================================================
+   REGRAS DO IMÓVEL — BELLEVIEW 2.0 PREMIUM
+=========================================================== */
+
+#regras {
+    background: #f5f7fa;
+    padding: 80px 40px;
+    border-radius: 0 0 20px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Título */
+#regras .aloj-title {
+    text-align: center;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #005c99;
+    margin-bottom: 35px;
+    letter-spacing: -0.5px;
+}
+
+/* Intro */
+#regras .intro-alojamento {
+    background: #ffffff;
+    padding: 32px 28px;
+    border-radius: 16px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    margin-bottom: 50px;
+}
+
+#regras .intro-alojamento .subtitulo {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: #444;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    margin-bottom: 18px;
+}
+
+/* GRID DE REGRAS */
+#regras .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+/* CARD INDIVIDUAL */
+#regras .rule-item {
+    background: #ffffff;
+    padding: 22px 20px;
+    border-radius: 16px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#regras .rule-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* ÍCONES */
+#regras .rule-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+    color: #005c99;
+    flex-shrink: 0;
+}
+
+/* TEXTO */
+#regras .rule-text {
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.55;
+}
+
+#regras .rule-text strong {
+    display: block;
+    font-size: 1.05rem;
+    color: #005c99;
+    margin-bottom: 4px;
+}
+
+/* ===========================================================
+   MOBILE — AJUSTES PREMIUM
+=========================================================== */
+
+@media (max-width: 900px) {
+    #regras .rules-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+
+    #regras {
+        padding: 50px 20px;
+    }
+
+    #regras .aloj-title {
+        font-size: 2.1rem;
+    }
+
+    #regras .rules-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    #regras .rule-item {
+        padding: 20px 18px;
+    }
+
+    #regras .rule-text {
+        font-size: 0.98rem;
+        line-height: 1.65;
+    }
+}
