@@ -613,7 +613,7 @@
         </button>
         <div class="faq-answer">
             <p data-i18n="faq_a3">
-                As duas piscinas do Marina Park (adultos e crianças) funcionam sazonalmente, geralmente entre a primavera
+                As duas piscinas do Marina Park (adultos e crianças) funcionam todo o ano, sobretudo entre a primavera
                 e o início do outono. O horário habitual é das 09h00 às 20h00, podendo variar consoante a época.
             </p>
         </div>
@@ -665,7 +665,7 @@
         </button>
         <div class="faq-answer">
             <p data-i18n="faq_a7">
-                Sim. O complexo dispõe de estacionamento exterior gratuito e fácil, disponível para todos os hóspedes.
+                Sim. Todos os apartamentos disponibilizam estacionamento reservado em lugar de garagem coletiva de forma gratuita, fácil e disponível para 1 viatura dos hóspedes.
             </p>
         </div>
     </div>
@@ -766,6 +766,22 @@
     </div>
 </footer>
 
+<script>
+document.querySelectorAll(".faq-question").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const item = btn.parentElement;
+        const answer = item.querySelector(".faq-answer");
+
+        item.classList.toggle("active");
+
+        if (item.classList.contains("active")) {
+            answer.style.maxHeight = answer.scrollHeight + "px";
+        } else {
+            answer.style.maxHeight = "0px";
+        }
+    });
+});
+</script>
 
 <script src="js/belleview-lang.js"></script>
 <script src="js/belleview-footer-lang.js"></script>
