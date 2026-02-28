@@ -1403,3 +1403,40 @@ a[href^="https://wa.me"],
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
     box-sizing: border-box; /* ← AQUI ESTÁ A CURA */
 }
+
+/* ===========================================================
+   CARD DE SUCESSO — BELLEVIEW 2.0
+=========================================================== */
+
+.success-card {
+    background: #ffffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 16px;
+    padding: 24px 22px;
+    margin-top: 25px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.success-icon {
+    font-size: 1.8rem;
+    color: #2ecc71;
+    flex-shrink: 0;
+}
+
+.success-text {
+    font-size: 1.15rem;
+    color: #2d2d2d;
+    font-weight: 600;
+    line-height: 1.5;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Animação suave */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
