@@ -1440,3 +1440,103 @@ a[href^="https://wa.me"],
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* ===========================================================
+   COOKIE BANNER — ESTILO BELLEVIEW 2.0
+=========================================================== */
+
+.cookie-banner {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px 26px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+    border: 1px solid #e6e6e6;
+    z-index: 9999;
+    display: none; /* aparece via JS */
+    max-width: 90%;
+    width: 480px;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.cookie-box {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cookie-text {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: #444;
+    font-family: "Poppins", sans-serif;
+    text-align: left;
+}
+
+.cookie-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.cookie-btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s ease;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Botão Aceitar */
+.cookie-btn.accept {
+    background: #005c99;
+    color: #ffffff;
+}
+
+.cookie-btn.accept:hover {
+    background: #004b80;
+}
+
+/* Botão Recusar */
+.cookie-btn.reject {
+    background: #e6e6e6;
+    color: #333;
+}
+
+.cookie-btn.reject:hover {
+    background: #d5d5d5;
+}
+
+/* Animação */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .cookie-banner {
+        width: 92%;
+        padding: 18px 20px;
+    }
+
+    .cookie-text {
+        font-size: 0.95rem;
+    }
+
+    .cookie-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cookie-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
