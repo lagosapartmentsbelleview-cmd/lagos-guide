@@ -1218,7 +1218,7 @@ a[href^="https://wa.me"],
     }
 
 /* ===========================================================
-   CONTACTOS — BELLEVIEW 2.0 PREMIUM
+   CONTACTOS — MÓDULO ISOLADO BELLEVIEW 2.0
 =========================================================== */
 
 #contactos {
@@ -1230,18 +1230,17 @@ a[href^="https://wa.me"],
 }
 
 /* Título */
-#contactos .aloj-title {
+#contactos .contact-title {
     text-align: center;
     font-size: 2.6rem;
     font-weight: 700;
     color: #005c99;
     margin-bottom: 35px;
-    letter-spacing: -0.5px;
     font-family: "Poppins", sans-serif;
 }
 
-/* INTRO */
-#contactos .intro-alojamento {
+/* INTRO — exclusivo Contactos */
+#contactos .contact-intro {
     background: #ffffff;
     padding: 32px 28px;
     border-radius: 16px;
@@ -1250,18 +1249,17 @@ a[href^="https://wa.me"],
     margin-bottom: 50px;
 }
 
-#contactos .intro-alojamento .subtitulo {
+#contactos .contact-intro p {
     font-size: 1.15rem;
     line-height: 1.75;
     color: #444;
     text-align: justify;
     text-justify: inter-word;
     hyphens: auto;
-    margin-bottom: 18px;
 }
 
-/* SUBTÍTULOS */
-#contactos .subtitulo-categoria {
+/* Subtítulos exclusivos */
+#contactos .contact-subtitle {
     font-size: 1.6rem;
     font-weight: 700;
     color: #005c99;
@@ -1270,14 +1268,14 @@ a[href^="https://wa.me"],
 }
 
 /* BLOCO DE CONTACTOS */
-#contactos .contacto-bloco {
+#contactos .contact-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 22px;
     margin-bottom: 40px;
 }
 
-#contactos .contacto-item {
+#contactos .contact-card {
     background: #ffffff;
     padding: 22px 20px;
     border-radius: 16px;
@@ -1289,24 +1287,24 @@ a[href^="https://wa.me"],
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-#contactos .contacto-item:hover {
+#contactos .contact-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
-#contactos .contacto-icon {
+#contactos .contact-icon {
     font-size: 2rem;
     color: #005c99;
     flex-shrink: 0;
 }
 
-#contactos .contacto-link {
+#contactos .contact-link {
     color: #005c99;
     font-weight: 600;
     text-decoration: none;
 }
 
-#contactos .contacto-link:hover {
+#contactos .contact-link:hover {
     text-decoration: underline;
 }
 
@@ -1349,7 +1347,7 @@ a[href^="https://wa.me"],
     outline: none;
 }
 
-/* BOTÃO ENVIAR */
+/* BOTÃO */
 #contactos .btn-enviar {
     background: #005c99;
     color: #ffffff;
@@ -1367,43 +1365,28 @@ a[href^="https://wa.me"],
     transform: translateY(-3px);
 }
 
-/* ===========================================================
-   RESPONSIVO — CONTACTOS
-=========================================================== */
-
+/* RESPONSIVO */
 @media (max-width: 900px) {
-    #contactos .contacto-bloco {
+    #contactos .contact-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 600px) {
-
     #contactos {
         padding: 50px 20px;
     }
 
-    #contactos .aloj-title {
+    #contactos .contact-title {
         font-size: 2.1rem;
     }
 
-    #contactos .contacto-bloco {
+    #contactos .contact-grid {
         grid-template-columns: 1fr;
         gap: 16px;
     }
 
     #contactos .contact-form {
         padding: 24px 20px;
-    }
-
-    #contactos input,
-    #contactos textarea {
-        font-size: 0.98rem;
-    }
-}
-
-
-    .faq-answer p {
-        font-size: 0.98rem;
     }
 }
