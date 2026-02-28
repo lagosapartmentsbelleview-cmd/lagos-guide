@@ -773,24 +773,33 @@
 
     <h3 class="contact-subtitle">Envie-nos uma mensagem</h3>
 
-    <form class="contact-form">
-        <div class="form-group">
-            <label>Nome</label>
-            <input type="text" required>
-        </div>
+    <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
 
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" required>
-        </div>
+    <input type="hidden" name="access_key" value="950b90bc-37f4-4f5b-9d69-3e56389a054d">
 
-        <div class="form-group">
-            <label>Mensagem</label>
-            <textarea rows="5" required></textarea>
-        </div>
+    <input type="checkbox" name="botcheck" style="display:none;">
 
-        <button type="submit" class="btn-enviar">Enviar</button>
-    </form>
+    <div class="form-group">
+        <label>Nome</label>
+        <input type="text" name="name" required>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+        <label>Mensagem</label>
+        <textarea name="message" rows="5" required></textarea>
+    </div>
+
+    <input type="hidden" name="redirect" value="https://apartmentsbelleview.com/sucesso.html">
+
+    <button type="submit" class="btn-enviar">Enviar</button>
+
+</form>
+
 
     <h3 class="contact-subtitle">Informação Legal</h3>
 
