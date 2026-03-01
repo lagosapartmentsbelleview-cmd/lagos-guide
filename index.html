@@ -682,7 +682,9 @@
 </section>
 
 
-    <section id="regras" class="secao">
+<!-- ABA REGRAS -->
+
+<section id="regras" class="secao">
 
     <!-- TÍTULO -->
     <h2 class="aloj-title" data-i18n="rules_title">Regras do Imóvel</h2>
@@ -824,11 +826,13 @@
                 Crianças devem estar sempre acompanhadas por um adulto.
             </div>
         </div>
-   </div>
+
+    </div>
 
 </section>
 
 <!-- FAQ -->
+
 <h3 class="subtitulo-categoria" data-i18n="loc_faq_title">Perguntas Frequentes</h3>
 
 <div class="faq-container">
@@ -965,9 +969,7 @@
 
 </div>
 
-</section>
-
-    <!-- ABA CONTACTOS -->
+<!-- ABA CONTACTOS -->
 
 <section id="contactos" class="secao">
 
@@ -986,16 +988,16 @@
         <div class="contact-card">
             <span class="contact-icon">📞</span>
             <div>
-                <strong>Telefone</strong><br>
+                <strong data-i18n="contact_phone_label">Telefone</strong><br>
                 <a href="tel:+351910051588" class="contact-link">+351 910 051 588</a><br>
-                <small>(Chamada para a rede fixa nacional)</small>
+                <small data-i18n="contact_phone_note">(Chamada para a rede fixa nacional)</small>
             </div>
         </div>
 
         <div class="contact-card">
             <span class="contact-icon">💬</span>
             <div>
-                <strong>WhatsApp</strong><br>
+                <strong data-i18n="contact_whatsapp_label">WhatsApp</strong><br>
                 <a href="https://wa.me/351910051588" class="contact-link">+351 910 051 588</a>
             </div>
         </div>
@@ -1003,14 +1005,14 @@
         <div class="contact-card">
             <span class="contact-icon">📧</span>
             <div>
-                <strong>Email</strong><br>
+                <strong data-i18n="contact_email_label">Email</strong><br>
                 <a href="mailto:belleview@sapo.pt" class="contact-link">belleview@sapo.pt</a>
             </div>
         </div>
 
     </div>
 
-    <h3 class="contact-subtitle">Morada</h3>
+    <h3 class="contact-subtitle" data-i18n="contact_address_title">Morada</h3>
 
     <div class="contact-grid">
         <div class="contact-card" style="grid-column: span 3;">
@@ -1024,54 +1026,64 @@
         </div>
     </div>
 
-    <h3 class="contact-subtitle">Envie-nos uma mensagem</h3>
+    <h3 class="contact-subtitle" data-i18n="contact_form_title">Envie-nos uma mensagem</h3>
 
-   <form id="contactForm" class="contact-form">
+    <form id="contactForm" class="contact-form">
 
-    <input type="hidden" name="access_key" value="950b90bc-37f4-4f5b-9d69-3e56389a054d">
-    <input type="checkbox" name="botcheck" style="display:none;">
+        <input type="hidden" name="access_key" value="950b90bc-37f4-4f5b-9d69-3e56389a054d">
+        <input type="checkbox" name="botcheck" style="display:none;">
 
-    <div class="form-group">
-        <label>Nome</label>
-        <input type="text" name="name" required>
-    </div>
+        <div class="form-group">
+            <label data-i18n="contact_form_name">Nome</label>
+            <input type="text" name="name" required>
+        </div>
 
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" required>
-    </div>
+        <div class="form-group">
+            <label data-i18n="contact_form_email">Email</label>
+            <input type="email" name="email" required>
+        </div>
 
-    <div class="form-group">
-        <label>Mensagem</label>
-        <textarea name="message" rows="5" required></textarea>
-    </div>
+        <div class="form-group">
+            <label data-i18n="contact_form_message">Mensagem</label>
+            <textarea name="message" rows="5" required></textarea>
+        </div>
 
-    <button type="submit" class="btn-enviar">Enviar</button>
+        <button type="submit" class="btn-enviar" data-i18n="contact_form_send">Enviar</button>
 
-    <!-- MENSAGEM DE SUCESSO -->
-    <div id="successMessage" class="success-card" style="display:none;">
-    <span class="success-icon">✔</span>
-    <p class="success-text" data-i18n="contact_success">
-        Mensagem enviada com sucesso! Obrigado pelo seu contacto.
-    </p>
-</div>
+        <!-- MENSAGEM DE SUCESSO -->
+        <div id="successMessage" class="success-card" style="display:none;">
+            <span class="success-icon">✔</span>
+            <p class="success-text" data-i18n="contact_success">
+                Mensagem enviada com sucesso! Obrigado pelo seu contacto.
+            </p>
+        </div>
 
+    </form>
 
-</form>
-
-
-
-    <h3 class="contact-subtitle">Informação Legal</h3>
+    <h3 class="contact-subtitle" data-i18n="contact_legal_title">Informação Legal</h3>
 
     <div class="contact-grid" style="grid-template-columns: 1fr;">
         <div class="contact-card">
             <span class="contact-icon">📝</span>
             <div>
-                <strong>Nº de Registos AL</strong><br>
+                <strong data-i18n="contact_legal_al">Nº de Registos AL</strong><br>
                 26313/AL, 116670/AL, 116671/AL<br><br>
-                <strong>Entidade Exploradora</strong><br>
+                <strong data-i18n="contact_legal_entity">Entidade Exploradora</strong><br>
                 Luís Ferreira
             </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- GALERIA FINAL -->
+
+<div class="aloj-galeria">
+    <img src="img/localizacao/loc1.jpg" alt="Zona envolvente Belleview Lagos">
+    <img src="img/localizacao/loc2.jpg" alt="Marina de Lagos">
+    <img src="img/localizacao/loc3.jpg" alt="Praias próximas">
+</div>
+
         </div>
     </div>
 
