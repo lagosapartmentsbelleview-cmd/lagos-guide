@@ -133,8 +133,33 @@ comp_item_8: "Garagem gratuita para 1 viatura",
 comp_item_9: "Ar condicionado",
 comp_item_10: "Televisão por cabo",
 comp_item_11: "Berço gratuito mediante pedido",
-comp_item_12: "Check‑in autónomo 24h"
+comp_item_12: "Check‑in autónomo 24h",
+comod_title: "Comodidades Belleview Lagos",
 
+comod_intro_1: "As comodidades dos Apartments Belleview Lagos foram pensadas para proporcionar uma estadia confortável, prática e tranquila, combinando o melhor do alojamento moderno com o ambiente premium do complexo Marina Park.",
+comod_intro_2: "Entre piscinas, jardins, zonas de lazer e espaços interiores totalmente equipados, cada detalhe foi concebido para que se sinta verdadeiramente em casa — com a conveniência, segurança e qualidade que distinguem o Belleview.",
+
+comod_complex_title: "No Complexo Marina Park",
+
+comod_cx_1: "2 Piscinas (adultos e crianças)",
+comod_cx_2: "Jardins envolventes",
+comod_cx_3: "Parque infantil",
+comod_cx_4: "Campos de ténis",
+comod_cx_5: "Bar‑restaurante de apoio",
+comod_cx_6: "Segurança 24 horas",
+comod_cx_7: "Estacionamento exterior gratuito",
+comod_cx_8: "Zonas verdes amplas",
+
+comod_apartment_title: "No Apartamento",
+
+comod_ap_1: "Wi‑Fi de alta velocidade",
+comod_ap_2: "Ar condicionado",
+comod_ap_3: "Kitchenette totalmente equipada",
+comod_ap_4: "Televisão por cabo HD",
+comod_ap_5: "Garagem gratuita para 1 viatura",
+comod_ap_6: "Berço gratuito mediante pedido",
+comod_ap_7: "Máquina de café",
+comod_ap_8: "Check‑in autónomo 24h"
 
   },
   en: {
@@ -261,8 +286,33 @@ comp_item_8: "Free parking for 1 vehicle",
 comp_item_9: "Air conditioning",
 comp_item_10: "Cable TV",
 comp_item_11: "Free crib upon request",
-comp_item_12: "24h self check‑in"
+comp_item_12: "24h self check‑in",
+comod_title: "Belleview Lagos Amenities",
 
+comod_intro_1: "The amenities at Belleview Lagos Apartments were designed to provide a comfortable, practical and peaceful stay, combining the best of modern accommodation with the premium environment of the Marina Park complex.",
+comod_intro_2: "Between swimming pools, gardens, leisure areas and fully equipped indoor spaces, every detail was created to make you feel truly at home — with the convenience, safety and quality that define Belleview.",
+
+comod_complex_title: "In the Marina Park Complex",
+
+comod_cx_1: "2 Swimming pools (adults and children)",
+comod_cx_2: "Surrounding gardens",
+comod_cx_3: "Playground",
+comod_cx_4: "Tennis courts",
+comod_cx_5: "Support bar‑restaurant",
+comod_cx_6: "24‑hour security",
+comod_cx_7: "Free outdoor parking",
+comod_cx_8: "Large green areas",
+
+comod_apartment_title: "In the Apartment",
+
+comod_ap_1: "High‑speed Wi‑Fi",
+comod_ap_2: "Air conditioning",
+comod_ap_3: "Fully equipped kitchenette",
+comod_ap_4: "HD cable TV",
+comod_ap_5: "Free parking for 1 vehicle",
+comod_ap_6: "Free crib upon request",
+comod_ap_7: "Coffee machine",
+comod_ap_8: "24h self check‑in",
 
   },
   es: {
@@ -389,8 +439,33 @@ comp_item_8: "Aparcamiento gratuito para 1 vehículo",
 comp_item_9: "Aire acondicionado",
 comp_item_10: "Televisión por cable",
 comp_item_11: "Cuna gratuita bajo petición",
-comp_item_12: "Check‑in autónomo 24h"
+comp_item_12: "Check‑in autónomo 24h",
+comod_title: "Comodidades Belleview Lagos",
 
+comod_intro_1: "Las comodidades de los Apartments Belleview Lagos fueron diseñadas para ofrecer una estancia cómoda, práctica y tranquila, combinando lo mejor del alojamiento moderno con el entorno premium del complejo Marina Park.",
+comod_intro_2: "Entre piscinas, jardines, zonas de ocio y espacios interiores totalmente equipados, cada detalle fue pensado para que se sienta realmente como en casa — con la comodidad, seguridad y calidad que distinguen a Belleview.",
+
+comod_complex_title: "En el Complejo Marina Park",
+
+comod_cx_1: "2 Piscinas (adultos y niños)",
+comod_cx_2: "Jardines alrededor",
+comod_cx_3: "Parque infantil",
+comod_cx_4: "Pistas de tenis",
+comod_cx_5: "Bar‑restaurante de apoyo",
+comod_cx_6: "Seguridad 24 horas",
+comod_cx_7: "Aparcamiento exterior gratuito",
+comod_cx_8: "Amplias zonas verdes",
+
+comod_apartment_title: "En el Apartamento",
+
+comod_ap_1: "Wi‑Fi de alta velocidad",
+comod_ap_2: "Aire acondicionado",
+comod_ap_3: "Kitchenette totalmente equipada",
+comod_ap_4: "Televisión por cable HD",
+comod_ap_5: "Aparcamiento gratuito para 1 vehículo",
+comod_ap_6: "Cuna gratuita bajo petición",
+comod_ap_7: "Máquina de café",
+comod_ap_8: "Check‑in autónomo 24h"
 
   },
   fr: {
@@ -517,8 +592,33 @@ comp_item_8: "Parking gratuit pour 1 véhicule",
 comp_item_9: "Climatisation",
 comp_item_10: "Télévision par câble",
 comp_item_11: "Lit bébé gratuit sur demande",
-comp_item_12: "Check‑in autonome 24h/24"
+comp_item_12: "Check‑in autonome 24h/24",
+comod_title: "Commodités Belleview Lagos",
 
+comod_intro_1: "Les commodités des Apartments Belleview Lagos ont été conçues pour offrir un séjour confortable, pratique et paisible, alliant le meilleur de l’hébergement moderne à l’environnement premium du complexe Marina Park.",
+comod_intro_2: "Entre piscines, jardins, espaces de loisirs et zones intérieures entièrement équipées, chaque détail a été pensé pour que vous vous sentiez vraiment chez vous — avec la commodité, la sécurité et la qualité qui caractérisent Belleview.",
+
+comod_complex_title: "Dans le Complexe Marina Park",
+
+comod_cx_1: "2 piscines (adultes et enfants)",
+comod_cx_2: "Jardins environnants",
+comod_cx_3: "Aire de jeux",
+comod_cx_4: "Courts de tennis",
+comod_cx_5: "Bar‑restaurant de soutien",
+comod_cx_6: "Sécurité 24h/24",
+comod_cx_7: "Parking extérieur gratuit",
+comod_cx_8: "Grandes zones vertes",
+
+comod_apartment_title: "Dans l’Appartement",
+
+comod_ap_1: "Wi‑Fi haut débit",
+comod_ap_2: "Climatisation",
+comod_ap_3: "Kitchenette entièrement équipée",
+comod_ap_4: "Télévision HD par câble",
+comod_ap_5: "Parking gratuit pour 1 véhicule",
+comod_ap_6: "Lit bébé gratuit sur demande",
+comod_ap_7: "Machine à café",
+comod_ap_8: "Check‑in autonome 24h/24"
 
   },
   it: {
@@ -645,8 +745,33 @@ comp_item_8: "Parcheggio gratuito per 1 veicolo",
 comp_item_9: "Aria condizionata",
 comp_item_10: "TV via cavo",
 comp_item_11: "Culla gratuita su richiesta",
-comp_item_12: "Check‑in autonomo 24h"
+comp_item_12: "Check‑in autonomo 24h",
+comod_title: "Servizi Belleview Lagos",
 
+comod_intro_1: "I servizi degli Apartments Belleview Lagos sono stati pensati per offrire un soggiorno confortevole, pratico e tranquillo, combinando il meglio dell’alloggio moderno con l’ambiente premium del complesso Marina Park.",
+comod_intro_2: "Tra piscine, giardini, aree ricreative e spazi interni completamente attrezzati, ogni dettaglio è stato progettato per farvi sentire davvero a casa — con la comodità, la sicurezza e la qualità che distinguono Belleview.",
+
+comod_complex_title: "Nel Complesso Marina Park",
+
+comod_cx_1: "2 piscine (adulti e bambini)",
+comod_cx_2: "Giardini circostanti",
+comod_cx_3: "Parco giochi",
+comod_cx_4: "Campi da tennis",
+comod_cx_5: "Bar‑ristorante di supporto",
+comod_cx_6: "Sicurezza 24 ore",
+comod_cx_7: "Parcheggio esterno gratuito",
+comod_cx_8: "Ampie aree verdi",
+
+comod_apartment_title: "Nell’Appartamento",
+
+comod_ap_1: "Wi‑Fi ad alta velocità",
+comod_ap_2: "Aria condizionata",
+comod_ap_3: "Angolo cottura completamente attrezzato",
+comod_ap_4: "TV via cavo HD",
+comod_ap_5: "Parcheggio gratuito per 1 veicolo",
+comod_ap_6: "Culla gratuita su richiesta",
+comod_ap_7: "Macchina da caffè",
+comod_ap_8: "Check‑in autonomo 24h"
 
   },
   de: {
@@ -773,8 +898,33 @@ comp_item_8: "Kostenloser Parkplatz für 1 Fahrzeug",
 comp_item_9: "Klimaanlage",
 comp_item_10: "Kabel‑TV",
 comp_item_11: "Kostenloses Babybett auf Anfrage",
-comp_item_12: "24‑Stunden‑Self‑Check‑in"
+comp_item_12: "24‑Stunden‑Self‑Check‑in",
+comod_title: "Ausstattung Belleview Lagos",
 
+comod_intro_1: "Die Ausstattung der Apartments Belleview Lagos wurde entwickelt, um einen komfortablen, praktischen und ruhigen Aufenthalt zu bieten, der das Beste aus modernem Wohnen mit der Premium‑Umgebung des Marina Park‑Komplexes verbindet.",
+comod_intro_2: "Zwischen Schwimmbädern, Gärten, Freizeitbereichen und vollständig ausgestatteten Innenräumen wurde jedes Detail so gestaltet, dass Sie sich wirklich wie zu Hause fühlen — mit dem Komfort, der Sicherheit und der Qualität, die Belleview auszeichnen.",
+
+comod_complex_title: "Im Marina Park‑Komplex",
+
+comod_cx_1: "2 Schwimmbäder (Erwachsene und Kinder)",
+comod_cx_2: "Umgebende Gärten",
+comod_cx_3: "Spielplatz",
+comod_cx_4: "Tennisplätze",
+comod_cx_5: "Unterstützendes Bar‑Restaurant",
+comod_cx_6: "24‑Stunden‑Sicherheit",
+comod_cx_7: "Kostenlose Außenparkplätze",
+comod_cx_8: "Große Grünflächen",
+
+comod_apartment_title: "Im Apartment",
+
+comod_ap_1: "Hochgeschwindigkeits‑WLAN",
+comod_ap_2: "Klimaanlage",
+comod_ap_3: "Voll ausgestattete Küchenzeile",
+comod_ap_4: "HD‑Kabel‑TV",
+comod_ap_5: "Kostenloser Parkplatz für 1 Fahrzeug",
+comod_ap_6: "Kostenloses Babybett auf Anfrage",
+comod_ap_7: "Kaffeemaschine",
+comod_ap_8: "24‑Stunden‑Self‑Check‑in"
 
   }
 };
