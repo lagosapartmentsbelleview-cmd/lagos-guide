@@ -1617,6 +1617,13 @@ a[href^="https://wa.me"],
     border: 1px solid #e6e6e6;
 }
 
+@media (max-width: 480px) {
+    .reviews-container {
+        padding: 20px;
+    }
+}
+
+
 /* ===========================================================
    COMENTÁRIOS — SLIDER PREMIUM
 =========================================================== */
@@ -1717,5 +1724,10 @@ a[href^="https://wa.me"],
 @media (max-width: 480px) {
     .review-card {
         width: 260px;
+    }
+}
+@media (max-width: 480px) {
+    .reviews-wrapper {
+        padding: 30px 10px;
     }
 }
