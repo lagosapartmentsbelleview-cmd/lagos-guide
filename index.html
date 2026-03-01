@@ -1191,25 +1191,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const next = document.querySelector('.next-btn');
     const prev = document.querySelector('.prev-btn');
 
-    // Largura real de um card (inclui gap)
     function getCardWidth() {
         const card = document.querySelector('.review-card');
         const style = window.getComputedStyle(card);
-        const cardWidth = card.offsetWidth;
-        const gap = parseInt(style.marginRight) || 24; 
-        return cardWidth + gap;
+        const gap = 24;
+        return card.offsetWidth + gap;
+    }
+
+    function cardsPerClick() {
+        return window.innerWidth <= 480 ? 1 : 3;
     }
 
     next.addEventListener('click', () => {
-        track.scrollLeft += getCardWidth() * 3; // avança 3 cards
+        track.scrollLeft += getCardWidth() * cardsPerClick();
     });
 
     prev.addEventListener('click', () => {
-        track.scrollLeft -= getCardWidth() * 3; // recua 3 cards
+        track.scrollLeft -= getCardWidth() * cardsPerClick();
     });
 
 });
 </script>
+
   
 <script>
 document.querySelectorAll(".faq-question").forEach(btn => {
