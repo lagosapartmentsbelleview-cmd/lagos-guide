@@ -208,21 +208,50 @@ loc_like_checkin: "Check‑in autónomo 24h",
 rules_title: "Regras do Imóvel",
 rules_intro: "Para garantir o conforto, segurança e bem-estar de todos os hóspedes, pedimos que respeite as regras do imóvel. Todas foram pensadas para proporcionar uma estadia tranquila e sem preocupações.",
 
-rules_r1: "Check-in / Check-out — Check-in: a partir das 15:00 · Check-out: até às 10:00",
-rules_r2: "Cancelamento / Pré-pagamento — As condições variam consoante o tipo de alojamento. Verifique ao efetuar a reserva.",
-rules_r3: "Crianças e camas — Todas as crianças são bem-vindas. Berços gratuitos (0-2 anos), sujeitos à disponibilidade. Não existem camas extra.",
-rules_r4: "Proibido Fumar — É proibido fumar no interior do apartamento. Permitido apenas no terraço.",
-rules_r5: "Festas e Eventos — Não são permitidas festas ou eventos.",
-rules_r6: "Animais de Estimação — Animais de estimação não são admitidos.",
-rules_r7: "Lei do Silêncio — Respeite as horas de silêncio entre as 22h00 e as 08h00.",
-rules_r8: "Serviços e consumíveis — Para estadias de 7 noites ou mais, roupa de cama e toalhas são mudadas a cada 7 dias. Consumíveis devem ser adquiridos após utilização dos disponibilizados.",
-rules_r9: "Informações do apartamento — No interior encontra um livro de informações com instruções sobre máquinas e equipamentos.",
-rules_r10: "Perda de chaves — A perda de qualquer chave implica um custo de 40,00 € por chave.",
-rules_r11: "Saúde e segurança — Medidas adicionais de higienização estão em vigor devido à COVID‑19.",
-rules_r12: "Comunicação de danos — Qualquer estrago ou avaria deve ser comunicado de imediato ao anfitrião.",
-rules_r13: "Piscinas — Duas piscinas (adultos e crianças), abertas sazonalmente das 09h00 às 20h00. Respeite as regras do Marina Park.",
-rules_r14: "Campos de Ténis — Têm custo adicional. O Belleview não fornece raquetes nem bolas. Reserva feita na receção do Marina Park.",
-rules_r15: "Parque Infantil — De uso comum, seguro e rodeado de zonas verdes. Crianças devem estar sempre acompanhadas por um adulto.",
+rules_r1_title: "Check-in / Check-out",
+rules_r1_text: "Check-in: a partir das 15:00<br>Check-out: até às 10:00",
+
+rules_r2_title: "Cancelamento / Pré-pagamento",
+rules_r2_text: "As condições variam consoante o tipo de alojamento. Verifique ao efetuar a reserva.",
+
+rules_r3_title: "Crianças e camas",
+rules_r3_text: "Todas as crianças são bem-vindas.<br>Berços gratuitos (0-2 anos), sujeitos à disponibilidade.<br>Não existem camas extra.",
+
+rules_r4_title: "Proibido Fumar",
+rules_r4_text: "É proibido fumar no interior do apartamento. É permitido fumar apenas no terraço.",
+
+rules_r5_title: "Festas e Eventos",
+rules_r5_text: "Não são permitidas festas ou eventos.",
+
+rules_r6_title: "Animais de Estimação",
+rules_r6_text: "Animais de estimação não são admitidos.",
+
+rules_r7_title: "Lei do Silêncio",
+rules_r7_text: "Respeite as horas de silêncio entre as 22h00 e as 08h00.",
+
+rules_r8_title: "Serviços e consumíveis",
+rules_r8_text: "Para estadias de 7 noites ou mais, roupa de cama e toalhas são mudadas a cada 7 dias.<br>Consumíveis devem ser adquiridos pelos hóspedes após utilização dos disponibilizados.",
+
+rules_r9_title: "Informações do apartamento",
+rules_r9_text: "No interior encontra um livro de informações com instruções sobre máquinas e equipamentos.",
+
+rules_r10_title: "Perda de chaves",
+rules_r10_text: "A perda de qualquer chave implica um custo de 40,00 € por chave.",
+
+rules_r11_title: "Saúde e segurança",
+rules_r11_text: "Medidas adicionais de higienização estão em vigor devido à COVID‑19.",
+
+rules_r12_title: "Comunicação de danos",
+rules_r12_text: "Qualquer estrago ou avaria deve ser comunicado de imediato ao anfitrião.",
+
+rules_r13_title: "Piscinas",
+rules_r13_text: "Duas piscinas (adultos e crianças), abertas sazonalmente das 09h00 às 20h00.<br>Respeite as regras do Marina Park.",
+
+rules_r14_title: "Campos de Ténis",
+rules_r14_text: "Têm custo adicional. O Belleview não fornece raquetes nem bolas.<br>Reserva feita na receção do Marina Park.",
+
+rules_r15_title: "Parque Infantil",
+rules_r15_text: "De uso comum, seguro e rodeado de zonas verdes.<br>Crianças devem estar sempre acompanhadas por um adulto.",
 
 /* ============================
              FAQ
@@ -483,21 +512,51 @@ loc_like_checkin: "24h self check‑in",
 rules_title: "Property Rules",
 rules_intro: "To ensure comfort, safety and well‑being for all guests, please respect the property rules. They were created to provide a peaceful and worry‑free stay.",
 
-rules_r1: "Check‑in / Check‑out — Check‑in: from 15:00 · Check‑out: until 10:00",
-rules_r2: "Cancellation / Pre‑payment — Conditions vary depending on the accommodation type. Check when booking.",
-rules_r3: "Children and beds — All children are welcome. Free cribs (0‑2 years), subject to availability. No extra beds.",
-rules_r4: "No Smoking — Smoking is not allowed inside the apartment. Only permitted on the terrace.",
-rules_r5: "Parties and Events — Parties or events are not allowed.",
-rules_r6: "Pets — Pets are not allowed.",
-rules_r7: "Quiet Hours — Respect quiet hours between 22:00 and 08:00.",
-rules_r8: "Services and consumables — For stays of 7+ nights, linens and towels are changed every 7 days. Consumables must be purchased after using those provided.",
-rules_r9: "Apartment information — Inside you will find an information book with instructions for appliances.",
-rules_r10: "Lost keys — Losing any key implies a cost of €40 per key.",
-rules_r11: "Health and safety — Additional hygiene measures are in place due to COVID‑19.",
-rules_r12: "Damage communication — Any damage must be reported immediately to the host.",
-rules_r13: "Pools — Two pools (adults and children), open seasonally from 09:00 to 20:00. Respect Marina Park rules.",
-rules_r14: "Tennis courts — Additional cost. Belleview does not provide rackets or balls. Booking at Marina Park reception.",
-rules_r15: "Playground — Shared, safe and surrounded by green areas. Children must always be supervised.",
+rules_r1_title: "Check-in / Check-out",
+rules_r1_text: "Check-in: from 15:00<br>Check-out: until 10:00",
+
+rules_r2_title: "Cancellation / Pre-payment",
+rules_r2_text: "Conditions vary depending on the accommodation type. Check when booking.",
+
+rules_r3_title: "Children and beds",
+rules_r3_text: "All children are welcome.<br>Free cribs (0–2 years), subject to availability.<br>No extra beds available.",
+
+rules_r4_title: "No Smoking",
+rules_r4_text: "Smoking is not allowed inside the apartment. Only permitted on the terrace.",
+
+rules_r5_title: "Parties and Events",
+rules_r5_text: "Parties or events are not allowed.",
+
+rules_r6_title: "Pets",
+rules_r6_text: "Pets are not allowed.",
+
+rules_r7_title: "Quiet Hours",
+rules_r7_text: "Respect quiet hours between 22:00 and 08:00.",
+
+rules_r8_title: "Services and consumables",
+rules_r8_text: "For stays of 7+ nights, linens and towels are changed every 7 days.<br>Consumables must be purchased after using those provided.",
+
+rules_r9_title: "Apartment information",
+rules_r9_text: "Inside you will find an information book with instructions for appliances.",
+
+rules_r10_title: "Lost keys",
+rules_r10_text: "Losing any key implies a cost of €40 per key.",
+
+rules_r11_title: "Health and safety",
+rules_r11_text: "Additional hygiene measures are in place due to COVID‑19.",
+
+rules_r12_title: "Damage communication",
+rules_r12_text: "Any damage must be reported immediately to the host.",
+
+rules_r13_title: "Pools",
+rules_r13_text: "Two pools (adults and children), open seasonally from 09:00 to 20:00.<br>Please respect Marina Park rules.",
+
+rules_r14_title: "Tennis courts",
+rules_r14_text: "Additional cost. Belleview does not provide rackets or balls.<br>Booking at Marina Park reception.",
+
+rules_r15_title: "Playground",
+rules_r15_text: "Shared, safe and surrounded by green areas.<br>Children must always be supervised.",
+
 
 loc_faq_title: "Frequently Asked Questions",
 
@@ -754,21 +813,51 @@ loc_like_checkin: "Check‑in autónomo 24h",
 rules_title: "Reglas del Alojamiento",
 rules_intro: "Para garantizar la comodidad, seguridad y bienestar de todos los huéspedes, pedimos que respete las reglas del alojamiento. Todas han sido pensadas para ofrecer una estancia tranquila y sin preocupaciones.",
 
-rules_r1: "Check‑in / Check‑out — Check‑in: desde las 15:00 · Check‑out: hasta las 10:00",
-rules_r2: "Cancelación / Prepago — Las condiciones varían según el tipo de alojamiento. Compruébelo al realizar la reserva.",
-rules_r3: "Niños y camas — Todos los niños son bienvenidos. Cunas gratuitas (0‑2 años), sujetas a disponibilidad. No hay camas supletorias.",
-rules_r4: "Prohibido fumar — No está permitido fumar dentro del apartamento. Solo se permite en la terraza.",
-rules_r5: "Fiestas y eventos — No se permiten fiestas ni eventos.",
-rules_r6: "Mascotas — No se admiten mascotas.",
-rules_r7: "Horario de silencio — Respete el horario de silencio entre las 22:00 y las 08:00.",
-rules_r8: "Servicios y consumibles — En estancias de 7 noches o más, la ropa de cama y las toallas se cambian cada 7 días. Los consumibles deben ser adquiridos tras usar los proporcionados.",
-rules_r9: "Información del apartamento — En el interior encontrará un libro con instrucciones sobre los electrodomésticos.",
-rules_r10: "Pérdida de llaves — La pérdida de cualquier llave implica un coste de 40,00 € por llave.",
-rules_r11: "Salud y seguridad — Medidas adicionales de higiene están en vigor debido a la COVID‑19.",
-rules_r12: "Comunicación de daños — Cualquier daño debe comunicarse inmediatamente al anfitrión.",
-rules_r13: "Piscinas — Dos piscinas (adultos y niños), abiertas de forma estacional de 09:00 a 20:00. Respete las normas del Marina Park.",
-rules_r14: "Pistas de tenis — Tienen coste adicional. Belleview no proporciona raquetas ni pelotas. Reserva en la recepción del Marina Park.",
-rules_r15: "Parque infantil — De uso común, seguro y rodeado de zonas verdes. Los niños deben estar siempre acompañados.",
+rules_r1_title: "Check-in / Check-out",
+rules_r1_text: "Check-in: desde las 15:00<br>Check-out: hasta las 10:00",
+
+rules_r2_title: "Cancelación / Prepago",
+rules_r2_text: "Las condiciones varían según el tipo de alojamiento. Compruébelo al reservar.",
+
+rules_r3_title: "Niños y camas",
+rules_r3_text: "Todos los niños son bienvenidos.<br>Cunas gratuitas (0–2 años), sujetas a disponibilidad.<br>No hay camas supletorias.",
+
+rules_r4_title: "Prohibido fumar",
+rules_r4_text: "No está permitido fumar dentro del apartamento. Solo en la terraza.",
+
+rules_r5_title: "Fiestas y eventos",
+rules_r5_text: "No se permiten fiestas ni eventos.",
+
+rules_r6_title: "Mascotas",
+rules_r6_text: "No se admiten mascotas.",
+
+rules_r7_title: "Horario de silencio",
+rules_r7_text: "Respete el horario de silencio entre las 22:00 y las 08:00.",
+
+rules_r8_title: "Servicios y consumibles",
+rules_r8_text: "En estancias de 7+ noches, la ropa de cama y las toallas se cambian cada 7 días.<br>Los consumibles deben ser adquiridos tras usar los proporcionados.",
+
+rules_r9_title: "Información del apartamento",
+rules_r9_text: "En el interior encontrará un libro con instrucciones sobre los electrodomésticos.",
+
+rules_r10_title: "Pérdida de llaves",
+rules_r10_text: "La pérdida de cualquier llave implica un coste de 40,00 € por llave.",
+
+rules_r11_title: "Salud y seguridad",
+rules_r11_text: "Medidas adicionales de higiene están en vigor debido a la COVID‑19.",
+
+rules_r12_title: "Comunicación de daños",
+rules_r12_text: "Cualquier daño debe comunicarse inmediatamente al anfitrión.",
+
+rules_r13_title: "Piscinas",
+rules_r13_text: "Dos piscinas (adultos y niños), abiertas de 09:00 a 20:00.<br>Respete las normas del Marina Park.",
+
+rules_r14_title: "Pistas de tenis",
+rules_r14_text: "Tienen coste adicional. Belleview no proporciona raquetas ni pelotas.<br>Reserva en la recepción del Marina Park.",
+
+rules_r15_title: "Parque infantil",
+rules_r15_text: "De uso común, seguro y rodeado de zonas verdes.<br>Los niños deben estar siempre acompañados.",
+
 
 /* ============================
               FAQ
@@ -1029,21 +1118,51 @@ loc_like_checkin: "Check‑in autonome 24h/24",
 rules_title: "Règles de l’Hébergement",
 rules_intro: "Pour garantir le confort, la sécurité et le bien‑être de tous les hôtes, nous vous demandons de respecter les règles de l’hébergement. Elles ont été conçues pour assurer un séjour paisible et sans souci.",
 
-rules_r1: "Check‑in / Check‑out — Check‑in : à partir de 15h00 · Check‑out : jusqu’à 10h00",
-rules_r2: "Annulation / Pré‑paiement — Les conditions varient selon le type d’hébergement. Vérifiez lors de la réservation.",
-rules_r3: "Enfants et lits — Tous les enfants sont les bienvenus. Lits bébé gratuits (0‑2 ans), sous réserve de disponibilité. Pas de lits supplémentaires.",
-rules_r4: "Interdiction de fumer — Il est interdit de fumer à l’intérieur. Autorisé uniquement sur la terrasse.",
-rules_r5: "Fêtes et événements — Les fêtes et événements ne sont pas autorisés.",
-rules_r6: "Animaux — Les animaux ne sont pas admis.",
-rules_r7: "Heures de silence — Respectez les heures de silence entre 22h00 et 08h00.",
-rules_r8: "Services et consommables — Pour les séjours de 7 nuits ou plus, les draps et serviettes sont changés tous les 7 jours. Les consommables doivent être achetés après utilisation.",
-rules_r9: "Informations de l’appartement — Un livret d’informations est disponible avec les instructions des appareils.",
-rules_r10: "Perte de clés — La perte d’une clé entraîne un coût de 40,00 € par clé.",
-rules_r11: "Santé et sécurité — Des mesures d’hygiène supplémentaires sont en vigueur en raison du COVID‑19.",
-rules_r12: "Communication des dommages — Tout dommage doit être signalé immédiatement à l’hôte.",
-rules_r13: "Piscines — Deux piscines (adultes et enfants), ouvertes de 09h00 à 20h00. Respectez les règles du Marina Park.",
-rules_r14: "Courts de tennis — Coût supplémentaire. Belleview ne fournit pas de raquettes ni de balles. Réservation à la réception du Marina Park.",
-rules_r15: "Aire de jeux — Espace commun, sécurisé et entouré de zones vertes. Les enfants doivent être accompagnés.",
+rules_r1_title: "Check-in / Check-out",
+rules_r1_text: "Check-in : à partir de 15h00<br>Check-out : jusqu’à 10h00",
+
+rules_r2_title: "Annulation / Pré-paiement",
+rules_r2_text: "Les conditions varient selon le type d’hébergement. Vérifiez lors de la réservation.",
+
+rules_r3_title: "Enfants et lits",
+rules_r3_text: "Tous les enfants sont les bienvenus.<br>Lits bébé gratuits (0–2 ans), sous réserve de disponibilité.<br>Aucun lit supplémentaire.",
+
+rules_r4_title: "Interdiction de fumer",
+rules_r4_text: "Il est interdit de fumer à l’intérieur. Autorisé uniquement sur la terrasse.",
+
+rules_r5_title: "Fêtes et événements",
+rules_r5_text: "Les fêtes et événements ne sont pas autorisés.",
+
+rules_r6_title: "Animaux",
+rules_r6_text: "Les animaux ne sont pas admis.",
+
+rules_r7_title: "Heures de silence",
+rules_r7_text: "Respectez les heures de silence entre 22h00 et 08h00.",
+
+rules_r8_title: "Services et consommables",
+rules_r8_text: "Pour les séjours de 7+ nuits, les draps et serviettes sont changés tous les 7 jours.<br>Les consommables doivent être achetés après utilisation.",
+
+rules_r9_title: "Informations de l’appartement",
+rules_r9_text: "Un livret d’informations est disponible avec les instructions des appareils.",
+
+rules_r10_title: "Perte de clés",
+rules_r10_text: "La perte d’une clé entraîne un coût de 40,00 € par clé.",
+
+rules_r11_title: "Santé et sécurité",
+rules_r11_text: "Des mesures d’hygiène supplémentaires sont en vigueur en raison du COVID‑19.",
+
+rules_r12_title: "Communication des dommages",
+rules_r12_text: "Tout dommage doit être signalé immédiatement à l’hôte.",
+
+rules_r13_title: "Piscines",
+rules_r13_text: "Deux piscines (adultes et enfants), ouvertes de 09h00 à 20h00.<br>Respectez les règles du Marina Park.",
+
+rules_r14_title: "Courts de tennis",
+rules_r14_text: "Coût supplémentaire. Belleview ne fournit pas de raquettes ni de balles.<br>Réservation à la réception du Marina Park.",
+
+rules_r15_title: "Aire de jeux",
+rules_r15_text: "Espace commun, sécurisé et entouré de zones vertes.<br>Les enfants doivent être accompagnés.",
+
 
 loc_faq_title: "Questions Fréquentes",
 
@@ -1296,21 +1415,51 @@ loc_like_checkin: "Check‑in autonomo 24h",
 rules_title: "Regole dell’Alloggio",
 rules_intro: "Per garantire comfort, sicurezza e benessere a tutti gli ospiti, chiediamo di rispettare le regole dell’alloggio. Sono state pensate per offrire un soggiorno tranquillo e senza preoccupazioni.",
 
-rules_r1: "Check‑in / Check‑out — Check‑in: dalle 15:00 · Check‑out: entro le 10:00",
-rules_r2: "Cancellazione / Pagamento anticipato — Le condizioni variano a seconda del tipo di alloggio. Verificare al momento della prenotazione.",
-rules_r3: "Bambini e letti — Tutti i bambini sono i benvenuti. Culle gratuite (0‑2 anni), soggette a disponibilità. Nessun letto extra.",
-rules_r4: "Vietato fumare — Vietato fumare all’interno dell’appartamento. Consentito solo sulla terrazza.",
-rules_r5: "Feste ed eventi — Non sono consentite feste o eventi.",
-rules_r6: "Animali domestici — Non sono ammessi animali.",
-rules_r7: "Orari di silenzio — Rispettare il silenzio tra le 22:00 e le 08:00.",
-rules_r8: "Servizi e consumabili — Per soggiorni di 7+ notti, lenzuola e asciugamani vengono cambiati ogni 7 giorni. I consumabili devono essere acquistati dopo l’uso di quelli forniti.",
-rules_r9: "Informazioni sull’appartamento — All’interno troverete un libro con istruzioni sugli elettrodomestici.",
-rules_r10: "Perdita delle chiavi — La perdita di una chiave comporta un costo di 40,00 € per chiave.",
-rules_r11: "Salute e sicurezza — Misure igieniche aggiuntive sono in vigore a causa del COVID‑19.",
-rules_r12: "Segnalazione danni — Qualsiasi danno deve essere comunicato immediatamente all’host.",
-rules_r13: "Piscine — Due piscine (adulti e bambini), aperte stagionalmente dalle 09:00 alle 20:00. Rispettare le regole del Marina Park.",
-rules_r14: "Campi da tennis — Hanno un costo aggiuntivo. Belleview non fornisce racchette o palline. Prenotazione presso la reception del Marina Park.",
-rules_r15: "Parco giochi — Di uso comune, sicuro e circondato da aree verdi. I bambini devono essere sempre accompagnati.",
+rules_r1_title: "Check-in / Check-out",
+rules_r1_text: "Check-in: dalle 15:00<br>Check-out: entro le 10:00",
+
+rules_r2_title: "Cancellazione / Pagamento anticipato",
+rules_r2_text: "Le condizioni variano a seconda del tipo di alloggio. Verificare al momento della prenotazione.",
+
+rules_r3_title: "Bambini e letti",
+rules_r3_text: "Tutti i bambini sono i benvenuti.<br>Culle gratuite (0–2 anni), soggette a disponibilità.<br>Nessun letto extra disponibile.",
+
+rules_r4_title: "Vietato fumare",
+rules_r4_text: "È vietato fumare all’interno dell’appartamento. Consentito solo sulla terrazza.",
+
+rules_r5_title: "Feste ed eventi",
+rules_r5_text: "Non sono consentite feste o eventi.",
+
+rules_r6_title: "Animali domestici",
+rules_r6_text: "Gli animali non sono ammessi.",
+
+rules_r7_title: "Orari di silenzio",
+rules_r7_text: "Rispettare il silenzio tra le 22:00 e le 08:00.",
+
+rules_r8_title: "Servizi e consumabili",
+rules_r8_text: "Per soggiorni di 7+ notti, lenzuola e asciugamani vengono cambiati ogni 7 giorni.<br>I consumabili devono essere acquistati dopo l’uso di quelli forniti.",
+
+rules_r9_title: "Informazioni sull’appartamento",
+rules_r9_text: "All’interno troverete un libro con istruzioni sugli elettrodomestici.",
+
+rules_r10_title: "Perdita delle chiavi",
+rules_r10_text: "La perdita di una chiave comporta un costo di 40,00 € per chiave.",
+
+rules_r11_title: "Salute e sicurezza",
+rules_r11_text: "Misure igieniche aggiuntive sono in vigore a causa del COVID‑19.",
+
+rules_r12_title: "Segnalazione danni",
+rules_r12_text: "Qualsiasi danno deve essere comunicato immediatamente all’host.",
+
+rules_r13_title: "Piscine",
+rules_r13_text: "Due piscine (adulti e bambini), aperte stagionalmente dalle 09:00 alle 20:00.<br>Rispettare le regole del Marina Park.",
+
+rules_r14_title: "Campi da tennis",
+rules_r14_text: "Hanno un costo aggiuntivo. Belleview non fornisce racchette o palline.<br>Prenotazione presso la reception del Marina Park.",
+
+rules_r15_title: "Parco giochi",
+rules_r15_text: "Area comune, sicura e circondata da zone verdi.<br>I bambini devono essere sempre accompagnati.",
+
 
 loc_faq_title: "Domande Frequenti",
 
@@ -1567,21 +1716,51 @@ loc_like_checkin: "24‑Stunden‑Self‑Check‑in",
 rules_title: "Hausregeln",
 rules_intro: "Um Komfort, Sicherheit und Wohlbefinden aller Gäste zu gewährleisten, bitten wir Sie, die Hausregeln zu respektieren. Sie wurden entwickelt, um einen ruhigen und sorgenfreien Aufenthalt zu ermöglichen.",
 
-rules_r1: "Check‑in / Check‑out — Check‑in: ab 15:00 Uhr · Check‑out: bis 10:00 Uhr",
-rules_r2: "Stornierung / Vorauszahlung — Die Bedingungen variieren je nach Unterkunftstyp. Bitte prüfen Sie dies bei der Buchung.",
-rules_r3: "Kinder und Betten — Alle Kinder sind willkommen. Kostenlose Babybetten (0‑2 Jahre), je nach Verfügbarkeit. Keine Zustellbetten.",
-rules_r4: "Rauchen verboten — Rauchen ist in der Wohnung nicht gestattet. Nur auf der Terrasse erlaubt.",
-rules_r5: "Partys und Veranstaltungen — Partys oder Veranstaltungen sind nicht erlaubt.",
-rules_r6: "Haustiere — Haustiere sind nicht gestattet.",
-rules_r7: "Ruhezeiten — Bitte beachten Sie die Ruhezeiten zwischen 22:00 und 08:00 Uhr.",
-rules_r8: "Service und Verbrauchsmaterial — Bei Aufenthalten ab 7 Nächten werden Bettwäsche und Handtücher alle 7 Tage gewechselt. Verbrauchsmaterialien müssen nach Nutzung ersetzt werden.",
-rules_r9: "Wohnungsinformationen — Im Inneren finden Sie ein Informationsbuch mit Anleitungen zu Geräten.",
-rules_r10: "Schlüsselverlust — Der Verlust eines Schlüssels kostet 40,00 € pro Schlüssel.",
-rules_r11: "Gesundheit und Sicherheit — Zusätzliche Hygienemaßnahmen sind aufgrund von COVID‑19 in Kraft.",
-rules_r12: "Schadensmeldung — Jegliche Schäden müssen sofort dem Gastgeber gemeldet werden.",
-rules_r13: "Schwimmbäder — Zwei Schwimmbäder (Erwachsene und Kinder), saisonal geöffnet von 09:00 bis 20:00 Uhr. Bitte beachten Sie die Regeln des Marina Park.",
-rules_r14: "Tennisplätze — Zusätzliche Kosten. Belleview stellt keine Schläger oder Bälle zur Verfügung. Reservierung an der Rezeption des Marina Park.",
-rules_r15: "Spielplatz — Gemeinschaftsbereich, sicher und von Grünflächen umgeben. Kinder müssen stets beaufsichtigt werden.",
+rules_r1_title: "Check-in / Check-out",
+rules_r1_text: "Check-in: ab 15:00 Uhr<br>Check-out: bis 10:00 Uhr",
+
+rules_r2_title: "Stornierung / Vorauszahlung",
+rules_r2_text: "Die Bedingungen variieren je nach Unterkunftstyp. Bitte prüfen Sie dies bei der Buchung.",
+
+rules_r3_title: "Kinder und Betten",
+rules_r3_text: "Alle Kinder sind willkommen.<br>Kostenlose Babybetten (0–2 Jahre), je nach Verfügbarkeit.<br>Keine Zustellbetten verfügbar.",
+
+rules_r4_title: "Rauchen verboten",
+rules_r4_text: "Rauchen ist in der Wohnung nicht gestattet. Nur auf der Terrasse erlaubt.",
+
+rules_r5_title: "Partys und Veranstaltungen",
+rules_r5_text: "Partys oder Veranstaltungen sind nicht erlaubt.",
+
+rules_r6_title: "Haustiere",
+rules_r6_text: "Haustiere sind nicht gestattet.",
+
+rules_r7_title: "Ruhezeiten",
+rules_r7_text: "Bitte beachten Sie die Ruhezeiten zwischen 22:00 und 08:00 Uhr.",
+
+rules_r8_title: "Service und Verbrauchsmaterial",
+rules_r8_text: "Bei Aufenthalten ab 7 Nächten werden Bettwäsche und Handtücher alle 7 Tage gewechselt.<br>Verbrauchsmaterialien müssen nach Nutzung ersetzt werden.",
+
+rules_r9_title: "Wohnungsinformationen",
+rules_r9_text: "Im Inneren finden Sie ein Informationsbuch mit Anleitungen zu Geräten.",
+
+rules_r10_title: "Schlüsselverlust",
+rules_r10_text: "Der Verlust eines Schlüssels kostet 40,00 € pro Schlüssel.",
+
+rules_r11_title: "Gesundheit und Sicherheit",
+rules_r11_text: "Zusätzliche Hygienemaßnahmen sind aufgrund von COVID‑19 in Kraft.",
+
+rules_r12_title: "Schadensmeldung",
+rules_r12_text: "Jegliche Schäden müssen sofort dem Gastgeber gemeldet werden.",
+
+rules_r13_title: "Schwimmbäder",
+rules_r13_text: "Zwei Schwimmbäder (Erwachsene und Kinder), saisonal geöffnet von 09:00 bis 20:00 Uhr.<br>Bitte beachten Sie die Regeln des Marina Park.",
+
+rules_r14_title: "Tennisplätze",
+rules_r14_text: "Zusätzliche Kosten. Belleview stellt keine Schläger oder Bälle zur Verfügung.<br>Reservierung an der Rezeption des Marina Park.",
+
+rules_r15_title: "Spielplatz",
+rules_r15_text: "Gemeinschaftsbereich, sicher und von Grünflächen umgeben.<br>Kinder müssen stets beaufsichtigt werden.",
+
 
 /* ============================
               FAQ
