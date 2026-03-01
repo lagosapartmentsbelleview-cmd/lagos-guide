@@ -1542,13 +1542,8 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   PRÉMIOS BOOKING — BELLEVIEW 2.0
+   PRÉMIOS BOOKING — DENTRO DO CARD GRANDE
 =========================================================== */
-
-.awards-section {
-    padding: 60px 20px;
-    text-align: center;
-}
 
 .awards-title {
     font-family: "Poppins", sans-serif;
@@ -1556,6 +1551,7 @@ a[href^="https://wa.me"],
     color: #005c99;
     margin-bottom: 30px;
     font-weight: 600;
+    text-align: center;
 }
 
 .awards-grid {
@@ -1563,6 +1559,7 @@ a[href^="https://wa.me"],
     justify-content: center;
     gap: 24px;
     flex-wrap: wrap;
+    margin-bottom: 50px; /* espaço entre prémios e comentários */
 }
 
 .award-card {
@@ -1586,7 +1583,7 @@ a[href^="https://wa.me"],
 }
 
 .award-year {
-   margin-top: 12px;
+    margin-top: 12px;
     font-size: 1.15rem;
     font-weight: 600;
     color: #005c99;
@@ -1594,7 +1591,6 @@ a[href^="https://wa.me"],
     text-align: center;
 }
 
-/* Mobile */
 @media (max-width: 480px) {
     .award-card {
         width: 150px;
@@ -1602,10 +1598,9 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   COMENTÁRIOS — BELLEVIEW 2.0 (CARD GRANDE + SLIDER PREMIUM)
+   CARD DE FUNDO — IGUAL AO DE ALOJAMENTO
 =========================================================== */
 
-/* CARD GRANDE (igual ao de alojamento) */
 .reviews-wrapper {
     display: flex;
     justify-content: center;
@@ -1622,7 +1617,10 @@ a[href^="https://wa.me"],
     border: 1px solid #e6e6e6;
 }
 
-/* TÍTULO */
+/* ===========================================================
+   COMENTÁRIOS — SLIDER PREMIUM
+=========================================================== */
+
 .reviews-title {
     font-family: "Poppins", sans-serif;
     font-size: 1.8rem;
@@ -1632,7 +1630,6 @@ a[href^="https://wa.me"],
     text-align: center;
 }
 
-/* SLIDER */
 .reviews-slider {
     position: relative;
     display: flex;
@@ -1647,7 +1644,6 @@ a[href^="https://wa.me"],
     width: 100%;
 }
 
-/* CARDS DE COMENTÁRIOS */
 .review-card {
     background: #ffffff;
     border-radius: 16px;
@@ -1718,7 +1714,6 @@ a[href^="https://wa.me"],
     margin-left: 12px;
 }
 
-/* MOBILE */
 @media (max-width: 480px) {
     .review-card {
         width: 260px;
