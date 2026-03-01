@@ -1586,11 +1586,12 @@ a[href^="https://wa.me"],
 }
 
 .award-year {
-    margin-top: 12px;
-    font-size: 1.1rem;
+   margin-top: 12px;
+    font-size: 1.15rem;
     font-weight: 600;
-    color: #333;
+    color: #005c99;
     font-family: "Poppins", sans-serif;
+    text-align: center;
 }
 
 /* Mobile */
@@ -1600,12 +1601,4 @@ a[href^="https://wa.me"],
     }
 }
 
-/* Legenda azul dos anos dos prémios */
-.award-year-blue {
-    margin-top: 12px;
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: #005c99;
-    font-family: "Poppins", sans-serif;
-    text-align: center;
-}
+
