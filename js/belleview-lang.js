@@ -159,7 +159,48 @@ comod_ap_4: "Televisão por cabo HD",
 comod_ap_5: "Garagem gratuita para 1 viatura",
 comod_ap_6: "Berço gratuito mediante pedido",
 comod_ap_7: "Máquina de café",
-comod_ap_8: "Check‑in autónomo 24h"
+comod_ap_8: "Check‑in autónomo 24h",
+loc_title: "Localização",
+
+loc_intro_1: "Os Apartments Belleview Lagos situam-se numa das zonas mais privilegiadas da cidade, combinando tranquilidade, segurança e proximidade às principais praias, marina, supermercados e pontos de interesse. Uma localização perfeita para quem procura conforto e conveniência durante a estadia.",
+loc_intro_2: "A poucos minutos das praias mais emblemáticas de Lagos e com acesso rápido ao centro histórico, o Belleview oferece o equilíbrio ideal entre descanso, mobilidade e qualidade de vida.",
+
+loc_dist_title: "Distâncias Relevantes",
+
+loc_meia_praia: "Meia‑Praia",
+loc_meia_praia_dist: "6 min de carro",
+
+loc_dona_ana: "Praia Dona Ana",
+loc_dona_ana_dist: "7 min de carro",
+
+loc_marina: "Marina de Lagos",
+loc_marina_dist: "4 min de carro",
+
+loc_centro: "Centro Histórico",
+loc_centro_dist: "6 min de carro",
+
+loc_pingo_doce: "Supermercado Pingo Doce",
+loc_pingo_doce_dist: "3 min de carro",
+
+loc_comboios: "Estação de Comboios",
+loc_comboios_dist: "5 min de carro",
+
+loc_autocarros: "Estação de Autocarros",
+loc_autocarros_dist: "6 min de carro",
+
+loc_golfe: "Campo de Golfe Boavista",
+loc_golfe_dist: "8 min de carro",
+
+loc_likes_title: "O que os hóspedes mais gostam",
+
+loc_like_tranquilidade: "Tranquilidade do complexo",
+loc_like_terracos: "Terraços amplos e privados",
+loc_like_piscinas: "Piscinas e jardins bem cuidados",
+loc_like_marina: "Localização perto da marina",
+loc_like_estacionamento: "Estacionamento gratuito",
+loc_like_espaco: "Apartamentos espaçosos",
+loc_like_limpeza: "Limpeza e conforto",
+loc_like_checkin: "Check‑in autónomo 24h"
 
   },
   en: {
@@ -313,6 +354,48 @@ comod_ap_5: "Free parking for 1 vehicle",
 comod_ap_6: "Free crib upon request",
 comod_ap_7: "Coffee machine",
 comod_ap_8: "24h self check‑in",
+loc_title: "Location",
+
+loc_intro_1: "Belleview Lagos Apartments are located in one of the most privileged areas of the city, combining tranquility, safety and proximity to the main beaches, marina, supermarkets and points of interest. A perfect location for those seeking comfort and convenience during their stay.",
+loc_intro_2: "Just minutes from Lagos’ most iconic beaches and with quick access to the historic center, Belleview offers the ideal balance between relaxation, mobility and quality of life.",
+
+loc_dist_title: "Relevant Distances",
+
+loc_meia_praia: "Meia‑Praia",
+loc_meia_praia_dist: "6 min by car",
+
+loc_dona_ana: "Dona Ana Beach",
+loc_dona_ana_dist: "7 min by car",
+
+loc_marina: "Lagos Marina",
+loc_marina_dist: "4 min by car",
+
+loc_centro: "Historic Center",
+loc_centro_dist: "6 min by car",
+
+loc_pingo_doce: "Pingo Doce Supermarket",
+loc_pingo_doce_dist: "3 min by car",
+
+loc_comboios: "Train Station",
+loc_comboios_dist: "5 min by car",
+
+loc_autocarros: "Bus Station",
+loc_autocarros_dist: "6 min by car",
+
+loc_golfe: "Boavista Golf Course",
+loc_golfe_dist: "8 min by car",
+
+loc_likes_title: "What guests like the most",
+
+loc_like_tranquilidade: "Complex tranquility",
+loc_like_terracos: "Large private terraces",
+loc_like_piscinas: "Well‑maintained pools and gardens",
+loc_like_marina: "Location near the marina",
+loc_like_estacionamento: "Free parking",
+loc_like_espaco: "Spacious apartments",
+loc_like_limpeza: "Cleanliness and comfort",
+loc_like_checkin: "24h self check‑in"
+
 
   },
   es: {
@@ -465,7 +548,49 @@ comod_ap_4: "Televisión por cable HD",
 comod_ap_5: "Aparcamiento gratuito para 1 vehículo",
 comod_ap_6: "Cuna gratuita bajo petición",
 comod_ap_7: "Máquina de café",
-comod_ap_8: "Check‑in autónomo 24h"
+comod_ap_8: "Check‑in autónomo 24h",
+loc_title: "Ubicación",
+
+loc_intro_1: "Los Apartments Belleview Lagos se encuentran en una de las zonas más privilegiadas de la ciudad, combinando tranquilidad, seguridad y proximidad a las principales playas, marina, supermercados y puntos de interés. Una ubicación perfecta para quienes buscan comodidad y conveniencia durante su estancia.",
+loc_intro_2: "A pocos minutos de las playas más emblemáticas de Lagos y con acceso rápido al centro histórico, Belleview ofrece el equilibrio ideal entre descanso, movilidad y calidad de vida.",
+
+loc_dist_title: "Distancias Relevantes",
+
+loc_meia_praia: "Meia‑Praia",
+loc_meia_praia_dist: "6 min en coche",
+
+loc_dona_ana: "Playa Dona Ana",
+loc_dona_ana_dist: "7 min en coche",
+
+loc_marina: "Marina de Lagos",
+loc_marina_dist: "4 min en coche",
+
+loc_centro: "Centro Histórico",
+loc_centro_dist: "6 min en coche",
+
+loc_pingo_doce: "Supermercado Pingo Doce",
+loc_pingo_doce_dist: "3 min en coche",
+
+loc_comboios: "Estación de Tren",
+loc_comboios_dist: "5 min en coche",
+
+loc_autocarros: "Estación de Autobuses",
+loc_autocarros_dist: "6 min en coche",
+
+loc_golfe: "Campo de Golf Boavista",
+loc_golfe_dist: "8 min en coche",
+
+loc_likes_title: "Lo que más les gusta a los huéspedes",
+
+loc_like_tranquilidade: "Tranquilidad del complejo",
+loc_like_terracos: "Terrazas amplias y privadas",
+loc_like_piscinas: "Piscinas y jardines bien cuidados",
+loc_like_marina: "Ubicación cerca de la marina",
+loc_like_estacionamento: "Aparcamiento gratuito",
+loc_like_espaco: "Apartamentos espaciosos",
+loc_like_limpeza: "Limpieza y comodidad",
+loc_like_checkin: "Check‑in autónomo 24h"
+
 
   },
   fr: {
@@ -618,7 +743,49 @@ comod_ap_4: "Télévision HD par câble",
 comod_ap_5: "Parking gratuit pour 1 véhicule",
 comod_ap_6: "Lit bébé gratuit sur demande",
 comod_ap_7: "Machine à café",
-comod_ap_8: "Check‑in autonome 24h/24"
+comod_ap_8: "Check‑in autonome 24h/24",
+loc_title: "Localisation",
+
+loc_intro_1: "Les Apartments Belleview Lagos sont situés dans l’un des quartiers les plus privilégiés de la ville, alliant tranquillité, sécurité et proximité des principales plages, de la marina, des supermarchés et des points d’intérêt. Un emplacement parfait pour ceux qui recherchent confort et commodité.",
+loc_intro_2: "À quelques minutes des plages les plus emblématiques de Lagos et avec un accès rapide au centre historique, Belleview offre l’équilibre idéal entre détente, mobilité et qualité de vie.",
+
+loc_dist_title: "Distances Importantes",
+
+loc_meia_praia: "Meia‑Praia",
+loc_meia_praia_dist: "6 min en voiture",
+
+loc_dona_ana: "Plage Dona Ana",
+loc_dona_ana_dist: "7 min en voiture",
+
+loc_marina: "Marina de Lagos",
+loc_marina_dist: "4 min en voiture",
+
+loc_centro: "Centre Historique",
+loc_centro_dist: "6 min en voiture",
+
+loc_pingo_doce: "Supermarché Pingo Doce",
+loc_pingo_doce_dist: "3 min en voiture",
+
+loc_comboios: "Gare Ferroviaire",
+loc_comboios_dist: "5 min en voiture",
+
+loc_autocarros: "Gare Routière",
+loc_autocarros_dist: "6 min en voiture",
+
+loc_golfe: "Golf de Boavista",
+loc_golfe_dist: "8 min en voiture",
+
+loc_likes_title: "Ce que les hôtes préfèrent",
+
+loc_like_tranquilidade: "Tranquillité du complexe",
+loc_like_terracos: "Terrasses spacieuses et privées",
+loc_like_piscinas: "Piscines et jardins bien entretenus",
+loc_like_marina: "Proximité de la marina",
+loc_like_estacionamento: "Parking gratuit",
+loc_like_espaco: "Appartements spacieux",
+loc_like_limpeza: "Propreté et confort",
+loc_like_checkin: "Check‑in autonome 24h/24"
+
 
   },
   it: {
@@ -771,7 +938,49 @@ comod_ap_4: "TV via cavo HD",
 comod_ap_5: "Parcheggio gratuito per 1 veicolo",
 comod_ap_6: "Culla gratuita su richiesta",
 comod_ap_7: "Macchina da caffè",
-comod_ap_8: "Check‑in autonomo 24h"
+comod_ap_8: "Check‑in autonomo 24h",
+loc_title: "Posizione",
+
+loc_intro_1: "Gli Apartments Belleview Lagos si trovano in una delle zone più privilegiate della città, combinando tranquillità, sicurezza e vicinanza alle principali spiagge, alla marina, ai supermercati e ai punti di interesse. Una posizione perfetta per chi cerca comfort e praticità durante il soggiorno.",
+loc_intro_2: "A pochi minuti dalle spiagge più emblematiche di Lagos e con rapido accesso al centro storico, Belleview offre il perfetto equilibrio tra relax, mobilità e qualità della vita.",
+
+loc_dist_title: "Distanze Rilevanti",
+
+loc_meia_praia: "Meia‑Praia",
+loc_meia_praia_dist: "6 min in auto",
+
+loc_dona_ana: "Spiaggia Dona Ana",
+loc_dona_ana_dist: "7 min in auto",
+
+loc_marina: "Marina di Lagos",
+loc_marina_dist: "4 min in auto",
+
+loc_centro: "Centro Storico",
+loc_centro_dist: "6 min in auto",
+
+loc_pingo_doce: "Supermercato Pingo Doce",
+loc_pingo_doce_dist: "3 min in auto",
+
+loc_comboios: "Stazione dei Treni",
+loc_comboios_dist: "5 min in auto",
+
+loc_autocarros: "Stazione degli Autobus",
+loc_autocarros_dist: "6 min in auto",
+
+loc_golfe: "Campo da Golf Boavista",
+loc_golfe_dist: "8 min in auto",
+
+loc_likes_title: "Cosa piace di più agli ospiti",
+
+loc_like_tranquilidade: "Tranquillità del complesso",
+loc_like_terracos: "Terrazze ampie e private",
+loc_like_piscinas: "Piscine e giardini curati",
+loc_like_marina: "Posizione vicino alla marina",
+loc_like_estacionamento: "Parcheggio gratuito",
+loc_like_espaco: "Appartamenti spaziosi",
+loc_like_limpeza: "Pulizia e comfort",
+loc_like_checkin: "Check‑in autonomo 24h"
+
 
   },
   de: {
@@ -924,7 +1133,49 @@ comod_ap_4: "HD‑Kabel‑TV",
 comod_ap_5: "Kostenloser Parkplatz für 1 Fahrzeug",
 comod_ap_6: "Kostenloses Babybett auf Anfrage",
 comod_ap_7: "Kaffeemaschine",
-comod_ap_8: "24‑Stunden‑Self‑Check‑in"
+comod_ap_8: "24‑Stunden‑Self‑Check‑in",
+loc_title: "Lage",
+
+loc_intro_1: "Die Apartments Belleview Lagos befinden sich in einer der privilegiertesten Gegenden der Stadt und verbinden Ruhe, Sicherheit und Nähe zu den wichtigsten Stränden, der Marina, Supermärkten und Sehenswürdigkeiten. Ein perfekter Standort für alle, die Komfort und Bequemlichkeit suchen.",
+loc_intro_2: "Nur wenige Minuten von den bekanntesten Stränden von Lagos entfernt und mit schnellem Zugang zur Altstadt bietet Belleview die ideale Balance zwischen Entspannung, Mobilität und Lebensqualität.",
+
+loc_dist_title: "Wichtige Entfernungen",
+
+loc_meia_praia: "Meia‑Praia",
+loc_meia_praia_dist: "6 Min. mit dem Auto",
+
+loc_dona_ana: "Strand Dona Ana",
+loc_dona_ana_dist: "7 Min. mit dem Auto",
+
+loc_marina: "Marina von Lagos",
+loc_marina_dist: "4 Min. mit dem Auto",
+
+loc_centro: "Historisches Zentrum",
+loc_centro_dist: "6 Min. mit dem Auto",
+
+loc_pingo_doce: "Supermarkt Pingo Doce",
+loc_pingo_doce_dist: "3 Min. mit dem Auto",
+
+loc_comboios: "Bahnhof",
+loc_comboios_dist: "5 Min. mit dem Auto",
+
+loc_autocarros: "Busbahnhof",
+loc_autocarros_dist: "6 Min. mit dem Auto",
+
+loc_golfe: "Boavista Golfplatz",
+loc_golfe_dist: "8 Min. mit dem Auto",
+
+loc_likes_title: "Was Gäste am meisten mögen",
+
+loc_like_tranquilidade: "Ruhe des Komplexes",
+loc_like_terracos: "Große private Terrassen",
+loc_like_piscinas: "Gepflegte Pools und Gärten",
+loc_like_marina: "Nähe zur Marina",
+loc_like_estacionamento: "Kostenloses Parken",
+loc_like_espaco: "Geräumige Apartments",
+loc_like_limpeza: "Sauberkeit und Komfort",
+loc_like_checkin: "24‑Stunden‑Self‑Check‑in"
+
 
   }
 };
