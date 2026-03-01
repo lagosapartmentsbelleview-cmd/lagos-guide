@@ -1184,7 +1184,33 @@
   };
 </script>
 
-    
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const track = document.querySelector('.reviews-track');
+    const next = document.querySelector('.next-btn');
+    const prev = document.querySelector('.prev-btn');
+
+    // Largura real de um card (inclui gap)
+    function getCardWidth() {
+        const card = document.querySelector('.review-card');
+        const style = window.getComputedStyle(card);
+        const cardWidth = card.offsetWidth;
+        const gap = parseInt(style.marginRight) || 24; 
+        return cardWidth + gap;
+    }
+
+    next.addEventListener('click', () => {
+        track.scrollLeft += getCardWidth() * 3; // avança 3 cards
+    });
+
+    prev.addEventListener('click', () => {
+        track.scrollLeft -= getCardWidth() * 3; // recua 3 cards
+    });
+
+});
+</script>
+  
 <script>
 document.querySelectorAll(".faq-question").forEach(btn => {
     btn.addEventListener("click", () => {
