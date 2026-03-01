@@ -200,7 +200,92 @@ loc_like_marina: "Localização perto da marina",
 loc_like_estacionamento: "Estacionamento gratuito",
 loc_like_espaco: "Apartamentos espaçosos",
 loc_like_limpeza: "Limpeza e conforto",
-loc_like_checkin: "Check‑in autónomo 24h"
+loc_like_checkin: "Check‑in autónomo 24h",
+/* ============================
+      REGRAS DO IMÓVEL
+============================ */
+
+rules_title: "Regras do Imóvel",
+rules_intro: "Para garantir o conforto, segurança e bem-estar de todos os hóspedes, pedimos que respeite as regras do imóvel. Todas foram pensadas para proporcionar uma estadia tranquila e sem preocupações.",
+
+rules_r1: "Check-in / Check-out — Check-in: a partir das 15:00 · Check-out: até às 10:00",
+rules_r2: "Cancelamento / Pré-pagamento — As condições variam consoante o tipo de alojamento. Verifique ao efetuar a reserva.",
+rules_r3: "Crianças e camas — Todas as crianças são bem-vindas. Berços gratuitos (0-2 anos), sujeitos à disponibilidade. Não existem camas extra.",
+rules_r4: "Proibido Fumar — É proibido fumar no interior do apartamento. Permitido apenas no terraço.",
+rules_r5: "Festas e Eventos — Não são permitidas festas ou eventos.",
+rules_r6: "Animais de Estimação — Animais de estimação não são admitidos.",
+rules_r7: "Lei do Silêncio — Respeite as horas de silêncio entre as 22h00 e as 08h00.",
+rules_r8: "Serviços e consumíveis — Para estadias de 7 noites ou mais, roupa de cama e toalhas são mudadas a cada 7 dias. Consumíveis devem ser adquiridos após utilização dos disponibilizados.",
+rules_r9: "Informações do apartamento — No interior encontra um livro de informações com instruções sobre máquinas e equipamentos.",
+rules_r10: "Perda de chaves — A perda de qualquer chave implica um custo de 40,00 € por chave.",
+rules_r11: "Saúde e segurança — Medidas adicionais de higienização estão em vigor devido à COVID‑19.",
+rules_r12: "Comunicação de danos — Qualquer estrago ou avaria deve ser comunicado de imediato ao anfitrião.",
+rules_r13: "Piscinas — Duas piscinas (adultos e crianças), abertas sazonalmente das 09h00 às 20h00. Respeite as regras do Marina Park.",
+rules_r14: "Campos de Ténis — Têm custo adicional. O Belleview não fornece raquetes nem bolas. Reserva feita na receção do Marina Park.",
+rules_r15: "Parque Infantil — De uso comum, seguro e rodeado de zonas verdes. Crianças devem estar sempre acompanhadas por um adulto.",
+
+/* ============================
+             FAQ
+============================ */
+
+loc_faq_title: "Perguntas Frequentes",
+
+faq_q1: "O que está incluído nos apartamentos T1?",
+faq_a1: "Todos os apartamentos T1 incluem quarto com cama de casal, sala com sofá‑cama, kitchenette equipada, casa de banho com banheira e um terraço espaçoso. Estão totalmente preparados para estadias curtas ou prolongadas.",
+
+faq_q2: "O que existe na zona envolvente do Marina Park?",
+faq_a2: "O Marina Park oferece amplas zonas verdes, duas piscinas, campos de ténis, parque infantil e um bar‑restaurante de apoio. É um espaço seguro e ideal para famílias e casais.",
+
+faq_q3: "As piscinas estão abertas todo o ano? Qual é o horário?",
+faq_a3: "As piscinas funcionam sobretudo entre a primavera e o início do outono. O horário habitual é das 09h00 às 20h00.",
+
+faq_q4: "Os campos de ténis são gratuitos? Disponibilizam raquetes e bolas?",
+faq_a4: "Os campos de ténis têm custo adicional. O Belleview não fornece raquetes nem bolas. A reserva é feita na receção do Marina Park.",
+
+faq_q5: "Existe parque infantil no complexo?",
+faq_a5: "Sim. O Marina Park dispõe de um parque infantil seguro e rodeado de zonas verdes.",
+
+faq_q6: "O check‑in é autónomo?",
+faq_a6: "Sim. O Belleview utiliza um sistema de check‑in autónomo, permitindo chegar a qualquer hora.",
+
+faq_q7: "Há estacionamento disponível?",
+faq_a7: "Sim. Todos os apartamentos incluem estacionamento reservado gratuito para 1 viatura.",
+
+faq_q8: "Os apartamentos são adequados para teletrabalho?",
+faq_a8: "Sim. Os apartamentos oferecem um ambiente calmo, luminoso e confortável, ideal para trabalhar à distância.",
+
+faq_q9: "A localização é perto da praia?",
+faq_a9: "Sim. Os apartamentos estão a poucos minutos das principais praias de Lagos.",
+
+faq_q10: "O que os hóspedes mais valorizam no Belleview?",
+faq_a10: "Os hóspedes elogiam a limpeza, o conforto, a luminosidade natural, o terraço privado e a tranquilidade da zona.",
+
+/* ============================
+           CONTACTOS
+============================ */
+
+contact_title: "Contactos",
+contact_intro: "Estamos disponíveis para ajudar antes, durante e após a sua estadia.",
+contact_direct_title: "Contactos Diretos",
+
+contact_phone_label: "Telefone",
+contact_phone_note: "(Chamada para a rede fixa nacional)",
+contact_whatsapp_label: "WhatsApp",
+contact_email_label: "Email",
+
+contact_address_title: "Morada",
+
+contact_form_title: "Envie-nos uma mensagem",
+contact_form_name: "Nome",
+contact_form_email: "Email",
+contact_form_message: "Mensagem",
+contact_form_send: "Enviar",
+
+contact_success: "Mensagem enviada com sucesso! Obrigado pelo seu contacto.",
+
+contact_legal_title: "Informação Legal",
+contact_legal_al: "Nº de Registos AL",
+contact_legal_entity: "Entidade Exploradora"
 
   },
   en: {
@@ -394,8 +479,80 @@ loc_like_marina: "Location near the marina",
 loc_like_estacionamento: "Free parking",
 loc_like_espaco: "Spacious apartments",
 loc_like_limpeza: "Cleanliness and comfort",
-loc_like_checkin: "24h self check‑in"
+loc_like_checkin: "24h self check‑in",
+rules_title: "Property Rules",
+rules_intro: "To ensure comfort, safety and well‑being for all guests, please respect the property rules. They were created to provide a peaceful and worry‑free stay.",
 
+rules_r1: "Check‑in / Check‑out — Check‑in: from 15:00 · Check‑out: until 10:00",
+rules_r2: "Cancellation / Pre‑payment — Conditions vary depending on the accommodation type. Check when booking.",
+rules_r3: "Children and beds — All children are welcome. Free cribs (0‑2 years), subject to availability. No extra beds.",
+rules_r4: "No Smoking — Smoking is not allowed inside the apartment. Only permitted on the terrace.",
+rules_r5: "Parties and Events — Parties or events are not allowed.",
+rules_r6: "Pets — Pets are not allowed.",
+rules_r7: "Quiet Hours — Respect quiet hours between 22:00 and 08:00.",
+rules_r8: "Services and consumables — For stays of 7+ nights, linens and towels are changed every 7 days. Consumables must be purchased after using those provided.",
+rules_r9: "Apartment information — Inside you will find an information book with instructions for appliances.",
+rules_r10: "Lost keys — Losing any key implies a cost of €40 per key.",
+rules_r11: "Health and safety — Additional hygiene measures are in place due to COVID‑19.",
+rules_r12: "Damage communication — Any damage must be reported immediately to the host.",
+rules_r13: "Pools — Two pools (adults and children), open seasonally from 09:00 to 20:00. Respect Marina Park rules.",
+rules_r14: "Tennis courts — Additional cost. Belleview does not provide rackets or balls. Booking at Marina Park reception.",
+rules_r15: "Playground — Shared, safe and surrounded by green areas. Children must always be supervised.",
+
+loc_faq_title: "Frequently Asked Questions",
+
+faq_q1: "What is included in the T1 apartments?",
+faq_a1: "All T1 apartments include a double bedroom, living room with sofa bed, equipped kitchenette, bathroom with bathtub and a spacious terrace.",
+
+faq_q2: "What is around the Marina Park area?",
+faq_a2: "Marina Park offers large green areas, two pools, tennis courts, a playground and a support bar‑restaurant.",
+
+faq_q3: "Are the pools open all year? What are the hours?",
+faq_a3: "The pools operate mainly between spring and early autumn, usually from 09:00 to 20:00.",
+
+faq_q4: "Are the tennis courts free? Do you provide rackets?",
+faq_a4: "The tennis courts have an additional cost. Belleview does not provide rackets or balls. Booking at Marina Park reception.",
+
+faq_q5: "Is there a playground?",
+faq_a5: "Yes. Marina Park has a safe playground surrounded by green areas.",
+
+faq_q6: "Is check‑in autonomous?",
+faq_a6: "Yes. Belleview uses a self check‑in system allowing arrival at any time.",
+
+faq_q7: "Is parking available?",
+faq_a7: "Yes. All apartments include free reserved parking for one vehicle.",
+
+faq_q8: "Are the apartments suitable for remote work?",
+faq_a8: "Yes. They offer a quiet, bright and comfortable environment ideal for remote work.",
+
+faq_q9: "Is the location close to the beach?",
+faq_a9: "Yes. The apartments are just minutes from Lagos’ main beaches.",
+
+faq_q10: "What do guests value most at Belleview?",
+faq_a10: "Guests praise cleanliness, comfort, natural light, private terraces and the peaceful area.",
+
+contact_title: "Contacts",
+contact_intro: "We are available to help before, during and after your stay.",
+contact_direct_title: "Direct Contacts",
+
+contact_phone_label: "Phone",
+contact_phone_note: "(Call to national landline)",
+contact_whatsapp_label: "WhatsApp",
+contact_email_label: "Email",
+
+contact_address_title: "Address",
+
+contact_form_title: "Send us a message",
+contact_form_name: "Name",
+contact_form_email: "Email",
+contact_form_message: "Message",
+contact_form_send: "Send",
+
+contact_success: "Message sent successfully! Thank you for contacting us.",
+
+contact_legal_title: "Legal Information",
+contact_legal_al: "AL Registration Numbers",
+contact_legal_entity: "Operating Entity"
 
   },
   es: {
@@ -589,8 +746,92 @@ loc_like_marina: "Ubicación cerca de la marina",
 loc_like_estacionamento: "Aparcamiento gratuito",
 loc_like_espaco: "Apartamentos espaciosos",
 loc_like_limpeza: "Limpieza y comodidad",
-loc_like_checkin: "Check‑in autónomo 24h"
+loc_like_checkin: "Check‑in autónomo 24h",
+/* ============================
+      REGLAS DEL ALOJAMIENTO
+============================ */
 
+rules_title: "Reglas del Alojamiento",
+rules_intro: "Para garantizar la comodidad, seguridad y bienestar de todos los huéspedes, pedimos que respete las reglas del alojamiento. Todas han sido pensadas para ofrecer una estancia tranquila y sin preocupaciones.",
+
+rules_r1: "Check‑in / Check‑out — Check‑in: desde las 15:00 · Check‑out: hasta las 10:00",
+rules_r2: "Cancelación / Prepago — Las condiciones varían según el tipo de alojamiento. Compruébelo al realizar la reserva.",
+rules_r3: "Niños y camas — Todos los niños son bienvenidos. Cunas gratuitas (0‑2 años), sujetas a disponibilidad. No hay camas supletorias.",
+rules_r4: "Prohibido fumar — No está permitido fumar dentro del apartamento. Solo se permite en la terraza.",
+rules_r5: "Fiestas y eventos — No se permiten fiestas ni eventos.",
+rules_r6: "Mascotas — No se admiten mascotas.",
+rules_r7: "Horario de silencio — Respete el horario de silencio entre las 22:00 y las 08:00.",
+rules_r8: "Servicios y consumibles — En estancias de 7 noches o más, la ropa de cama y las toallas se cambian cada 7 días. Los consumibles deben ser adquiridos tras usar los proporcionados.",
+rules_r9: "Información del apartamento — En el interior encontrará un libro con instrucciones sobre los electrodomésticos.",
+rules_r10: "Pérdida de llaves — La pérdida de cualquier llave implica un coste de 40,00 € por llave.",
+rules_r11: "Salud y seguridad — Medidas adicionales de higiene están en vigor debido a la COVID‑19.",
+rules_r12: "Comunicación de daños — Cualquier daño debe comunicarse inmediatamente al anfitrión.",
+rules_r13: "Piscinas — Dos piscinas (adultos y niños), abiertas de forma estacional de 09:00 a 20:00. Respete las normas del Marina Park.",
+rules_r14: "Pistas de tenis — Tienen coste adicional. Belleview no proporciona raquetas ni pelotas. Reserva en la recepción del Marina Park.",
+rules_r15: "Parque infantil — De uso común, seguro y rodeado de zonas verdes. Los niños deben estar siempre acompañados.",
+
+/* ============================
+              FAQ
+============================ */
+
+loc_faq_title: "Preguntas Frecuentes",
+
+faq_q1: "¿Qué incluyen los apartamentos T1?",
+faq_a1: "Todos los T1 incluyen dormitorio con cama doble, sala con sofá cama, kitchenette equipada, baño con bañera y una terraza amplia.",
+
+faq_q2: "¿Qué hay en los alrededores del Marina Park?",
+faq_a2: "El Marina Park ofrece amplias zonas verdes, dos piscinas, pistas de tenis, parque infantil y un bar‑restaurante de apoyo.",
+
+faq_q3: "¿Las piscinas están abiertas todo el año? ¿Cuál es el horario?",
+faq_a3: "Las piscinas funcionan principalmente entre primavera y principios de otoño, normalmente de 09:00 a 20:00.",
+
+faq_q4: "¿Las pistas de tenis son gratuitas? ¿Proporcionan raquetas?",
+faq_a4: "Las pistas de tenis tienen coste adicional. Belleview no proporciona raquetas ni pelotas. La reserva se realiza en la recepción del Marina Park.",
+
+faq_q5: "¿Hay parque infantil en el complejo?",
+faq_a5: "Sí. El Marina Park dispone de un parque infantil seguro y rodeado de zonas verdes.",
+
+faq_q6: "¿El check‑in es autónomo?",
+faq_a6: "Sí. Belleview utiliza un sistema de check‑in autónomo que permite llegar a cualquier hora.",
+
+faq_q7: "¿Hay aparcamiento disponible?",
+faq_a7: "Sí. Todos los apartamentos incluyen aparcamiento reservado gratuito para un vehículo.",
+
+faq_q8: "¿Los apartamentos son adecuados para teletrabajo?",
+faq_a8: "Sí. Ofrecen un ambiente tranquilo, luminoso y cómodo, ideal para trabajar a distancia.",
+
+faq_q9: "¿La ubicación está cerca de la playa?",
+faq_a9: "Sí. Los apartamentos están a pocos minutos de las principales playas de Lagos.",
+
+faq_q10: "¿Qué valoran más los huéspedes del Belleview?",
+faq_a10: "Los huéspedes destacan la limpieza, la comodidad, la luz natural, la terraza privada y la tranquilidad de la zona.",
+
+/* ============================
+            CONTACTOS
+============================ */
+
+contact_title: "Contactos",
+contact_intro: "Estamos disponibles para ayudar antes, durante y después de su estancia.",
+contact_direct_title: "Contactos Directos",
+
+contact_phone_label: "Teléfono",
+contact_phone_note: "(Llamada a la red fija nacional)",
+contact_whatsapp_label: "WhatsApp",
+contact_email_label: "Correo electrónico",
+
+contact_address_title: "Dirección",
+
+contact_form_title: "Envíenos un mensaje",
+contact_form_name: "Nombre",
+contact_form_email: "Correo electrónico",
+contact_form_message: "Mensaje",
+contact_form_send: "Enviar",
+
+contact_success: "¡Mensaje enviado con éxito! Gracias por su contacto.",
+
+contact_legal_title: "Información Legal",
+contact_legal_al: "Nº de Registros AL",
+contact_legal_entity: "Entidad Operadora"
 
   },
   fr: {
@@ -784,8 +1025,80 @@ loc_like_marina: "Proximité de la marina",
 loc_like_estacionamento: "Parking gratuit",
 loc_like_espaco: "Appartements spacieux",
 loc_like_limpeza: "Propreté et confort",
-loc_like_checkin: "Check‑in autonome 24h/24"
+loc_like_checkin: "Check‑in autonome 24h/24",
+rules_title: "Règles de l’Hébergement",
+rules_intro: "Pour garantir le confort, la sécurité et le bien‑être de tous les hôtes, nous vous demandons de respecter les règles de l’hébergement. Elles ont été conçues pour assurer un séjour paisible et sans souci.",
 
+rules_r1: "Check‑in / Check‑out — Check‑in : à partir de 15h00 · Check‑out : jusqu’à 10h00",
+rules_r2: "Annulation / Pré‑paiement — Les conditions varient selon le type d’hébergement. Vérifiez lors de la réservation.",
+rules_r3: "Enfants et lits — Tous les enfants sont les bienvenus. Lits bébé gratuits (0‑2 ans), sous réserve de disponibilité. Pas de lits supplémentaires.",
+rules_r4: "Interdiction de fumer — Il est interdit de fumer à l’intérieur. Autorisé uniquement sur la terrasse.",
+rules_r5: "Fêtes et événements — Les fêtes et événements ne sont pas autorisés.",
+rules_r6: "Animaux — Les animaux ne sont pas admis.",
+rules_r7: "Heures de silence — Respectez les heures de silence entre 22h00 et 08h00.",
+rules_r8: "Services et consommables — Pour les séjours de 7 nuits ou plus, les draps et serviettes sont changés tous les 7 jours. Les consommables doivent être achetés après utilisation.",
+rules_r9: "Informations de l’appartement — Un livret d’informations est disponible avec les instructions des appareils.",
+rules_r10: "Perte de clés — La perte d’une clé entraîne un coût de 40,00 € par clé.",
+rules_r11: "Santé et sécurité — Des mesures d’hygiène supplémentaires sont en vigueur en raison du COVID‑19.",
+rules_r12: "Communication des dommages — Tout dommage doit être signalé immédiatement à l’hôte.",
+rules_r13: "Piscines — Deux piscines (adultes et enfants), ouvertes de 09h00 à 20h00. Respectez les règles du Marina Park.",
+rules_r14: "Courts de tennis — Coût supplémentaire. Belleview ne fournit pas de raquettes ni de balles. Réservation à la réception du Marina Park.",
+rules_r15: "Aire de jeux — Espace commun, sécurisé et entouré de zones vertes. Les enfants doivent être accompagnés.",
+
+loc_faq_title: "Questions Fréquentes",
+
+faq_q1: "Que comprennent les appartements T1 ?",
+faq_a1: "Tous les T1 comprennent une chambre double, un salon avec canapé‑lit, une kitchenette équipée, une salle de bain avec baignoire et une terrasse spacieuse.",
+
+faq_q2: "Que trouve‑t‑on autour du Marina Park ?",
+faq_a2: "Le Marina Park offre de vastes espaces verts, deux piscines, des courts de tennis, une aire de jeux et un bar‑restaurant.",
+
+faq_q3: "Les piscines sont‑elles ouvertes toute l’année ? Quel est l’horaire ?",
+faq_a3: "Les piscines fonctionnent principalement entre le printemps et le début de l’automne, généralement de 09h00 à 20h00.",
+
+faq_q4: "Les courts de tennis sont‑ils gratuits ? Fournissez‑vous des raquettes ?",
+faq_a4: "Les courts de tennis ont un coût supplémentaire. Belleview ne fournit pas de raquettes ni de balles. Réservation à la réception du Marina Park.",
+
+faq_q5: "Y a‑t‑il une aire de jeux ?",
+faq_a5: "Oui. Le Marina Park dispose d’une aire de jeux sécurisée entourée de zones vertes.",
+
+faq_q6: "Le check‑in est‑il autonome ?",
+faq_a6: "Oui. Belleview utilise un système de check‑in autonome permettant d’arriver à toute heure.",
+
+faq_q7: "Y a‑t‑il un parking disponible ?",
+faq_a7: "Oui. Tous les appartements disposent d’un parking réservé gratuit pour un véhicule.",
+
+faq_q8: "Les appartements conviennent‑ils au télétravail ?",
+faq_a8: "Oui. Ils offrent un environnement calme, lumineux et confortable, idéal pour travailler à distance.",
+
+faq_q9: "L’emplacement est‑il proche de la plage ?",
+faq_a9: "Oui. Les appartements se trouvent à quelques minutes des principales plages de Lagos.",
+
+faq_q10: "Qu’apprécient le plus les hôtes au Belleview ?",
+faq_a10: "Les hôtes apprécient la propreté, le confort, la lumière naturelle, la terrasse privée et la tranquillité du quartier.",
+
+contact_title: "Contacts",
+contact_intro: "Nous sommes disponibles pour vous aider avant, pendant et après votre séjour.",
+contact_direct_title: "Contacts Directs",
+
+contact_phone_label: "Téléphone",
+contact_phone_note: "(Appel vers le réseau fixe national)",
+contact_whatsapp_label: "WhatsApp",
+contact_email_label: "Email",
+
+contact_address_title: "Adresse",
+
+contact_form_title: "Envoyez‑nous un message",
+contact_form_name: "Nom",
+contact_form_email: "Email",
+contact_form_message: "Message",
+contact_form_send: "Envoyer",
+
+contact_success: "Message envoyé avec succès ! Merci pour votre contact.",
+
+contact_legal_title: "Informations Légales",
+contact_legal_al: "Numéros d’enregistrement AL",
+contact_legal_entity: "Entité Exploitante"
 
   },
   it: {
@@ -979,8 +1292,80 @@ loc_like_marina: "Posizione vicino alla marina",
 loc_like_estacionamento: "Parcheggio gratuito",
 loc_like_espaco: "Appartamenti spaziosi",
 loc_like_limpeza: "Pulizia e comfort",
-loc_like_checkin: "Check‑in autonomo 24h"
+loc_like_checkin: "Check‑in autonomo 24h",
+rules_title: "Regole dell’Alloggio",
+rules_intro: "Per garantire comfort, sicurezza e benessere a tutti gli ospiti, chiediamo di rispettare le regole dell’alloggio. Sono state pensate per offrire un soggiorno tranquillo e senza preoccupazioni.",
 
+rules_r1: "Check‑in / Check‑out — Check‑in: dalle 15:00 · Check‑out: entro le 10:00",
+rules_r2: "Cancellazione / Pagamento anticipato — Le condizioni variano a seconda del tipo di alloggio. Verificare al momento della prenotazione.",
+rules_r3: "Bambini e letti — Tutti i bambini sono i benvenuti. Culle gratuite (0‑2 anni), soggette a disponibilità. Nessun letto extra.",
+rules_r4: "Vietato fumare — Vietato fumare all’interno dell’appartamento. Consentito solo sulla terrazza.",
+rules_r5: "Feste ed eventi — Non sono consentite feste o eventi.",
+rules_r6: "Animali domestici — Non sono ammessi animali.",
+rules_r7: "Orari di silenzio — Rispettare il silenzio tra le 22:00 e le 08:00.",
+rules_r8: "Servizi e consumabili — Per soggiorni di 7+ notti, lenzuola e asciugamani vengono cambiati ogni 7 giorni. I consumabili devono essere acquistati dopo l’uso di quelli forniti.",
+rules_r9: "Informazioni sull’appartamento — All’interno troverete un libro con istruzioni sugli elettrodomestici.",
+rules_r10: "Perdita delle chiavi — La perdita di una chiave comporta un costo di 40,00 € per chiave.",
+rules_r11: "Salute e sicurezza — Misure igieniche aggiuntive sono in vigore a causa del COVID‑19.",
+rules_r12: "Segnalazione danni — Qualsiasi danno deve essere comunicato immediatamente all’host.",
+rules_r13: "Piscine — Due piscine (adulti e bambini), aperte stagionalmente dalle 09:00 alle 20:00. Rispettare le regole del Marina Park.",
+rules_r14: "Campi da tennis — Hanno un costo aggiuntivo. Belleview non fornisce racchette o palline. Prenotazione presso la reception del Marina Park.",
+rules_r15: "Parco giochi — Di uso comune, sicuro e circondato da aree verdi. I bambini devono essere sempre accompagnati.",
+
+loc_faq_title: "Domande Frequenti",
+
+faq_q1: "Cosa è incluso negli appartamenti T1?",
+faq_a1: "Tutti i T1 includono una camera matrimoniale, soggiorno con divano letto, angolo cottura attrezzato, bagno con vasca e un’ampia terrazza.",
+
+faq_q2: "Cosa c’è nei dintorni del Marina Park?",
+faq_a2: "Il Marina Park offre ampie aree verdi, due piscine, campi da tennis, parco giochi e un bar‑ristorante di supporto.",
+
+faq_q3: "Le piscine sono aperte tutto l’anno? Quali sono gli orari?",
+faq_a3: "Le piscine funzionano principalmente tra primavera e inizio autunno, solitamente dalle 09:00 alle 20:00.",
+
+faq_q4: "I campi da tennis sono gratuiti? Fornite racchette?",
+faq_a4: "I campi da tennis hanno un costo aggiuntivo. Belleview non fornisce racchette o palline. Prenotazione presso la reception del Marina Park.",
+
+faq_q5: "C’è un parco giochi nel complesso?",
+faq_a5: "Sì. Il Marina Park dispone di un parco giochi sicuro circondato da aree verdi.",
+
+faq_q6: "Il check‑in è autonomo?",
+faq_a6: "Sì. Belleview utilizza un sistema di self check‑in che permette di arrivare a qualsiasi ora.",
+
+faq_q7: "È disponibile un parcheggio?",
+faq_a7: "Sì. Tutti gli appartamenti includono parcheggio riservato gratuito per un veicolo.",
+
+faq_q8: "Gli appartamenti sono adatti al telelavoro?",
+faq_a8: "Sì. Offrono un ambiente tranquillo, luminoso e confortevole, ideale per lavorare a distanza.",
+
+faq_q9: "La posizione è vicina alla spiaggia?",
+faq_a9: "Sì. Gli appartamenti si trovano a pochi minuti dalle principali spiagge di Lagos.",
+
+faq_q10: "Cosa apprezzano di più gli ospiti del Belleview?",
+faq_a10: "Gli ospiti apprezzano la pulizia, il comfort, la luce naturale, la terrazza privata e la tranquillità della zona.",
+
+contact_title: "Contatti",
+contact_intro: "Siamo disponibili ad aiutarti prima, durante e dopo il tuo soggiorno.",
+contact_direct_title: "Contatti Diretti",
+
+contact_phone_label: "Telefono",
+contact_phone_note: "(Chiamata alla rete fissa nazionale)",
+contact_whatsapp_label: "WhatsApp",
+contact_email_label: "Email",
+
+contact_address_title: "Indirizzo",
+
+contact_form_title: "Inviaci un messaggio",
+contact_form_name: "Nome",
+contact_form_email: "Email",
+contact_form_message: "Messaggio",
+contact_form_send: "Invia",
+
+contact_success: "Messaggio inviato con successo! Grazie per averci contattato.",
+
+contact_legal_title: "Informazioni Legali",
+contact_legal_al: "Numeri di registrazione AL",
+contact_legal_entity: "Ente Gestore"
 
   },
   de: {
@@ -1174,8 +1559,92 @@ loc_like_marina: "Nähe zur Marina",
 loc_like_estacionamento: "Kostenloses Parken",
 loc_like_espaco: "Geräumige Apartments",
 loc_like_limpeza: "Sauberkeit und Komfort",
-loc_like_checkin: "24‑Stunden‑Self‑Check‑in"
+loc_like_checkin: "24‑Stunden‑Self‑Check‑in",
+/* ============================
+      HAUSREGELN
+============================ */
 
+rules_title: "Hausregeln",
+rules_intro: "Um Komfort, Sicherheit und Wohlbefinden aller Gäste zu gewährleisten, bitten wir Sie, die Hausregeln zu respektieren. Sie wurden entwickelt, um einen ruhigen und sorgenfreien Aufenthalt zu ermöglichen.",
+
+rules_r1: "Check‑in / Check‑out — Check‑in: ab 15:00 Uhr · Check‑out: bis 10:00 Uhr",
+rules_r2: "Stornierung / Vorauszahlung — Die Bedingungen variieren je nach Unterkunftstyp. Bitte prüfen Sie dies bei der Buchung.",
+rules_r3: "Kinder und Betten — Alle Kinder sind willkommen. Kostenlose Babybetten (0‑2 Jahre), je nach Verfügbarkeit. Keine Zustellbetten.",
+rules_r4: "Rauchen verboten — Rauchen ist in der Wohnung nicht gestattet. Nur auf der Terrasse erlaubt.",
+rules_r5: "Partys und Veranstaltungen — Partys oder Veranstaltungen sind nicht erlaubt.",
+rules_r6: "Haustiere — Haustiere sind nicht gestattet.",
+rules_r7: "Ruhezeiten — Bitte beachten Sie die Ruhezeiten zwischen 22:00 und 08:00 Uhr.",
+rules_r8: "Service und Verbrauchsmaterial — Bei Aufenthalten ab 7 Nächten werden Bettwäsche und Handtücher alle 7 Tage gewechselt. Verbrauchsmaterialien müssen nach Nutzung ersetzt werden.",
+rules_r9: "Wohnungsinformationen — Im Inneren finden Sie ein Informationsbuch mit Anleitungen zu Geräten.",
+rules_r10: "Schlüsselverlust — Der Verlust eines Schlüssels kostet 40,00 € pro Schlüssel.",
+rules_r11: "Gesundheit und Sicherheit — Zusätzliche Hygienemaßnahmen sind aufgrund von COVID‑19 in Kraft.",
+rules_r12: "Schadensmeldung — Jegliche Schäden müssen sofort dem Gastgeber gemeldet werden.",
+rules_r13: "Schwimmbäder — Zwei Schwimmbäder (Erwachsene und Kinder), saisonal geöffnet von 09:00 bis 20:00 Uhr. Bitte beachten Sie die Regeln des Marina Park.",
+rules_r14: "Tennisplätze — Zusätzliche Kosten. Belleview stellt keine Schläger oder Bälle zur Verfügung. Reservierung an der Rezeption des Marina Park.",
+rules_r15: "Spielplatz — Gemeinschaftsbereich, sicher und von Grünflächen umgeben. Kinder müssen stets beaufsichtigt werden.",
+
+/* ============================
+              FAQ
+============================ */
+
+loc_faq_title: "Häufig gestellte Fragen",
+
+faq_q1: "Was ist in den T1‑Apartments enthalten?",
+faq_a1: "Alle T1‑Apartments verfügen über ein Schlafzimmer mit Doppelbett, ein Wohnzimmer mit Schlafsofa, eine ausgestattete Küchenzeile, ein Badezimmer mit Badewanne und eine großzügige Terrasse.",
+
+faq_q2: "Was gibt es in der Umgebung des Marina Park?",
+faq_a2: "Der Marina Park bietet große Grünflächen, zwei Schwimmbäder, Tennisplätze, einen Spielplatz und ein unterstützendes Bar‑Restaurant.",
+
+faq_q3: "Sind die Schwimmbäder das ganze Jahr geöffnet? Wie sind die Öffnungszeiten?",
+faq_a3: "Die Schwimmbäder sind hauptsächlich zwischen Frühling und Frühherbst geöffnet, in der Regel von 09:00 bis 20:00 Uhr.",
+
+faq_q4: "Sind die Tennisplätze kostenlos? Werden Schläger und Bälle bereitgestellt?",
+faq_a4: "Die Tennisplätze haben zusätzliche Kosten. Belleview stellt keine Schläger oder Bälle zur Verfügung. Reservierung an der Rezeption des Marina Park.",
+
+faq_q5: "Gibt es einen Spielplatz im Komplex?",
+faq_a5: "Ja. Der Marina Park verfügt über einen sicheren Spielplatz, der von Grünflächen umgeben ist.",
+
+faq_q6: "Ist der Check‑in autonom?",
+faq_a6: "Ja. Belleview verwendet ein Self‑Check‑in‑System, das eine Ankunft zu jeder Uhrzeit ermöglicht.",
+
+faq_q7: "Gibt es Parkmöglichkeiten?",
+faq_a7: "Ja. Alle Apartments verfügen über einen reservierten, kostenlosen Garagenstellplatz für ein Fahrzeug.",
+
+faq_q8: "Sind die Apartments für Remote‑Work geeignet?",
+faq_a8: "Ja. Sie bieten eine ruhige, helle und komfortable Umgebung, ideal für das Arbeiten aus der Ferne.",
+
+faq_q9: "Ist die Lage strandnah?",
+faq_a9: "Ja. Die Apartments befinden sich nur wenige Minuten von den wichtigsten Stränden von Lagos entfernt.",
+
+faq_q10: "Was schätzen die Gäste am Belleview am meisten?",
+faq_a10: "Die Gäste loben besonders die Sauberkeit, den Komfort, das natürliche Licht, die private Terrasse und die ruhige Umgebung.",
+
+/* ============================
+            KONTAKTE
+============================ */
+
+contact_title: "Kontakte",
+contact_intro: "Wir stehen Ihnen vor, während und nach Ihrem Aufenthalt zur Verfügung.",
+contact_direct_title: "Direkte Kontakte",
+
+contact_phone_label: "Telefon",
+contact_phone_note: "(Anruf ins nationale Festnetz)",
+contact_whatsapp_label: "WhatsApp",
+contact_email_label: "E‑Mail",
+
+contact_address_title: "Adresse",
+
+contact_form_title: "Senden Sie uns eine Nachricht",
+contact_form_name: "Name",
+contact_form_email: "E‑Mail",
+contact_form_message: "Nachricht",
+contact_form_send: "Senden",
+
+contact_success: "Nachricht erfolgreich gesendet! Vielen Dank für Ihre Kontaktaufnahme.",
+
+contact_legal_title: "Rechtliche Informationen",
+contact_legal_al: "AL‑Registrierungsnummern",
+contact_legal_entity: "Betreibende Entität"
 
   }
 };
