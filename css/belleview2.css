@@ -1725,3 +1725,68 @@ a[href^="https://wa.me"],
     }
 }
 
+.reviews-carousel-section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.reviews-carousel-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.8rem;
+    color: #005c99;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.reviews-carousel {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+}
+
+.reviews-carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.reviews-carousel::-webkit-scrollbar-thumb {
+    background: #cccccc;
+    border-radius: 10px;
+}
+
+.review-item {
+    min-width: 260px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    border: 1px solid #e6e6e6;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    text-align: left;
+}
+
+.review-logo {
+    height: 22px;
+    margin-bottom: 10px;
+}
+
+.review-score {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #005c99;
+    margin-bottom: 8px;
+}
+
+.review-text {
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.review-author {
+    font-size: 0.85rem;
+    color: #777;
+}
