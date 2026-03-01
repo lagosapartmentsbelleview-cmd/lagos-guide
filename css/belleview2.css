@@ -1606,7 +1606,7 @@ a[href^="https://wa.me"],
 =========================================================== */
 
 .reviews-carousel-section {
-    padding: 60px 20px;
+    padding: 80px 20px; /* igual ao espaçamento da secção de baixo */
     background: #F5F7FA;
     text-align: center;
 }
@@ -1634,16 +1634,17 @@ a[href^="https://wa.me"],
 
 /* Card */
 .review-card {
-    min-width: 300px;
+    min-width: 340px;
     background: #FFFFFF;
     border-radius: 20px;
-    padding: 26px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    padding: 32px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
     border: 1px solid #E6E6E6;
     scroll-snap-align: start;
     flex-shrink: 0;
     text-align: left;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    margin-bottom: 40px; /* igual ao card grande */
 }
 
 .review-card:hover {
