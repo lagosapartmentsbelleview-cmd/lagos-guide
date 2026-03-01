@@ -83,7 +83,58 @@ review_19_text: "Ideal para quem procura descanso.",
 review_19_author: "Marco — Itália",
 
 review_20_text: "Muito acolhedor e bem decorado.",
-review_20_author: "Julia — Suécia"
+review_20_author: "Julia — Suécia",
+aloj_title: "Alojamentos Belleview Lagos",
+
+aloj_intro_1: "Os Apartments Belleview Lagos oferecem T1 amplos, luminosos e totalmente equipados, criados para quem procura conforto, tranquilidade e qualidade no Algarve. Cada apartamento combina privacidade, funcionalidade e uma atmosfera acolhedora que convida ao descanso.",
+aloj_intro_2: "Os terraços privados e as zonas verdes envolventes criam o cenário ideal para relaxar ao ar livre, ler, trabalhar ou simplesmente aproveitar o clima ameno algarvio. A localização estratégica, perto das praias e dos principais serviços, garante uma estadia equilibrada entre bem‑estar e conveniência.",
+aloj_intro_3: "Perfeitos para casais, famílias ou viajantes independentes, os alojamentos destacam‑se pela sensação de “casa longe de casa”, pela harmonia dos espaços e pela experiência moderna e descomplicada que proporcionam.",
+
+aloj_highlights_title: "Destaques do Alojamento",
+
+aloj_hl_1: "2 Piscinas",
+aloj_hl_2: "Wi‑Fi de alta velocidade",
+aloj_hl_3: "Garagem gratuita para 1 viatura",
+aloj_hl_4: "Ar condicionado",
+aloj_hl_5: "Elevador",
+aloj_hl_6: "Jardins envolventes",
+aloj_hl_7: "Terraço privado",
+aloj_hl_8: "A poucos minutos da praia",
+aloj_hl_9: "Quartos familiares",
+aloj_hl_10: "Sofá‑cama",
+aloj_hl_11: "Kitchenette totalmente equipada",
+aloj_hl_12: "Televisão por cabo HD",
+aloj_hl_13: "Segurança 24 horas",
+aloj_hl_14: "Parque infantil",
+aloj_hl_15: "Campos de ténis",
+
+aloj_desc_title: "Os Apartamentos",
+
+aloj_desc_1: "Os apartamentos T1 foram concebidos para oferecer conforto, luz natural e um ambiente moderno, perfeito para férias, escapadinhas românticas, teletrabalho ou estadias prolongadas. Cada unidade é prática, acolhedora e totalmente equipada.",
+aloj_desc_2: "Incluem quarto com cama de casal, casa de banho com banheira, kitchenette equipada, sala com sofá‑cama e um terraço espaçoso ideal para refeições ao ar livre ou momentos de descontração. A decoração equilibrada e a funcionalidade dos espaços criam um ambiente relaxante.",
+aloj_desc_3: "Inseridos no prestigiado complexo Marina Park, os apartamentos beneficiam de piscinas, campos de ténis, amplas zonas verdes, parque infantil e um bar‑restaurante de apoio — tudo num espaço seguro, tranquilo e rodeado de natureza.",
+aloj_desc_4: "Todas as unidades têm a mesma tipologia, tamanho e comodidades. A atribuição é feita pela nossa equipa no momento da reserva, garantindo sempre a melhor opção disponível e uma experiência consistente de qualidade.",
+
+aloj_comp_title: "Composição dos Apartamentos",
+
+aloj_comp_1: "Os T1 do Belleview Lagos foram projetados para oferecer conforto, funcionalidade e bem‑estar, adaptando‑se a férias, teletrabalho ou estadias prolongadas.",
+aloj_comp_2: "A luz natural, a fluidez dos espaços e o mobiliário funcional criam um ambiente equilibrado, ideal para relaxar, cozinhar, trabalhar ou desfrutar de tempo em família.",
+
+composicao_titulo: "Composição do apartamento",
+
+comp_item_1: "Sala ampla com sofá‑cama e zona de refeições",
+comp_item_2: "Quarto com cama de casal",
+comp_item_3: "Kitchenette totalmente equipada",
+comp_item_4: "Casa de banho com banheira",
+comp_item_5: "Terraço privado de 30 m²",
+comp_item_6: "Wi‑Fi de alta velocidade",
+comp_item_7: "Capacidade até 4 hóspedes",
+comp_item_8: "Garagem gratuita para 1 viatura",
+comp_item_9: "Ar condicionado",
+comp_item_10: "Televisão por cabo",
+comp_item_11: "Berço gratuito mediante pedido",
+comp_item_12: "Check‑in autónomo 24h"
+
 
   },
   en: {
@@ -160,7 +211,58 @@ review_19_text: "Ideal for those seeking rest.",
 review_19_author: "Marco — Italy",
 
 review_20_text: "Very cozy and well decorated.",
-review_20_author: "Julia — Sweden"
+review_20_author: "Julia — Sweden",
+aloj_title: "Belleview Lagos Apartments",
+
+aloj_intro_1: "Belleview Lagos Apartments offer spacious, bright and fully equipped one‑bedroom units, designed for those seeking comfort, tranquility and quality in the Algarve. Each apartment combines privacy, functionality and a welcoming atmosphere that invites relaxation.",
+aloj_intro_2: "Private terraces and surrounding green areas create the ideal setting to relax outdoors, read, work or simply enjoy the mild Algarve climate. The strategic location, close to beaches and essential services, ensures a balanced stay between well‑being and convenience.",
+aloj_intro_3: "Perfect for couples, families or independent travelers, the apartments stand out for their “home away from home” feeling, harmonious spaces and a modern, uncomplicated experience.",
+
+aloj_highlights_title: "Accommodation Highlights",
+
+aloj_hl_1: "2 Swimming pools",
+aloj_hl_2: "High‑speed Wi‑Fi",
+aloj_hl_3: "Free parking for 1 vehicle",
+aloj_hl_4: "Air conditioning",
+aloj_hl_5: "Elevator",
+aloj_hl_6: "Surrounding gardens",
+aloj_hl_7: "Private terrace",
+aloj_hl_8: "A few minutes from the beach",
+aloj_hl_9: "Family rooms",
+aloj_hl_10: "Sofa bed",
+aloj_hl_11: "Fully equipped kitchenette",
+aloj_hl_12: "HD cable TV",
+aloj_hl_13: "24‑hour security",
+aloj_hl_14: "Playground",
+aloj_hl_15: "Tennis courts",
+
+aloj_desc_title: "The Apartments",
+
+aloj_desc_1: "The one‑bedroom apartments were designed to offer comfort, natural light and a modern atmosphere, perfect for holidays, romantic getaways, remote work or long stays. Each unit is practical, cozy and fully equipped.",
+aloj_desc_2: "They include a bedroom with a double bed, a bathroom with a bathtub, an equipped kitchenette, a living room with a sofa bed and a spacious terrace ideal for outdoor meals or relaxing moments. Balanced decor and functional spaces create a relaxing environment.",
+aloj_desc_3: "Located in the prestigious Marina Park complex, the apartments benefit from swimming pools, tennis courts, large green areas, a playground and a support bar‑restaurant — all in a safe, quiet environment surrounded by nature.",
+aloj_desc_4: "All units have the same layout, size and amenities. Allocation is made by our team at the time of booking, always ensuring the best available option and a consistent quality experience.",
+
+aloj_comp_title: "Apartment Composition",
+
+aloj_comp_1: "Belleview Lagos one‑bedroom apartments were designed to offer comfort, functionality and well‑being, suitable for holidays, remote work or long stays.",
+aloj_comp_2: "Natural light, fluid spaces and functional furniture create a balanced environment, ideal for relaxing, cooking, working or enjoying family time.",
+
+composicao_titulo: "Apartment composition",
+
+comp_item_1: "Spacious living room with sofa bed and dining area",
+comp_item_2: "Bedroom with double bed",
+comp_item_3: "Fully equipped kitchenette",
+comp_item_4: "Bathroom with bathtub",
+comp_item_5: "Private 30 m² terrace",
+comp_item_6: "High‑speed Wi‑Fi",
+comp_item_7: "Capacity for up to 4 guests",
+comp_item_8: "Free parking for 1 vehicle",
+comp_item_9: "Air conditioning",
+comp_item_10: "Cable TV",
+comp_item_11: "Free crib upon request",
+comp_item_12: "24h self check‑in"
+
 
   },
   es: {
@@ -237,7 +339,58 @@ review_19_text: "Ideal para quienes buscan descanso.",
 review_19_author: "Marco — Italia",
 
 review_20_text: "Muy acogedor y bien decorado.",
-review_20_author: "Julia — Suecia"
+review_20_author: "Julia — Suecia",
+aloj_title: "Alojamientos Belleview Lagos",
+
+aloj_intro_1: "Los Apartments Belleview Lagos ofrecen T1 amplios, luminosos y totalmente equipados, creados para quienes buscan comodidad, tranquilidad y calidad en el Algarve. Cada apartamento combina privacidad, funcionalidad y un ambiente acogedor que invita al descanso.",
+aloj_intro_2: "Las terrazas privadas y las zonas verdes que los rodean crean el escenario ideal para relajarse al aire libre, leer, trabajar o simplemente disfrutar del clima templado del Algarve. La ubicación estratégica, cerca de las playas y de los principales servicios, garantiza una estancia equilibrada entre bienestar y conveniencia.",
+aloj_intro_3: "Perfectos para parejas, familias o viajeros independientes, los alojamientos destacan por su sensación de “hogar lejos de casa”, la armonía de los espacios y la experiencia moderna y sencilla que ofrecen.",
+
+aloj_highlights_title: "Destacados del Alojamiento",
+
+aloj_hl_1: "2 piscinas",
+aloj_hl_2: "Wi‑Fi de alta velocidad",
+aloj_hl_3: "Aparcamiento gratuito para 1 vehículo",
+aloj_hl_4: "Aire acondicionado",
+aloj_hl_5: "Ascensor",
+aloj_hl_6: "Jardines alrededor",
+aloj_hl_7: "Terraza privada",
+aloj_hl_8: "A pocos minutos de la playa",
+aloj_hl_9: "Habitaciones familiares",
+aloj_hl_10: "Sofá cama",
+aloj_hl_11: "Kitchenette totalmente equipada",
+aloj_hl_12: "Televisión por cable HD",
+aloj_hl_13: "Seguridad 24 horas",
+aloj_hl_14: "Parque infantil",
+aloj_hl_15: "Pistas de tenis",
+
+aloj_desc_title: "Los Apartamentos",
+
+aloj_desc_1: "Los apartamentos T1 fueron diseñados para ofrecer comodidad, luz natural y un ambiente moderno, perfecto para vacaciones, escapadas románticas, teletrabajo o estancias prolongadas. Cada unidad es práctica, acogedora y totalmente equipada.",
+aloj_desc_2: "Incluyen dormitorio con cama doble, baño con bañera, kitchenette equipada, sala con sofá cama y una terraza amplia ideal para comidas al aire libre o momentos de relajación. La decoración equilibrada y la funcionalidad de los espacios crean un ambiente relajante.",
+aloj_desc_3: "Ubicados en el prestigioso complejo Marina Park, los apartamentos cuentan con piscinas, pistas de tenis, amplias zonas verdes, parque infantil y un bar‑restaurante de apoyo — todo en un espacio seguro, tranquilo y rodeado de naturaleza.",
+aloj_desc_4: "Todas las unidades tienen la misma tipología, tamaño y comodidades. La asignación se realiza por nuestro equipo en el momento de la reserva, garantizando siempre la mejor opción disponible y una experiencia consistente de calidad.",
+
+aloj_comp_title: "Composición de los Apartamentos",
+
+aloj_comp_1: "Los T1 de Belleview Lagos fueron diseñados para ofrecer comodidad, funcionalidad y bienestar, adaptándose a vacaciones, teletrabajo o estancias prolongadas.",
+aloj_comp_2: "La luz natural, la fluidez de los espacios y el mobiliario funcional crean un ambiente equilibrado, ideal para relajarse, cocinar, trabajar o disfrutar en familia.",
+
+composicao_titulo: "Composición del apartamento",
+
+comp_item_1: "Sala amplia con sofá cama y zona de comedor",
+comp_item_2: "Dormitorio con cama doble",
+comp_item_3: "Kitchenette totalmente equipada",
+comp_item_4: "Baño con bañera",
+comp_item_5: "Terraza privada de 30 m²",
+comp_item_6: "Wi‑Fi de alta velocidad",
+comp_item_7: "Capacidad hasta 4 huéspedes",
+comp_item_8: "Aparcamiento gratuito para 1 vehículo",
+comp_item_9: "Aire acondicionado",
+comp_item_10: "Televisión por cable",
+comp_item_11: "Cuna gratuita bajo petición",
+comp_item_12: "Check‑in autónomo 24h"
+
 
   },
   fr: {
@@ -314,7 +467,58 @@ review_19_text: "Idéal pour ceux qui recherchent le repos.",
 review_19_author: "Marco — Italie",
 
 review_20_text: "Très chaleureux et bien décoré.",
-review_20_author: "Julia — Suède"
+review_20_author: "Julia — Suède",
+aloj_title: "Hébergements Belleview Lagos",
+
+aloj_intro_1: "Les Apartments Belleview Lagos proposent des T1 spacieux, lumineux et entièrement équipés, conçus pour ceux qui recherchent confort, tranquillité et qualité en Algarve. Chaque appartement allie intimité, fonctionnalité et une atmosphère chaleureuse propice à la détente.",
+aloj_intro_2: "Les terrasses privées et les espaces verts environnants créent un cadre idéal pour se détendre en plein air, lire, travailler ou simplement profiter du climat doux de l’Algarve. L’emplacement stratégique, proche des plages et des services essentiels, garantit un séjour équilibré entre bien‑être et commodité.",
+aloj_intro_3: "Parfaits pour les couples, les familles ou les voyageurs indépendants, les hébergements se distinguent par leur sensation de “maison loin de la maison”, l’harmonie des espaces et une expérience moderne et simple.",
+
+aloj_highlights_title: "Points forts de l’hébergement",
+
+aloj_hl_1: "2 piscines",
+aloj_hl_2: "Wi‑Fi haut débit",
+aloj_hl_3: "Parking gratuit pour 1 véhicule",
+aloj_hl_4: "Climatisation",
+aloj_hl_5: "Ascenseur",
+aloj_hl_6: "Jardins environnants",
+aloj_hl_7: "Terrasse privée",
+aloj_hl_8: "À quelques minutes de la plage",
+aloj_hl_9: "Chambres familiales",
+aloj_hl_10: "Canapé‑lit",
+aloj_hl_11: "Kitchenette entièrement équipée",
+aloj_hl_12: "Télévision HD par câble",
+aloj_hl_13: "Sécurité 24h/24",
+aloj_hl_14: "Aire de jeux",
+aloj_hl_15: "Courts de tennis",
+
+aloj_desc_title: "Les Appartements",
+
+aloj_desc_1: "Les appartements T1 ont été conçus pour offrir confort, lumière naturelle et ambiance moderne, parfaits pour les vacances, les escapades romantiques, le télétravail ou les séjours prolongés. Chaque unité est pratique, accueillante et entièrement équipée.",
+aloj_desc_2: "Ils comprennent une chambre avec lit double, une salle de bain avec baignoire, une kitchenette équipée, un salon avec canapé‑lit et une terrasse spacieuse idéale pour les repas en plein air ou les moments de détente. La décoration équilibrée et la fonctionnalité des espaces créent une atmosphère relaxante.",
+aloj_desc_3: "Situés dans le prestigieux complexe Marina Park, les appartements bénéficient de piscines, courts de tennis, vastes espaces verts, aire de jeux et d’un bar‑restaurant — le tout dans un environnement sûr, calme et entouré de nature.",
+aloj_desc_4: "Toutes les unités ont la même typologie, taille et commodités. L’attribution est effectuée par notre équipe au moment de la réservation, garantissant toujours la meilleure option disponible et une expérience de qualité cohérente.",
+
+aloj_comp_title: "Composition des Appartements",
+
+aloj_comp_1: "Les T1 de Belleview Lagos ont été conçus pour offrir confort, fonctionnalité et bien‑être, adaptés aux vacances, au télétravail ou aux séjours prolongés.",
+aloj_comp_2: "La lumière naturelle, la fluidité des espaces et le mobilier fonctionnel créent un environnement équilibré, idéal pour se détendre, cuisiner, travailler ou profiter en famille.",
+
+composicao_titulo: "Composition de l’appartement",
+
+comp_item_1: "Salon spacieux avec canapé‑lit et coin repas",
+comp_item_2: "Chambre avec lit double",
+comp_item_3: "Kitchenette entièrement équipée",
+comp_item_4: "Salle de bain avec baignoire",
+comp_item_5: "Terrasse privée de 30 m²",
+comp_item_6: "Wi‑Fi haut débit",
+comp_item_7: "Capacité jusqu’à 4 personnes",
+comp_item_8: "Parking gratuit pour 1 véhicule",
+comp_item_9: "Climatisation",
+comp_item_10: "Télévision par câble",
+comp_item_11: "Lit bébé gratuit sur demande",
+comp_item_12: "Check‑in autonome 24h/24"
+
 
   },
   it: {
@@ -391,7 +595,58 @@ review_19_text: "Ideale per chi cerca riposo.",
 review_19_author: "Marco — Italia",
 
 review_20_text: "Molto accogliente e ben decorato.",
-review_20_author: "Julia — Svezia"
+review_20_author: "Julia — Svezia",
+aloj_title: "Alloggi Belleview Lagos",
+
+aloj_intro_1: "Gli Apartments Belleview Lagos offrono T1 spaziosi, luminosi e completamente attrezzati, pensati per chi cerca comfort, tranquillità e qualità in Algarve. Ogni appartamento combina privacy, funzionalità e un’atmosfera accogliente che invita al relax.",
+aloj_intro_2: "Le terrazze private e le aree verdi circostanti creano l’ambiente ideale per rilassarsi all’aperto, leggere, lavorare o semplicemente godersi il clima mite dell’Algarve. La posizione strategica, vicino alle spiagge e ai principali servizi, garantisce un soggiorno equilibrato tra benessere e comodità.",
+aloj_intro_3: "Perfetti per coppie, famiglie o viaggiatori indipendenti, gli alloggi si distinguono per la sensazione di “casa lontano da casa”, l’armonia degli spazi e un’esperienza moderna e senza complicazioni.",
+
+aloj_highlights_title: "Punti forti dell’alloggio",
+
+aloj_hl_1: "2 piscine",
+aloj_hl_2: "Wi‑Fi ad alta velocità",
+aloj_hl_3: "Parcheggio gratuito per 1 veicolo",
+aloj_hl_4: "Aria condizionata",
+aloj_hl_5: "Ascensore",
+aloj_hl_6: "Giardini circostanti",
+aloj_hl_7: "Terrazza privata",
+aloj_hl_8: "A pochi minuti dalla spiaggia",
+aloj_hl_9: "Camere familiari",
+aloj_hl_10: "Divano letto",
+aloj_hl_11: "Angolo cottura completamente attrezzato",
+aloj_hl_12: "TV via cavo HD",
+aloj_hl_13: "Sicurezza 24 ore",
+aloj_hl_14: "Parco giochi",
+aloj_hl_15: "Campi da tennis",
+
+aloj_desc_title: "Gli Appartamenti",
+
+aloj_desc_1: "Gli appartamenti T1 sono stati progettati per offrire comfort, luce naturale e un ambiente moderno, perfetti per vacanze, fughe romantiche, lavoro da remoto o soggiorni prolungati. Ogni unità è pratica, accogliente e completamente attrezzata.",
+aloj_desc_2: "Includono una camera con letto matrimoniale, un bagno con vasca, un angolo cottura attrezzato, un soggiorno con divano letto e una terrazza spaziosa ideale per pasti all’aperto o momenti di relax. L’arredamento equilibrato e la funzionalità degli spazi creano un ambiente rilassante.",
+aloj_desc_3: "Situati nel prestigioso complesso Marina Park, gli appartamenti beneficiano di piscine, campi da tennis, ampie aree verdi, parco giochi e un bar‑ristorante di supporto — tutto in un ambiente sicuro, tranquillo e immerso nella natura.",
+aloj_desc_4: "Tutte le unità hanno la stessa tipologia, dimensione e servizi. L’assegnazione viene effettuata dal nostro team al momento della prenotazione, garantendo sempre la migliore opzione disponibile e un’esperienza di qualità coerente.",
+
+aloj_comp_title: "Composizione degli Appartamenti",
+
+aloj_comp_1: "I T1 del Belleview Lagos sono stati progettati per offrire comfort, funzionalità e benessere, adattandosi a vacanze, lavoro da remoto o soggiorni prolungati.",
+aloj_comp_2: "La luce naturale, la fluidità degli spazi e l’arredamento funzionale creano un ambiente equilibrato, ideale per rilassarsi, cucinare, lavorare o trascorrere tempo in famiglia.",
+
+composicao_titulo: "Composizione dell’appartamento",
+
+comp_item_1: "Ampio soggiorno con divano letto e zona pranzo",
+comp_item_2: "Camera da letto con letto matrimoniale",
+comp_item_3: "Angolo cottura completamente attrezzato",
+comp_item_4: "Bagno con vasca",
+comp_item_5: "Terrazza privata di 30 m²",
+comp_item_6: "Wi‑Fi ad alta velocità",
+comp_item_7: "Capacità fino a 4 ospiti",
+comp_item_8: "Parcheggio gratuito per 1 veicolo",
+comp_item_9: "Aria condizionata",
+comp_item_10: "TV via cavo",
+comp_item_11: "Culla gratuita su richiesta",
+comp_item_12: "Check‑in autonomo 24h"
+
 
   },
   de: {
@@ -468,7 +723,58 @@ review_19_text: "Ideal für alle, die Ruhe suchen.",
 review_19_author: "Marco — Italien",
 
 review_20_text: "Sehr gemütlich und schön dekoriert.",
-review_20_author: "Julia — Schweden"
+review_20_author: "Julia — Schweden",
+aloj_title: "Unterkünfte Belleview Lagos",
+
+aloj_intro_1: "Die Apartments Belleview Lagos bieten geräumige, helle und vollständig ausgestattete T1‑Einheiten, ideal für alle, die Komfort, Ruhe und Qualität an der Algarve suchen. Jede Wohnung kombiniert Privatsphäre, Funktionalität und eine einladende Atmosphäre, die zur Entspannung einlädt.",
+aloj_intro_2: "Private Terrassen und umliegende Grünflächen schaffen den idealen Rahmen, um im Freien zu entspannen, zu lesen, zu arbeiten oder einfach das milde Algarve‑Klima zu genießen. Die strategische Lage, nahe den Stränden und wichtigen Dienstleistungen, sorgt für einen ausgewogenen Aufenthalt zwischen Wohlbefinden und Komfort.",
+aloj_intro_3: "Perfekt für Paare, Familien oder unabhängige Reisende zeichnen sich die Unterkünfte durch ihr „Zuhause‑fern‑von‑Zuhause“-Gefühl, harmonische Räume und ein modernes, unkompliziertes Erlebnis aus.",
+
+aloj_highlights_title: "Highlights der Unterkunft",
+
+aloj_hl_1: "2 Schwimmbäder",
+aloj_hl_2: "Hochgeschwindigkeits‑WLAN",
+aloj_hl_3: "Kostenloser Parkplatz für 1 Fahrzeug",
+aloj_hl_4: "Klimaanlage",
+aloj_hl_5: "Aufzug",
+aloj_hl_6: "Umgebende Gärten",
+aloj_hl_7: "Private Terrasse",
+aloj_hl_8: "Nur wenige Minuten vom Strand entfernt",
+aloj_hl_9: "Familienzimmer",
+aloj_hl_10: "Schlafsofa",
+aloj_hl_11: "Voll ausgestattete Küchenzeile",
+aloj_hl_12: "HD‑Kabel‑TV",
+aloj_hl_13: "24‑Stunden‑Sicherheit",
+aloj_hl_14: "Spielplatz",
+aloj_hl_15: "Tennisplätze",
+
+aloj_desc_title: "Die Apartments",
+
+aloj_desc_1: "Die T1‑Apartments wurden entwickelt, um Komfort, natürliches Licht und eine moderne Atmosphäre zu bieten — ideal für Urlaub, romantische Auszeiten, Remote‑Work oder längere Aufenthalte. Jede Einheit ist praktisch, gemütlich und vollständig ausgestattet.",
+aloj_desc_2: "Sie verfügen über ein Schlafzimmer mit Doppelbett, ein Badezimmer mit Badewanne, eine ausgestattete Küchenzeile, ein Wohnzimmer mit Schlafsofa und eine großzügige Terrasse, ideal für Mahlzeiten im Freien oder entspannte Momente. Die ausgewogene Dekoration und funktionalen Räume schaffen eine beruhigende Atmosphäre.",
+aloj_desc_3: "Im renommierten Marina Park‑Komplex gelegen, profitieren die Apartments von Schwimmbädern, Tennisplätzen, großen Grünflächen, Spielplatz und einer Bar‑Restaurant‑Unterstützung — alles in einer sicheren, ruhigen und naturnahen Umgebung.",
+aloj_desc_4: "Alle Einheiten haben die gleiche Typologie, Größe und Ausstattung. Die Zuteilung erfolgt durch unser Team zum Zeitpunkt der Buchung, wodurch stets die beste verfügbare Option und ein konsistentes Qualitätserlebnis gewährleistet werden.",
+
+aloj_comp_title: "Apartment‑Zusammensetzung",
+
+aloj_comp_1: "Die T1 von Belleview Lagos wurden entwickelt, um Komfort, Funktionalität und Wohlbefinden zu bieten — ideal für Urlaub, Remote‑Work oder längere Aufenthalte.",
+aloj_comp_2: "Natürliches Licht, fließende Räume und funktionale Möbel schaffen eine ausgewogene Umgebung, ideal zum Entspannen, Kochen, Arbeiten oder für Familienzeit.",
+
+composicao_titulo: "Apartment‑Ausstattung",
+
+comp_item_1: "Großes Wohnzimmer mit Schlafsofa und Essbereich",
+comp_item_2: "Schlafzimmer mit Doppelbett",
+comp_item_3: "Voll ausgestattete Küchenzeile",
+comp_item_4: "Badezimmer mit Badewanne",
+comp_item_5: "Private Terrasse mit 30 m²",
+comp_item_6: "Hochgeschwindigkeits‑WLAN",
+comp_item_7: "Kapazität für bis zu 4 Gäste",
+comp_item_8: "Kostenloser Parkplatz für 1 Fahrzeug",
+comp_item_9: "Klimaanlage",
+comp_item_10: "Kabel‑TV",
+comp_item_11: "Kostenloses Babybett auf Anfrage",
+comp_item_12: "24‑Stunden‑Self‑Check‑in"
+
 
   }
 };
