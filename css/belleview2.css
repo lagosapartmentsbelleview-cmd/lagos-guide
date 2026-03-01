@@ -1602,191 +1602,94 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   COMENTÁRIOS — BELLEVIEW 2.0
+   COMENTÁRIOS — BELLEVIEW 2.0 (VERSÃO PREMIUM)
 =========================================================== */
 
-.reviews-section {
+.reviews-carousel-section {
     padding: 60px 20px;
+    background: #F5F7FA;
     text-align: center;
 }
 
-.reviews-title {
+.reviews-carousel-title {
     font-family: "Poppins", sans-serif;
-    font-size: 1.8rem;
-    color: #005c99;
-    margin-bottom: 10px;
+    font-size: 2rem;
     font-weight: 600;
+    color: #005C99;
+    margin-bottom: 40px;
 }
 
-.reviews-subtitle {
-    font-family: "Poppins", sans-serif;
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 30px;
-}
-
-.reviews-grid {
+/* Carrossel horizontal */
+.reviews-carousel {
     display: flex;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
+    gap: 28px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 10px 0 20px 0;
 }
 
+.reviews-carousel::-webkit-scrollbar {
+    display: none; /* Premium look */
+}
+
+/* Card */
 .review-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 22px 20px;
-    width: 280px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
-    border: 1px solid #e6e6e6;
+    min-width: 300px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 26px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border: 1px solid #E6E6E6;
+    scroll-snap-align: start;
+    flex-shrink: 0;
     text-align: left;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .review-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
 }
 
+/* Header do card */
 .review-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    align-items: center;
+    margin-bottom: 18px;
 }
 
 .review-logo {
-    height: 22px;
+    height: 26px;
     object-fit: contain;
 }
 
 .review-score {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #005c99;
     font-family: "Poppins", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #005C99;
 }
 
+/* Texto */
 .review-text {
-    font-size: 0.98rem;
-    line-height: 1.55;
-    color: #333;
     font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.55;
     margin-bottom: 12px;
 }
 
 .review-author {
+    font-family: "Poppins", sans-serif;
     font-size: 0.9rem;
     color: #777;
-    font-family: "Poppins", sans-serif;
-}
-
-/* CTA links */
-
-.reviews-cta {
-    margin-top: 28px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-}
-
-.reviews-link {
-    font-family: "Poppins", sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #ffffff;
-    background: #005c99;
-    padding: 10px 18px;
-    border-radius: 999px;
-    text-decoration: none;
-    transition: background 0.25s ease, transform 0.2s ease;
-}
-
-.reviews-link:hover {
-    background: #004b80;
-    transform: translateY(-1px);
-}
-
-.reviews-link.secondary {
-    background: #e6e6e6;
-    color: #333;
-}
-
-.reviews-link.secondary:hover {
-    background: #d4d4d4;
+    font-weight: 500;
 }
 
 /* Mobile */
-
 @media (max-width: 480px) {
     .review-card {
-        width: 100%;
+        min-width: 260px;
     }
-}
-
-.reviews-carousel-section {
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.reviews-carousel-title {
-    font-family: "Poppins", sans-serif;
-    font-size: 1.8rem;
-    color: #005c99;
-    margin-bottom: 30px;
-    font-weight: 600;
-}
-
-.reviews-carousel {
-    display: flex;
-    gap: 24px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 10px;
-}
-
-.reviews-carousel::-webkit-scrollbar {
-    height: 8px;
-}
-
-.reviews-carousel::-webkit-scrollbar-thumb {
-    background: #cccccc;
-    border-radius: 10px;
-}
-
-.review-item {
-    min-width: 260px;
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
-    border: 1px solid #e6e6e6;
-    scroll-snap-align: start;
-    flex-shrink: 0;
-    text-align: left;
-}
-
-.review-logo {
-    height: 22px;
-    margin-bottom: 10px;
-}
-
-.review-score {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #005c99;
-    margin-bottom: 8px;
-}
-
-.review-text {
-    font-size: 0.95rem;
-    color: #333;
-    line-height: 1.5;
-    margin-bottom: 10px;
-}
-
-.review-author {
-    font-size: 0.85rem;
-    color: #777;
 }
