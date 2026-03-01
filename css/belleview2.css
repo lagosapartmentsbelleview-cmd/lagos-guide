@@ -1602,95 +1602,125 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   COMENTÁRIOS — BELLEVIEW 2.0 (VERSÃO PREMIUM)
+   COMENTÁRIOS — BELLEVIEW 2.0 (CARD GRANDE + SLIDER PREMIUM)
 =========================================================== */
 
-.reviews-carousel-section {
-    padding: 80px 20px; /* igual ao espaçamento da secção de baixo */
-    background: #F5F7FA;
+/* CARD GRANDE (igual ao de alojamento) */
+.reviews-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.reviews-container {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 1100px;
+    width: 100%;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+    border: 1px solid #e6e6e6;
+}
+
+/* TÍTULO */
+.reviews-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #005c99;
+    margin-bottom: 30px;
     text-align: center;
 }
 
-.reviews-carousel-title {
-    font-family: "Poppins", sans-serif;
-    font-size: 2rem;
-    font-weight: 600;
-    color: #005C99;
-    margin-bottom: 40px;
-}
-
-/* Carrossel horizontal */
-.reviews-carousel {
+/* SLIDER */
+.reviews-slider {
+    position: relative;
     display: flex;
-    gap: 28px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding: 10px 0 20px 0;
+    align-items: center;
 }
 
-.reviews-carousel::-webkit-scrollbar {
-    display: none; /* Premium look */
+.reviews-track {
+    display: flex;
+    gap: 24px;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
 }
 
-/* Card */
+/* CARDS DE COMENTÁRIOS */
 .review-card {
-    min-width: 340px;
-    background: #FFFFFF;
-    border-radius: 20px;
-    padding: 32px;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
-    border: 1px solid #E6E6E6;
-    scroll-snap-align: start;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px 20px;
+    width: 300px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    border: 1px solid #e6e6e6;
     flex-shrink: 0;
-    text-align: left;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
-    margin-bottom: 40px; /* igual ao card grande */
 }
 
 .review-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
 }
 
-/* Header do card */
 .review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 .review-logo {
-    height: 26px;
-    object-fit: contain;
+    height: 22px;
 }
 
 .review-score {
-    font-family: "Poppins", sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: #005C99;
+    color: #005c99;
 }
 
-/* Texto */
 .review-text {
-    font-family: "Poppins", sans-serif;
-    font-size: 1rem;
-    color: #333;
+    font-size: 0.98rem;
     line-height: 1.55;
+    color: #333;
     margin-bottom: 12px;
 }
 
 .review-author {
-    font-family: "Poppins", sans-serif;
     font-size: 0.9rem;
     color: #777;
-    font-weight: 500;
 }
 
-/* Mobile */
+/* SETAS */
+.slider-btn {
+    background: #005c99;
+    color: #fff;
+    border: none;
+    font-size: 1.8rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.slider-btn:hover {
+    background: #004b80;
+}
+
+.prev-btn {
+    margin-right: 12px;
+}
+
+.next-btn {
+    margin-left: 12px;
+}
+
+/* MOBILE */
 @media (max-width: 480px) {
     .review-card {
-        min-width: 260px;
+        width: 260px;
     }
 }
