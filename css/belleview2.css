@@ -1826,3 +1826,16 @@ a[href^="https://wa.me"],
     min-width: 0;
     display: block; /* ← AQUI ESTÁ A CURA REAL */
 }
+
+/* IMPEDIR QUE O ÍCONE FIQUE POR CIMA DO TEXTO */
+.contact-icon-circle {
+    z-index: 1;
+}
+
+.contact-info {
+    position: relative;
+    z-index: 2; /* texto fica por cima do ícone */
+    flex: 1;
+    min-width: 0;
+}
+
