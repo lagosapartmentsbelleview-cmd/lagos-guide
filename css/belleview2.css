@@ -1234,13 +1234,14 @@ a[href^="https://wa.me"],
 .contact-container {
     background: #ffffff;
     border-radius: 28px;
-    padding: 60px 50px;
-    max-width: 1050px; /* igual ao card de alojamento */
+    padding: 40px 35px; /* ← padding igual ao card de alojamento */
+    max-width: 1050px;  /* ← largura correta */
     width: 100%;
     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
     border: 1px solid #e3e8ef;
     box-sizing: border-box;
 }
+
 
 
 .contact-title {
