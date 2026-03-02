@@ -1278,29 +1278,32 @@ document.querySelectorAll(".faq-question").forEach(btn => {
 });
 </script>
 <script>
-document.getElementById("contactForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
 
-    const form = e.target;
-    const formData = new FormData(form);
+    document.getElementById("contactForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData
+        const form = e.target;
+        const formData = new FormData(form);
+
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            const msg = document.getElementById("successMessage");
+            msg.style.display = "flex";   // mostra o card
+            form.reset();
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 3000);
+        }
     });
 
-    const result = await response.json();
-
-    if (result.success) {
-        const msg = document.getElementById("successMessage");
-        msg.style.display = "flex";   // mostra o card
-        form.reset();
-
-        // Redireciona após 3 segundos
-        setTimeout(() => {
-            window.location.href = "index.html";
-        }, 3000);
-    }
 });
 </script>
 
