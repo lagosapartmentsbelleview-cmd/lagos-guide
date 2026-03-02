@@ -1814,3 +1814,17 @@ a[href^="https://wa.me"],
     -webkit-text-fill-color: #333 !important;
     text-decoration: none !important;
 }
+
+@media (max-width: 600px) {
+
+    .contact-wrapper {
+        padding: 40px 15px !important; /* igual aos outros wrappers */
+    }
+
+    .contact-container {
+        padding: 24px 20px !important; /* igual aos outros containers premium */
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+}
