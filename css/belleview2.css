@@ -1740,8 +1740,8 @@ a[href^="https://wa.me"],
 .cb-item {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
 }
 
 .aloj-highlights {
@@ -1749,3 +1749,5 @@ a[href^="https://wa.me"],
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 12px;
 }
+
+
