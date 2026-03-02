@@ -1235,7 +1235,7 @@ a[href^="https://wa.me"],
     background: #ffffff;
     border-radius: 28px;
     padding: 40px 35px;
-    max-width: 1200px; /* igual ao card de alojamento */
+    max-width: 1200px; /* igual ao alojamento */
     width: 100%;
     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
     border: 1px solid #e3e8ef;
@@ -1311,33 +1311,33 @@ a[href^="https://wa.me"],
     color: #fff;
 }
 
-/* TEXTO DOS CONTACTOS */
+/* TEXTO DOS CONTACTOS — CORRIGIDO */
 .contact-info {
-    min-width: 0; /* impede desaparecimento */
-    flex: 1;      /* ocupa o espaço restante */
+    min-width: 0;
+    flex: 1;
 }
 
 .contact-info strong {
     font-size: 1.1rem;
-    color: #004b80;
+    color: #004b80 !important;
     display: block;
     margin-bottom: 4px;
 }
 
 .contact-link {
     font-size: 1.05rem;
-    color: #333;
+    color: #333 !important; /* ← COR VISÍVEL */
     font-weight: 500;
     text-decoration: none;
 }
 
 .contact-link:hover {
-    color: #004b80;
+    color: #004b80 !important;
 }
 
 .contact-info small {
     font-size: 0.8rem;
-    color: #777;
+    color: #777 !important;
 }
 
 /* MORADA */
@@ -1437,6 +1437,7 @@ a[href^="https://wa.me"],
         padding: 24px 20px;
     }
 }
+
 
 /* ===========================================================
    CARD DE SUCESSO — BELLEVIEW 2.0
