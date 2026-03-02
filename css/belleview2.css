@@ -1556,7 +1556,7 @@ a[href^="https://wa.me"],
     background: #ffffff;
     border-radius: 28px;
     padding: 60px 50px;
-    max-width: 1250px;
+    max-width: 1050px; /* alinhado com o card alojamento */
     width: 100%;
     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
     border: 1px solid #e3e8ef;
@@ -1622,23 +1622,23 @@ a[href^="https://wa.me"],
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
     margin-top: 20px;
 }
 
 .reviews-track {
     display: flex;
-    gap: 32px;
-    overflow: hidden;
+    gap: 20px;
+    overflow-x: auto;
     scroll-behavior: smooth;
-    width: 100%;
-    padding: 10px 0;
+    padding-bottom: 10px;
 }
 
 .review-card {
     background: #ffffff;
     border-radius: 20px;
-    padding: 28px 24px;
-    width: 320px;
+    padding: 24px 20px;
+    width: 300px; /* 3 cards perfeitos em desktop */
     box-shadow: 0 12px 32px rgba(0,0,0,0.08);
     border: 1px solid #e6e6e6;
     flex-shrink: 0;
@@ -1696,14 +1696,22 @@ a[href^="https://wa.me"],
     cursor: pointer;
     transition: 0.2s ease;
     box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .slider-btn:hover {
     background: #003a66;
 }
 
-.prev-btn { margin-right: 16px; }
-.next-btn { margin-left: 16px; }
+.prev-btn {
+    left: -55px; /* fora do slider */
+}
+
+.next-btn {
+    right: -55px; /* fora do slider */
+}
 
 /* ===========================================================
    MOBILE
@@ -1721,13 +1729,16 @@ a[href^="https://wa.me"],
     }
 
     .review-card {
-        width: 280px;
-        padding: 22px 18px;
+        width: 260px; /* 1 card por slide */
+        padding: 20px 16px;
     }
 
     .reviews-track {
         gap: 20px;
     }
+
+    .prev-btn { left: -35px; }
+    .next-btn { right: -35px; }
 
     .slider-btn {
         width: 40px;
