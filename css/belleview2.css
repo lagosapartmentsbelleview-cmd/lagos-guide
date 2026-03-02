@@ -1800,4 +1800,14 @@ a[href^="https://wa.me"],
     gap: 12px;
 }
 
+/* CORRIGIR TEXTO INVISÍVEL NOS CONTACTOS */
+#contactos .contact-info strong,
+#contactos .contact-info a,
+#contactos .contact-info small {
+    color: #333 !important;
+}
+
+#contactos .contact-info a:hover {
+    color: #004b80 !important;
+}
 
