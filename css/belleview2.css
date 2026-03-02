@@ -1828,4 +1828,28 @@ a[href^="https://wa.me"],
     text-decoration: none !important;
 }
 
+/* ===========================================================
+   CORREÇÃO MOBILE — CONTACTOS COM A MESMA LARGURA DOS OUTROS
+=========================================================== */
+
+@media (max-width: 600px) {
+
+    /* Remover padding duplicado do wrapper principal */
+    #contactos {
+        padding: 0 !important;
+    }
+
+    /* Wrapper igual aos outros cards premium */
+    .contact-wrapper {
+        padding: 50px 20px !important;
+    }
+
+    /* Container igual aos outros cards premium */
+    .contact-container {
+        padding: 24px 20px !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+}
 
