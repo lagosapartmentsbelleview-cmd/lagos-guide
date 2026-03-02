@@ -1731,3 +1731,21 @@ a[href^="https://wa.me"],
         padding: 30px 10px;
     }
 }
+
+.cb-item span {
+    white-space: normal;
+    word-break: break-word;
+}
+
+.cb-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.aloj-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
