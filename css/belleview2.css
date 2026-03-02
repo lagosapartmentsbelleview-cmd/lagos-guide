@@ -1590,12 +1590,14 @@ a[href^="https://wa.me"],
 .reviews-container {
     background: #ffffff;
     border-radius: 28px;
-    padding: 60px 50px;
-    max-width: 1050px; /* alinhado com o card alojamento */
+    padding: 40px 35px; /* igual ao Contactos e Alojamento */
+    max-width: 1200px; /* igual aos outros cards premium */
     width: 100%;
     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
     border: 1px solid #e3e8ef;
+    box-sizing: border-box;
 }
+
 
 /* ===========================================================
    TÍTULOS
