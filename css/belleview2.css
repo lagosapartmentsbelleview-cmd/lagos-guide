@@ -1226,17 +1226,20 @@ a[href^="https://wa.me"],
 .contact-wrapper {
     display: flex;
     justify-content: center;
-    padding: 80px 20px;
+    padding: 80px 20px; /* margens laterais iguais ao resto do site */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .contact-container {
     background: #ffffff;
     border-radius: 28px;
     padding: 60px 50px;
-    max-width: 1050px;
+    max-width: 1050px; /* igual ao card de alojamento */
     width: 100%;
     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
     border: 1px solid #e3e8ef;
+    box-sizing: border-box;
 }
 
 
