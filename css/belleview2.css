@@ -1542,193 +1542,197 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   PRÉMIOS BOOKING — DENTRO DO CARD GRANDE
-=========================================================== */
-
-.awards-title {
-    font-family: "Poppins", sans-serif;
-    font-size: 1.8rem;
-    color: #005c99;
-    margin-bottom: 30px;
-    font-weight: 600;
-    text-align: center;
-}
-
-.awards-grid {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
-    margin-bottom: 50px; /* espaço entre prémios e comentários */
-}
-
-.award-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 20px 18px;
-    width: 180px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
-    border: 1px solid #e6e6e6;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.award-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
-}
-
-.award-card img {
-    width: 100%;
-    border-radius: 12px;
-}
-
-.award-year {
-    margin-top: 12px;
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: #005c99;
-    font-family: "Poppins", sans-serif;
-    text-align: center;
-}
-
-@media (max-width: 480px) {
-    .award-card {
-        width: 150px;
-    }
-}
-
-/* ===========================================================
-   CARD DE FUNDO — IGUAL AO DE ALOJAMENTO
+   SECÇÃO PREMIUM — WRAPPER
 =========================================================== */
 
 .reviews-wrapper {
     display: flex;
     justify-content: center;
-    padding: 60px 20px;
+    padding: 80px 20px;
+    background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%);
 }
 
 .reviews-container {
     background: #ffffff;
-    border-radius: 20px;
-    padding: 40px;
-    max-width: 1100px;
+    border-radius: 28px;
+    padding: 60px 50px;
+    max-width: 1250px;
     width: 100%;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    border: 1px solid #e3e8ef;
+}
+
+/* ===========================================================
+   TÍTULOS
+=========================================================== */
+
+.awards-title,
+.reviews-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #004b80;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* ===========================================================
+   PRÉMIOS — GRID PREMIUM
+=========================================================== */
+
+.awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 28px;
+    margin-bottom: 60px;
+}
+
+.award-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.08);
     border: 1px solid #e6e6e6;
+    transition: 0.25s ease;
 }
 
-@media (max-width: 480px) {
-    .reviews-container {
-        padding: 20px;
-    }
+.award-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.12);
 }
 
+.award-card img {
+    width: 100%;
+    border-radius: 16px;
+}
+
+.award-year {
+    margin-top: 14px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #004b80;
+    text-align: center;
+}
 
 /* ===========================================================
    COMENTÁRIOS — SLIDER PREMIUM
 =========================================================== */
 
-.reviews-title {
-    font-family: "Poppins", sans-serif;
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #005c99;
-    margin-bottom: 30px;
-    text-align: center;
-}
-
 .reviews-slider {
     position: relative;
     display: flex;
     align-items: center;
+    margin-top: 20px;
 }
 
 .reviews-track {
     display: flex;
-    gap: 24px;
+    gap: 32px;
     overflow: hidden;
     scroll-behavior: smooth;
     width: 100%;
+    padding: 10px 0;
 }
 
 .review-card {
     background: #ffffff;
-    border-radius: 16px;
-    padding: 22px 20px;
-    width: 275px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    border-radius: 20px;
+    padding: 28px 24px;
+    width: 320px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
     border: 1px solid #e6e6e6;
     flex-shrink: 0;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: 0.25s ease;
 }
 
 .review-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.12);
 }
 
 .review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .review-logo {
-    height: 22px;
+    height: 26px;
+    opacity: 0.9;
 }
 
 .review-score {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #005c99;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #004b80;
 }
 
 .review-text {
-    font-size: 0.98rem;
-    line-height: 1.55;
+    font-size: 1rem;
+    line-height: 1.6;
     color: #333;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .review-author {
-    font-size: 0.9rem;
-    color: #777;
+    font-size: 0.95rem;
+    color: #666;
+    font-weight: 500;
 }
 
-/* SETAS */
+/* ===========================================================
+   SETAS PREMIUM
+=========================================================== */
+
 .slider-btn {
-    background: #005c99;
+    background: #004b80;
     color: #fff;
     border: none;
     font-size: 1.8rem;
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     cursor: pointer;
     transition: 0.2s ease;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
 .slider-btn:hover {
-    background: #004b80;
+    background: #003a66;
 }
 
-.prev-btn {
-    margin-right: 12px;
-}
+.prev-btn { margin-right: 16px; }
+.next-btn { margin-left: 16px; }
 
-.next-btn {
-    margin-left: 12px;
-}
+/* ===========================================================
+   MOBILE
+=========================================================== */
 
 @media (max-width: 480px) {
-    .review-card {
-        width: 260px;
+
+    .reviews-container {
+        padding: 30px 20px;
+        border-radius: 20px;
     }
-}
-@media (max-width: 480px) {
-    .reviews-wrapper {
-        padding: 30px 10px;
+
+    .award-card {
+        padding: 18px;
+    }
+
+    .review-card {
+        width: 280px;
+        padding: 22px 18px;
+    }
+
+    .reviews-track {
+        gap: 20px;
+    }
+
+    .slider-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
     }
 }
 
