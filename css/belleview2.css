@@ -1811,3 +1811,18 @@ a[href^="https://wa.me"],
     color: #004b80 !important;
 }
 
+/* CORRIGIR TEXTO INVISÍVEL NOS CONTACTOS */
+.contact-card,
+.contact-address-card {
+    align-items: flex-start;
+}
+
+.contact-icon-circle {
+    flex-shrink: 0;
+}
+
+.contact-info {
+    flex: 1;
+    min-width: 0;
+    display: block; /* ← AQUI ESTÁ A CURA REAL */
+}
