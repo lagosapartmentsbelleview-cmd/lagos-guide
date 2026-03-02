@@ -1861,3 +1861,11 @@ a[href^="https://wa.me"],
     display: block;
 }
 
+/* ANULAR REGRA GLOBAL DO FOOTER PARA CONTACTOS */
+#contactos a[href^="tel"],
+#contactos a[href^="mailto"],
+#contactos a[href^="https://wa.me"] {
+    color: #333 !important;
+    -webkit-text-fill-color: #333 !important;
+    text-decoration: none !important;
+}
