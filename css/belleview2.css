@@ -1234,15 +1234,24 @@ a[href^="https://wa.me"],
 .contact-container {
     background: #ffffff;
     border-radius: 28px;
-    padding: 40px 35px; /* ← padding igual ao card de alojamento */
-    max-width: 1050px;  /* ← largura correta */
+    padding: 40px 35px;
+    max-width: 1200px; /* ← AGORA FICA IGUAL AO ALOJAMENTO */
     width: 100%;
     box-shadow: 0 20px 40px rgba(0,0,0,0.08);
     border: 1px solid #e3e8ef;
     box-sizing: border-box;
 }
 
+/* GARANTIR QUE O TEXTO NÃO DESAPARECE */
+.contact-info {
+    min-width: 0;
+}
 
+.contact-info strong,
+.contact-info a,
+.contact-info small {
+    color: #333 !important;
+}
 
 .contact-title {
     font-family: "Poppins", sans-serif;
