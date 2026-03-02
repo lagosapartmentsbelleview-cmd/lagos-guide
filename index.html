@@ -1015,113 +1015,112 @@
 
 <section id="contactos" class="secao">
 
-    <h2 class="contact-title" data-i18n="contact_title">Contactos</h2>
+    <div class="contact-wrapper">
+        <div class="contact-container">
 
-    <p class="contact-intro" data-i18n="contact_intro">
-        Estamos disponíveis para ajudar antes, durante e após a sua estadia.
-    </p>
+            <h2 class="contact-title" data-i18n="contact_title">Contactos</h2>
 
-    <h3 class="contact-subtitle" data-i18n="contact_direct_title">Contactos Diretos</h3>
-
-    <div class="contact-grid">
-
-        <div class="contact-card">
-            <div class="contact-icon-circle">
-                <span class="contact-icon">📞</span>
-            </div>
-            <div class="contact-info">
-                <strong data-i18n="contact_phone_label">Telefone</strong>
-                <a href="tel:+351910051588" class="contact-link">+351 910 051 588</a>
-                <small data-i18n="contact_phone_note">(Chamada para a rede fixa nacional)</small>
-            </div>
-        </div>
-
-        <div class="contact-card">
-            <div class="contact-icon-circle">
-                <span class="contact-icon">💬</span>
-            </div>
-            <div class="contact-info">
-                <strong data-i18n="contact_whatsapp_label">WhatsApp</strong>
-                <a href="https://wa.me/351910051588" class="contact-link">+351 910 051 588</a>
-            </div>
-        </div>
-
-        <div class="contact-card">
-            <div class="contact-icon-circle">
-                <span class="contact-icon">📧</span>
-            </div>
-            <div class="contact-info">
-                <strong data-i18n="contact_email_label">Email</strong>
-                <a href="mailto:belleview@sapo.pt" class="contact-link">belleview@sapo.pt</a>
-            </div>
-        </div>
-
-    </div>
-
-    <h3 class="contact-subtitle" data-i18n="contact_address_title">Morada</h3>
-
-    <div class="contact-address-card">
-        <div class="contact-icon-circle">
-            <span class="contact-icon">📍</span>
-        </div>
-        <div class="contact-info">
-            <strong>Apartments Belleview Lagos</strong><br>
-            Rua Quinta do Landeiro Lote 22, 23<br>
-            Urbanização Marina Park<br>
-            8600-302 Lagos, Algarve - Portugal
-        </div>
-    </div>
-
-    <h3 class="contact-subtitle" data-i18n="contact_form_title">Envie-nos uma mensagem</h3>
-
-    <form id="contactForm" class="contact-form">
-
-        <input type="hidden" name="access_key" value="950b90bc-37f4-4f5b-9d69-3e56389a054d">
-        <input type="checkbox" name="botcheck" style="display:none;">
-
-        <div class="form-group">
-            <label data-i18n="contact_form_name">Nome</label>
-            <input type="text" name="name" required>
-        </div>
-
-        <div class="form-group">
-            <label data-i18n="contact_form_email">Email</label>
-            <input type="email" name="email" required>
-        </div>
-
-        <div class="form-group">
-            <label data-i18n="contact_form_message">Mensagem</label>
-            <textarea name="message" rows="5" required></textarea>
-        </div>
-
-        <button type="submit" class="btn-enviar" data-i18n="contact_form_send">Enviar</button>
-
-        <div id="successMessage" class="success-card" style="display:none;">
-            <span class="success-icon">✔</span>
-            <p class="success-text" data-i18n="contact_success">
-                Mensagem enviada com sucesso! Obrigado pelo seu contacto.
+            <p class="contact-intro" data-i18n="contact_intro">
+                Estamos disponíveis para ajudar antes, durante e após a sua estadia.
             </p>
-        </div>
 
-    </form>
+            <!-- CONTACTOS DIRETOS -->
+            <h3 class="contact-subtitle" data-i18n="contact_direct_title">Contactos Diretos</h3>
 
-    <h3 class="contact-subtitle" data-i18n="contact_legal_title">Informação Legal</h3>
+            <div class="contact-grid">
 
-    <div class="contact-grid" style="grid-template-columns: 1fr;">
-        <div class="contact-card">
-            <div class="contact-icon-circle">
-                <span class="contact-icon">📝</span>
+                <div class="contact-card">
+                    <div class="contact-icon-circle"><span class="contact-icon">📞</span></div>
+                    <div class="contact-info">
+                        <strong data-i18n="contact_phone_label">Telefone</strong>
+                        <a href="tel:+351910051588" class="contact-link">+351 910 051 588</a>
+                        <small data-i18n="contact_phone_note">(Chamada para a rede fixa nacional)</small>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon-circle"><span class="contact-icon">💬</span></div>
+                    <div class="contact-info">
+                        <strong data-i18n="contact_whatsapp_label">WhatsApp</strong>
+                        <a href="https://wa.me/351910051588" class="contact-link">+351 910 051 588</a>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon-circle"><span class="contact-icon">📧</span></div>
+                    <div class="contact-info">
+                        <strong data-i18n="contact_email_label">Email</strong>
+                        <a href="mailto:belleview@sapo.pt" class="contact-link">belleview@sapo.pt</a>
+                    </div>
+                </div>
+
             </div>
-            <div class="contact-info">
-                <strong data-i18n="contact_legal_al">Nº de Registos AL</strong><br>
-                26313/AL, 116670/AL, 116671/AL<br><br>
-                <strong data-i18n="contact_legal_entity">Entidade Exploradora</strong><br>
-                Luís Ferreira
+
+            <!-- MORADA -->
+            <h3 class="contact-subtitle" data-i18n="contact_address_title">Morada</h3>
+
+            <div class="contact-address-card">
+                <div class="contact-icon-circle"><span class="contact-icon">📍</span></div>
+                <div class="contact-info">
+                    <strong>Apartments Belleview Lagos</strong><br>
+                    Rua Quinta do Landeiro Lote 22, 23<br>
+                    Urbanização Marina Park<br>
+                    8600-302 Lagos, Algarve - Portugal
+                </div>
             </div>
+
+            <!-- FORMULÁRIO -->
+            <h3 class="contact-subtitle" data-i18n="contact_form_title">Envie-nos uma mensagem</h3>
+
+            <form id="contactForm" class="contact-form">
+
+                <input type="hidden" name="access_key" value="950b90bc-37f4-4f5b-9d69-3e56389a054d">
+                <input type="checkbox" name="botcheck" style="display:none;">
+
+                <div class="form-group">
+                    <label data-i18n="contact_form_name">Nome</label>
+                    <input type="text" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="contact_form_email">Email</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="contact_form_message">Mensagem</label>
+                    <textarea name="message" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-enviar" data-i18n="contact_form_send">Enviar</button>
+
+                <div id="successMessage" class="success-card" style="display:none;">
+                    <span class="success-icon">✔</span>
+                    <p class="success-text" data-i18n="contact_success">
+                        Mensagem enviada com sucesso! Obrigado pelo seu contacto.
+                    </p>
+                </div>
+
+            </form>
+
+            <!-- LEGAL -->
+            <h3 class="contact-subtitle" data-i18n="contact_legal_title">Informação Legal</h3>
+
+            <div class="contact-card legal-card">
+                <div class="contact-icon-circle"><span class="contact-icon">📝</span></div>
+                <div class="contact-info">
+                    <strong data-i18n="contact_legal_al">Nº de Registos AL</strong><br>
+                    26313/AL, 116670/AL, 116671/AL<br><br>
+                    <strong data-i18n="contact_legal_entity">Entidade Exploradora</strong><br>
+                    Luís Ferreira
+                </div>
+            </div>
+
         </div>
     </div>
 
 </section>
+
 
 <!-- GALERIA FINAL (opcional, 3 fotos) -->
     
