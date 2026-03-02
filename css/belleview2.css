@@ -1839,3 +1839,25 @@ a[href^="https://wa.me"],
     min-width: 0;
 }
 
+/* CORRIGIR TEXTO INVISÍVEL NOS CONTACTOS — FIX REAL */
+.contact-card,
+.contact-address-card {
+    display: flex;
+    align-items: flex-start !important; /* impede compressão vertical */
+}
+
+.contact-info {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.contact-info strong,
+.contact-info a,
+.contact-info small {
+    color: #333 !important;
+    display: block;
+}
+
