@@ -1934,3 +1934,55 @@ a[href^="https://wa.me"],
         line-height: 1.45;
     }
 }
+
+/* ===========================================================
+   POPUP DE SUCESSO — CENTRADO NA TELA
+=========================================================== */
+
+.success-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.success-popup-box {
+    background: #e8f9f0;
+    border: 2px solid #2ecc71;
+    border-radius: 18px;
+    padding: 26px 32px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+    text-align: center;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.success-popup-icon {
+    font-size: 2.4rem;
+    color: #2ecc71;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.success-popup-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d2d2d;
+    font-family: "Poppins", sans-serif;
+}
+
+@media (max-width: 600px) {
+    .success-popup-box {
+        padding: 22px 24px;
+        border-radius: 14px;
+    }
+
+    .success-popup-text {
+        font-size: 1.1rem;
+    }
+}
