@@ -59,13 +59,21 @@ function validarCapacidade() {
 
     const msg = document.getElementById("mensagemDisponibilidade");
 
-    // Limpa mensagens anteriores
     msg.textContent = "";
     msg.style.display = "none";
     msg.classList.remove("disponivel", "indisponivel");
 
+    // Regra 1: Pelo menos 1 adulto por apartamento
+    if (adultos < apartamentos) {
+        msg.textContent = `Cada apartamento precisa de pelo menos 1 adulto. Para ${apartamentos} apartamento(s), são necessários ${apartamentos} adulto(s).`;
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return false;
+    }
+
+    // Regra 2: Capacidade máxima total
     if (total > capacidadeMax) {
-        msg.textContent = "Número de hóspedes excede a capacidade máxima permitida.";
+        msg.textContent = `Capacidade excedida: máximo ${capacidadeMax} hóspedes para ${apartamentos} apartamento(s).`;
         msg.classList.add("indisponivel");
         msg.style.display = "block";
         return false;
