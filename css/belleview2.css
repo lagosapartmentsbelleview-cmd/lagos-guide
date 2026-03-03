@@ -1884,14 +1884,14 @@ a[href^="https://wa.me"],
 =========================================================== */
 
 .success-card {
-    background: #e8f9f0;                 /* verde premium muito claro */
-    border: 1px solid #2ecc71;           /* verde sucesso */
+    background: #e8f9f0;
+    border: 1px solid #2ecc71;
     border-radius: 16px;
     padding: 18px 20px;
     margin-top: 22px;
-    width: 100%;                         /* ocupa toda a largura do form */
+    width: 100%;
     box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    display: flex !important;            /* força a aparecer */
+    display: none;                     /* ← CORREÇÃO AQUI */
     align-items: center;
     gap: 12px;
     box-sizing: border-box;
@@ -1912,18 +1912,12 @@ a[href^="https://wa.me"],
     font-family: "Poppins", sans-serif;
 }
 
-/* Animação suave */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===========================================================
-   MOBILE — AJUSTES FINOS
-=========================================================== */
-
 @media (max-width: 600px) {
-
     .success-card {
         padding: 16px 18px;
         border-radius: 14px;
