@@ -2006,11 +2006,29 @@ a[href^="https://wa.me"],
     background: #fff;
     width: 90%;
     max-width: 420px;
+    max-height: 85vh; /* impede que o modal ultrapasse o ecrã */
     padding: 28px;
     border-radius: 14px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.25);
     animation: fadeIn 0.25s ease-out;
+    overflow-y: auto; /* scroll interno suave */
+    scrollbar-width: thin; /* Firefox */
 }
+
+/* Scrollbar elegante (Chrome, Edge, Safari) */
+.modal-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-box::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.modal-box::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
 
 /* Título */
 .modal-box h2 {
