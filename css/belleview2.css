@@ -1981,17 +1981,15 @@ a[href^="https://wa.me"],
         padding: 22px 24px;
         border-radius: 14px;
     }
-
     .success-popup-text {
         font-size: 1.1rem;
     }
 }
 
 /* ===========================================================
-   MODAL DE RESERVAS — BELLEVIEW COMPACTO + MOBILE-FRIENDLY
+   MODAL DE RESERVAS — BELLEVIEW ULTRA-COMPACTO EM DUAS COLUNAS
 =========================================================== */
 
-/* Fundo do modal */
 .modal-bg {
     position: fixed;
     top: 0;
@@ -2005,28 +2003,74 @@ a[href^="https://wa.me"],
     z-index: 9999;
 }
 
-/* Caixa do modal — compacta e elegante */
 .modal-box {
     background: #fff;
     width: 92%;
     max-width: 360px;
-    padding: 16px 18px;
+    padding: 14px 16px;
     border-radius: 12px;
     box-shadow: 0 6px 24px rgba(0,0,0,0.20);
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    max-height: 90vh;
-    overflow-y: auto;
+    gap: 8px;
 }
 
-/* Scrollbar elegante */
-.modal-box::-webkit-scrollbar {
-    width: 4px;
+/* GRID EM DUAS COLUNAS */
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
 }
-.modal-box::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
+
+/* Título */
+.modal-box h2 {
+    margin: 0 0 6px 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #003d66;
+    text-align: center;
+}
+
+/* Labels compactos */
+.modal-box label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+/* Inputs compactos */
+.modal-box input,
+.modal-box select {
+    width: 100%;
+    padding: 5px 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    background: #fafafa;
+}
+
+/* Total de hóspedes */
+.modal-total {
+    font-size: 0.78rem;
+    text-align: center;
+    margin-top: 4px;
+}
+
+/* Botão principal */
+.modal-btn {
+    margin-top: 6px;
+    padding: 10px;
+    background: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.modal-btn:hover {
+    background: #005fa3;
 }
 
 /* Botão fechar */
@@ -2041,55 +2085,6 @@ a[href^="https://wa.me"],
     color: #444;
 }
 
-/* Título */
-.modal-box h2 {
-    margin: 0 0 4px 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #003d66;
-}
-
-/* Labels compactos */
-.modal-box label {
-    font-size: 0.78rem;
-    font-weight: 500;
-    margin-top: 2px;
-    color: #333;
-}
-
-/* Inputs e selects compactos */
-.modal-box input,
-.modal-box select {
-    width: 100%;
-    padding: 6px 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 0.82rem;
-    background: #fafafa;
-}
-
-/* Botão principal */
-.modal-btn {
-    margin-top: 8px;
-    padding: 10px;
-    background: #0077cc;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    cursor: pointer;
-}
-
-.modal-btn:hover {
-    background: #005fa3;
-}
-
-/* Total de hóspedes */
-.modal-total {
-    margin-top: 2px;
-    font-size: 0.82rem;
-}
-
 /* Mensagens */
 .modal-msg {
     margin-top: 6px;
@@ -2097,6 +2092,7 @@ a[href^="https://wa.me"],
     border-radius: 6px;
     font-size: 0.78rem;
     display: none;
+    text-align: center;
 }
 
 .modal-msg.disponivel {
@@ -2116,6 +2112,7 @@ a[href^="https://wa.me"],
     from { opacity: 0; transform: translateY(-10px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+
 
 /* Ajustes extra para ecrãs muito pequenos */
 @media (max-height: 650px) {
