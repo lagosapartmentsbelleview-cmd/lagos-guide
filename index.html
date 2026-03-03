@@ -69,28 +69,66 @@
 
 
 <!-- MODAL -->
+<!-- MODAL -->
 <div id="modal" class="modal-bg">
     <div class="modal-box">
         <button id="fecharModal" class="modal-close">×</button>
 
-        <h2>Reservar</h2>
+        <h2 data-i18n="reserve_title">Reservar</h2>
 
-        <label>Check‑in</label>
-        <input type="date">
+        <label data-i18n="checkin">Check‑in</label>
+        <input id="checkin" type="date">
 
-        <label>Check‑out</label>
-        <input type="date">
+        <label data-i18n="checkout">Check‑out</label>
+        <input id="checkout" type="date">
 
-        <label>Nº de Apartamentos</label>
-        <select>
+        <label data-i18n="adults">Adultos</label>
+        <select id="adults">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select>
+
+        <label data-i18n="children">Crianças (2–17)</label>
+        <select id="children">
+            <option>0</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
         </select>
 
-        <button class="modal-btn">Confirmar Reserva</button>
+        <label data-i18n="babies">Bebés (0–2)</label>
+        <select id="babies">
+            <option>0</option>
+            <option>1</option>
+        </select>
+
+        <label data-i18n="crib">Precisa de berço?</label>
+        <select id="crib">
+            <option value="no" data-i18n="no">Não</option>
+            <option value="yes" data-i18n="yes">Sim</option>
+        </select>
+
+        <label data-i18n="apartments">Nº de Apartamentos</label>
+        <select id="apartments">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+
+        <div class="modal-total">
+            <p><strong data-i18n="total_guests">Total de hóspedes:</strong> <span id="totalHospedes">0</span></p>
+        </div>
+
+        <button id="confirmarReserva" class="modal-btn" data-i18n="confirm_reservation">
+            Confirmar Reserva
+        </button>
+
+        <p id="mensagemDisponibilidade" class="modal-msg"></p>
     </div>
 </div>
+
 
 <!-- BOTÃO FLUTUANTE -->
 <button id="btnFlutuante" class="btn-flutuante" data-i18n="reserve_here">
