@@ -2114,18 +2114,3 @@ a[href^="https://wa.me"],
 }
 
 
-/* Ajustes extra para ecrãs muito pequenos */
-@media (max-height: 650px) {
-    .modal-box {
-        max-height: 95vh;
-        padding: 12px 14px;
-    }
-    .modal-box h2 {
-        font-size: 1.15rem;
-    }
-    .modal-box input,
-    .modal-box select {
-        padding: 5px 6px;
-        font-size: 0.78rem;
-    }
-}
