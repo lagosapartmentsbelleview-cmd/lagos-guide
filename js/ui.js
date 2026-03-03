@@ -106,43 +106,40 @@ document.getElementById("confirmarReserva").addEventListener("click", () => {
     const r = verificarDisponibilidade(checkin, checkout, numApt);
 
     // 3) Interpretar o resultado
-    if (r.status === "erro") {
-        msg.textContent = "Datas inválidas.";
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+if (r.status === "erro") {
+    msg.textContent = "Datas inválidas.";
+    msg.classList.add("indisponivel");
+    msg.style.display = "block";
+    return;
+}
 
-    if (r.status === "indisponivel") {
-        msg.textContent = "Não há apartamentos disponíveis neste intervalo.";
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+if (r.status === "indisponivel") {
+    msg.textContent = "Indisponível para estas datas.";
+    msg.classList.add("indisponivel");
+    msg.style.display = "block";
+    return;
+}
 
-    if (r.status === "parcial") {
-        msg.innerHTML = `
-            <strong>Disponibilidade parcial</strong><br>
-            Apenas ${r.apartamentos.length} disponível(is):<br>
-            ${r.apartamentos.join(", ")}
-        `;
-        msg.classList.add("disponivel");
-        msg.style.display = "block";
-        return;
-    }
+if (r.status === "parcial") {
+    msg.innerHTML = `
+        <strong>Disponibilidade parcial</strong><br>
+        Apenas ${r.apartamentos.length} disponível(is).
+    `;
+    msg.classList.add("indisponivel");
+    msg.style.display = "block";
+    return;
+}
 
-    if (r.status === "disponivel") {
-        msg.innerHTML = `
-            <strong>Datas disponíveis!</strong><br>
-            Apartamentos atribuídos:<br>
-            ${r.apartamentos.join(", ")}
-        `;
-        msg.classList.add("disponivel");
-        msg.style.display = "block";
+if (r.status === "disponivel") {
+    msg.innerHTML = `
+        <strong>Datas disponíveis!</strong>
+    `;
+    msg.classList.add("disponivel");
+    msg.style.display = "block";
 
-        // Aqui no Passo 6 vamos ativar o botão "Continuar Reserva"
-        return;
-    }
-});
+    // Aqui no Passo 6 vamos ativar o botão "Continuar Reserva"
+    return;
+}
+
 
 
