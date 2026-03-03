@@ -1986,3 +1986,130 @@ a[href^="https://wa.me"],
         font-size: 1.1rem;
     }
 }
+
+/* Fundo do modal */
+.modal-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Caixa do modal */
+.modal-box {
+    background: #fff;
+    width: 90%;
+    max-width: 420px;
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    animation: fadeIn 0.25s ease-out;
+}
+
+/* Título */
+.modal-box h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #222;
+}
+
+/* Labels */
+.modal-box label {
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Inputs e selects */
+.modal-box input,
+.modal-box select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #fafafa;
+    transition: 0.2s;
+}
+
+.modal-box input:focus,
+.modal-box select:focus {
+    border-color: #0077cc;
+    background: #fff;
+    outline: none;
+}
+
+/* Botão principal */
+.modal-btn {
+    margin-top: 22px;
+    width: 100%;
+    padding: 12px;
+    background: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.modal-btn:hover {
+    background: #005fa3;
+}
+
+/* Botão fechar */
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #444;
+}
+
+/* Mensagem de disponibilidade */
+.modal-msg {
+    margin-top: 18px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+}
+
+.modal-msg.disponivel {
+    background: #e6f7e6;
+    color: #1a7a1a;
+    border: 1px solid #b6e3b6;
+}
+
+.modal-msg.indisponivel {
+    background: #ffe6e6;
+    color: #b30000;
+    border: 1px solid #ffb3b3;
+}
+
+/* Total de hóspedes */
+.modal-total {
+    margin-top: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Animação */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
