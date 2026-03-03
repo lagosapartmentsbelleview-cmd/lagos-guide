@@ -1953,8 +1953,8 @@ a[href^="https://wa.me"],
 }
 
 .success-popup-box {
-    background: #e8f9f0;
-    border: 2px solid #2ecc71;
+    background: #e6f2fa;                 /* azul muito claro Belleview */
+    border: 2px solid #005c99;           /* azul principal */
     border-radius: 18px;
     padding: 26px 32px;
     box-shadow: 0 12px 32px rgba(0,0,0,0.25);
@@ -1964,7 +1964,7 @@ a[href^="https://wa.me"],
 
 .success-popup-icon {
     font-size: 2.4rem;
-    color: #2ecc71;
+    color: #005c99;                      /* ícone azul */
     display: block;
     margin-bottom: 12px;
 }
@@ -1972,7 +1972,7 @@ a[href^="https://wa.me"],
 .success-popup-text {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #2d2d2d;
+    color: #004b80;                      /* azul escuro */
     font-family: "Poppins", sans-serif;
 }
 
