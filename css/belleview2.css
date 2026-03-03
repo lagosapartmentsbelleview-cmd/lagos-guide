@@ -1987,7 +1987,7 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   MODAL DE RESERVAS — BELLEVIEW ULTRA-COMPACTO EM DUAS COLUNAS
+   MODAL DE RESERVAS — BELLEVIEW 2.0 PREMIUM
 =========================================================== */
 
 .modal-bg {
@@ -2001,60 +2001,85 @@ a[href^="https://wa.me"],
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    font-family: "Poppins", sans-serif;
 }
 
+/* Caixa do modal */
 .modal-box {
-    background: #fff;
+    background: #ffffff;
     width: 92%;
     max-width: 360px;
-    padding: 14px 16px;
-    border-radius: 12px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.20);
+    padding: 18px 20px;
+    border-radius: 14px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.25);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
+    animation: fadeIn 0.25s ease-out;
+}
+
+/* Título */
+.modal-box h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #005c99;
+    text-align: center;
+}
+
+/* Botão fechar */
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #005c99;
+    cursor: pointer;
 }
 
 /* GRID EM DUAS COLUNAS */
 .modal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px 12px;
+    gap: 10px 14px;
 }
 
-/* Título */
-.modal-box h2 {
-    margin: 0 0 6px 0;
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: #003d66;
-    text-align: center;
-}
-
-/* Labels compactos */
+/* Labels */
 .modal-box label {
     font-size: 0.75rem;
     font-weight: 500;
-    color: #333;
+    color: #003d66;
     margin-bottom: 2px;
 }
 
-/* Inputs compactos */
+/* Inputs e selects */
 .modal-box input,
 .modal-box select {
     width: 100%;
-    padding: 5px 6px;
-    border: 1px solid #ccc;
+    padding: 6px 8px;
+    border: 1px solid #c7d7e6;
     border-radius: 6px;
-    font-size: 0.78rem;
-    background: #fafafa;
+    font-size: 0.8rem;
+    background: #f4f8fc;
+    color: #003d66;
+    transition: 0.2s;
+}
+
+.modal-box input:focus,
+.modal-box select:focus {
+    border-color: #0077cc;
+    background: #ffffff;
+    outline: none;
 }
 
 /* Total de hóspedes */
 .modal-total {
-    font-size: 0.78rem;
+    grid-column: span 2;
     text-align: center;
-    margin-top: 4px;
+    font-size: 0.8rem;
+    color: #003d66;
 }
 
 /* Botão principal */
@@ -2067,22 +2092,12 @@ a[href^="https://wa.me"],
     border-radius: 6px;
     font-size: 0.9rem;
     cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
 }
 
 .modal-btn:hover {
-    background: #005fa3;
-}
-
-/* Botão fechar */
-.modal-close {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: #444;
+    background: #005c99;
 }
 
 /* Mensagens */
@@ -2091,8 +2106,8 @@ a[href^="https://wa.me"],
     padding: 8px;
     border-radius: 6px;
     font-size: 0.78rem;
-    display: none;
     text-align: center;
+    display: none;
 }
 
 .modal-msg.disponivel {
