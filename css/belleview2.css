@@ -1457,19 +1457,21 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   CARD DE SUCESSO — BELLEVIEW 2.0
+   CARD DE SUCESSO — BELLEVIEW 2.0 (DESKTOP + MOBILE)
 =========================================================== */
 
 .success-card {
-    background: #ffffff;
-    border: 1px solid #e6e6e6;
+    background: #e8f9f0;                 /* verde premium muito claro */
+    border: 1px solid #2ecc71;           /* verde sucesso */
     border-radius: 16px;
-    padding: 24px 22px;
-    margin-top: 25px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    padding: 18px 20px;
+    margin-top: 22px;
+    width: 100%;                         /* ocupa toda a largura do form */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
+    box-sizing: border-box;
     animation: fadeIn 0.4s ease forwards;
 }
 
@@ -1480,7 +1482,7 @@ a[href^="https://wa.me"],
 }
 
 .success-text {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     color: #2d2d2d;
     font-weight: 600;
     line-height: 1.5;
@@ -1492,6 +1494,30 @@ a[href^="https://wa.me"],
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* ===========================================================
+   MOBILE — AJUSTES FINOS
+=========================================================== */
+
+@media (max-width: 600px) {
+
+    .success-card {
+        padding: 16px 18px;
+        border-radius: 14px;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .success-icon {
+        font-size: 1.6rem;
+    }
+
+    .success-text {
+        font-size: 1rem;
+        line-height: 1.45;
+    }
+}
+
 
 /* ===========================================================
    COOKIE BANNER — ESTILO BELLEVIEW 2.0
