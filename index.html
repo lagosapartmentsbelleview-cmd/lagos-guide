@@ -1103,13 +1103,6 @@
 
                 <button type="submit" class="btn-enviar" data-i18n="contact_form_send">Enviar</button>
 
-                <div id="successMessage" class="success-card" style="display:none;">
-                    <span class="success-icon">✔</span>
-                    <p class="success-text" data-i18n="contact_success">
-                        Mensagem enviada com sucesso! Obrigado pelo seu contacto.
-                    </p>
-                </div>
-
             </form>
 
             <!-- LEGAL -->
@@ -1294,18 +1287,29 @@ document.addEventListener("DOMContentLoaded", function () {
         const result = await response.json();
 
         if (result.success) {
-            const msg = document.getElementById("successMessage");
-            msg.style.display = "flex";   // mostra o card
-            form.reset();
 
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 3000);
-        }
-    });
+    const popup = document.getElementById("successPopup");
+    popup.style.display = "flex";
+
+    form.reset();
+
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 3000);
+}
+
+});
 
 });
 </script>
+
+<!-- POPUP DE SUCESSO -->
+<div id="successPopup" class="success-popup">
+    <div class="success-popup-box">
+        <span class="success-popup-icon">✔</span>
+        <p class="success-popup-text">Mensagem enviada com sucesso!</p>
+    </div>
+</div>
 
 
 <script src="js/belleview-lang.js"></script>
