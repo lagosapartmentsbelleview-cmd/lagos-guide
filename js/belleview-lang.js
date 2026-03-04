@@ -1835,7 +1835,7 @@ function setLanguage(lang) {
   // Atualizar textos com data-i18n
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
-    el.textContent = translations[lang][key];
+    el.innerHTML = translations[lang][key];
   });
 
   // Atualizar footer multilíngua
