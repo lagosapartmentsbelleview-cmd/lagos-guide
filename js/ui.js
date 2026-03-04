@@ -143,116 +143,119 @@ async function obterPrecoSite(checkin, checkout) {
 // ------------------------------
 // PASSO 5 — VERIFICAR DISPONIBILIDADE
 // ------------------------------
-document.getElementById("confirmarReserva").addEventListener("click", () => {
+const btnConfirmar = document.getElementById("confirmarReserva");
 
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
-    const numApt = parseInt(document.getElementById("apartments").value);
-    const msg = document.getElementById("mensagemDisponibilidade");
+if (btnConfirmar) {
+    btnConfirmar.addEventListener("click", async () => {
 
-    // Limpar mensagens anteriores
-    msg.textContent = "";
-    msg.style.display = "none";
-    msg.classList.remove("disponivel", "indisponivel");
+        const checkin = document.getElementById("checkin").value;
+        const checkout = document.getElementById("checkout").value;
+        const numApt = parseInt(document.getElementById("apartments").value);
+        const msg = document.getElementById("mensagemDisponibilidade");
 
-    // Se faltar alguma data, nem continua
-    if (!checkin || !checkout) {
-        msg.textContent = "Selecione as datas de check-in e check-out.";
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+        // Limpar mensagens anteriores
+        msg.textContent = "";
+        msg.style.display = "none";
+        msg.classList.remove("disponivel", "indisponivel");
 
-    // Converter datas
-    const dataIn = new Date(checkin);
-    const dataOut = new Date(checkout);
-    const hoje = new Date();
+        // Se faltar alguma data, nem continua
+        if (!checkin || !checkout) {
+            msg.textContent = "Selecione as datas de check-in e check-out.";
+            msg.classList.add("indisponivel");
+            msg.style.display = "block";
+            return;
+        }
 
-    // 1) Check-out > Check-in
-    if (dataOut <= dataIn) {
-        msg.textContent = "A data de check-out tem de ser posterior à data de check-in.";
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+        // Converter datas
+        const dataIn = new Date(checkin);
+        const dataOut = new Date(checkout);
+        const hoje = new Date();
 
-    // 2) Mínimo 3 noites
-    const noites = (dataOut - dataIn) / (1000 * 60 * 60 * 24);
-    if (noites < 3) {
-        msg.textContent = "O período mínimo de reserva é de 3 noites.";
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+        // 1) Check-out > Check-in
+        if (dataOut <= dataIn) {
+            msg.textContent = "A data de check-out tem de ser posterior à data de check-in.";
+            msg.classList.add("indisponivel");
+            msg.style.display = "block";
+            return;
+        }
 
-    // 3) Antecedência mínima de 3 dias
-    const diasAntecedencia = (dataIn - hoje) / (1000 * 60 * 60 * 24);
-    if (diasAntecedencia < 3) {
-        msg.textContent = "A reserva deve ser feita com pelo menos 3 dias de antecedência em relação ao check-in.";
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+        // 2) Mínimo 3 noites
+        const noites = (dataOut - dataIn) / (1000 * 60 * 60 * 24);
+        if (noites < 3) {
+            msg.textContent = "O período mínimo de reserva é de 3 noites.";
+            msg.classList.add("indisponivel");
+            msg.style.display = "block";
+            return;
+        }
 
-    // 4) Validar capacidade (adultos / crianças / bebés / apartamentos)
-    if (!validarCapacidade()) {
-        return; // Se exceder, não continua
-    }
+        // 3) Antecedência mínima de 3 dias
+        const diasAntecedencia = (dataIn - hoje) / (1000 * 60 * 60 * 24);
+        if (diasAntecedencia < 3) {
+            msg.textContent = "A reserva deve ser feita com pelo menos 3 dias de antecedência em relação ao check-in.";
+            msg.classList.add("indisponivel");
+            msg.style.display = "block";
+            return;
+        }
 
-    // 5) Chamar o motor de disponibilidade
-    const r = verificarDisponibilidade(checkin, checkout, numApt);
+        // 4) Validar capacidade
+        if (!validarCapacidade()) {
+            return;
+        }
 
-    // 6) Interpretar o resultado
-    if (r.status === "erro") {
-        msg.textContent = "Datas inválidas.";
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+        // 5) Motor de disponibilidade
+        const r = verificarDisponibilidade(checkin, checkout, numApt);
 
-    if (r.status === "indisponivel") {
-        msg.textContent = "Não existem apartamentos disponíveis para as datas selecionadas.";
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+        if (r.status === "erro") {
+            msg.textContent = "Datas inválidas.";
+            msg.classList.add("indisponivel");
+            msg.style.display = "block";
+            return;
+        }
 
-    if (r.status === "parcial") {
-        msg.innerHTML = `
-            <strong>Disponibilidade parcial</strong><br>
-            Apenas ${r.apartamentos.length} Apartamento disponível(is).
-        `;
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+        if (r.status === "indisponivel") {
+            msg.textContent = "Não existem apartamentos disponíveis para as datas selecionadas.";
+            msg.classList.add("indisponivel");
+            msg.style.display = "block";
+            return;
+        }
 
-    if (r.status === "disponivel") {
+        if (r.status === "parcial") {
+            msg.innerHTML = `
+                <strong>Disponibilidade parcial</strong><br>
+                Apenas ${r.apartamentos.length} Apartamento disponível(is).
+            `;
+            msg.classList.add("indisponivel");
+            msg.style.display = "block";
+            return;
+        }
 
-    // 7) Calcular preço do site
-    const preco = await obterPrecoSite(checkin, checkout);
+        if (r.status === "disponivel") {
 
-    if (preco.status !== "ok") {
-        msg.textContent = preco.mensagem;
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+            // 7) Calcular preço do site
+            const preco = await obterPrecoSite(checkin, checkout);
 
-    // Mostrar preço ao utilizador
-    msg.innerHTML = `
-        <strong>Datas disponíveis.</strong><br>
-        Noites: ${preco.noites}<br>
-        Preço total: ${preco.total.toFixed(2)} €
-    `;
-    msg.classList.add("disponivel");
-    msg.style.display = "block";
+            if (preco.status !== "ok") {
+                msg.textContent = preco.mensagem;
+                msg.classList.add("indisponivel");
+                msg.style.display = "block";
+                return;
+            }
 
-    // Aqui depois vamos colocar o botão "Continuar" para recolher dados do cliente
-    return;
+            // Mostrar preço ao utilizador
+            msg.innerHTML = `
+                <strong>Datas disponíveis.</strong><br>
+                Noites: ${preco.noites}<br>
+                Preço total: ${preco.total.toFixed(2)} €
+            `;
+            msg.classList.add("disponivel");
+            msg.style.display = "block";
+
+            return;
+        }
+
+    });
 }
 
-});
 
 
 
