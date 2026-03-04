@@ -241,12 +241,17 @@ if (btnConfirmar) {
                 return;
             }
 
+            // Multiplicar pelo número de apartamentos
+            const totalFinal = preco.total * numApt;
+
             // Mostrar preço ao utilizador
             msg.innerHTML = `
-                <strong>Datas disponíveis.</strong><br>
-                Noites: ${preco.noites}<br>
-                Preço total: ${preco.total.toFixed(2)} €
+            <strong>Datas disponíveis.</strong><br>
+            Noites: ${preco.noites}<br>
+            Apartamentos: ${numApt}<br>
+            Preço total: ${totalFinal.toFixed(2)} €
             `;
+
             msg.classList.add("disponivel");
             msg.style.display = "block";
 
