@@ -87,11 +87,6 @@ function validarCapacidade() {
 // ------------------------------
 document.getElementById("confirmarReserva").addEventListener("click", () => {
 
-    // 1) Validar capacidade primeiro
-    if (!validarCapacidade()) {
-        return; // Se exceder, não continua
-    }
-
     const checkin = document.getElementById("checkin").value;
     const checkout = document.getElementById("checkout").value;
     const numApt = parseInt(document.getElementById("apartments").value);
@@ -102,42 +97,86 @@ document.getElementById("confirmarReserva").addEventListener("click", () => {
     msg.style.display = "none";
     msg.classList.remove("disponivel", "indisponivel");
 
-    // 2) Chamar o motor antigo
+    // Se faltar alguma data, nem continua
+    if (!checkin || !checkout) {
+        msg.textContent = "Selecione as datas de check-in e check-out.";
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
+
+    // Converter datas
+    const dataIn = new Date(checkin);
+    const dataOut = new Date(checkout);
+    const hoje = new Date();
+
+    // 1) Check-out > Check-in
+    if (dataOut <= dataIn) {
+        msg.textContent = "A data de check-out tem de ser posterior à data de check-in.";
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
+
+    // 2) Mínimo 3 noites
+    const noites = (dataOut - dataIn) / (1000 * 60 * 60 * 24);
+    if (noites < 3) {
+        msg.textContent = "O período mínimo de reserva é de 3 noites.";
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
+
+    // 3) Antecedência mínima de 3 dias
+    const diasAntecedencia = (dataIn - hoje) / (1000 * 60 * 60 * 24);
+    if (diasAntecedencia < 3) {
+        msg.textContent = "A reserva deve ser feita com pelo menos 3 dias de antecedência em relação ao check-in.";
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
+
+    // 4) Validar capacidade (adultos / crianças / bebés / apartamentos)
+    if (!validarCapacidade()) {
+        return; // Se exceder, não continua
+    }
+
+    // 5) Chamar o motor de disponibilidade
     const r = verificarDisponibilidade(checkin, checkout, numApt);
 
-// 3) Interpretar o resultado
-if (r.status === "erro") {
-    msg.textContent = "Datas inválidas.";
-    msg.classList.add("indisponivel");
-    msg.style.display = "block";
-    return;
-}
+    // 6) Interpretar o resultado
+    if (r.status === "erro") {
+        msg.textContent = "Datas inválidas.";
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
 
-if (r.status === "indisponivel") {
-    msg.textContent = "Não existem apartamentos disponíveis para as datas selecionadas.";
-    msg.classList.add("indisponivel");
-    msg.style.display = "block";
-    return;
-}
+    if (r.status === "indisponivel") {
+        msg.textContent = "Não existem apartamentos disponíveis para as datas selecionadas.";
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
 
-if (r.status === "parcial") {
-    msg.innerHTML = `
-        <strong>Disponibilidade parcial</strong><br>
-        Apenas ${r.apartamentos.length} Apartamento disponível(is).
-    `;
-    msg.classList.add("indisponivel");
-    msg.style.display = "block";
-    return;
-}
+    if (r.status === "parcial") {
+        msg.innerHTML = `
+            <strong>Disponibilidade parcial</strong><br>
+            Apenas ${r.apartamentos.length} Apartamento disponível(is).
+        `;
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
 
-if (r.status === "disponivel") {
-    msg.innerHTML = `
-        <strong>Apartamento com datas disponíveis.</strong>
-    `;
-    msg.classList.add("disponivel");
-    msg.style.display = "block";
-    return;
-}
+    if (r.status === "disponivel") {
+        msg.innerHTML = `
+            <strong>Apartamento com datas disponíveis.</strong>
+        `;
+        msg.classList.add("disponivel");
+        msg.style.display = "block";
+        return;
+    }
 
 });
 
