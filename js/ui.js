@@ -231,7 +231,7 @@ if (btnConfirmar) {
 
         if (r.status === "disponivel") {
 
-            // 7) Calcular preço do site
+// 7) Calcular preço do site
 const preco = await obterPrecoSite(checkin, checkout);
 
 if (preco.status !== "ok") {
@@ -263,9 +263,29 @@ msg.style.display = "block";
 document.getElementById("formReserva").style.display = "block";
 
 return;
+    }); 
+} 
 
+// PASSO 6 — LIGAR BOTÃO "FINALIZAR RESERVA"
+const btnFinalizar = document.getElementById("btnFinalizarReserva");
 
+if (btnFinalizar) {
+    btnFinalizar.addEventListener("click", () => {
 
+        const nome = document.getElementById("nomeHospede").value.trim();
+        const email = document.getElementById("emailHospede").value.trim();
+        const telefone = document.getElementById("telefoneHospede").value.trim();
+        const pais = document.getElementById("paisHospede").value.trim();
+        const obs = document.getElementById("obsHospede").value.trim();
 
+        if (!nome || !email || !telefone || !pais) {
+            alert("Por favor preencha todos os campos obrigatórios.");
+            return;
+        }
 
+        console.log("Dados do hóspede:", { nome, email, telefone, pais, obs });
+
+        // 👉 PASSO 7: Aqui vamos gravar no Firestore
+    });
+}
 
