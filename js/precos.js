@@ -334,6 +334,8 @@ function aplicarFiltros() {
     // gerarGrelha();
     gerarTabelaNova();
     preencherTabelaNova();
+    gerarTabelaPrecosSite();
+
 }
 
 
@@ -788,6 +790,96 @@ function formatarDDMM(dataISO) {
 function debug(...args) {
     console.log("[DEBUG]", ...args);
 }
+
+// ===============================
+// TABELA DE PREÇOS DO SITE
+// ===============================
+
+function gerarTabelaPrecosSite() {
+    const dataInicio = document.getElementById("dataInicio").value;
+    const dataFim = document.getElementById("dataFim").value;
+
+    if (!dataInicio || !dataFim) {
+        document.getElementById("tabelaPrecosSite").innerHTML =
+            "<p style='color:#777;'>Selecione datas para gerar a tabela.</p>";
+        return;
+    }
+
+    const datas = gerarIntervaloDatas(dataInicio, dataFim);
+
+    let html = `
+        <table class="tabela-site">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Preço Final (Booking)</th>
+                    <th>Preço Site</th>
+                    <th>Aberto</th>
+                    <th>Nota</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    datas.forEach(dataISO => {
+        const precoBooking = obterPrecoVitasol(dataISO)
+            ? (obterPrecoVitasol(dataISO) - lerMargem()).toFixed(2)
+            : "—";
+
+        html += `
+            <tr>
+                <td>${dataISO}</td>
+                <td>${precoBooking} €</td>
+                <td><input type="number" step="0.01" data-dia="${dataISO}" class="precoSiteInput"></td>
+                <td><input type="checkbox" data-dia="${dataISO}" class="abertoSiteInput" checked></td>
+                <td><input type="text" data-dia="${dataISO}" class="notaSiteInput"></td>
+            </tr>
+        `;
+    });
+
+    html += `</tbody></table>`;
+
+    document.getElementById("tabelaPrecosSite").innerHTML = html;
+
+    carregarPrecosSite();
+}
+
+function carregarPrecosSite() {
+    db.collection("precos_site").get().then(snapshot => {
+        snapshot.forEach(doc => {
+            const d = doc.data();
+
+            const precoInput = document.querySelector(`.precoSiteInput[data-dia="${d.data}"]`);
+            const abertoInput = document.querySelector(`.abertoSiteInput[data-dia="${d.data}"]`);
+            const notaInput = document.querySelector(`.notaSiteInput[data-dia="${d.data}"]`);
+
+            if (precoInput) precoInput.value = d.precoSite ?? "";
+            if (abertoInput) abertoInput.checked = d.aberto;
+            if (notaInput) notaInput.value = d.nota ?? "";
+        });
+    });
+}
+
+document.getElementById("guardarPrecosSite").addEventListener("click", () => {
+    const linhas = document.querySelectorAll(".precoSiteInput");
+
+    linhas.forEach(input => {
+        const data = input.getAttribute("data-dia");
+        const preco = parseFloat(input.value) || null;
+        const aberto = document.querySelector(`.abertoSiteInput[data-dia="${data}"]`).checked;
+        const nota = document.querySelector(`.notaSiteInput[data-dia="${data}"]`).value;
+
+        db.collection("precos_site").doc(data).set({
+            data,
+            precoSite: preco,
+            aberto,
+            nota
+        });
+    });
+
+    alert("Preços do site guardados com sucesso.");
+});
+
 
 // ===============================
 // FINAL
