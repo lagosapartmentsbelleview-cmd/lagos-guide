@@ -83,6 +83,64 @@ function validarCapacidade() {
 }
 
 // ------------------------------
+// FUNÇÃO PARA CALCULAR PREÇO DO SITE
+// ------------------------------
+async function obterPrecoSite(checkin, checkout) {
+    const dataIn = new Date(checkin);
+    const dataOut = new Date(checkout);
+
+    const dias = [];
+    let atual = new Date(dataIn);
+
+    while (atual < dataOut) {
+        const ano = atual.getFullYear();
+        const mes = String(atual.getMonth() + 1).padStart(2, "0");
+        const dia = String(atual.getDate()).padStart(2, "0");
+        dias.push(`${ano}-${mes}-${dia}`);
+        atual.setDate(atual.getDate() + 1);
+    }
+
+    let total = 0;
+    let noites = dias.length;
+
+    for (const dataISO of dias) {
+        const doc = await db.collection("precos_site").doc(dataISO).get();
+
+        if (!doc.exists) {
+            return {
+                status: "erro",
+                mensagem: `Não existe preço definido para ${dataISO}.`
+            };
+        }
+
+        const d = doc.data();
+
+        if (!d.aberto) {
+            return {
+                status: "fechado",
+                mensagem: `O dia ${dataISO} está fechado para reservas.`
+            };
+        }
+
+        if (d.precoSite === null || d.precoSite === undefined) {
+            return {
+                status: "erro",
+                mensagem: `O dia ${dataISO} não tem preço definido.`
+            };
+        }
+
+        total += Number(d.precoSite);
+    }
+
+    return {
+        status: "ok",
+        total,
+        noites,
+        precoNoite: total / noites
+    };
+}
+
+// ------------------------------
 // PASSO 5 — VERIFICAR DISPONIBILIDADE
 // ------------------------------
 document.getElementById("confirmarReserva").addEventListener("click", () => {
@@ -170,13 +228,29 @@ document.getElementById("confirmarReserva").addEventListener("click", () => {
     }
 
     if (r.status === "disponivel") {
-        msg.innerHTML = `
-            <strong>Apartamento com datas disponíveis.</strong>
-        `;
-        msg.classList.add("disponivel");
+
+    // 7) Calcular preço do site
+    const preco = await obterPrecoSite(checkin, checkout);
+
+    if (preco.status !== "ok") {
+        msg.textContent = preco.mensagem;
+        msg.classList.add("indisponivel");
         msg.style.display = "block";
         return;
     }
+
+    // Mostrar preço ao utilizador
+    msg.innerHTML = `
+        <strong>Datas disponíveis.</strong><br>
+        Noites: ${preco.noites}<br>
+        Preço total: ${preco.total.toFixed(2)} €
+    `;
+    msg.classList.add("disponivel");
+    msg.style.display = "block";
+
+    // Aqui depois vamos colocar o botão "Continuar" para recolher dados do cliente
+    return;
+}
 
 });
 
