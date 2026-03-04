@@ -853,7 +853,19 @@ function carregarPrecosSite() {
             const abertoInput = document.querySelector(`.abertoSiteInput[data-dia="${d.data}"]`);
             const notaInput = document.querySelector(`.notaSiteInput[data-dia="${d.data}"]`);
 
-            if (precoInput) precoInput.value = d.precoSite ?? "";
+            if (precoInput) {
+    if (d.precoSite !== null && d.precoSite !== undefined) {
+        // Já existe preço guardado → usar esse
+        precoInput.value = d.precoSite;
+    } else {
+        // Não existe preço guardado → usar Preço Final (Booking)
+        const precoBooking = obterPrecoVitasol(d.data)
+            ? (obterPrecoVitasol(d.data) - lerMargem()).toFixed(2)
+            : "";
+        precoInput.value = precoBooking;
+    }
+}
+
             if (abertoInput) abertoInput.checked = d.aberto;
             if (notaInput) notaInput.value = d.nota ?? "";
         });
