@@ -1377,6 +1377,9 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
+<!-- Configuração Firebase -->
+<script src="js/firebase-config.js"></script>
+
 <!-- Proteção do site (para retirar quando site for colocado no ar)-->
 <script>
 firebase.auth().onAuthStateChanged(user => {
@@ -1385,10 +1388,6 @@ firebase.auth().onAuthStateChanged(user => {
     }
 });
 </script>
-
-
-<!-- Configuração Firebase -->
-<script src="js/firebase-config.js"></script>
     
 <!-- JS DO MOTOR DE RESERVAS (o antigo) -->
 <script src="js/reservas.js"></script>
