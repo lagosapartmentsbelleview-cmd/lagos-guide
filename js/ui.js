@@ -263,8 +263,8 @@ msg.style.display = "block";
 document.getElementById("formReserva").style.display = "block";
 
 return;
-    }); 
-} 
+    });
+}   // fecha o if(btnConfirmar)
 
 // PASSO 6 — LIGAR BOTÃO "FINALIZAR RESERVA"
 const btnFinalizar = document.getElementById("btnFinalizarReserva");
