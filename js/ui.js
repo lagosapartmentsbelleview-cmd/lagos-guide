@@ -231,40 +231,42 @@ if (btnConfirmar) {
 
         if (r.status === "disponivel") {
 
-// 7) Calcular preço do site
-const preco = await obterPrecoSite(checkin, checkout);
+    // 7) Calcular preço do site
+    const preco = await obterPrecoSite(checkin, checkout);
 
-if (preco.status !== "ok") {
-    msg.textContent = preco.mensagem;
-    msg.classList.add("indisponivel");
+    if (preco.status !== "ok") {
+        msg.textContent = preco.mensagem;
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+
+        // Esconder formulário se houver erro
+        document.getElementById("formReserva").style.display = "none";
+        return;
+    }
+
+    // Multiplicar pelo número de apartamentos
+    const totalFinal = preco.total * numApt;
+
+    // Mostrar preço ao utilizador
+    msg.innerHTML = `
+        <strong>Datas disponíveis.</strong><br>
+        Noites: ${preco.noites}<br>
+        Apartamentos: ${numApt}<br>
+        Preço por apartamento: ${preco.total.toFixed(2)} €<br>
+        <strong>Preço total: ${totalFinal.toFixed(2)} €</strong>
+    `;
+
+    msg.classList.add("disponivel");
     msg.style.display = "block";
 
-    // Esconder formulário se houver erro
-    document.getElementById("formReserva").style.display = "none";
+    // 👉 PASSO 6: Mostrar formulário de dados do hóspede
+    document.getElementById("formReserva").style.display = "block";
+
     return;
-}
+}   // ← FECHA O if (r.status === "disponivel")
 
-// Multiplicar pelo número de apartamentos
-const totalFinal = preco.total * numApt;
-
-// Mostrar preço ao utilizador
-msg.innerHTML = `
-    <strong>Datas disponíveis.</strong><br>
-    Noites: ${preco.noites}<br>
-    Apartamentos: ${numApt}<br>
-    Preço por apartamento: ${preco.total.toFixed(2)} €<br>
-    <strong>Preço total: ${totalFinal.toFixed(2)} €</strong>
-`;
-
-msg.classList.add("disponivel");
-msg.style.display = "block";
-
-// 👉 PASSO 6: Mostrar formulário de dados do hóspede
-document.getElementById("formReserva").style.display = "block";
-
-return;
     });
-}   // fecha o if(btnConfirmar)
+}   // ← FECHA O if(btnConfirmar)
 
 // PASSO 6 — LIGAR BOTÃO "FINALIZAR RESERVA"
 const btnFinalizar = document.getElementById("btnFinalizarReserva");
