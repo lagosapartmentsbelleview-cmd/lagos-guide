@@ -1377,6 +1377,16 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
+<!-- Proteção do site (para retirar quando site for colocado no ar)-->
+<script>
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "login.html";
+    }
+});
+</script>
+
+
 <!-- Configuração Firebase -->
 <script src="js/firebase-config.js"></script>
     
