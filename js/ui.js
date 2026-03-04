@@ -245,12 +245,14 @@ if (btnConfirmar) {
             const totalFinal = preco.total * numApt;
 
             // Mostrar preço ao utilizador
-            msg.innerHTML = `
+             msg.innerHTML = `
             <strong>Datas disponíveis.</strong><br>
             Noites: ${preco.noites}<br>
             Apartamentos: ${numApt}<br>
-            Preço total: ${totalFinal.toFixed(2)} €
+            Preço por apartamento: ${preco.total.toFixed(2)} €<br>
+            <strong>Preço total: ${totalFinal.toFixed(2)} €</strong>
             `;
+
 
             msg.classList.add("disponivel");
             msg.style.display = "block";
