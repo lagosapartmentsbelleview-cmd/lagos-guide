@@ -568,7 +568,18 @@ const texts = {
     
     submit: "Formular absenden"
 }
-}; 
+};
+ 
+// ============================================================
+// MENSAGEM DE SUCESSO MULTILINGUE PARA O POPUP AIMA
+// ============================================================
+texts.pt.aima_success = "Formulário enviado com sucesso!";
+texts.en.aima_success = "Form submitted successfully!";
+texts.es.aima_success = "Formulario enviado con éxito!";
+texts.fr.aima_success = "Formulaire envoyé avec succès!";
+texts.it.aima_success = "Modulo inviato con successo!";
+texts.de.aima_success = "Formular erfolgreich gesendet!";
+
 
 // ------------------------------
 // FAQ TITULO DO MODAL POR IDIOMA
@@ -1373,7 +1384,17 @@ subjectInput.value = `Novo Formulário AIMA Recebido de ${firstGuestName}`;
         it: "Modulo inviato con successo!"
       };
 
-      alert(successMessages[currentLang] || successMessages.pt);
+      // POPUP DE SUCESSO MULTILINGUE
+      const popup = document.getElementById("aimaSuccessPopup");
+      const popupText = popup.querySelector(".success-popup-text");
+
+      popupText.textContent = texts[currentLang].aima_success;
+      popup.style.display = "flex";
+
+      setTimeout(() => {
+      popup.style.display = "none";
+      }, 3000);
+
 
       this.reset();
       generateGuestFields();
