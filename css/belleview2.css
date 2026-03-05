@@ -2134,4 +2134,63 @@ a[href^="https://wa.me"],
     to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ===========================================================
+   LIVRO DE INFORMAÇÕES — CANVA EMBED
+=========================================================== */
+
+.info-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.info-container h1 {
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 2.4rem;
+    color: #005c99;
+    margin-bottom: 30px;
+}
+
+.info-book-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 20px auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+.info-book-wrapper iframe {
+    width: 100%;
+    height: 80vh; /* altura grande e confortável */
+    border: none;
+}
+
+.info-external-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.info-external-link a {
+    color: #005c99;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.info-external-link a:hover {
+    text-decoration: underline;
+}
+
+/* MOBILE — LIVRO DE INFORMAÇÕES */
+@media (max-width: 768px) {
+    .info-book-wrapper iframe {
+        height: 75vh; /* ocupa 75% da altura do ecrã */
+    }
+
+    .info-container h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+}
 
