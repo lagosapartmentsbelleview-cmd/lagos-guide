@@ -5,70 +5,112 @@
   <title>Guia de Cápsulas – Delta Q / Qdelta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
- <style>
-  body {
-    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f6f6f6;
-    color: #222;
-    line-height: 1.6;
-  }
+  <style>
+    body {
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f6f6f6;
+      color: #222;
+      line-height: 1.6;
+    }
 
-  .wrapper {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
+    /* HEADER BELLEVIEW */
+    .header {
+      background: #ffffff;
+      padding: 1.2rem 2rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 2rem;
+    }
 
-  .card {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-    margin-bottom: 3rem;
-  }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #222;
+    }
 
-  h1, h2, h3 {
-    margin-top: 0;
-    font-weight: 600;
-  }
+    .logo-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
 
-  .lang-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
+    /* CONTENT */
+    .wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
 
-  .lang-label img {
-    width: 28px;
-    height: 20px;
-    border-radius: 4px;
-    object-fit: cover;
-  }
+    .card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      margin-bottom: 3rem;
+    }
 
-  /* 🔥 FOTOS REDUZIDAS E ELEGANTES */
-  .photo {
-    width: 55%;              /* reduzido de 100% para 55% */
-    max-width: 320px;        /* limite máximo */
-    height: auto;
-    border-radius: 12px;
-    margin: 1.5rem auto;     /* centraliza */
-    display: block;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  }
+    h1, h2, h3 {
+      margin-top: 0;
+      font-weight: 600;
+    }
 
-  ul, ol {
-    padding-left: 1.2rem;
-  }
-</style>
+    .lang-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
 
+    .lang-label img {
+      width: 32px;
+      height: 22px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    /* FOTOS REDUZIDAS */
+    .photo {
+      width: 45%;
+      max-width: 260px;
+      height: auto;
+      border-radius: 12px;
+      margin: 1.5rem auto;
+      display: block;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    ul, ol {
+      padding-left: 1.2rem;
+    }
+  </style>
 </head>
 
 <body>
+
+<!-- HEADER BELLEVIEW -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-circle">B</div>
+    <span>Apartments Belleview Lagos</span>
+  </div>
+</header>
+
 <div class="wrapper">
 
   <!-- CAPA -->
@@ -93,17 +135,20 @@
     </ul>
   </div>
 
-  <!-- PORTUGUÊS -->
+  <!-- ========================= -->
+  <!-- 🇵🇹 PORTUGUÊS -->
+  <!-- ========================= -->
+
   <div class="card" id="pt">
     <div class="lang-label">
-      <img src="/flags/pt.svg" alt="PT">
+      <img src="https://flagcdn.com/w40/pt.png" alt="PT">
       Português (PT)
     </div>
 
     <h2>Cápsulas compatíveis com a máquina Delta Q</h2>
 
     <h3>Cápsulas originais Delta Q</h3>
-    <img src="/img/cafe/capsulasqdelta.jpg" class="photo" alt="Cápsulas Delta Q">
+    <img src="/img/cafe/capsulasqdelta.jpg" class="photo">
 
     <ul>
       <li>Qalidus – intenso</li>
@@ -114,7 +159,7 @@
     </ul>
 
     <h3>Cápsulas compatíveis (outras marcas)</h3>
-    <img src="/img/cafe/capsulasqdelta2.jpg" class="photo" alt="Cápsulas compatíveis">
+    <img src="/img/cafe/capsulasqdelta2.jpg" class="photo">
 
     <ul>
       <li>Bellissimo Intenso</li>
@@ -123,29 +168,33 @@
       <li>Qualquer cápsula com “Compatível com Delta Q”</li>
     </ul>
 
-    <h3>Como usar</h3>
-    <img src="/img/cafe/maquinadeltaq.jpg" class="photo" alt="Máquina Delta Q">
+    <h3>Como usar a máquina</h3>
+    <img src="/img/cafe/maquinadeltaq.jpg" class="photo">
 
     <ol>
-      <li>Levante a alavanca.</li>
-      <li>Insira a cápsula.</li>
-      <li>Baixe a alavanca.</li>
-      <li>Escolha curto ou longo.</li>
-      <li>A cápsula usada cai no depósito interno.</li>
+      <li><strong>Ligue a máquina</strong> no botão traseiro. A luz pisca enquanto aquece e fica fixa quando está pronta.</li>
+      <li><strong>Levante a alavanca superior</strong> para abrir o compartimento da cápsula.</li>
+      <li><strong>Insira a cápsula</strong> com a face colorida virada para cima.</li>
+      <li><strong>Baixe a alavanca</strong> até ouvir um clique suave.</li>
+      <li><strong>Escolha o café</strong>: curto (espresso) ou longo (lungo). A máquina pára automaticamente.</li>
+      <li><strong>Levante a alavanca</strong> novamente para libertar a cápsula usada para o depósito interno.</li>
     </ol>
   </div>
 
-  <!-- ENGLISH -->
+  <!-- ========================= -->
+  <!-- 🇬🇧 ENGLISH -->
+  <!-- ========================= -->
+
   <div class="card" id="en">
     <div class="lang-label">
-      <img src="/flags/gb.svg" alt="EN">
+      <img src="https://flagcdn.com/w40/gb.png" alt="EN">
       English (EN)
     </div>
 
     <h2>Compatible capsules for the Delta Q machine</h2>
 
     <h3>Original Delta Q capsules</h3>
-    <img src="/img/cafe/capsulasqdelta1.jpg" class="photo" alt="Delta Q Capsules">
+    <img src="/img/cafe/capsulasqdelta1.jpg" class="photo">
 
     <ul>
       <li>Qalidus – strong</li>
@@ -156,7 +205,7 @@
     </ul>
 
     <h3>Compatible capsules</h3>
-    <img src="/img/cafe/capsulasqdelta2.jpg" class="photo" alt="Compatible Capsules">
+    <img src="/img/cafe/capsulasqdelta2.jpg" class="photo">
 
     <ul>
       <li>Bellissimo Intenso</li>
@@ -164,18 +213,33 @@
       <li>Supermarket compatible brands</li>
       <li>Any capsule labelled “Compatible with Delta Q”</li>
     </ul>
+
+    <h3>How to use the machine</h3>
+    <img src="/img/cafe/maquinadeltaq.jpg" class="photo">
+
+    <ol>
+      <li><strong>Turn on the machine</strong> using the rear switch. The light flashes while heating and becomes steady when ready.</li>
+      <li><strong>Lift the top lever</strong> to open the capsule compartment.</li>
+      <li><strong>Insert the capsule</strong> with the colored side facing up.</li>
+      <li><strong>Lower the lever</strong> until you feel a soft click.</li>
+      <li><strong>Select your coffee</strong>: short (espresso) or long (lungo). The machine stops automatically.</li>
+      <li><strong>Lift the lever</strong> again to drop the used capsule into the internal container.</li>
+    </ol>
   </div>
 
-  <!-- ESPAÑOL -->
+  <!-- ========================= -->
+  <!-- 🇪🇸 ESPAÑOL -->
+  <!-- ========================= -->
+
   <div class="card" id="es">
     <div class="lang-label">
-      <img src="/flags/es.svg" alt="ES">
+      <img src="https://flagcdn.com/w40/es.png" alt="ES">
       Español (ES)
     </div>
 
     <h2>Cápsulas compatibles con la máquina Delta Q</h2>
 
-    <img src="/img/cafe/capsulasqdelta.jpg" class="photo" alt="Cápsulas Delta Q">
+    <img src="/img/cafe/capsulasqdelta.jpg" class="photo">
 
     <ul>
       <li>Qalidus – intenso</li>
@@ -185,27 +249,32 @@
       <li>Descafeinado</li>
     </ul>
 
-    <h3>Cápsulas compatibles</h3>
-    <img src="/img/cafe/capsulasqdelta2.jpg" class="photo" alt="Cápsulas compatibles">
+    <h3>Cómo usar la máquina</h3>
+    <img src="/img/cafe/maquinadeltaq.jpg" class="photo">
 
-    <ul>
-      <li>Bellissimo Intenso</li>
-      <li>Nicola compatibles</li>
-      <li>Marcas de supermercado</li>
-      <li>“Compatible con Delta Q”</li>
-    </ul>
+    <ol>
+      <li><strong>Encienda la máquina</strong> con el botón trasero. La luz parpadea mientras calienta.</li>
+      <li><strong>Levante la palanca superior</strong> para abrir el compartimento.</li>
+      <li><strong>Inserte la cápsula</strong> con la parte coloreada hacia arriba.</li>
+      <li><strong>Baje la palanca</strong> hasta oír un clic suave.</li>
+      <li><strong>Elija café corto o largo</strong>. La máquina se detiene sola.</li>
+      <li><strong>Levante la palanca</strong> para que la cápsula usada caiga al depósito interno.</li>
+    </ol>
   </div>
 
-  <!-- FRANÇAIS -->
+  <!-- ========================= -->
+  <!-- 🇫🇷 FRANÇAIS -->
+  <!-- ========================= -->
+
   <div class="card" id="fr">
     <div class="lang-label">
-      <img src="/flags/fr.svg" alt="FR">
+      <img src="https://flagcdn.com/w40/fr.png" alt="FR">
       Français (FR)
     </div>
 
     <h2>Capsules compatibles avec la machine Delta Q</h2>
 
-    <img src="/img/cafe/capsulasqdelta1.jpg" class="photo" alt="Capsules Delta Q">
+    <img src="/img/cafe/capsulasqdelta1.jpg" class="photo">
 
     <ul>
       <li>Qalidus – intense</li>
@@ -215,27 +284,32 @@
       <li>Décaféiné</li>
     </ul>
 
-    <h3>Capsules compatibles</h3>
-    <img src="/img/cafe/capsulasqdelta2.jpg" class="photo" alt="Capsules compatibles">
+    <h3>Comment utiliser la machine</h3>
+    <img src="/img/cafe/maquinadeltaq.jpg" class="photo">
 
-    <ul>
-      <li>Bellissimo Intenso</li>
-      <li>Nicola compatibles</li>
-      <li>Marques de supermarché</li>
-      <li>“Compatible Delta Q”</li>
-    </ul>
+    <ol>
+      <li><strong>Allumez la machine</strong> avec l’interrupteur arrière. La lumière clignote pendant le chauffage.</li>
+      <li><strong>Soulevez le levier supérieur</strong> pour ouvrir le compartiment.</li>
+      <li><strong>Insérez la capsule</strong> face colorée vers le haut.</li>
+      <li><strong>Abaissez le levier</strong> jusqu’au clic.</li>
+      <li><strong>Choisissez café court ou long</strong>. La machine s’arrête automatiquement.</li>
+      <li><strong>Soulevez le levier</strong> pour éjecter la capsule usée.</li>
+    </ol>
   </div>
 
-  <!-- ITALIANO -->
+  <!-- ========================= -->
+  <!-- 🇮🇹 ITALIANO -->
+  <!-- ========================= -->
+
   <div class="card" id="it">
     <div class="lang-label">
-      <img src="/flags/it.svg" alt="IT">
+      <img src="https://flagcdn.com/w40/it.png" alt="IT">
       Italiano (IT)
     </div>
 
     <h2>Capsule compatibili con la macchina Delta Q</h2>
 
-    <img src="/img/cafe/capsulasqdelta.jpg" class="photo" alt="Capsule Delta Q">
+    <img src="/img/cafe/capsulasqdelta.jpg" class="photo">
 
     <ul>
       <li>Qalidus – intenso</li>
@@ -245,27 +319,32 @@
       <li>Decaffeinato</li>
     </ul>
 
-    <h3>Capsule compatibili</h3>
-    <img src="/img/cafe/capsulasqdelta2.jpg" class="photo" alt="Capsule compatibili">
+    <h3>Come usare la macchina</h3>
+    <img src="/img/cafe/maquinadeltaq.jpg" class="photo">
 
-    <ul>
-      <li>Bellissimo Intenso</li>
-      <li>Nicola compatibili</li>
-      <li>Marche dei supermercati</li>
-      <li>“Compatibile Delta Q”</li>
-    </ul>
+    <ol>
+      <li><strong>Accendere la macchina</strong> tramite il pulsante posteriore.</li>
+      <li><strong>Sollevare la leva superiore</strong> per aprire il vano capsula.</li>
+      <li><strong>Inserire la capsula</strong> con la parte colorata rivolta verso l’alto.</li>
+      <li><strong>Abbassare la leva</strong> fino al clic.</li>
+      <li><strong>Scegliere caffè corto o lungo</strong>. La macchina si ferma da sola.</li>
+      <li><strong>Sollevare la leva</strong> per far cadere la capsula usata nel contenitore interno.</li>
+    </ol>
   </div>
 
-  <!-- DEUTSCH -->
+  <!-- ========================= -->
+  <!-- 🇩🇪 DEUTSCH -->
+  <!-- ========================= -->
+
   <div class="card" id="de">
     <div class="lang-label">
-      <img src="/flags/de.svg" alt="DE">
+      <img src="https://flagcdn.com/w40/de.png" alt="DE">
       Deutsch (DE)
     </div>
 
     <h2>Kompatible Kapseln für die Delta Q Maschine</h2>
 
-    <img src="/img/cafe/capsulasqdelta1.jpg" class="photo" alt="Delta Q Kapseln">
+    <img src="/img/cafe/capsulasqdelta1.jpg" class="photo">
 
     <ul>
       <li>Qalidus – stark</li>
@@ -275,19 +354,19 @@
       <li>Entkoffeiniert</li>
     </ul>
 
-    <h3>Kompatible Kapseln</h3>
-    <img src="/img/cafe/capsulasqdelta2.jpg" class="photo" alt="Kompatible Kapseln">
+    <h3>Wie man die Maschine benutzt</h3>
+    <img src="/img/cafe/maquinadeltaq.jpg" class="photo">
 
-    <ul>
-      <li>Bellissimo Intenso</li>
-      <li>Nicola kompatibel</li>
-      <li>Supermarktmarken</li>
-      <li>“Kompatibel mit Delta Q”</li>
-    </ul>
+    <ol>
+      <li><strong>Schalten Sie die Maschine ein</strong> über den hinteren Knopf.</li>
+      <li><strong>Heben Sie den oberen Hebel an</strong>, um das Kapsel­fach zu öffnen.</li>
+      <li><strong>Legen Sie die Kapsel ein</strong>, farbige Seite nach oben.</li>
+      <li><strong>Senken Sie den Hebel</strong> bis zum Klick.</li>
+      <li><strong>Wählen Sie kurz oder lang</strong>. Die Maschine stoppt automatisch.</li>
+      <li><strong>Heben Sie den Hebel</strong>, damit die gebrauchte Kapsel in den Behälter fällt.</li>
+    </ol>
   </div>
 
 </div>
 </body>
-</html>
-
 </html>
