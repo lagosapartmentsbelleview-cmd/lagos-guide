@@ -7,7 +7,7 @@ const fecharModal = document.getElementById("fecharModal");
 
 btnFlutuante.addEventListener("click", () => {
     modal.style.display = "flex";
-    resetModal();
+    resetSteps();
 });
 
 fecharModal.addEventListener("click", () => {
@@ -73,11 +73,11 @@ function validarCapacidade() {
 }
 
 // ======================================================
-// FASE 1 — VERIFICAR DISPONIBILIDADE
+// STEP 1 — VERIFICAR DISPONIBILIDADE
 // ======================================================
-const btnConfirmar = document.getElementById("confirmarReserva");
+const btnVerificar = document.getElementById("btnVerificar");
 
-btnConfirmar.addEventListener("click", () => {
+btnVerificar.addEventListener("click", () => {
 
     const checkin = document.getElementById("checkin").value;
     const checkout = document.getElementById("checkout").value;
@@ -123,35 +123,47 @@ btnConfirmar.addEventListener("click", () => {
 
     if (!validarCapacidade()) return;
 
-    // SIMULAÇÃO DE DISPONIBILIDADE (sempre disponível)
+    // SIMULAÇÃO DE DISPONIBILIDADE
     msg.textContent = "Excelente notícia! O apartamento está disponível.";
     msg.classList.add("disponivel");
     msg.style.display = "block";
 
-    // Esconder botão confirmar
-    btnConfirmar.style.display = "none";
-
-    // Criar botão "Pedir Cotação"
-    const btnCotacao = document.createElement("button");
-    btnCotacao.id = "btnCotacao";
-    btnCotacao.className = "modal-btn";
-    btnCotacao.textContent = "Pedir Cotação de Reserva";
-
-    msg.insertAdjacentElement("afterend", btnCotacao);
-
-    btnCotacao.addEventListener("click", () => {
-        formReserva.style.display = "block";
-        btnCotacao.style.display = "none";
-    });
+    // Abrir Step 2
+    abrirStep2();
 });
 
 // ======================================================
-// FASE 2 — ENVIAR PEDIDO DE COTAÇÃO
+// STEP 2 — ABRIR FORMULÁRIO DE COTAÇÃO
 // ======================================================
-const formReserva = document.getElementById("formReserva");
-const btnFinalizar = document.getElementById("btnFinalizarReserva");
+function abrirStep2() {
 
-btnFinalizar.addEventListener("click", async () => {
+    const checkin = document.getElementById("checkin").value;
+    const checkout = document.getElementById("checkout").value;
+    const total = document.getElementById("totalHospedes").textContent;
+    const apt = document.getElementById("apartments").value;
+
+    document.getElementById("step1").style.display = "none";
+    document.getElementById("step2").style.display = "block";
+
+    document.getElementById("step2Header").innerHTML = `
+        <strong>Pedido de Cotação</strong><br>
+        ${checkin} → ${checkout}<br>
+        ${total} hóspedes • ${apt} apartamento(s)
+    `;
+}
+
+// ======================================================
+// STEP 2 — VOLTAR PARA STEP 1
+// ======================================================
+document.getElementById("btnVoltarStep1").addEventListener("click", () => {
+    document.getElementById("step2").style.display = "none";
+    document.getElementById("step1").style.display = "block";
+});
+
+// ======================================================
+// STEP 2 — ENVIAR PEDIDO DE COTAÇÃO
+// ======================================================
+document.getElementById("btnEnviarCotacao").addEventListener("click", async () => {
 
     const nome = document.getElementById("nomeHospede").value.trim();
     const email = document.getElementById("emailHospede").value.trim();
@@ -184,27 +196,30 @@ btnFinalizar.addEventListener("click", async () => {
         body: formData
     });
 
-    // POPUP DE SUCESSO
-    const popup = document.getElementById("successPopup");
-    popup.style.display = "flex";
-
-    setTimeout(() => {
-        popup.style.display = "none";
-        modal.style.display = "none";
-        resetModal();
-    }, 3000);
+    abrirStep3();
 });
 
 // ======================================================
-// RESET DO MODAL
+// STEP 3 — SUCESSO
 // ======================================================
-function resetModal() {
+function abrirStep3() {
+    document.getElementById("step2").style.display = "none";
+    document.getElementById("step3").style.display = "block";
+}
+
+document.getElementById("btnFecharStep3").addEventListener("click", () => {
+    modal.style.display = "none";
+    resetSteps();
+});
+
+// ======================================================
+// RESET TOTAL DO MODAL
+// ======================================================
+function resetSteps() {
+    document.getElementById("step1").style.display = "block";
+    document.getElementById("step2").style.display = "none";
+    document.getElementById("step3").style.display = "none";
+
     document.getElementById("mensagemDisponibilidade").textContent = "";
     document.getElementById("mensagemDisponibilidade").style.display = "none";
-
-    formReserva.style.display = "none";
-    btnConfirmar.style.display = "block";
-
-    const btnCotacao = document.getElementById("btnCotacao");
-    if (btnCotacao) btnCotacao.remove();
 }
