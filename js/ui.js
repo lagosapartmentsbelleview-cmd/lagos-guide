@@ -123,13 +123,52 @@ btnVerificar.addEventListener("click", () => {
 
     if (!validarCapacidade()) return;
 
-    // SIMULAÇÃO DE DISPONIBILIDADE
-    msg.textContent = "Excelente notícia! O apartamento está disponível.";
-    msg.classList.add("disponivel");
-    msg.style.display = "block";
+    // ======================================================
+    // MOTOR REAL DE DISPONIBILIDADE
+    // ======================================================
+    const numApt = parseInt(document.getElementById("apartments").value);
+    const r = verificarDisponibilidade(checkin, checkout, numApt);
 
-    // Abrir Step 2
-    abrirStep2();
+    if (!r || !r.status) {
+        msg.textContent = "Erro ao verificar disponibilidade.";
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
+
+    if (r.status === "erro") {
+        msg.textContent = "Datas inválidas.";
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
+
+    if (r.status === "indisponivel") {
+        msg.textContent = "Não existem apartamentos disponíveis para as datas selecionadas.";
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
+
+    if (r.status === "parcial") {
+        const disponiveis = r.apartamentos ? r.apartamentos.length : 0;
+
+        msg.innerHTML = `
+            <strong>Disponibilidade parcial</strong><br>
+            Apenas ${disponiveis} apartamento(s) disponível(is).
+        `;
+        msg.classList.add("indisponivel");
+        msg.style.display = "block";
+        return;
+    }
+
+    if (r.status === "disponivel") {
+        msg.textContent = "Excelente notícia! O apartamento está disponível.";
+        msg.classList.add("disponivel");
+        msg.style.display = "block";
+
+        abrirStep2();
+    }
 });
 
 // ======================================================
