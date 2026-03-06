@@ -77,101 +77,133 @@
     <div class="modal-box">
 
         <button id="fecharModal" class="modal-close">&times;</button>
-        <h2 data-i18n="reserve">Reservar</h2>
+        <h2 id="modalTitulo" data-i18n="reserve">Reservar</h2>
 
-        <div class="modal-grid">
+        <!-- ================================================= -->
+        <!-- STEP 1 — VERIFICAR DISPONIBILIDADE -->
+        <!-- ================================================= -->
+        <div id="step1">
 
-            <div>
-                <label data-i18n="checkin">Check-in</label>
-                <input type="date" id="checkin">
+            <div class="modal-grid">
+
+                <div>
+                    <label data-i18n="checkin">Check-in</label>
+                    <input type="date" id="checkin">
+                </div>
+
+                <div>
+                    <label data-i18n="checkout">Check-out</label>
+                    <input type="date" id="checkout">
+                </div>
+
+                <div>
+                    <label data-i18n="adults">Adultos</label>
+                    <select id="adults">
+                        <option>1</option><option>2</option><option>3</option><option>4</option>
+                        <option>5</option><option>6</option><option>7</option><option>8</option>
+                        <option>9</option><option>10</option><option>11</option><option>12</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label data-i18n="children">Crianças (2–17)</label>
+                    <select id="children">
+                        <option>0</option><option>1</option><option>2</option><option>3</option>
+                        <option>4</option><option>5</option><option>6</option><option>7</option>
+                        <option>8</option><option>9</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label data-i18n="babies">Bebés (0–2)</label>
+                    <select id="babies">
+                        <option>0</option><option>1</option><option>2</option><option>3</option>
+                        <option>4</option><option>5</option><option>6</option><option>7</option>
+                        <option>8</option><option>9</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label data-i18n="crib">Berço?</label>
+                    <select id="crib">
+                        <option value="no" data-i18n="no">Não</option>
+                        <option value="yes" data-i18n="yes">Sim</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label data-i18n="apartments">Apartamentos</label>
+                    <select id="apartments">
+                        <option>1</option><option>2</option><option>3</option>
+                    </select>
+                </div>
+
+                <div class="modal-total">
+                    <strong data-i18n="total_guests">Total:</strong>
+                    <span id="totalHospedes">0</span>
+                </div>
+
             </div>
 
-            <div>
-                <label data-i18n="checkout">Check-out</label>
-                <input type="date" id="checkout">
-            </div>
+            <button id="btnVerificar" class="modal-btn">
+                Verificar Disponibilidade
+            </button>
 
-            <div>
-                <label data-i18n="adults">Adultos</label>
-                <select id="adults">
-                    <option>1</option><option>2</option><option>3</option><option>4</option>
-                    <option>5</option><option>6</option><option>7</option><option>8</option>
-                    <option>9</option><option>10</option><option>11</option><option>12</option>
-                </select>
-            </div>
+            <p id="mensagemDisponibilidade" class="modal-msg"></p>
 
-            <div>
-                <label data-i18n="children">Crianças (2–17)</label>
-                <select id="children">
-                    <option>0</option><option>1</option><option>2</option><option>3</option>
-                    <option>4</option><option>5</option><option>6</option><option>7</option>
-                    <option>8</option><option>9</option>
-                </select>
-            </div>
+        </div>
 
-            <div>
-                <label data-i18n="babies">Bebés (0–2)</label>
-                <select id="babies">
-                    <option>0</option><option>1</option><option>2</option><option>3</option>
-                    <option>4</option><option>5</option><option>6</option><option>7</option>
-                    <option>8</option><option>9</option>
-                </select>
-            </div>
+        <!-- ================================================= -->
+        <!-- STEP 2 — PEDIDO DE COTAÇÃO -->
+        <!-- ================================================= -->
+        <div id="step2" style="display:none;">
 
-            <div>
-                <label data-i18n="crib">Berço?</label>
-                <select id="crib">
-                    <option value="no" data-i18n="no">Não</option>
-                    <option value="yes" data-i18n="yes">Sim</option>
-                </select>
-            </div>
+            <h3 id="step2Header"></h3>
 
-            <div>
-                <label data-i18n="apartments">Apartamentos</label>
-                <select id="apartments">
-                    <option>1</option><option>2</option><option>3</option>
-                </select>
-            </div>
+            <label data-i18n="full_name">Nome Completo</label>
+            <input type="text" id="nomeHospede">
 
-            <div class="modal-total">
-                <strong data-i18n="total_guests">Total:</strong>
-                <span id="totalHospedes">0</span>
+            <label>Email</label>
+            <input type="email" id="emailHospede">
+
+            <label data-i18n="phone">Telefone</label>
+            <input type="text" id="telefoneHospede">
+
+            <label data-i18n="country">País</label>
+            <input type="text" id="paisHospede">
+
+            <label data-i18n="notes_optional">Observações (opcional)</label>
+            <textarea id="obsHospede" rows="3"></textarea>
+
+            <div style="display:flex; gap:10px; margin-top:15px;">
+                <button id="btnVoltarStep1" class="modal-btn" style="background:#777;">
+                    Voltar atrás
+                </button>
+
+                <button id="btnEnviarCotacao" class="modal-btn">
+                    Enviar Pedido de Cotação
+                </button>
             </div>
 
         </div>
 
-        <button id="confirmarReserva" class="modal-btn" data-i18n="confirm_reservation">
-            Confirmar Reserva
-        </button>
+        <!-- ================================================= -->
+        <!-- STEP 3 — SUCESSO -->
+        <!-- ================================================= -->
+        <div id="step3" style="display:none; text-align:center;">
 
-        <p id="mensagemDisponibilidade" class="modal-msg"></p>
+            <h3 data-i18n="success_title">Pedido enviado com sucesso!</h3>
 
-        <!-- PASSO 6 — FORMULÁRIO DE DADOS DO HÓSPEDE -->
-<div id="formReserva" style="display:none; margin-top:20px;">
+            <p data-i18n="success_msg">
+                O seu pedido foi recebido com sucesso.<br>
+                Irá receber por email a cotação completa da estadia e as respetivas condições de reserva e pagamento.
+            </p>
 
-    <h3 data-i18n="guest_details">Dados do Hóspede</h3>
+            <button id="btnFecharStep3" class="modal-btn">
+                Fechar
+            </button>
 
-    <label data-i18n="full_name">Nome Completo</label>
-    <input type="text" id="nomeHospede" placeholder="O seu nome">
-
-    <label>Email</label>
-    <input type="email" id="emailHospede" placeholder="email@exemplo.com">
-
-    <label data-i18n="phone">Telefone</label>
-    <input type="text" id="telefoneHospede" placeholder="+351 ...">
-
-    <label data-i18n="country">País</label>
-    <input type="text" id="paisHospede" placeholder="Portugal">
-
-    <label data-i18n="notes_optional">Observações (opcional)</label>
-    <textarea id="obsHospede" rows="3"></textarea>
-
-    <button id="btnFinalizarReserva" class="modal-btn" style="margin-top:15px;">
-        Finalizar Reserva
-    </button>
-
-</div>
-
+        </div>
 
     </div>
 </div>
