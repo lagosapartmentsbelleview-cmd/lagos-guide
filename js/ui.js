@@ -19,6 +19,59 @@ modal.addEventListener("click", (e) => {
 });
 
 // ======================================================
+// LISTA DE PAÍSES + INDICATIVOS
+// ======================================================
+const PAISES_INDICATIVOS = [
+    { nome: "Portugal", codigo: "+351" },
+    { nome: "Brasil", codigo: "+55" },
+    { nome: "Espanha", codigo: "+34" },
+    { nome: "França", codigo: "+33" },
+    { nome: "Alemanha", codigo: "+49" },
+    { nome: "Reino Unido", codigo: "+44" },
+    { nome: "Irlanda", codigo: "+353" },
+    { nome: "Itália", codigo: "+39" },
+    { nome: "Suíça", codigo: "+41" },
+    { nome: "Luxemburgo", codigo: "+352" },
+    { nome: "Holanda", codigo: "+31" },
+    { nome: "Bélgica", codigo: "+32" },
+    { nome: "Áustria", codigo: "+43" },
+    { nome: "Polónia", codigo: "+48" },
+    { nome: "Roménia", codigo: "+40" },
+    { nome: "Suécia", codigo: "+46" },
+    { nome: "Noruega", codigo: "+47" },
+    { nome: "Dinamarca", codigo: "+45" },
+    { nome: "Finlândia", codigo: "+358" },
+    { nome: "Estados Unidos", codigo: "+1" },
+    { nome: "Canadá", codigo: "+1" },
+    { nome: "México", codigo: "+52" },
+    { nome: "Argentina", codigo: "+54" },
+    { nome: "Chile", codigo: "+56" },
+    { nome: "Uruguai", codigo: "+598" },
+    { nome: "Angola", codigo: "+244" },
+    { nome: "Moçambique", codigo: "+258" },
+    { nome: "Cabo Verde", codigo: "+238" },
+    { nome: "Guiné-Bissau", codigo: "+245" },
+    { nome: "São Tomé e Príncipe", codigo: "+239" },
+    { nome: "Timor-Leste", codigo: "+670" },
+    { nome: "Emirados Árabes Unidos", codigo: "+971" },
+    { nome: "Turquia", codigo: "+90" },
+    { nome: "Grécia", codigo: "+30" },
+    { nome: "Croácia", codigo: "+385" },
+    { nome: "República Checa", codigo: "+420" },
+    { nome: "Hungria", codigo: "+36" },
+    { nome: "Bulgária", codigo: "+359" },
+    { nome: "Islândia", codigo: "+354" },
+    { nome: "Japão", codigo: "+81" },
+    { nome: "China", codigo: "+86" },
+    { nome: "Austrália", codigo: "+61" },
+    { nome: "Nova Zelândia", codigo: "+64" },
+    { nome: "África do Sul", codigo: "+27" },
+    { nome: "Marrocos", codigo: "+212" },
+    { nome: "Tunísia", codigo: "+216" },
+    { nome: "Egito", codigo: "+20" }
+];
+
+// ======================================================
 // TOTAL DE HÓSPEDES
 // ======================================================
 function atualizarTotalHospedes() {
@@ -123,9 +176,7 @@ btnVerificar.addEventListener("click", () => {
 
     if (!validarCapacidade()) return;
 
-    // ======================================================
     // MOTOR REAL DE DISPONIBILIDADE
-    // ======================================================
     const numApt = parseInt(document.getElementById("apartments").value);
     const r = verificarDisponibilidade(checkin, checkout, numApt);
 
@@ -189,6 +240,8 @@ function abrirStep2() {
         ${checkin} → ${checkout}<br>
         ${total} hóspedes • ${apt} apartamento(s)
     `;
+
+    updateProgress(2);
 }
 
 // ======================================================
@@ -197,6 +250,7 @@ function abrirStep2() {
 document.getElementById("btnVoltarStep1").addEventListener("click", () => {
     document.getElementById("step2").style.display = "none";
     document.getElementById("step1").style.display = "block";
+    updateProgress(1);
 });
 
 // ======================================================
@@ -215,7 +269,6 @@ document.getElementById("btnEnviarCotacao").addEventListener("click", async () =
         return;
     }
 
-    // Enviar via Web3Forms
     const formData = new FormData();
     formData.append("access_key", "AQUI_A_TUA_KEY");
     formData.append("subject", "Pedido de Cotação de Reserva");
@@ -244,11 +297,52 @@ document.getElementById("btnEnviarCotacao").addEventListener("click", async () =
 function abrirStep3() {
     document.getElementById("step2").style.display = "none";
     document.getElementById("step3").style.display = "block";
+    updateProgress(3);
 }
 
 document.getElementById("btnFecharStep3").addEventListener("click", () => {
     modal.style.display = "none";
     resetSteps();
+});
+
+// ======================================================
+// BARRA DE PROGRESSO — ATUALIZAR
+// ======================================================
+function updateProgress(step) {
+    const s1 = document.getElementById("progressStep1");
+    const s2 = document.getElementById("progressStep2");
+    const s3 = document.getElementById("progressStep3");
+
+    [s1, s2, s3].forEach(s => s.classList.remove("active"));
+
+    if (step >= 1) s1.classList.add("active");
+    if (step >= 2) s2.classList.add("active");
+    if (step >= 3) s3.classList.add("active");
+}
+
+// ======================================================
+// POPULAR SELECTS DE PAÍS E INDICATIVO
+// ======================================================
+window.addEventListener("DOMContentLoaded", () => {
+    const paisSelect = document.getElementById("paisHospede");
+    const indicativoSelect = document.getElementById("indicativoHospede");
+
+    if (!paisSelect || !indicativoSelect) return;
+
+    paisSelect.innerHTML = `<option value="">Selecione o país</option>`;
+    indicativoSelect.innerHTML = `<option value="">Indicativo</option>`;
+
+    PAISES_INDICATIVOS.forEach(p => {
+        const o1 = document.createElement("option");
+        o1.value = p.nome;
+        o1.textContent = p.nome;
+        paisSelect.appendChild(o1);
+
+        const o2 = document.createElement("option");
+        o2.value = p.codigo;
+        o2.textContent = `${p.codigo} (${p.nome})`;
+        indicativoSelect.appendChild(o2);
+    });
 });
 
 // ======================================================
@@ -261,4 +355,6 @@ function resetSteps() {
 
     document.getElementById("mensagemDisponibilidade").textContent = "";
     document.getElementById("mensagemDisponibilidade").style.display = "none";
+
+    updateProgress(1);
 }
