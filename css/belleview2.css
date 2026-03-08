@@ -2240,3 +2240,23 @@ a[href^="https://wa.me"],
         font-size: 1.1rem;
     }
 }
+
+/* Barra de progresso do modal */
+.progress-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    margin: 8px 0 18px 0;
+}
+
+.progress-step {
+    flex: 1;
+    height: 6px;
+    background: #d0dbe5;
+    border-radius: 4px;
+    transition: 0.3s ease;
+}
+
+.progress-step.active {
+    background: #005c99;
+}
