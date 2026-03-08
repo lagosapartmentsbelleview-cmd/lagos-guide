@@ -79,8 +79,6 @@
         <button id="fecharModal" class="modal-close">&times;</button>
         <h2 id="modalTitulo" data-i18n="reserve">Reservar</h2>
 
-        <h2 id="modalTitulo" data-i18n="reserve">Reservar</h2>
-
         <div class="progress-bar">
             <div class="progress-step" id="progressStep1"></div>
             <div class="progress-step" id="progressStep2"></div>
@@ -162,40 +160,42 @@
 
         </div>
 
-        <!-- ================================================= -->
-        <!-- STEP 2 — PEDIDO DE COTAÇÃO -->
-        <!-- ================================================= -->
-        <div id="step2" style="display:none;">
+<!-- ================================================= -->
+<!-- STEP 2 — PEDIDO DE COTAÇÃO -->
+<!-- ================================================= -->
+<div id="step2" style="display:none;">
 
-            <h3 id="step2Header"></h3>
+    <h3 id="step2Header"></h3>
 
-            <label data-i18n="full_name">Nome Completo</label>
-            <input type="text" id="nomeHospede">
+    <label data-i18n="full_name">Nome Completo</label>
+    <input type="text" id="nomeHospede">
 
-            <label>Email</label>
-            <input type="email" id="emailHospede">
+    <label>Email</label>
+    <input type="email" id="emailHospede">
 
-            <label data-i18n="phone">Telefone</label>
-            <input type="text" id="telefoneHospede">
+    <label data-i18n="phone">Telefone</label>
+    <input type="text" id="telefoneHospede">
 
-            <label data-i18n="country">País</label>
-            <input type="text" id="paisHospede">
+    <label data-i18n="country">País</label>
+    <select id="paisHospede"></select>
 
-            <label data-i18n="notes_optional">Observações (opcional)</label>
-            <textarea id="obsHospede" rows="3"></textarea>
+    <label data-i18n="phone_prefix">Indicativo</label>
+    <select id="indicativoHospede"></select>
 
-            <div style="display:flex; gap:10px; margin-top:15px;">
-                <button id="btnVoltarStep1" class="modal-btn secondary">
-                    Voltar atrás
-                </button>
+    <label data-i18n="notes_optional">Observações (opcional)</label>
+    <textarea id="obsHospede" rows="3"></textarea>
 
-               <button id="btnEnviarCotacao" class="modal-btn success">
-                Enviar Pedido de Cotação
-               </button>
+    <div style="display:flex; gap:10px; margin-top:15px;">
+        <button id="btnVoltarStep1" class="modal-btn secondary">
+            Voltar atrás
+        </button>
 
-            </div>
+        <button id="btnEnviarCotacao" class="modal-btn success">
+            Enviar Pedido de Cotação
+        </button>
+    </div>
 
-        </div>
+</div>
 
         <!-- ================================================= -->
         <!-- STEP 3 — SUCESSO -->
