@@ -2369,7 +2369,7 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   STEP 2 — INFO BELLEVIEW (RESTAURADO)
+   STEP 2 — INFO BELLEVIEW 
 =========================================================== */
 
 .step2-info {
@@ -2377,17 +2377,12 @@ a[href^="https://wa.me"],
     margin: 10px 0 20px 0;
 }
 
-.step2-dates {
+/* Datas + Resumo — mesmo estilo Belleview */
+.step2-dates,
+.step2-summary {
     color: #005c99; /* azul Belleview */
     font-weight: 600;
     font-size: 1rem;
     margin: 4px 0;
     font-family: "Poppins", sans-serif;
-}
-
-.step2-summary {
-    color: #444; /* cinza Belleview */
-    font-size: 0.95rem;
-    margin: 4px 0;
-    font-family: "Inter", sans-serif;
 }
