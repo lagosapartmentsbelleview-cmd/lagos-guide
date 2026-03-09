@@ -403,7 +403,7 @@ function abrirStep2() {
     const header = document.getElementById("step2Header");
     header.textContent = lang.quote_request;
 
-    // Inserir datas traduzidas
+    // Inserir datas + resumo juntos (ordem correta)
     header.insertAdjacentHTML(
         "afterend",
         `
@@ -412,13 +412,7 @@ function abrirStep2() {
                 .replace("{CHECKIN}", checkin)
                 .replace("{CHECKOUT}", checkout)}
         </p>
-        `
-    );
 
-    // Inserir resumo traduzido
-    header.insertAdjacentHTML(
-        "afterend",
-        `
         <p class="step2-summary">
             ${lang.step2_summary
                 .replace("{GUESTS}", total)
@@ -429,6 +423,7 @@ function abrirStep2() {
 
     updateProgress(2);
 }
+
 
 // ======================================================
 // STEP 2 — VOLTAR PARA STEP 1
