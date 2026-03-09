@@ -403,7 +403,7 @@ function abrirStep2() {
     const header = document.getElementById("step2Header");
     header.textContent = lang.quote_request;
 
-    // Inserir datas + resumo juntos (ordem correta)
+    // Inserir datas + resumo juntos (ordem correta e CSS preservado)
     header.insertAdjacentHTML(
         "afterend",
         `
@@ -423,6 +423,7 @@ function abrirStep2() {
 
     updateProgress(2);
 }
+
 
 
 // ======================================================
