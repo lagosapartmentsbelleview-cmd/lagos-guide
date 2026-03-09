@@ -693,7 +693,7 @@ contact_legal_entity: "Operating Entity",
 
 /* Step 1 — Check Availability */
 reserve: "Reserve",
-reserve_here: "Reserve here!",
+reserve_here: "Book now!",
 checkin: "Check-in",
 checkout: "Check-out",
 adults: "Adults",
