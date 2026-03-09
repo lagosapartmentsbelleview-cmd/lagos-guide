@@ -372,6 +372,23 @@ phone_prefix: "Indicativo",
 select_country: "Selecione o país",
 full_name: "Nome Completo",
 
+// STEP 2
+        quote_request: "Pedido de Cotação",
+        step2_dates: "{CHECKIN} → {CHECKOUT}",
+        step2_summary: "{GUESTS} hóspede(s) • {APTS} apartamento(s)",
+
+        // REGRAS / VALIDAÇÕES
+        rules_select_dates: "Selecione as datas de check-in e check-out.",
+        rules_checkout_after_checkin: "A data de check-out deve ser posterior ao check-in.",
+        rules_min_nights: "O período mínimo de reserva é de 3 noites.",
+        rules_min_days: "A reserva deve ser feita com pelo menos 3 dias de antecedência.",
+        rules_invalid_dates: "Datas inválidas.",
+        rules_no_availability: "Não existem apartamentos disponíveis para as datas selecionadas.",
+        rules_partial: "Disponibilidade parcial",
+        rules_available: "Excelente notícia! O apartamento está disponível.",
+        rules_required_fields: "Por favor preencha todos os campos obrigatórios.",
+        rules_one_adult: "Cada apartamento precisa de pelo menos 1 adulto.",
+        rules_capacity_exceeded: "Capacidade excedida: máximo {MAX} hóspedes.",
 
   },
   en: {
@@ -726,6 +743,21 @@ phone_prefix: "Prefix",
 select_country: "Select a country",
 full_name: "Full Name",
 
+ quote_request: "Quote Request",
+        step2_dates: "{CHECKIN} → {CHECKOUT}",
+        step2_summary: "{GUESTS} guest(s) • {APTS} apartment(s)",
+
+        rules_select_dates: "Please select check-in and check-out dates.",
+        rules_checkout_after_checkin: "Check-out date must be after check-in.",
+        rules_min_nights: "The minimum stay is 3 nights.",
+        rules_min_days: "The reservation must be made at least 3 days in advance.",
+        rules_invalid_dates: "Invalid dates.",
+        rules_no_availability: "No apartments available for the selected dates.",
+        rules_partial: "Partial availability",
+        rules_available: "Great news! The apartment is available.",
+        rules_required_fields: "Please fill in all required fields.",
+        rules_one_adult: "Each apartment requires at least 1 adult.",
+        rules_capacity_exceeded: "Capacity exceeded: maximum {MAX} guests.",
 
   },
   es: {
@@ -1092,6 +1124,22 @@ phone_prefix: "Prefijo",
 select_country: "Seleccione un país",
 full_name: "Nombre Completo",
 
+quote_request: "Solicitud de Cotización",
+        step2_dates: "{CHECKIN} → {CHECKOUT}",
+        step2_summary: "{GUESTS} huésped(es) • {APTS} apartamento(s)",
+
+        rules_select_dates: "Seleccione las fechas de entrada y salida.",
+        rules_checkout_after_checkin: "La fecha de salida debe ser posterior a la de entrada.",
+        rules_min_nights: "La estancia mínima es de 3 noches.",
+        rules_min_days: "La reserva debe hacerse con al menos 3 días de antelación.",
+        rules_invalid_dates: "Fechas inválidas.",
+        rules_no_availability: "No hay apartamentos disponibles para las fechas seleccionadas.",
+        rules_partial: "Disponibilidad parcial",
+        rules_available: "¡Buenas noticias! El apartamento está disponible.",
+        rules_required_fields: "Por favor complete todos los campos obligatorios.",
+        rules_one_adult: "Cada apartamento requiere al menos 1 adulto.",
+        rules_capacity_exceeded: "Capacidad excedida: máximo {MAX} huéspedes.",
+
 
   },
   fr: {
@@ -1446,6 +1494,23 @@ phone_prefix: "Indicatif",
 select_country: "Sélectionnez un pays",
 full_name: "Nom Complet",
 
+quote_request: "Demande de Devis",
+        step2_dates: "{CHECKIN} → {CHECKOUT}",
+        step2_summary: "{GUESTS} voyageur(s) • {APTS} appartement(s)",
+
+        rules_select_dates: "Veuillez sélectionner les dates d'arrivée et de départ.",
+        rules_checkout_after_checkin: "La date de départ doit être postérieure à la date d'arrivée.",
+        rules_min_nights: "Le séjour minimum est de 3 nuits.",
+        rules_min_days: "La réservation doit être effectuée au moins 3 jours à l'avance.",
+        rules_invalid_dates: "Dates invalides.",
+        rules_no_availability: "Aucun appartement disponible aux dates sélectionnées.",
+        rules_partial: "Disponibilité partielle",
+        rules_available: "Bonne nouvelle ! L'appartement est disponible.",
+        rules_required_fields: "Veuillez remplir tous les champs obligatoires.",
+        rules_one_adult: "Chaque appartement nécessite au moins 1 adulte.",
+        rules_capacity_exceeded: "Capacité dépassée : maximum {MAX} voyageurs.",
+   
+
 
   },
   it: {
@@ -1799,6 +1864,23 @@ step2_summary: "{GUESTS} ospite/i • {APTS} appartamento/i",
 phone_prefix: "Prefisso",
 select_country: "Seleziona un paese",
 full_name: "Nome e Cognome",
+
+
+        quote_request: "Richiesta di Preventivo",
+        step2_dates: "{CHECKIN} → {CHECKOUT}",
+        step2_summary: "{GUESTS} ospite/i • {APTS} appartamento/i",
+
+        rules_select_dates: "Seleziona le date di check-in e check-out.",
+        rules_checkout_after_checkin: "La data di check-out deve essere successiva al check-in.",
+        rules_min_nights: "Il soggiorno minimo è di 3 notti.",
+        rules_min_days: "La prenotazione deve essere effettuata almeno 3 giorni prima.",
+        rules_invalid_dates: "Date non valide.",
+        rules_no_availability: "Nessun appartamento disponibile per le date selezionate.",
+        rules_partial: "Disponibilità parziale",
+        rules_available: "Ottime notizie! L'appartamento è disponibile.",
+        rules_required_fields: "Per favore compila tutti i campi obbligatori.",
+        rules_one_adult: "Ogni appartamento richiede almeno 1 adulto.",
+        rules_capacity_exceeded: "Capacità superata: massimo {MAX} ospiti.",
 
 
   },
@@ -2166,105 +2248,7 @@ phone_prefix: "Vorwahl",
 select_country: "Land auswählen",
 full_name: "Vollständiger Name",
 
-
-
-  }
-};
-const translations = {
-    pt: {
-        // STEP 2
-        quote_request: "Pedido de Cotação",
-        step2_dates: "{CHECKIN} → {CHECKOUT}",
-        step2_summary: "{GUESTS} hóspede(s) • {APTS} apartamento(s)",
-
-        // REGRAS / VALIDAÇÕES
-        rules_select_dates: "Selecione as datas de check-in e check-out.",
-        rules_checkout_after_checkin: "A data de check-out deve ser posterior ao check-in.",
-        rules_min_nights: "O período mínimo de reserva é de 3 noites.",
-        rules_min_days: "A reserva deve ser feita com pelo menos 3 dias de antecedência.",
-        rules_invalid_dates: "Datas inválidas.",
-        rules_no_availability: "Não existem apartamentos disponíveis para as datas selecionadas.",
-        rules_partial: "Disponibilidade parcial",
-        rules_available: "Excelente notícia! O apartamento está disponível.",
-        rules_required_fields: "Por favor preencha todos os campos obrigatórios.",
-        rules_one_adult: "Cada apartamento precisa de pelo menos 1 adulto.",
-        rules_capacity_exceeded: "Capacidade excedida: máximo {MAX} hóspedes."
-    },
-
-    en: {
-        quote_request: "Quote Request",
-        step2_dates: "{CHECKIN} → {CHECKOUT}",
-        step2_summary: "{GUESTS} guest(s) • {APTS} apartment(s)",
-
-        rules_select_dates: "Please select check-in and check-out dates.",
-        rules_checkout_after_checkin: "Check-out date must be after check-in.",
-        rules_min_nights: "The minimum stay is 3 nights.",
-        rules_min_days: "The reservation must be made at least 3 days in advance.",
-        rules_invalid_dates: "Invalid dates.",
-        rules_no_availability: "No apartments available for the selected dates.",
-        rules_partial: "Partial availability",
-        rules_available: "Great news! The apartment is available.",
-        rules_required_fields: "Please fill in all required fields.",
-        rules_one_adult: "Each apartment requires at least 1 adult.",
-        rules_capacity_exceeded: "Capacity exceeded: maximum {MAX} guests."
-    },
-
-    es: {
-        quote_request: "Solicitud de Cotización",
-        step2_dates: "{CHECKIN} → {CHECKOUT}",
-        step2_summary: "{GUESTS} huésped(es) • {APTS} apartamento(s)",
-
-        rules_select_dates: "Seleccione las fechas de entrada y salida.",
-        rules_checkout_after_checkin: "La fecha de salida debe ser posterior a la de entrada.",
-        rules_min_nights: "La estancia mínima es de 3 noches.",
-        rules_min_days: "La reserva debe hacerse con al menos 3 días de antelación.",
-        rules_invalid_dates: "Fechas inválidas.",
-        rules_no_availability: "No hay apartamentos disponibles para las fechas seleccionadas.",
-        rules_partial: "Disponibilidad parcial",
-        rules_available: "¡Buenas noticias! El apartamento está disponible.",
-        rules_required_fields: "Por favor complete todos los campos obligatorios.",
-        rules_one_adult: "Cada apartamento requiere al menos 1 adulto.",
-        rules_capacity_exceeded: "Capacidad excedida: máximo {MAX} huéspedes."
-    },
-
-    fr: {
-        quote_request: "Demande de Devis",
-        step2_dates: "{CHECKIN} → {CHECKOUT}",
-        step2_summary: "{GUESTS} voyageur(s) • {APTS} appartement(s)",
-
-        rules_select_dates: "Veuillez sélectionner les dates d'arrivée et de départ.",
-        rules_checkout_after_checkin: "La date de départ doit être postérieure à la date d'arrivée.",
-        rules_min_nights: "Le séjour minimum est de 3 nuits.",
-        rules_min_days: "La réservation doit être effectuée au moins 3 jours à l'avance.",
-        rules_invalid_dates: "Dates invalides.",
-        rules_no_availability: "Aucun appartement disponible aux dates sélectionnées.",
-        rules_partial: "Disponibilité partielle",
-        rules_available: "Bonne nouvelle ! L'appartement est disponible.",
-        rules_required_fields: "Veuillez remplir tous les champs obligatoires.",
-        rules_one_adult: "Chaque appartement nécessite au moins 1 adulte.",
-        rules_capacity_exceeded: "Capacité dépassée : maximum {MAX} voyageurs."
-    },
-
-    it: {
-        quote_request: "Richiesta di Preventivo",
-        step2_dates: "{CHECKIN} → {CHECKOUT}",
-        step2_summary: "{GUESTS} ospite/i • {APTS} appartamento/i",
-
-        rules_select_dates: "Seleziona le date di check-in e check-out.",
-        rules_checkout_after_checkin: "La data di check-out deve essere successiva al check-in.",
-        rules_min_nights: "Il soggiorno minimo è di 3 notti.",
-        rules_min_days: "La prenotazione deve essere effettuata almeno 3 giorni prima.",
-        rules_invalid_dates: "Date non valide.",
-        rules_no_availability: "Nessun appartamento disponibile per le date selezionate.",
-        rules_partial: "Disponibilità parziale",
-        rules_available: "Ottime notizie! L'appartamento è disponibile.",
-        rules_required_fields: "Per favore compila tutti i campi obbligatori.",
-        rules_one_adult: "Ogni appartamento richiede almeno 1 adulto.",
-        rules_capacity_exceeded: "Capacità superata: massimo {MAX} ospiti."
-    },
-
-    de: {
-        quote_request: "Preisangebot anfordern",
+ quote_request: "Preisangebot anfordern",
         step2_dates: "{CHECKIN} → {CHECKOUT}",
         step2_summary: "{GUESTS} Gast/Gäste • {APTS} Apartment(s)",
 
@@ -2278,13 +2262,12 @@ const translations = {
         rules_available: "Gute Nachrichten! Das Apartment ist verfügbar.",
         rules_required_fields: "Bitte füllen Sie alle Pflichtfelder aus.",
         rules_one_adult: "Jedes Apartment benötigt mindestens 1 Erwachsenen.",
-        rules_capacity_exceeded: "Kapazität überschritten: maximal {MAX} Gäste."
-    }
+        rules_capacity_exceeded: "Kapazität überschritten: maximal {MAX} Gäste.",
+
+  }
 };
 
-
-
-
+      
 /* Função principal */
 function setLanguage(lang) {
   currentLang = lang;
