@@ -390,14 +390,42 @@ function abrirStep2() {
     const total = document.getElementById("totalHospedes").textContent;
     const apt = document.getElementById("apartments").value;
 
+    const lang = translations[currentLang];
+
+    // Mostrar Step 2
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
 
-    document.getElementById("step2Header").innerHTML = `
-        <strong>Pedido de Cotação</strong><br>
-        ${checkin} → ${checkout}<br>
-        ${total} hóspedes • ${apt} apartamento(s)
-    `;
+    // Limpar mensagens antigas
+    document.querySelectorAll(".step2-dates, .step2-summary").forEach(el => el.remove());
+
+    // Título traduzido
+    const header = document.getElementById("step2Header");
+    header.textContent = lang.quote_request;
+
+    // Inserir datas traduzidas
+    header.insertAdjacentHTML(
+        "afterend",
+        `
+        <p class="step2-dates">
+            ${lang.step2_dates
+                .replace("{CHECKIN}", checkin)
+                .replace("{CHECKOUT}", checkout)}
+        </p>
+        `
+    );
+
+    // Inserir resumo traduzido
+    header.insertAdjacentHTML(
+        "afterend",
+        `
+        <p class="step2-summary">
+            ${lang.step2_summary
+                .replace("{GUESTS}", total)
+                .replace("{APTS}", apt)}
+        </p>
+        `
+    );
 
     updateProgress(2);
 }
