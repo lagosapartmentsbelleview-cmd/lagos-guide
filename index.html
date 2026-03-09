@@ -167,13 +167,18 @@
 
     <h3 id="step2Header"></h3>
 
-    <label data-i18n="full_name">Nome Completo</label>
-    <input type="text" id="nomeHospede">
+    <div class="modal-grid">
+        <div style="grid-column: span 2;">
+            <label data-i18n="full_name">Nome Completo</label>
+            <input type="text" id="nomeHospede">
+        </div>
 
-    <label>Email</label>
-    <input type="email" id="emailHospede">
+        <div style="grid-column: span 2;">
+            <label>Email</label>
+            <input type="email" id="emailHospede">
+        </div>
 
-    <div class="linha-telefone">
+        <!-- Indicativo + Telefone lado a lado -->
         <div>
             <label data-i18n="phone_prefix">Indicativo</label>
             <select id="indicativoHospede"></select>
@@ -183,13 +188,17 @@
             <label data-i18n="phone">Telefone</label>
             <input type="text" id="telefoneHospede">
         </div>
+
+        <div style="grid-column: span 2;">
+            <label data-i18n="country">País</label>
+            <select id="paisHospede"></select>
+        </div>
+
+        <div style="grid-column: span 2;">
+            <label data-i18n="notes_optional">Observações (opcional)</label>
+            <textarea id="obsHospede" rows="3"></textarea>
+        </div>
     </div>
-
-    <label data-i18n="country">País</label>
-    <select id="paisHospede"></select>
-
-    <label data-i18n="notes_optional">Observações (opcional)</label>
-    <textarea id="obsHospede" rows="3"></textarea>
 
     <div style="display:flex; gap:10px; margin-top:10px;">
         <button id="btnVoltarStep1" class="modal-btn secondary">
@@ -202,6 +211,7 @@
     </div>
 
 </div>
+
 
 
         <!-- ================================================= -->
