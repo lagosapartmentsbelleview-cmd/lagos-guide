@@ -363,7 +363,10 @@ missing_prefix: "Por favor selecione o indicativo telefónico.",
 /* Step 3 — Sucesso */
 success_title: "Pedido enviado com sucesso!",
 success_msg: "O seu pedido foi recebido com sucesso. Irá receber por email a cotação completa da estadia e as respetivas condições de reserva e pagamento.",
-close: "Fechar"
+close: "Fechar",
+
+step2_dates: "{CHECKIN} → {CHECKOUT}",
+step2_summary: "{GUESTS} hóspedes • {APTS} apartamento(s)",
 
   },
   en: {
@@ -709,7 +712,10 @@ missing_prefix: "Please select your phone prefix.",
 /* Step 3 — Success */
 success_title: "Request sent successfully!",
 success_msg: "Your request has been received. You will receive the full quote and booking conditions by email.",
-close: "Close"
+close: "Close",
+
+step2_dates: "{CHECKIN} → {CHECKOUT}",
+step2_summary: "{GUESTS} guest(s) • {APTS} apartment(s)",
 
   },
   es: {
@@ -1067,7 +1073,10 @@ missing_prefix: "Seleccione el prefijo telefónico.",
 /* Step 3 — Éxito */
 success_title: "¡Solicitud enviada con éxito!",
 success_msg: "Su solicitud ha sido recibida. Recibirá por email la cotización completa y las condiciones de reserva.",
-close: "Cerrar"
+close: "Cerrar",
+
+step2_dates: "{CHECKIN} → {CHECKOUT}",
+step2_summary: "{GUESTS} huésped(es) • {APTS} apartamento(s)",
 
   },
   fr: {
@@ -1413,7 +1422,10 @@ missing_prefix: "Veuillez sélectionner l'indicatif téléphonique.",
 /* Step 3 — Succès */
 success_title: "Demande envoyée avec succès!",
 success_msg: "Votre demande a été reçue. Vous recevrez par email le devis complet et les conditions de réservation.",
-close: "Fermer"
+close: "Fermer",
+
+step2_dates: "{CHECKIN} → {CHECKOUT}",
+step2_summary: "{GUESTS} voyageur(s) • {APTS} appartement(s)",
 
   },
   it: {
@@ -1759,7 +1771,10 @@ missing_prefix: "Seleziona il prefisso telefonico.",
 /* Step 3 — Successo */
 success_title: "Richiesta inviata con successo!",
 success_msg: "La tua richiesta è stata ricevuta. Riceverai via email il preventivo completo e le condizioni di prenotazione.",
-close: "Chiudi"
+close: "Chiudi",
+
+step2_dates: "{CHECKIN} → {CHECKOUT}",
+step2_summary: "{GUESTS} ospite/i • {APTS} appartamento/i",
 
   },
   de: {
@@ -2117,7 +2132,11 @@ missing_prefix: "Bitte wählen Sie die Telefonvorwahl.",
 /* Step 3 — Erfolg */
 success_title: "Anfrage erfolgreich gesendet!",
 success_msg: "Ihre Anfrage wurde erhalten. Sie erhalten das vollständige Angebot und die Buchungsbedingungen per Email.",
-close: "Schließen"
+close: "Schließen",
+
+step2_dates: "{CHECKIN} → {CHECKOUT}",
+step2_summary: "{GUESTS} Gast/Gäste • {APTS} Apartment(s)",
+
 
   }
 };
