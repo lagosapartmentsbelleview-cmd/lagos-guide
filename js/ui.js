@@ -513,21 +513,21 @@ window.addEventListener("DOMContentLoaded", () => {
 
     if (!paisSelect || !indicativoSelect) return;
 
-    paisSelect.innerHTML = `<option value=""></option>`;
-    indicativoSelect.innerHTML = `<option value=""></option>`;
+   paisSelect.innerHTML = `<option value=""></option>`;
+indicativoSelect.innerHTML = `<option value=""></option>`;
 
+PAISES_INDICATIVOS.forEach(p => {
+    const optCountry = document.createElement("option");
+    optCountry.value = p.name;
+    optCountry.textContent = p.name;
+    paisSelect.appendChild(optCountry);
 
-    PAISES_INDICATIVOS.forEach(p => {
-        const o1 = document.createElement("option");
-        o1.value = p.nome;
-        o1.textContent = p.nome;
-        paisSelect.appendChild(o1);
+    const optPrefix = document.createElement("option");
+    optPrefix.value = p.code;
+    optPrefix.textContent = `${p.code} (${p.name})`;
+    indicativoSelect.appendChild(optPrefix);
+});
 
-        const o2 = document.createElement("option");
-        o2.value = p.codigo;
-        o2.textContent = `${p.codigo} (${p.nome})`;
-        indicativoSelect.appendChild(o2);
-    });
 });
 
 // ======================================================
