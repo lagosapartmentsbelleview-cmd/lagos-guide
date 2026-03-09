@@ -514,8 +514,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
     if (!paisSelect || !indicativoSelect) return;
 
-    paisSelect.innerHTML = `<option value="">${translations[currentLang].select_country}</option>`;
-    indicativoSelect.innerHTML = `<option value="">${translations[currentLang].phone_prefix}</option>`;
+    paisSelect.innerHTML = `<option value=""></option>`;
+    indicativoSelect.innerHTML = `<option value=""></option>`;
+
 
     PAISES_INDICATIVOS.forEach(p => {
         const o1 = document.createElement("option");
