@@ -314,7 +314,51 @@ contact_success: "Mensagem enviada com sucesso! Obrigado pelo seu contacto.",
 
 contact_legal_title: "Informação Legal",
 contact_legal_al: "Nº de Registos AL",
-contact_legal_entity: "Entidade Exploradora"
+contact_legal_entity: "Entidade Exploradora",
+
+/* ============================
+           MODAL RESERVA
+============================ */
+
+// Step 1
+checkin: "Check-in",
+checkout: "Check-out",
+adults: "Adultos",
+children: "Crianças (2–17)",
+babies: "Bebés (0–2)",
+crib: "Berço?",
+apartments: "Apartamentos",
+total_guests: "Total:",
+check_availability: "Verificar Disponibilidade",
+availability_ok: "Excelente notícia! O apartamento está disponível.",
+availability_fail: "Infelizmente, não temos disponibilidade para estas datas.",
+invalid_dates: "As datas selecionadas não são válidas.",
+missing_dates: "Por favor selecione as datas de check-in e check-out.",
+checkout_before_checkin: "A data de check-out não pode ser anterior ao check-in.",
+
+// Step 2
+quote_request: "Pedido de Cotação",
+full_name: "Nome Completo",
+email: "Email",
+phone: "Telefone",
+phone_prefix: "Indicativo",
+country: "País",
+select_country: "Selecione o país",
+notes_optional: "Observações (opcional)",
+back: "Voltar atrás",
+send_quote: "Enviar Pedido de Cotação",
+
+// Step 2 — validações
+missing_name: "Por favor introduza o seu nome.",
+invalid_email: "Por favor introduza um email válido.",
+missing_phone: "Por favor introduza o seu número de telefone.",
+missing_country: "Por favor selecione o seu país.",
+missing_prefix: "Por favor selecione o indicativo telefónico.",
+
+// Step 3
+success_title: "Pedido enviado com sucesso!",
+success_msg: "O seu pedido foi recebido com sucesso. Irá receber por email a cotação completa da estadia e as respetivas condições de reserva e pagamento.",
+close: "Fechar"
 
   },
   en: {
@@ -611,7 +655,51 @@ contact_success: "Message sent successfully! Thank you for contacting us.",
 
 contact_legal_title: "Legal Information",
 contact_legal_al: "AL Registration Numbers",
-contact_legal_entity: "Operating Entity"
+contact_legal_entity: "Operating Entity",
+
+/* ============================
+           MODAL RESERVATION
+============================ */
+
+// Step 1
+checkin: "Check-in",
+checkout: "Check-out",
+adults: "Adults",
+children: "Children (2–17)",
+babies: "Babies (0–2)",
+crib: "Crib?",
+apartments: "Apartments",
+total_guests: "Total:",
+check_availability: "Check Availability",
+availability_ok: "Great news! The apartment is available.",
+availability_fail: "Unfortunately, we have no availability for these dates.",
+invalid_dates: "The selected dates are not valid.",
+missing_dates: "Please select check-in and check-out dates.",
+checkout_before_checkin: "Check-out cannot be earlier than check-in.",
+
+// Step 2
+quote_request: "Quote Request",
+full_name: "Full Name",
+email: "Email",
+phone: "Phone",
+phone_prefix: "Prefix",
+country: "Country",
+select_country: "Select a country",
+notes_optional: "Notes (optional)",
+back: "Go back",
+send_quote: "Send Quote Request",
+
+// Step 2 — validations
+missing_name: "Please enter your name.",
+invalid_email: "Please enter a valid email.",
+missing_phone: "Please enter your phone number.",
+missing_country: "Please select your country.",
+missing_prefix: "Please select your phone prefix.",
+
+// Step 3
+success_title: "Request sent successfully!",
+success_msg: "Your request has been received. You will receive the full quote and booking conditions by email.",
+close: "Close"
 
   },
   es: {
