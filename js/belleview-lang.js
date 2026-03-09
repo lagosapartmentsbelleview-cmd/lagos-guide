@@ -368,6 +368,11 @@ close: "Fechar",
 step2_dates: "{CHECKIN} → {CHECKOUT}",
 step2_summary: "{GUESTS} hóspedes • {APTS} apartamento(s)",
 
+phone_prefix: "Indicativo",
+select_country: "Selecione o país",
+full_name: "Nome Completo",
+
+
   },
   en: {
     menu_alojamento: "Accommodation",
@@ -716,6 +721,11 @@ close: "Close",
 
 step2_dates: "{CHECKIN} → {CHECKOUT}",
 step2_summary: "{GUESTS} guest(s) • {APTS} apartment(s)",
+
+phone_prefix: "Prefix",
+select_country: "Select a country",
+full_name: "Full Name",
+
 
   },
   es: {
@@ -1078,6 +1088,11 @@ close: "Cerrar",
 step2_dates: "{CHECKIN} → {CHECKOUT}",
 step2_summary: "{GUESTS} huésped(es) • {APTS} apartamento(s)",
 
+phone_prefix: "Prefijo",
+select_country: "Seleccione un país",
+full_name: "Nombre Completo",
+
+
   },
   fr: {
     menu_alojamento: "Hébergement",
@@ -1427,6 +1442,11 @@ close: "Fermer",
 step2_dates: "{CHECKIN} → {CHECKOUT}",
 step2_summary: "{GUESTS} voyageur(s) • {APTS} appartement(s)",
 
+phone_prefix: "Indicatif",
+select_country: "Sélectionnez un pays",
+full_name: "Nom Complet",
+
+
   },
   it: {
     menu_alojamento: "Alloggio",
@@ -1775,6 +1795,11 @@ close: "Chiudi",
 
 step2_dates: "{CHECKIN} → {CHECKOUT}",
 step2_summary: "{GUESTS} ospite/i • {APTS} appartamento/i",
+
+phone_prefix: "Prefisso",
+select_country: "Seleziona un paese",
+full_name: "Nome e Cognome",
+
 
   },
   de: {
@@ -2136,6 +2161,11 @@ close: "Schließen",
 
 step2_dates: "{CHECKIN} → {CHECKOUT}",
 step2_summary: "{GUESTS} Gast/Gäste • {APTS} Apartment(s)",
+
+phone_prefix: "Vorwahl",
+select_country: "Land auswählen",
+full_name: "Vollständiger Name",
+
 
 
   }
