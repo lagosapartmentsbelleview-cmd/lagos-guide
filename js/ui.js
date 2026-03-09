@@ -7,16 +7,24 @@ const fecharModal = document.getElementById("fecharModal");
 
 btnFlutuante.addEventListener("click", () => {
     modal.style.display = "flex";
+    btnFlutuante.classList.add("hidden"); // esconde o botão
     resetSteps();
 });
 
+
 fecharModal.addEventListener("click", () => {
     modal.style.display = "none";
+    btnFlutuante.classList.remove("hidden"); // volta a mostrar o botão
 });
 
+
 modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.style.display = "none";
+    if (e.target === modal) {
+        modal.style.display = "none";
+        btnFlutuante.classList.remove("hidden");
+    }
 });
+
 
 // ======================================================
 // LISTA DE PAÍSES + INDICATIVOS
@@ -302,8 +310,10 @@ function abrirStep3() {
 
 document.getElementById("btnFecharStep3").addEventListener("click", () => {
     modal.style.display = "none";
+    btnFlutuante.classList.remove("hidden");
     resetSteps();
 });
+
 
 // ======================================================
 // BARRA DE PROGRESSO — ATUALIZAR
