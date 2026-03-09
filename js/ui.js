@@ -464,7 +464,7 @@ if (btnEnviar) {
         const apartamentos = document.getElementById("apartments")?.value || "1";
         const totalHospedes = document.getElementById("totalHospedes")?.textContent || "0";
 
-        // Campo berço — agora seguro
+        // Campo berço
         const bercoEl = document.getElementById("bercoHospede");
         const berco = bercoEl ? (bercoEl.value === "yes" ? "Sim" : "Não") : "Não indicado";
 
@@ -472,12 +472,13 @@ if (btnEnviar) {
             ? (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24)
             : 0;
 
-        // EMAIL HTML
+        // EMAIL HTML REAL
         const htmlMessage = `
-            <h2>Pedido de Cotação - Belleview Lagos</h2>
+            <h2 style="font-family:Arial; color:#333;">Pedido de Cotação - Belleview Lagos</h2>
 
-            <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 650px;">
-                <tr><th colspan="2" style="background:#f4f4f4;">Dados da Reserva</th></tr>
+            <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 650px; font-family:Arial; font-size:14px;">
+                
+                <tr><th colspan="2" style="background:#f4f4f4; text-align:left;">Dados da Reserva</th></tr>
                 <tr><td><strong>Check-in</strong></td><td>${checkin}</td></tr>
                 <tr><td><strong>Check-out</strong></td><td>${checkout}</td></tr>
                 <tr><td><strong>Noites</strong></td><td>${noites}</td></tr>
@@ -488,14 +489,14 @@ if (btnEnviar) {
                 <tr><td><strong>Total de Hóspedes</strong></td><td>${totalHospedes}</td></tr>
                 <tr><td><strong>Apartamentos</strong></td><td>${apartamentos}</td></tr>
 
-                <tr><th colspan="2" style="background:#f4f4f4;">Dados do Hóspede</th></tr>
+                <tr><th colspan="2" style="background:#f4f4f4; text-align:left;">Dados do Hóspede</th></tr>
                 <tr><td><strong>Nome</strong></td><td>${nome}</td></tr>
                 <tr><td><strong>Email</strong></td><td>${email}</td></tr>
                 <tr><td><strong>Telefone</strong></td><td>${telefone}</td></tr>
                 <tr><td><strong>País</strong></td><td>${pais}</td></tr>
                 <tr><td><strong>Observações</strong></td><td>${obs || "—"}</td></tr>
 
-                <tr><th colspan="2" style="background:#f4f4f4;">Informação Técnica</th></tr>
+                <tr><th colspan="2" style="background:#f4f4f4; text-align:left;">Informação Técnica</th></tr>
                 <tr><td><strong>Idioma</strong></td><td>${currentLang.toUpperCase()}</td></tr>
             </table>
         `;
@@ -503,7 +504,10 @@ if (btnEnviar) {
         const formData = new FormData();
         formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
         formData.append("subject", "Pedido de Cotação - Belleview Lagos");
-        formData.append("message", htmlMessage);
+        formData.append("from_name", "Belleview Lagos Website");
+
+        // AQUI ESTÁ A MUDANÇA IMPORTANTE
+        formData.append("html", htmlMessage);
 
         await fetch("https://api.web3forms.com/submit", {
             method: "POST",
