@@ -396,7 +396,7 @@ function abrirStep2() {
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
 
-    // Limpar blocos antigos
+    // Remover bloco antigo
     const oldInfo = document.querySelector(".step2-info");
     if (oldInfo) oldInfo.remove();
 
@@ -404,18 +404,18 @@ function abrirStep2() {
     const header = document.getElementById("step2Header");
     header.textContent = lang.quote_request;
 
-    // Inserir bloco completo com o wrapper correto
+    // Inserir bloco com classes Belleview
     header.insertAdjacentHTML(
         "afterend",
         `
-        <div class="step2-info" style="text-align:center; margin-bottom:15px;">
-            <p class="step2-dates" style="color:#0077cc; font-weight:600; margin:4px 0;">
+        <div class="step2-info">
+            <p class="step2-dates">
                 ${lang.step2_dates
                     .replace("{CHECKIN}", checkin)
                     .replace("{CHECKOUT}", checkout)}
             </p>
 
-            <p class="step2-summary" style="color:#444; margin:4px 0;">
+            <p class="step2-summary">
                 ${lang.step2_summary
                     .replace("{GUESTS}", total)
                     .replace("{APTS}", apt)}
