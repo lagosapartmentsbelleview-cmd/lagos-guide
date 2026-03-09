@@ -2367,3 +2367,27 @@ a[href^="https://wa.me"],
 #step2 > div:last-child {
     margin-top: 6px !important;
 }
+
+/* ===========================================================
+   STEP 2 — INFO BELLEVIEW (RESTAURADO)
+=========================================================== */
+
+.step2-info {
+    text-align: center;
+    margin: 10px 0 20px 0;
+}
+
+.step2-dates {
+    color: #005c99; /* azul Belleview */
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 4px 0;
+    font-family: "Poppins", sans-serif;
+}
+
+.step2-summary {
+    color: #444; /* cinza Belleview */
+    font-size: 0.95rem;
+    margin: 4px 0;
+    font-family: "Inter", sans-serif;
+}
