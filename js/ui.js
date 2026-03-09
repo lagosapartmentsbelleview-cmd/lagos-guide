@@ -451,18 +451,41 @@ document.getElementById("btnEnviarCotacao").addEventListener("click", async () =
         return;
     }
 
+    // Dados do STEP 1
+    const checkin = document.getElementById("checkin").value;
+    const checkout = document.getElementById("checkout").value;
+    const adultos = document.getElementById("adults").value;
+    const criancas = document.getElementById("children").value;
+    const bebes = document.getElementById("babies").value;
+    const totalHospedes = document.getElementById("totalHospedes").textContent;
+    const apartamentos = document.getElementById("apartments").value;
+
+    const noites = (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24);
+
     const formData = new FormData();
     formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
-    formData.append("subject", "Pedido de Cotação de Reserva");
-    formData.append("name", nome);
-    formData.append("email", email);
+    formData.append("subject", "Pedido de Cotação de Reserva - Belleview Lagos");
+
+    // Corpo completo do email
     formData.append("message", `
-        Pedido de cotação de reserva:
-        Nome: ${nome}
-        Email: ${email}
-        Telefone: ${telefone}
-        País: ${pais}
-        Observações: ${obs}
+=== STEP 1 — Dados da Reserva ===
+Check-in: ${checkin}
+Check-out: ${checkout}
+Noites: ${noites}
+Adultos: ${adultos}
+Crianças: ${criancas}
+Bebés: ${bebes}
+Total de Hóspedes: ${totalHospedes}
+Apartamentos: ${apartamentos}
+
+=== STEP 2 — Dados do Hóspede ===
+Nome: ${nome}
+Email: ${email}
+Telefone: ${telefone}
+País: ${pais}
+Observações: ${obs}
+
+Idioma do Pedido: ${currentLang.toUpperCase()}
     `);
 
     await fetch("https://api.web3forms.com/submit", {
@@ -472,7 +495,6 @@ document.getElementById("btnEnviarCotacao").addEventListener("click", async () =
 
     abrirStep3();
 });
-
 
 // ======================================================
 // STEP 3 — SUCESSO
