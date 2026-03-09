@@ -452,7 +452,7 @@ document.getElementById("btnEnviarCotacao").addEventListener("click", async () =
     }
 
     const formData = new FormData();
-    formData.append("access_key", "AQUI_A_TUA_KEY");
+    formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
     formData.append("subject", "Pedido de Cotação de Reserva");
     formData.append("name", nome);
     formData.append("email", email);
@@ -472,6 +472,7 @@ document.getElementById("btnEnviarCotacao").addEventListener("click", async () =
 
     abrirStep3();
 });
+
 
 // ======================================================
 // STEP 3 — SUCESSO
