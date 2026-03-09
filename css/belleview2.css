@@ -2290,48 +2290,80 @@ a[href^="https://wa.me"],
 #step2 {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* igual ao espaçamento interno do Step 1 */
+    gap: 6px; /* mais compacto */
+    margin-top: -4px; /* aproxima do topo */
 }
 
-/* Labels mais compactos */
-#step2 label {
-    margin-bottom: 4px;
+/* Título interno compacto */
+#step2 h3 {
+    margin: 0 0 4px 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 600;
 }
 
-/* Inputs, selects e textarea com margens iguais ao Step 1 */
-#step2 input,
-#step2 select,
-#step2 textarea {
-    margin-bottom: 4px;
-}
-
-/* Grid interna do Step 2 (igual ao Step 1) */
+/* Grid interna igual ao Step 1 mas mais compacta */
 #step2 .modal-grid {
-    margin-top: 10px;
-    gap: 14px 18px; /* igual ao Step 1 */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 14px; /* igual ao Step 1 */
+    margin-top: 4px;
+}
+
+/* Labels compactos */
+#step2 label {
+    margin-bottom: 2px;
+    font-size: 14px;
+}
+
+/* Inputs e selects mais baixos */
+#step2 input,
+#step2 select {
+    height: 38px; /* igual ao Step 1 */
+    margin-bottom: 2px;
+}
+
+/* Textarea mais pequeno */
+#step2 textarea {
+    height: 50px;
+    resize: none;
+    margin-bottom: 2px;
 }
 
 /* ===========================================================
    TELEFONE + INDICATIVO — PROPORÇÕES CORRETAS
 =========================================================== */
 
-/* Indicativo maior, Telefone menor */
-#step2 .modal-grid .indicativo {
+/* Indicativo maior */
+#step2 .indicativo {
     grid-column: span 1;
 }
 
-#step2 .modal-grid .telefone {
+/* Telefone menor */
+#step2 .telefone {
     grid-column: span 1;
 }
 
 /* Altura consistente */
 #indicativoHospede,
 #telefoneHospede {
-    height: 44px;
+    height: 38px;
 }
 
-/* Ajuste de textarea */
-#step2 textarea {
-    height: 70px;
-    resize: none;
+/* ===========================================================
+   BOTÕES — ALTURA IGUAL AO STEP 1
+=========================================================== */
+
+#step2 .modal-btn,
+#step2 .modal-btn.secondary,
+#step2 .modal-btn.success {
+    height: 38px;
+    padding: 6px 14px;
+    font-size: 14px;
+}
+
+/* Aproxima os botões do conteúdo */
+#step2 > div:last-child {
+    margin-top: 6px !important;
 }
