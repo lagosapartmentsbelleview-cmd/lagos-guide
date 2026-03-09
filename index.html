@@ -173,26 +173,25 @@
     <label>Email</label>
     <input type="email" id="emailHospede">
 
+    <div class="linha-telefone">
+        <div>
+            <label data-i18n="phone_prefix">Indicativo</label>
+            <select id="indicativoHospede"></select>
+        </div>
+
+        <div>
+            <label data-i18n="phone">Telefone</label>
+            <input type="text" id="telefoneHospede">
+        </div>
+    </div>
+
     <label data-i18n="country">País</label>
-<select id="paisHospede"></select>
-
-<div class="linha-telefone">
-    <div>
-        <label data-i18n="phone_prefix">Indicativo</label>
-        <select id="indicativoHospede"></select>
-    </div>
-
-    <div>
-        <label data-i18n="phone">Telefone</label>
-        <input type="text" id="telefoneHospede">
-    </div>
-</div>
-
+    <select id="paisHospede"></select>
 
     <label data-i18n="notes_optional">Observações (opcional)</label>
     <textarea id="obsHospede" rows="3"></textarea>
 
-    <div style="display:flex; gap:10px; margin-top:15px;">
+    <div style="display:flex; gap:10px; margin-top:10px;">
         <button id="btnVoltarStep1" class="modal-btn secondary">
             Voltar atrás
         </button>
@@ -203,6 +202,7 @@
     </div>
 
 </div>
+
 
         <!-- ================================================= -->
         <!-- STEP 3 — SUCESSO -->
