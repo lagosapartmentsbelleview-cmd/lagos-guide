@@ -396,35 +396,36 @@ function abrirStep2() {
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
 
-    // Limpar mensagens antigas
-    document.querySelectorAll(".step2-dates, .step2-summary").forEach(el => el.remove());
+    // Limpar blocos antigos
+    const oldInfo = document.querySelector(".step2-info");
+    if (oldInfo) oldInfo.remove();
 
     // Título traduzido
     const header = document.getElementById("step2Header");
     header.textContent = lang.quote_request;
 
-    // Inserir datas + resumo juntos (ordem correta e CSS preservado)
+    // Inserir bloco completo com o wrapper correto
     header.insertAdjacentHTML(
         "afterend",
         `
-        <p class="step2-dates">
-            ${lang.step2_dates
-                .replace("{CHECKIN}", checkin)
-                .replace("{CHECKOUT}", checkout)}
-        </p>
+        <div class="step2-info" style="text-align:center; margin-bottom:15px;">
+            <p class="step2-dates" style="color:#0077cc; font-weight:600; margin:4px 0;">
+                ${lang.step2_dates
+                    .replace("{CHECKIN}", checkin)
+                    .replace("{CHECKOUT}", checkout)}
+            </p>
 
-        <p class="step2-summary">
-            ${lang.step2_summary
-                .replace("{GUESTS}", total)
-                .replace("{APTS}", apt)}
-        </p>
+            <p class="step2-summary" style="color:#444; margin:4px 0;">
+                ${lang.step2_summary
+                    .replace("{GUESTS}", total)
+                    .replace("{APTS}", apt)}
+            </p>
+        </div>
         `
     );
 
     updateProgress(2);
 }
-
-
 
 // ======================================================
 // STEP 2 — VOLTAR PARA STEP 1
