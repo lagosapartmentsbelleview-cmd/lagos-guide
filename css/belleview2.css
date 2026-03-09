@@ -2282,3 +2282,9 @@ a[href^="https://wa.me"],
 .linha-telefone input {
     height: 44px;
 }
+
+#step2 input,
+#step2 select,
+#step2 textarea {
+    margin-bottom: 8px;
+}
