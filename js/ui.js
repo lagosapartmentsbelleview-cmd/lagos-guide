@@ -29,7 +29,7 @@ modal.addEventListener("click", (e) => {
 // ======================================================
 // LISTA DE PAÍSES + INDICATIVOS
 // ======================================================
-const COUNTRIES = [
+const PAISES_INDICATIVOS = [
   { name: "Afghanistan", code: "+93" },
   { name: "Albania", code: "+355" },
   { name: "Algeria", code: "+213" },
