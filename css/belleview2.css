@@ -2283,8 +2283,35 @@ a[href^="https://wa.me"],
     height: 44px;
 }
 
+/* Step 2 compacto como Step 1 */
+#step2 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* igual ao espaçamento interno do Step 1 */
+}
+
+/* Reduz espaço entre labels e inputs */
+#step2 label {
+    margin-bottom: 4px;
+}
+
+/* Inputs, selects e textarea com margens iguais ao Step 1 */
 #step2 input,
 #step2 select,
 #step2 textarea {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
+
+/* Linha Telefone + Indicativo */
+.linha-telefone {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 12px;
+}
+
+/* Altura consistente */
+.linha-telefone select,
+.linha-telefone input {
+    height: 44px;
+}
+
