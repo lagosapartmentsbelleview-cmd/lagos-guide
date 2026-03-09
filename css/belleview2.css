@@ -2269,3 +2269,16 @@ a[href^="https://wa.me"],
 .progress-step.active {
     background: #005c99;
 }
+
+/* Linha Telefone + Indicativo */
+.linha-telefone {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.linha-telefone select,
+.linha-telefone input {
+    height: 44px;
+}
