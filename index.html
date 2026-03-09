@@ -77,14 +77,16 @@
     <div class="modal-box">
 
         <button id="fecharModal" class="modal-close">&times;</button>
+
+        <!-- Título do modal -->
         <h2 id="modalTitulo" data-i18n="reserve">Reservar</h2>
 
+        <!-- Barra de progresso -->
         <div class="progress-bar">
             <div class="progress-step" id="progressStep1"></div>
             <div class="progress-step" id="progressStep2"></div>
-        <div class="progress-step" id="progressStep3"></div>
-</div>
-
+            <div class="progress-step" id="progressStep3"></div>
+        </div>
 
         <!-- ================================================= -->
         <!-- STEP 1 — VERIFICAR DISPONIBILIDADE -->
@@ -152,7 +154,7 @@
 
             </div>
 
-            <button id="btnVerificar" class="modal-btn">
+            <button id="btnVerificar" class="modal-btn" data-i18n="check_availability">
                 Verificar Disponibilidade
             </button>
 
@@ -160,59 +162,59 @@
 
         </div>
 
-<!-- ================================================= -->
-<!-- STEP 2 — PEDIDO DE COTAÇÃO -->
-<!-- ================================================= -->
-<div id="step2" style="display:none;">
+        <!-- ================================================= -->
+        <!-- STEP 2 — PEDIDO DE COTAÇÃO -->
+        <!-- ================================================= -->
+        <div id="step2" style="display:none;">
 
-    <h3 id="step2Header"></h3>
+            <!-- Título do Step 2 -->
+            <h3 id="step2Header" data-i18n="quote_request">Pedido de Cotação</h3>
 
-    <div class="modal-grid">
-        <div style="grid-column: span 2;">
-            <label data-i18n="full_name">Nome Completo</label>
-            <input type="text" id="nomeHospede">
+            <div class="modal-grid">
+
+                <div style="grid-column: span 2;">
+                    <label data-i18n="full_name">Nome Completo</label>
+                    <input type="text" id="nomeHospede">
+                </div>
+
+                <div style="grid-column: span 2;">
+                    <label data-i18n="email">Email</label>
+                    <input type="email" id="emailHospede">
+                </div>
+
+                <div>
+                    <label data-i18n="phone_prefix">Indicativo</label>
+                    <select id="indicativoHospede"></select>
+                </div>
+
+                <div>
+                    <label data-i18n="phone">Telefone</label>
+                    <input type="text" id="telefoneHospede">
+                </div>
+
+                <div style="grid-column: span 2;">
+                    <label data-i18n="country">País</label>
+                    <select id="paisHospede"></select>
+                </div>
+
+                <div style="grid-column: span 2;">
+                    <label data-i18n="notes_optional">Observações (opcional)</label>
+                    <textarea id="obsHospede" rows="3"></textarea>
+                </div>
+
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:10px;">
+                <button id="btnVoltarStep1" class="modal-btn secondary" data-i18n="back">
+                    Voltar atrás
+                </button>
+
+                <button id="btnEnviarCotacao" class="modal-btn success" data-i18n="send_quote">
+                    Enviar Pedido de Cotação
+                </button>
+            </div>
+
         </div>
-
-        <div style="grid-column: span 2;">
-            <label>Email</label>
-            <input type="email" id="emailHospede">
-        </div>
-
-        <!-- Indicativo + Telefone lado a lado -->
-        <div>
-            <label data-i18n="phone_prefix">Indicativo</label>
-            <select id="indicativoHospede"></select>
-        </div>
-
-        <div>
-            <label data-i18n="phone">Telefone</label>
-            <input type="text" id="telefoneHospede">
-        </div>
-
-        <div style="grid-column: span 2;">
-            <label data-i18n="country">País</label>
-            <select id="paisHospede"></select>
-        </div>
-
-        <div style="grid-column: span 2;">
-            <label data-i18n="notes_optional">Observações (opcional)</label>
-            <textarea id="obsHospede" rows="3"></textarea>
-        </div>
-    </div>
-
-    <div style="display:flex; gap:10px; margin-top:10px;">
-        <button id="btnVoltarStep1" class="modal-btn secondary">
-            Voltar atrás
-        </button>
-
-        <button id="btnEnviarCotacao" class="modal-btn success">
-            Enviar Pedido de Cotação
-        </button>
-    </div>
-
-</div>
-
-
 
         <!-- ================================================= -->
         <!-- STEP 3 — SUCESSO -->
@@ -226,7 +228,7 @@
                 Irá receber por email a cotação completa da estadia e as respetivas condições de reserva e pagamento.
             </p>
 
-            <button id="btnFecharStep3" class="modal-btn">
+            <button id="btnFecharStep3" class="modal-btn" data-i18n="close">
                 Fechar
             </button>
 
@@ -234,6 +236,7 @@
 
     </div>
 </div>
+
 
 
 
