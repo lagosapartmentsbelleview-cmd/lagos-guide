@@ -438,74 +438,82 @@ document.getElementById("btnVoltarStep1").addEventListener("click", () => {
 // ======================================================
 // STEP 2 — ENVIAR PEDIDO DE COTAÇÃO
 // ======================================================
-document.getElementById("btnEnviarCotacao").addEventListener("click", async () => {
+const btnEnviar = document.getElementById("btnEnviarCotacao");
 
-    // STEP 2 — Dados do hóspede
-    const nome = document.getElementById("nomeHospede").value.trim();
-    const email = document.getElementById("emailHospede").value.trim();
-    const telefone = document.getElementById("telefoneHospede").value.trim();
-    const pais = document.getElementById("paisHospede").value.trim();
-    const obs = document.getElementById("obsHospede").value.trim();
+if (btnEnviar) {
+    btnEnviar.addEventListener("click", async () => {
 
-    if (!nome || !email || !telefone || !pais) {
-        alert(translations[currentLang].rules_required_fields);
-        return;
-    }
+        // STEP 2 — Dados do hóspede
+        const nome = document.getElementById("nomeHospede")?.value.trim() || "";
+        const email = document.getElementById("emailHospede")?.value.trim() || "";
+        const telefone = document.getElementById("telefoneHospede")?.value.trim() || "";
+        const pais = document.getElementById("paisHospede")?.value.trim() || "";
+        const obs = document.getElementById("obsHospede")?.value.trim() || "";
 
-    // STEP 1 — Dados da reserva
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
-    const adultos = document.getElementById("adults").value;
-    const criancas = document.getElementById("children").value;
-    const bebes = document.getElementById("babies").value;
-    const berco = document.getElementById("bercoHospede").value === "yes" ? "Sim" : "Não";
-    const totalHospedes = document.getElementById("totalHospedes").textContent;
-    const apartamentos = document.getElementById("apartments").value;
+        if (!nome || !email || !telefone || !pais) {
+            alert(translations[currentLang].rules_required_fields);
+            return;
+        }
 
-    const noites = (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24);
+        // STEP 1 — Dados da reserva
+        const checkin = document.getElementById("checkin")?.value || "";
+        const checkout = document.getElementById("checkout")?.value || "";
+        const adultos = document.getElementById("adults")?.value || "0";
+        const criancas = document.getElementById("children")?.value || "0";
+        const bebes = document.getElementById("babies")?.value || "0";
+        const apartamentos = document.getElementById("apartments")?.value || "1";
+        const totalHospedes = document.getElementById("totalHospedes")?.textContent || "0";
 
-    // EMAIL EM HTML — TABELA PREMIUM
-    const htmlMessage = `
-        <h2 style="font-family:Arial; color:#333;">Pedido de Cotação - Belleview Lagos</h2>
+        // Campo berço — agora seguro
+        const bercoEl = document.getElementById("bercoHospede");
+        const berco = bercoEl ? (bercoEl.value === "yes" ? "Sim" : "Não") : "Não indicado";
 
-        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 650px; font-family:Arial; font-size:14px;">
-            
-            <tr><th colspan="2" style="background:#f4f4f4; text-align:left;">Dados da Reserva</th></tr>
-            <tr><td><strong>Check-in</strong></td><td>${checkin}</td></tr>
-            <tr><td><strong>Check-out</strong></td><td>${checkout}</td></tr>
-            <tr><td><strong>Noites</strong></td><td>${noites}</td></tr>
-            <tr><td><strong>Adultos</strong></td><td>${adultos}</td></tr>
-            <tr><td><strong>Crianças</strong></td><td>${criancas}</td></tr>
-            <tr><td><strong>Bebés</strong></td><td>${bebes}</td></tr>
-            <tr><td><strong>Berço</strong></td><td>${berco}</td></tr>
-            <tr><td><strong>Total de Hóspedes</strong></td><td>${totalHospedes}</td></tr>
-            <tr><td><strong>Apartamentos</strong></td><td>${apartamentos}</td></tr>
+        const noites = checkin && checkout
+            ? (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24)
+            : 0;
 
-            <tr><th colspan="2" style="background:#f4f4f4; text-align:left;">Dados do Hóspede</th></tr>
-            <tr><td><strong>Nome</strong></td><td>${nome}</td></tr>
-            <tr><td><strong>Email</strong></td><td>${email}</td></tr>
-            <tr><td><strong>Telefone</strong></td><td>${telefone}</td></tr>
-            <tr><td><strong>País</strong></td><td>${pais}</td></tr>
-            <tr><td><strong>Observações</strong></td><td>${obs || "—"}</td></tr>
+        // EMAIL HTML
+        const htmlMessage = `
+            <h2>Pedido de Cotação - Belleview Lagos</h2>
 
-            <tr><th colspan="2" style="background:#f4f4f4; text-align:left;">Informação Técnica</th></tr>
-            <tr><td><strong>Idioma do Pedido</strong></td><td>${currentLang.toUpperCase()}</td></tr>
-        </table>
-    `;
+            <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 650px;">
+                <tr><th colspan="2" style="background:#f4f4f4;">Dados da Reserva</th></tr>
+                <tr><td><strong>Check-in</strong></td><td>${checkin}</td></tr>
+                <tr><td><strong>Check-out</strong></td><td>${checkout}</td></tr>
+                <tr><td><strong>Noites</strong></td><td>${noites}</td></tr>
+                <tr><td><strong>Adultos</strong></td><td>${adultos}</td></tr>
+                <tr><td><strong>Crianças</strong></td><td>${criancas}</td></tr>
+                <tr><td><strong>Bebés</strong></td><td>${bebes}</td></tr>
+                <tr><td><strong>Berço</strong></td><td>${berco}</td></tr>
+                <tr><td><strong>Total de Hóspedes</strong></td><td>${totalHospedes}</td></tr>
+                <tr><td><strong>Apartamentos</strong></td><td>${apartamentos}</td></tr>
 
-    const formData = new FormData();
-    formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
-    formData.append("subject", "Pedido de Cotação - Belleview Lagos");
-    formData.append("from_name", "Belleview Lagos Website");
-    formData.append("message", htmlMessage);
+                <tr><th colspan="2" style="background:#f4f4f4;">Dados do Hóspede</th></tr>
+                <tr><td><strong>Nome</strong></td><td>${nome}</td></tr>
+                <tr><td><strong>Email</strong></td><td>${email}</td></tr>
+                <tr><td><strong>Telefone</strong></td><td>${telefone}</td></tr>
+                <tr><td><strong>País</strong></td><td>${pais}</td></tr>
+                <tr><td><strong>Observações</strong></td><td>${obs || "—"}</td></tr>
 
-    await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData
+                <tr><th colspan="2" style="background:#f4f4f4;">Informação Técnica</th></tr>
+                <tr><td><strong>Idioma</strong></td><td>${currentLang.toUpperCase()}</td></tr>
+            </table>
+        `;
+
+        const formData = new FormData();
+        formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
+        formData.append("subject", "Pedido de Cotação - Belleview Lagos");
+        formData.append("message", htmlMessage);
+
+        await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        abrirStep3();
     });
+}
 
-    abrirStep3();
-});
 
 
 // ======================================================
