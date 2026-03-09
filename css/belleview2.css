@@ -172,6 +172,15 @@ body {
     transform: translateY(-50%) translateY(-4px);
 }
 
+.btn-flutuante {
+    transition: opacity 0.25s ease;
+}
+
+.btn-flutuante.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
 /* ===========================================================
    MODAL
 =========================================================== */
