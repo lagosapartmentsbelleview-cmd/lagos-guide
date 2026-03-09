@@ -266,14 +266,14 @@ function validarCapacidade() {
     msg.classList.remove("disponivel", "indisponivel");
 
     if (adultos < apartamentos) {
-        msg.textContent = `Cada apartamento precisa de pelo menos 1 adulto.`;
+        msg.textContent = translations[currentLang].rules_one_adult;
         msg.classList.add("indisponivel");
         msg.style.display = "block";
         return false;
     }
 
     if (total > capacidadeMax) {
-        msg.textContent = `Capacidade excedida: máximo ${capacidadeMax} hóspedes.`;
+        msg.textContent = translations[currentLang].rules_capacity_exceeded.replace("{MAX}", capacidadeMax);
         msg.classList.add("indisponivel");
         msg.style.display = "block";
         return false;
@@ -281,6 +281,7 @@ function validarCapacidade() {
 
     return true;
 }
+
 
 // ======================================================
 // STEP 1 — VERIFICAR DISPONIBILIDADE
@@ -298,7 +299,7 @@ btnVerificar.addEventListener("click", () => {
     msg.classList.remove("disponivel", "indisponivel");
 
     if (!checkin || !checkout) {
-        msg.textContent = "Selecione as datas de check-in e check-out.";
+        msg.textContent = translations[currentLang].rules_select_dates;
         msg.classList.add("indisponivel");
         msg.style.display = "block";
         return;
@@ -309,7 +310,7 @@ btnVerificar.addEventListener("click", () => {
     const hoje = new Date();
 
     if (dataOut <= dataIn) {
-        msg.textContent = "A data de check-out deve ser posterior ao check-in.";
+        msg.textContent = translations[currentLang].rules_checkout_after_checkin;
         msg.classList.add("indisponivel");
         msg.style.display = "block";
         return;
@@ -317,7 +318,7 @@ btnVerificar.addEventListener("click", () => {
 
     const noites = (dataOut - dataIn) / (1000 * 60 * 60 * 24);
     if (noites < 3) {
-        msg.textContent = "O período mínimo de reserva é de 3 noites.";
+        msg.textContent = translations[currentLang].rules_min_nights;
         msg.classList.add("indisponivel");
         msg.style.display = "block";
         return;
@@ -325,7 +326,7 @@ btnVerificar.addEventListener("click", () => {
 
     const diasAntecedencia = (dataIn - hoje) / (1000 * 60 * 60 * 24);
     if (diasAntecedencia < 3) {
-        msg.textContent = "A reserva deve ser feita com pelo menos 3 dias de antecedência.";
+        msg.textContent = translations[currentLang].rules_min_days;
         msg.classList.add("indisponivel");
         msg.style.display = "block";
         return;
@@ -333,26 +334,25 @@ btnVerificar.addEventListener("click", () => {
 
     if (!validarCapacidade()) return;
 
-    // MOTOR REAL DE DISPONIBILIDADE
     const numApt = parseInt(document.getElementById("apartments").value);
     const r = verificarDisponibilidade(checkin, checkout, numApt);
 
     if (!r || !r.status) {
-        msg.textContent = "Erro ao verificar disponibilidade.";
+        msg.textContent = translations[currentLang].rules_invalid_dates;
         msg.classList.add("indisponivel");
         msg.style.display = "block";
         return;
     }
 
     if (r.status === "erro") {
-        msg.textContent = "Datas inválidas.";
+        msg.textContent = translations[currentLang].rules_invalid_dates;
         msg.classList.add("indisponivel");
         msg.style.display = "block";
         return;
     }
 
     if (r.status === "indisponivel") {
-        msg.textContent = "Não existem apartamentos disponíveis para as datas selecionadas.";
+        msg.textContent = translations[currentLang].rules_no_availability;
         msg.classList.add("indisponivel");
         msg.style.display = "block";
         return;
@@ -362,8 +362,8 @@ btnVerificar.addEventListener("click", () => {
         const disponiveis = r.apartamentos ? r.apartamentos.length : 0;
 
         msg.innerHTML = `
-            <strong>Disponibilidade parcial</strong><br>
-            Apenas ${disponiveis} apartamento(s) disponível(is).
+            <strong>${translations[currentLang].rules_partial}</strong><br>
+            ${disponiveis} apartment(s) available.
         `;
         msg.classList.add("indisponivel");
         msg.style.display = "block";
@@ -371,7 +371,7 @@ btnVerificar.addEventListener("click", () => {
     }
 
     if (r.status === "disponivel") {
-        msg.textContent = "Excelente notícia! O apartamento está disponível.";
+        msg.textContent = translations[currentLang].rules_available;
         msg.classList.add("disponivel");
         msg.style.display = "block";
 
@@ -447,7 +447,7 @@ document.getElementById("btnEnviarCotacao").addEventListener("click", async () =
     const obs = document.getElementById("obsHospede").value.trim();
 
     if (!nome || !email || !telefone || !pais) {
-        alert("Por favor preencha todos os campos obrigatórios.");
+        alert(translations[currentLang].rules_required_fields);
         return;
     }
 
