@@ -2314,4 +2314,24 @@ a[href^="https://wa.me"],
 .linha-telefone input {
     height: 44px;
 }
+/* Step 2 compacto como Step 1 */
+#step2 .modal-grid {
+    margin-top: 10px;
+    gap: 14px 18px; /* igual ao Step 1 */
+}
+
+/* Indicativo maior, Telefone menor */
+#indicativoHospede {
+    width: 100%;
+}
+
+#telefoneHospede {
+    width: 100%;
+}
+
+/* Ajuste de textarea */
+#step2 textarea {
+    height: 70px;
+    resize: none;
+}
 
