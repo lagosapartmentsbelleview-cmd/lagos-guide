@@ -20,19 +20,25 @@ async function carregarReservasPublico(force = false) {
     // 2) Caso contrário, vamos ao Firebase
     console.log("A carregar reservas do Firebase para o site público...");
 
-    const snap = await db.collection("reservas").orderBy("checkin").get();
+const snap = await db.collection("reservas").orderBy("checkin").get();
 
-    const lista = [];
-    snap.forEach(doc => lista.push({ id: doc.id, ...doc.data() }));
+const lista = [];
+snap.forEach(doc => lista.push({ id: doc.id, ...doc.data() }));
 
-    reservas = lista;
-    reservasCarregadasEm = agora;
+// 🔥 FILTRAR APENAS RESERVAS FUTURAS
+const hoje = new Date();
+const futuras = lista.filter(r => {
+    const fim = parseDataPt(r.checkout);
+    return fim && fim >= hoje;
+});
 
-    console.log("Reservas carregadas no site público:", reservas);
+reservas = futuras;
+reservasCarregadasEm = agora;
+
+console.log("Reservas futuras carregadas no site público:", reservas);
+
 }
 
-
-carregarReservasPublico();
 
 function parseDataPt(str) {
     if (!str) return null;
@@ -351,12 +357,16 @@ function renderApartamentos() {
 const btn = document.getElementById("btnDisponibilidade");
 const resultado = document.getElementById("resultadoDisponibilidade");
 
-btn.addEventListener("click", () => {
+btn.addEventListener("click", async () => {
+
+    // 1) Garantir que as reservas estão carregadas (com cache do ponto 1)
+    await carregarReservasPublico();
+
+    // 2) Agora sim, verificar disponibilidade
     const checkin = document.getElementById("checkin").value;
     const checkout = document.getElementById("checkout").value;
     const numApt = parseInt(document.getElementById("numApt").value);
 
-    const t = translations[window.currentLang];
     const r = verificarDisponibilidade(checkin, checkout, numApt);
 
     // Limpa estados anteriores
