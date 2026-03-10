@@ -390,6 +390,8 @@ full_name: "Nome Completo",
         rules_one_adult: "Cada apartamento precisa de pelo menos 1 adulto.",
         rules_capacity_exceeded: "Capacidade excedida: máximo {MAX} hóspedes.",
 
+continue: "Continuar",
+
   },
   en: {
     menu_alojamento: "Accommodation",
@@ -758,6 +760,8 @@ full_name: "Full Name",
         rules_required_fields: "Please fill in all required fields.",
         rules_one_adult: "Each apartment requires at least 1 adult.",
         rules_capacity_exceeded: "Capacity exceeded: maximum {MAX} guests.",
+
+continue: "Continue",
 
   },
   es: {
@@ -1140,6 +1144,7 @@ quote_request: "Solicitud de Cotización",
         rules_one_adult: "Cada apartamento requiere al menos 1 adulto.",
         rules_capacity_exceeded: "Capacidad excedida: máximo {MAX} huéspedes.",
 
+continue: "Continuar",
 
   },
   fr: {
@@ -1509,8 +1514,8 @@ quote_request: "Demande de Devis",
         rules_required_fields: "Veuillez remplir tous les champs obligatoires.",
         rules_one_adult: "Chaque appartement nécessite au moins 1 adulte.",
         rules_capacity_exceeded: "Capacité dépassée : maximum {MAX} voyageurs.",
-   
 
+continue: "Continuer",
 
   },
   it: {
@@ -1881,7 +1886,8 @@ full_name: "Nome e Cognome",
         rules_required_fields: "Per favore compila tutti i campi obbligatori.",
         rules_one_adult: "Ogni appartamento richiede almeno 1 adulto.",
         rules_capacity_exceeded: "Capacità superata: massimo {MAX} ospiti.",
-
+     
+continue: "Continua",
 
   },
   de: {
@@ -2263,6 +2269,8 @@ full_name: "Vollständiger Name",
         rules_required_fields: "Bitte füllen Sie alle Pflichtfelder aus.",
         rules_one_adult: "Jedes Apartment benötigt mindestens 1 Erwachsenen.",
         rules_capacity_exceeded: "Kapazität überschritten: maximal {MAX} Gäste.",
+
+continue: "Weiter",
 
   }
 };
