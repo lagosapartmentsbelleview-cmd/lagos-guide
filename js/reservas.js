@@ -5,15 +5,32 @@ auth.onAuthStateChanged(user => {
 });
 
 let reservas = [];
+let reservasCarregadasEm = 0;                 // timestamp do último carregamento
+const RESERVAS_TTL_MS = 5 * 60 * 1000;        // 5 minutos de cache
 
-async function carregarReservasPublico() {
+async function carregarReservasPublico(force = false) {
+    const agora = Date.now();
+
+    // 1) Se já temos reservas recentes e não estamos a forçar, reutilizamos
+    if (!force && reservas.length > 0 && (agora - reservasCarregadasEm) < RESERVAS_TTL_MS) {
+        console.log("Reservas reutilizadas do cache em memória:", reservas);
+        return;
+    }
+
+    // 2) Caso contrário, vamos ao Firebase
+    console.log("A carregar reservas do Firebase para o site público...");
+
     const snap = await db.collection("reservas").orderBy("checkin").get();
 
-    reservas = [];
-    snap.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
+    const lista = [];
+    snap.forEach(doc => lista.push({ id: doc.id, ...doc.data() }));
+
+    reservas = lista;
+    reservasCarregadasEm = agora;
 
     console.log("Reservas carregadas no site público:", reservas);
 }
+
 
 carregarReservasPublico();
 
