@@ -5,34 +5,39 @@ auth.onAuthStateChanged(user => {
 });
 
 let reservas = [];
-let reservasCarregadasEm = 0;                 // timestamp do último carregamento
-const RESERVAS_TTL_MS = 5 * 60 * 1000;        // 5 minutos de cache
+let reservasCarregadasEm = 0;
+const RESERVAS_TTL_MS = 5 * 60 * 1000; // 5 minutos
 
+// ---------------------------------------------------------------
+// CARREGAR RESERVAS DO FIREBASE (COM CACHE EM MEMÓRIA)
+// ---------------------------------------------------------------
 async function carregarReservasPublico(force = false) {
     const agora = Date.now();
 
-    // 1) Se já temos reservas recentes e não estamos a forçar, reutilizamos
+    // Se já temos reservas recentes e não estamos a forçar, reutilizamos
     if (!force && reservas.length > 0 && (agora - reservasCarregadasEm) < RESERVAS_TTL_MS) {
         console.log("Reservas reutilizadas do cache em memória:", reservas);
         return;
     }
 
-    // 2) Caso contrário, vamos ao Firebase
     console.log("A carregar reservas do Firebase para o site público...");
 
-const snap = await db.collection("reservas").orderBy("checkin").get();
+    const snap = await db.collection("reservas").orderBy("checkin").get();
 
-const lista = [];
-snap.forEach(doc => lista.push({ id: doc.id, ...doc.data() }));
+    reservas = [];
+    snap.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
 
-reservas = lista;
-reservasCarregadasEm = agora;
+    reservasCarregadasEm = agora;
 
-console.log("Reservas carregadas no site público:", reservas);
-
+    console.log("Reservas carregadas no site público:", reservas);
 }
 
+// NOTA: já não chamamos carregarReservasPublico() automaticamente aqui.
+// Só carregamos quando o utilizador clicar em "Verificar Disponibilidade".
 
+// ---------------------------------------------------------------
+// UTILITÁRIOS DE DATA
+// ---------------------------------------------------------------
 function parseDataPt(str) {
     if (!str) return null;
 
@@ -56,7 +61,6 @@ function calcularNoites(checkin, checkout) {
     return Math.round(diff / (1000 * 60 * 60 * 24));
 }
 
-
 function validarDatasCheckinCheckout(checkin, checkout) {
     const [d1, m1, a1] = checkin.split("/");
     const [d2, m2, a2] = checkout.split("/");
@@ -67,6 +71,24 @@ function validarDatasCheckinCheckout(checkin, checkout) {
     return dataCheckout > dataCheckin;
 }
 
+// ---------------------------------------------------------------
+// REGRA: SÓ PERMITIR DATAS FUTURAS
+// ---------------------------------------------------------------
+function validarCheckinFuturo(checkin) {
+    const dataCheckin = parseDataPt(checkin);
+    if (!dataCheckin) return false;
+
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+    dataCheckin.setHours(0, 0, 0, 0);
+
+    // Só permite check-in hoje ou no futuro
+    return dataCheckin >= hoje;
+}
+
+// ---------------------------------------------------------------
+// LÓGICA DE CONFLITOS E ALOCAÇÃO
+// ---------------------------------------------------------------
 function temConflitoNoApartamento(reservaNova, apartamento, reservasExistentes) {
     const iniNova = parseDataPt(reservaNova.checkin);
     const fimNova = parseDataPt(reservaNova.checkout);
@@ -140,6 +162,11 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         return { status: "erro", mensagem: "Selecione datas válidas." };
     }
 
+    // NOVO: bloquear datas de check-in no passado
+    if (!validarCheckinFuturo(checkin)) {
+        return { status: "past", mensagem: "Check-in tem de ser hoje ou numa data futura." };
+    }
+
     if (!validarDatasCheckinCheckout(checkin, checkout)) {
         return { status: "erro", mensagem: "Checkout deve ser depois do check-in." };
     }
@@ -176,7 +203,6 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         apartamentos: apartamentosLivres
     };
 }
-
 
 // ------------------------------
 // ADULTOS E CRIANÇAS 
@@ -241,8 +267,6 @@ document.getElementById("checkout").addEventListener("focus", () => {
 numAptSelect.addEventListener("change", () => {
     extraCampos.style.display = "block";
 });
-
-
 
 // ------------------------------
 // GERAR APARTAMENTOS
@@ -345,20 +369,29 @@ function renderApartamentos() {
 }
 
 // ---------------------------------------------------------------
-// BOTÃO VER DISPONIBILIDADE
+// BOTÃO VER DISPONIBILIDADE (AGORA ASSÍNCRONO + CACHE + FUTURO)
 // ---------------------------------------------------------------
 const btn = document.getElementById("btnDisponibilidade");
 const resultado = document.getElementById("resultadoDisponibilidade");
 
 btn.addEventListener("click", async () => {
-
-    // 1) Garantir que as reservas estão carregadas (com cache do ponto 1)
-    await carregarReservasPublico();
-
-    // 2) Agora sim, verificar disponibilidade
     const checkin = document.getElementById("checkin").value;
     const checkout = document.getElementById("checkout").value;
     const numApt = parseInt(document.getElementById("numApt").value);
+
+    const t = translations[window.currentLang];
+
+    // 1) Bloquear logo datas de check-in no passado (mensagem traduzível)
+    if (!validarCheckinFuturo(checkin)) {
+        resultado.classList.remove("disponivel", "indisponivel");
+        resultado.textContent = t.availability_past || "Só é possível verificar disponibilidade para datas futuras.";
+        resultado.classList.add("indisponivel");
+        resultado.style.display = "block";
+        return;
+    }
+
+    // 2) Garantir que as reservas estão carregadas (com cache)
+    await carregarReservasPublico();
 
     const r = verificarDisponibilidade(checkin, checkout, numApt);
 
@@ -366,7 +399,7 @@ btn.addEventListener("click", async () => {
     resultado.classList.remove("disponivel", "indisponivel");
     resultado.style.display = "none";
 
-    // ERRO: datas inválidas
+    // ERRO: datas inválidas / checkout antes do checkin
     if (r.status === "erro") {
         resultado.textContent = t.availability_error;
         resultado.classList.add("indisponivel");
@@ -374,9 +407,9 @@ btn.addEventListener("click", async () => {
         return;
     }
 
-    // ERRO: checkout antes do checkin
-    if (r.status === "invalid") {
-        resultado.textContent = t.availability_invalid;
+    // ESTADO "past" vindo de verificarDisponibilidade (fallback, se algum dia usares lá dentro)
+    if (r.status === "past") {
+        resultado.textContent = t.availability_past || "Só é possível verificar disponibilidade para datas futuras.";
         resultado.classList.add("indisponivel");
         resultado.style.display = "block";
         return;
@@ -418,7 +451,6 @@ btn.addEventListener("click", async () => {
     }
 });
 
-
 function limparCard() {
     resultado.style.display = "none";
     resultado.classList.remove("disponivel", "indisponivel");
@@ -427,8 +459,6 @@ function limparCard() {
 document.getElementById("checkin").addEventListener("change", limparCard);
 document.getElementById("checkout").addEventListener("change", limparCard);
 document.getElementById("numApt").addEventListener("change", limparCard);
-
-
 
 // ---------------------------------------------------------------
 // EVENTOS
