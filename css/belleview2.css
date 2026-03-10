@@ -6,7 +6,6 @@ html, body {
    BASE
 =========================================================== */
 body {
-    padding-top: 80px; /* ajusta conforme a altura real do header */
     margin: 0;
     font-family: "Inter", sans-serif;
     background: #f7f7f7;
