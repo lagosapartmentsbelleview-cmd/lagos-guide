@@ -1,18 +1,13 @@
-auth.onAuthStateChanged(user => {
-    if (!user) {
-        window.location.href = "login.html";
-    }
-});
-
-// ---------------------------------------------------------------
-// RESERVAS (carregadas apenas quando necessário)
-// ---------------------------------------------------------------
+// ======================================================
+// VARIÁVEIS GLOBAIS
+// ======================================================
 let reservas = [];
+let reservasCarregadas = false;
 
-// ---------------------------------------------------------------
-// CARREGAR RESERVAS DO FIREBASE (coleção CALENDARIO)
-// ---------------------------------------------------------------
-async function carregarReservasCalendario() {
+// ======================================================
+// CARREGAR RESERVAS DO FIREBASE (coleção "reservas")
+// ======================================================
+async function carregarReservas() {
 
     // 1) Tenta usar cache
     const cache = sessionStorage.getItem("reservasCache");
@@ -22,26 +17,38 @@ async function carregarReservasCalendario() {
 
     if (cache && cacheTime && (agora - cacheTime < TTL)) {
         reservas = JSON.parse(cache);
+        reservasCarregadas = true;
         console.log("Reservas carregadas da cache:", reservas);
         return;
     }
 
-    // 2) Ler Firebase apenas quando necessário
-    const snap = await db.collection("calendario").orderBy("checkin").get();
+    // 2) Ler Firebase
+    const snap = await db.collection("reservas").orderBy("checkin").get();
 
     reservas = [];
     snap.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
 
-    console.log("Reservas carregadas do Firestore (calendario):", reservas);
+    reservasCarregadas = true;
+    console.log("Reservas carregadas do Firestore:", reservas);
 
     // 3) Guardar em cache
     sessionStorage.setItem("reservasCache", JSON.stringify(reservas));
     sessionStorage.setItem("reservasCacheTime", agora);
 }
 
-// ---------------------------------------------------------------
+// ======================================================
+// CARREGAR RESERVAS AUTOMATICAMENTE QUANDO O MODAL ABRE
+// ======================================================
+document.getElementById("btnFlutuante").addEventListener("click", async () => {
+    if (!reservasCarregadas) {
+        console.log("A carregar reservas antes de abrir o modal...");
+        await carregarReservas();
+    }
+});
+
+// ======================================================
 // FUNÇÕES DE DATA
-// ---------------------------------------------------------------
+// ======================================================
 function parseDataPt(str) {
     if (!str) return null;
 
@@ -75,9 +82,9 @@ function validarDatasCheckinCheckout(checkin, checkout) {
     return dataCheckout > dataCheckin;
 }
 
-// ---------------------------------------------------------------
+// ======================================================
 // CONFLITOS E ALOCAÇÃO
-// ---------------------------------------------------------------
+// ======================================================
 function temConflitoNoApartamento(reservaNova, apartamento, reservasExistentes) {
     const iniNova = parseDataPt(reservaNova.checkin);
     const fimNova = parseDataPt(reservaNova.checkout);
@@ -146,24 +153,22 @@ function alocarApartamentosInteligente(quartos, checkin, checkout, reservasExist
     return resultado;
 }
 
-// ---------------------------------------------------------------
-// VERIFICAR DISPONIBILIDADE
-// ---------------------------------------------------------------
-async function verificarDisponibilidadeComFirebase(checkin, checkout, numApt) {
-
-    // Garantir que temos reservas carregadas
-    await carregarReservasCalendario();
-
-    return verificarDisponibilidade(checkin, checkout, numApt);
-}
-
+// ======================================================
+// FUNÇÃO PRINCIPAL — SINCRONA PARA O UI
+// ======================================================
 function verificarDisponibilidade(checkin, checkout, numApt) {
+
+    if (!reservasCarregadas) {
+        console.warn("⚠️ Reservas ainda não carregadas — devolvendo indisponível por segurança.");
+        return { status: "erro" };
+    }
+
     if (!checkin || !checkout) {
-        return { status: "erro", mensagem: "Selecione datas válidas." };
+        return { status: "erro" };
     }
 
     if (!validarDatasCheckinCheckout(checkin, checkout)) {
-        return { status: "erro", mensagem: "Checkout deve ser depois do check-in." };
+        return { status: "erro" };
     }
 
     const apartamentosLivres = alocarApartamentosInteligente(
@@ -174,100 +179,20 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
     );
 
     if (apartamentosLivres.length === 0) {
-        return {
-            status: "indisponivel",
-            mensagem: "Não há apartamentos disponíveis neste intervalo."
-        };
+        return { status: "indisponivel" };
     }
 
     if (apartamentosLivres.length < numApt) {
         return {
             status: "parcial",
-            mensagem: `Só ${apartamentosLivres.length} disponível(is).`,
             apartamentos: apartamentosLivres
         };
     }
 
     return {
         status: "disponivel",
-        mensagem: "Datas disponíveis!",
         apartamentos: apartamentosLivres
     };
 }
-
-// ---------------------------------------------------------------
-// BOTÃO VER DISPONIBILIDADE
-// ---------------------------------------------------------------
-const btn = document.getElementById("btnDisponibilidade");
-const resultado = document.getElementById("resultadoDisponibilidade");
-
-btn.addEventListener("click", async () => {
-
-    const checkin = document.getElementById("checkin").value;
-    const checkout = document.getElementById("checkout").value;
-    const numApt = parseInt(document.getElementById("numApt").value);
-
-    const t = translations[window.currentLang];
-
-    // 🔥 Agora só aqui é que lemos Firebase
-    const r = await verificarDisponibilidadeComFirebase(checkin, checkout, numApt);
-
-    resultado.classList.remove("disponivel", "indisponivel");
-    resultado.style.display = "none";
-
-    if (r.status === "erro") {
-        resultado.textContent = t.availability_error;
-        resultado.classList.add("indisponivel");
-        resultado.style.display = "block";
-        return;
-    }
-
-    if (r.status === "indisponivel") {
-        resultado.textContent = t.availability_none;
-        resultado.classList.add("indisponivel");
-        resultado.style.display = "block";
-        return;
-    }
-
-    if (r.status === "parcial") {
-        const msg = t.availability_partial_msg.replace("{X}", r.apartamentos.length);
-        resultado.innerHTML = `
-            ⚠️ <strong>${t.availability_partial_title}</strong><br>
-            ${msg}<br>
-            ${r.apartamentos.join(", ")}
-        `;
-        resultado.classList.add("disponivel");
-        resultado.style.display = "block";
-        return;
-    }
-
-    if (r.status === "disponivel") {
-        const noites = calcularNoites(checkin, checkout);
-        const msg = t.availability_ok_msg.replace("{N}", noites);
-
-        resultado.innerHTML = `
-            <strong>${t.availability_ok_title}</strong><br>
-            ${msg}
-        `;
-        resultado.classList.add("disponivel");
-        resultado.style.display = "block";
-        return;
-    }
-});
-
-function limparCard() {
-    resultado.style.display = "none";
-    resultado.classList.remove("disponivel", "indisponivel");
-}
-
-document.getElementById("checkin").addEventListener("change", limparCard);
-document.getElementById("checkout").addEventListener("change", limparCard);
-document.getElementById("numApt").addEventListener("change", limparCard);
-
-// ---------------------------------------------------------------
-// EVENTOS
-// ---------------------------------------------------------------
-numAptSelect.addEventListener("change", renderApartamentos);
-renderApartamentos();
 
 console.log("reservas_v2.js carregado");
