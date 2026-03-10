@@ -26,10 +26,9 @@ const lista = [];
 snap.forEach(doc => lista.push({ id: doc.id, ...doc.data() }));
 
 reservas = lista;
-
 reservasCarregadasEm = agora;
 
-console.log("Reservas futuras carregadas no site público:", reservas);
+console.log("Reservas carregadas no site público:", reservas);
 
 }
 
