@@ -2016,18 +2016,16 @@ a[href^="https://wa.me"],
     font-family: "Poppins", sans-serif;
 }
 
-/* Caixa do modal — versão compacta e profissional */
+/* Caixa do modal */
 .modal-box {
     background: #ffffff;
     width: 92%;
-    max-width: 360px; /* antes 400px */
-    padding: 18px 20px; /* antes 28px 26px */
-    border-radius: 18px;
+    max-width: 400px;
+    padding: 28px 26px;
+    border-radius: 20px;
     box-shadow: 0 12px 32px rgba(0,0,0,0.25);
     position: relative;
     animation: modalFade 0.25s ease-out;
-    max-height: 90vh; /* evita cortar botões */
-    overflow-y: auto; /* scroll elegante */
 }
 
 /* Animações */
@@ -2045,12 +2043,10 @@ a[href^="https://wa.me"],
     animation: stepFade 0.35s ease;
 }
 
-/* Títulos uniformes */
-.modal-box h2,
-#step2Header,
-#step3 h3 {
-    margin: 0 0 10px 0;
-    font-size: 1.25rem;
+/* Título */
+.modal-box h2 {
+    margin: 0 0 12px 0;
+    font-size: 1.45rem;
     font-weight: 700;
     color: #005c99;
     text-align: center;
@@ -2068,39 +2064,70 @@ a[href^="https://wa.me"],
     cursor: pointer;
 }
 
-/* GRID COMPACTA */
+/* GRID EM DUAS COLUNAS */
 .modal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px 12px; /* antes 16px 18px */
+    gap: 16px 18px;
 }
 
-/* Labels compactos */
+/* Força alinhamento vertical */
+.modal-grid > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Labels */
 .modal-box label {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: #003d66;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
+    display: block;
 }
 
-/* Inputs compactos */
+/* Inputs e selects — ALTURA CONSISTENTE */
 .modal-box input,
-.modal-box select {
-    height: 36px; /* antes 44px */
-    padding: 0 10px;
+.modal-box select,
+.modal-box textarea {
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 12px;
     border: 1px solid #c7d7e6;
-    border-radius: 8px;
-    font-size: 0.85rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
     background: #f4f8fc;
+    color: #003d66;
     transition: 0.25s ease;
+    box-sizing: border-box;
+    appearance: none;
 }
 
-/* Textarea compacto */
+/* Corrige input date */
+.modal-box input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #f4f8fc;
+    padding-left: 12px;
+}
+
+/* Select seta alinhada */
+.modal-box select {
+    background-image: url("data:image/svg+xml,%3Csvg fill='%23005c99' height='20' width='20' viewBox='0 0 20 20'%3E%3Cpath d='M5.516 7.548l4.484 4.484 4.484-4.484L16 8.548l-6 6-6-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+    padding-right: 36px;
+}
+
+/* Textarea Step 2 — tamanho ideal */
 .modal-box textarea {
-    height: 48px;
-    padding: 8px 10px;
+    height: 70px;
+    padding: 10px 12px;
     resize: none;
-    font-size: 0.85rem;
+    line-height: 1.4;
 }
 
 /* Focus */
@@ -2117,57 +2144,55 @@ a[href^="https://wa.me"],
 .modal-total {
     grid-column: span 2;
     text-align: center;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #003d66;
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
-/* BOTÕES UNIFORMES — PRINCIPAL E SECUNDÁRIO */
-.modal-btn,
-.modal-btn-secondary {
-    width: 100%;
-    padding: 10px 16px; /* antes 14px 20px */
-    margin-top: 10px;
-    border-radius: 999px;
-    border: none;
-    font-family: "Poppins", sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.2;
-    cursor: pointer;
-    text-align: center;
-    display: block;
-    transition: background 0.25s ease, transform 0.2s ease;
-}
-
-/* Botão principal */
+/* Botões */
 .modal-btn {
-    background: #005c99;
-    color: #ffffff;
+    margin-top: 12px;
+    padding: 14px;
+    background: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s ease;
+    width: 100%;
 }
 
 .modal-btn:hover {
-    background: #0074c7;
+    background: #005c99;
     transform: translateY(-2px);
 }
 
-/* Botão secundário */
-.modal-btn-secondary {
-    background: #e6eef5;
-    color: #005c99;
+/* Botão secundário (Voltar atrás) */
+.modal-btn.secondary {
+    background: #005c99;
 }
 
-.modal-btn-secondary:hover {
-    background: #d9e7f2;
-    transform: translateY(-2px);
+.modal-btn.secondary:hover {
+    background: #004d80;
+}
+
+/* Botão sucesso (Enviar Pedido de Cotação) */
+.modal-btn.success {
+    background: #28a745;
+}
+
+.modal-btn.success:hover {
+    background: #1e7e34;
 }
 
 /* Mensagens */
 .modal-msg {
-    margin-top: 10px;
-    padding: 10px;
+    margin-top: 12px;
+    padding: 12px;
     border-radius: 10px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     text-align: center;
     display: none;
 }
@@ -2184,24 +2209,236 @@ a[href^="https://wa.me"],
     border: 1px solid #ffb3b3;
 }
 
-/* Step 3 texto */
+/* Step 2 Header */
+#step2Header {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #005c99;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* Step 3 */
+#step3 h3 {
+    color: #005c99;
+    font-size: 1.55rem;
+    margin-bottom: 12px;
+}
+
 #step3 p {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     color: #333;
-    line-height: 1.45;
-    margin-bottom: 18px;
+    line-height: 1.55;
+    margin-bottom: 22px;
 }
 
 /* Mobile */
 @media (max-width: 600px) {
     .modal-box {
-        padding: 16px;
+        padding: 22px;
         max-width: 92%;
     }
 
     .modal-btn {
-        font-size: 0.9rem;
-        padding: 10px;
+        font-size: 0.95rem;
+        padding: 12px;
+    }
+
+    #step2Header {
+        font-size: 1.1rem;
     }
 }
 
+/* Barra de progresso do modal */
+.progress-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    margin: 8px 0 18px 0;
+}
+
+.progress-step {
+    flex: 1;
+    height: 6px;
+    background: #d0dbe5;
+    border-radius: 4px;
+    transition: 0.3s ease;
+}
+
+.progress-step.active {
+    background: #005c99;
+}
+
+/* Linha Telefone + Indicativo */
+.linha-telefone {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.linha-telefone select,
+.linha-telefone input {
+    height: 44px;
+}
+
+/* ===========================================================
+   STEP 2 — COMPACTO COMO STEP 1
+=========================================================== */
+
+#step2 {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* mais compacto */
+    margin-top: -4px; /* aproxima do topo */
+}
+
+/* Título interno compacto */
+#step2 h3 {
+    margin: 0 0 4px 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 600;
+}
+
+/* Grid interna igual ao Step 1 mas mais compacta */
+#step2 .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 14px; /* igual ao Step 1 */
+    margin-top: 4px;
+}
+
+/* Labels compactos */
+#step2 label {
+    margin-bottom: 2px;
+    font-size: 14px;
+}
+
+/* Inputs e selects mais baixos */
+#step2 input,
+#step2 select {
+    height: 38px; /* igual ao Step 1 */
+    margin-bottom: 2px;
+}
+
+/* Textarea mais pequeno */
+#step2 textarea {
+    height: 50px;
+    resize: none;
+    margin-bottom: 2px;
+}
+
+/* ===========================================================
+   TELEFONE + INDICATIVO — PROPORÇÕES CORRETAS
+=========================================================== */
+
+/* Indicativo maior */
+#step2 .indicativo {
+    grid-column: span 1;
+}
+
+/* Telefone menor */
+#step2 .telefone {
+    grid-column: span 1;
+}
+
+/* Altura consistente */
+#indicativoHospede,
+#telefoneHospede {
+    height: 38px;
+}
+
+/* ===========================================================
+   BOTÕES — ALTURA IGUAL AO STEP 1
+=========================================================== */
+
+#step2 .modal-btn,
+#step2 .modal-btn.secondary,
+#step2 .modal-btn.success {
+    height: 38px;
+    padding: 6px 14px;
+    font-size: 14px;
+}
+
+/* Aproxima os botões do conteúdo */
+#step2 > div:last-child {
+    margin-top: 6px !important;
+}
+
+/* ===========================================================
+   STEP 2 — INFO BELLEVIEW 
+=========================================================== */
+
+.step2-info {
+    text-align: center;
+    margin: 10px 0 20px 0;
+}
+
+/* Datas + Resumo — mesmo estilo Belleview */
+.step2-dates,
+.step2-summary {
+    color: #005c99; /* azul Belleview */
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 4px 0;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ===========================================================
+   BOTÕES DO MODAL — BELLEVIEW PREMIUM
+=========================================================== */
+
+/* Botão principal */
+.modal-btn {
+    width: 100%;
+    padding: 14px 20px;
+    margin-top: 16px;
+    border-radius: 999px;
+    border: none;
+    background: #005c99;
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.25; /* IMPORTANTE */
+    cursor: pointer;
+    text-align: center;
+    display: block; /* IMPORTANTE */
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.modal-btn:hover {
+    background: #0074c7;
+    transform: translateY(-2px);
+}
+
+.modal-btn:active {
+    transform: translateY(0);
+}
+
+/* Botão secundário — IGUAL ao principal, só muda a cor */
+.modal-btn-secondary {
+    width: 100%;
+    padding: 14px 20px;
+    margin-top: 16px;
+    border-radius: 999px;
+    border: none;
+    background: #e6eef5;
+    color: #005c99;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.25; /* IGUAL AO PRINCIPAL */
+    cursor: pointer;
+    text-align: center;
+    display: block; /* IGUAL AO PRINCIPAL */
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.modal-btn-secondary:hover {
+    background: #d9e7f2;
+    transform: translateY(-2px);
+}
