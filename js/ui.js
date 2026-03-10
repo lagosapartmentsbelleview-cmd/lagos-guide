@@ -361,16 +361,23 @@ btnVerificar.addEventListener("click", () => {
     }
 
     if (r.status === "parcial") {
-        const disponiveis = r.apartamentos ? r.apartamentos.length : 0;
+    const disponiveis = r.apartamentos ? r.apartamentos.length : 0;
 
-        msg.innerHTML = `
-            <strong>${translations[currentLang].rules_partial}</strong><br>
-            ${disponiveis} apartment(s) available.
-        `;
-        msg.classList.add("indisponivel");
-        msg.style.display = "block";
-        return;
-    }
+    const key = disponiveis === 1 
+        ? "available_apartments" 
+        : "available_apartments_plural";
+
+    const texto = translations[currentLang][key].replace("{count}", disponiveis);
+
+    msg.innerHTML = `
+        <strong>${translations[currentLang].rules_partial}</strong><br>
+        ${texto}
+    `;
+    msg.classList.add("indisponivel");
+    msg.style.display = "block";
+    return;
+}
+
 
     if (r.status === "disponivel") {
     msg.textContent = translations[currentLang].rules_available;
