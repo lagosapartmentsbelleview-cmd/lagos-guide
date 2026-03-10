@@ -25,14 +25,8 @@ const snap = await db.collection("reservas").orderBy("checkin").get();
 const lista = [];
 snap.forEach(doc => lista.push({ id: doc.id, ...doc.data() }));
 
-// 🔥 FILTRAR APENAS RESERVAS FUTURAS
-const hoje = new Date();
-const futuras = lista.filter(r => {
-    const fim = parseDataPt(r.checkout);
-    return fim && fim >= hoje;
-});
+reservas = lista;
 
-reservas = futuras;
 reservasCarregadasEm = agora;
 
 console.log("Reservas futuras carregadas no site público:", reservas);
