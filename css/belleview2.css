@@ -71,7 +71,8 @@ body {
 =========================================================== */
 .lang-switch {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    transform: translateX(-10px); /* puxa tudo para a esquerda */
 }
 
 .lang-switch img {
