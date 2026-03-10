@@ -392,6 +392,9 @@ full_name: "Nome Completo",
 
 continue: "Continuar",
 
+available_apartments: "{count} apartamento disponível",
+available_apartments_plural: "{count} apartamentos disponíveis",
+
   },
   en: {
     menu_alojamento: "Accommodation",
@@ -762,6 +765,9 @@ full_name: "Full Name",
         rules_capacity_exceeded: "Capacity exceeded: maximum {MAX} guests.",
 
 continue: "Continue",
+
+available_apartments: "{count} apartment available",
+available_apartments_plural: "{count} apartments available",
 
   },
   es: {
@@ -1146,6 +1152,9 @@ quote_request: "Solicitud de Cotización",
 
 continue: "Continuar",
 
+available_apartments: "{count} apartamento disponible",
+available_apartments_plural: "{count} apartamentos disponibles",
+
   },
   fr: {
     menu_alojamento: "Hébergement",
@@ -1516,6 +1525,9 @@ quote_request: "Demande de Devis",
         rules_capacity_exceeded: "Capacité dépassée : maximum {MAX} voyageurs.",
 
 continue: "Continuer",
+
+available_apartments: "{count} appartement disponible",
+available_apartments_plural: "{count} appartements disponibles",
 
   },
   it: {
@@ -1888,6 +1900,9 @@ full_name: "Nome e Cognome",
         rules_capacity_exceeded: "Capacità superata: massimo {MAX} ospiti.",
      
 continue: "Continua",
+
+available_apartments: "{count} appartamento disponibile",
+available_apartments_plural: "{count} appartamenti disponibili",
 
   },
   de: {
@@ -2271,6 +2286,9 @@ full_name: "Vollständiger Name",
         rules_capacity_exceeded: "Kapazität überschritten: maximal {MAX} Gäste.",
 
 continue: "Weiter",
+
+available_apartments: "{count} Apartment verfügbar",
+available_apartments_plural: "{count} Apartments verfügbar",
 
   }
 };
