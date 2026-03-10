@@ -5,36 +5,18 @@ auth.onAuthStateChanged(user => {
 });
 
 let reservas = [];
-let reservasCarregadasEm = 0;
-const RESERVAS_TTL_MS = 5 * 60 * 1000; // 5 minutos
 
-// ---------------------------------------------------------------
-// CARREGAR RESERVAS DO FIREBASE (COM CACHE EM MEMÓRIA)
-// ---------------------------------------------------------------
-async function carregarReservasPublico(force = false) {
-    const agora = Date.now();
-
-    // Se já temos reservas recentes e não estamos a forçar, reutilizamos
-    if (!force && reservas.length > 0 && (agora - reservasCarregadasEm) < RESERVAS_TTL_MS) {
-        console.log("Reservas reutilizadas do cache em memória:", reservas);
-        return;
-    }
-
-    console.log("A carregar reservas do Firebase para o site público...");
-
+async function carregarReservasPublico() {
     const snap = await db.collection("reservas").orderBy("checkin").get();
 
     reservas = [];
     snap.forEach(doc => reservas.push({ id: doc.id, ...doc.data() }));
 
-    reservasCarregadasEm = agora;
-
     console.log("Reservas carregadas no site público:", reservas);
 }
 
-// ⚠️ IMPORTANTE: já NÃO chamamos carregarReservasPublico() aqui.
-// Antes tinhas: carregarReservasPublico();
-// Agora só carregamos quando o utilizador clicar no botão.
+// ⚠️ Mantemos o comportamento original: carrega logo ao abrir
+carregarReservasPublico();
 
 function parseDataPt(str) {
     if (!str) return null;
@@ -69,9 +51,7 @@ function validarDatasCheckinCheckout(checkin, checkout) {
     return dataCheckout > dataCheckin;
 }
 
-// ---------------------------------------------------------------
-// REGRA: SÓ PERMITIR CHECK-IN HOJE OU FUTURO
-// ---------------------------------------------------------------
+// NOVO: só permitir check-in hoje ou futuro
 function validarCheckinFuturo(checkin) {
     const dataCheckin = parseDataPt(checkin);
     if (!dataCheckin) return false;
@@ -194,6 +174,7 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
     };
 }
 
+
 // ------------------------------
 // ADULTOS E CRIANÇAS 
 // ------------------------------
@@ -257,6 +238,7 @@ document.getElementById("checkout").addEventListener("focus", () => {
 numAptSelect.addEventListener("change", () => {
     extraCampos.style.display = "block";
 });
+
 
 // ------------------------------
 // GERAR APARTAMENTOS
@@ -359,33 +341,19 @@ function renderApartamentos() {
 }
 
 // ---------------------------------------------------------------
-// BOTÃO VER DISPONIBILIDADE (AGORA ASSÍNCRONO + CACHE + FUTURO)
+// BOTÃO VER DISPONIBILIDADE (igual ao original + estado "past")
 // ---------------------------------------------------------------
 const btn = document.getElementById("btnDisponibilidade");
 const resultado = document.getElementById("resultadoDisponibilidade");
 
-btn.addEventListener("click", async () => {
+btn.addEventListener("click", () => {
     const checkin = document.getElementById("checkin").value;
     const checkout = document.getElementById("checkout").value;
     const numApt = parseInt(document.getElementById("numApt").value);
 
     const t = translations[window.currentLang];
-
-    // 1) Bloquear logo datas de check-in no passado (mensagem traduzível)
-    if (!validarCheckinFuturo(checkin)) {
-        resultado.classList.remove("disponivel", "indisponivel");
-        resultado.textContent = t.availability_past || "Só é possível verificar disponibilidade para datas futuras.";
-        resultado.classList.add("indisponivel");
-        resultado.style.display = "block";
-        return;
-    }
-
-    // 2) Garantir que as reservas estão carregadas (com cache)
-    await carregarReservasPublico();
-
     const r = verificarDisponibilidade(checkin, checkout, numApt);
 
-    // Limpa estados anteriores
     resultado.classList.remove("disponivel", "indisponivel");
     resultado.style.display = "none";
 
@@ -444,6 +412,7 @@ function limparCard() {
 document.getElementById("checkin").addEventListener("change", limparCard);
 document.getElementById("checkout").addEventListener("change", limparCard);
 document.getElementById("numApt").addEventListener("change", limparCard);
+
 
 // ---------------------------------------------------------------
 // EVENTOS
