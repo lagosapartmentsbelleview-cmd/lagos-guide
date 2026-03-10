@@ -2443,13 +2443,4 @@ a[href^="https://wa.me"],
     transform: translateY(-2px);
 }
 
-.modal-box {
-    padding-bottom: 40px !important;
-}
-#btnEnviarCotacao {
-    margin-bottom: 10px;
-}
-.modal-box {
-    max-height: 90vh;
-    overflow-y: auto;
-}
+
