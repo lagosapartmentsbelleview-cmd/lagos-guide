@@ -375,7 +375,6 @@ btnVerificar.addEventListener("click", () => {
         msg.classList.add("disponivel");
         msg.style.display = "block";
 
-        abrirStep2();
     }
 });
 
