@@ -32,12 +32,10 @@ async function carregarReservasPublico(force = false) {
     console.log("Reservas carregadas no site público:", reservas);
 }
 
-// NOTA: já não chamamos carregarReservasPublico() automaticamente aqui.
-// Só carregamos quando o utilizador clicar em "Verificar Disponibilidade".
+// ⚠️ IMPORTANTE: já NÃO chamamos carregarReservasPublico() aqui.
+// Antes tinhas: carregarReservasPublico();
+// Agora só carregamos quando o utilizador clicar no botão.
 
-// ---------------------------------------------------------------
-// UTILITÁRIOS DE DATA
-// ---------------------------------------------------------------
 function parseDataPt(str) {
     if (!str) return null;
 
@@ -72,7 +70,7 @@ function validarDatasCheckinCheckout(checkin, checkout) {
 }
 
 // ---------------------------------------------------------------
-// REGRA: SÓ PERMITIR DATAS FUTURAS
+// REGRA: SÓ PERMITIR CHECK-IN HOJE OU FUTURO
 // ---------------------------------------------------------------
 function validarCheckinFuturo(checkin) {
     const dataCheckin = parseDataPt(checkin);
@@ -82,13 +80,9 @@ function validarCheckinFuturo(checkin) {
     hoje.setHours(0, 0, 0, 0);
     dataCheckin.setHours(0, 0, 0, 0);
 
-    // Só permite check-in hoje ou no futuro
     return dataCheckin >= hoje;
 }
 
-// ---------------------------------------------------------------
-// LÓGICA DE CONFLITOS E ALOCAÇÃO
-// ---------------------------------------------------------------
 function temConflitoNoApartamento(reservaNova, apartamento, reservasExistentes) {
     const iniNova = parseDataPt(reservaNova.checkin);
     const fimNova = parseDataPt(reservaNova.checkout);
@@ -162,7 +156,7 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         return { status: "erro", mensagem: "Selecione datas válidas." };
     }
 
-    // NOVO: bloquear datas de check-in no passado
+    // NOVO: bloquear check-in no passado
     if (!validarCheckinFuturo(checkin)) {
         return { status: "past", mensagem: "Check-in tem de ser hoje ou numa data futura." };
     }
@@ -171,7 +165,6 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         return { status: "erro", mensagem: "Checkout deve ser depois do check-in." };
     }
 
-    // Tenta alocar apartamentos usando o teu algoritmo inteligente
     const apartamentosLivres = alocarApartamentosInteligente(
         numApt,
         checkin,
@@ -179,7 +172,6 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         reservas
     );
 
-    // Nenhum apartamento disponível
     if (apartamentosLivres.length === 0) {
         return {
             status: "indisponivel",
@@ -187,7 +179,6 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         };
     }
 
-    // Disponibilidade parcial
     if (apartamentosLivres.length < numApt) {
         return {
             status: "parcial",
@@ -196,7 +187,6 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         };
     }
 
-    // Disponível
     return {
         status: "disponivel",
         mensagem: "Datas disponíveis!",
@@ -399,7 +389,6 @@ btn.addEventListener("click", async () => {
     resultado.classList.remove("disponivel", "indisponivel");
     resultado.style.display = "none";
 
-    // ERRO: datas inválidas / checkout antes do checkin
     if (r.status === "erro") {
         resultado.textContent = t.availability_error;
         resultado.classList.add("indisponivel");
@@ -407,7 +396,6 @@ btn.addEventListener("click", async () => {
         return;
     }
 
-    // ESTADO "past" vindo de verificarDisponibilidade (fallback, se algum dia usares lá dentro)
     if (r.status === "past") {
         resultado.textContent = t.availability_past || "Só é possível verificar disponibilidade para datas futuras.";
         resultado.classList.add("indisponivel");
@@ -415,7 +403,6 @@ btn.addEventListener("click", async () => {
         return;
     }
 
-    // INDISPONÍVEL
     if (r.status === "indisponivel") {
         resultado.textContent = t.availability_none;
         resultado.classList.add("indisponivel");
@@ -423,7 +410,6 @@ btn.addEventListener("click", async () => {
         return;
     }
 
-    // PARCIAL
     if (r.status === "parcial") {
         const msg = t.availability_partial_msg.replace("{X}", r.apartamentos.length);
         resultado.innerHTML = `
@@ -436,7 +422,6 @@ btn.addEventListener("click", async () => {
         return;
     }
 
-    // DISPONÍVEL
     if (r.status === "disponivel") {
         const noites = calcularNoites(checkin, checkout);
         const msg = t.availability_ok_msg.replace("{N}", noites);
