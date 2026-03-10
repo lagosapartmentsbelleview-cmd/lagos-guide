@@ -290,6 +290,8 @@ const btnVerificar = document.getElementById("btnVerificar");
 
 btnVerificar.addEventListener("click", () => {
 
+    document.getElementById("btnAvancarStep2").style.display = "none";
+
     const checkin = document.getElementById("checkin").value;
     const checkout = document.getElementById("checkout").value;
     const msg = document.getElementById("mensagemDisponibilidade");
@@ -371,12 +373,20 @@ btnVerificar.addEventListener("click", () => {
     }
 
     if (r.status === "disponivel") {
-        msg.textContent = translations[currentLang].rules_available;
-        msg.classList.add("disponivel");
-        msg.style.display = "block";
+    msg.textContent = translations[currentLang].rules_available;
+    msg.classList.add("disponivel");
+    msg.style.display = "block";
 
-    }
+    document.getElementById("btnAvancarStep2").style.display = "block";
+}
+
 });
+
+// Botão para avançar para Step 2 quando há disponibilidade
+document.getElementById("btnAvancarStep2").addEventListener("click", () => {
+    abrirStep2();
+});
+
 
 // ======================================================
 // STEP 2 — ABRIR FORMULÁRIO DE COTAÇÃO
