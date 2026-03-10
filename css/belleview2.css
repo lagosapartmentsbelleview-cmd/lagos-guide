@@ -2391,6 +2391,7 @@ a[href^="https://wa.me"],
    BOTÕES DO MODAL — BELLEVIEW PREMIUM
 =========================================================== */
 
+/* Botão principal */
 .modal-btn {
     width: 100%;
     padding: 14px 20px;
@@ -2402,8 +2403,10 @@ a[href^="https://wa.me"],
     font-family: "Poppins", sans-serif;
     font-size: 1.05rem;
     font-weight: 600;
+    line-height: 1.25; /* IMPORTANTE */
     cursor: pointer;
     text-align: center;
+    display: block; /* IMPORTANTE */
     transition: background 0.25s ease, transform 0.2s ease;
 }
 
@@ -2416,9 +2419,9 @@ a[href^="https://wa.me"],
     transform: translateY(0);
 }
 
-/* Botão secundário — herda tudo do modal-btn */
+/* Botão secundário — IGUAL ao principal, só muda a cor */
 .modal-btn-secondary {
-    width: 100%; /* ESTA LINHA É OBRIGATÓRIA */
+    width: 100%;
     padding: 14px 20px;
     margin-top: 16px;
     border-radius: 999px;
@@ -2428,15 +2431,14 @@ a[href^="https://wa.me"],
     font-family: "Poppins", sans-serif;
     font-size: 1.05rem;
     font-weight: 600;
+    line-height: 1.25; /* IGUAL AO PRINCIPAL */
     cursor: pointer;
     text-align: center;
+    display: block; /* IGUAL AO PRINCIPAL */
     transition: background 0.25s ease, transform 0.2s ease;
 }
-
 
 .modal-btn-secondary:hover {
     background: #d9e7f2;
     transform: translateY(-2px);
 }
-
-
