@@ -15,7 +15,6 @@ async function carregarReservasPublico() {
     console.log("Reservas carregadas no site público:", reservas);
 }
 
-// ⚠️ Mantemos o comportamento original: carrega logo ao abrir
 carregarReservasPublico();
 
 function parseDataPt(str) {
@@ -41,6 +40,7 @@ function calcularNoites(checkin, checkout) {
     return Math.round(diff / (1000 * 60 * 60 * 24));
 }
 
+
 function validarDatasCheckinCheckout(checkin, checkout) {
     const [d1, m1, a1] = checkin.split("/");
     const [d2, m2, a2] = checkout.split("/");
@@ -49,18 +49,6 @@ function validarDatasCheckinCheckout(checkin, checkout) {
     const dataCheckout = new Date(`${a2}-${m2}-${d2}`);
 
     return dataCheckout > dataCheckin;
-}
-
-// NOVO: só permitir check-in hoje ou futuro
-function validarCheckinFuturo(checkin) {
-    const dataCheckin = parseDataPt(checkin);
-    if (!dataCheckin) return false;
-
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
-    dataCheckin.setHours(0, 0, 0, 0);
-
-    return dataCheckin >= hoje;
 }
 
 function temConflitoNoApartamento(reservaNova, apartamento, reservasExistentes) {
@@ -136,15 +124,11 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         return { status: "erro", mensagem: "Selecione datas válidas." };
     }
 
-    // NOVO: bloquear check-in no passado
-    if (!validarCheckinFuturo(checkin)) {
-        return { status: "past", mensagem: "Check-in tem de ser hoje ou numa data futura." };
-    }
-
     if (!validarDatasCheckinCheckout(checkin, checkout)) {
         return { status: "erro", mensagem: "Checkout deve ser depois do check-in." };
     }
 
+    // Tenta alocar apartamentos usando o teu algoritmo inteligente
     const apartamentosLivres = alocarApartamentosInteligente(
         numApt,
         checkin,
@@ -152,6 +136,7 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         reservas
     );
 
+    // Nenhum apartamento disponível
     if (apartamentosLivres.length === 0) {
         return {
             status: "indisponivel",
@@ -159,6 +144,7 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         };
     }
 
+    // Disponibilidade parcial
     if (apartamentosLivres.length < numApt) {
         return {
             status: "parcial",
@@ -167,6 +153,7 @@ function verificarDisponibilidade(checkin, checkout, numApt) {
         };
     }
 
+    // Disponível
     return {
         status: "disponivel",
         mensagem: "Datas disponíveis!",
@@ -238,6 +225,7 @@ document.getElementById("checkout").addEventListener("focus", () => {
 numAptSelect.addEventListener("change", () => {
     extraCampos.style.display = "block";
 });
+
 
 
 // ------------------------------
@@ -341,7 +329,7 @@ function renderApartamentos() {
 }
 
 // ---------------------------------------------------------------
-// BOTÃO VER DISPONIBILIDADE (igual ao original + estado "past")
+// BOTÃO VER DISPONIBILIDADE
 // ---------------------------------------------------------------
 const btn = document.getElementById("btnDisponibilidade");
 const resultado = document.getElementById("resultadoDisponibilidade");
@@ -354,9 +342,11 @@ btn.addEventListener("click", () => {
     const t = translations[window.currentLang];
     const r = verificarDisponibilidade(checkin, checkout, numApt);
 
+    // Limpa estados anteriores
     resultado.classList.remove("disponivel", "indisponivel");
     resultado.style.display = "none";
 
+    // ERRO: datas inválidas
     if (r.status === "erro") {
         resultado.textContent = t.availability_error;
         resultado.classList.add("indisponivel");
@@ -364,13 +354,15 @@ btn.addEventListener("click", () => {
         return;
     }
 
-    if (r.status === "past") {
-        resultado.textContent = t.availability_past || "Só é possível verificar disponibilidade para datas futuras.";
+    // ERRO: checkout antes do checkin
+    if (r.status === "invalid") {
+        resultado.textContent = t.availability_invalid;
         resultado.classList.add("indisponivel");
         resultado.style.display = "block";
         return;
     }
 
+    // INDISPONÍVEL
     if (r.status === "indisponivel") {
         resultado.textContent = t.availability_none;
         resultado.classList.add("indisponivel");
@@ -378,6 +370,7 @@ btn.addEventListener("click", () => {
         return;
     }
 
+    // PARCIAL
     if (r.status === "parcial") {
         const msg = t.availability_partial_msg.replace("{X}", r.apartamentos.length);
         resultado.innerHTML = `
@@ -390,6 +383,7 @@ btn.addEventListener("click", () => {
         return;
     }
 
+    // DISPONÍVEL
     if (r.status === "disponivel") {
         const noites = calcularNoites(checkin, checkout);
         const msg = t.availability_ok_msg.replace("{N}", noites);
@@ -404,6 +398,7 @@ btn.addEventListener("click", () => {
     }
 });
 
+
 function limparCard() {
     resultado.style.display = "none";
     resultado.classList.remove("disponivel", "indisponivel");
@@ -412,6 +407,7 @@ function limparCard() {
 document.getElementById("checkin").addEventListener("change", limparCard);
 document.getElementById("checkout").addEventListener("change", limparCard);
 document.getElementById("numApt").addEventListener("change", limparCard);
+
 
 
 // ---------------------------------------------------------------
