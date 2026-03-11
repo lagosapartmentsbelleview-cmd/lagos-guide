@@ -136,6 +136,49 @@ body {
         font-size: 0.95rem;
     }
 }
+/* ===========================================================
+   CORREÇÃO MOBILE — HEADER PERFEITO
+=========================================================== */
+@media (max-width: 768px) {
+
+    /* Header mais compacto */
+    .header {
+        padding: 10px 14px;
+    }
+
+    /* Logo mais pequeno e centrado */
+    .header .logo {
+        font-size: 1.05rem;
+        gap: 6px;
+    }
+
+    .logo-circle {
+        width: 32px;
+        font-size: 1.1rem;
+    }
+
+    /* Menu mais compacto */
+    .nav a {
+        margin-left: 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Bandeiras corrigidas */
+    .lang-switch {
+        transform: translateX(0); /* remove o problema */
+        gap: 6px;
+    }
+
+    .lang-switch img {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Evita que o conteúdo fique escondido atrás do header */
+    body {
+        padding-top: 70px;
+    }
+}
 
 /* ===========================================================
    HERO — BELLEVIEW PREMIUM (IMAGEM PUXADA PARA CIMA)
