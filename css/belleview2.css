@@ -2533,4 +2533,9 @@ a[href^="https://wa.me"],
     transform: translateY(-2px);
 }
 
+@media (max-width: 768px) {
+    .hero-text {
+        margin-left: 0 !important;
+    }
+}
 
