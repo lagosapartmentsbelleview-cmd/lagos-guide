@@ -417,33 +417,36 @@ a[href^="https://wa.me"],
     font-weight: 600;
 }
 
-    /* HERO — CORRIGIDO */
+    /* ===========================================================
+   MOBILE — HERO + BOTÃO + TEXTO (CORRIGIDO)
+=========================================================== */
+@media (max-width: 768px) {
+
     .hero {
-    position: relative;
-    background-image: url("../img/hero/hero1.jpg");
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-position: center top !important;
-    padding: 90px 20px 0 20px; /* sem cinzento */
-    min-height: 100vh !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    color: #fff;
-}
+        position: relative;
+        background-image: url("../img/hero/hero1.jpg");
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        background-position: center top !important;
+        padding: 90px 20px 0 20px;
+        min-height: 100vh !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        color: #fff;
+    }
 
     .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0 !important; /* garante que cobre tudo */
-    background: linear-gradient(
-        rgba(0,0,0,0.55),
-        rgba(0,0,0,0.25)
-    );
-    z-index: 0;
-}
-
+        content: "";
+        position: absolute;
+        inset: 0 !important;
+        background: linear-gradient(
+            rgba(0,0,0,0.55),
+            rgba(0,0,0,0.25)
+        );
+        z-index: 0;
+    }
 
     .hero-text {
         position: relative;
@@ -472,27 +475,22 @@ a[href^="https://wa.me"],
         margin: 0 auto;
     }
 
-    /* BOTÃO FLUTUANTE — MOBILE (CORREÇÃO CRÍTICA) */
+    /* BOTÃO FLUTUANTE — MOBILE */
     .btn-flutuante {
         position: fixed;
         bottom: 80px;
         left: 50%;
         right: auto;
-
-        /* ANULA COMPLETAMENTE O DESKTOP */
         top: auto !important;
         transform: translate(-50%, 0) !important;
-
         padding: 8px 18px;
         font-size: 0.85rem;
         line-height: 1;
-
         width: auto;
         max-width: 200px;
         white-space: normal;
         word-break: break-word;
         text-align: center;
-
         border-radius: 999px;
         background: #005c99;
         color: #fff;
@@ -500,11 +498,11 @@ a[href^="https://wa.me"],
         z-index: 99999;
     }
 
-    /* ANULA O HOVER DO DESKTOP */
     .btn-flutuante:hover {
         transform: translate(-50%, 0) !important;
     }
 }
+
 
 /* ===========================================================
    ALOJAMENTO — ESTILO PREMIUM BELLEVIEW
