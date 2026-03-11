@@ -417,58 +417,6 @@ a[href^="https://wa.me"],
     font-weight: 600;
 }
 
-
-
-/* ===========================================================
-   MOBILE — HEADER + HERO + BOTÃO (CORRIGIDO)
-=========================================================== */
-@media (max-width: 768px) {
-
-    /* HEADER */
-    .header {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 14px 20px;
-        gap: 10px;
-        text-align: center;
-    }
-
-    .logo {
-        font-size: 1.15rem;
-        gap: 8px;
-    }
-
-    .logo-circle {
-        width: 34px;
-        aspect-ratio: 1 / 1;
-        font-size: 1.1rem;
-        flex-shrink: 0;
-    }
-
-    .nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 4px;
-    }
-
-    .nav a {
-        margin: 0;
-        font-size: 0.9rem;
-        padding: 4px 8px;
-    }
-
-    .lang-switch {
-        gap: 6px;
-    }
-
-    .lang-switch img {
-        width: 24px;
-        height: 24px;
-    }
-
     /* HERO — CORRIGIDO */
     .hero {
     position: relative;
