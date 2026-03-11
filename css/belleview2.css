@@ -16,16 +16,16 @@ body {
 /* ===========================================================
    HEADER — BELLEVIEW PREMIUM
 =========================================================== */
-/* HEADER FIXO BELLEVIEW */
+/* HEADER FIXO BELLEVIEW (DESKTOP) */
 .header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 9998;
-    background: rgba(255,255,255,0.92); /* leve transparência premium */
-    backdrop-filter: blur(8px); /* efeito moderno */
-    -webkit-backdrop-filter: blur(8px); /* iOS fix */
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
@@ -33,7 +33,7 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
-
+/* LOGO */
 .logo {
     display: flex;
     align-items: center;
@@ -44,9 +44,10 @@ body {
     color: #005c99;
 }
 
+/* CÍRCULO DO LOGO */
 .logo-circle {
     width: 42px;
-    aspect-ratio: 1 / 1; /* mantém sempre círculo perfeito */
+    aspect-ratio: 1 / 1;
     background: #005c99;
     color: #fff;
     border-radius: 50%;
@@ -55,9 +56,14 @@ body {
     align-items: center;
     font-weight: 700;
     font-size: 1.4rem;
-    flex-shrink: 0; /* impede de encolher */
+    flex-shrink: 0;
 }
 
+/* MENU DESKTOP */
+.nav {
+    display: flex;
+    align-items: center;
+}
 
 .nav a {
     margin-left: 20px;
@@ -67,16 +73,12 @@ body {
     font-size: 1.05rem;
 }
 
-/* ===========================================================
-   BANDEIRAS PREMIUM
-=========================================================== */
+/* BANDEIRAS PREMIUM (DESKTOP) */
 .lang-switch {
     display: flex;
     gap: 10px;
-    margin-left: 20px; /* puxa as bandeiras para a esquerda */
-    transform: translateX(-25px); /* ajuste fino */
+    transform: translateX(-20px); /* puxa ligeiramente para a esquerda */
 }
-
 
 .lang-switch img {
     width: 32px;
@@ -131,6 +133,7 @@ body {
 
     /* Menu centrado, sem margens laterais, sem cortar texto */
     .nav {
+        display: flex;              /* <- FALTAVA ISTO */
         flex-wrap: wrap;
         justify-content: center;
         gap: 8px;
@@ -162,7 +165,6 @@ body {
         padding-top: 120px;
     }
 }
-
 
 /* ===========================================================
    HERO — BELLEVIEW PREMIUM (IMAGEM PUXADA PARA CIMA)
