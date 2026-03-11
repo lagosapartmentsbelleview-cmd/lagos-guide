@@ -13,41 +13,20 @@ body {
 }
 
 /* ===========================================================
-   HEADER — BELLEVIEW PREMIUM (2 LINHAS)
+   HEADER — BELLEVIEW PREMIUM
 =========================================================== */
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-
-    background: rgba(255,255,255,0.95);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
-    display: flex;
-    flex-direction: column; /* ← DUAS LINHAS */
-    align-items: center;
-    padding: 12px 20px;
-}
-
-/* Placeholder para não tapar o hero */
-.header-placeholder {
-    height: 120px; /* altura real do header em 2 linhas */
-    width: 100%;
-}
-
-/* ===========================================================
-   LINHA 1 — LOGO + BANDEIRAS
-=========================================================== */
-.header-top {
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 18px 40px;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 9999;
 }
 
-/* LOGO */
 .logo {
     display: flex;
     align-items: center;
@@ -56,12 +35,11 @@ body {
     font-size: 1.3rem;
     font-weight: 600;
     color: #005c99;
-    text-decoration: none;
 }
 
 .logo-circle {
     width: 42px;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1 / 1; /* mantém sempre círculo perfeito */
     background: #005c99;
     color: #fff;
     border-radius: 50%;
@@ -70,7 +48,16 @@ body {
     align-items: center;
     font-weight: 700;
     font-size: 1.4rem;
-    flex-shrink: 0;
+    flex-shrink: 0; /* impede de encolher */
+}
+
+
+.nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #005c99;
+    font-weight: 600;
+    font-size: 1.05rem;
 }
 
 /* ===========================================================
@@ -79,7 +66,6 @@ body {
 .lang-switch {
     display: flex;
     gap: 10px;
-    flex-shrink: 0;
 }
 
 .lang-switch img {
@@ -90,30 +76,12 @@ body {
     transition: 0.25s ease;
     border: 2px solid #ffffff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    flex-shrink: 0;
 }
 
 .lang-switch img:hover {
     transform: scale(1.12);
     box-shadow: 0 4px 10px rgba(0,0,0,0.35);
 }
-
-/* ===========================================================
-   LINHA 2 — MENU
-=========================================================== */
-.nav {
-    margin-top: 10px;
-    display: flex;
-    gap: 20px;
-}
-
-.nav a {
-    text-decoration: none;
-    color: #005c99;
-    font-weight: 600;
-    font-size: 1.05rem;
-}
-
 
 /* ===========================================================
    HERO — BELLEVIEW PREMIUM (IMAGEM PUXADA PARA CIMA)
@@ -2485,10 +2453,3 @@ a[href^="https://wa.me"],
     text-decoration: none !important;
     color: #0074c7 !important; /* azul Belleview mais claro */
 }
-
-@media (max-width: 768px) {
-    .header-placeholder {
-        height: 120px; /* header fica mais alto em mobile */
-    }
-}
-
