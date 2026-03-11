@@ -84,7 +84,7 @@ body {
 .lang-switch {
     display: flex;
     gap: 8px;
-    transform: translateX(-30px); /* puxa tudo para a esquerda */
+    transform: translateX(-30px); /* desktop OK */
 }
 
 .lang-switch img {
@@ -100,6 +100,41 @@ body {
 .lang-switch img:hover {
     transform: scale(1.12);
     box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+}
+
+/* ===========================================================
+   CORREÇÃO MOBILE — iPhone / Android
+=========================================================== */
+@media (max-width: 768px) {
+
+    /* remove o translate que estava a destruir o layout */
+    .lang-switch {
+        transform: translateX(0);
+        gap: 6px;
+    }
+
+    /* bandeiras menores para caberem no header */
+    .lang-switch img {
+        width: 26px;
+        height: 26px;
+    }
+
+    /* logo mais compacto */
+    .header .logo {
+        font-size: 1.1rem;
+        gap: 8px;
+    }
+
+    .logo-circle {
+        width: 34px;
+        font-size: 1.2rem;
+    }
+
+    /* menu mais compacto */
+    .nav a {
+        margin-left: 12px;
+        font-size: 0.95rem;
+    }
 }
 
 /* ===========================================================
