@@ -16,7 +16,7 @@ body {
    HEADER — BELLEVIEW PREMIUM
 =========================================================== */
 
-/* HEADER FIXO BELLEVIEW */
+/* HEADER FIXO BELLEVIEW (DESKTOP) */
 .header {
     position: fixed;
     top: 0;
@@ -28,7 +28,7 @@ body {
     -webkit-backdrop-filter: blur(8px);
     padding: 12px 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* desktop: logo à esquerda, menu ao centro, bandeiras à direita */
     align-items: center;
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
@@ -68,7 +68,12 @@ body {
     flex-shrink: 0;
 }
 
-/* MENU */
+/* MENU (DESKTOP) */
+.nav {
+    display: flex;
+    align-items: center;
+}
+
 .nav a {
     margin-left: 20px;
     text-decoration: none;
@@ -77,13 +82,11 @@ body {
     font-size: 1.05rem;
 }
 
-/* ===========================================================
-   BANDEIRAS PREMIUM
-=========================================================== */
+/* BANDEIRAS PREMIUM (DESKTOP) */
 .lang-switch {
     display: flex;
     gap: 8px;
-    transform: translateX(-30px); /* desktop OK */
+    transform: translateX(-30px); /* desktop OK, puxa ligeiramente para a esquerda */
 }
 
 .lang-switch img {
@@ -102,24 +105,30 @@ body {
 }
 
 /* ===========================================================
-   MOBILE — HEADER PERFEITO (ÚNICO BLOCO)
+   MOBILE — HEADER CENTRADO (LOGO + MENU + BANDEIRAS)
 =========================================================== */
 @media (max-width: 768px) {
 
-    /* HEADER EM COLUNA E CENTRADO */
+    /* HEADER EM COLUNA E CENTRADO NO ECRÃ */
     .header {
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 16px 20px;
-        gap: 10px;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 16px 16px;
+        gap: 8px;
         text-align: center;
     }
 
-    /* LOGO */
+    /* TODOS OS FILHOS DO HEADER CENTRADOS */
+    .header > * {
+        margin: 0 auto;
+    }
+
+    /* LOGO MAIS COMPACTO E CENTRADO */
     .header .logo {
         font-size: 1.15rem;
         gap: 8px;
+        justify-content: center;
     }
 
     .logo-circle {
@@ -127,13 +136,13 @@ body {
         font-size: 1.1rem;
     }
 
-    /* MENU */
+    /* MENU EM LINHA, CENTRADO, SEM MARGENS LATERAIS */
     .nav {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 10px;
-        margin-top: 4px;
+        gap: 8px;
+        margin-top: 2px;
     }
 
     .nav a {
@@ -142,10 +151,12 @@ body {
         padding: 4px 8px;
     }
 
-    /* BANDEIRAS */
+    /* BANDEIRAS — ANULA O TRANSLATE E CENTRA MESMO */
     .lang-switch {
-        transform: translateX(0);
+        transform: none !important;
         gap: 6px;
+        justify-content: center !important;
+        margin: 0 auto !important;
     }
 
     .lang-switch img {
@@ -153,12 +164,11 @@ body {
         height: 24px;
     }
 
-    /* AFASTAR O HERO DO HEADER FIXO */
+    /* AFASTAR O HERO DO HEADER FIXO (MOBILE) */
     body {
         padding-top: 120px;
     }
 }
-
 
 /* ===========================================================
    HERO — BELLEVIEW PREMIUM (IMAGEM PUXADA PARA CIMA)
