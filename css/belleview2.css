@@ -73,7 +73,10 @@ body {
 .lang-switch {
     display: flex;
     gap: 10px;
+    margin-left: 20px; /* puxa as bandeiras para a esquerda */
+    transform: translateX(-10px); /* ajuste fino */
 }
+
 
 .lang-switch img {
     width: 32px;
