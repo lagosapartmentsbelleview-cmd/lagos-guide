@@ -167,7 +167,7 @@ body {
 }
 
 /* ===========================================================
-   HERO — BELLEVIEW PREMIUM (IMAGEM PUXADA PARA CIMA)
+   HERO — BELLEVIEW PREMIUM (DESKTOP)
 =========================================================== */
 .hero {
     position: relative;
@@ -175,11 +175,11 @@ body {
     background-size: cover;
     background-position: center top;
     background-position-y: -150px; /* mostra mais piscina */
-    padding: 120px 40px 120px 40px; /* menos altura total */
+    padding: 120px 40px 120px 40px;
     color: #ffffff;
     display: flex;
     align-items: flex-start;
-    min-height: 65vh; /* hero mais compacto */
+    min-height: 65vh;
 }
 
 .hero::before {
@@ -197,7 +197,7 @@ body {
     position: relative;
     z-index: 2;
     max-width: 620px;
-    margin-top: 10px; /* sobe o texto */
+    margin-top: 10px;
     margin-left: 4vw;
 }
 
@@ -227,6 +227,56 @@ body {
     text-justify: inter-word;
     hyphens: auto;
 }
+
+/* ===========================================================
+   HERO — MOBILE CORRIGIDO
+=========================================================== */
+@media (max-width: 768px) {
+
+    .hero {
+        background-image: url("../img/hero/hero1.jpg");
+        background-size: cover !important;
+        background-position: center top !important;
+        background-position-y: 0 !important; /* remove corte da imagem */
+        padding: 90px 20px 40px 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero::before {
+        inset: 0 !important;
+    }
+
+    .hero-text {
+        margin: 0;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .hero-local {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    .hero-text h1 {
+        font-size: 1.9rem;
+        line-height: 1.25;
+        margin-bottom: 10px;
+    }
+
+    .hero-sub {
+        font-size: 1rem;
+        line-height: 1.45;
+        max-width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
+
 
 /* ===========================================================
    BOTÃO FLUTUANTE — BELLEVIEW PREMIUM
