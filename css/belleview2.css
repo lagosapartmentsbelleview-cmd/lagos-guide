@@ -22,10 +22,18 @@ body {
     padding: 18px 40px;
     background: rgba(255,255,255,0.95);
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 100%;
     z-index: 9999;
 }
+
+.header-placeholder {
+    height: 90px; /* igual à altura do header */
+    width: 100%;
+}
+
 
 .logo {
     display: flex;
@@ -2453,3 +2461,10 @@ a[href^="https://wa.me"],
     text-decoration: none !important;
     color: #0074c7 !important; /* azul Belleview mais claro */
 }
+
+@media (max-width: 768px) {
+    .header-placeholder {
+        height: 120px; /* header fica mais alto em mobile */
+    }
+}
+
