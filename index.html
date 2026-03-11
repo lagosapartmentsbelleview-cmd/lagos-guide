@@ -1487,6 +1487,25 @@ firebase.auth().onAuthStateChanged(user => {
 <!-- JS DO MODAL (o novo ui.js) -->
 <script src="js/ui.js"></script>
 
+<!-- BOTÃO PARA VOLTAR AO TOPO -->
+
+<div class="btn-topo" id="btnTopo">Topo</div>
+
+<script>
+const btnTopo = document.getElementById("btnTopo");
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+        btnTopo.classList.add("show");
+    } else {
+        btnTopo.classList.remove("show");
+    }
+});
+
+btnTopo.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
 
 </body>
 </html>
