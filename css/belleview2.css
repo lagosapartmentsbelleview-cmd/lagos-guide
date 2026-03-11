@@ -13,32 +13,38 @@ body {
 }
 
 /* ===========================================================
-   HEADER — BELLEVIEW PREMIUM
+   HEADER — BELLEVIEW PREMIUM (2 LINHAS)
 =========================================================== */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    /* REDUZIDO PARA CABER TUDO EM FIXED */
-    padding: 18px 24px;
-
-    background: rgba(255,255,255,0.95);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
-    /* FIXED SEMPRE — O MAIS ESTÁVEL EM ANDROID */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-
     z-index: 9999;
+
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+    display: flex;
+    flex-direction: column; /* ← DUAS LINHAS */
+    align-items: center;
+    padding: 12px 20px;
 }
 
 /* Placeholder para não tapar o hero */
 .header-placeholder {
-    height: 90px; /* igual à altura real do header */
+    height: 120px; /* altura real do header em 2 linhas */
     width: 100%;
+}
+
+/* ===========================================================
+   LINHA 1 — LOGO + BANDEIRAS
+=========================================================== */
+.header-top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* LOGO */
@@ -50,6 +56,7 @@ body {
     font-size: 1.3rem;
     font-weight: 600;
     color: #005c99;
+    text-decoration: none;
 }
 
 .logo-circle {
@@ -66,23 +73,12 @@ body {
     flex-shrink: 0;
 }
 
-/* MENU */
-.nav a {
-    margin-left: 20px;
-    text-decoration: none;
-    color: #005c99;
-    font-weight: 600;
-    font-size: 1.05rem;
-}
-
 /* ===========================================================
    BANDEIRAS PREMIUM
 =========================================================== */
 .lang-switch {
     display: flex;
     gap: 10px;
-
-    /* impede o container de encolher */
     flex-shrink: 0;
 }
 
@@ -94,14 +90,28 @@ body {
     transition: 0.25s ease;
     border: 2px solid #ffffff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-
-    /* impede cada bandeira de encolher */
     flex-shrink: 0;
 }
 
 .lang-switch img:hover {
     transform: scale(1.12);
     box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+}
+
+/* ===========================================================
+   LINHA 2 — MENU
+=========================================================== */
+.nav {
+    margin-top: 10px;
+    display: flex;
+    gap: 20px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #005c99;
+    font-weight: 600;
+    font-size: 1.05rem;
 }
 
 
