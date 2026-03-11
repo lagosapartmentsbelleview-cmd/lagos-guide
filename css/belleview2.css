@@ -57,6 +57,14 @@ body {
     flex-shrink: 0; /* impede de encolher */
 }
 
+.header .logo,
+.header .logo:hover,
+.header .logo:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+
 
 .nav a {
     margin-left: 20px;
