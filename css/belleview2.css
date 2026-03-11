@@ -2442,3 +2442,14 @@ a[href^="https://wa.me"],
     background: #d9e7f2;
     transform: translateY(-2px);
 }
+
+/* Remover sublinhado do título do site */
+.logo {
+    text-decoration: none !important;
+    color: #005c99 !important; /* azul Belleview */
+}
+
+.logo:hover {
+    text-decoration: none !important;
+    color: #0074c7 !important; /* azul Belleview mais claro */
+}
