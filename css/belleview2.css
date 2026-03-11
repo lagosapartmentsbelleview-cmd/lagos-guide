@@ -23,9 +23,9 @@ body {
     left: 0;
     width: 100%;
     z-index: 9998;
-    background: rgba(255,255,255,0.92); /* leve transparência premium */
-    backdrop-filter: blur(8px); /* efeito moderno */
-    -webkit-backdrop-filter: blur(8px); /* iOS fix */
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
@@ -33,7 +33,7 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
-/* LOGO CLICÁVEL — CORRETO E SEM SUBLINHADO */
+/* LOGO CLICÁVEL */
 .header .logo {
     display: flex;
     align-items: center;
@@ -41,16 +41,15 @@ body {
     font-family: "Poppins", sans-serif;
     font-size: 1.3rem;
     font-weight: 600;
-    color: #005c99; /* cor correta */
-    text-decoration: none; /* remove sublinhado */
+    color: #005c99;
+    text-decoration: none;
 }
 
-/* GARANTE QUE NUNCA FICA PRETO EM NENHUM ESTADO */
 .header .logo:link,
 .header .logo:visited,
 .header .logo:hover,
 .header .logo:active {
-    color: #005c99; /* força a cor correta */
+    color: #005c99;
     text-decoration: none;
 }
 
@@ -103,69 +102,49 @@ body {
 }
 
 /* ===========================================================
-   CORREÇÃO MOBILE — iPhone / Android
+   MOBILE — HEADER PERFEITO (ÚNICO BLOCO)
 =========================================================== */
 @media (max-width: 768px) {
 
-    /* remove o translate que estava a destruir o layout */
-    .lang-switch {
-        transform: translateX(0);
-        gap: 6px;
+    /* HEADER EM COLUNA E CENTRADO */
+    .header {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 16px 20px;
+        gap: 10px;
+        text-align: center;
     }
 
-    /* bandeiras menores para caberem no header */
-    .lang-switch img {
-        width: 26px;
-        height: 26px;
-    }
-
-    /* logo mais compacto */
+    /* LOGO */
     .header .logo {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         gap: 8px;
     }
 
     .logo-circle {
         width: 34px;
-        font-size: 1.2rem;
-    }
-
-    /* menu mais compacto */
-    .nav a {
-        margin-left: 12px;
-        font-size: 0.95rem;
-    }
-}
-/* ===========================================================
-   CORREÇÃO MOBILE — HEADER PERFEITO
-=========================================================== */
-@media (max-width: 768px) {
-
-    /* Header mais compacto */
-    .header {
-        padding: 10px 14px;
-    }
-
-    /* Logo mais pequeno e centrado */
-    .header .logo {
-        font-size: 1.05rem;
-        gap: 6px;
-    }
-
-    .logo-circle {
-        width: 32px;
         font-size: 1.1rem;
     }
 
-    /* Menu mais compacto */
-    .nav a {
-        margin-left: 10px;
-        font-size: 0.9rem;
+    /* MENU */
+    .nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 4px;
     }
 
-    /* Bandeiras corrigidas */
+    .nav a {
+        margin: 0;
+        font-size: 0.9rem;
+        padding: 4px 8px;
+    }
+
+    /* BANDEIRAS */
     .lang-switch {
-        transform: translateX(0); /* remove o problema */
+        transform: translateX(0);
         gap: 6px;
     }
 
@@ -174,11 +153,12 @@ body {
         height: 24px;
     }
 
-    /* Evita que o conteúdo fique escondido atrás do header */
+    /* AFASTAR O HERO DO HEADER FIXO */
     body {
-        padding-top: 70px;
+        padding-top: 120px;
     }
 }
+
 
 /* ===========================================================
    HERO — BELLEVIEW PREMIUM (IMAGEM PUXADA PARA CIMA)
