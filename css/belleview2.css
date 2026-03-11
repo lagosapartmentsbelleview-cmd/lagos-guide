@@ -2539,3 +2539,67 @@ a[href^="https://wa.me"],
     }
 }
 
+@media (max-width: 768px) {
+
+    /* HEADER EM COLUNA COM LARGURA TOTAL */
+    .header {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 16px;
+        gap: 10px;
+        text-align: center;
+    }
+
+    /* FORÇA TODOS OS FILHOS A TEREM LARGURA IGUAL */
+    .header > * {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* LOGO COM ESPAÇAMENTO CORRETO */
+    .header .logo {
+        font-size: 1.15rem;
+        gap: 8px;
+        justify-content: center;
+        white-space: nowrap;
+    }
+
+    .logo-circle {
+        width: 34px;
+        font-size: 1.1rem;
+    }
+
+    /* MENU COM QUEBRA CORRETA */
+    .nav {
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 4px;
+    }
+
+    .nav a {
+        font-size: 0.9rem;
+        padding: 4px 8px;
+        white-space: nowrap;
+    }
+
+    /* BANDEIRAS CENTRADAS */
+    .lang-switch {
+        transform: none !important;
+        gap: 6px;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .lang-switch img {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* AFASTAR O HERO DO HEADER FIXO */
+    body {
+        padding-top: 130px;
+    }
+}
