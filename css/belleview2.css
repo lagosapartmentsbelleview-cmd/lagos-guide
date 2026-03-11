@@ -86,7 +86,7 @@ body {
 .lang-switch {
     display: flex;
     gap: 8px;
-    transform: translateX(-30px); /* desktop OK, puxa ligeiramente para a esquerda */
+    transform: translateX(-20px); /* desktop OK, puxa ligeiramente para a esquerda */
 }
 
 .lang-switch img {
