@@ -94,6 +94,77 @@ body {
 }
 
 /* ===========================================================
+   MOBILE — HEADER CENTRADO
+=========================================================== */
+@media (max-width: 768px) {
+
+    /* Header em coluna e centrado no ecrã */
+    .header {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 16px 16px;
+        gap: 8px;
+        text-align: center;
+    }
+
+    /* Cada filho ocupa a largura total e é centrado */
+    .header > * {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+
+    /* Logo mais compacto e centrado */
+    .header .logo {
+        font-size: 1.1rem;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .logo-circle {
+        width: 34px;
+        font-size: 1.1rem;
+    }
+
+    /* Menu centrado, sem margens laterais, sem cortar texto */
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin: 0;
+    }
+
+    .nav a {
+        margin: 0;
+        font-size: 0.9rem;
+        padding: 4px 8px;
+        white-space: nowrap; /* evita cortar "Contactos/Contacts" */
+    }
+
+    /* Bandeiras centradas, sem translate */
+    .lang-switch {
+        transform: none !important;
+        justify-content: center;
+        margin: 0 auto;
+        gap: 6px;
+    }
+
+    .lang-switch img {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Afasta o conteúdo do hero do header fixo */
+    body {
+        padding-top: 120px;
+    }
+}
+
+
+/* ===========================================================
    HERO — BELLEVIEW PREMIUM (IMAGEM PUXADA PARA CIMA)
 =========================================================== */
 .hero {
