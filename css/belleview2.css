@@ -513,7 +513,7 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   ALOJAMENTO — ESTILO PREMIUM BELLEVIEW
+   ALOJAMENTO — ESTILO PREMIUM BELLEVIEW (DESKTOP)
 =========================================================== */
 
 /* Secção geral */
@@ -576,6 +576,38 @@ a[href^="https://wa.me"],
     transform: translateY(-4px);
     box-shadow: 0 12px 28px rgba(0,0,0,0.18);
 }
+/* ===========================================================
+   ALOJAMENTO — MOBILE
+=========================================================== */
+@media (max-width: 768px) {
+
+    #alojamento {
+        padding: 50px 20px;
+    }
+
+    .aloj-title {
+        font-size: 2.1rem;
+        margin-bottom: 28px;
+    }
+
+    .intro-alojamento {
+        padding: 24px 20px;
+        border-radius: 14px;
+    }
+
+    .intro-alojamento .subtitulo {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 16px;
+        hyphens: auto;
+        word-break: break-word;
+    }
+
+    .aloj-galeria img {
+        height: 200px;
+    }
+}
+
 
 /* SUBTÍTULO DESTAQUES */
 .subtitulo-categoria {
@@ -586,118 +618,8 @@ a[href^="https://wa.me"],
     font-family: "Poppins", sans-serif;
 }
 
-/* COMODIDADES — Ícones premium */
-.aloj-highlights {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 22px;
-    margin-bottom: 50px;
-}
-
-.cb-item {
-    background: #ffffff;
-    padding: 22px 18px;
-    border-radius: 14px;
-    border: 1px solid #e6e6e6;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    text-align: center;
-    font-weight: 600;
-    color: #005c99;
-    font-family: "Poppins", sans-serif;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.cb-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-}
-
-/* DESCRIÇÃO — Cards premium */
-.descricao-alojamento {
-    background: #ffffff;
-    padding: 32px 28px;
-    border-radius: 16px;
-    border: 1px solid #e6e6e6;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    margin: 50px 0;
-}
-
-.descricao-alojamento h3 {
-    font-size: 1.9rem;
-    font-weight: 700;
-    color: #005c99;
-    margin-bottom: 18px;
-    font-family: "Poppins", sans-serif;
-}
-
-.descricao-alojamento p {
-    font-size: 1.15rem;
-    line-height: 1.65;
-    color: #444;
-    text-align: justify;
-    text-justify: inter-word;
-    margin-bottom: 18px;
-}
-
-/* LISTA DE COMPOSIÇÃO — Premium vertical cards */
-.comodidades-lista {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 18px;
-    margin: 30px 0 50px;
-}
-
-.comodidade-item {
-    background: #ffffff;
-    padding: 22px 20px;
-    border-radius: 14px;
-    border: 1px solid #e6e6e6;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    text-align: center;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.comodidade-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-}
-
-.comodidade-nome {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #005c99;
-    margin-bottom: 6px;
-    font-family: "Poppins", sans-serif;
-}
-
-.comodidade-check {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #2ecc71;
-}
-
-/* RESPONSIVO */
-@media (max-width: 768px) {
-    #alojamento {
-        padding: 50px 20px;
-    }
-
-    .aloj-title {
-        font-size: 2.1rem;
-    }
-
-    .intro-alojamento,
-    .descricao-alojamento {
-        padding: 24px 20px;
-    }
-
-    .aloj-galeria img {
-        height: 200px;
-    }
-}
-
 /* ===========================================================
-   COMODIDADES — BELLEVIEW 2.0 PREMIUM
+   COMODIDADES — BELLEVIEW 2.0 PREMIUM (DESKTOP)
 =========================================================== */
 
 #comodidades {
@@ -737,7 +659,7 @@ a[href^="https://wa.me"],
     margin-bottom: 18px;
 }
 
-/* Subtítulos */
+/* Subtítulo */
 #comodidades .subtitulo-categoria {
     font-size: 1.6rem;
     font-weight: 700;
@@ -745,10 +667,10 @@ a[href^="https://wa.me"],
     margin: 40px 0 20px;
 }
 
-/* Grelha de comodidades */
+/* Grelha — 4 colunas em desktop */
 #comodidades .aloj-highlights {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 22px;
     margin-bottom: 50px;
 }
@@ -772,8 +694,11 @@ a[href^="https://wa.me"],
     box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
-/* Responsivo */
+/* ===========================================================
+   COMODIDADES — MOBILE
+=========================================================== */
 @media (max-width: 768px) {
+
     #comodidades {
         padding: 50px 20px;
     }
@@ -785,37 +710,15 @@ a[href^="https://wa.me"],
     #comodidades .intro-alojamento {
         padding: 24px 20px;
     }
-}
 
-/* Grelha de comodidades — 4 colunas em desktop */
-#comodidades .aloj-highlights {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
-    margin-bottom: 50px;
-}
+    #comodidades .intro-alojamento .subtitulo {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        hyphens: auto;
+        word-break: break-word;
+    }
 
-/* Cards premium */
-#comodidades .cb-item {
-    background: #ffffff;
-    padding: 22px 18px;
-    border-radius: 14px;
-    border: 1px solid #e6e6e6;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    text-align: center;
-    font-weight: 600;
-    color: #005c99;
-    font-family: "Poppins", sans-serif;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-#comodidades .cb-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-}
-
-/* Mobile — 2 colunas */
-@media (max-width: 768px) {
+    /* 2 colunas em mobile */
     #comodidades .aloj-highlights {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
@@ -829,36 +732,9 @@ a[href^="https://wa.me"],
     }
 }
 
-/* ===========================================================
-   MOBILE — MELHORIA DE TEXTO PREMIUM BELLEVIEW
-=========================================================== */
-
-@media (max-width: 768px) {
-
-    /* Todos os textos descritivos */
-    .intro-alojamento .subtitulo,
-    .descricao-alojamento p,
-    #comodidades .intro-alojamento .subtitulo {
-        font-size: 1.05rem;              /* mais compacto */
-        line-height: 1.75;               /* mais respirado */
-        text-align: justify;
-        text-justify: inter-word;
-        hyphens: auto;                   /* quebra natural */
-        word-break: break-word;          /* evita buracos */
-        margin-bottom: 16px;
-    }
-
-    /* Limitar largura para leitura perfeita */
-    .intro-alojamento,
-    .descricao-alojamento {
-        max-width: 95%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
 
 /* ===========================================================
-   LOCALIZAÇÃO — BELLEVIEW 2.0 PREMIUM
+   LOCALIZAÇÃO — BELLEVIEW 2.0 PREMIUM (DESKTOP)
 =========================================================== */
 
 #localizacao {
@@ -954,7 +830,7 @@ a[href^="https://wa.me"],
     opacity: 0.85;
 }
 
-/* O que os hóspedes mais gostam — cards iguais aos de Comodidades */
+/* O que os hóspedes mais gostam — cards */
 #localizacao .aloj-highlights {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1003,9 +879,8 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   MOBILE — AJUSTES PREMIUM
+   LOCALIZAÇÃO — MOBILE
 =========================================================== */
-
 @media (max-width: 768px) {
 
     #localizacao {
@@ -1026,27 +901,31 @@ a[href^="https://wa.me"],
         margin-bottom: 20px;
     }
 
+    /* Distâncias — 1 coluna */
     #localizacao .proximidades-lista {
         grid-template-columns: 1fr;
         gap: 14px;
     }
 
+    /* Cards — 2 colunas */
     #localizacao .aloj-highlights {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
 
+    /* Galeria */
     #localizacao .aloj-galeria img {
         height: 200px;
     }
 }
 
-/* Mobile pequeno */
+/* Mobile pequeno — 1 coluna */
 @media (max-width: 480px) {
     #localizacao .aloj-highlights {
         grid-template-columns: 1fr;
     }
 }
+
 
 /* ===========================================================
    REGRAS DO IMÓVEL — BELLEVIEW 2.0 PREMIUM
