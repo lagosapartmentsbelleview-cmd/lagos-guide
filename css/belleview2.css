@@ -542,6 +542,35 @@ a[href^="https://wa.me"],
     }
 }
 
+@media (max-width: 768px) {
+
+    /* Cada elemento do header ocupa a largura total */
+    .header > * {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    /* Garante que o menu não quebra mal */
+    .nav {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .nav a {
+        white-space: nowrap; /* evita cortar "Contacts" */
+    }
+
+    /* Bandeiras centradas */
+    .lang-switch {
+        transform: none !important;
+        justify-content: center !important;
+        margin: 0 auto !important;
+    }
+}
+
+
 /* ===========================================================
    ALOJAMENTO — ESTILO PREMIUM BELLEVIEW
 =========================================================== */
