@@ -402,6 +402,16 @@ a[href^="https://wa.me"],
         height: 24px;
     }
 
+    @media (max-width: 768px) {
+    .lang-switch {
+        margin-top: 6px;
+        margin-bottom: 6px;
+        justify-content: center;
+        transform: none; /* remove o deslocamento do desktop */
+    }
+}
+
+
     /* HERO — CORRIGIDO */
     .hero {
     position: relative;
