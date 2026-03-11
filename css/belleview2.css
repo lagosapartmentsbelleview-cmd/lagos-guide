@@ -72,7 +72,7 @@ body {
 .lang-switch {
     display: flex;
     gap: 8px;
-    transform: translateX(-20px); /* puxa tudo para a esquerda */
+    transform: translateX(-30px); /* puxa tudo para a esquerda */
 }
 
 .lang-switch img {
