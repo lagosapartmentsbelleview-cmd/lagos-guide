@@ -159,35 +159,6 @@ body {
     }
 }
 
-@media (max-width: 768px) {
-
-    /* Corrige o alinhamento das bandeiras */
-    .lang-switch {
-        transform: none !important;
-        margin: 0 auto !important;   /* centra o grupo */
-        justify-content: center !important;
-    }
-
-    /* Garante que o header fica realmente centrado */
-    .header {
-        justify-content: center !important;
-        align-items: center !important;
-        text-align: center !important;
-    }
-
-    /* Garante que o menu não fica deslocado */
-    .nav {
-        justify-content: center !important;
-        margin: 0 auto !important;
-    }
-
-    /* Garante que o logo fica centrado */
-    .header .logo {
-        margin: 0 auto !important;
-        justify-content: center !important;
-    }
-}
-
 
 /* ===========================================================
    HERO — BELLEVIEW PREMIUM (IMAGEM PUXADA PARA CIMA)
@@ -446,7 +417,7 @@ a[href^="https://wa.me"],
     font-weight: 600;
 }
 
-    /* ===========================================================
+/* ===========================================================
    MOBILE — HERO + BOTÃO + TEXTO (CORRIGIDO)
 =========================================================== */
 @media (max-width: 768px) {
@@ -532,6 +503,34 @@ a[href^="https://wa.me"],
     }
 }
 
+@media (max-width: 768px) {
+
+    /* Corrige o alinhamento das bandeiras */
+    .lang-switch {
+        transform: none !important;
+        margin: 0 auto !important;   /* centra o grupo */
+        justify-content: center !important;
+    }
+
+    /* Garante que o header fica realmente centrado */
+    .header {
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    /* Garante que o menu não fica deslocado */
+    .nav {
+        justify-content: center !important;
+        margin: 0 auto !important;
+    }
+
+    /* Garante que o logo fica centrado */
+    .header .logo {
+        margin: 0 auto !important;
+        justify-content: center !important;
+    }
+}
 
 /* ===========================================================
    ALOJAMENTO — ESTILO PREMIUM BELLEVIEW
