@@ -74,7 +74,7 @@ body {
     display: flex;
     gap: 10px;
     margin-left: 20px; /* puxa as bandeiras para a esquerda */
-    transform: translateX(-20px); /* ajuste fino */
+    transform: translateX(-25px); /* ajuste fino */
 }
 
 
