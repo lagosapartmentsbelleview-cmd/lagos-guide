@@ -1051,6 +1051,19 @@ footer {
     transform: scale(1.12);
     opacity: 0.8;
 }
+.footer-social .social-icon svg {
+    width: 24px !important;
+    height: 24px !important;
+    color: #ffffff !important; /* ícones brancos */
+    fill: #ffffff !important;  /* força branco mesmo em paths */
+    display: block;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.footer-social .social-icon:hover svg {
+    transform: scale(1.12);
+    opacity: 0.85;
+}
 
 /* ============================================================
    15. RESPONSIVO — TABLET & MOBILE
