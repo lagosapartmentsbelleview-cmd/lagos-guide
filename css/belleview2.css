@@ -361,6 +361,29 @@ a[href^="https://wa.me"],
     opacity: 0.8;
 }
 
+.footer-social {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 18px;
+    margin-bottom: 6px;
+}
+
+.footer-social .social-icon svg {
+    width: 22px !important;
+    height: 22px !important;
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    display: block;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.footer-social .social-icon:hover svg {
+    transform: scale(1.12);
+    opacity: 0.85;
+}
+
 
 /* ===========================================================
    MOBILE — HEADER + HERO + BOTÃO (CORRIGIDO)
