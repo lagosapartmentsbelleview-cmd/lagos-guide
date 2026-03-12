@@ -1354,20 +1354,26 @@
   }
 
   window.onload = function() {
-    if (!getCookie("cookieConsent")) {
-      document.getElementById("cookie-banner").style.display = "block";
-    }
-  };
+    const banner = document.getElementById("cookie-banner");
 
-  document.getElementById("accept-cookies").onclick = function() {
+    if (!getCookie("cookieConsent")) {
+        banner.style.display = "block";
+        banner.classList.add("showing");
+    }
+};
+
+document.getElementById("accept-cookies").onclick = function() {
     setCookie("cookieConsent", "accepted", 365);
     document.getElementById("cookie-banner").style.display = "none";
-  };
+    document.getElementById("cookie-banner").classList.remove("showing");
+};
 
-  document.getElementById("reject-cookies").onclick = function() {
+document.getElementById("reject-cookies").onclick = function() {
     setCookie("cookieConsent", "rejected", 365);
     document.getElementById("cookie-banner").style.display = "none";
-  };
+    document.getElementById("cookie-banner").classList.remove("showing");
+};
+
 </script>
 
 <script>
