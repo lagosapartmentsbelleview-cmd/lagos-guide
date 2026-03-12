@@ -1535,7 +1535,7 @@ a[href^="https://wa.me"],
 
 
 /* ===========================================================
-   COOKIE BANNER — ESTILO BELLEVIEW 2.0
+   COOKIE BANNER — ESTILO BELLEVIEW 2.0 (CORRIGIDO)
 =========================================================== */
 
 .cookie-banner {
@@ -1549,10 +1549,12 @@ a[href^="https://wa.me"],
     box-shadow: 0 10px 28px rgba(0,0,0,0.12);
     border: 1px solid #e6e6e6;
     z-index: 9999;
-    display: none; /* aparece via JS */
-    max-width: 90%;
-    width: 480px;
-    animation: fadeIn 0.4s ease forwards;
+    display: none;
+
+    /* CORREÇÃO CRÍTICA */
+    width: auto;
+    max-width: min(90vw, 420px);
+    box-sizing: border-box;
 }
 
 .cookie-box {
@@ -1606,17 +1608,16 @@ a[href^="https://wa.me"],
     background: #d5d5d5;
 }
 
-/* Animação */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translate(-50%, 10px); }
-    to { opacity: 1; transform: translate(-50%, 0); }
-}
-
 /* Mobile */
 @media (max-width: 480px) {
     .cookie-banner {
-        width: 92%;
+        bottom: 16px;
         padding: 18px 20px;
+
+        /* CORREÇÃO MOBILE */
+        max-width: 92vw;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .cookie-text {
