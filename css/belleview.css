@@ -1031,6 +1031,27 @@ footer {
     padding-top: 15px;
 }
 
+.footer-social {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 18px;
+    margin-bottom: 6px;
+}
+
+.footer-social .social-icon svg {
+    width: 26px;
+    height: 26px;
+    color: #ffffff; /* ícones brancos para combinar com o footer */
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.footer-social .social-icon:hover svg {
+    transform: scale(1.12);
+    opacity: 0.8;
+}
+
 /* ============================================================
    15. RESPONSIVO — TABLET & MOBILE
    ============================================================ */
