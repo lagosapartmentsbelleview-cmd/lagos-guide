@@ -71,6 +71,7 @@ function desenharTabelaOperacional() {
 
         const comissao = Number(r.comissao || 0);
         const comissaoExtra = Number(r.comissaoExtra || 0);
+        const comissaoTotal = comissao + comissaoExtra;
         const limpeza = Number(r.limpeza || 0);
 
         const liquidoOTA = totalBruto - comissao - comissaoExtra;
@@ -102,6 +103,7 @@ function desenharTabelaOperacional() {
             <td>${valorIVA.toFixed(2)}</td>
             <td>${comissao.toFixed(2)}</td>
             <td>${comissaoExtra.toFixed(2)}</td>
+            <td>${comissaoTotal.toFixed(2)}</td>
             <td>${limpeza.toFixed(2)}</td>
             <td>${liquidoOTA.toFixed(2)}</td>
             <td>${liquidoOperacional.toFixed(2)}</td>
