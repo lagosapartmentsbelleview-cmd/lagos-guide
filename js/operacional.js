@@ -174,6 +174,22 @@ function parseDataPt(data) {
     return new Date(`${ano}-${mes}-${dia}`);
 }
 
+// LIGAR FILTROS
+document.getElementById("filtroTexto").addEventListener("input", aplicarFiltrosOperacional);
+document.getElementById("filtroOrigem").addEventListener("change", aplicarFiltrosOperacional);
+document.getElementById("filtroPagamento").addEventListener("change", aplicarFiltrosOperacional);
+document.getElementById("filtroDataInicio").addEventListener("change", aplicarFiltrosOperacional);
+document.getElementById("filtroDataFim").addEventListener("change", aplicarFiltrosOperacional);
 
-// -------------------------------------------------------------
+document.getElementById("btnLimparFiltros").addEventListener("click", () => {
+    document.getElementById("filtroTexto").value = "";
+    document.getElementById("filtroOrigem").value = "";
+    document.getElementById("filtroPagamento").value = "";
+    document.getElementById("filtroDataInicio").value = "";
+    document.getElementById("filtroDataFim").value = "";
+    aplicarFiltrosOperacional();
+});
+
+// INICIAR
 document.addEventListener("DOMContentLoaded", carregarOperacional);
+
