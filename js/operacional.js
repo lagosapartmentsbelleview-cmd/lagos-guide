@@ -35,7 +35,7 @@ function aplicarFiltrosOperacional() {
 
         if (origem && r.origem !== origem) return false;
 
-        if (pagamento && r.estadoPagamentoOperacional !== pagamento) return false;
+        if (pagamento && r.statusPagamento !== pagamento) return false;
 
         if (dtInicio) {
             const d1 = parseDataPt(r.checkin);
@@ -83,9 +83,10 @@ function desenharTabelaOperacional() {
         tr.classList.add("linha");
 
         // Cor por estado pagamento
-        if (r.estadoPagamentoOperacional === "total") tr.classList.add("pago-total");
-        if (r.estadoPagamentoOperacional === "parcial") tr.classList.add("pago-parcial");
-        if (r.estadoPagamentoOperacional === "nao") tr.classList.add("pago-nao");
+        if (r.statusPagamento === "total") tr.classList.add("pago-total");
+        if (r.statusPagamento === "parcial") tr.classList.add("pago-parcial");
+        if (r.statusPagamento === "aguardar") tr.classList.add("pago-nao");
+
 
         tr.innerHTML = `
             <td>${r.origem || ""}</td>
@@ -114,9 +115,9 @@ function desenharTabelaOperacional() {
             <td>
                 <select class="selectPagamento" data-id="${r.id}">
                     <option value="">—</option>
-                    <option value="total" ${r.estadoPagamentoOperacional === "total" ? "selected" : ""}>Pago totalmente</option>
-                    <option value="parcial" ${r.estadoPagamentoOperacional === "parcial" ? "selected" : ""}>Pago parcialmente</option>
-                    <option value="nao" ${r.estadoPagamentoOperacional === "nao" ? "selected" : ""}>Por pagar</option>
+                    <option value="total" ${r.statusPagamento === "total" ? "selected" : ""}>Pago totalmente</option>
+                    <option value="parcial" ${r.statusPagamento === "parcial" ? "selected" : ""}>Pago parcialmente</option>
+                    <option value="aguardar" ${r.statusPagamento === "aguardar" ? "selected" : ""}>Por pagar</option>
                 </select>
             </td>
 
@@ -149,7 +150,7 @@ function ligarEventosLinha() {
 
             await db.collection("reservas").doc(id).update({
                 numeroFatura,
-                estadoPagamentoOperacional: estadoPagamento
+                statusPagamento: estadoPagamento
             });
 
             alert("Atualizado.");
