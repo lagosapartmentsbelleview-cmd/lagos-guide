@@ -168,5 +168,12 @@ function ligarEventosLinha() {
     });
 }
 
+function parseDataPt(data) {
+    if (!data) return null;
+    const [dia, mes, ano] = data.split("/");
+    return new Date(`${ano}-${mes}-${dia}`);
+}
+
+
 // -------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", carregarOperacional);
