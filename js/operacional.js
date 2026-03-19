@@ -110,7 +110,16 @@ function desenharTabelaOperacional() {
             <td>${liquidoOperacional.toFixed(2)}</td>
             <td>${liquidoTotal.toFixed(2)}</td>
 
-            <td><input type="text" class="inputFatura" data-id="${r.id}" value="${r.numeroFatura || ""}"></td>
+            <td>
+    <input type="date" class="inputDataPagamento" data-id="${r.id}" 
+           value="${r.dataPagamento || ""}">
+</td>
+
+<td>
+    <input type="text" class="inputFatura" data-id="${r.id}" 
+           value="${r.numeroFatura || ""}">
+</td>
+
 
             <td>
                 <select class="selectPagamento" data-id="${r.id}">
@@ -147,11 +156,15 @@ function ligarEventosLinha() {
 
             const numeroFatura = document.querySelector(`.inputFatura[data-id="${id}"]`).value;
             const estadoPagamento = document.querySelector(`.selectPagamento[data-id="${id}"]`).value;
+            const dataPagamento = document.querySelector(`.inputDataPagamento[data-id="${id}"]`).value;
+
 
             await db.collection("reservas").doc(id).update({
-                numeroFatura,
-                statusPagamento: estadoPagamento
+            numeroFatura,
+            statusPagamento: estadoPagamento,
+            dataPagamento
             });
+
 
             alert("Atualizado.");
             carregarOperacional();
