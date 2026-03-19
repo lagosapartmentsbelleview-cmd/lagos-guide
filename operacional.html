@@ -113,6 +113,14 @@
         </table>
     </div>
 
+<script>
+document.getElementById("toggleMenu").addEventListener("click", () => {
+    const menu = document.getElementById("dropdown-menu");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+});
+</script>
+
+
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
