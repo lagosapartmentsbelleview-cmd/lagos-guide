@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Operacional — Belleview</title>
+    <link rel="stylesheet" href="operacional.css">
+</head>
+
+<body>
+
+    <h1 class="titulo">Painel Operacional</h1>
+
+    <!-- FILTROS -->
+    <div id="filtros" class="filtros-container">
+
+        <input type="text" id="filtroTexto" placeholder="Pesquisar texto...">
+
+        <select id="filtroOrigem">
+            <option value="">Origem</option>
+            <option value="Booking">Booking</option>
+            <option value="Airbnb">Airbnb</option>
+            <option value="Direto">Direto</option>
+        </select>
+
+        <select id="filtroPagamento">
+            <option value="">Pagamento</option>
+            <option value="total">Pago totalmente</option>
+            <option value="parcial">Pago parcialmente</option>
+            <option value="nao">Por pagar</option>
+        </select>
+
+        <input type="date" id="filtroDataInicio">
+        <input type="date" id="filtroDataFim">
+
+        <button id="btnLimparFiltros">Limpar</button>
+    </div>
+
+    <!-- TABELA -->
+    <div class="tabela-wrapper">
+        <table id="tabelaOperacional">
+            <thead>
+                <tr>
+                    <th>Origem</th>
+                    <th>Nº Reserva</th>
+                    <th>Hóspede</th>
+                    <th>Quartos</th>
+                    <th>Apartamentos</th>
+                    <th>Pessoas</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Noites</th>
+                    <th>Total Bruto (€)</th>
+                    <th>Valor/Noite (€)</th>
+                    <th>Bruto S/IVA (€)</th>
+                    <th>IVA (€)</th>
+                    <th>Comissão (€)</th>
+                    <th>Comissão Extra (€)</th>
+                    <th>Limpeza (€)</th>
+                    <th>Liq. OTA (€)</th>
+                    <th>Liq. Operacional (€)</th>
+                    <th>Liq. Total (€)</th>
+                    <th>Nº Fatura</th>
+                    <th>Pagamento</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyOperacional"></tbody>
+        </table>
+    </div>
+
+    <script src="firebase.js"></script>
+    <script src="operacional.js"></script>
+
+</body>
+</html>
