@@ -1,6 +1,31 @@
 let reservasOperacional = [];
 let reservasFiltradas = [];
 
+function inicializarFiltrosPersistentes() {
+    const elementosFiltro = document.querySelectorAll('#filtros input, #filtros select');
+
+    elementosFiltro.forEach(el => {
+        // 1) RESTAURAR valor guardado (se existir)
+        const chave = 'operacional_filtro_' + el.id;
+        const valorGuardado = localStorage.getItem(chave);
+        if (valorGuardado !== null) {
+            el.value = valorGuardado;
+        }
+
+        // 2) GUARDAR sempre que o utilizador altera
+        el.addEventListener('change', () => {
+            localStorage.setItem(chave, el.value);
+
+            // Se tiveres uma função que reaplica filtros, chama-a aqui:
+            if (typeof aplicarFiltrosOperacional === 'function') {
+            aplicarFiltrosOperacional();
+            }
+
+        });
+    });
+}
+
+
 // -------------------------------------------------------------
 // 1) CARREGAR RESERVAS (UMA VEZ)
 // -------------------------------------------------------------
@@ -253,5 +278,13 @@ function ordenarPorColuna(coluna, ordem) {
 
 
 // INICIAR
-document.addEventListener("DOMContentLoaded", carregarOperacional);
+document.addEventListener("DOMContentLoaded", () => {
+
+    // 1) Restaurar filtros guardados + ativar persistência
+    inicializarFiltrosPersistentes();
+
+    // 2) Carregar reservas
+    carregarOperacional();
+});
+
 
