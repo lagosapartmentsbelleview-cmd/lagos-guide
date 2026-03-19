@@ -125,6 +125,7 @@ function desenharTabelaOperacional() {
                 <button class="btnApagar" data-id="${r.id}">Apagar</button>
             </td>
         `;
+r.comissaoTotal = comissaoTotal;
 
         tbody.appendChild(tr);
     });
