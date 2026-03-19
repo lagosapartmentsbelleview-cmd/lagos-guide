@@ -352,3 +352,17 @@ th[data-col]:hover::after {
 .tabela-wrapper::-webkit-scrollbar-thumb:hover {
     background: #004d80;
 }
+.inputDataPagamento {
+    width: 140px;
+    padding: 6px 8px;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    font-size: 13px;
+    background: #fafafa;
+    transition: border 0.2s ease;
+}
+
+.inputDataPagamento:focus {
+    border-color: #005c99;
+    outline: none;
+}
