@@ -81,7 +81,11 @@ body {
     border-radius: 14px;
     padding: 12px;
     box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #005c99 #e6e6e6;
 }
+
 
 /* ============================================
    TABELA
