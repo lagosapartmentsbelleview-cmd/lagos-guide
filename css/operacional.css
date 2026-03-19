@@ -282,3 +282,52 @@ th[data-col]:hover::after {
     border-radius: 10px 10px 0 0;
     margin-top: 20px;
 }
+/* ============================
+   MENU SUPERIOR BELLEVIEW
+============================ */
+.top-menu {
+    background: #005c99;
+    padding: 12px 16px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    position: relative;
+}
+
+.menu-button {
+    cursor: pointer;
+    user-select: none;
+}
+
+.dropdown-menu {
+    display: none;
+    flex-direction: column;
+    background: white;
+    position: absolute;
+    top: 48px;
+    left: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    z-index: 999;
+}
+
+.dropdown-menu a {
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #005c99;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+.dropdown-menu a:hover {
+    background: #e6f3ff;
+}
+
+.dropdown-menu .sair {
+    color: #e74c3c;
+}
+
+.dropdown-menu .sair:hover {
+    background: #fde2e2;
+}
