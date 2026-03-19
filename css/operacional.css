@@ -1,51 +1,177 @@
-body {
-    font-family: Arial;
-    background: #f5f7fa;
-    padding: 20px;
-}
-
-.titulo {
-    font-size: 26px;
-    margin-bottom: 20px;
-}
-
+/* ================================
+   WRAPPER DA TABELA
+================================ */
 .tabela-wrapper {
+    width: 100%;
     overflow-x: auto;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    margin-top: 20px;
 }
 
-table {
+/* ================================
+   TABELA
+================================ */
+#tabelaOperacional {
     width: 100%;
     border-collapse: collapse;
-    background: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #2d3436;
 }
 
-th, td {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+/* ================================
+   CABEÇALHO
+================================ */
+#tabelaOperacional thead th {
+    background: #0a3d62;
+    color: white;
+    padding: 12px 10px;
+    text-align: left;
+    font-weight: 600;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    white-space: nowrap;
+    user-select: none;
+    border-bottom: 2px solid #062a44;
+}
+
+/* Ícone de ordenação */
+th[data-col]::after {
+    content: " ⇅";
+    font-size: 11px;
+    opacity: 0.5;
+}
+
+th[data-col]:hover::after {
+    opacity: 0.9;
+}
+
+/* ================================
+   LINHAS
+================================ */
+#tabelaOperacional tbody tr {
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+#tabelaOperacional tbody tr:hover {
+    background: #f1f2f6;
+}
+
+/* ================================
+   CÉLULAS
+================================ */
+#tabelaOperacional td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e6e6e6;
     white-space: nowrap;
 }
 
-tr.pago-total {
-    background: #d4edda;
+/* ================================
+   INPUTS E SELECTS
+================================ */
+.inputFatura,
+.selectPagamento {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    font-size: 13px;
+    background: #fafafa;
+    transition: border 0.2s ease;
 }
 
-tr.pago-parcial {
-    background: #fff3cd;
+.inputFatura:focus,
+.selectPagamento:focus {
+    border-color: #0a3d62;
+    outline: none;
 }
 
-tr.pago-nao {
-    background: #f8d7da;
+/* ================================
+   BOTÕES
+================================ */
+.btnGravar,
+.btnApagar {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
-input.inputFatura {
-    width: 120px;
+.btnGravar {
+    background: #1e90ff;
+    color: white;
 }
 
-select.selectPagamento {
-    width: 150px;
+.btnGravar:hover {
+    background: #0c7cd5;
+    transform: scale(1.03);
 }
 
-button {
-    padding: 4px 10px;
-    margin-right: 4px;
+.btnApagar {
+    background: #e74c3c;
+    color: white;
+    margin-left: 4px;
+}
+
+.btnApagar:hover {
+    background: #c0392b;
+    transform: scale(1.03);
+}
+
+/* ================================
+   ESTADO DE PAGAMENTO
+================================ */
+
+/* Pago totalmente — verde premium */
+.pago-total {
+    background: #dff6e0 !important;
+}
+
+/* Pago parcialmente — amarelo pastel */
+.pago-parcial {
+    background: #fff7d6 !important;
+}
+
+/* Não pago — vermelho suave */
+.pago-nao {
+    background: #fde2e2 !important;
+}
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+@media (max-width: 900px) {
+    #tabelaOperacional td,
+    #tabelaOperacional th {
+        padding: 8px 6px;
+        font-size: 12px;
+    }
+
+    .btnGravar,
+    .btnApagar {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    #tabelaOperacional td,
+    #tabelaOperacional th {
+        padding: 6px 4px;
+        font-size: 11px;
+    }
+
+    .inputFatura,
+    .selectPagamento {
+        font-size: 11px;
+        padding: 4px 6px;
+    }
 }
