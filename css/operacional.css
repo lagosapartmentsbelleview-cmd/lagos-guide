@@ -1,6 +1,79 @@
-/* ================================
+/* ============================================
+   ESTILO GERAL BELLEVIEW
+============================================ */
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 0;
+    color: #2d3436;
+}
+
+/* ============================================
+   TÍTULO PRINCIPAL
+============================================ */
+.titulo-operacional {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0a3d62;
+    margin: 20px 0 10px 0;
+    padding-left: 4px;
+}
+
+/* ============================================
+   FILTROS — BARRA PREMIUM
+============================================ */
+.filtros-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: #ffffff;
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.filtros-wrapper label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0a3d62;
+}
+
+.filtros-wrapper input,
+.filtros-wrapper select {
+    padding: 8px 10px;
+    border: 1px solid #dcdde1;
+    border-radius: 8px;
+    font-size: 13px;
+    background: #fafafa;
+    transition: border 0.2s ease;
+}
+
+.filtros-wrapper input:focus,
+.filtros-wrapper select:focus {
+    border-color: #0a3d62;
+    outline: none;
+}
+
+#btnLimparFiltros {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+#btnLimparFiltros:hover {
+    background: #c0392b;
+}
+
+/* ============================================
    WRAPPER DA TABELA
-================================ */
+============================================ */
 .tabela-wrapper {
     width: 100%;
     overflow-x: auto;
@@ -8,23 +81,20 @@
     border-radius: 14px;
     padding: 12px;
     box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-    margin-top: 20px;
 }
 
-/* ================================
+/* ============================================
    TABELA
-================================ */
+============================================ */
 #tabelaOperacional {
     width: 100%;
     border-collapse: collapse;
-    font-family: 'Inter', sans-serif;
     font-size: 14px;
-    color: #2d3436;
 }
 
-/* ================================
-   CABEÇALHO
-================================ */
+/* ============================================
+   CABEÇALHO DA TABELA
+============================================ */
 #tabelaOperacional thead th {
     background: #0a3d62;
     color: white;
@@ -36,7 +106,6 @@
     top: 0;
     z-index: 20;
     white-space: nowrap;
-    user-select: none;
     border-bottom: 2px solid #062a44;
 }
 
@@ -51,29 +120,29 @@ th[data-col]:hover::after {
     opacity: 0.9;
 }
 
-/* ================================
+/* ============================================
    LINHAS
-================================ */
+============================================ */
 #tabelaOperacional tbody tr {
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition: background 0.2s ease;
 }
 
 #tabelaOperacional tbody tr:hover {
     background: #f1f2f6;
 }
 
-/* ================================
+/* ============================================
    CÉLULAS
-================================ */
+============================================ */
 #tabelaOperacional td {
     padding: 10px 8px;
     border-bottom: 1px solid #e6e6e6;
     white-space: nowrap;
 }
 
-/* ================================
-   INPUTS E SELECTS
-================================ */
+/* ============================================
+   INPUTS E SELECTS NA TABELA
+============================================ */
 .inputFatura,
 .selectPagamento {
     width: 100%;
@@ -91,9 +160,9 @@ th[data-col]:hover::after {
     outline: none;
 }
 
-/* ================================
+/* ============================================
    BOTÕES
-================================ */
+============================================ */
 .btnGravar,
 .btnApagar {
     padding: 6px 10px;
@@ -126,38 +195,28 @@ th[data-col]:hover::after {
     transform: scale(1.03);
 }
 
-/* ================================
+/* ============================================
    ESTADO DE PAGAMENTO
-================================ */
-
-/* Pago totalmente — verde premium */
+============================================ */
 .pago-total {
     background: #dff6e0 !important;
 }
 
-/* Pago parcialmente — amarelo pastel */
 .pago-parcial {
     background: #fff7d6 !important;
 }
 
-/* Não pago — vermelho suave */
 .pago-nao {
     background: #fde2e2 !important;
 }
 
-/* ================================
+/* ============================================
    RESPONSIVIDADE
-================================ */
+============================================ */
 @media (max-width: 900px) {
     #tabelaOperacional td,
     #tabelaOperacional th {
         padding: 8px 6px;
-        font-size: 12px;
-    }
-
-    .btnGravar,
-    .btnApagar {
-        padding: 5px 8px;
         font-size: 12px;
     }
 }
