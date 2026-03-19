@@ -294,3 +294,10 @@ th[data-col]:hover::after {
 #btnLimparFiltros:hover {
     background: #c0392b;
 }
+.titulo-operacional {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0a3d62;
+    margin: 20px 0 10px 0;
+    padding-left: 4px;
+}
