@@ -190,6 +190,49 @@ document.getElementById("btnLimparFiltros").addEventListener("click", () => {
     aplicarFiltrosOperacional();
 });
 
+// -------------------------------------------------------------
+// 5) ORDENAR POR COLUNA (clicar no cabeçalho)
+// -------------------------------------------------------------
+let ordemAtual = {}; // guarda estado de cada coluna
+
+document.querySelectorAll("#tabelaOperacional th[data-col]").forEach(th => {
+    th.addEventListener("click", () => {
+        const coluna = th.dataset.col;
+
+        // alternar ordem
+        ordemAtual[coluna] = ordemAtual[coluna] === "asc" ? "desc" : "asc";
+
+        ordenarPorColuna(coluna, ordemAtual[coluna]);
+    });
+});
+
+function ordenarPorColuna(coluna, ordem) {
+
+    reservasFiltradas.sort((a, b) => {
+        let v1 = a[coluna];
+        let v2 = b[coluna];
+
+        // converter números
+        if (!isNaN(v1) && !isNaN(v2)) {
+            v1 = Number(v1);
+            v2 = Number(v2);
+        }
+
+        // converter datas PT
+        if (coluna === "checkin" || coluna === "checkout") {
+            v1 = parseDataPt(v1);
+            v2 = parseDataPt(v2);
+        }
+
+        if (v1 < v2) return ordem === "asc" ? -1 : 1;
+        if (v1 > v2) return ordem === "asc" ? 1 : -1;
+        return 0;
+    });
+
+    desenharTabelaOperacional();
+}
+
+
 // INICIAR
 document.addEventListener("DOMContentLoaded", carregarOperacional);
 
