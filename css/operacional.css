@@ -335,3 +335,20 @@ th[data-col]:hover::after {
 .dropdown-menu .sair:hover {
     background: #fde2e2;
 }
+.tabela-wrapper::-webkit-scrollbar {
+    height: 10px;
+}
+
+.tabela-wrapper::-webkit-scrollbar-track {
+    background: #e6e6e6;
+    border-radius: 10px;
+}
+
+.tabela-wrapper::-webkit-scrollbar-thumb {
+    background: #005c99;
+    border-radius: 10px;
+}
+
+.tabela-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #004d80;
+}
