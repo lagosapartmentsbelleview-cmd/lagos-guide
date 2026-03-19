@@ -15,7 +15,7 @@ body {
 .titulo-operacional {
     font-size: 26px;
     font-weight: 700;
-    color: #0a3d62;
+    color: #005c99;
     margin: 20px 0 10px 0;
     padding-left: 4px;
 }
@@ -37,7 +37,7 @@ body {
 .filtros-wrapper label {
     font-size: 13px;
     font-weight: 600;
-    color: #0a3d62;
+    color: #005c99;
 }
 
 .filtros-wrapper input,
@@ -52,7 +52,7 @@ body {
 
 .filtros-wrapper input:focus,
 .filtros-wrapper select:focus {
-    border-color: #0a3d62;
+    border-color: #005c99;
     outline: none;
 }
 
@@ -96,7 +96,7 @@ body {
    CABEÇALHO DA TABELA
 ============================================ */
 #tabelaOperacional thead th {
-    background: #0a3d62;
+    background: #005c99;
     color: white;
     padding: 12px 10px;
     text-align: left;
@@ -106,7 +106,7 @@ body {
     top: 0;
     z-index: 20;
     white-space: nowrap;
-    border-bottom: 2px solid #062a44;
+    border-bottom: 2px solid #004d80;
 }
 
 /* Ícone de ordenação */
@@ -156,7 +156,7 @@ th[data-col]:hover::after {
 
 .inputFatura:focus,
 .selectPagamento:focus {
-    border-color: #0a3d62;
+    border-color: #005c99;
     outline: none;
 }
 
@@ -234,20 +234,10 @@ th[data-col]:hover::after {
         padding: 4px 6px;
     }
 }
-/* ================================
-   FILTROS BELLEVIEW
-================================ */
-.filtros-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    background: #ffffff;
-    padding: 16px;
-    border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    margin-bottom: 20px;
-}
 
+/* ============================================
+   FILTROS BELLEVIEW (EXTRA)
+============================================ */
 .filtro-item {
     display: flex;
     flex-direction: column;
@@ -256,7 +246,7 @@ th[data-col]:hover::after {
 .filtro-item label {
     font-size: 13px;
     font-weight: 600;
-    color: #0a3d62;
+    color: #005c99;
     margin-bottom: 4px;
 }
 
@@ -272,7 +262,7 @@ th[data-col]:hover::after {
 
 .filtro-item input:focus,
 .filtro-item select:focus {
-    border-color: #0a3d62;
+    border-color: #005c99;
     outline: none;
 }
 
@@ -280,29 +270,11 @@ th[data-col]:hover::after {
     align-self: end;
 }
 
-#btnLimparFiltros {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-#btnLimparFiltros:hover {
-    background: #c0392b;
-}
-.titulo-operacional {
-    font-size: 26px;
-    font-weight: 700;
-    color: #0a3d62;
-    margin: 20px 0 10px 0;
-    padding-left: 4px;
-}
+/* ============================================
+   BARRA AZUL BELLEVIEW
+============================================ */
 .barra-operacional {
-    background: #0a3d62;
+    background: #005c99;
     color: white;
     padding: 12px 16px;
     font-size: 16px;
