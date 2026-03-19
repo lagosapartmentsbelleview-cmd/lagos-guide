@@ -10,30 +10,50 @@
 
     <h1 class="titulo">Painel Operacional</h1>
 
-    <!-- FILTROS -->
-    <div id="filtros" class="filtros-container">
+    <!-- FILTROS BELLEVIEW -->
+<div class="filtros-wrapper">
 
-        <input type="text" id="filtroTexto" placeholder="Pesquisar texto...">
+    <div class="filtro-item">
+        <label>Pesquisar</label>
+        <input type="text" id="filtroTexto" placeholder="Nome ou reserva">
+    </div>
 
+    <div class="filtro-item">
+        <label>Origem</label>
         <select id="filtroOrigem">
-            <option value="">Origem</option>
+            <option value="">Todas</option>
             <option value="Booking">Booking</option>
             <option value="Airbnb">Airbnb</option>
             <option value="Direto">Direto</option>
         </select>
+    </div>
 
+    <div class="filtro-item">
+        <label>Pagamento</label>
         <select id="filtroPagamento">
-            <option value="">Pagamento</option>
+            <option value="">Todos</option>
             <option value="total">Pago totalmente</option>
             <option value="parcial">Pago parcialmente</option>
-            <option value="nao">Por pagar</option>
+            <option value="aguardar">Por pagar</option>
         </select>
+    </div>
 
+    <div class="filtro-item">
+        <label>Data início</label>
         <input type="date" id="filtroDataInicio">
-        <input type="date" id="filtroDataFim">
+    </div>
 
+    <div class="filtro-item">
+        <label>Data fim</label>
+        <input type="date" id="filtroDataFim">
+    </div>
+
+    <div class="filtro-item filtro-botao">
         <button id="btnLimparFiltros">Limpar</button>
     </div>
+
+</div>
+
 
     <!-- TABELA -->
     <div class="tabela-wrapper">
