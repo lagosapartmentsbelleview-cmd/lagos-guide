@@ -339,12 +339,11 @@ function atualizarCardsIVA(reservas) {
         Q4: { total: 0, faturado: 0 }
     };
 
-    function getTrimestre(dateObj) {
-        if (!dateObj || isNaN(dateObj)) return null;
-        const mes = dateObj.getMonth() + 1;
-        if (mes >= 1 && mes <= 3) return "Q1";
-        if (mes >= 4 && mes <= 6) return "Q2";
-        if (mes >= 7 && mes <= 9) return "Q3";
+    function getTri(date) {
+        const m = date.getMonth() + 1;
+        if (m <= 3) return "Q1";
+        if (m <= 6) return "Q2";
+        if (m <= 9) return "Q3";
         return "Q4";
     }
 
@@ -352,26 +351,25 @@ function atualizarCardsIVA(reservas) {
 
         if (!r.totalBruto) return;
 
-        // IVA 6% calculado a partir do total bruto
+        // IVA calculado corretamente
         const iva = r.totalBruto - (r.totalBruto / 1.06);
 
-        // ---------- IVA TOTAL TRIMESTRAL (por CHECK-OUT) ----------
+        // -----------------------------
+        // IVA TOTAL (por CHECK-OUT)
+        // -----------------------------
         if (r.checkout) {
-            const dtCheckout = parseDataPt(r.checkout); // já usas isto para filtros
-            const triTotal = getTrimestre(dtCheckout);
-            if (triTotal) {
-                trimestres[triTotal].total += iva;
-            }
+            const dt = parseDataPt(r.checkout);
+            const tri = getTri(dt);
+            trimestres[tri].total += iva;
         }
 
-        // ---------- IVA TRIMESTRAL FATURADO (por DATA PAGAMENTO) ----------
-        if (r.dataPagamento && r.numeroFatura && r.numeroFatura.trim() !== "") {
-            // se dataPagamento estiver em formato PT, também podes usar parseDataPt
-            const dtPagamento = new Date(r.dataPagamento);
-            const triFat = getTrimestre(dtPagamento);
-            if (triFat) {
-                trimestres[triFat].faturado += iva;
-            }
+        // -----------------------------
+        // IVA FATURADO (por DATA PAGAMENTO)
+        // -----------------------------
+        if (r.numeroFatura && r.numeroFatura.trim() !== "" && r.dataPagamento) {
+            const dt = parseDataPt(r.dataPagamento);
+            const tri = getTri(dt);
+            trimestres[tri].faturado += iva;
         }
     });
 
