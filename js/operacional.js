@@ -1,3 +1,9 @@
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "login.html";
+    }
+});
+
 // ============================================================
 // 0) VARIÁVEIS GLOBAIS
 // ============================================================
