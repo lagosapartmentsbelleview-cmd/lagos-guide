@@ -16,7 +16,7 @@ let ordemAtual = {}; // para ordenação
 // ============================================================
 function calcularPagamentosBooking(reservas) {
 
-    const pagamentos = {}; // { "2026-03-05": { total: 1234.56, reservas: 3 } }
+    const pagamentos = {};
 
     reservas.forEach(r => {
 
@@ -27,22 +27,26 @@ function calcularPagamentosBooking(reservas) {
         const comissao = Number(r.comissao) || 0;
         const comissaoExtra = Number(r.comissaoExtra) || 0;
 
-        // Liq. OTA = Total Bruto - Comissão - Comissão Extra
         const liquidoOTA = totalBruto - comissao - comissaoExtra;
         if (liquidoOTA <= 0) return;
 
         const dtCheckout = parseDataPt(r.checkout);
         if (isNaN(dtCheckout)) return;
 
-        const diaSemana = dtCheckout.getDay(); // 0=Dom, 1=Seg, ..., 3=Qua, 4=Qui
+        // 1) Encontrar a quinta-feira anterior ao checkout
+        const diaSemana = dtCheckout.getDay(); // 0=Dom, 1=Seg, ..., 4=Qui
+        const quintaAnterior = new Date(dtCheckout);
+        quintaAnterior.setDate(dtCheckout.getDate() - ((diaSemana + 3) % 7));
 
-        let diasAteQuinta = 4 - diaSemana;
-        if (diasAteQuinta <= 0) diasAteQuinta += 7;
+        // 2) Quarta-feira seguinte à quinta anterior
+        const quartaSeguinte = new Date(quintaAnterior);
+        quartaSeguinte.setDate(quintaAnterior.getDate() + 6);
 
-        const dtPagamento = new Date(dtCheckout);
-        dtPagamento.setDate(dtCheckout.getDate() + diasAteQuinta);
+        // 3) Quinta-feira de pagamento (dia seguinte à quarta)
+        const quintaPagamento = new Date(quartaSeguinte);
+        quintaPagamento.setDate(quartaSeguinte.getDate() + 1);
 
-        const chave = dtPagamento.toISOString().split("T")[0];
+        const chave = quintaPagamento.toISOString().split("T")[0];
 
         if (!pagamentos[chave]) {
             pagamentos[chave] = { total: 0, reservas: 0 };
@@ -54,7 +58,6 @@ function calcularPagamentosBooking(reservas) {
 
     return pagamentos;
 }
-
 
 // ============================================================
 // PREENCHER TABELA DO POPUP
