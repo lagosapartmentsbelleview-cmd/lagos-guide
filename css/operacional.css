@@ -80,7 +80,7 @@ body {
     overflow-y: visible;
     background: #ffffff;
     border-radius: 0 0 14px 14px;
-    padding: 0 12px 12px;
+    padding: 0 0 12px 0;
     box-shadow: 0 4px 18px rgba(0,0,0,0.08);
     scroll-behavior: smooth;
 }
