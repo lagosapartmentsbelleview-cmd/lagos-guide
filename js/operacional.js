@@ -468,14 +468,30 @@ function atualizarCardsIVA(reservas) {
     // ============================================================
     // ATUALIZAR CARDS TRIMESTRAIS (BRUTO + IVA)
     // ============================================================
-    document.querySelector("#ivaQ1 span").innerHTML =
-        `${trimestres.Q1.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q1.iva.toFixed(2)} €</small>`;
-    document.querySelector("#ivaQ2 span").innerHTML =
-        `${trimestres.Q2.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q2.iva.toFixed(2)} €</small>`;
-    document.querySelector("#ivaQ3 span").innerHTML =
-        `${trimestres.Q3.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q3.iva.toFixed(2)} €</small>`;
-    document.querySelector("#ivaQ4 span").innerHTML =
-        `${trimestres.Q4.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q4.iva.toFixed(2)} €</small>`;
+   // Q1
+document.querySelector("#ivaQ1 .bruto").textContent =
+    `${trimestres.Q1.bruto.toFixed(2)} €`;
+document.querySelector("#ivaQ1 .iva").textContent =
+    `IVA: ${trimestres.Q1.iva.toFixed(2)} €`;
+
+// Q2
+document.querySelector("#ivaQ2 .bruto").textContent =
+    `${trimestres.Q2.bruto.toFixed(2)} €`;
+document.querySelector("#ivaQ2 .iva").textContent =
+    `IVA: ${trimestres.Q2.iva.toFixed(2)} €`;
+
+// Q3
+document.querySelector("#ivaQ3 .bruto").textContent =
+    `${trimestres.Q3.bruto.toFixed(2)} €`;
+document.querySelector("#ivaQ3 .iva").textContent =
+    `IVA: ${trimestres.Q3.iva.toFixed(2)} €`;
+
+// Q4
+document.querySelector("#ivaQ4 .bruto").textContent =
+    `${trimestres.Q4.bruto.toFixed(2)} €`;
+document.querySelector("#ivaQ4 .iva").textContent =
+    `IVA: ${trimestres.Q4.iva.toFixed(2)} €`;
+
 
     // ============================================================
     // ATUALIZAR CARDS DE IVA FATURADO
