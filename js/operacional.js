@@ -403,10 +403,10 @@ function restaurarOrdenacaoSeExistir() {
 function atualizarCardsIVA(reservas) {
 
     const trimestres = {
-        Q1: { total: 0, faturado: 0 },
-        Q2: { total: 0, faturado: 0 },
-        Q3: { total: 0, faturado: 0 },
-        Q4: { total: 0, faturado: 0 }
+        Q1: { bruto: 0, iva: 0, faturado: 0 },
+        Q2: { bruto: 0, iva: 0, faturado: 0 },
+        Q3: { bruto: 0, iva: 0, faturado: 0 },
+        Q4: { bruto: 0, iva: 0, faturado: 0 }
     };
 
     function getTri(date) {
@@ -419,41 +419,72 @@ function atualizarCardsIVA(reservas) {
 
     reservas.forEach(r => {
 
-        if (!r.totalBruto) return;
+        // ============================
+        // 1) IVA TOTAL TRIMESTRAL
+        // ============================
+        if (r.checkout && r.totalBruto) {
 
-        // IVA calculado corretamente
-        const iva = r.totalBruto - (r.totalBruto / 1.06);
-
-        // -----------------------------
-        // IVA TOTAL (por CHECK-OUT)
-        // -----------------------------
-        if (r.checkout) {
             const dt = parseDataPt(r.checkout);
-            const tri = getTri(dt);
-            trimestres[tri].total += iva;
+            if (!isNaN(dt)) {
+
+                const tri = getTri(dt);
+                const bruto = Number(r.totalBruto) || 0;
+
+                const iva = bruto - (bruto / 1.06);
+
+                trimestres[tri].bruto += bruto;
+                trimestres[tri].iva += iva;
+            }
         }
 
-        // -----------------------------
-        // IVA FATURADO (por DATA PAGAMENTO)
-        // -----------------------------
-        if (r.numeroFatura && r.numeroFatura.trim() !== "" && r.dataPagamento) {
-            const dt = parseDataPt(r.dataPagamento);
-            const tri = getTri(dt);
-            trimestres[tri].faturado += iva;
+        // ============================
+        // 2) IVA FATURADO (mantém igual)
+        // ============================
+        if (r.dataPagamento && r.numeroFatura && r.numeroFatura.trim() !== "") {
+
+            const dtPag = parseDataPt(r.dataPagamento);
+            if (!isNaN(dtPag)) {
+
+                const tri = getTri(dtPag);
+                const bruto = Number(r.totalBruto) || 0;
+                const iva = bruto - (bruto / 1.06);
+
+                trimestres[tri].faturado += iva;
+            }
         }
     });
 
-    // Atualizar DOM
-    document.getElementById("ivaQ1").querySelector("span").textContent = trimestres.Q1.total.toFixed(2) + " €";
-    document.getElementById("ivaQ2").querySelector("span").textContent = trimestres.Q2.total.toFixed(2) + " €";
-    document.getElementById("ivaQ3").querySelector("span").textContent = trimestres.Q3.total.toFixed(2) + " €";
-    document.getElementById("ivaQ4").querySelector("span").textContent = trimestres.Q4.total.toFixed(2) + " €";
+    // ============================
+    // ATUALIZAR CARDS NO HTML
+    // ============================
 
-    document.getElementById("ivaFQ1").querySelector("span").textContent = trimestres.Q1.faturado.toFixed(2) + " €";
-    document.getElementById("ivaFQ2").querySelector("span").textContent = trimestres.Q2.faturado.toFixed(2) + " €";
-    document.getElementById("ivaFQ3").querySelector("span").textContent = trimestres.Q3.faturado.toFixed(2) + " €";
-    document.getElementById("ivaFQ4").querySelector("span").textContent = trimestres.Q4.faturado.toFixed(2) + " €";
+    // Totais trimestrais (Bruto + IVA)
+    document.querySelector("#ivaQ1 span").innerHTML =
+        `${trimestres.Q1.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q1.iva.toFixed(2)} €</small>`;
+
+    document.querySelector("#ivaQ2 span").innerHTML =
+        `${trimestres.Q2.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q2.iva.toFixed(2)} €</small>`;
+
+    document.querySelector("#ivaQ3 span").innerHTML =
+        `${trimestres.Q3.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q3.iva.toFixed(2)} €</small>`;
+
+    document.querySelector("#ivaQ4 span").innerHTML =
+        `${trimestres.Q4.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q4.iva.toFixed(2)} €</small>`;
+
+    // IVA Faturado (mantém igual)
+    document.getElementById("ivaFQ1").querySelector("span").textContent =
+        trimestres.Q1.faturado.toFixed(2) + " €";
+
+    document.getElementById("ivaFQ2").querySelector("span").textContent =
+        trimestres.Q2.faturado.toFixed(2) + " €";
+
+    document.getElementById("ivaFQ3").querySelector("span").textContent =
+        trimestres.Q3.faturado.toFixed(2) + " €";
+
+    document.getElementById("ivaFQ4").querySelector("span").textContent =
+        trimestres.Q4.faturado.toFixed(2) + " €";
 }
+
 
 // ============================================================
 // EVENTOS DO POPUP
