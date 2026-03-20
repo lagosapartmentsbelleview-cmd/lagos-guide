@@ -465,7 +465,9 @@ function atualizarCardsIVA(reservas) {
         }
     });
 
-    // Totais trimestrais (Bruto + IVA)
+    // ============================================================
+    // ATUALIZAR CARDS TRIMESTRAIS (BRUTO + IVA)
+    // ============================================================
     document.querySelector("#ivaQ1 span").innerHTML =
         `${trimestres.Q1.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q1.iva.toFixed(2)} €</small>`;
     document.querySelector("#ivaQ2 span").innerHTML =
@@ -475,11 +477,46 @@ function atualizarCardsIVA(reservas) {
     document.querySelector("#ivaQ4 span").innerHTML =
         `${trimestres.Q4.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q4.iva.toFixed(2)} €</small>`;
 
-    // IVA Faturado
+    // ============================================================
+    // ATUALIZAR CARDS DE IVA FATURADO
+    // ============================================================
     document.querySelector("#ivaFQ1 span").textContent = trimestres.Q1.faturado.toFixed(2) + " €";
     document.querySelector("#ivaFQ2 span").textContent = trimestres.Q2.faturado.toFixed(2) + " €";
     document.querySelector("#ivaFQ3 span").textContent = trimestres.Q3.faturado.toFixed(2) + " €";
     document.querySelector("#ivaFQ4 span").textContent = trimestres.Q4.faturado.toFixed(2) + " €";
+
+    // ============================================================
+    // 5º CARD — TOTAL GERAL (BRUTO + IVA)
+    // ============================================================
+    const totalBrutoGeral =
+        trimestres.Q1.bruto +
+        trimestres.Q2.bruto +
+        trimestres.Q3.bruto +
+        trimestres.Q4.bruto;
+
+    const totalIvaGeral =
+        trimestres.Q1.iva +
+        trimestres.Q2.iva +
+        trimestres.Q3.iva +
+        trimestres.Q4.iva;
+
+    document.querySelector("#ivaTotal span").innerHTML =
+        `${totalBrutoGeral.toFixed(2)} €`;
+
+    document.querySelector("#ivaTotal small").innerHTML =
+        `IVA: ${totalIvaGeral.toFixed(2)} €`;
+
+    // ============================================================
+    // 5º CARD — TOTAL FATURADO
+    // ============================================================
+    const totalIvaFaturado =
+        trimestres.Q1.faturado +
+        trimestres.Q2.faturado +
+        trimestres.Q3.faturado +
+        trimestres.Q4.faturado;
+
+    document.querySelector("#ivaFTotal span").innerHTML =
+        `${totalIvaFaturado.toFixed(2)} €`;
 }
 
 
