@@ -93,9 +93,10 @@ function aplicarFiltrosOperacional() {
         return true;
     });
 
-    reservasFiltradas = lista;
-    desenharTabelaOperacional();
-}
+   reservasFiltradas = lista;
+   desenharTabelaOperacional();
+   restaurarOrdenacaoSeExistir();
+ }
 
 
 // ============================================================
@@ -215,6 +216,7 @@ function ligarEventosLinha() {
             }
 
             aplicarFiltrosOperacional();
+            restaurarOrdenacaoSeExistir();
         });
     });
 
@@ -230,6 +232,7 @@ function ligarEventosLinha() {
             reservasOperacional = reservasOperacional.filter(r => r.id !== id);
 
             aplicarFiltrosOperacional();
+            restaurarOrdenacaoSeExistir();
         });
     });
 }
@@ -286,7 +289,19 @@ function parseDataPt(data) {
     const [dia, mes, ano] = data.split("/");
     return new Date(`${ano}-${mes}-${dia}`);
 }
+// ============================================================
+//  MANTEM FILTRO COLUNA MESMO APOS GRAVAR OU APAGAR
+// ============================================================
 
+function restaurarOrdenacaoSeExistir() {
+    const col = localStorage.getItem("operacional_ordem_coluna");
+    const dir = localStorage.getItem("operacional_ordem_direcao");
+
+    if (col && dir) {
+        ordemAtual[col] = dir;
+        ordenarPorColuna(col, dir);
+    }
+}
 
 // ============================================================
 // 8) INICIAR
