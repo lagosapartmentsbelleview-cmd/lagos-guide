@@ -183,7 +183,6 @@ function desenharTabelaOperacional() {
     });
 
     ligarEventosLinha();
-    atualizarScrollHorizontal();
 
 }
 
@@ -342,26 +341,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// ===============================
-//  SCROLL SUPERIOR DA TABELA
-// ===============================
-function atualizarScrollHorizontal() {
-    const scrollBar = document.querySelector(".scroll-bar-fixa");
-    const scrollInner = document.querySelector(".scroll-bar-inner");
-    const tabelaInner = document.querySelector(".tabela-inner");
 
-    if (!scrollBar || !scrollInner || !tabelaInner) return;
-
-    // Ajusta a largura da barra superior para igualar a largura da tabela
-    scrollInner.style.width = tabelaInner.scrollWidth + "px";
-
-    // Sincroniza scroll da barra -> tabela
-    scrollBar.onscroll = () => {
-        tabelaInner.scrollLeft = scrollBar.scrollLeft;
-    };
-
-    // Sincroniza scroll da tabela -> barra
-    tabelaInner.onscroll = () => {
-        scrollBar.scrollLeft = tabelaInner.scrollLeft;
-    };
-}
