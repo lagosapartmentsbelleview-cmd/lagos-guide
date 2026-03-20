@@ -84,11 +84,10 @@ body {
     box-shadow: 0 4px 18px rgba(0,0,0,0.08);
     scroll-behavior: smooth;
 
-    /* AQUI ESTÁ A CHAVE */
+    /* Mantém a barra SEMPRE acima da tabela */
     position: relative;
-    z-index: 50; /* FICA ACIMA DA TABELA */
+    z-index: 100;
 }
-
 
 /* Scrollbar custom (WebKit) */
 .tabela-scroll-wrapper::-webkit-scrollbar {
@@ -110,6 +109,16 @@ body {
 }
 
 /* ============================================
+   WRAPPER INTERNO (CONTEÚDO DA TABELA)
+============================================ */
+.tabela-inner {
+    width: max-content;
+    min-width: 100%;
+    position: relative;
+    z-index: 1; /* tabela fica abaixo da barra */
+}
+
+/* ============================================
    TABELA
 ============================================ */
 #tabelaOperacional {
@@ -118,12 +127,7 @@ body {
     border-collapse: collapse;
     font-size: 14px;
     background: #ffffff;
-
-    /* IMPORTANTE: tabela fica abaixo do wrapper */
-    position: relative;
-    z-index: 1;
 }
-
 
 /* ============================================
    CABEÇALHO DA TABELA
