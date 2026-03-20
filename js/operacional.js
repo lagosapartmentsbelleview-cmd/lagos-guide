@@ -1,34 +1,41 @@
+// ============================================================
+// 0) VARIÁVEIS GLOBAIS
+// ============================================================
 let reservasOperacional = [];
 let reservasFiltradas = [];
+let ordemAtual = {}; // para ordenação
 
+
+// ============================================================
+// 1) FILTROS PERSISTENTES
+// ============================================================
 function inicializarFiltrosPersistentes() {
     const elementosFiltro = document.querySelectorAll('#filtros input, #filtros select');
 
     elementosFiltro.forEach(el => {
-        // 1) RESTAURAR valor guardado (se existir)
         const chave = 'operacional_filtro_' + el.id;
+
+        // Restaurar valor guardado
         const valorGuardado = localStorage.getItem(chave);
         if (valorGuardado !== null) {
             el.value = valorGuardado;
         }
 
-        // 2) GUARDAR sempre que o utilizador altera
+        // Guardar sempre que muda
         el.addEventListener('change', () => {
             localStorage.setItem(chave, el.value);
 
-            // Se tiveres uma função que reaplica filtros, chama-a aqui:
             if (typeof aplicarFiltrosOperacional === 'function') {
-            aplicarFiltrosOperacional();
+                aplicarFiltrosOperacional();
             }
-
         });
     });
 }
 
 
-// -------------------------------------------------------------
-// 1) CARREGAR RESERVAS (UMA VEZ)
-// -------------------------------------------------------------
+// ============================================================
+// 2) CARREGAR RESERVAS (APENAS 1 VEZ)
+// ============================================================
 async function carregarOperacional() {
     const snap = await db.collection("reservas").orderBy("checkin").get();
 
@@ -38,9 +45,10 @@ async function carregarOperacional() {
     aplicarFiltrosOperacional();
 }
 
-// -------------------------------------------------------------
-// 2) FILTROS
-// -------------------------------------------------------------
+
+// ============================================================
+// 3) FILTRAR (SEM LER FIREBASE)
+// ============================================================
 function aplicarFiltrosOperacional() {
 
     let lista = [...reservasOperacional];
@@ -79,9 +87,10 @@ function aplicarFiltrosOperacional() {
     desenharTabelaOperacional();
 }
 
-// -------------------------------------------------------------
-// 3) DESENHAR TABELA
-// -------------------------------------------------------------
+
+// ============================================================
+// 4) DESENHAR TABELA (SEM LER FIREBASE)
+// ============================================================
 function desenharTabelaOperacional() {
 
     const tbody = document.getElementById("tbodyOperacional");
@@ -89,7 +98,6 @@ function desenharTabelaOperacional() {
 
     reservasFiltradas.forEach(r => {
 
-        // Cálculos financeiros
         const totalBruto = Number(r.totalBruto || 0);
         const antesIVA = totalBruto / 1.06;
         const valorIVA = totalBruto - antesIVA;
@@ -103,15 +111,12 @@ function desenharTabelaOperacional() {
         const liquidoOperacional = liquidoOTA - limpeza;
         const liquidoTotal = liquidoOperacional - valorIVA;
 
-        // Linha
         const tr = document.createElement("tr");
         tr.classList.add("linha");
 
-        // Cor por estado pagamento
         if (r.statusPagamento === "total") tr.classList.add("pago-total");
         if (r.statusPagamento === "parcial") tr.classList.add("pago-parcial");
         if (r.statusPagamento === "aguardar") tr.classList.add("pago-nao");
-
 
         tr.innerHTML = `
             <td>${r.origem || ""}</td>
@@ -124,7 +129,10 @@ function desenharTabelaOperacional() {
             <td>${r.checkout}</td>
             <td>${Math.round(r.noites)}</td>
             <td>${totalBruto.toFixed(2)}</td>
+
+            <!-- NOVO CÁLCULO CORRETO -->
             <td>${(totalBruto / r.noites / r.quartos).toFixed(2)}</td>
+
             <td>${antesIVA.toFixed(2)}</td>
             <td>${valorIVA.toFixed(2)}</td>
             <td>${comissao.toFixed(2)}</td>
@@ -136,15 +144,14 @@ function desenharTabelaOperacional() {
             <td>${liquidoTotal.toFixed(2)}</td>
 
             <td>
-    <input type="date" class="inputDataPagamento" data-id="${r.id}" 
-           value="${r.dataPagamento || ""}">
-</td>
+                <input type="date" class="inputDataPagamento" data-id="${r.id}" 
+                       value="${r.dataPagamento || ""}">
+            </td>
 
-<td>
-    <input type="text" class="inputFatura" data-id="${r.id}" 
-           value="${r.numeroFatura || ""}">
-</td>
-
+            <td>
+                <input type="text" class="inputFatura" data-id="${r.id}" 
+                       value="${r.numeroFatura || ""}">
+            </td>
 
             <td>
                 <select class="selectPagamento" data-id="${r.id}">
@@ -160,9 +167,6 @@ function desenharTabelaOperacional() {
                 <button class="btnApagar" data-id="${r.id}">Apagar</button>
             </td>
         `;
-        r.comissaoTotal = comissaoTotal;
-        r.estadoPagamentoOperacional = r.estadoPagamentoOperacional || "";
-
 
         tbody.appendChild(tr);
     });
@@ -170,80 +174,64 @@ function desenharTabelaOperacional() {
     ligarEventosLinha();
 }
 
-// -------------------------------------------------------------
-// 4) EVENTOS INLINE
-// -------------------------------------------------------------
+
+// ============================================================
+// 5) EVENTOS (SEM LER FIREBASE)
+// ============================================================
 function ligarEventosLinha() {
 
+    // GRAVAR
     document.querySelectorAll(".btnGravar").forEach(btn => {
         btn.addEventListener("click", async () => {
+
             const id = btn.dataset.id;
 
             const numeroFatura = document.querySelector(`.inputFatura[data-id="${id}"]`).value;
             const estadoPagamento = document.querySelector(`.selectPagamento[data-id="${id}"]`).value;
             const dataPagamento = document.querySelector(`.inputDataPagamento[data-id="${id}"]`).value;
 
-
             await db.collection("reservas").doc(id).update({
-            numeroFatura,
-            statusPagamento: estadoPagamento,
-            dataPagamento
+                numeroFatura,
+                statusPagamento: estadoPagamento,
+                dataPagamento
             });
 
+            // Atualizar apenas a reserva em memória
+            const r = reservasOperacional.find(x => x.id === id);
+            if (r) {
+                r.numeroFatura = numeroFatura;
+                r.statusPagamento = estadoPagamento;
+                r.dataPagamento = dataPagamento;
+            }
 
-            alert("Atualizado.");
-            carregarOperacional();
+            aplicarFiltrosOperacional();
         });
     });
 
+    // APAGAR
     document.querySelectorAll(".btnApagar").forEach(btn => {
         btn.addEventListener("click", async () => {
-            const id = btn.dataset.id;
 
+            const id = btn.dataset.id;
             if (!confirm("Apagar reserva?")) return;
 
             await db.collection("reservas").doc(id).delete();
 
-            const snapCal = await db.collection("calendario").where("id", "==", id).get();
-            snapCal.forEach(doc => doc.ref.delete());
+            reservasOperacional = reservasOperacional.filter(r => r.id !== id);
 
-            carregarOperacional();
+            aplicarFiltrosOperacional();
         });
     });
 }
 
-function parseDataPt(data) {
-    if (!data) return null;
-    const [dia, mes, ano] = data.split("/");
-    return new Date(`${ano}-${mes}-${dia}`);
-}
 
-// LIGAR FILTROS
-document.getElementById("filtroTexto").addEventListener("input", aplicarFiltrosOperacional);
-document.getElementById("filtroOrigem").addEventListener("change", aplicarFiltrosOperacional);
-document.getElementById("filtroPagamento").addEventListener("change", aplicarFiltrosOperacional);
-document.getElementById("filtroDataInicio").addEventListener("change", aplicarFiltrosOperacional);
-document.getElementById("filtroDataFim").addEventListener("change", aplicarFiltrosOperacional);
-
-document.getElementById("btnLimparFiltros").addEventListener("click", () => {
-    document.getElementById("filtroTexto").value = "";
-    document.getElementById("filtroOrigem").value = "";
-    document.getElementById("filtroPagamento").value = "";
-    document.getElementById("filtroDataInicio").value = "";
-    document.getElementById("filtroDataFim").value = "";
-    aplicarFiltrosOperacional();
-});
-
-// -------------------------------------------------------------
-// 5) ORDENAR POR COLUNA (clicar no cabeçalho)
-// -------------------------------------------------------------
-let ordemAtual = {}; // guarda estado de cada coluna
-
+// ============================================================
+// 6) ORDENAR (SEM LER FIREBASE)
+// ============================================================
 document.querySelectorAll("#tabelaOperacional th[data-col]").forEach(th => {
     th.addEventListener("click", () => {
         const coluna = th.dataset.col;
 
-        // alternar ordem
         ordemAtual[coluna] = ordemAtual[coluna] === "asc" ? "desc" : "asc";
 
         ordenarPorColuna(coluna, ordemAtual[coluna]);
@@ -256,13 +244,11 @@ function ordenarPorColuna(coluna, ordem) {
         let v1 = a[coluna];
         let v2 = b[coluna];
 
-        // converter números
         if (!isNaN(v1) && !isNaN(v2)) {
             v1 = Number(v1);
             v2 = Number(v2);
         }
 
-        // converter datas PT
         if (coluna === "checkin" || coluna === "checkout") {
             v1 = parseDataPt(v1);
             v2 = parseDataPt(v2);
@@ -277,14 +263,20 @@ function ordenarPorColuna(coluna, ordem) {
 }
 
 
-// INICIAR
+// ============================================================
+// 7) PARSE DATA
+// ============================================================
+function parseDataPt(data) {
+    if (!data) return null;
+    const [dia, mes, ano] = data.split("/");
+    return new Date(`${ano}-${mes}-${dia}`);
+}
+
+
+// ============================================================
+// 8) INICIAR
+// ============================================================
 document.addEventListener("DOMContentLoaded", () => {
-
-    // 1) Restaurar filtros guardados + ativar persistência
     inicializarFiltrosPersistentes();
-
-    // 2) Carregar reservas
-    carregarOperacional();
+    carregarOperacional(); // única leitura Firebase
 });
-
-
