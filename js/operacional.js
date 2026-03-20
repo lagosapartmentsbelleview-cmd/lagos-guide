@@ -467,6 +467,11 @@ document.getElementById("btnFecharPopup").addEventListener("click", () => {
     document.getElementById("popupPagamentos").style.display = "none";
 });
 
+document.getElementById("popupPagamentos").addEventListener("click", (e) => {
+    if (e.target.id === "popupPagamentos") {
+        e.target.style.display = "none";
+    }
+});
 
 // ============================================================
 // 8) INICIAR
