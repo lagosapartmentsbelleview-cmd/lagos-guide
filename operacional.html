@@ -79,47 +79,39 @@
 </div>
 
 <div class="tabela-scroll-wrapper">
-    <!-- Barra de scroll fixa (acima da tabela) -->
-    <div class="scroll-bar-fixa">
-        <div class="scroll-bar-inner"></div>
-    </div>
-
-    <!-- Área da tabela (sem scroll próprio) -->
-    <div class="tabela-inner">
-        <table id="tabelaOperacional">
-            <thead>
-                <tr>
-                    <th data-col="origem">Origem</th>
-                    <th data-col="bookingId">Nº Reserva</th>
-                    <th data-col="cliente">Hóspede</th>
-                    <th data-col="quartos">Quartos</th>
-                    <th data-col="apartamentos">Apartamentos</th>
-                    <th data-col="hospedes">Pessoas</th>
-                    <th data-col="checkin">Check-in</th>
-                    <th data-col="checkout">Check-out</th>
-                    <th data-col="noites">Noites</th>
-                    <th data-col="totalBruto">Total Bruto (€)</th>
-                    <th data-col="valorNoite">Valor/Noite (€)</th>
-                    <th data-col="antesIVA">Bruto S/IVA (€)</th>
-                    <th data-col="valorIVA">IVA (€)</th>
-                    <th data-col="comissao">Comissão (€)</th>
-                    <th data-col="comissaoExtra">Comissão Extra (€)</th>
-                    <th data-col="comissaoTotal">Comissão Total (€)</th>
-                    <th data-col="limpeza">Limpeza (€)</th>
-                    <th data-col="liquidoOTA">Liq. OTA (€)</th>
-                    <th data-col="liquidoOperacional">Liq. Operacional (€)</th>
-                    <th data-col="liquidoTotal">Liq. Total (€)</th>
-                    <th data-col="dataPagamento">Data Pagamento</th>
-                    <th data-col="numeroFatura">Nº Fatura</th>
-                    <th data-col="estadoPagamentoOperacional">Pagamento</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-
-            <tbody id="tbodyOperacional"></tbody>
-        </table>
-    </div>
+    <table id="tabelaOperacional">
+        <thead>
+            <tr>
+                <th data-col="origem">Origem</th>
+                <th data-col="bookingId">Nº Reserva</th>
+                <th data-col="cliente">Hóspede</th>
+                <th data-col="quartos">Quartos</th>
+                <th data-col="apartamentos">Apartamentos</th>
+                <th data-col="hospedes">Pessoas</th>
+                <th data-col="checkin">Check-in</th>
+                <th data-col="checkout">Check-out</th>
+                <th data-col="noites">Noites</th>
+                <th data-col="totalBruto">Total Bruto (€)</th>
+                <th data-col="valorNoite">Valor/Noite (€)</th>
+                <th data-col="antesIVA">Bruto S/IVA (€)</th>
+                <th data-col="valorIVA">IVA (€)</th>
+                <th data-col="comissao">Comissão (€)</th>
+                <th data-col="comissaoExtra">Comissão Extra (€)</th>
+                <th data-col="comissaoTotal">Comissão Total (€)</th>
+                <th data-col="limpeza">Limpeza (€)</th>
+                <th data-col="liquidoOTA">Liq. OTA (€)</th>
+                <th data-col="liquidoOperacional">Liq. Operacional (€)</th>
+                <th data-col="liquidoTotal">Liq. Total (€)</th>
+                <th data-col="dataPagamento">Data Pagamento</th>
+                <th data-col="numeroFatura">Nº Fatura</th>
+                <th data-col="estadoPagamentoOperacional">Pagamento</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tbodyOperacional"></tbody>
+    </table>
 </div>
+
 
 <script>
 document.getElementById("toggleMenu").addEventListener("click", () => {
