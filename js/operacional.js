@@ -294,4 +294,34 @@ function parseDataPt(data) {
 document.addEventListener("DOMContentLoaded", () => {
     inicializarFiltrosPersistentes();
     carregarOperacional(); // única leitura Firebase
+
+    // LIGAR BOTÃO LIMPAR
+    const btnLimpar = document.getElementById("btnLimparFiltros");
+    if (btnLimpar) {
+        btnLimpar.addEventListener("click", () => {
+
+            // limpar filtros visuais
+            document.getElementById("filtroTexto").value = "";
+            document.getElementById("filtroOrigem").value = "";
+            document.getElementById("filtroPagamento").value = "";
+            document.getElementById("filtroDataInicio").value = "";
+            document.getElementById("filtroDataFim").value = "";
+
+            // limpar filtros persistentes
+            ["filtroTexto","filtroOrigem","filtroPagamento","filtroDataInicio","filtroDataFim"].forEach(id => {
+                localStorage.removeItem("operacional_filtro_" + id);
+            });
+
+            // limpar ordenação persistente
+            localStorage.removeItem("operacional_ordem_coluna");
+            localStorage.removeItem("operacional_ordem_direcao");
+
+            // limpar ordenação em memória
+            ordemAtual = {};
+
+            // aplicar tabela sem filtros nem ordenação
+            aplicarFiltrosOperacional();
+        });
+    }
 });
+
