@@ -522,6 +522,101 @@ function atualizarTabelas(ano) {
         document.getElementById("btnMostrarMais").style.display = "block";
     }
 }
+
+// -------------------------------------------------------------
+// PREVISÃO POR DATA DE CORTE (ON-THE-BOOKS POR CHECK-IN)
+// -------------------------------------------------------------
+function atualizarPrevisaoPorDataCorte() {
+    const input = document.getElementById("filtroDataCorte");
+    const tabela = document.getElementById("tabelaPrevisao");
+    const thead = tabela.querySelector("thead");
+    const tbody = tabela.querySelector("tbody");
+
+    tbody.innerHTML = "";
+    thead.innerHTML = "";
+
+    if (!input.value) return;
+
+    const dtCorte = new Date(input.value); // yyyy-mm-dd
+
+    // mapa[ano][mes] = totalBruto
+    const mapa = {};
+
+    reservas.forEach(r => {
+
+        // 1) data em que a reserva foi feita
+        const reservadoStr = r.dataReserva; // <-- CONFIRMADO
+        if (!reservadoStr || reservadoStr.trim() === "") return;
+
+        const dtReservado = parseDataDDMMYYYY(reservadoStr);
+        if (!dtReservado || isNaN(dtReservado)) return;
+
+        // só conta reservas que já existiam na data de corte
+        if (dtReservado > dtCorte) return;
+
+        // 2) data de check-in (ano/mês da receita)
+        const dtCheckin = parseDataDDMMYYYY(r.checkin);
+        if (!dtCheckin || isNaN(dtCheckin)) return;
+
+        const ano = dtCheckin.getFullYear();
+        const mes = dtCheckin.getMonth() + 1;
+
+        if (!mapa[ano]) mapa[ano] = {};
+        if (!mapa[ano][mes]) mapa[ano][mes] = 0;
+
+        const bruto = Number(r.totalBruto || 0);
+        mapa[ano][mes] += bruto;
+    });
+
+    // descobrir anos com dados
+    const anos = Object.keys(mapa)
+        .map(a => Number(a))
+        .sort((a, b) => a - b);
+
+    if (anos.length === 0) {
+        thead.innerHTML = "<tr><th>Sem dados para esta data de corte</th></tr>";
+        return;
+    }
+
+    // cabeçalho
+    let header = "<tr><th>Mês</th>";
+    anos.forEach(ano => header += `<th>${ano}</th>`);
+    header += "<th>Total</th><th>Crescimento vs Ano Anterior</th></tr>";
+    thead.innerHTML = header;
+
+    // linhas por mês
+    for (let m = 1; m <= 12; m++) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
+
+        let totalLinha = 0;
+
+        anos.forEach(ano => {
+            const valor = (mapa[ano][m] || 0);
+            totalLinha += valor;
+            tr.innerHTML += `<td>${formatarEuro(valor)}</td>`;
+        });
+
+        // crescimento vs ano anterior (para o ano selecionado no filtro)
+        const anoAtual = Number(document.getElementById("filtroAno").value);
+        const valorAtual = (mapa[anoAtual] && mapa[anoAtual][m]) ? mapa[anoAtual][m] : 0;
+        const valorAnterior = (mapa[anoAtual - 1] && mapa[anoAtual - 1][m]) ? mapa[anoAtual - 1][m] : 0;
+
+        let crescimento = 0;
+        if (valorAnterior > 0) {
+            crescimento = ((valorAtual - valorAnterior) / valorAnterior) * 100;
+        }
+
+        tr.innerHTML += `
+            <td>${formatarEuro(totalLinha)}</td>
+            <td>${formatarPercent(crescimento)}</td>
+        `;
+
+        tbody.appendChild(tr);
+    }
+}
+
+
 // -------------------------------------------------------------
 // TABELAS — FINANCEIRO
 // -------------------------------------------------------------
@@ -1146,12 +1241,17 @@ function inicializarFiltros() {
 // -------------------------------------------------------------
 // INICIALIZAÇÃO FINAL
 // -------------------------------------------------------------
-
 document.addEventListener("DOMContentLoaded", () => {
 
     // Botões de modo
     document.getElementById("btnFinanceiro").onclick = () => ativarModo("financeiro");
     document.getElementById("btnOperacional").onclick = () => ativarModo("operacional");
+
+    // Botão da previsão por data de corte
+    const btnCorte = document.getElementById("btnAplicarDataCorte");
+    if (btnCorte) {
+        btnCorte.addEventListener("click", atualizarPrevisaoPorDataCorte);
+    }
 
     // Firebase Auth
     firebase.auth().onAuthStateChanged(user => {
@@ -1163,4 +1263,3 @@ document.addEventListener("DOMContentLoaded", () => {
         carregarReservas();
     });
 });
-
