@@ -365,3 +365,54 @@ th[data-col]:hover::after {
 .dropdown-menu .sair:hover {
     background: #fde2e2;
 }
+
+/* ============================================
+   WRAPPER DA TABELA (SCROLL EM BAIXO)
+============================================ */
+.tabela-scroll-wrapper {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+
+    /* CORREÇÕES IMPORTANTES */
+    position: relative;        /* impede scroll ficar atrás da tabela */
+    overflow-x: auto;          /* scroll horizontal */
+    overflow-y: hidden;        /* evita barra fantasma */
+    scrollbar-gutter: stable;  /* evita saltos antes/depois de carregar */
+
+    background: #ffffff;
+    border-radius: 0 0 14px 14px;
+    padding: 0;                /* remove espaço que empurrava o scroll */
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    scroll-behavior: smooth;
+}
+
+/* Scrollbar custom (WebKit) */
+.tabela-scroll-wrapper::-webkit-scrollbar {
+    height: 10px;
+}
+
+.tabela-scroll-wrapper::-webkit-scrollbar-track {
+    background: #e6e6e6;
+    border-radius: 10px;
+}
+
+.tabela-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: #1976d2;
+    border-radius: 10px;
+}
+
+.tabela-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #115293;
+}
+
+/* ============================================
+   TABELA
+============================================ */
+#tabelaOperacional {
+    width: max-content;   /* mantém largura real */
+    min-width: 100%;      /* garante que ocupa o wrapper */
+    border-collapse: collapse;
+    font-size: 14px;
+    background: #ffffff;
+}
