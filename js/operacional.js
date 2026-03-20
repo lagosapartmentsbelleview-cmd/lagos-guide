@@ -124,7 +124,7 @@ function desenharTabelaOperacional() {
             <td>${r.checkout}</td>
             <td>${Math.round(r.noites)}</td>
             <td>${totalBruto.toFixed(2)}</td>
-            <td>${(totalBruto / r.noites).toFixed(2)}</td>
+            <td>${(totalBruto / r.noites / r.quartos).toFixed(2)}</td>
             <td>${antesIVA.toFixed(2)}</td>
             <td>${valorIVA.toFixed(2)}</td>
             <td>${comissao.toFixed(2)}</td>
