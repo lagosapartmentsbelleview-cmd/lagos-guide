@@ -513,7 +513,7 @@ th[data-col]:hover::after {
 }
 
 #tabelaPagamentosBooking th {
-    background: #005bbb;
+    background: #1976d2;
     color: white;
     padding: 10px;
     border-radius: 6px;
