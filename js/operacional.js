@@ -43,7 +43,17 @@ async function carregarOperacional() {
     snap.forEach(doc => reservasOperacional.push({ id: doc.id, ...doc.data() }));
 
     aplicarFiltrosOperacional();
+
+    // RESTAURAR ORDENACAO
+    const col = localStorage.getItem("operacional_ordem_coluna");
+    const dir = localStorage.getItem("operacional_ordem_direcao");
+
+    if (col && dir) {
+        ordemAtual[col] = dir;
+        ordenarPorColuna(col, dir);
+    }
 }
+
 
 
 // ============================================================
@@ -234,9 +244,14 @@ document.querySelectorAll("#tabelaOperacional th[data-col]").forEach(th => {
 
         ordemAtual[coluna] = ordemAtual[coluna] === "asc" ? "desc" : "asc";
 
+        // GUARDAR NO LOCALSTORAGE
+        localStorage.setItem("operacional_ordem_coluna", coluna);
+        localStorage.setItem("operacional_ordem_direcao", ordemAtual[coluna]);
+
         ordenarPorColuna(coluna, ordemAtual[coluna]);
     });
 });
+
 
 function ordenarPorColuna(coluna, ordem) {
 
