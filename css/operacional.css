@@ -423,7 +423,10 @@ th[data-col]:hover::after {
     border-radius: 12px;
     width: 90%;
     max-width: 600px;
+    max-height: 80vh; /* impede que o popup ultrapasse o ecrã */
+    overflow-y: auto; /* ativa scroll interno */
     box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
 }
 
 #tabelaPagamentosBooking {
