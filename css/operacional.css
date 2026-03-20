@@ -76,6 +76,7 @@ body {
 ============================================ */
 .tabela-scroll-wrapper {
     width: 100%;
+    display: block;
     overflow-x: auto;          /* scroll horizontal nativo */
     overflow-y: visible;
     background: #ffffff;
