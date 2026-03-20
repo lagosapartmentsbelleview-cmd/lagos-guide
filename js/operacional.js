@@ -11,6 +11,63 @@ let reservasOperacional = [];
 let reservasFiltradas = [];
 let ordemAtual = {}; // para ordenação
 
+// ============================================================
+// PREVISÃO DE PAGAMENTOS BOOKING.COM
+// ============================================================
+function calcularPagamentosBooking(reservas) {
+
+    const pagamentos = {}; // { "2026-03-05": { total: 1234.56, reservas: 3 } }
+
+    reservas.forEach(r => {
+
+        if (r.origem !== "Booking") return;
+        if (!r.checkout || !r.liqOTA) return;
+
+        const dtCheckout = parseDataPt(r.checkout);
+        const diaSemana = dtCheckout.getDay(); // 0=Dom, 1=Seg, ..., 3=Qua, 4=Qui
+
+        // calcular a quinta-feira seguinte
+        let diasAteQuinta = 4 - diaSemana;
+        if (diasAteQuinta <= 0) diasAteQuinta += 7;
+
+        const dtPagamento = new Date(dtCheckout);
+        dtPagamento.setDate(dtCheckout.getDate() + diasAteQuinta);
+
+        const chave = dtPagamento.toISOString().split("T")[0];
+
+        if (!pagamentos[chave]) {
+            pagamentos[chave] = { total: 0, reservas: 0 };
+        }
+
+        pagamentos[chave].total += Number(r.liqOTA);
+        pagamentos[chave].reservas++;
+    });
+
+    return pagamentos;
+}
+
+// ============================================================
+// PREENCHER TABELA DO POPUP
+// ============================================================
+function preencherTabelaPagamentos() {
+    const dados = calcularPagamentosBooking(reservasOperacional);
+    const tbody = document.querySelector("#tabelaPagamentosBooking tbody");
+    tbody.innerHTML = "";
+
+    const datas = Object.keys(dados).sort();
+
+    datas.forEach(data => {
+        const linha = document.createElement("tr");
+        linha.innerHTML = `
+            <td>${data}</td>
+            <td>${dados[data].total.toFixed(2)} €</td>
+            <td>${dados[data].reservas}</td>
+        `;
+        tbody.appendChild(linha);
+    });
+}
+
+
 
 // ============================================================
 // 1) FILTROS PERSISTENTES
@@ -384,6 +441,18 @@ function atualizarCardsIVA(reservas) {
     document.getElementById("ivaFQ3").querySelector("span").textContent = trimestres.Q3.faturado.toFixed(2) + " €";
     document.getElementById("ivaFQ4").querySelector("span").textContent = trimestres.Q4.faturado.toFixed(2) + " €";
 }
+
+// ============================================================
+// EVENTOS DO POPUP
+// ============================================================
+document.getElementById("btnPagamentosBooking").addEventListener("click", () => {
+    preencherTabelaPagamentos();
+    document.getElementById("popupPagamentos").style.display = "flex";
+});
+
+document.getElementById("btnFecharPopup").addEventListener("click", () => {
+    document.getElementById("popupPagamentos").style.display = "none";
+});
 
 
 // ============================================================
