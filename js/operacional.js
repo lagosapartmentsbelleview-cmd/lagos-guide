@@ -48,9 +48,10 @@ async function carregarOperacional() {
     reservasOperacional = [];
     snap.forEach(doc => reservasOperacional.push({ id: doc.id, ...doc.data() }));
 
+    // aplicar filtros iniciais
     aplicarFiltrosOperacional();
 
-    // RESTAURAR ORDENACAO
+    // restaurar ordenação persistente
     const col = localStorage.getItem("operacional_ordem_coluna");
     const dir = localStorage.getItem("operacional_ordem_direcao");
 
@@ -58,7 +59,14 @@ async function carregarOperacional() {
         ordemAtual[col] = dir;
         ordenarPorColuna(col, dir);
     }
+
+    // atualizar cards de IVA (total + faturado)
+    atualizarCardsIVA(reservasOperacional);
+
+    // inicializar scroll sincronizado
+    inicializarScrollSincronizado();
 }
+
 
 
 
@@ -99,11 +107,20 @@ function aplicarFiltrosOperacional() {
         return true;
     });
 
-   reservasFiltradas = lista;
-   desenharTabelaOperacional();
-   restaurarOrdenacaoSeExistir();
- }
+    reservasFiltradas = lista;
 
+    // desenhar tabela filtrada
+    desenharTabelaOperacional();
+
+    // restaurar ordenação se existir
+    restaurarOrdenacaoSeExistir();
+
+    // atualizar cards de IVA com base nas reservas filtradas
+    atualizarCardsIVA(reservasFiltradas);
+
+    // atualizar scroll sincronizado
+    if (window.atualizarScrollSincronizado) atualizarScrollSincronizado();
+}
 
 // ============================================================
 // 4) DESENHAR TABELA (SEM LER FIREBASE)
@@ -309,6 +326,51 @@ function restaurarOrdenacaoSeExistir() {
         ordenarPorColuna(col, dir);
     }
 }
+
+// ============================================================
+// CÁLCULO DOS CARDS DE IVA
+// ============================================================
+
+function atualizarCardsIVA(reservas) {
+
+    const trimestres = {
+        Q1: { total: 0, faturado: 0 },
+        Q2: { total: 0, faturado: 0 },
+        Q3: { total: 0, faturado: 0 },
+        Q4: { total: 0, faturado: 0 }
+    };
+
+    reservas.forEach(r => {
+        if (!r.valorIVA || !r.checkin) return;
+
+        const mes = new Date(r.checkin).getMonth() + 1;
+        let trimestre = "Q1";
+
+        if (mes >= 4 && mes <= 6) trimestre = "Q2";
+        else if (mes >= 7 && mes <= 9) trimestre = "Q3";
+        else if (mes >= 10) trimestre = "Q4";
+
+        // IVA total
+        trimestres[trimestre].total += Number(r.valorIVA);
+
+        // IVA faturado (tem inputFatura preenchido)
+        if (r.numeroFatura && r.numeroFatura.trim() !== "") {
+            trimestres[trimestre].faturado += Number(r.valorIVA);
+        }
+    });
+
+    // Atualizar DOM
+    document.getElementById("ivaQ1").querySelector("span").textContent = trimestres.Q1.total.toFixed(2) + " €";
+    document.getElementById("ivaQ2").querySelector("span").textContent = trimestres.Q2.total.toFixed(2) + " €";
+    document.getElementById("ivaQ3").querySelector("span").textContent = trimestres.Q3.total.toFixed(2) + " €";
+    document.getElementById("ivaQ4").querySelector("span").textContent = trimestres.Q4.total.toFixed(2) + " €";
+
+    document.getElementById("ivaFQ1").querySelector("span").textContent = trimestres.Q1.faturado.toFixed(2) + " €";
+    document.getElementById("ivaFQ2").querySelector("span").textContent = trimestres.Q2.faturado.toFixed(2) + " €";
+    document.getElementById("ivaFQ3").querySelector("span").textContent = trimestres.Q3.faturado.toFixed(2) + " €";
+    document.getElementById("ivaFQ4").querySelector("span").textContent = trimestres.Q4.faturado.toFixed(2) + " €";
+}
+
 
 // ============================================================
 // 8) INICIAR
