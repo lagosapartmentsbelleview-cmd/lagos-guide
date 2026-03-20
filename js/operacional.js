@@ -328,9 +328,8 @@ function restaurarOrdenacaoSeExistir() {
 }
 
 // ============================================================
-// CÁLCULO DOS CARDS DE IVA
+// CÁLCULO DOS CARDS DE IVA (SEM CAMPO NO FIREBASE)
 // ============================================================
-
 function atualizarCardsIVA(reservas) {
 
     const trimestres = {
@@ -341,8 +340,13 @@ function atualizarCardsIVA(reservas) {
     };
 
     reservas.forEach(r => {
-        if (!r.valorIVA || !r.checkin) return;
 
+        if (!r.totalBruto || !r.checkin) return;
+
+        // calcular IVA 6%
+        const iva = r.totalBruto - (r.totalBruto / 1.06);
+
+        // determinar trimestre
         const mes = new Date(r.checkin).getMonth() + 1;
         let trimestre = "Q1";
 
@@ -351,11 +355,11 @@ function atualizarCardsIVA(reservas) {
         else if (mes >= 10) trimestre = "Q4";
 
         // IVA total
-        trimestres[trimestre].total += Number(r.valorIVA);
+        trimestres[trimestre].total += iva;
 
-        // IVA faturado (tem inputFatura preenchido)
+        // IVA faturado (tem número de fatura)
         if (r.numeroFatura && r.numeroFatura.trim() !== "") {
-            trimestres[trimestre].faturado += Number(r.valorIVA);
+            trimestres[trimestre].faturado += iva;
         }
     });
 
