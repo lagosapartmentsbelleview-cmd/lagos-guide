@@ -72,45 +72,22 @@ body {
 }
 
 /* ============================================
-   WRAPPER DA TABELA (SCROLL EM BAIXO)
-   — VERSÃO FINAL CORRIGIDA
+   WRAPPER DA TABELA — SEM SCROLL
 ============================================ */
 .tabela-scroll-wrapper {
     width: 100%;
     max-width: 100%;
     display: block;
 
-    position: relative;        /* impede scroll ficar atrás da tabela */
-    overflow-x: auto;          /* scroll horizontal */
-    overflow-y: hidden;        /* evita barra fantasma */
-    scrollbar-gutter: stable;  /* evita saltos antes/depois de carregar */
+    /* SCROLL DESATIVADO AQUI */
+    overflow: visible !important;
 
     background: #ffffff;
     border-radius: 0 0 14px 14px;
-    padding: 0;                /* ESSENCIAL — evita barra azul antes da tabela */
-    margin: 0;                 /* evita expansão antes da tabela existir */
+    padding: 0;
+    margin: 0;
 
     box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-    scroll-behavior: smooth;
-}
-
-/* Scrollbar custom (WebKit) */
-.tabela-scroll-wrapper::-webkit-scrollbar {
-    height: 10px;
-}
-
-.tabela-scroll-wrapper::-webkit-scrollbar-track {
-    background: #e6e6e6;
-    border-radius: 10px;
-}
-
-.tabela-scroll-wrapper::-webkit-scrollbar-thumb {
-    background: #1976d2;
-    border-radius: 10px;
-}
-
-.tabela-scroll-wrapper::-webkit-scrollbar-thumb:hover {
-    background: #115293;
 }
 
 /* ============================================
