@@ -76,6 +76,7 @@ body {
 ============================================ */
 .tabela-scroll-wrapper {
     width: 100%;
+    max-width: 100%;           /* ESSENCIAL — impede scroll no body */
     display: block;
     overflow-x: auto;          /* scroll horizontal nativo */
     overflow-y: visible;
@@ -85,6 +86,7 @@ body {
     box-shadow: 0 4px 18px rgba(0,0,0,0.08);
     scroll-behavior: smooth;
 }
+
 
 /* Scrollbar custom (WebKit) */
 .tabela-scroll-wrapper::-webkit-scrollbar {
