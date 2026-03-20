@@ -361,6 +361,17 @@ th[data-col]:hover::after {
     background: #fafafa;
     transition: border 0.2s ease;
 }
+.tabela-scroll-wrapper {
+    overflow-x: auto;
+    overflow-y: visible;
+    white-space: nowrap;
+    max-width: 100%;
+    padding-bottom: 8px;
+}
+#tabelaOperacional {
+    width: max-content;
+    min-width: 100%;
+}
 
 .inputDataPagamento:focus {
     border-color: #005c99;
