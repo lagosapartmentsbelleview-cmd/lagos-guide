@@ -417,72 +417,69 @@ function atualizarCardsIVA(reservas) {
         return "Q4";
     }
 
+    // ler filtro anual (ou qualquer intervalo que tenhas)
+    const inicioStr = document.getElementById("filtroDataInicio").value;
+    const fimStr    = document.getElementById("filtroDataFim").value;
+    const dtInicio  = inicioStr ? new Date(inicioStr) : null;
+    const dtFim     = fimStr    ? new Date(fimStr)    : null;
+
     reservas.forEach(r => {
 
-        // ============================
-        // 1) IVA TOTAL TRIMESTRAL
-        // ============================
+        // -------------------------
+        // 1) IVA TOTAL (por CHECK-OUT)
+        // -------------------------
         if (r.checkout && r.totalBruto) {
 
             const dt = parseDataPt(r.checkout);
-            if (!isNaN(dt)) {
+            if (isNaN(dt)) return;
 
-                const tri = getTri(dt);
-                const bruto = Number(r.totalBruto) || 0;
+            // respeitar filtro anual / intervalo
+            if (dtInicio && dt < dtInicio) return;
+            if (dtFim && dt > dtFim) return;
 
-                const iva = bruto - (bruto / 1.06);
+            const tri   = getTri(dt);
+            const bruto = Number(r.totalBruto) || 0;
+            const iva   = bruto - (bruto / 1.06);
 
-                trimestres[tri].bruto += bruto;
-                trimestres[tri].iva += iva;
-            }
+            trimestres[tri].bruto += bruto;
+            trimestres[tri].iva   += iva;
         }
 
-        // ============================
-        // 2) IVA FATURADO (mantém igual)
-        // ============================
+        // -------------------------
+        // 2) IVA FATURADO (por DATA PAGAMENTO)
+        // -------------------------
         if (r.dataPagamento && r.numeroFatura && r.numeroFatura.trim() !== "") {
 
             const dtPag = parseDataPt(r.dataPagamento);
-            if (!isNaN(dtPag)) {
+            if (isNaN(dtPag)) return;
 
-                const tri = getTri(dtPag);
-                const bruto = Number(r.totalBruto) || 0;
-                const iva = bruto - (bruto / 1.06);
+            // também respeita o filtro
+            if (dtInicio && dtPag < dtInicio) return;
+            if (dtFim && dtPag > dtFim) return;
 
-                trimestres[tri].faturado += iva;
-            }
+            const tri   = getTri(dtPag);
+            const bruto = Number(r.totalBruto) || 0;
+            const iva   = bruto - (bruto / 1.06);
+
+            trimestres[tri].faturado += iva;
         }
     });
-
-    // ============================
-    // ATUALIZAR CARDS NO HTML
-    // ============================
 
     // Totais trimestrais (Bruto + IVA)
     document.querySelector("#ivaQ1 span").innerHTML =
         `${trimestres.Q1.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q1.iva.toFixed(2)} €</small>`;
-
     document.querySelector("#ivaQ2 span").innerHTML =
         `${trimestres.Q2.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q2.iva.toFixed(2)} €</small>`;
-
     document.querySelector("#ivaQ3 span").innerHTML =
         `${trimestres.Q3.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q3.iva.toFixed(2)} €</small>`;
-
     document.querySelector("#ivaQ4 span").innerHTML =
         `${trimestres.Q4.bruto.toFixed(2)} €<br><small>IVA: ${trimestres.Q4.iva.toFixed(2)} €</small>`;
 
-    // IVA Faturado (mantém igual)
-    document.getElementById("ivaFQ1").querySelector("span").textContent =
-        trimestres.Q1.faturado.toFixed(2) + " €";
-
-    document.getElementById("ivaFQ2").querySelector("span").textContent =
-        trimestres.Q2.faturado.toFixed(2) + " €";
-
-    document.getElementById("ivaFQ3").querySelector("span").textContent =
-        trimestres.Q3.faturado.toFixed(2) + " €";
-
-    document.getElementById("ivaFQ4").querySelector("span").textContent =
-        trimestres.Q4.faturado.toFixed(2) + " €";
+    // IVA Faturado
+    document.querySelector("#ivaFQ1 span").textContent = trimestres.Q1.faturado.toFixed(2) + " €";
+    document.querySelector("#ivaFQ2 span").textContent = trimestres.Q2.faturado.toFixed(2) + " €";
+    document.querySelector("#ivaFQ3 span").textContent = trimestres.Q3.faturado.toFixed(2) + " €";
+    document.querySelector("#ivaFQ4 span").textContent = trimestres.Q4.faturado.toFixed(2) + " €";
 }
 
 
