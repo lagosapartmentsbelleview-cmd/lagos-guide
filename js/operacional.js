@@ -21,12 +21,21 @@ function calcularPagamentosBooking(reservas) {
     reservas.forEach(r => {
 
         if (r.origem !== "Booking") return;
-        if (!r.checkout || !r.liqOTA) return;
+        if (!r.checkout || !r.totalBruto) return;
+
+        const totalBruto = Number(r.totalBruto) || 0;
+        const comissao = Number(r.comissao) || 0;
+        const comissaoExtra = Number(r.comissaoExtra) || 0;
+
+        // Liq. OTA = Total Bruto - Comissão - Comissão Extra
+        const liquidoOTA = totalBruto - comissao - comissaoExtra;
+        if (liquidoOTA <= 0) return;
 
         const dtCheckout = parseDataPt(r.checkout);
+        if (isNaN(dtCheckout)) return;
+
         const diaSemana = dtCheckout.getDay(); // 0=Dom, 1=Seg, ..., 3=Qua, 4=Qui
 
-        // calcular a quinta-feira seguinte
         let diasAteQuinta = 4 - diaSemana;
         if (diasAteQuinta <= 0) diasAteQuinta += 7;
 
@@ -39,12 +48,13 @@ function calcularPagamentosBooking(reservas) {
             pagamentos[chave] = { total: 0, reservas: 0 };
         }
 
-        pagamentos[chave].total += Number(r.liqOTA);
+        pagamentos[chave].total += liquidoOTA;
         pagamentos[chave].reservas++;
     });
 
     return pagamentos;
 }
+
 
 // ============================================================
 // PREENCHER TABELA DO POPUP
