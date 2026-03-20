@@ -72,19 +72,17 @@ body {
 }
 
 /* ============================================
-   WRAPPER DA TABELA (SCROLL HORIZONTAL PREMIUM)
+   WRAPPER DA TABELA (SCROLL EM BAIXO)
 ============================================ */
 .tabela-scroll-wrapper {
     width: 100%;
+    overflow-x: auto;          /* scroll horizontal nativo */
+    overflow-y: visible;
     background: #ffffff;
-    border-radius: 14px;
-    padding: 0; /* sem padding para não empurrar a barra */
+    border-radius: 0 0 14px 14px;
+    padding: 0 12px 12px;
     box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-    
-
-    /* Mantém a barra SEMPRE acima da tabela */
-    position: relative;
-    
+    scroll-behavior: smooth;
 }
 
 /* Scrollbar custom (WebKit) */
@@ -104,16 +102,6 @@ body {
 
 .tabela-scroll-wrapper::-webkit-scrollbar-thumb:hover {
     background: #115293;
-}
-
-/* ============================================
-   WRAPPER INTERNO (CONTEÚDO DA TABELA)
-============================================ */
-.tabela-inner {
-    width: max-content;
-    min-width: 100%;
-    position: relative;
-    z-index: 1; /* tabela fica abaixo da barra */
 }
 
 /* ============================================
@@ -373,46 +361,4 @@ th[data-col]:hover::after {
 
 .dropdown-menu .sair:hover {
     background: #fde2e2;
-}
-
-/* ============================================
-   SCROLL SUPERIOR FIXO
-============================================ */
-.scroll-bar-fixa {
-    height: 14px;
-    background: #e6e6e6;
-    border-radius: 10px 10px 0 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: thin;
-    scrollbar-color: #1976d2 #e6e6e6;
-}
-
-/* Conteúdo interno que define a largura da barra */
-.scroll-bar-inner {
-    height: 1px;
-}
-
-/* WebKit */
-.scroll-bar-fixa::-webkit-scrollbar {
-    height: 10px;
-}
-
-.scroll-bar-fixa::-webkit-scrollbar-track {
-    background: #e6e6e6;
-    border-radius: 10px;
-}
-
-.scroll-bar-fixa::-webkit-scrollbar-thumb {
-    background: #1976d2;
-    border-radius: 10px;
-}
-
-.scroll-bar-fixa::-webkit-scrollbar-thumb:hover {
-    background: #115293;
-}
-
-/* A tabela já não tem scroll próprio */
-.tabela-inner {
-    overflow-x: hidden;
 }
