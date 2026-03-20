@@ -535,6 +535,42 @@ th[data-col]:hover::after {
     font-weight: 600;
 }
 
+.cards-linha {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.card-iva {
+    background: white;
+    border-radius: 14px;
+    padding: 18px 22px;
+    width: 180px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    border-left: 6px solid #1976d2;
+    transition: 0.2s ease;
+}
+
+.card-iva:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.card-iva span {
+    display: block;
+    margin-top: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.card-iva small {
+    font-size: 13px;
+    color: #555;
+}
+
+
 .btn-fechar-popup:hover {
     background: #c0392b;
 }
