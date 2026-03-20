@@ -183,6 +183,8 @@ function desenharTabelaOperacional() {
     });
 
     ligarEventosLinha();
+    atualizarScrollHorizontal();
+
 }
 
 
