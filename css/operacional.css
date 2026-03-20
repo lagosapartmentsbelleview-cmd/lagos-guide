@@ -348,3 +348,42 @@ th[data-col]:hover::after {
 .dropdown-menu .sair:hover {
     background: #fde2e2;
 }
+
+.cards-iva-wrapper {
+    margin: 20px 0;
+}
+
+.titulo-cards {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1976d2;
+    margin: 10px 0;
+}
+
+.cards-linha {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.card-iva {
+    flex: 1;
+    min-width: 140px;
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    text-align: center;
+    font-weight: 600;
+    color: #1976d2;
+    font-size: 15px;
+}
+
+.card-iva span {
+    display: block;
+    margin-top: 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2d3436;
+}
