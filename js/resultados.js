@@ -624,9 +624,8 @@ for (let m = 1; m <= 12; m++) {
     tr.innerHTML += `<td>${formatarPercent(crescimentoAno)}</td>`;
 
     tbody.appendChild(tr);
+  }
 }
-
-
 
 // -------------------------------------------------------------
 // TABELAS — FINANCEIRO
