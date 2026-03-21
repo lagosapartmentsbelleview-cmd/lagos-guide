@@ -561,11 +561,20 @@ function atualizarPrevisaoPorDataCorte() {
         const ano = dtCheckin.getFullYear();
         const mes = dtCheckin.getMonth() + 1;
 
-        if (!mapa[ano]) mapa[ano] = {};
-        if (!mapa[ano][mes]) mapa[ano][mes] = 0;
+        // Criar estrutura do ano se não existir
+if (!mapa[ano]) mapa[ano] = {};
 
-        const bruto = Number(r.totalBruto || 0);
-        mapa[ano][mes] += bruto;
+// Criar estrutura do mês se não existir
+if (!mapa[ano][mes]) mapa[ano][mes] = 0;
+
+// Somar ao mês
+const bruto = Number(r.totalBruto || 0);
+mapa[ano][mes] += bruto;
+
+// Somar ao total anual
+if (!mapa[ano].totalAno) mapa[ano].totalAno = 0;
+mapa[ano].totalAno += bruto;
+
     });
 
     // descobrir anos com dados
@@ -584,37 +593,39 @@ function atualizarPrevisaoPorDataCorte() {
     header += "<th>Total</th><th>Crescimento vs Ano Anterior</th></tr>";
     thead.innerHTML = header;
 
-    // linhas por mês
-    for (let m = 1; m <= 12; m++) {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
+   // linhas por mês
+for (let m = 1; m <= 12; m++) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
 
-        let totalLinha = 0;
+    let totalLinha = 0;
 
-        anos.forEach(ano => {
-            const valor = (mapa[ano][m] || 0);
-            totalLinha += valor;
-            tr.innerHTML += `<td>${formatarEuro(valor)}</td>`;
-        });
+    // valores mensais por ano
+    anos.forEach(ano => {
+        const valorMes = (mapa[ano][m] || 0);
+        totalLinha += valorMes;
+        tr.innerHTML += `<td>${formatarEuro(valorMes)}</td>`;
+    });
 
-        // crescimento vs ano anterior (para o ano selecionado no filtro)
-        const anoAtual = Number(document.getElementById("filtroAno").value);
-        const valorAtual = (mapa[anoAtual] && mapa[anoAtual][m]) ? mapa[anoAtual][m] : 0;
-        const valorAnterior = (mapa[anoAtual - 1] && mapa[anoAtual - 1][m]) ? mapa[anoAtual - 1][m] : 0;
+    // total mensal (somando todos os anos)
+    tr.innerHTML += `<td>${formatarEuro(totalLinha)}</td>`;
 
-        let crescimento = 0;
-        if (valorAnterior > 0) {
-            crescimento = ((valorAtual - valorAnterior) / valorAnterior) * 100;
-        }
+    // crescimento anual (com base no total anual, não no mês)
+    const anoAtual = Number(document.getElementById("filtroAno").value);
 
-        tr.innerHTML += `
-            <td>${formatarEuro(totalLinha)}</td>
-            <td>${formatarPercent(crescimento)}</td>
-        `;
+    const totalAnoAtual = mapa[anoAtual]?.totalAno || 0;
+    const totalAnoAnterior = mapa[anoAtual - 1]?.totalAno || 0;
 
-        tbody.appendChild(tr);
+    let crescimentoAno = 0;
+    if (totalAnoAnterior > 0) {
+        crescimentoAno = ((totalAnoAtual - totalAnoAnterior) / totalAnoAnterior) * 100;
     }
+
+    tr.innerHTML += `<td>${formatarPercent(crescimentoAno)}</td>`;
+
+    tbody.appendChild(tr);
 }
+
 
 
 // -------------------------------------------------------------
