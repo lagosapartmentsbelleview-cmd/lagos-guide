@@ -639,7 +639,7 @@ function atualizarPrevisaoPorDataCorte() {
             tr += `
                 <td>${formatarEuro(otb.bruto)}</td>
                 <td>${otb.reservas}</td>
-                <td>${otb.noites}</td>
+                <td>${Math.round(otb.noites)}</td>
                 <td class="final">${mesJaPassou ? formatarEuro(fin.bruto) : ""}</td>
             `;
         });
