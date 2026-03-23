@@ -258,3 +258,79 @@ table tbody tr:hover {
     display: table-cell !important;
 }
 
+/* ============================
+   TABELA PREVISÃO (PREMIUM BELLEVIEW)
+============================ */
+
+.tabela-previsao {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+}
+
+/* Cabeçalho principal (anos) */
+.tabela-previsao th {
+    background: #1976d2;
+    color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Sub‑header (VBruto, Reservas, Noites, Final) */
+.tabela-previsao .sub-header {
+    background: #e8f2fa;
+    color: #0d47a1;
+    font-weight: bold;
+}
+
+/* Células normais */
+.tabela-previsao td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* Linhas alternadas */
+.tabela-previsao tbody tr:nth-child(even) {
+    background: #f4f7fb;
+}
+
+/* Hover */
+.tabela-previsao tbody tr:hover {
+    background: #e3f0ff;
+    transition: 0.2s;
+}
+
+/* Valor final (cinzento) */
+.tabela-previsao .final {
+    color: #777;
+    font-style: italic;
+}
+
+/* Crescimento (última coluna) */
+.tabela-previsao .crescimento {
+    font-weight: bold;
+    color: #0d47a1;
+}
+
+/* Cabeçalho agrupado por ano */
+.tabela-previsao .ano-header {
+    background: #145a86;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* Responsividade: scroll horizontal se houver muitos anos */
+@media (max-width: 1100px) {
+    .tabela-previsao {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
