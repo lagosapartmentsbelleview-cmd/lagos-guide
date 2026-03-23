@@ -524,120 +524,174 @@ function atualizarTabelas(ano) {
 }
 
 // -------------------------------------------------------------
-// PREVISÃO POR DATA DE CORTE (ON-THE-BOOKS POR CHECK-IN)
+// PREVISÃO POR DATA DE CORTE (ON‑THE‑BOOKS PREMIUM 4 COLUNAS)
 // -------------------------------------------------------------
 function atualizarPrevisaoPorDataCorte() {
     const input = document.getElementById("filtroDataCorte");
     const tabela = document.getElementById("tabelaPrevisao");
-    const thead = tabela.querySelector("thead");
-    const tbody = tabela.querySelector("tbody");
+    const thead = document.getElementById("previsaoHead");
+    const tbody = document.getElementById("previsaoBody");
 
-    tbody.innerHTML = "";
     thead.innerHTML = "";
+    tbody.innerHTML = "";
 
     if (!input.value) return;
 
-    const dtCorte = new Date(input.value); // yyyy-mm-dd
+    const dtCorte = new Date(input.value);
 
-    // mapa[ano][mes] = totalBruto
-    const mapa = {};
+    // MAPAS
+    const mapaOTB = {};   // filtrado pela data de corte
+    const mapaFinal = {}; // valor final do mês (sem filtro)
 
     reservas.forEach(r => {
 
-        // 1) data em que a reserva foi feita (ISO → Date)
+        // -----------------------------
+        // DATA DE RESERVA (ISO)
+        // -----------------------------
         const reservadoStr = r.dataReserva;
         if (!reservadoStr || reservadoStr.trim() === "") return;
 
         const dtReservado = new Date(reservadoStr);
-        if (!dtReservado || isNaN(dtReservado)) return;
+        if (isNaN(dtReservado)) return;
 
-        // 2) data de check-in (ano/mês da receita)
+        // -----------------------------
+        // CHECK-IN (DD/MM/YYYY)
+        // -----------------------------
         const dtCheckin = parseDataDDMMYYYY(r.checkin);
         if (!dtCheckin || isNaN(dtCheckin)) return;
 
         const ano = dtCheckin.getFullYear();
         const mes = dtCheckin.getMonth() + 1;
 
-        // 3) construir a data de corte correspondente ao ano do check-in
-        const dtCorteAno = new Date(ano, dtCorte.getMonth(), dtCorte.getDate());
+        const bruto = Number(r.totalBruto || 0);
+        const noites = Number(r.noites || 0);
 
-        // 4) só conta reservas feitas até à data de corte desse ano
+        // -----------------------------
+        // MAPA FINAL (SEM FILTRO)
+        // -----------------------------
+        if (!mapaFinal[ano]) mapaFinal[ano] = {};
+        if (!mapaFinal[ano][mes]) mapaFinal[ano][mes] = { bruto: 0, reservas: 0, noites: 0 };
+
+        mapaFinal[ano][mes].bruto += bruto;
+        mapaFinal[ano][mes].reservas += 1;
+        mapaFinal[ano][mes].noites += noites;
+
+        // -----------------------------
+        // MAPA OTB (COM FILTRO)
+        // -----------------------------
+        const dtCorteAno = new Date(ano, dtCorte.getMonth(), dtCorte.getDate());
         if (dtReservado > dtCorteAno) return;
 
-        // Criar estrutura do ano se não existir
-        if (!mapa[ano]) mapa[ano] = {};
+        if (!mapaOTB[ano]) mapaOTB[ano] = {};
+        if (!mapaOTB[ano][mes]) mapaOTB[ano][mes] = { bruto: 0, reservas: 0, noites: 0 };
 
-        // Criar estrutura do mês se não existir
-        if (!mapa[ano][mes]) mapa[ano][mes] = 0;
-
-        // Somar ao mês
-        const bruto = Number(r.totalBruto || 0);
-        mapa[ano][mes] += bruto;
-
-        // Somar ao total anual
-        if (!mapa[ano].totalAno) mapa[ano].totalAno = 0;
-        mapa[ano].totalAno += bruto;
+        mapaOTB[ano][mes].bruto += bruto;
+        mapaOTB[ano][mes].reservas += 1;
+        mapaOTB[ano][mes].noites += noites;
     });
 
-    // descobrir anos com dados
-    const anos = Object.keys(mapa)
+    // -----------------------------
+    // LISTA DE ANOS
+    // -----------------------------
+    const anos = Object.keys(mapaFinal)
         .map(a => Number(a))
         .sort((a, b) => a - b);
 
     if (anos.length === 0) {
-        thead.innerHTML = "<tr><th>Sem dados para esta data de corte</th></tr>";
+        thead.innerHTML = "<tr><th>Sem dados</th></tr>";
         return;
     }
 
-    // cabeçalho
-    let header = "<tr><th>Mês</th>";
-    anos.forEach(ano => header += `<th>${ano}</th>`);
-    header += "<th>Crescimento vs Ano Anterior</th></tr>";
-    thead.innerHTML = header;
+    // -----------------------------
+    // CABEÇALHO AGRUPADO
+    // -----------------------------
+    let linha1 = "<tr><th rowspan='2'>Mês</th>";
+    anos.forEach(ano => {
+        linha1 += `<th class="ano-header" colspan="4">${ano}</th>`;
+    });
+    linha1 += "<th rowspan='2'>Crescimento</th></tr>";
 
-    // linhas por mês
-    for (let m = 1; m <= 12; m++) {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
+    let linha2 = "<tr>";
+    anos.forEach(() => {
+        linha2 += `
+            <th class="sub-header">V. Bruto</th>
+            <th class="sub-header">Reservas</th>
+            <th class="sub-header">Noites</th>
+            <th class="sub-header">V. Final</th>
+        `;
+    });
+    linha2 += "</tr>";
 
-        // valores mensais por ano
+    thead.innerHTML = linha1 + linha2;
+
+    // -----------------------------
+    // LINHAS POR MÊS
+    // -----------------------------
+    for (let mes = 1; mes <= 12; mes++) {
+        let tr = `<tr><td>${NOMES_MESES[mes - 1]}</td>`;
+
         anos.forEach(ano => {
-            const valorMes = (mapa[ano][m] || 0);
-            tr.innerHTML += `<td>${formatarEuro(valorMes)}</td>`;
+            const otb = mapaOTB[ano]?.[mes] || { bruto: 0, reservas: 0, noites: 0 };
+            const fin = mapaFinal[ano]?.[mes] || { bruto: 0 };
+
+            const mesJaPassou = new Date(ano, mes - 1, 28) < dtCorte;
+
+            tr += `
+                <td>${formatarEuro(otb.bruto)}</td>
+                <td>${otb.reservas}</td>
+                <td>${otb.noites}</td>
+                <td class="final">${mesJaPassou ? formatarEuro(fin.bruto) : ""}</td>
+            `;
         });
 
-        // crescimento anual (com base no total anual)
-        const anoAtual = Number(document.getElementById("filtroAno").value);
+        // Crescimento OTB (ano mais recente vs anterior)
+        const anoAtual = anos[anos.length - 1];
+        const anoAnterior = anoAtual - 1;
 
-        const totalAnoAtual = mapa[anoAtual]?.totalAno || 0;
-        const totalAnoAnterior = mapa[anoAtual - 1]?.totalAno || 0;
+        const brutoAtual = mapaOTB[anoAtual]?.[mes]?.bruto || 0;
+        const brutoAnterior = mapaOTB[anoAnterior]?.[mes]?.bruto || 0;
 
-        let crescimentoAno = 0;
-        if (totalAnoAnterior > 0) {
-            crescimentoAno = ((totalAnoAtual - totalAnoAnterior) / totalAnoAnterior) * 100;
+        let crescimento = "—";
+        if (brutoAnterior > 0) {
+            crescimento = ((brutoAtual - brutoAnterior) / brutoAnterior * 100).toFixed(1) + "%";
         }
 
-        tr.innerHTML += `<td>${formatarPercent(crescimentoAno)}</td>`;
-
-        tbody.appendChild(tr);
+        tr += `<td class="crescimento">${crescimento}</td></tr>`;
+        tbody.innerHTML += tr;
     }
 
-    // -------------------------------------------------------------
-    // LINHA FINAL: TOTAL ANUAL POR ANO
-    // -------------------------------------------------------------
-    const trTotal = document.createElement("tr");
-    trTotal.innerHTML = `<td><strong>Total anual</strong></td>`;
+    // -----------------------------
+    // TOTAIS ANUAIS
+    // -----------------------------
+    let trTotal = "<tr><td><strong>Total anual</strong></td>";
 
     anos.forEach(ano => {
-        const totalAno = mapa[ano]?.totalAno || 0;
-        trTotal.innerHTML += `<td><strong>${formatarEuro(totalAno)}</strong></td>`;
+        const totOTB = somarAno(mapaOTB, ano);
+        const totFinal = somarAno(mapaFinal, ano);
+
+        trTotal += `
+            <td><strong>${formatarEuro(totOTB.bruto)}</strong></td>
+            <td><strong>${totOTB.reservas}</strong></td>
+            <td><strong>${totOTB.noites}</strong></td>
+            <td class="final"><strong>${formatarEuro(totFinal.bruto)}</strong></td>
+        `;
     });
 
-    // coluna vazia para crescimento
-    trTotal.innerHTML += `<td>—</td>`;
-
-    tbody.appendChild(trTotal);
+    trTotal += "<td></td></tr>";
+    tbody.innerHTML += trTotal;
 }
+
+// Soma anual
+function somarAno(mapa, ano) {
+    let bruto = 0, reservas = 0, noites = 0;
+    for (let m = 1; m <= 12; m++) {
+        bruto += mapa[ano]?.[m]?.bruto || 0;
+        reservas += mapa[ano]?.[m]?.reservas || 0;
+        noites += mapa[ano]?.[m]?.noites || 0;
+    }
+    return { bruto, reservas, noites };
+}
+
 
 
 
