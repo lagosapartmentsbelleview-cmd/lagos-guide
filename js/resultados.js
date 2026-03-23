@@ -632,7 +632,8 @@ function atualizarPrevisaoPorDataCorte() {
 
         anos.forEach(ano => {
             const otb = mapaOTB[ano]?.[mes] || { bruto: 0, reservas: 0, noites: 0 };
-            const fin = mapaFinal[ano]?.[mes] || { bruto: 0 };
+            const fin = mapaFinal[ano]?.[mes] || { bruto: 0, reservas: 0, noites: 0 };
+
 
             const mesJaPassou = new Date(ano, mes - 1, 28) < dtCorte;
 
