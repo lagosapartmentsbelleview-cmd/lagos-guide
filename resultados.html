@@ -218,23 +218,26 @@
     <div class="filtros-resultados">
         <label>Data de corte:</label>
         <input type="date" id="filtroDataCorte">
-
         <button id="btnAplicarDataCorte">Ver previsão</button>
     </div>
+
+    <!-- Importador histórico -->
+    <div class="importador-historico">
         <button id="btnImportDataReserva" class="btn-secundario-pequeno">
-    Importar datas de reserva (histórico)
-</button>
+            Importar datas de reserva (histórico)
+        </button>
 
-<input type="file" id="fileDataReserva" accept=".xlsx,.xls" style="display:none;">
+        <input type="file" id="fileDataReserva" accept=".xlsx,.xls" style="display:none;">
 
-<span id="importDataReservaStatus" class="texto-status-import"></span>
-
+        <span id="importDataReservaStatus" class="texto-status-import"></span>
+    </div>
 
     <table id="tabelaPrevisao">
         <thead></thead>
         <tbody></tbody>
     </table>
 </div>
+
 
 
     <!-- Firebase -->
