@@ -690,8 +690,13 @@ function somarAno(mapa, ano) {
         reservas += mapa[ano]?.[m]?.reservas || 0;
         noites += mapa[ano]?.[m]?.noites || 0;
     }
-    return { bruto, reservas, noites };
+    return {
+        bruto,
+        reservas,
+        noites: Math.round(noites)
+    };
 }
+
 
 
 
