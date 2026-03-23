@@ -6,6 +6,9 @@
 
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/resultados.css">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/import-data-reserva.js"></script>
+
 </head>
 
 <body>
@@ -218,6 +221,14 @@
 
         <button id="btnAplicarDataCorte">Ver previsão</button>
     </div>
+        <button id="btnImportDataReserva" class="btn-secundario-pequeno">
+    Importar datas de reserva (histórico)
+</button>
+
+<input type="file" id="fileDataReserva" accept=".xlsx,.xls" style="display:none;">
+
+<span id="importDataReservaStatus" class="texto-status-import"></span>
+
 
     <table id="tabelaPrevisao">
         <thead></thead>
