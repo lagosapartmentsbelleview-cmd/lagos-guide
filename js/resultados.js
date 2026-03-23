@@ -551,8 +551,21 @@ function atualizarPrevisaoPorDataCorte() {
         const dtReservado = parseDataDDMMYYYY(reservadoStr);
         if (!dtReservado || isNaN(dtReservado)) return;
 
-        // só conta reservas que já existiam na data de corte
-        if (dtReservado > dtCorte) return;
+       // 1) data de check-in (ano/mês da receita)
+const dtCheckin = parseDataDDMMYYYY(r.checkin);
+if (!dtCheckin || isNaN(dtCheckin)) return;
+
+const ano = dtCheckin.getFullYear();
+
+// 2) construir a data de corte correspondente ao ano do check-in
+const dtCorteAno = new Date(ano, dtCorte.getMonth(), dtCorte.getDate());
+
+// 3) data em que a reserva foi feita (ISO → Date)
+const dtReservado = new Date(reservadoStr);
+
+// 4) só conta reservas feitas até à data de corte desse ano
+if (dtReservado > dtCorteAno) return;
+
 
         // 2) data de check-in (ano/mês da receita)
         const dtCheckin = parseDataDDMMYYYY(r.checkin);
