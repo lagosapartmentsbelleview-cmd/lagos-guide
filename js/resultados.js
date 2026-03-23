@@ -592,7 +592,7 @@ function atualizarPrevisaoPorDataCorte() {
     // cabeçalho
     let header = "<tr><th>Mês</th>";
     anos.forEach(ano => header += `<th>${ano}</th>`);
-    header += "<th>Total</th><th>Crescimento vs Ano Anterior</th></tr>";
+    header += "<th>Crescimento vs Ano Anterior</th></tr>";
     thead.innerHTML = header;
 
     // linhas por mês
@@ -600,17 +600,11 @@ function atualizarPrevisaoPorDataCorte() {
         const tr = document.createElement("tr");
         tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
 
-        let totalLinha = 0;
-
         // valores mensais por ano
         anos.forEach(ano => {
             const valorMes = (mapa[ano][m] || 0);
-            totalLinha += valorMes;
             tr.innerHTML += `<td>${formatarEuro(valorMes)}</td>`;
         });
-
-        // total mensal (somando todos os anos)
-        tr.innerHTML += `<td>${formatarEuro(totalLinha)}</td>`;
 
         // crescimento anual (com base no total anual)
         const anoAtual = Number(document.getElementById("filtroAno").value);
@@ -627,7 +621,24 @@ function atualizarPrevisaoPorDataCorte() {
 
         tbody.appendChild(tr);
     }
+
+    // -------------------------------------------------------------
+    // LINHA FINAL: TOTAL ANUAL POR ANO
+    // -------------------------------------------------------------
+    const trTotal = document.createElement("tr");
+    trTotal.innerHTML = `<td><strong>Total anual</strong></td>`;
+
+    anos.forEach(ano => {
+        const totalAno = mapa[ano]?.totalAno || 0;
+        trTotal.innerHTML += `<td><strong>${formatarEuro(totalAno)}</strong></td>`;
+    });
+
+    // coluna vazia para crescimento
+    trTotal.innerHTML += `<td>—</td>`;
+
+    tbody.appendChild(trTotal);
 }
+
 
 
 // -------------------------------------------------------------
