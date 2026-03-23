@@ -544,28 +544,12 @@ function atualizarPrevisaoPorDataCorte() {
 
     reservas.forEach(r => {
 
-        // 1) data em que a reserva foi feita
-        const reservadoStr = r.dataReserva; // <-- CONFIRMADO
+        // 1) data em que a reserva foi feita (ISO → Date)
+        const reservadoStr = r.dataReserva;
         if (!reservadoStr || reservadoStr.trim() === "") return;
 
-        const dtReservado = parseDataDDMMYYYY(reservadoStr);
+        const dtReservado = new Date(reservadoStr);
         if (!dtReservado || isNaN(dtReservado)) return;
-
-       // 1) data de check-in (ano/mês da receita)
-const dtCheckin = parseDataDDMMYYYY(r.checkin);
-if (!dtCheckin || isNaN(dtCheckin)) return;
-
-const ano = dtCheckin.getFullYear();
-
-// 2) construir a data de corte correspondente ao ano do check-in
-const dtCorteAno = new Date(ano, dtCorte.getMonth(), dtCorte.getDate());
-
-// 3) data em que a reserva foi feita (ISO → Date)
-const dtReservado = new Date(reservadoStr);
-
-// 4) só conta reservas feitas até à data de corte desse ano
-if (dtReservado > dtCorteAno) return;
-
 
         // 2) data de check-in (ano/mês da receita)
         const dtCheckin = parseDataDDMMYYYY(r.checkin);
@@ -574,20 +558,25 @@ if (dtReservado > dtCorteAno) return;
         const ano = dtCheckin.getFullYear();
         const mes = dtCheckin.getMonth() + 1;
 
+        // 3) construir a data de corte correspondente ao ano do check-in
+        const dtCorteAno = new Date(ano, dtCorte.getMonth(), dtCorte.getDate());
+
+        // 4) só conta reservas feitas até à data de corte desse ano
+        if (dtReservado > dtCorteAno) return;
+
         // Criar estrutura do ano se não existir
-if (!mapa[ano]) mapa[ano] = {};
+        if (!mapa[ano]) mapa[ano] = {};
 
-// Criar estrutura do mês se não existir
-if (!mapa[ano][mes]) mapa[ano][mes] = 0;
+        // Criar estrutura do mês se não existir
+        if (!mapa[ano][mes]) mapa[ano][mes] = 0;
 
-// Somar ao mês
-const bruto = Number(r.totalBruto || 0);
-mapa[ano][mes] += bruto;
+        // Somar ao mês
+        const bruto = Number(r.totalBruto || 0);
+        mapa[ano][mes] += bruto;
 
-// Somar ao total anual
-if (!mapa[ano].totalAno) mapa[ano].totalAno = 0;
-mapa[ano].totalAno += bruto;
-
+        // Somar ao total anual
+        if (!mapa[ano].totalAno) mapa[ano].totalAno = 0;
+        mapa[ano].totalAno += bruto;
     });
 
     // descobrir anos com dados
@@ -606,39 +595,40 @@ mapa[ano].totalAno += bruto;
     header += "<th>Total</th><th>Crescimento vs Ano Anterior</th></tr>";
     thead.innerHTML = header;
 
-   // linhas por mês
-for (let m = 1; m <= 12; m++) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
+    // linhas por mês
+    for (let m = 1; m <= 12; m++) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${NOMES_MESES[m - 1]}</td>`;
 
-    let totalLinha = 0;
+        let totalLinha = 0;
 
-    // valores mensais por ano
-    anos.forEach(ano => {
-        const valorMes = (mapa[ano][m] || 0);
-        totalLinha += valorMes;
-        tr.innerHTML += `<td>${formatarEuro(valorMes)}</td>`;
-    });
+        // valores mensais por ano
+        anos.forEach(ano => {
+            const valorMes = (mapa[ano][m] || 0);
+            totalLinha += valorMes;
+            tr.innerHTML += `<td>${formatarEuro(valorMes)}</td>`;
+        });
 
-    // total mensal (somando todos os anos)
-    tr.innerHTML += `<td>${formatarEuro(totalLinha)}</td>`;
+        // total mensal (somando todos os anos)
+        tr.innerHTML += `<td>${formatarEuro(totalLinha)}</td>`;
 
-    // crescimento anual (com base no total anual, não no mês)
-    const anoAtual = Number(document.getElementById("filtroAno").value);
+        // crescimento anual (com base no total anual)
+        const anoAtual = Number(document.getElementById("filtroAno").value);
 
-    const totalAnoAtual = mapa[anoAtual]?.totalAno || 0;
-    const totalAnoAnterior = mapa[anoAtual - 1]?.totalAno || 0;
+        const totalAnoAtual = mapa[anoAtual]?.totalAno || 0;
+        const totalAnoAnterior = mapa[anoAtual - 1]?.totalAno || 0;
 
-    let crescimentoAno = 0;
-    if (totalAnoAnterior > 0) {
-        crescimentoAno = ((totalAnoAtual - totalAnoAnterior) / totalAnoAnterior) * 100;
+        let crescimentoAno = 0;
+        if (totalAnoAnterior > 0) {
+            crescimentoAno = ((totalAnoAtual - totalAnoAnterior) / totalAnoAnterior) * 100;
+        }
+
+        tr.innerHTML += `<td>${formatarPercent(crescimentoAno)}</td>`;
+
+        tbody.appendChild(tr);
     }
-
-    tr.innerHTML += `<td>${formatarPercent(crescimentoAno)}</td>`;
-
-    tbody.appendChild(tr);
-  }
 }
+
 
 // -------------------------------------------------------------
 // TABELAS — FINANCEIRO
