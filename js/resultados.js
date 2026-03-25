@@ -699,6 +699,54 @@ function somarAno(mapa, ano) {
     };
 }
 
+function atualizarKPIsExtras(mapaOTB, mapaFinal, anos) {
+
+    const anoAtual = anos[anos.length - 1];
+    const anoAnterior = anoAtual - 1;
+
+    const totOTB = somarAno(mapaOTB, anoAtual);
+    const totFinal = somarAno(mapaFinal, anoAtual);
+
+    const totOTBAnterior = somarAno(mapaOTB, anoAnterior);
+
+    // Capacidade (2 apartamentos × 365 noites)
+    const capacidadeAnual = 2 * 365;
+
+    // ADR
+    const adrOtb = totOTB.noites > 0 ? totOTB.bruto / totOTB.noites : 0;
+    const adrFinal = totFinal.noites > 0 ? totFinal.bruto / totFinal.noites : 0;
+
+    // Ocupação
+    const occOtb = (totOTB.noites / capacidadeAnual) * 100;
+    const occFinal = (totFinal.noites / capacidadeAnual) * 100;
+
+    // RevPAR
+    const revparOtb = totOTB.bruto / capacidadeAnual;
+    const revparFinal = totFinal.bruto / capacidadeAnual;
+
+    // Pacing
+    const pacing = totOTBAnterior.bruto > 0
+        ? ((totOTB.bruto - totOTBAnterior.bruto) / totOTBAnterior.bruto) * 100
+        : 0;
+
+    // Crescimento YoY Final
+    const crescimento = totFinal.bruto > 0 && totFinal.bruto > 0
+        ? ((totFinal.bruto - totOTBAnterior.bruto) / totOTBAnterior.bruto) * 100
+        : 0;
+
+    // Atualizar cards
+    document.getElementById("kpiAdrOtb").innerText = formatarEuro(adrOtb);
+    document.getElementById("kpiAdrFinal").innerText = formatarEuro(adrFinal);
+
+    document.getElementById("kpiOccOtb").innerText = occOtb.toFixed(1) + "%";
+    document.getElementById("kpiOccFinal").innerText = occFinal.toFixed(1) + "%";
+
+    document.getElementById("kpiRevparOtb").innerText = formatarEuro(revparOtb);
+    document.getElementById("kpiRevparFinal").innerText = formatarEuro(revparFinal);
+
+    document.getElementById("kpiPacing").innerText = pacing.toFixed(1) + "%";
+    document.getElementById("kpiCrescimento").innerText = crescimento.toFixed(1) + "%";
+}
 
 
 
