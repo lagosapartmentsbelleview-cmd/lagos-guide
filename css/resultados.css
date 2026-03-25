@@ -334,3 +334,38 @@ table tbody tr:hover {
     }
 }
 
+/* ============================
+   KPIs EXTRA (abaixo da tabela)
+============================ */
+
+.kpi-extra-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 30px 20px;
+}
+
+.kpi-extra-card {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    width: 220px;
+}
+
+.kpi-extra-card h4 {
+    margin: 0 0 8px 0;
+    color: #1976d2;
+}
+
+.kpi-extra-card p {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0 0 6px 0;
+    color: #333;
+}
+
+.kpi-extra-card small {
+    color: #666;
+    font-size: 12px;
+}
