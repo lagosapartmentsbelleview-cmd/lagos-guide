@@ -680,6 +680,8 @@ function atualizarPrevisaoPorDataCorte() {
 
     trTotal += "<td></td></tr>";
     tbody.innerHTML += trTotal;
+
+atualizarKPIsExtras(mapaOTB, mapaFinal, anos);
 }
 
 // Soma anual
