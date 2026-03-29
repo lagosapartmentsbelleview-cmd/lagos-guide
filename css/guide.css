@@ -401,3 +401,15 @@ a[href^="https://wa.me"],
         text-decoration: underline !important;
     }
 }
+
+/* Telefones dentro do conteúdo do guia (não footer) */
+main a[href^="tel"] {
+    color: #005c99 !important;
+    -webkit-text-fill-color: #005c99 !important;
+    font-weight: 600;
+}
+.category-card a[href^="tel"] {
+    color: #005c99 !important;
+    -webkit-text-fill-color: #005c99 !important;
+    font-weight: 600;
+}
