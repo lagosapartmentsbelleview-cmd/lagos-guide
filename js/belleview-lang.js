@@ -395,6 +395,11 @@ continue: "Continuar",
 available_apartments: "{count} apartamento disponível",
 available_apartments_plural: "{count} apartamentos disponíveis",
 
+cookies_msg: "Utilizamos cookies para melhorar a sua experiência. Pode aceitar ou recusar.",
+cookies_accept: "Aceitar",
+cookies_reject: "Recusar",
+
+
   },
   en: {
     menu_alojamento: "Accommodation",
@@ -768,6 +773,11 @@ continue: "Continue",
 
 available_apartments: "{count} apartment available",
 available_apartments_plural: "{count} apartments available",
+
+cookies_msg: "We use cookies to improve your experience. You can accept or decline.",
+cookies_accept: "Accept",
+cookies_reject: "Decline",
+
 
   },
   es: {
@@ -1155,6 +1165,11 @@ continue: "Continuar",
 available_apartments: "{count} apartamento disponible",
 available_apartments_plural: "{count} apartamentos disponibles",
 
+cookies_msg: "Utilizamos cookies para mejorar su experiencia. Puede aceptar o rechazar.",
+cookies_accept: "Aceptar",
+cookies_reject: "Rechazar",
+
+
   },
   fr: {
     menu_alojamento: "Hébergement",
@@ -1528,6 +1543,11 @@ continue: "Continuer",
 
 available_apartments: "{count} appartement disponible",
 available_apartments_plural: "{count} appartements disponibles",
+
+cookies_msg: "Nous utilisons des cookies pour améliorer votre expérience. Vous pouvez accepter ou refuser.",
+cookies_accept: "Accepter",
+cookies_reject: "Refuser",
+
 
   },
   it: {
@@ -1903,6 +1923,11 @@ continue: "Continua",
 
 available_apartments: "{count} appartamento disponibile",
 available_apartments_plural: "{count} appartamenti disponibili",
+
+cookies_msg: "Utilizziamo i cookie per migliorare la tua esperienza. Puoi accettare o rifiutare.",
+cookies_accept: "Accetta",
+cookies_reject: "Rifiuta",
+
 
   },
   de: {
@@ -2289,6 +2314,11 @@ continue: "Weiter",
 
 available_apartments: "{count} Apartment verfügbar",
 available_apartments_plural: "{count} Apartments verfügbar",
+
+cookies_msg: "Wir verwenden Cookies, um Ihre Erfahrung zu verbessern. Sie können akzeptieren oder ablehnen.",
+cookies_accept: "Akzeptieren",
+cookies_reject: "Ablehnen",
+
 
   }
 };
