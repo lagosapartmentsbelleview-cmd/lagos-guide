@@ -2602,7 +2602,7 @@ a[href^="https://wa.me"],
 
 /* ===========================================================
    FIX SAFARI iOS — Datepicker não abre dentro de modais
-   (apenas em dispositivos iOS, não afeta desktop)
+   (apenas iOS, não afeta desktop)
 =========================================================== */
 @supports (-webkit-touch-callout: none) and (not (hover: hover)) {
 
@@ -2622,17 +2622,15 @@ a[href^="https://wa.me"],
     }
 
     /* Safari iOS bloqueia datepicker se overflow estiver escondido */
-    .modal-box {
-        overflow-y: visible !important;
-        overflow-x: hidden !important;
+    .modal-content {
+        overflow: visible !important; /* AQUI está o segredo */
     }
 }
 
 /* ===========================================================
-   FIX SAFARI iOS — títulos longos a sair fora do card
+   FIX SAFARI iOS — títulos longos
 =========================================================== */
 @supports (-webkit-touch-callout: none) and (not (hover: hover)) {
-
     .aloj-title,
     .subtitulo-categoria,
     .comodidade-nome,
