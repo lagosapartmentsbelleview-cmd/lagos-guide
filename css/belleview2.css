@@ -2625,3 +2625,17 @@ a[href^="https://wa.me"],
         overflow: visible !important;
     }
 }
+
+/* FIX SAFARI iOS — títulos longos a sair fora do card */
+@supports (-webkit-touch-callout: none) {
+
+    .aloj-title,
+    .subtitulo-categoria,
+    .comodidade-nome,
+    .cb-item,
+    h1, h2, h3 {
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+    }
+}
