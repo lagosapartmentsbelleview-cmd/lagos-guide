@@ -2599,3 +2599,29 @@ a[href^="https://wa.me"],
         padding: 16px;
     }
 }
+
+/* ===========================================================
+   FIX SAFARI iOS — Datepicker não abre dentro de modais
+=========================================================== */
+@supports (-webkit-touch-callout: none) {
+
+    /* Safari não lida bem com blur + fixed */
+    .modal-bg {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(0,0,0,0.65) !important; /* mantém o efeito visual */
+    }
+
+    /* Safari precisa que o input esteja acima de tudo */
+    input[type="date"] {
+        position: relative !important;
+        z-index: 999999 !important;
+        -webkit-appearance: none !important;
+        background: #fff !important;
+    }
+
+    /* Safari bloqueia datepicker se overflow estiver escondido */
+    .modal-box {
+        overflow: visible !important;
+    }
+}
