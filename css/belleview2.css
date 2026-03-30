@@ -2639,3 +2639,8 @@ a[href^="https://wa.me"],
         hyphens: auto !important;
     }
 }
+
+.modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
