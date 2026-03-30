@@ -2533,3 +2533,69 @@ a[href^="https://wa.me"],
     background: #0073c2;
     transform: scale(1.05);
 }
+
+/* ============================
+   CORREÇÃO DO BANNER DE COOKIES
+============================ */
+
+.cookie-banner {
+    position: fixed;
+    bottom: 20px !important; /* sobe o banner */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 99999;
+    width: 90%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+    padding: 18px;
+}
+
+/* Caixa interna */
+.cookie-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Texto */
+.cookie-text {
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+
+/* Botões */
+.cookie-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.cookie-btn {
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.cookie-btn.accept {
+    background: #005c99;
+    color: #fff;
+}
+
+.cookie-btn.reject {
+    background: #ddd;
+    color: #333;
+}
+
+/* MOBILE — ainda mais alto para não tapar o botão de reserva */
+@media (max-width: 600px) {
+    .cookie-banner {
+        bottom: 90px !important; /* sobe mais no mobile */
+        width: 92%;
+        padding: 16px;
+    }
+}
