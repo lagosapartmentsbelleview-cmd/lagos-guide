@@ -1517,15 +1517,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <!-- Configuração Firebase -->
 <script src="js/firebase-config.js"></script>
 
-<!-- Proteção do site (para retirar quando site for colocado no ar)-->
-<script>
-firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-        window.location.href = "login.html";
-    }
-});
-</script>
-    
+ 
 <!-- JS DO MOTOR DE RESERVAS (o antigo) -->
 <script src="js/reservas_v2.js"></script>
 
