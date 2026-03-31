@@ -2036,7 +2036,7 @@ aloj_desc_2: "Sie verfügen über ein Schlafzimmer mit Doppelbett, ein Badezimme
 aloj_desc_3: "Im renommierten Marina Park‑Komplex gelegen, profitieren die Apartments von Schwimmbädern, Tennisplätzen, großen Grünflächen, Spielplatz und einer Bar‑Restaurant‑Unterstützung — alles in einer sicheren, ruhigen und naturnahen Umgebung.",
 aloj_desc_4: "Alle Einheiten haben die gleiche Typologie, Größe und Ausstattung. Die Zuteilung erfolgt durch unser Team zum Zeitpunkt der Buchung, wodurch stets die beste verfügbare Option und ein konsistentes Qualitätserlebnis gewährleistet werden.",
 
-aloj_comp_title: "Apartment‑Zusammensetzung",
+aloj_comp_title: "Apartment Zusammensetzung",
 
 aloj_comp_1: "Die T1 von Belleview Lagos wurden entwickelt, um Komfort, Funktionalität und Wohlbefinden zu bieten — ideal für Urlaub, Remote‑Work oder längere Aufenthalte.",
 aloj_comp_2: "Natürliches Licht, fließende Räume und funktionale Möbel schaffen eine ausgewogene Umgebung, ideal zum Entspannen, Kochen, Arbeiten oder für Familienzeit.",
