@@ -2593,14 +2593,42 @@ a[href^="https://wa.me"],
 }
 
 @media (min-width: 1024px) {
+
+    /* Modal mais pequeno */
     .modal-box {
-        max-width: 420px;     /* modal mais estreito */
-        max-height: 520px;    /* altura fixa e elegante */
-        padding: 20px 24px;   /* menos espaço interno */
-        border-radius: 16px;
+        max-width: 360px;      /* mais estreito */
+        padding: 16px 18px;    /* menos espaço interno */
+        border-radius: 14px;
     }
 
+    /* Reduz TUDO dentro do modal */
     .modal-box * {
-        font-size: 0.95rem;   /* texto ligeiramente mais pequeno */
+        font-size: 0.85rem !important;
+        line-height: 1.25 !important;
+    }
+
+    /* Inputs mais pequenos */
+    .modal-box input,
+    .modal-box select,
+    .modal-box textarea {
+        padding: 6px 8px !important;
+        height: 34px !important;
+    }
+
+    /* Labels mais pequenas */
+    .modal-box label {
+        margin-bottom: 4px !important;
+    }
+
+    /* Grupos com menos espaço */
+    .modal-box .form-group {
+        margin-bottom: 10px !important;
+    }
+
+    /* Botões mais compactos */
+    .modal-box button {
+        padding: 10px 14px !important;
+        font-size: 0.9rem !important;
     }
 }
+
