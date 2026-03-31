@@ -2540,7 +2540,7 @@ a[href^="https://wa.me"],
 
 .cookie-banner {
     position: fixed;
-    bottom: 20px !important; /* sobe o banner */
+    bottom: 20px !important;
     left: 50%;
     transform: translateX(-50%);
     z-index: 99999;
@@ -2552,21 +2552,18 @@ a[href^="https://wa.me"],
     padding: 18px;
 }
 
-/* Caixa interna */
 .cookie-box {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-/* Texto */
 .cookie-text {
     font-size: 14px;
     color: #333;
     text-align: center;
 }
 
-/* Botões */
 .cookie-buttons {
     display: flex;
     justify-content: center;
@@ -2591,29 +2588,26 @@ a[href^="https://wa.me"],
     color: #333;
 }
 
-/* MOBILE — ainda mais alto para não tapar o botão de reserva */
 @media (max-width: 600px) {
     .cookie-banner {
-        bottom: 90px !important; /* sobe mais no mobile */
+        bottom: 90px !important;
         width: 92%;
         padding: 16px;
     }
 }
 
 /* ===========================================================
-   FIX SAFARI iOS — Datepicker não abre dentro de modais
-   (apenas iOS, não afeta desktop)
+   FIX SAFARI iOS — Datepicker e overflow
+   (100% exclusivo iOS — não afeta desktop nem Android)
 =========================================================== */
 @supports (-webkit-touch-callout: none) and (not (hover: hover)) {
 
-    /* Safari iOS não lida bem com blur + fixed */
     .modal-bg {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         background: rgba(0,0,0,0.65) !important;
     }
 
-    /* Safari iOS precisa que o input esteja acima de tudo */
     input[type="date"] {
         position: relative !important;
         z-index: 999999 !important;
@@ -2621,9 +2615,9 @@ a[href^="https://wa.me"],
         background: #fff !important;
     }
 
-    /* Safari iOS bloqueia datepicker se overflow estiver escondido */
+    /* Apenas no iOS o modal precisa de overflow visível */
     .modal-content {
-        overflow: visible !important; /* AQUI está o segredo */
+        overflow: visible !important;
     }
 }
 
@@ -2643,20 +2637,31 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   MODAL — comportamento normal (desktop + mobile)
+   TÍTULOS LONGOS — Android + Desktop
 =========================================================== */
-.modal-body {
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
+.aloj-title,
+.subtitulo-categoria {
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
+/* ===========================================================
+   MODAL — comportamento normal (desktop + Android)
+=========================================================== */
 .modal-dialog {
     max-height: 90vh;
+    margin: auto; /* IMPEDIR que cole ao topo e fundo */
     display: flex;
     flex-direction: column;
 }
 
 .modal-content {
     max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+}
+
+.modal-body {
+    max-height: calc(100vh - 200px);
     overflow-y: auto;
 }
