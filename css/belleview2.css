@@ -2778,3 +2778,22 @@ a[href^="https://wa.me"],
         height: 420px !important;
     }
 }
+
+@media (min-width: 1024px) {
+
+    /* Botão X maior e independente das reduções */
+    .modal-close {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 1.2rem !important;
+        top: 10px !important;
+        right: 10px !important;
+        line-height: 26px !important;
+    }
+
+    /* Se o X for um ícone SVG */
+    .modal-close svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
