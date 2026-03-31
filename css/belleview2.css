@@ -2805,3 +2805,29 @@ a[href^="https://wa.me"],
         justify-content: center !important;
     }
 }
+@media (min-width: 1024px) {
+
+    /* O segredo: impedir que o X herde estilos do modal */
+    #fecharModal,
+    .modal-close {
+        all: unset !important; /* limpa tudo o que herdou */
+        position: absolute !important;
+
+        top: 8px !important;
+        right: 8px !important;
+
+        width: 32px !important;
+        height: 32px !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        font-size: 1.8rem !important;
+        font-weight: bold !important;
+        line-height: 32px !important;
+
+        cursor: pointer !important;
+        color: #333 !important;
+    }
+}
