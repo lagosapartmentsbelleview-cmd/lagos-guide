@@ -2656,3 +2656,59 @@ a[href^="https://wa.me"],
         margin-bottom: 4px !important;
     }
 }
+
+@media (min-width: 1024px) {
+
+    /* TÍTULO DO STEP 2 */
+    .step2 h2,
+    .step2 h3 {
+        font-size: 0.80rem !important;
+        margin-bottom: 4px !important;
+    }
+
+    /* RESUMO DAS DATAS E HÓSPEDES */
+    .step2 .resumo-datas,
+    .step2 .resumo-hospedes {
+        font-size: 0.70rem !important;
+        margin-bottom: 6px !important;
+        line-height: 1.15 !important;
+    }
+
+    /* INPUTS DO STEP 2 */
+    .step2 input,
+    .step2 select,
+    .step2 textarea {
+        height: 24px !important;
+        padding: 3px 5px !important;
+        font-size: 0.70rem !important;
+    }
+
+    /* LABELS DO STEP 2 */
+    .step2 label {
+        font-size: 0.68rem !important;
+        margin-bottom: 2px !important;
+    }
+
+    /* GRUPOS DO STEP 2 */
+    .step2 .form-group {
+        margin-bottom: 5px !important;
+    }
+
+    /* BOTÕES DO STEP 2 */
+    .step2 button {
+        height: 28px !important;
+        padding: 4px 6px !important;
+        font-size: 0.72rem !important;
+        margin-top: 6px !important;
+    }
+
+    /* BOTÃO VOLTAR ATRÁS */
+    .step2 .modal-btn-secondary {
+        margin-top: 4px !important;
+    }
+
+    /* BOTÃO ENVIAR */
+    .step2 .modal-btn {
+        margin-top: 8px !important;
+    }
+}
