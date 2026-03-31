@@ -2591,3 +2591,16 @@ a[href^="https://wa.me"],
         overflow-y: auto;
     }
 }
+
+@media (min-width: 1024px) {
+    .modal-box {
+        max-width: 420px;     /* modal mais estreito */
+        max-height: 520px;    /* altura fixa e elegante */
+        padding: 20px 24px;   /* menos espaço interno */
+        border-radius: 16px;
+    }
+
+    .modal-box * {
+        font-size: 0.95rem;   /* texto ligeiramente mais pequeno */
+    }
+}
