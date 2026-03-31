@@ -2447,10 +2447,10 @@ a[href^="https://wa.me"],
     font-family: "Poppins", sans-serif;
     font-size: 1.05rem;
     font-weight: 600;
-    line-height: 1.25; /* IMPORTANTE */
+    line-height: 1.25;
     cursor: pointer;
     text-align: center;
-    display: block; /* IMPORTANTE */
+    display: block;
     transition: background 0.25s ease, transform 0.2s ease;
 }
 
@@ -2463,7 +2463,7 @@ a[href^="https://wa.me"],
     transform: translateY(0);
 }
 
-/* Botão secundário — IGUAL ao principal, só muda a cor */
+/* Botão secundário */
 .modal-btn-secondary {
     width: 100%;
     padding: 14px 20px;
@@ -2475,10 +2475,10 @@ a[href^="https://wa.me"],
     font-family: "Poppins", sans-serif;
     font-size: 1.05rem;
     font-weight: 600;
-    line-height: 1.25; /* IGUAL AO PRINCIPAL */
+    line-height: 1.25;
     cursor: pointer;
     text-align: center;
-    display: block; /* IGUAL AO PRINCIPAL */
+    display: block;
     transition: background 0.25s ease, transform 0.2s ease;
 }
 
@@ -2487,39 +2487,39 @@ a[href^="https://wa.me"],
     transform: translateY(-2px);
 }
 
-/* Remover sublinhado do título do site */
+/* ===========================================================
+   LOGO — Remover sublinhado
+=========================================================== */
 .logo {
     text-decoration: none !important;
-    color: #005c99 !important; /* azul Belleview */
+    color: #005c99 !important;
 }
 
 .logo:hover {
     text-decoration: none !important;
-    color: #0074c7 !important; /* azul Belleview mais claro */
+    color: #0074c7 !important;
 }
 
-/* BOTÃO FLUTUANTE — VOLTAR AO TOPO (ESTILO BELLEVIEW) */
+/* ===========================================================
+   BOTÃO FLUTUANTE — VOLTAR AO TOPO
+=========================================================== */
 .btn-topo {
     position: fixed;
     bottom: 24px;
     right: 24px;
-
-    background: #005c99; /* azul Belleview */
+    background: #005c99;
     color: #fff;
     padding: 12px 20px;
-    border-radius: 8px; /* igual ao estilo do botão Reserva */
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
     font-family: "Inter", sans-serif;
-
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     cursor: pointer;
-
     opacity: 0;
     pointer-events: none;
     transform: translateY(10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-
     z-index: 9999;
 }
 
@@ -2534,10 +2534,9 @@ a[href^="https://wa.me"],
     transform: scale(1.05);
 }
 
-/* ============================
-   CORREÇÃO DO BANNER DE COOKIES
-============================ */
-
+/* ===========================================================
+   BANNER DE COOKIES — BELLEVIEW PREMIUM
+=========================================================== */
 .cookie-banner {
     position: fixed;
     bottom: 20px !important;
@@ -2597,8 +2596,7 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   FIX SAFARI iOS — Datepicker e overflow
-   (100% exclusivo iOS — não afeta desktop nem Android)
+   FIX SAFARI iOS — Datepicker + overflow
 =========================================================== */
 @supports (-webkit-touch-callout: none) and (not (hover: hover)) {
 
@@ -2606,18 +2604,22 @@ a[href^="https://wa.me"],
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         background: rgba(0,0,0,0.65) !important;
+        align-items: flex-start !important;
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
+        overflow-y: auto !important;
     }
 
-    input[type="date"] {
+    .modal-box {
+        max-height: calc(100vh - 80px) !important;
+        overflow-y: auto !important;
+    }
+
+    input[type="date"],
+    input,
+    select {
         position: relative !important;
         z-index: 999999 !important;
-        -webkit-appearance: none !important;
-        background: #fff !important;
-    }
-
-    /* Apenas no iOS o modal precisa de overflow visível */
-    .modal-content {
-        overflow: visible !important;
     }
 }
 
@@ -2637,56 +2639,10 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   TÍTULOS LONGOS — Android + Desktop
+   TÍTULOS LONGOS — Desktop + Android
 =========================================================== */
 .aloj-title,
 .subtitulo-categoria {
     word-break: break-word;
     overflow-wrap: break-word;
-}
-
-/* ===========================================================
-   MODAL — comportamento normal (desktop + Android)
-=========================================================== */
-.modal-dialog {
-    max-height: 90vh;
-    margin: auto; /* IMPEDIR que cole ao topo e fundo */
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-content {
-    max-height: 90vh;
-    overflow-y: auto;
-    border-radius: 12px;
-}
-
-.modal-body {
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
-}
-
-/* ============================
-   CORREÇÃO DO MODAL NO DESKTOP
-============================ */
-
-/* Centrar o modal no ecrã */
-.modal-dialog {
-    margin: auto !important;
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Impedir que o modal ocupe o ecrã inteiro */
-.modal-content {
-    max-height: 85vh !important;
-    overflow-y: auto !important;
-    border-radius: 12px;
-}
-
-/* Scroll interno no corpo do modal */
-.modal-body {
-    max-height: calc(85vh - 160px) !important;
-    overflow-y: auto !important;
 }
