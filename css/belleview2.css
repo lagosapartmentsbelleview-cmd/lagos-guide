@@ -2594,50 +2594,50 @@ a[href^="https://wa.me"],
 
 @media (min-width: 1024px) {
 
-    /* Modal realmente pequeno */
+    /* Modal super compacto */
     .modal-box {
-        max-width: 340px;      /* ainda mais estreito */
-        padding: 14px 16px;    /* menos espaço interno */
+        max-width: 330px;
+        padding: 12px 14px;
         border-radius: 12px;
     }
 
-    /* Texto mais compacto */
+    /* Texto muito compacto */
     .modal-box * {
-        font-size: 0.80rem !important;
-        line-height: 1.20 !important;
+        font-size: 0.75rem !important;
+        line-height: 1.15 !important;
     }
 
-    /* Inputs super compactos */
+    /* Inputs e selects ultra compactos */
     .modal-box input,
     .modal-box select,
     .modal-box textarea {
-        padding: 5px 6px !important;
-        height: 30px !important;
-        font-size: 0.80rem !important;
+        height: 26px !important;
+        padding: 4px 6px !important;
+        font-size: 0.75rem !important;
     }
 
     /* Labels pequenas */
     .modal-box label {
-        margin-bottom: 3px !important;
-        font-size: 0.78rem !important;
+        margin-bottom: 2px !important;
+        font-size: 0.72rem !important;
     }
 
-    /* Grupos com menos espaço */
+    /* Grupos com espaço mínimo */
     .modal-box .form-group {
-        margin-bottom: 8px !important;
+        margin-bottom: 6px !important;
     }
 
     /* Botões compactos */
     .modal-box button {
-        padding: 8px 10px !important;
-        font-size: 0.85rem !important;
-        height: 34px !important;
+        height: 30px !important;
+        padding: 6px 8px !important;
+        font-size: 0.78rem !important;
     }
 
-    /* Títulos mais pequenos */
+    /* Títulos reduzidos */
     .modal-box h2,
     .modal-box h3 {
-        font-size: 1rem !important;
-        margin-bottom: 8px !important;
+        font-size: 0.95rem !important;
+        margin-bottom: 6px !important;
     }
 }
