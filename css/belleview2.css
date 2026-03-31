@@ -2659,56 +2659,63 @@ a[href^="https://wa.me"],
 
 @media (min-width: 1024px) {
 
-    /* TÍTULO DO STEP 2 */
+    /* Modal ainda mais pequeno no Step 2 */
+    .step2 .modal-box {
+        max-width: 300px !important;
+        padding: 8px 10px !important;
+        border-radius: 10px !important;
+    }
+
+    /* Títulos super compactos */
     .step2 h2,
     .step2 h3 {
-        font-size: 0.80rem !important;
+        font-size: 0.78rem !important;
         margin-bottom: 4px !important;
     }
 
-    /* RESUMO DAS DATAS E HÓSPEDES */
+    /* Resumo das datas e hóspedes */
     .step2 .resumo-datas,
     .step2 .resumo-hospedes {
-        font-size: 0.70rem !important;
-        margin-bottom: 6px !important;
-        line-height: 1.15 !important;
+        font-size: 0.68rem !important;
+        margin-bottom: 4px !important;
+        line-height: 1.10 !important;
     }
 
-    /* INPUTS DO STEP 2 */
+    /* Inputs ultra compactos */
     .step2 input,
     .step2 select,
     .step2 textarea {
-        height: 24px !important;
+        height: 22px !important;
+        padding: 2px 4px !important;
+        font-size: 0.68rem !important;
+    }
+
+    /* Labels mínimas */
+    .step2 label {
+        font-size: 0.66rem !important;
+        margin-bottom: 1px !important;
+    }
+
+    /* Grupos com espaço mínimo */
+    .step2 .form-group {
+        margin-bottom: 4px !important;
+    }
+
+    /* Botões ultra compactos */
+    .step2 button {
+        height: 26px !important;
         padding: 3px 5px !important;
         font-size: 0.70rem !important;
-    }
-
-    /* LABELS DO STEP 2 */
-    .step2 label {
-        font-size: 0.68rem !important;
-        margin-bottom: 2px !important;
-    }
-
-    /* GRUPOS DO STEP 2 */
-    .step2 .form-group {
-        margin-bottom: 5px !important;
-    }
-
-    /* BOTÕES DO STEP 2 */
-    .step2 button {
-        height: 28px !important;
-        padding: 4px 6px !important;
-        font-size: 0.72rem !important;
         margin-top: 6px !important;
     }
 
-    /* BOTÃO VOLTAR ATRÁS */
+    /* Botão voltar atrás ainda mais pequeno */
     .step2 .modal-btn-secondary {
         margin-top: 4px !important;
     }
 
-    /* BOTÃO ENVIAR */
+    /* Botão enviar pedido */
     .step2 .modal-btn {
-        margin-top: 8px !important;
+        margin-top: 6px !important;
     }
 }
