@@ -2831,3 +2831,11 @@ a[href^="https://wa.me"],
         color: #333 !important;
     }
 }
+
+@media (min-width: 1024px) {
+
+    .modal-close:hover {
+        color: #0077c2 !important; /* Azul Belleview mais claro no hover */
+        transition: 0.2s ease-in-out;
+    }
+}
