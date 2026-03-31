@@ -2594,53 +2594,65 @@ a[href^="https://wa.me"],
 
 @media (min-width: 1024px) {
 
+    /* Modal ainda mais compacto */
     .modal-box {
-        max-width: 320px;
-        padding: 10px 14px;
-        border-radius: 12px;
+        max-width: 310px;
+        padding: 10px 12px;
+        border-radius: 10px;
     }
 
+    /* Texto ainda menor */
     .modal-box * {
-        font-size: 0.72rem !important;
-        line-height: 1.15 !important;
+        font-size: 0.70rem !important;
+        line-height: 1.12 !important;
     }
 
+    /* Inputs super compactos */
     .modal-box input,
-    .modal-box select,
-    .modal-box textarea {
-        height: 26px !important;
-        padding: 4px 6px !important;
-        font-size: 0.72rem !important;
-    }
-
-    .modal-box label {
-        margin-bottom: 2px !important;
+    .modal-box select {
+        height: 24px !important;
+        padding: 3px 5px !important;
         font-size: 0.70rem !important;
     }
 
+    /* Labels mínimas */
+    .modal-box label {
+        margin-bottom: 2px !important;
+        font-size: 0.68rem !important;
+    }
+
+    /* Grupos com espaço mínimo */
     .modal-box .form-group {
-        margin-bottom: 6px !important;
+        margin-bottom: 5px !important;
     }
 
+    /* Botões ultra compactos */
     .modal-box button {
-        height: 30px !important;
-        padding: 6px 8px !important;
-        font-size: 0.75rem !important;
+        height: 28px !important;
+        padding: 4px 6px !important;
+        font-size: 0.72rem !important;
+        margin-top: 8px !important;
     }
 
+    /* Mensagem de disponibilidade mais pequena */
+    .modal-box .mensagem-disponibilidade,
+    .modal-box .msg,
+    .modal-box .disponivel,
+    .modal-box .indisponivel {
+        font-size: 0.68rem !important;
+        margin: 6px 0 !important;
+        padding: 4px 6px !important;
+    }
+
+    /* Títulos reduzidos */
     .modal-box h2,
     .modal-box h3 {
-        font-size: 0.90rem !important;
-        margin-bottom: 6px !important;
+        font-size: 0.85rem !important;
+        margin-bottom: 5px !important;
     }
 
-    /* Remove qualquer margem extra no Step 2 */
+    /* Remove qualquer margem extra no fim do Step 2 */
     .step2 .form-group:last-child {
-        margin-bottom: 0 !important;
-    }
-
-    /* Garante que o botão final não tem margem exagerada */
-    .step2 .modal-btn {
-        margin-top: 12px !important;
+        margin-bottom: 4px !important;
     }
 }
