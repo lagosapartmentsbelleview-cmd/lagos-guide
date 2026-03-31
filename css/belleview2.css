@@ -2573,6 +2573,10 @@ a[href^="https://wa.me"],
     }
 }
 
+/* ===========================================================
+   ALTERAR TAMANHO MODAL RESERVA
+=========================================================== */
+
 @media (min-width: 769px) {
     .modal-box {
         max-height: 80vh;      /* impede que fique gigante */
@@ -2580,3 +2584,10 @@ a[href^="https://wa.me"],
     }
 }
 
+@media (min-width: 769px) {
+    .modal-box {
+        padding: 20px 22px;
+        max-height: 75vh;
+        overflow-y: auto;
+    }
+}
