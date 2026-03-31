@@ -2870,3 +2870,15 @@ header .logo a,
 header .site-title a {
     text-decoration: none !important;
 }
+
+@media (max-width: 767px) {
+
+    .card-title, 
+    .alojamento-card-title, 
+    .apartment-title {
+        white-space: normal !important;   /* permite quebrar linha */
+        word-break: break-word !important; /* quebra palavras longas */
+        hyphens: auto !important;          /* adiciona hífen automático */
+        font-size: 0.95rem !important;     /* ligeiro ajuste opcional */
+    }
+}
