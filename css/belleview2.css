@@ -2573,4 +2573,10 @@ a[href^="https://wa.me"],
     }
 }
 
+@media (min-width: 769px) {
+    .modal-box {
+        max-height: 80vh;      /* impede que fique gigante */
+        overflow-y: auto;      /* scroll interno quando necessário */
+    }
+}
 
