@@ -2665,3 +2665,28 @@ a[href^="https://wa.me"],
     max-height: calc(100vh - 200px);
     overflow-y: auto;
 }
+
+/* ============================
+   CORREÇÃO DO MODAL NO DESKTOP
+============================ */
+
+/* Centrar o modal no ecrã */
+.modal-dialog {
+    margin: auto !important;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Impedir que o modal ocupe o ecrã inteiro */
+.modal-content {
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    border-radius: 12px;
+}
+
+/* Scroll interno no corpo do modal */
+.modal-body {
+    max-height: calc(85vh - 160px) !important;
+    overflow-y: auto !important;
+}
