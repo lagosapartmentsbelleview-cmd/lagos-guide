@@ -2873,12 +2873,15 @@ header .site-title a {
 
 @media (max-width: 767px) {
 
-    .card-title, 
-    .alojamento-card-title, 
+    .card-title,
+    .alojamento-card-title,
     .apartment-title {
-        white-space: normal !important;   /* permite quebrar linha */
-        word-break: break-word !important; /* quebra palavras longas */
-        hyphens: auto !important;          /* adiciona hífen automático */
-        font-size: 0.95rem !important;     /* ligeiro ajuste opcional */
+        white-space: normal !important;      /* permite quebrar linha */
+        word-break: break-word !important;   /* quebra palavras longas */
+        overflow-wrap: break-word !important;/* fallback */
+        hyphens: auto !important;            /* adiciona hífen automático */
+        font-size: 0.95rem !important;       /* ligeiro ajuste opcional */
+        line-height: 1.2 !important;
     }
 }
+
