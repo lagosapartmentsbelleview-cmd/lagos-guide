@@ -2594,50 +2594,53 @@ a[href^="https://wa.me"],
 
 @media (min-width: 1024px) {
 
-    /* Modal super compacto */
     .modal-box {
-        max-width: 330px;
-        padding: 12px 14px;
+        max-width: 320px;
+        padding: 10px 14px;
         border-radius: 12px;
     }
 
-    /* Texto muito compacto */
     .modal-box * {
-        font-size: 0.75rem !important;
+        font-size: 0.72rem !important;
         line-height: 1.15 !important;
     }
 
-    /* Inputs e selects ultra compactos */
     .modal-box input,
     .modal-box select,
     .modal-box textarea {
         height: 26px !important;
         padding: 4px 6px !important;
-        font-size: 0.75rem !important;
-    }
-
-    /* Labels pequenas */
-    .modal-box label {
-        margin-bottom: 2px !important;
         font-size: 0.72rem !important;
     }
 
-    /* Grupos com espaço mínimo */
+    .modal-box label {
+        margin-bottom: 2px !important;
+        font-size: 0.70rem !important;
+    }
+
     .modal-box .form-group {
         margin-bottom: 6px !important;
     }
 
-    /* Botões compactos */
     .modal-box button {
         height: 30px !important;
         padding: 6px 8px !important;
-        font-size: 0.78rem !important;
+        font-size: 0.75rem !important;
     }
 
-    /* Títulos reduzidos */
     .modal-box h2,
     .modal-box h3 {
-        font-size: 0.95rem !important;
+        font-size: 0.90rem !important;
         margin-bottom: 6px !important;
+    }
+
+    /* Remove qualquer margem extra no Step 2 */
+    .step2 .form-group:last-child {
+        margin-bottom: 0 !important;
+    }
+
+    /* Garante que o botão final não tem margem exagerada */
+    .step2 .modal-btn {
+        margin-top: 12px !important;
     }
 }
