@@ -2611,3 +2611,30 @@ a[href^="https://wa.me"],
         hyphens: auto !important;
     }
 }
+/* ===========================================================
+   MODAL — CORREÇÃO DE ALTURA E SCROLL INTERNO
+=========================================================== */
+
+.modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* evita colar ao centro */
+    padding: 40px 20px;
+    overflow-y: auto;
+    z-index: 999999;
+}
+
+.modal-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 18px;
+    width: 90%;
+    max-width: 420px;
+    max-height: calc(100vh - 80px); /* limite de altura */
+    overflow-y: auto; /* scroll interno */
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    position: relative;
+}
