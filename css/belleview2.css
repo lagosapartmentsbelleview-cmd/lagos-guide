@@ -2765,3 +2765,16 @@ a[href^="https://wa.me"],
     }
 }
 
+@media (min-width: 1024px) {
+
+    /* Remove scroll global do modal no desktop */
+    .modal-box {
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+
+    /* Step 2 controla a altura */
+    .step2 .modal-box {
+        height: 420px !important;
+    }
+}
