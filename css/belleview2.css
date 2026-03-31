@@ -2435,15 +2435,13 @@ a[href^="https://wa.me"],
    BOTÕES DO MODAL — BELLEVIEW PREMIUM
 =========================================================== */
 
-/* Botão principal */
-.modal-btn {
+.modal-btn,
+.modal-btn-secondary {
     width: 100%;
     padding: 14px 20px;
     margin-top: 16px;
     border-radius: 999px;
     border: none;
-    background: #005c99;
-    color: #ffffff;
     font-family: "Poppins", sans-serif;
     font-size: 1.05rem;
     font-weight: 600;
@@ -2452,6 +2450,11 @@ a[href^="https://wa.me"],
     text-align: center;
     display: block;
     transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.modal-btn {
+    background: #005c99;
+    color: #ffffff;
 }
 
 .modal-btn:hover {
@@ -2463,23 +2466,9 @@ a[href^="https://wa.me"],
     transform: translateY(0);
 }
 
-/* Botão secundário */
 .modal-btn-secondary {
-    width: 100%;
-    padding: 14px 20px;
-    margin-top: 16px;
-    border-radius: 999px;
-    border: none;
     background: #e6eef5;
     color: #005c99;
-    font-family: "Poppins", sans-serif;
-    font-size: 1.05rem;
-    font-weight: 600;
-    line-height: 1.25;
-    cursor: pointer;
-    text-align: center;
-    display: block;
-    transition: background 0.25s ease, transform 0.2s ease;
 }
 
 .modal-btn-secondary:hover {
@@ -2488,21 +2477,9 @@ a[href^="https://wa.me"],
 }
 
 /* ===========================================================
-   LOGO — Remover sublinhado
-=========================================================== */
-.logo {
-    text-decoration: none !important;
-    color: #005c99 !important;
-}
-
-.logo:hover {
-    text-decoration: none !important;
-    color: #0074c7 !important;
-}
-
-/* ===========================================================
    BOTÃO FLUTUANTE — VOLTAR AO TOPO
 =========================================================== */
+
 .btn-topo {
     position: fixed;
     bottom: 24px;
@@ -2537,9 +2514,10 @@ a[href^="https://wa.me"],
 /* ===========================================================
    BANNER DE COOKIES — BELLEVIEW PREMIUM
 =========================================================== */
+
 .cookie-banner {
     position: fixed;
-    bottom: 20px !important;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 99999;
@@ -2589,15 +2567,16 @@ a[href^="https://wa.me"],
 
 @media (max-width: 600px) {
     .cookie-banner {
-        bottom: 90px !important;
+        bottom: 90px;
         width: 92%;
         padding: 16px;
     }
 }
 
 /* ===========================================================
-   FIX SAFARI iOS — Datepicker + overflow
+   FIX SAFARI iOS — Modal, datepicker, títulos longos
 =========================================================== */
+
 @supports (-webkit-touch-callout: none) and (not (hover: hover)) {
 
     .modal-bg {
@@ -2621,12 +2600,7 @@ a[href^="https://wa.me"],
         position: relative !important;
         z-index: 999999 !important;
     }
-}
 
-/* ===========================================================
-   FIX SAFARI iOS — títulos longos
-=========================================================== */
-@supports (-webkit-touch-callout: none) and (not (hover: hover)) {
     .aloj-title,
     .subtitulo-categoria,
     .comodidade-nome,
@@ -2636,13 +2610,4 @@ a[href^="https://wa.me"],
         overflow-wrap: break-word !important;
         hyphens: auto !important;
     }
-}
-
-/* ===========================================================
-   TÍTULOS LONGOS — Desktop + Android
-=========================================================== */
-.aloj-title,
-.subtitulo-categoria {
-    word-break: break-word;
-    overflow-wrap: break-word;
 }
