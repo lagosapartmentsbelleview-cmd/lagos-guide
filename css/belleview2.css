@@ -2719,3 +2719,49 @@ a[href^="https://wa.me"],
         margin-top: 4px !important;
     }
 }
+
+@media (min-width: 1024px) {
+
+    /* Modal Step 2 com altura fixa */
+    .step2 .modal-box {
+        max-width: 290px !important;
+        height: 420px !important;          /* altura fixa */
+        padding: 6px 10px !important;
+        border-radius: 10px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important; /* distribui conteúdo */
+    }
+
+    /* Conteúdo interno ajustado */
+    .step2 .modal-content {
+        flex: 1 1 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+
+    /* Inputs e grupos ainda mais compactos */
+    .step2 input,
+    .step2 select,
+    .step2 textarea {
+        height: 22px !important;
+        padding: 2px 4px !important;
+        font-size: 0.66rem !important;
+    }
+
+    .step2 .form-group {
+        margin-bottom: 3px !important;
+    }
+
+    /* Botões fixos na base */
+    .step2 .modal-btn,
+    .step2 .modal-btn-secondary {
+        height: 26px !important;
+        padding: 3px 5px !important;
+        font-size: 0.70rem !important;
+        margin-top: 4px !important;
+        flex-shrink: 0 !important;
+    }
+}
+
