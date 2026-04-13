@@ -22,7 +22,7 @@
             <a href="resultados.html">Resultados</a>
             <a href="operacional.html">Operacional</a>
             <a id="btnSyncFirebase" class="btn-sync-global">🔄 Sincronizar</a>
-            <a href="login.html" class="sair">Sair</a>
+            <button id="btnLogout" class="sair">Sair</button>
         </div>
     </div>
 
@@ -356,53 +356,49 @@
 
 
 
-    <script src="https://unpkg.com/html5-qrcode"></script>
+<!-- QR Code -->
+<script src="https://unpkg.com/html5-qrcode"></script>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
+<!-- Configuração Firebase -->
 <script src="js/firebase-config.js"></script>
-<script src="js/menu.js"></script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const tabs = document.querySelectorAll(".tab");
-    const contents = document.querySelectorAll(".tab-content");
-
-    if (!tabs.length || !contents.length) return;
-
-    tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-            const target = tab.getAttribute("data-tab");
-            const content = document.getElementById("tab-" + target);
-            if (!content) return;
-
-            tabs.forEach(t => t.classList.remove("active"));
-            contents.forEach(c => c.classList.remove("active"));
-
-            tab.classList.add("active");
-            content.classList.add("active");
-        });
-    });
-});
-</script>
-
+<!-- Proteção da página -->
 <script>
 firebase.auth().onAuthStateChanged(user => {
     if (!user) {
         window.location.href = "login.html";
-        return;
     }
 });
 </script>
 
+<!-- Logout -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const btnLogout = document.getElementById("btnLogout");
+    if (btnLogout) {
+        btnLogout.addEventListener("click", () => {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "login.html";
+            });
+        });
+    }
+});
+</script>
+
+<!-- Menu -->
+<script src="js/menu.js"></script>
+
+<!-- XLSX / PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
-<!-- 🔥 ESTE TEM DE SER O ÚLTIMO -->
+<!-- Financeiro (último sempre) -->
 <script src="js/financeiro.js?v=10"></script>
 
 <script>
@@ -410,6 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initFinanceiro();
 });
 </script>
+
 
 </body>
 </html>
