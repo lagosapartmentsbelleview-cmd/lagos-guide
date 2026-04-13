@@ -22,7 +22,8 @@
             <a href="financeiro.html">Financeiro</a>
             <a href="resultados.html">Resultados</a>
             <a href="operacional.html">Operacional</a>
-            <a href="login.html" class="sair">Sair</a>
+            <button id="btnLogout" class="sair">Sair</button>
+
         </div>
     </div>
 
@@ -231,19 +232,43 @@
 
     </div> <!-- fecha .content -->
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <!-- Firebase compat v9 -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
-    <!-- Configuração Firebase -->
-    <script src="js/firebase-config.js"></script>
+<!-- Configuração Firebase -->
+<script src="js/firebase-config.js"></script>
 
-    <!-- Menu -->
-    <script src="js/menu.js"></script>
+<!-- Proteção da página -->
+<script>
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "login.html";
+    }
+});
+</script>
 
-    <!-- Código principal -->
-    <script src="js/precos.js"></script>
+<!-- Logout -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const btnLogout = document.getElementById("btnLogout");
+    if (btnLogout) {
+        btnLogout.addEventListener("click", () => {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "login.html";
+            });
+        });
+    }
+});
+</script>
+
+<!-- Menu -->
+<script src="js/menu.js"></script>
+
+<!-- Código principal -->
+<script src="js/precos.js"></script>
+
 
 </body>
 </html>
