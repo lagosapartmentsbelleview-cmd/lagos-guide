@@ -6,9 +6,6 @@
 
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/resultados.css">
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    <script src="js/import-data-reserva.js"></script>
-
 </head>
 
 <body>
@@ -23,7 +20,8 @@
             <a href="precos.html">Preços</a>
             <a href="financeiro.html">Financeiro</a>
             <a href="operacional.html">Operacional</a>
-            <a href="login.html" class="sair">Sair</a>
+            <!-- 🔥 Logout correto -->
+            <button id="btnLogout" class="sair">Sair</button>
         </div>
     </div>
 
@@ -96,7 +94,6 @@
                 <p id="kpiLucro">0 €</p>
             </div>
 
-            <!-- KPI extra só usado no modo operacional -->
             <div class="kpi-card" id="kpiRevparCard">
                 <h3>RevPAR</h3>
                 <p id="kpiRevpar">0 €</p>
@@ -110,7 +107,7 @@
             <canvas id="graficoReceita"></canvas>
         </div>
 
-         <div class="card">
+        <div class="card">
             <h3>Comparação Mensal (Ano Atual vs 2 Anos Anteriores)</h3>
             <canvas id="graficoComparacaoMensal"></canvas>
         </div>
@@ -135,8 +132,7 @@
             <canvas id="graficoComparacao"></canvas>
         </div>
 
-       
-        <!-- TABELA MENSAL (usa financeiro ou operacional consoante o modo) -->
+        <!-- TABELA MENSAL -->
         <div class="card">
             <h3>Estatísticas Mensais</h3>
             <table id="tabelaMensal">
@@ -149,14 +145,13 @@
                         <th>Ocupação</th>
                         <th>Preço Médio</th>
                         <th class="col-revpar" style="display:none;">RevPAR</th>
-                        <!-- No modo operacional, o JS acrescenta RevPAR na última coluna -->
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </div>
 
-        <!-- TABELA ANUAL FINANCEIRA (comparativa por mês vs anos) -->
+        <!-- TABELA ANUAL FINANCEIRA -->
         <div class="card">
             <h3>Estatísticas Anuais (Financeiro)</h3>
             <table id="tabelaAnual">
@@ -165,7 +160,7 @@
             </table>
         </div>
 
-        <!-- CARD EVOLUÇÃO PREÇO MÉDIO (só modo operacional) -->
+        <!-- EVOLUÇÃO PREÇO MÉDIO -->
         <div class="card" id="cardEvolucaoPrecoMedio" style="display:none;">
             <h3>Evolução do Preço Médio por Noite</h3>
             <table id="tabelaEvolucaoPrecoMedio">
@@ -174,12 +169,12 @@
             </table>
         </div>
 
-        <!-- BOTÃO MOSTRAR MAIS (só modo operacional) -->
+        <!-- MOSTRAR MAIS -->
         <div class="card" id="cardMostrarMaisOperacional" style="display:none;">
             <button id="btnMostrarMais">Mostrar mais estatísticas operacionais</button>
         </div>
 
-        <!-- TABELA ANUAL OPERACIONAL (escondida até clicar) -->
+        <!-- TABELA ANUAL OPERACIONAL -->
         <div class="card" id="cardTabelaAnualOperacional" style="display:none;">
             <h3>Estatísticas Anuais (Operacional)</h3>
             <table id="tabelaAnualOperacional">
@@ -188,7 +183,7 @@
             </table>
         </div>
 
-        <!-- TABELA DE CUSTOS (escondida até clicar) -->
+        <!-- TABELA DE CUSTOS -->
         <div class="card" id="cardTabelaCustos" style="display:none;">
             <h3>Tabela de Custos</h3>
             <table id="tabelaCustos">
@@ -197,7 +192,7 @@
             </table>
         </div>
 
-        <!-- LEGENDA EXPLICATIVA -->
+        <!-- LEGENDA -->
         <div class="card">
             <h3>Legenda e Explicação dos Cálculos</h3>
 
@@ -206,106 +201,121 @@
             <p><strong>Receita Líquida:</strong> Receita Bruta menos custos variáveis.</p>
             <p><strong>Ocupação:</strong> (Noites ocupadas / Noites disponíveis) × 100.</p>
             <p><strong>Preço Médio por Noite:</strong> Receita Bruta / Noites ocupadas.</p>
-            <p><strong>Lucro:</strong> Receita Líquida (podes depois subtrair custos fixos se quiseres).</p>
-            <p><strong>RevPAR:</strong> Receita Bruta / Noites disponíveis (modo operacional).</p>
+            <p><strong>Lucro:</strong> Receita Líquida.</p>
+            <p><strong>RevPAR:</strong> Receita Bruta / Noites disponíveis.</p>
         </div>
 
     </div>
 
-   <div class="card">
-    <h3>Previsão de Receita por Data de Corte (On‑The‑Books)</h3>
+    <!-- PREVISÃO -->
+    <div class="card">
+        <h3>Previsão de Receita por Data de Corte (On‑The‑Books)</h3>
 
-    <div class="filtros-resultados">
-        <label>Data de corte:</label>
-        <input type="date" id="filtroDataCorte">
-        <button id="btnAplicarDataCorte">Ver previsão</button>
+        <div class="filtros-resultados">
+            <label>Data de corte:</label>
+            <input type="date" id="filtroDataCorte">
+            <button id="btnAplicarDataCorte">Ver previsão</button>
+        </div>
+
+        <div class="importador-historico">
+            <button id="btnImportDataReserva" class="btn-secundario-pequeno">
+                Importar datas de reserva (histórico)
+            </button>
+
+            <input type="file" id="fileDataReserva" accept=".xlsx,.xls" style="display:none;">
+
+            <span id="importDataReservaStatus" class="texto-status-import"></span>
+        </div>
+
+        <table id="tabelaPrevisao" class="tabela-previsao">
+            <thead id="previsaoHead"></thead>
+            <tbody id="previsaoBody"></tbody>
+        </table>
     </div>
 
-    <!-- Importador histórico -->
-    <div class="importador-historico">
-        <button id="btnImportDataReserva" class="btn-secundario-pequeno">
-            Importar datas de reserva (histórico)
-        </button>
+    <div id="kpiContainer" class="kpi-extra-container">
 
-        <input type="file" id="fileDataReserva" accept=".xlsx,.xls" style="display:none;">
+        <div class="kpi-extra-card">
+            <h4>ADR OTB</h4>
+            <p id="kpiAdrOtb">—</p>
+        </div>
 
-        <span id="importDataReservaStatus" class="texto-status-import"></span>
+        <div class="kpi-extra-card">
+            <h4>ADR Final</h4>
+            <p id="kpiAdrFinal">—</p>
+        </div>
+
+        <div class="kpi-extra-card">
+            <h4>Ocupação OTB</h4>
+            <p id="kpiOccOtb">—</p>
+        </div>
+
+        <div class="kpi-extra-card">
+            <h4>Ocupação Final</h4>
+            <p id="kpiOccFinal">—</p>
+        </div>
+
+        <div class="kpi-extra-card">
+            <h4>RevPAR OTB</h4>
+            <p id="kpiRevparOtb">—</p>
+        </div>
+
+        <div class="kpi-extra-card">
+            <h4>RevPAR Final</h4>
+            <p id="kpiRevparFinal">—</p>
+        </div>
+
+        <div class="kpi-extra-card">
+            <h4>Pacing</h4>
+            <p id="kpiPacing">—</p>
+        </div>
+
+        <div class="kpi-extra-card">
+            <h4>Crescimento YoY</h4>
+            <p id="kpiCrescimento">—</p>
+        </div>
+
     </div>
 
-    <!-- ⭐ TABELA PREMIUM BELLEVIEW (4 colunas por ano) -->
-    <table id="tabelaPrevisao" class="tabela-previsao">
-        <thead id="previsaoHead"></thead>
-        <tbody id="previsaoBody"></tbody>
-    </table>
-</div>
-
-<div id="kpiContainer" class="kpi-extra-container">
-
-    <div class="kpi-extra-card">
-        <h4>ADR OTB</h4>
-        <p id="kpiAdrOtb">—</p>
-        <small>Preço médio por noite reservado até à data de corte.</small>
-    </div>
-
-    <div class="kpi-extra-card">
-        <h4>ADR Final</h4>
-        <p id="kpiAdrFinal">—</p>
-        <small>Preço médio por noite após cancelamentos.</small>
-    </div>
-
-    <div class="kpi-extra-card">
-        <h4>Ocupação OTB</h4>
-        <p id="kpiOccOtb">—</p>
-        <small>Percentagem de noites vendidas até à data de corte.</small>
-    </div>
-
-    <div class="kpi-extra-card">
-        <h4>Ocupação Final</h4>
-        <p id="kpiOccFinal">—</p>
-        <small>Percentagem de noites vendidas no final do mês.</small>
-    </div>
-
-    <div class="kpi-extra-card">
-        <h4>RevPAR OTB</h4>
-        <p id="kpiRevparOtb">—</p>
-        <small>Receita por apartamento disponível (reservado).</small>
-    </div>
-
-    <div class="kpi-extra-card">
-        <h4>RevPAR Final</h4>
-        <p id="kpiRevparFinal">—</p>
-        <small>Receita por apartamento disponível (final).</small>
-    </div>
-
-    <div class="kpi-extra-card">
-        <h4>Pacing</h4>
-        <p id="kpiPacing">—</p>
-        <small>Velocidade de reservas vs ano anterior.</small>
-    </div>
-
-    <div class="kpi-extra-card">
-        <h4>Crescimento YoY</h4>
-        <p id="kpiCrescimento">—</p>
-        <small>Variação anual da receita reservada.</small>
-    </div>
-
-</div>
-
-
-
-    <!-- Firebase -->
+    <!-- Firebase compat v9 -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
+    <!-- Configuração Firebase -->
     <script src="js/firebase-config.js"></script>
-    <script src="js/menu.js"></script>
 
-    <!-- Chart.js -->
+    <!-- Proteção -->
+    <script>
+    firebase.auth().onAuthStateChanged(user => {
+        if (!user) window.location.href = "login.html";
+    });
+    </script>
+
+    <!-- Logout -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnLogout = document.getElementById("btnLogout");
+        if (btnLogout) {
+            btnLogout.addEventListener("click", () => {
+                firebase.auth().signOut().then(() => {
+                    window.location.href = "login.html";
+                });
+            });
+        }
+    });
+    </script>
+
+    <!-- Bibliotecas externas -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- JS dos Resultados -->
+    <!-- JS da página -->
+    <script src="js/import-data-reserva.js"></script>
     <script src="js/resultados.js"></script>
+
+    <!-- Menu -->
+    <script src="js/menu.js"></script>
 
 </body>
 </html>
