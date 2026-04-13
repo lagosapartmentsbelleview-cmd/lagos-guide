@@ -22,7 +22,8 @@
             <a href="financeiro.html">Financeiro</a>
             <a href="resultados.html">Resultados</a>
             <a href="operacional.html">Operacional</a>
-            <a href="login.html" class="sair">Sair</a>
+            <button id="btnLogout" class="sair">Sair</button>
+
         </div>
     </div>
 
@@ -68,6 +69,19 @@
         }
     });
     </script>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const btnLogout = document.getElementById("btnLogout");
+    if (btnLogout) {
+        btnLogout.addEventListener("click", () => {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "login.html";
+            });
+        });
+    }
+});
+</script>
 
     <!-- Menu -->
     <script src="js/menu.js"></script>
