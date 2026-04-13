@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Operacional — Belleview</title>
+
+    <!-- (opcional, mas recomendado para consistência) -->
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/operacional.css">
 </head>
 
@@ -21,19 +24,19 @@
         <a href="financeiro.html">Financeiro</a>
         <a href="resultados.html">Resultados</a>
         <a href="listagem-reservas.html">Reservas</a>
-        <a href="login.html" class="sair">Sair</a>
+        <!-- 🔥 Logout correto -->
+        <button id="btnLogout" class="sair">Sair</button>
     </div>
 </div>
 
-
-    <h1 class="titulo-operacional">Painel Operacional</h1>
+<h1 class="titulo-operacional">Painel Operacional</h1>
 
 <!-- BOTÃO -->
 <button id="btnPagamentosBooking" class="btn-pagamentos-booking">
     Booking.com
 </button>
 
-    <!-- FILTROS BELLEVIEW -->
+<!-- FILTROS BELLEVIEW -->
 <div id="filtros" class="filtros-wrapper">
 
     <div class="filtro-item">
@@ -110,7 +113,6 @@
             <small class="iva">IVA: 0 €</small>
         </div>
 
-        <!-- 5º CARD — TOTAL -->
         <div class="card-iva" id="ivaTotal">
             TOTAL<br>
             <span class="bruto">0 €</span>
@@ -118,7 +120,6 @@
         </div>
 
     </div>
-
 
     <!-- ========================= -->
     <!-- IVA — FATURADO -->
@@ -147,7 +148,6 @@
             <span class="bruto">0 €</span>
         </div>
 
-        <!-- 5º CARD — TOTAL FATURADO -->
         <div class="card-iva" id="ivaFTotal">
             TOTAL<br>
             <span class="bruto">0 €</span>
@@ -157,10 +157,7 @@
 
 </div>
 
-
-    
 <!-- TABELA -->
-
 <div class="tabela-scroll-wrapper">
     <table id="tabelaOperacional">
         <thead>
@@ -195,10 +192,7 @@
     </table>
 </div>
 
-<!-- Scrollbar fixo sincronizado -->
 <div id="scroll-sync"></div>
-
-
 
 <!-- POPUP -->
 <div id="popupPagamentos" class="popup-overlay">
@@ -219,22 +213,42 @@
     </div>
 </div>
 
+<!-- Firebase compat v9 -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+<!-- Configuração Firebase -->
+<script src="js/firebase-config.js"></script>
+
+<!-- Proteção da página -->
 <script>
-document.getElementById("toggleMenu").addEventListener("click", () => {
-    const menu = document.getElementById("dropdown-menu");
-    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "login.html";
+    }
 });
 </script>
 
+<!-- Logout -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const btnLogout = document.getElementById("btnLogout");
+    if (btnLogout) {
+        btnLogout.addEventListener("click", () => {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "login.html";
+            });
+        });
+    }
+});
+</script>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-
-<script src="js/firebase-config.js"></script>
+<!-- JS principal da página -->
 <script src="js/operacional.js"></script>
 
-
+<!-- Menu (toggle do menu superior) -->
+<script src="js/menu.js"></script>
 
 </body>
 </html>
