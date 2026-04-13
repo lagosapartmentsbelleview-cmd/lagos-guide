@@ -1,17 +1,4 @@
 // ===============================
-// FIREBASE – AUTENTICAÇÃO
-// ===============================
-
-firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-        alert("Sessão expirada. Por favor faça login novamente.");
-        window.location.href = "login.html";
-        return;
-    }
-    console.log("Utilizador autenticado:", user.email);
-});
-
-// ===============================
 // ELEMENTOS BASE
 // ===============================
 
