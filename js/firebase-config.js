@@ -13,4 +13,8 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-const auth = firebase.auth(); // 🔥 TENS DE TER ISTO
+const auth = firebase.auth();
+
+// 🔥 Forçar Firebase Auth a NÃO usar localStorage
+auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
