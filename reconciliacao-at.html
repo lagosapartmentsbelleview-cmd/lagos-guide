@@ -2,8 +2,6 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-  
-
     <title>Reconciliação AT</title>
 
     <link rel="stylesheet" href="css/global.css">
@@ -94,13 +92,12 @@
         <textarea id="textoAT"></textarea>
 
         <div class="filtros">
-    <label>Data início:</label>
-    <input type="date" id="dataInicio">
+            <label>Data início:</label>
+            <input type="date" id="dataInicio">
 
-    <label>Data fim:</label>
-    <input type="date" id="dataFim">
-</div>
-
+            <label>Data fim:</label>
+            <input type="date" id="dataFim">
+        </div>
 
         <div style="margin-top: 15px;">
             <button class="btn btn-blue" onclick="processarAT()">Processar AT</button>
@@ -114,12 +111,22 @@
 
 </div>
 
-<!-- Firebase -->
+<!-- Firebase compat v9 -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
+<!-- Configuração Firebase -->
 <script src="js/firebase-config.js"></script>
+
+<!-- Proteção da página -->
+<script>
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "login.html";
+    }
+});
+</script>
 
 <!-- Script da Reconciliação -->
 <script src="js/reconciliacao-at.js"></script>
