@@ -12,29 +12,28 @@
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
     
-    <div style="display:flex; gap:10px;">
-        <button onclick="window.location.href='financeiro.html'">← Financeiro</button>
-        <button onclick="window.location.href='entidades.html'">Entidades</button>
+      <div style="display:flex; gap:10px;">
+          <button onclick="window.location.href='financeiro.html'">← Financeiro</button>
+          <button onclick="window.location.href='entidades.html'">Entidades</button>
+      </div>
+
+      <!-- 🔥 Logout correto -->
+      <button id="btnLogout" class="btn-delete">Sair</button>
     </div>
 
-    <button onclick="logout()" class="btn-delete">Logout</button>
-</div>
-
-
     <div class="barra-entidades">
-  <h1>Gestão de Categorias</h1>
-</div>
+      <h1>Gestão de Categorias</h1>
+    </div>
 
     <button class="btn-add" onclick="abrirModalCategoria()">+ Adicionar Categoria</button>
 
     <input 
-    type="text" 
-    id="pesquisaCategorias" 
-    placeholder="Pesquisar categorias..." 
-    oninput="filtrarCategorias()" 
-    style="margin-bottom: 15px; padding: 8px; width: 300px;"
->
-
+      type="text" 
+      id="pesquisaCategorias" 
+      placeholder="Pesquisar categorias..." 
+      oninput="filtrarCategorias()" 
+      style="margin-bottom: 15px; padding: 8px; width: 300px;"
+    >
 
     <table id="tabelaCategorias">
       <thead>
@@ -59,29 +58,39 @@
     </div>
   </div>
 
-  <!-- 🔥 Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <!-- 🔥 Firebase compat v9 -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-  <!-- 🔥 Configuração Firebase -->
+  <!-- Configuração Firebase -->
   <script src="js/firebase-config.js"></script>
 
-  <!-- 🔐 Verificação de sessão -->
+  <!-- 🔐 Proteção da página -->
   <script>
-    auth.onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {
         if (!user) {
-            window.location.href = "login.html"; // 🔥 Se não estiver autenticado, volta ao login
+            window.location.href = "login.html";
             return;
         }
 
         document.getElementById("crudScreen").style.display = "block";
         carregarCategorias();
     });
+  </script>
 
-    function logout() {
-        auth.signOut().then(() => window.location.href = "login.html");
-    }
+  <!-- 🔓 Logout -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnLogout = document.getElementById("btnLogout");
+        if (btnLogout) {
+            btnLogout.addEventListener("click", () => {
+                firebase.auth().signOut().then(() => {
+                    window.location.href = "login.html";
+                });
+            });
+        }
+    });
   </script>
 
   <!-- CRUD -->
