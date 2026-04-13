@@ -1226,10 +1226,11 @@ async function importarExcelBooking(event) {
 
     // ⭐ VERSÃO SEGURA — evita erro "reading 's'"
     const linhas = XLSX.utils.sheet_to_json(sheet, {
-        defval: "",
-        raw: false,
-        blankrows: false
-    });
+    defval: "",
+    raw: false,
+    blankrows: false,
+    cellStyles: false
+});
 
     const bookingIdsImportados = new Set();
     let reservasSimulacao = [...reservas];
@@ -1407,22 +1408,7 @@ function formatarDataExcel(valor) {
 // -------------------------------------------------------------
 // HELPER: Normalizar valor vindo do Excel Booking ("225,57 EUR", "225.57", etc.)
 // -------------------------------------------------------------
-function normalizarValorBooking(raw) {
-    if (raw === undefined || raw === null) return 0;
 
-    let txt = String(raw).trim();
-
-    // Remove "EUR", "€" e espaços
-    txt = txt.replace(/EUR/gi, "")
-             .replace(/€/g, "")
-             .replace(/\s+/g, "");
-
-    // Troca vírgula por ponto
-    txt = txt.replace(",", ".");
-
-    const num = parseFloat(txt);
-    return isNaN(num) ? 0 : num;
-}
 
 // -------------------------------------------------------------
 // HELPER: Normalizar data Booking (aceita número Excel ou string)
