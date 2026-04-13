@@ -2030,7 +2030,11 @@ document.getElementById("btnExportExcel").addEventListener("click", function () 
     });
 
     // Criar sheet a partir da tabela limpa
-    const ws = XLSX.utils.table_to_sheet(tabelaClone, { raw: true });
+   const ws = XLSX.utils.table_to_sheet(tabelaClone, { 
+    raw: true,
+    cellStyles: false
+});
+
 
     // Filtros automáticos
     ws['!autofilter'] = { ref: XLSX.utils.encode_range(ws['!ref']) };
