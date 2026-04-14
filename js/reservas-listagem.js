@@ -7,6 +7,74 @@ let reservas = [];            // todas as reservas
 let reservasFiltradas = [];   // reservas após filtro
 let reservaAtual = null;
 
+// -------------------------------------------------------------
+//  EXCELL
+// -------------------------------------------------------------
+
+// -------------------------------------------------------------
+// EXPORTAR PARA EXCEL (RESPEITA FILTROS + BASEADO EM DADOS)
+// -------------------------------------------------------------
+document.getElementById("btnExportExcel").addEventListener("click", function () {
+
+    // 1) Escolher a lista correta (filtrada ou completa)
+    const lista = reservasFiltradas.length > 0 
+        ? reservasFiltradas 
+        : reservas;
+
+    if (!lista || lista.length === 0) {
+        alert("Não há reservas para exportar.");
+        return;
+    }
+
+    // 2) Transformar cada reserva num objeto limpo para Excel
+    const linhas = lista.map(r => {
+
+        const apartamentosStr = Array.isArray(r.apartamentos)
+            ? r.apartamentos.join(", ")
+            : (r.apartamentos || "");
+
+        return {
+            "Origem": r.origem || "",
+            "Nº Reserva": r.bookingId || "",
+            "Hóspede": r.cliente || "",
+            "Quartos": r.quartos || "",
+            "Apartamentos": apartamentosStr,
+            "Pessoas": `${r.adultos || 0} adultos${r.criancas ? " + " + r.criancas + " crianças" : ""}`,
+            "Check-in": r.checkin || "",
+            "Check-out": r.checkout || "",
+            "Noites": r.noites !== undefined ? Math.round(r.noites) : "",
+            "Total Bruto (€)": r.totalBruto !== undefined ? Number(r.totalBruto).toFixed(2) : "",
+            "Comissão (€)": r.comissao !== undefined ? Number(r.comissao).toFixed(2) : "",
+            "Valor/Noite (€)": r.precoNoite !== undefined ? Number(r.precoNoite).toFixed(2) : "",
+            "Berço": r.berco ? "Sim" : "Não",
+            "Limpeza (€)": r.limpeza !== undefined ? Number(r.limpeza).toFixed(2) : "",
+            "Comentários": r.comentarios || ""
+        };
+    });
+
+    // 3) Criar sheet
+    const ws = XLSX.utils.json_to_sheet(linhas);
+
+    // 4) Filtros automáticos
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    ws['!autofilter'] = { ref: XLSX.utils.encode_range(range) };
+
+    // 5) Largura das colunas
+    const headers = Object.keys(linhas[0]);
+    ws['!cols'] = headers.map(h => ({ wch: Math.max(h.length + 2, 15) }));
+
+    // 6) Criar workbook e exportar
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Reservas");
+
+    XLSX.writeFile(wb, "reservas.xlsx");
+});
+
+
+// -------------------------------------------------------------
+//  CONST
+// -------------------------------------------------------------
+
 const APARTAMENTOS_FIXOS = ["2301", "2203", "2204"];
 const DIAS_SEGURANCA_REALOCA = 5;
 
@@ -700,9 +768,13 @@ function aplicarFiltroIntervalo() {
 
     // Se faltar qualquer campo → mostra tudo
     if (!anoInicio || !mesInicio || !anoFim || !mesFim) {
-        desenharTabela(reservas);
-        return;
-    }
+    // Sem intervalo definido → considera que não há filtro de intervalo ativo
+    reservasFiltradas = [];          // Excel passa a usar todas as reservas
+    desenharTabela(reservas);        // tabela mostra tudo
+    renderizarTotaisReservas();      // totais com base em todas as reservas
+    return;
+}
+
 
     const dataInicio = new Date(anoInicio, mesInicio - 1, 1);
     const dataFim = new Date(anoFim, mesFim, 0); // último dia do mês fim
@@ -715,7 +787,7 @@ function aplicarFiltroIntervalo() {
 
     reservasFiltradas = filtradas;
     desenharTabela(reservasFiltradas);
-
+    renderizarTotaisReservas();
     }
 
 
@@ -2012,60 +2084,6 @@ async function carregarReservasNormalizadas() {
     return lista;
 }
 
-document.getElementById("btnExportExcel").addEventListener("click", function () {
-
-    const tabelaOriginal = document.getElementById("tabelaReservas");
-
-    // Criar cópia invisível da tabela
-    const tabelaClone = tabelaOriginal.cloneNode(true);
-    tabelaClone.style.display = "none";
-    document.body.appendChild(tabelaClone);
-
-    // 1) Remover ícones e botões
-    tabelaClone.querySelectorAll("i, svg, button").forEach(el => el.remove());
-
-    // 2) Remover coluna Ações (última coluna)
-    tabelaClone.querySelectorAll("th:last-child, td:last-child").forEach(el => el.remove());
-
-    // 3) Limpar coluna Pessoas (remover emojis)
-    tabelaClone.querySelectorAll("td:nth-child(7)").forEach(td => {
-        td.textContent = td.textContent
-            .replace(/👤/g, "")
-            .replace(/👶/g, "")
-            .trim();
-    });
-
-    // 4) Converter valores numéricos com ponto → vírgula
-    tabelaClone.querySelectorAll("td").forEach(td => {
-        const txt = td.textContent.trim();
-        if (/^\d+\.\d+$/.test(txt)) {
-            td.textContent = txt.replace(".", ",");
-        }
-    });
-
-    // Criar sheet a partir da tabela limpa
-    const ws = XLSX.utils.table_to_sheet(tabelaClone, { raw: true });
-
-    // Filtros automáticos
-    ws['!autofilter'] = { ref: XLSX.utils.encode_range(ws['!ref']) };
-
-    // Ajustar colunas
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    ws['!cols'] = [];
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-        ws['!cols'].push({ wch: 20 });
-    }
-
-    // Criar workbook
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Reservas");
-
-    // Remover tabela clone
-    tabelaClone.remove();
-
-    // Exportar
-    XLSX.writeFile(wb, "reservas.xlsx");
-});
 
 
 // -------------------------------------------------------------
