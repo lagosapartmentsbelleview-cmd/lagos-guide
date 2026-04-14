@@ -1791,7 +1791,7 @@ function calcularTotaisReservas(lista) {
         const comissaoTotal = Number(r.comissaoTotal || 0); // 🔥 usar o valor do Firebase
         const limpeza = Number(r.limpeza || 0);
 
-        totalNoites += Number(r.noites || 0);
+        totalNoites += Math.round(Number(r.noites || 0));
         totalValor += bruto;
         totalComissao += comissaoTotal;
         totalLimpeza += limpeza;
