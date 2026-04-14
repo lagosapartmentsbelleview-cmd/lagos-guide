@@ -1319,7 +1319,10 @@ async function importarExcelBooking(event) {
         const checkout = normalizarDataBooking(linha["Check-out"]);
 
         // 🔹 Data em que a reserva foi feita (para estatísticas por mês/ano de reserva)
-        const dataReserva = normalizarDataBooking(linha["Reservado em"]);
+        const dataReserva = linha["Reservado em"]
+    ? new Date(linha["Reservado em"]).toISOString()
+    : "";
+
 
         // 🔹 Data de cancelamento (se existir)
         const dataCancelamento = normalizarDataBooking(linha["Data de cancelamento"]);
