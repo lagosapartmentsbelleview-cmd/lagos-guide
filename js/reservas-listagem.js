@@ -1837,7 +1837,7 @@ function renderizarTotaisReservas() {
 
         <div class="total-card">
             Noites
-            <strong>${fmt(t.totalNoites)}</strong>
+            <strong>${Math.round(t.totalNoites)}</strong>
         </div>
 
         <div class="total-card">
