@@ -165,7 +165,7 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
     apartamentos.forEach(ap => {
         html += `<tr><td>${ap}</td>`;
         dias.forEach(dia => {
-            const id = `cel-${ap}-${dia.getDate()}`;
+            const id = `cel-${ap}-${i}`;
             html += `<td class="dia-celula" id="${id}"></td>`;
         });
         html += `</tr>`;
