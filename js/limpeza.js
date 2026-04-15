@@ -233,17 +233,27 @@ listaAps.forEach(ap => {
         const isCheckinReal = dtN.getTime() === realInicio.getTime();
         const isCheckoutReal = dtN.getTime() === realFim.getTime();
 
-        // MASTER no primeiro dia visível
-        if (!masterCriada && i === 0) {
-            const master = document.createElement("div");
-            master.classList.add("reserva-master");
-            master.textContent = nomeCurto(r.cliente);
-            master.style.width = `calc(${diasVisiveis.length * 100}%)`;
-            master.style.left = "0";
-            master.setAttribute("data-info", tooltipTexto);
-            cel.appendChild(master);
-            masterCriada = true;
-        }
+        // Se a reserva só tem 1 dia visível → NÃO criar master
+if (diasVisiveis.length === 1) {
+    const div = document.createElement("div");
+    div.classList.add("reserva", "single");
+    div.setAttribute("data-info", tooltipTexto);
+    cel.appendChild(div);
+    return;
+}
+
+// MASTER no primeiro dia visível (apenas reservas > 1 dia)
+if (!masterCriada && i === 0) {
+    const master = document.createElement("div");
+    master.classList.add("reserva-master");
+    master.textContent = nomeCurto(r.cliente);
+    master.style.width = `calc(${diasVisiveis.length * 100}%)`;
+    master.style.left = "0";
+    master.setAttribute("data-info", tooltipTexto);
+    cel.appendChild(master);
+    masterCriada = true;
+}
+
 
         // Se só há 1 dia visível E é check-in e check-out reais → aplica classe single
 if (diasVisiveis.length === 1 && isCheckinReal && isCheckoutReal) {
