@@ -253,15 +253,23 @@ listaAps.forEach(ap => {
         const div = document.createElement("div");
         div.classList.add("reserva");
 
-        if (isCheckinReal) {
-            div.classList.add("reserva-inicio-metade");
-        }
-        else if (isCheckoutReal) {
-            div.classList.add("reserva-fim-metade");
-        }
-        else {
-            div.classList.add("reserva-meio");
-        }
+        // Check-in e check-out no mesmo dia
+if (isCheckinReal && isCheckoutReal) {
+    div.classList.add("single");
+}
+// Apenas check-in
+else if (isCheckinReal) {
+    div.classList.add("in");
+}
+// Apenas check-out
+else if (isCheckoutReal) {
+    div.classList.add("out");
+}
+// Dias no meio
+else {
+    div.classList.add("middle");
+}
+
 
         div.setAttribute("data-info", tooltipTexto);
         cel.appendChild(div);
