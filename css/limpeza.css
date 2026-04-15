@@ -101,6 +101,7 @@ h2 {
     padding: 0;
     overflow: hidden;
     background: transparent;
+    border: 1px solid #dcdcdc; /* AQUI! */
 }
 
 /* quando há reserva, grelha desaparece */
@@ -255,4 +256,17 @@ h2 {
 
 [data-info]::after {
     z-index: 999999 !important;
+}
+
+.reserva {
+    pointer-events: auto;
+}
+
+.reserva:hover::after {
+    z-index: 999999 !important;
+}
+
+/* Garantir que o tooltip fica acima da barra azul */
+.reserva {
+    z-index: 10; /* antes era 1 */
 }
