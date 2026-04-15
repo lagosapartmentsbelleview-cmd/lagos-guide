@@ -135,7 +135,7 @@ function preencherLista(reservas) {
 }
 
 // -------------------------------------------------------------
-// 7) CALENDÁRIO DE LIMPEZA — VERSÃO FINAL
+// 7) CALENDÁRIO DE LIMPEZA — CORRIGIDO
 // -------------------------------------------------------------
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
@@ -160,8 +160,8 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
     apartamentos.forEach(ap => {
         html += `<tr><td>${ap}</td>`;
-        dias.forEach((dia, i) => {
-            const id = `cel-${ap}-${i}`;
+        dias.forEach(dia => {
+            const id = `cel-${ap}-${dia.getDate()}`;
             html += `<td class="dia-celula" id="${id}"></td>`;
         });
         html += `</tr>`;
@@ -220,8 +220,8 @@ Obs: ${r.comentarios || "-"}
 
             diasVisiveis.forEach(dtN => {
 
-                const index = dias.findIndex(x => x.getTime() === dtN.getTime());
-                const cel = document.getElementById(`cel-${ap}-${index}`);
+                const dia = dtN.getDate();
+                const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) return;
 
                 const isCheckinReal = dtN.getTime() === realInicio.getTime();
