@@ -76,6 +76,20 @@ h2 {
     overflow: visible;  /* igual ao calendario.css */
 }
 
+/* 🔧 Separar visualmente as metades IN e OUT */
+.dia-celula .reserva-inicio-metade {
+    position: absolute;
+    right: 0;
+    width: 50%;
+}
+
+.dia-celula .reserva-fim-metade {
+    position: absolute;
+    left: 0;
+    width: 50%;
+}
+
+
 /* Barra MASTER (nome do cliente) */
 .reserva-master {
     position: absolute;
