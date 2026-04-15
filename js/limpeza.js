@@ -138,6 +138,142 @@ function preencherLista(reservas) {
 // 7) CALENDÁRIO DE LIMPEZA — CORRIGIDO
 // -------------------------------------------------------------
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
+
+    // normalizar
+    inicio = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate());
+    fim    = new Date(fim.getFullYear(),    fim.getMonth(),    fim.getDate());
+
+    const container = document.getElementById("calendarioContainer");
+    container.innerHTML = "";
+
+    // lista de dias visíveis
+    const dias = [];
+    let d = new Date(inicio);
+    while (d <= fim) {
+        dias.push(new Date(d));
+        d.setDate(d.getDate() + 1);
+    }
+
+    const apartamentos = ["2301", "2203", "2204"];
+
+    // cabeçalho
+    let html = `<div id="calendarioWrapper"><table class="calendario"><thead><tr><th>Apt</th>`;
+    dias.forEach(dia => html += `<th>${dia.getDate()}</th>`);
+    html += `</tr></thead><tbody>`;
+
+    // linhas
+    apartamentos.forEach(ap => {
+        html += `<tr><td>${ap}</td>`;
+        dias.forEach((_, i) => {
+            const id = `cel-${ap}-${i}`;
+            html += `<td class="dia-celula" id="${id}"></td>`;
+        });
+        html += `</tr>`;
+    });
+
+    html += `</tbody></table></div>`;
+    container.innerHTML = html;
+
+    function nomeCurto(nome) {
+        if (!nome) return "";
+        const partes = nome.trim().split(" ");
+        if (partes.length === 1) return partes[0];
+        return partes[0] + " " + partes[partes.length - 1];
+    }
+
+    function normalizar(d) {
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    }
+
+    reservas.forEach(r => {
+        const listaAps   = Array.isArray(r.apartamentos) ? r.apartamentos : [];
+        const dataInicio = parseDataPt(r.checkin);
+        const dataFim    = parseDataPt(r.checkout);
+        if (!dataInicio || !dataFim) return;
+
+        const realInicio = normalizar(dataInicio);
+        const realFim    = normalizar(dataFim);
+
+        // corta ao intervalo visível
+        const visInicio = realInicio < inicio ? normalizar(inicio) : realInicio;
+        const visFim    = realFim    > fim    ? normalizar(fim)    : realFim;
+        if (visInicio > visFim) return;
+
+        // dias visíveis desta reserva
+        const diasVisiveis = [];
+        let dt = new Date(visInicio);
+        while (dt <= visFim) {
+            diasVisiveis.push(new Date(dt));
+            dt.setDate(dt.getDate() + 1);
+        }
+        const totalDiasVisiveis = diasVisiveis.length;
+
+        const tooltipTexto = `
+${r.cliente}
+Check-in: ${realInicio.toLocaleDateString("pt-PT")}
+Check-out: ${realFim.toLocaleDateString("pt-PT")}
+${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
+Idades: ${r.idadesCriancas || "-"}
+Berço: ${r.berco ? "Sim" : "Não"}
+Obs: ${r.comentarios || "-"}
+        `.trim();
+
+        listaAps.forEach(ap => {
+            let masterCriada = false;
+
+            diasVisiveis.forEach(dtN => {
+                const index = dias.findIndex(x => x.getTime() === dtN.getTime());
+                if (index === -1) return;
+
+                const cel = document.getElementById(`cel-${ap}-${index}`);
+                if (!cel) return;
+
+                const isCheckinReal  = dtN.getTime() === realInicio.getTime();
+                const isCheckoutReal = dtN.getTime() === realFim.getTime();
+
+                // reserva de 1 dia real → só master
+                if (isCheckinReal && isCheckoutReal) {
+                    if (!masterCriada) {
+                        const master = document.createElement("div");
+                        master.classList.add("reserva-master");
+                        master.textContent = nomeCurto(r.cliente);
+                        master.style.width = "100%";
+                        master.setAttribute("data-info", tooltipTexto);
+                        cel.appendChild(master);
+                        masterCriada = true;
+                    }
+                    return;
+                }
+
+                // master no primeiro dia visível que é também o check-in real
+                if (!masterCriada && isCheckinReal) {
+                    const master = document.createElement("div");
+                    master.classList.add("reserva-master");
+                    master.textContent = nomeCurto(r.cliente);
+                    master.style.width = `calc(${totalDiasVisiveis * 100}%)`;
+                    master.setAttribute("data-info", tooltipTexto);
+                    cel.appendChild(master);
+                    masterCriada = true;
+                }
+
+                const div = document.createElement("div");
+                div.classList.add("reserva");
+
+                if (isCheckinReal) {
+                    div.classList.add("reserva-inicio-metade");
+                } else if (isCheckoutReal) {
+                    div.classList.add("reserva-fim-metade");
+                } else {
+                    div.classList.add("reserva-meio");
+                }
+
+                div.setAttribute("data-info", tooltipTexto);
+                cel.appendChild(div);
+            });
+        });
+    });
+}
+
 // -------------------------------------------------------------
 // 8) TOTAIS ADMIN
 // -------------------------------------------------------------
