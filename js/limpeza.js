@@ -225,27 +225,30 @@ Obs: ${r.comentarios || "-"}
                 const isCheckoutVisivel = dtN.getTime() === visFim.getTime();
 
                 const div = document.createElement("div");
-                div.classList.add("reserva");
+div.classList.add("reserva");
 
-                if (isCheckinVisivel && isCheckoutVisivel) {
-                    // reserva de 1 dia visível → célula inteira
-                    div.classList.add("reserva-meio");
-                } else if (isCheckinVisivel) {
-                    div.classList.add("reserva-inicio-metade");   // metade direita
-                    div.textContent = nomeCurto(r.cliente);
-
-                } else if (isCheckoutVisivel) {
-                    div.classList.add("reserva-fim-metade");      // metade esquerda
-                } else {
-                    div.classList.add("reserva-meio");            // dia intermédio
-                }
-
-                div.setAttribute("data-info", tooltipTexto);
-                cel.appendChild(div);
-            });
-        });
-    });
+if (isCheckinVisivel && isCheckoutVisivel) {
+    // reserva de 1 dia visível → célula inteira
+    div.classList.add("reserva-meio");
+} else if (isCheckinVisivel) {
+    div.classList.add("reserva-inicio-metade");   // metade direita
+} else if (isCheckoutVisivel) {
+    div.classList.add("reserva-fim-metade");      // metade esquerda
+} else {
+    div.classList.add("reserva-meio");            // dia intermédio
 }
+
+div.setAttribute("data-info", tooltipTexto);
+cel.appendChild(div);
+
+// --- NOME DO CLIENTE (barra transparente por cima das metades) ---
+if (isCheckinVisivel) {
+    const nome = document.createElement("div");
+    nome.classList.add("reserva-nome");
+    nome.textContent = nomeCurto(r.cliente);
+    cel.appendChild(nome);
+}
+
 
 
 // -------------------------------------------------------------
