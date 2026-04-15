@@ -258,7 +258,7 @@ h2 {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0; /* garantir largura total */
+    right: 0; /* ESSENCIAL */
     width: 100%;
     height: 100%;
     display: flex;
@@ -270,3 +270,4 @@ h2 {
     pointer-events: none;
     z-index: 5;
 }
+
