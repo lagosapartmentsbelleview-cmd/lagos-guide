@@ -230,43 +230,43 @@ Obs: ${r.comentarios || "-"}
                 const isCheckoutVisivel = dtN.getTime() === visFim.getTime();
 
                 // 1) Criar METADES primeiro (para ficarem por baixo)
-                const div = document.createElement("div");
-                div.classList.add("reserva");
+const div = document.createElement("div");
+div.classList.add("reserva");
 
-                if (isCheckinVisivel) {
-                    div.classList.add("reserva-inicio-metade");   // metade direita
-                } else if (isCheckoutVisivel) {
-                    div.classList.add("reserva-fim-metade");      // metade esquerda
-                } else {
-                    div.classList.add("reserva-meio");            // dia intermédio
-                }
+if (isCheckinVisivel) {
+    div.classList.add("reserva-inicio-metade");   // metade direita
+} else if (isCheckoutVisivel) {
+    div.classList.add("reserva-fim-metade");      // metade esquerda
+} else {
+    div.classList.add("reserva-meio");            // dia intermédio
+}
 
-                div.setAttribute("data-info", tooltipTexto);
-                cel.appendChild(div);
+div.setAttribute("data-info", tooltipTexto);
+cel.appendChild(div);
 
-                // 2) Criar MASTER *depois* das metades (para ficar por cima)
-                if (!masterCriada && isCheckinVisivel) {
-                    const master = document.createElement("div");
-                    master.classList.add("reserva-master");
-                    master.textContent = nomeCurto(r.cliente);
-                    master.style.width = `calc(${totalDiasVisiveis * 100}%)`;
-                    master.setAttribute("data-info", tooltipTexto);
-                    cel.appendChild(master);
-                    masterCriada = true;
-                }
+// 2) Criar MASTER *depois* das metades (para ficar por cima)
+if (!masterCriada && isCheckinVisivel) {
+    const master = document.createElement("div");
+    master.classList.add("reserva-master");
+    master.textContent = nomeCurto(r.cliente);
+    master.style.width = `calc(${totalDiasVisiveis * 100}%)`;
+    master.setAttribute("data-info", tooltipTexto);
+    cel.appendChild(master);
+    masterCriada = true;
+}
 
-                // 3) Caso seja reserva de 1 dia visível
-                if (isCheckinVisivel && isCheckoutVisivel) {
-                    if (!masterCriada) {
-                        const master = document.createElement("div");
-                        master.classList.add("reserva-master");
-                        master.textContent = nomeCurto(r.cliente);
-                        master.style.width = "100%";
-                        master.setAttribute("data-info", tooltipTexto);
-                        cel.appendChild(master);
-                        masterCriada = true;
-                    }
-                }
+// 3) Caso seja reserva de 1 dia visível
+if (isCheckinVisivel && isCheckoutVisivel) {
+    if (!masterCriada) {
+        const master = document.createElement("div");
+        master.classList.add("reserva-master");
+        master.textContent = nomeCurto(r.cliente);
+        master.style.width = "100%";
+        master.setAttribute("data-info", tooltipTexto);
+        cel.appendChild(master);
+        masterCriada = true;
+    }
+}
 
             });
         });
