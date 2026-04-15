@@ -96,11 +96,11 @@ h2 {
 .dia-celula {
     position: relative;
     padding: 0;
-    overflow: visible; /* permite que a barra se cole visualmente */
+    overflow: visible;
 }
 
 /* ---------------------------------------------------------
-   BARRAS DE RESERVA (igual ao calendário principal)
+   BARRAS DE RESERVA — IGUAL AO CALENDÁRIO PRINCIPAL
 --------------------------------------------------------- */
 
 .reserva {
@@ -119,7 +119,7 @@ h2 {
     padding: 0 4px;
     box-sizing: border-box;
     cursor: pointer;
-    z-index: 5;
+    z-index: 5; /* 🔽 metades por baixo do master */
     background: #1976d2;
 }
 
@@ -129,16 +129,12 @@ h2 {
     right: 0;
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
 }
 
 /* Metade esquerda — CHECK-OUT */
 .reserva-fim-metade {
     width: 50%;
     left: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
 }
@@ -150,7 +146,7 @@ h2 {
     border-radius: 0;
 }
 
-/* Barra principal com nome centrado no total */
+/* Barra MASTER com nome centrado */
 .reserva-master {
     line-height: 1.2;
     position: absolute;
@@ -168,13 +164,13 @@ h2 {
     padding: 0 4px;
     box-sizing: border-box;
     cursor: pointer;
-    z-index: 10; /* acima das metades, como no calendário principal */
+    z-index: 10; /* 🔼 master por cima das metades */
     background: #1976d2;
     border-radius: 12px;
 }
 
 /* ---------------------------------------------------------
-   TOOLTIP (usa data-info, como já tens no JS)
+   TOOLTIP (data-info)
 --------------------------------------------------------- */
 :root {
     --mouse-x: 0px;
