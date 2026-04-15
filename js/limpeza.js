@@ -135,18 +135,16 @@ function preencherLista(reservas) {
 }
 
 // -------------------------------------------------------------
-// 7) CALENDÁRIO DE LIMPEZA (alinhado com reservas-calendario.js)
+// 7) CALENDÁRIO DE LIMPEZA — VERSÃO FINAL
 // -------------------------------------------------------------
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
-    // Normalizar início/fim
     inicio = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate());
     fim = new Date(fim.getFullYear(), fim.getMonth(), fim.getDate());
 
     const container = document.getElementById("calendarioContainer");
     container.innerHTML = "";
 
-    // Gerar lista de dias visíveis
     const dias = [];
     let d = new Date(inicio);
     while (d <= fim) {
@@ -156,16 +154,14 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
     const apartamentos = ["2301", "2203", "2204"];
 
-    // Cabeçalho
     let html = `<div id="calendarioWrapper"><table class="calendario"><thead><tr><th>Apt</th>`;
     dias.forEach(dia => html += `<th>${dia.getDate()}</th>`);
     html += `</tr></thead><tbody>`;
 
-    // Linhas por apartamento
     apartamentos.forEach(ap => {
         html += `<tr><td>${ap}</td>`;
-        dias.forEach(dia => {
-            const id = `cel-${ap}-${dia.getDate()}`;
+        dias.forEach((dia, i) => {
+            const id = `cel-${ap}-${i}`;
             html += `<td class="dia-celula" id="${id}"></td>`;
         });
         html += `</tr>`;
@@ -195,7 +191,6 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
         const realInicio = normalizar(dataInicio);
         const realFim = normalizar(dataFim);
 
-        // Corta ao intervalo visível
         const visInicio = realInicio < inicio ? normalizar(inicio) : realInicio;
         const visFim = realFim > fim ? normalizar(fim) : realFim;
         if (visInicio > visFim) return;
@@ -223,23 +218,21 @@ Obs: ${r.comentarios || "-"}
 
             let masterCriada = false;
 
-            diasVisiveis.forEach((dtN, i) => {
+            diasVisiveis.forEach(dtN => {
 
-                const dia = dtN.getDate();
-                const cel = document.getElementById(`cel-${ap}-${dia}`);
+                const index = dias.findIndex(x => x.getTime() === dtN.getTime());
+                const cel = document.getElementById(`cel-${ap}-${index}`);
                 if (!cel) return;
 
                 const isCheckinReal = dtN.getTime() === realInicio.getTime();
                 const isCheckoutReal = dtN.getTime() === realFim.getTime();
 
-                // Reserva de 1 dia real → só master, sem metades
                 if (isCheckinReal && isCheckoutReal) {
                     if (!masterCriada) {
                         const master = document.createElement("div");
                         master.classList.add("reserva-master");
                         master.textContent = nomeCurto(r.cliente);
-                        master.style.width = `100%`;
-                        master.style.left = "0";
+                        master.style.width = "100%";
                         master.setAttribute("data-info", tooltipTexto);
                         cel.appendChild(master);
                         masterCriada = true;
@@ -247,19 +240,16 @@ Obs: ${r.comentarios || "-"}
                     return;
                 }
 
-                // MASTER no primeiro dia visível
                 if (!masterCriada && isCheckinReal) {
                     const master = document.createElement("div");
                     master.classList.add("reserva-master");
                     master.textContent = nomeCurto(r.cliente);
                     master.style.width = `calc(${totalDiasVisiveis * 100}%)`;
-                    master.style.left = "0";
                     master.setAttribute("data-info", tooltipTexto);
                     cel.appendChild(master);
                     masterCriada = true;
                 }
 
-                // Criar fragmentos (igual ao calendário principal)
                 const div = document.createElement("div");
                 div.classList.add("reserva");
 
