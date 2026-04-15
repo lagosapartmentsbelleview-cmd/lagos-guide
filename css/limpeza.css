@@ -73,24 +73,14 @@ h2 {
 .dia-celula {
     position: relative;
     padding: 0;
-    overflow: visible;  /* igual ao calendario.css */
+    overflow: visible;
 }
 
-/* 🔧 Separar visualmente as metades IN e OUT */
-.dia-celula .reserva-inicio-metade {
-    position: absolute;
-    right: 0;
-    width: 50%;
-}
+/* ---------------------------------------------------------
+   BARRAS
+--------------------------------------------------------- */
 
-.dia-celula .reserva-fim-metade {
-    position: absolute;
-    left: 0;
-    width: 50%;
-}
-
-
-/* Barra MASTER (nome do cliente) */
+/* MASTER (nome do cliente) — fica por baixo dos fragmentos */
 .reserva-master {
     position: absolute;
     top: 0;
@@ -100,21 +90,21 @@ h2 {
     color: #fff;
     font-size: 10px;
     border-radius: 12px;
-    z-index: 10; /* 🔥 acima dos fragmentos, como no calendario.css */
+    z-index: 5; /* 🔽 FICA POR BAIXO */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
-/* Fragmentos diários */
+/* Fragmentos diários — ficam por cima */
 .reserva {
     position: absolute;
     top: 0;
     height: 100%;
     background: #1976d2;
     border-radius: 0;
-    z-index: 5; /* 🔥 por baixo do master, mas como estão em células diferentes, não se tapam */
+    z-index: 10; /* 🔼 FICAM POR CIMA DO MASTER */
 }
 
 /* Metade direita — CHECK-IN */
@@ -124,8 +114,6 @@ h2 {
     left: auto;
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
 }
 
 /* Metade esquerda — CHECK-OUT */
@@ -133,12 +121,9 @@ h2 {
     width: 50%;
     left: 0;
     right: auto;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
 }
-
 
 /* Dia completo (intermédio) */
 .reserva-meio {
@@ -147,22 +132,8 @@ h2 {
     border-radius: 0;
 }
 
-/* Tooltip flutuante */
-.tooltip {
-    position: fixed;
-    background: #333;
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    pointer-events: none;
-    z-index: 9999;
-    max-width: 260px;
-    white-space: pre-line;
-}
-
 /* ---------------------------------------------------------
-   TOOLTIP (igual ao calendario.html)
+   TOOLTIP
 --------------------------------------------------------- */
 :root {
     --mouse-x: 0px;
@@ -232,7 +203,7 @@ h2 {
 }
 
 /* ---------------------------------------------------------
-   PARA IMPRESSÃO PDF EM PAGINAS SEPARADAS
+   PDF
 --------------------------------------------------------- */
 .secao-calendario-pdf-break {
     page-break-before: always;
