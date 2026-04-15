@@ -225,45 +225,49 @@ Obs: ${r.comentarios || "-"}
                 const cel = document.getElementById(`cel-${ap}-${index}`);
                 if (!cel) return;
 
-                const isCheckinReal = dtN.getTime() === realInicio.getTime();
-                const isCheckoutReal = dtN.getTime() === realFim.getTime();
+                // IN/OUT em termos de intervalo visível
+const isCheckinVisivel  = dtN.getTime() === visInicio.getTime();
+const isCheckoutVisivel = dtN.getTime() === visFim.getTime();
 
-                if (isCheckinReal && isCheckoutReal) {
-                    if (!masterCriada) {
-                        const master = document.createElement("div");
-                        master.classList.add("reserva-master");
-                        master.textContent = nomeCurto(r.cliente);
-                        master.style.width = "100%";
-                        master.setAttribute("data-info", tooltipTexto);
-                        cel.appendChild(master);
-                        masterCriada = true;
-                    }
-                    return;
-                }
+// reserva de 1 dia *visível* → só master
+if (isCheckinVisivel && isCheckoutVisivel) {
+    if (!masterCriada) {
+        const master = document.createElement("div");
+        master.classList.add("reserva-master");
+        master.textContent = nomeCurto(r.cliente);
+        master.style.width = "100%";
+        master.setAttribute("data-info", tooltipTexto);
+        cel.appendChild(master);
+        masterCriada = true;
+    }
+    return;
+}
 
-                if (!masterCriada && isCheckinReal) {
-                    const master = document.createElement("div");
-                    master.classList.add("reserva-master");
-                    master.textContent = nomeCurto(r.cliente);
-                    master.style.width = `calc(${totalDiasVisiveis * 100}%)`;
-                    master.setAttribute("data-info", tooltipTexto);
-                    cel.appendChild(master);
-                    masterCriada = true;
-                }
+// master no primeiro dia visível
+if (!masterCriada && isCheckinVisivel) {
+    const master = document.createElement("div");
+    master.classList.add("reserva-master");
+    master.textContent = nomeCurto(r.cliente);
+    master.style.width = `calc(${totalDiasVisiveis * 100}%)`;
+    master.setAttribute("data-info", tooltipTexto);
+    cel.appendChild(master);
+    masterCriada = true;
+}
 
-                const div = document.createElement("div");
-                div.classList.add("reserva");
+const div = document.createElement("div");
+div.classList.add("reserva");
 
-                if (isCheckinReal) {
-                    div.classList.add("reserva-inicio-metade");
-                } else if (isCheckoutReal) {
-                    div.classList.add("reserva-fim-metade");
-                } else {
-                    div.classList.add("reserva-meio");
-                }
+if (isCheckinVisivel) {
+    div.classList.add("reserva-inicio-metade");
+} else if (isCheckoutVisivel) {
+    div.classList.add("reserva-fim-metade");
+} else {
+    div.classList.add("reserva-meio");
+}
 
-                div.setAttribute("data-info", tooltipTexto);
-                cel.appendChild(div);
+div.setAttribute("data-info", tooltipTexto);
+cel.appendChild(div);
+
             });
         });
     });
