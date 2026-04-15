@@ -96,84 +96,60 @@ h2 {
 .dia-celula {
     position: relative;
     padding: 0;
-    overflow: visible;
+    overflow: hidden; /* remove grelha */
+    background: transparent;
 }
 
 /* ---------------------------------------------------------
-   BARRAS DE RESERVA — IGUAL AO CALENDÁRIO PRINCIPAL
+   BARRAS DE RESERVA — LIMPEZA (SEM MASTER)
 --------------------------------------------------------- */
 
 .reserva {
     position: absolute;
     top: 0;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0 4px;
-    box-sizing: border-box;
-    cursor: pointer;
-    z-index: 5; /* 🔽 metades por baixo do master */
     background: #1976d2;
+    border-radius: 0;
+    z-index: 1; /* metades no fundo */
 }
 
 /* Metade direita — CHECK-IN */
 .reserva-inicio-metade {
     width: 50%;
     right: 0;
-    left: auto;
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
 }
 
 /* Metade esquerda — CHECK-OUT */
 .reserva-fim-metade {
     width: 50%;
     left: 0;
-    right: auto;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
 }
-
 
 /* Dia intermédio — 100% */
 .reserva-meio {
     width: 100%;
     left: 0;
-    border-radius: 0;
 }
 
-/* Barra MASTER com nome centrado */
-.reserva-master {
-    line-height: 1.2;
+/* Nome centrado entre IN e OUT */
+.reserva-nome {
     position: absolute;
     top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0 4px;
-    box-sizing: border-box;
-    cursor: pointer;
-    z-index: 10; /* 🔼 master por cima das metades */
-    background: #1976d2;
-    border-radius: 12px;
+    color: white;
+    pointer-events: none;
+    z-index: 5; /* por cima das metades */
 }
 
 /* ---------------------------------------------------------
@@ -247,9 +223,8 @@ h2 {
     }
 
     .reserva,
-    .reserva-master {
+    .reserva-nome {
         font-size: 10px;
-        padding: 0 2px;
     }
 }
 
