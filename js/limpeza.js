@@ -165,7 +165,7 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
     apartamentos.forEach(ap => {
         html += `<tr><td>${ap}</td>`;
         dias.forEach(dia => {
-            const id = `cel-${ap}-${i}`;
+            const id = `cel-${ap}-${dia.getDate()}`;
             html += `<td class="dia-celula" id="${id}"></td>`;
         });
         html += `</tr>`;
@@ -225,8 +225,8 @@ Obs: ${r.comentarios || "-"}
 
             diasVisiveis.forEach((dtN, i) => {
 
-                const index = dias.findIndex(x => x.getTime() === dtN.getTime());
-                const cel = document.getElementById(`cel-${ap}-${index}`);
+                const dia = dtN.getDate();
+                const cel = document.getElementById(`cel-${ap}-${dia}`);
                 if (!cel) return;
 
                 const isCheckinReal = dtN.getTime() === realInicio.getTime();
