@@ -549,10 +549,25 @@ function atualizarPrevisaoPorDataCorte() {
         // DATA DE RESERVA (ISO)
         // -----------------------------
         const reservadoStr = r.dataReserva;
-        if (!reservadoStr || reservadoStr.trim() === "") return;
+if (!reservadoStr || reservadoStr.trim() === "") return;
 
-        const dtReservado = new Date(reservadoStr);
-        if (isNaN(dtReservado)) return;
+let dtReservado;
+
+// Caso 1: formato "YYYY-MM-DD HH:mm:ss"
+if (reservadoStr.includes(" ") && !reservadoStr.includes("T")) {
+    dtReservado = new Date(reservadoStr.replace(" ", "T"));
+}
+// Caso 2: formato DD/MM/YYYY
+else if (reservadoStr.includes("/")) {
+    dtReservado = parseDataDDMMYYYY(reservadoStr);
+}
+// Caso 3: ISO normal
+else {
+    dtReservado = new Date(reservadoStr);
+}
+
+if (!dtReservado || isNaN(dtReservado)) return;
+
 
         // -----------------------------
         // CHECK-IN (DD/MM/YYYY)
