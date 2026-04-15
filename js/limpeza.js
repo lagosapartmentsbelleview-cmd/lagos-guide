@@ -213,83 +213,79 @@ Obs: ${r.comentarios || "-"}
 
         listaAps.forEach(ap => {
 
-    const indicesCelulas = [];
+            const indicesCelulas = [];
 
-    diasVisiveis.forEach(dtN => {
+            diasVisiveis.forEach(dtN => {
 
-        const index = dias.findIndex(x => x.getTime() === dtN.getTime());
-        if (index === -1) return;
+                const index = dias.findIndex(x => x.getTime() === dtN.getTime());
+                if (index === -1) return;
 
-        const cel = document.getElementById(`cel-${ap}-${index}`);
-        if (!cel) return;
+                const cel = document.getElementById(`cel-${ap}-${index}`);
+                if (!cel) return;
 
-        const isCheckinVisivel  = dtN.getTime() === visInicio.getTime();
-        const isCheckoutVisivel = dtN.getTime() === visFim.getTime();
+                const isCheckinVisivel  = dtN.getTime() === visInicio.getTime();
+                const isCheckoutVisivel = dtN.getTime() === visFim.getTime();
 
-        const div = document.createElement("div");
-        div.classList.add("reserva");
+                const div = document.createElement("div");
+                div.classList.add("reserva");
 
-        // detectar truncamentos
-const truncadoNoInicio = realInicio < inicio;
-const truncadoNoFim    = realFim > fim;
+                // detectar truncamentos
+                const truncadoNoInicio = realInicio < inicio;
+                const truncadoNoFim    = realFim > fim;
 
-// decidir forma da barra
-if (isCheckinVisivel && isCheckoutVisivel) {
+                // decidir forma da barra
+                if (isCheckinVisivel && isCheckoutVisivel) {
 
-    if (!truncadoNoInicio && truncadoNoFim) {
-        // começa aqui e continua para o mês seguinte → "("
-        div.classList.add("reserva-inicio-metade");
+                    if (!truncadoNoInicio && truncadoNoFim) {
+                        // começa aqui e continua para o mês seguinte → "("
+                        div.classList.add("reserva-inicio-metade");
 
-    } else if (truncadoNoInicio && !truncadoNoFim) {
-        // vem de antes e termina aqui → ")"
-        div.classList.add("reserva-fim-metade");
+                    } else if (truncadoNoInicio && !truncadoNoFim) {
+                        // vem de antes e termina aqui → ")"
+                        div.classList.add("reserva-fim-metade");
 
-    } else {
-        // reserva realmente de 1 dia
-        div.classList.add("reserva-meio");
-    }
+                    } else {
+                        // reserva realmente de 1 dia
+                        div.classList.add("reserva-meio");
+                    }
 
-} else if (isCheckinVisivel) {
-    div.classList.add("reserva-inicio-metade");
+                } else if (isCheckinVisivel) {
+                    div.classList.add("reserva-inicio-metade");
 
-} else if (isCheckoutVisivel) {
-    div.classList.add("reserva-fim-metade");
+                } else if (isCheckoutVisivel) {
+                    div.classList.add("reserva-fim-metade");
 
-} else {
-    div.classList.add("reserva-meio");
-}
+                } else {
+                    div.classList.add("reserva-meio");
+                }
 
+                div.setAttribute("data-info", tooltipTexto);
+                cel.appendChild(div);
 
-        div.setAttribute("data-info", tooltipTexto);
-        cel.appendChild(div);
+                // marcar célula como tendo reserva (para o CSS da grelha)
+                cel.classList.add("dia-com-reserva");
 
-        // marcar célula como tendo reserva (para o CSS da grelha)
-        cel.classList.add("dia-com-reserva");
+                // guardar índice desta célula para depois pôr o nome no meio
+                indicesCelulas.push(index);
+            });
 
-        // guardar índice desta célula para depois pôr o nome no meio
-        indicesCelulas.push(index);
-    });
-
-    // depois de desenhar todas as células desta reserva neste apartamento,
-    // colocamos o nome na célula do meio
-    if (indicesCelulas.length > 0) {
-        const meioIndex = indicesCelulas[Math.floor(indicesCelulas.length / 2)];
-        const celMeio = document.getElementById(`cel-${ap}-${meioIndex}`);
-        if (celMeio) {
-            const nome = document.createElement("div");
-            nome.classList.add("reserva-nome");
-            nome.textContent = nomeCurto(r.cliente);
-            celMeio.appendChild(nome);
-        }
-    }
-
-});
+            // depois de desenhar todas as células desta reserva neste apartamento,
+            // colocamos o nome na célula do meio
+            if (indicesCelulas.length > 0) {
+                const meioIndex = indicesCelulas[Math.floor(indicesCelulas.length / 2)];
+                const celMeio = document.getElementById(`cel-${ap}-${meioIndex}`);
+                if (celMeio) {
+                    const nome = document.createElement("div");
+                    nome.classList.add("reserva-nome");
+                    nome.textContent = nomeCurto(r.cliente);
+                    celMeio.appendChild(nome);
+                }
+            }
 
         });
+
     });
 }
-
-
 
 // -------------------------------------------------------------
 // 8) TOTAIS ADMIN
