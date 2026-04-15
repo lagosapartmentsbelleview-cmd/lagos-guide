@@ -127,17 +127,24 @@ h2 {
 .reserva-inicio-metade {
     width: 50%;
     right: 0;
+    left: auto;
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 /* Metade esquerda — CHECK-OUT */
 .reserva-fim-metade {
     width: 50%;
     left: 0;
+    right: auto;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
+
 
 /* Dia intermédio — 100% */
 .reserva-meio {
