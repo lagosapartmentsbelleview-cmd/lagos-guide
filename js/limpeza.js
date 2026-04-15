@@ -225,8 +225,8 @@ Obs: ${r.comentarios || "-"}
 
             diasVisiveis.forEach((dtN, i) => {
 
-                const dia = dtN.getDate();
-                const cel = document.getElementById(`cel-${ap}-${dia}`);
+                const index = dias.findIndex(x => x.getTime() === dtN.getTime());
+                const cel = document.getElementById(`cel-${ap}-${index}`);
                 if (!cel) return;
 
                 const isCheckinReal = dtN.getTime() === realInicio.getTime();
