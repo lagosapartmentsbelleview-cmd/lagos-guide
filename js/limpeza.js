@@ -14,10 +14,10 @@ firebase.auth().onAuthStateChanged(user => {
         document.getElementById("painelAdmin").style.display = "none";
     }
 });
-// -------------------------------------------------------------
-//  Tooltip
-// -------------------------------------------------------------
 
+// -------------------------------------------------------------
+//  Tooltip (para data-info)
+// -------------------------------------------------------------
 document.addEventListener("mousemove", e => {
     document.documentElement.style.setProperty("--mouse-x", e.clientX + "px");
     document.documentElement.style.setProperty("--mouse-y", e.clientY + "px");
@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleAdmin = document.getElementById("toggleAdmin");
     const btnGerar = document.getElementById("btnGerar");
 
-    // Se não existir painel admin, ignora esta parte
     if (painelAdmin && toggleAdmin) {
         painelAdmin.classList.add("aberto");
 
@@ -42,12 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Se existir botão gerar, ativa-o
     if (btnGerar) {
         btnGerar.addEventListener("click", gerarLimpeza);
     }
 });
-
 
 // -------------------------------------------------------------
 // 3) FORMATAR DATA (dd/mm/yyyy)
@@ -79,7 +76,6 @@ async function gerarLimpeza() {
         return;
     }
 
-    // 🔥 AQUI ESTÁ A MÁGICA: usar a função universal
     const reservas = await carregarReservasNormalizadas();
     const filtradas = filtrarPorDatas(reservas, dataInicio, dataFim);
 
@@ -87,7 +83,6 @@ async function gerarLimpeza() {
     desenharCalendarioLimpeza(filtradas, dataInicio, dataFim);
 
     if (isAdmin) calcularTotais(filtradas, dataInicio, dataFim);
-
 }
 
 // -------------------------------------------------------------
@@ -139,16 +134,19 @@ function preencherLista(reservas) {
     });
 }
 
-
+// -------------------------------------------------------------
+// 7) CALENDÁRIO DE LIMPEZA (alinhado com reservas-calendario.js)
+// -------------------------------------------------------------
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
-    inicio = new Date(inicio);
-    fim = new Date(fim);
+    // Normalizar início/fim
+    inicio = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate());
+    fim = new Date(fim.getFullYear(), fim.getMonth(), fim.getDate());
 
     const container = document.getElementById("calendarioContainer");
     container.innerHTML = "";
 
-    // Gerar lista de dias
+    // Gerar lista de dias visíveis
     const dias = [];
     let d = new Date(inicio);
     while (d <= fim) {
@@ -194,15 +192,22 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
         const dataFim = parseDataPt(r.checkout);
         if (!dataInicio || !dataFim) return;
 
-        // corta a reserva ao intervalo visível
         const realInicio = normalizar(dataInicio);
         const realFim = normalizar(dataFim);
+
+        // Corta ao intervalo visível
         const visInicio = realInicio < inicio ? normalizar(inicio) : realInicio;
         const visFim = realFim > fim ? normalizar(fim) : realFim;
         if (visInicio > visFim) return;
 
-        const totalDiasVisiveis =
-            Math.floor((visFim - visInicio) / (1000 * 60 * 60 * 24)) + 1;
+        const diasVisiveis = [];
+        let dt = new Date(visInicio);
+        while (dt <= visFim) {
+            diasVisiveis.push(new Date(dt));
+            dt.setDate(dt.getDate() + 1);
+        }
+
+        const totalDiasVisiveis = diasVisiveis.length;
 
         const tooltipTexto = `
 ${r.cliente}
@@ -214,89 +219,68 @@ Berço: ${r.berco ? "Sim" : "Não"}
 Obs: ${r.comentarios || "-"}
         `.trim();
 
-listaAps.forEach(ap => {
+        listaAps.forEach(ap => {
 
-    let masterCriada = false;
+            let masterCriada = false;
 
-    // Seleciona apenas os dias que pertencem à reserva dentro do intervalo visível
-    const diasVisiveis = dias.filter(d => {
-        const dn = normalizar(d);
-        return dn >= visInicio && dn <= visFim;
-    });
+            diasVisiveis.forEach((dtN, i) => {
 
-    diasVisiveis.forEach((dtN, i) => {
+                const dia = dtN.getDate();
+                const cel = document.getElementById(`cel-${ap}-${dia}`);
+                if (!cel) return;
 
-        const dia = dtN.getDate();
-        const cel = document.getElementById(`cel-${ap}-${dia}`);
-        if (!cel) return;
+                const isCheckinReal = dtN.getTime() === realInicio.getTime();
+                const isCheckoutReal = dtN.getTime() === realFim.getTime();
 
-        const isCheckinReal = dtN.getTime() === realInicio.getTime();
-        const isCheckoutReal = dtN.getTime() === realFim.getTime();
+                // Reserva de 1 dia real → só master, sem metades
+                if (isCheckinReal && isCheckoutReal) {
+                    if (!masterCriada) {
+                        const master = document.createElement("div");
+                        master.classList.add("reserva-master");
+                        master.textContent = nomeCurto(r.cliente);
+                        master.style.width = `100%`;
+                        master.style.left = "0";
+                        master.setAttribute("data-info", tooltipTexto);
+                        cel.appendChild(master);
+                        masterCriada = true;
+                    }
+                    return;
+                }
 
-        // Se a reserva só tem 1 dia visível → NÃO criar master
-if (diasVisiveis.length === 1) {
-    const div = document.createElement("div");
-    div.classList.add("reserva", "single");
-    div.setAttribute("data-info", tooltipTexto);
-    cel.appendChild(div);
-    return;
-}
+                // MASTER no primeiro dia visível
+                if (!masterCriada && i === 0) {
+                    const master = document.createElement("div");
+                    master.classList.add("reserva-master");
+                    master.textContent = nomeCurto(r.cliente);
+                    master.style.width = `calc(${totalDiasVisiveis * 100}%)`;
+                    master.style.left = "0";
+                    master.setAttribute("data-info", tooltipTexto);
+                    cel.appendChild(master);
+                    masterCriada = true;
+                }
 
-// MASTER no primeiro dia visível (apenas reservas > 1 dia)
-if (!masterCriada && i === 0) {
-    const master = document.createElement("div");
-    master.classList.add("reserva-master");
-    master.textContent = nomeCurto(r.cliente);
-    master.style.width = `calc(${diasVisiveis.length * 100}%)`;
-    master.style.left = "0";
-    master.setAttribute("data-info", tooltipTexto);
-    cel.appendChild(master);
-    masterCriada = true;
-}
+                // Criar fragmentos (igual ao calendário principal)
+                const div = document.createElement("div");
+                div.classList.add("reserva");
 
+                if (isCheckinReal) {
+                    div.classList.add("reserva-inicio-metade");
+                } else if (isCheckoutReal) {
+                    div.classList.add("reserva-fim-metade");
+                } else {
+                    div.classList.add("reserva-meio");
+                }
 
-        // Se só há 1 dia visível E é check-in e check-out reais → aplica classe single
-if (diasVisiveis.length === 1 && isCheckinReal && isCheckoutReal) {
-    const div = document.createElement("div");
-    div.classList.add("reserva", "single");
-    div.setAttribute("data-info", tooltipTexto);
-    cel.appendChild(div);
-    return;
-}
-
-        const div = document.createElement("div");
-        div.classList.add("reserva");
-
-       // Check-in e check-out no mesmo dia
-if (isCheckinReal && isCheckoutReal) {
-    div.classList.add("single");
-}
-// Apenas check-in
-else if (isCheckinReal) {
-    div.classList.add("in");
-}
-// Apenas check-out
-else if (isCheckoutReal) {
-    div.classList.add("out");
-}
-// Dias no meio
-else {
-    div.classList.add("middle");
-}
-
-
-
-        div.setAttribute("data-info", tooltipTexto);
-        cel.appendChild(div);
-    });
-});
-
+                div.setAttribute("data-info", tooltipTexto);
+                cel.appendChild(div);
+            });
+        });
     });
 }
 
-
-
-
+// -------------------------------------------------------------
+// 8) TOTAIS ADMIN
+// -------------------------------------------------------------
 function calcularTotais(reservas) {
     let totalBase = 0;
     let totalExtras = 0;
