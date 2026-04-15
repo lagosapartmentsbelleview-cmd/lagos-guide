@@ -271,3 +271,29 @@ h2 {
     z-index: 5;
 }
 
+/* 1) Grelha só desaparece quando há reserva */
+.dia-celula {
+    border: 1px solid #dcdcdc;
+}
+
+.dia-celula.dia-com-reserva {
+    border: none !important;
+}
+
+/* 2) Nome centrado no bloco */
+.reserva-nome {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0; /* garantir largura total */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+    pointer-events: none;
+    z-index: 5;
+}
