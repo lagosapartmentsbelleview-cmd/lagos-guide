@@ -232,6 +232,8 @@ Obs: ${r.comentarios || "-"}
                     div.classList.add("reserva-meio");
                 } else if (isCheckinVisivel) {
                     div.classList.add("reserva-inicio-metade");   // metade direita
+                    div.textContent = nomeCurto(r.cliente);
+
                 } else if (isCheckoutVisivel) {
                     div.classList.add("reserva-fim-metade");      // metade esquerda
                 } else {
