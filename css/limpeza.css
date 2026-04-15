@@ -243,7 +243,13 @@ h2 {
 }
 
 /* 1) Remover grelha entre dias */
-.calendario td.dia-celula {
+/* por defeito, grelha visível */
+.dia-celula {
+    border: 1px solid #dcdcdc;
+}
+
+/* quando há reserva, grelha desaparece */
+.dia-celula.dia-com-reserva {
     border: none !important;
 }
 
