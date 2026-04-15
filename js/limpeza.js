@@ -245,10 +245,14 @@ listaAps.forEach(ap => {
             masterCriada = true;
         }
 
-        // Se só há 1 dia visível E é check-in e check-out reais → só master
-        if (diasVisiveis.length === 1 && isCheckinReal && isCheckoutReal) {
-            return;
-        }
+        // Se só há 1 dia visível E é check-in e check-out reais → aplica classe single
+if (diasVisiveis.length === 1 && isCheckinReal && isCheckoutReal) {
+    const div = document.createElement("div");
+    div.classList.add("reserva", "single");
+    div.setAttribute("data-info", tooltipTexto);
+    cel.appendChild(div);
+    return;
+}
 
         const div = document.createElement("div");
         div.classList.add("reserva");
