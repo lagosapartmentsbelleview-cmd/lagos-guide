@@ -1001,7 +1001,7 @@ async function guardarReserva() {
     const liquidoReal = liquido - limpeza;
     const totalLiquidoFinal = liquidoReal;
 
-    const dataReserva = new Date().toLocaleDateString("pt-PT");
+    const dataReserva = reserva?.dataReserva || new Date().toLocaleDateString("pt-PT");
     const tipoUnidade = apartamentosDigitados.length > 0 ? `Apartamento ${apartamentosDigitados[0]}` : "";
     const dispositivo = "Web";
 
