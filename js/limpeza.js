@@ -213,42 +213,57 @@ Obs: ${r.comentarios || "-"}
 
         listaAps.forEach(ap => {
 
-            diasVisiveis.forEach(dtN => {
+    const indicesCelulas = [];
 
-                const index = dias.findIndex(x => x.getTime() === dtN.getTime());
-                if (index === -1) return;
+    diasVisiveis.forEach(dtN => {
 
-                const cel = document.getElementById(`cel-${ap}-${index}`);
-                if (!cel) return;
+        const index = dias.findIndex(x => x.getTime() === dtN.getTime());
+        if (index === -1) return;
 
-                const isCheckinVisivel  = dtN.getTime() === visInicio.getTime();
-                const isCheckoutVisivel = dtN.getTime() === visFim.getTime();
+        const cel = document.getElementById(`cel-${ap}-${index}`);
+        if (!cel) return;
 
-                const div = document.createElement("div");
-                div.classList.add("reserva");
+        const isCheckinVisivel  = dtN.getTime() === visInicio.getTime();
+        const isCheckoutVisivel = dtN.getTime() === visFim.getTime();
 
-                if (isCheckinVisivel && isCheckoutVisivel) {
-                    div.classList.add("reserva-meio");
-                } else if (isCheckinVisivel) {
-                    div.classList.add("reserva-inicio-metade");
-                } else if (isCheckoutVisivel) {
-                    div.classList.add("reserva-fim-metade");
-                } else {
-                    div.classList.add("reserva-meio");
-                }
+        const div = document.createElement("div");
+        div.classList.add("reserva");
 
-                div.setAttribute("data-info", tooltipTexto);
-                cel.appendChild(div);
+        if (isCheckinVisivel && isCheckoutVisivel) {
+            div.classList.add("reserva-meio");
+        } else if (isCheckinVisivel) {
+            div.classList.add("reserva-inicio-metade");
+        } else if (isCheckoutVisivel) {
+            div.classList.add("reserva-fim-metade");
+        } else {
+            div.classList.add("reserva-meio");
+        }
 
-                // Nome centrado (barra transparente)
-                if (isCheckinVisivel) {
-                    const nome = document.createElement("div");
-                    nome.classList.add("reserva-nome");
-                    nome.textContent = nomeCurto(r.cliente);
-                    cel.appendChild(nome);
-                }
+        div.setAttribute("data-info", tooltipTexto);
+        cel.appendChild(div);
 
-            });
+        // marcar célula como tendo reserva (para o CSS da grelha)
+        cel.classList.add("dia-com-reserva");
+
+        // guardar índice desta célula para depois pôr o nome no meio
+        indicesCelulas.push(index);
+    });
+
+    // depois de desenhar todas as células desta reserva neste apartamento,
+    // colocamos o nome na célula do meio
+    if (indicesCelulas.length > 0) {
+        const meioIndex = indicesCelulas[Math.floor(indicesCelulas.length / 2)];
+        const celMeio = document.getElementById(`cel-${ap}-${meioIndex}`);
+        if (celMeio) {
+            const nome = document.createElement("div");
+            nome.classList.add("reserva-nome");
+            nome.textContent = nomeCurto(r.cliente);
+            celMeio.appendChild(nome);
+        }
+    }
+
+});
+
         });
     });
 }
