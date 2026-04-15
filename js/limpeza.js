@@ -248,7 +248,7 @@ Obs: ${r.comentarios || "-"}
                 }
 
                 // MASTER no primeiro dia visível
-                if (!masterCriada && i === 0) {
+                if (!masterCriada && isCheckinReal) {
                     const master = document.createElement("div");
                     master.classList.add("reserva-master");
                     master.textContent = nomeCurto(r.cliente);
