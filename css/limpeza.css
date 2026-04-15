@@ -268,5 +268,9 @@ h2 {
 
 /* Garantir que o tooltip fica acima da barra azul */
 .reserva {
-    z-index: 10; /* antes era 1 */
+    z-index: 2; /* antes era 1 */
+}
+
+.reserva-nome {
+    z-index: 10;
 }
