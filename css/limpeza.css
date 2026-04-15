@@ -260,4 +260,29 @@ h2 {
     margin-left: 0;
 }
 
+/* ---------------------------------------------------------
+   NOVO — Arredondamento igual ao calendário principal */
+--------------------------------------------------------- */
+
+/* Check-in arredondado à esquerda */
+.reserva.in {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+/* Check-out arredondado à direita */
+.reserva.out {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* Check-in e check-out no mesmo dia */
+.reserva.single {
+    border-radius: 12px;
+}
+
+/* Dias no meio */
+.reserva.middle {
+    border-radius: 0;
+}
 
