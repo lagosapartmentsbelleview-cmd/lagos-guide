@@ -8,37 +8,9 @@ body {
     color: #222;
 }
 
-/*.topo {    
-      background: #1e88e5;    
-      color: white;    
-      padding: 20px;}*/
-
 .topo h1 {
     margin: 0 0 10px 0;
 }
-
-/*.filtros {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}*/
-
-/*.filtros label {
-    font-weight: bold;
-}*/
-
-/*.btn-primario {
-    background: #1565c0;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 4px;
-}*/
-
-/*.btn-primario:hover {
-    background: #0d47a1;
-}*/
 
 .secao {
     margin: 25px;
@@ -114,24 +86,21 @@ h2 {
     color: #fff;
     font-size: 10px;
     border-radius: 12px;
-    z-index: 5; /* 🔥 Fica por baixo dos fragmentos */
+    z-index: 10; /* 🔥 acima dos fragmentos, como no calendario.css */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
-
-
 /* Fragmentos diários */
 .reserva {
     position: absolute;
     top: 0;
-    left: 0;
     height: 100%;
     background: #1976d2;
     border-radius: 0;
-    z-index: 20; /* 🔥 Agora fica por cima do MASTER */
+    z-index: 5; /* 🔥 por baixo do master, mas como estão em células diferentes, não se tapam */
 }
 
 /* Metade direita — CHECK-IN */
@@ -156,11 +125,11 @@ h2 {
     border-bottom-right-radius: 12px;
 }
 
-/* Dia completo */
+/* Dia completo (intermédio) */
 .reserva-meio {
-  left: 0;
-  width: 100%;
-  border-radius: 0; /* ✅ Remove qualquer arredondamento residual */
+    left: 0;
+    width: 100%;
+    border-radius: 0;
 }
 
 /* Tooltip flutuante */
@@ -259,39 +228,4 @@ h2 {
     box-sizing: border-box;
     padding-left: 0;
     margin-left: 0;
-}
-
-/* ---------------------------------------------------------
-   NOVO — Arredondamento igual ao calendário principal
---------------------------------------------------------- */
-
-
-/* Check-in arredondado à esquerda */
-.reserva.in {
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-}
-
-/* Check-out arredondado à direita */
-.reserva.out {
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-}
-
-/* Check-in e check-out no mesmo dia */
-.reserva.single {
-    border-radius: 12px;
-}
-
-/* Dias no meio */
-.reserva.middle {
-    border-radius: 0;
-}
-
-/* Garantir que os fragmentos ficam acima do MASTER */
-.reserva.single,
-.reserva.in,
-.reserva.out,
-.reserva.middle {
-    z-index: 20 !important;
 }
