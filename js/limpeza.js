@@ -229,15 +229,36 @@ Obs: ${r.comentarios || "-"}
         const div = document.createElement("div");
         div.classList.add("reserva");
 
-        if (isCheckinVisivel && isCheckoutVisivel) {
-            div.classList.add("reserva-meio");
-        } else if (isCheckinVisivel) {
-            div.classList.add("reserva-inicio-metade");
-        } else if (isCheckoutVisivel) {
-            div.classList.add("reserva-fim-metade");
-        } else {
-            div.classList.add("reserva-meio");
-        }
+        // detectar truncamentos
+const truncadoNoInicio = realInicio < inicio;
+const truncadoNoFim    = realFim > fim;
+
+// decidir forma da barra
+if (isCheckinVisivel && isCheckoutVisivel) {
+
+    if (!truncadoNoInicio && truncadoNoFim) {
+        // começa aqui e continua para o mês seguinte → "("
+        div.classList.add("reserva-inicio-metade");
+
+    } else if (truncadoNoInicio && !truncadoNoFim) {
+        // vem de antes e termina aqui → ")"
+        div.classList.add("reserva-fim-metade");
+
+    } else {
+        // reserva realmente de 1 dia
+        div.classList.add("reserva-meio");
+    }
+
+} else if (isCheckinVisivel) {
+    div.classList.add("reserva-inicio-metade");
+
+} else if (isCheckoutVisivel) {
+    div.classList.add("reserva-fim-metade");
+
+} else {
+    div.classList.add("reserva-meio");
+}
+
 
         div.setAttribute("data-info", tooltipTexto);
         cel.appendChild(div);
