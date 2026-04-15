@@ -253,7 +253,7 @@ listaAps.forEach(ap => {
         const div = document.createElement("div");
         div.classList.add("reserva");
 
-        // Check-in e check-out no mesmo dia
+       // Check-in e check-out no mesmo dia
 if (isCheckinReal && isCheckoutReal) {
     div.classList.add("single");
 }
@@ -269,6 +269,7 @@ else if (isCheckoutReal) {
 else {
     div.classList.add("middle");
 }
+
 
 
         div.setAttribute("data-info", tooltipTexto);
