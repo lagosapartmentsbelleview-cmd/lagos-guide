@@ -287,3 +287,10 @@ h2 {
     border-radius: 0;
 }
 
+/* Garantir que os fragmentos ficam acima do MASTER */
+.reserva.single,
+.reserva.in,
+.reserva.out,
+.reserva.middle {
+    z-index: 20 !important;
+}
