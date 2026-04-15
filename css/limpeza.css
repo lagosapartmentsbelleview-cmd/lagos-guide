@@ -125,13 +125,6 @@ h2 {
     border-bottom-right-radius: 12px;
 }
 
-/* 🔥 Garantir que metades não se sobrepõem */
-.dia-celula {
-    display: flex;
-    position: relative;
-    justify-content: space-between;
-}
-
 
 /* Dia completo (intermédio) */
 .reserva-meio {
