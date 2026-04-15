@@ -252,3 +252,7 @@ h2 {
     padding-left: 0;
     margin-left: 0;
 }
+
+[data-info]::after {
+    z-index: 999999 !important;
+}
