@@ -263,3 +263,16 @@ h2 {
     color: white;
 }
 
+.dia-celula {
+    position: relative;
+    z-index: 1;
+}
+
+.dia-celula .reserva {
+    z-index: 2;
+}
+
+.dia-celula .reserva-nome {
+    z-index: 3 !important;
+}
+
