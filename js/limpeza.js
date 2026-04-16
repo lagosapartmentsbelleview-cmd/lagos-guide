@@ -289,7 +289,16 @@ Obs: ${r.comentarios || "-"}
                 nome.classList.add("reserva-nome");
                 nome.textContent = nomeCurto(r.cliente);
 
-                celPrimeira.appendChild(nome);
+                // criar um contêiner absoluto que cobre o bloco inteiro
+                const containerNome = document.createElement("div");
+                containerNome.classList.add("reserva-nome-container");
+
+                // inserir o nome dentro do contêiner
+                containerNome.appendChild(nome);
+
+                // inserir o contêiner na célula PRIMEIRA (mas ele vai cobrir todas)
+                celPrimeira.appendChild(containerNome);
+
 
                 requestAnimationFrame(() => {
                     const rectPrimeira = celPrimeira.getBoundingClientRect();
