@@ -260,3 +260,16 @@ h2 {
     }
 }
 
+.print-only {
+    display: none;
+}
+
+@media print {
+    #calendarioContainer {
+        display: none !important;
+    }
+    .print-only {
+        display: block !important;
+    }
+}
+
