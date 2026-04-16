@@ -135,7 +135,7 @@ function preencherLista(reservas) {
 }
 
 // -------------------------------------------------------------
-// 7) CALENDÁRIO DE LIMPEZA — VERSÃO FINAL (SEM MASTER)
+// 7) CALENDÁRIO DE LIMPEZA — VERSÃO FINAL (CENTRAMENTO PERFEITO)
 // -------------------------------------------------------------
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
@@ -223,101 +223,86 @@ Obs: ${r.comentarios || "-"}
                 const cel = document.getElementById(`cel-${ap}-${index}`);
                 if (!cel) return;
 
-                // detectar truncamentos (TEM DE VIR PRIMEIRO)
                 const truncadoNoInicio = realInicio < inicio;
                 const truncadoNoFim    = realFim > fim;
 
-                // flags visíveis (só se não houver truncamento)
                 const isCheckinVisivel  = !truncadoNoInicio && dtN.getTime() === visInicio.getTime();
                 const isCheckoutVisivel = !truncadoNoFim    && dtN.getTime() === visFim.getTime();
 
                 const div = document.createElement("div");
                 div.classList.add("reserva");
 
-                // decidir forma da barra
-               if (isCheckinVisivel && isCheckoutVisivel) {
+                if (isCheckinVisivel && isCheckoutVisivel) {
 
-    if (!truncadoNoInicio && truncadoNoFim) {
-        div.classList.add("reserva-inicio-metade");
-        cel.dataset.tipo = "inicio";
+                    if (!truncadoNoInicio && truncadoNoFim) {
+                        div.classList.add("reserva-inicio-metade");
+                        cel.dataset.tipo = "inicio";
 
-    } else if (truncadoNoInicio && !truncadoNoFim) {
-        div.classList.add("reserva-fim-metade");
-        cel.dataset.tipo = "fim";
+                    } else if (truncadoNoInicio && !truncadoNoFim) {
+                        div.classList.add("reserva-fim-metade");
+                        cel.dataset.tipo = "fim";
 
-    } else {
-        div.classList.add("reserva-meio");
-        cel.dataset.tipo = "meio";
-    }
+                    } else {
+                        div.classList.add("reserva-meio");
+                        cel.dataset.tipo = "meio";
+                    }
 
-} else if (isCheckinVisivel) {
-    div.classList.add("reserva-inicio-metade");
-    cel.dataset.tipo = "inicio";
+                } else if (isCheckinVisivel) {
+                    div.classList.add("reserva-inicio-metade");
+                    cel.dataset.tipo = "inicio";
 
-} else if (isCheckoutVisivel) {
-    div.classList.add("reserva-fim-metade");
-    cel.dataset.tipo = "fim";
+                } else if (isCheckoutVisivel) {
+                    div.classList.add("reserva-fim-metade");
+                    cel.dataset.tipo = "fim";
 
-} else {
-    div.classList.add("reserva-meio");
-    cel.dataset.tipo = "meio";
-}
-
+                } else {
+                    div.classList.add("reserva-meio");
+                    cel.dataset.tipo = "meio";
+                }
 
                 cel.setAttribute("data-info", tooltipTexto);
                 cel.appendChild(div);
-
-                // marcar célula como tendo reserva (para o CSS da grelha)
                 cel.classList.add("dia-com-reserva");
 
-                // guardar índice desta célula para depois pôr o nome no meio
                 indicesCelulas.push(index);
             });
 
-            // depois de desenhar todas as células desta reserva neste apartamento,
-            // colocamos o nome na célula do meio
+            // ---------------------------------------------------------
+            // CENTRAMENTO MATEMÁTICO PERFEITO (OPÇÃO B + OPÇÃO 1)
+            // ---------------------------------------------------------
             if (indicesCelulas.length > 0) {
-                // 1. Obter apenas as células cheias (meio)
-const indicesCheios = indicesCelulas.filter(i => {
-    const c = document.getElementById(`cel-${ap}-${i}`);
-    return c && c.dataset.tipo === "meio";
-});
 
-// 2. Se não houver cheias (reserva de 1 dia), usar todas
-const base = indicesCheios.length > 0 ? indicesCheios : indicesCelulas;
+                const indicesCheios = indicesCelulas.filter(i => {
+                    const c = document.getElementById(`cel-${ap}-${i}`);
+                    return c && c.dataset.tipo === "meio";
+                });
 
-// 3. Calcular o centro geométrico do intervalo
-const inicioCheio = base[0];
-const fimCheio = base[base.length - 1];
-const centro = (inicioCheio + fimCheio) / 2;
+                const base = indicesCheios.length > 0 ? indicesCheios : indicesCelulas;
 
-// 4. Encontrar a célula mais próxima do centro
-let melhorIndex = base[0];
-let melhorDist = Math.abs(base[0] - centro);
+                const idxPrimeira = base[0];
+                const idxUltima = base[base.length - 1];
 
-for (const idx of base) {
-    const dist = Math.abs(idx - centro);
-    if (dist < melhorDist) {
-        melhorDist = dist;
-        melhorIndex = idx;
-    }
-}
+                const celPrimeira = document.getElementById(`cel-${ap}-${idxPrimeira}`);
+                const celUltima = document.getElementById(`cel-${ap}-${idxUltima}`);
 
-// 5. Inserir o nome nessa célula
-const celMeio = document.getElementById(`cel-${ap}-${melhorIndex}`);
-if (celMeio) {
-    const nome = document.createElement("div");
-    nome.classList.add("reserva-nome");
-    nome.textContent = nomeCurto(r.cliente);
-    celMeio.appendChild(nome);
-}
+                const nome = document.createElement("div");
+                nome.classList.add("reserva-nome");
+                nome.textContent = nomeCurto(r.cliente);
 
-                if (celMeio) {
-                    const nome = document.createElement("div");
-                    nome.classList.add("reserva-nome");
-                    nome.textContent = nomeCurto(r.cliente);
-                    celMeio.appendChild(nome);
-                }
+                celPrimeira.appendChild(nome);
+
+                requestAnimationFrame(() => {
+                    const rectPrimeira = celPrimeira.getBoundingClientRect();
+                    const rectUltima = celUltima.getBoundingClientRect();
+                    const rectNome = nome.getBoundingClientRect();
+
+                    const centroBloco = (rectPrimeira.left + rectUltima.right) / 2;
+                    const centroNome = rectNome.left + rectNome.width / 2;
+
+                    const deslocamento = centroBloco - centroNome;
+
+                    nome.style.transform = `translateX(${deslocamento}px)`;
+                });
             }
 
         });
