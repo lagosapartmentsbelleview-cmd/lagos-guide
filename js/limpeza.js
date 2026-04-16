@@ -235,30 +235,34 @@ Obs: ${r.comentarios || "-"}
                 div.classList.add("reserva");
 
                 // decidir forma da barra
-                if (isCheckinVisivel && isCheckoutVisivel) {
+               if (isCheckinVisivel && isCheckoutVisivel) {
 
-                    if (!truncadoNoInicio && truncadoNoFim) {
-                        // começa aqui e continua para o mês seguinte → "("
-                        div.classList.add("reserva-inicio-metade");
+    if (!truncadoNoInicio && truncadoNoFim) {
+        div.classList.add("reserva-inicio-metade");
+        cel.dataset.tipo = "inicio";
 
-                    } else if (truncadoNoInicio && !truncadoNoFim) {
-                        // vem de antes e termina aqui → ")"
-                        div.classList.add("reserva-fim-metade");
+    } else if (truncadoNoInicio && !truncadoNoFim) {
+        div.classList.add("reserva-fim-metade");
+        cel.dataset.tipo = "fim";
 
-                    } else {
-                        // reserva realmente de 1 dia
-                        div.classList.add("reserva-meio");
-                    }
+    } else {
+        div.classList.add("reserva-meio");
+        cel.dataset.tipo = "meio";
+    }
 
-                } else if (isCheckinVisivel) {
-                    div.classList.add("reserva-inicio-metade");
+} else if (isCheckinVisivel) {
+    div.classList.add("reserva-inicio-metade");
+    cel.dataset.tipo = "inicio";
 
-                } else if (isCheckoutVisivel) {
-                    div.classList.add("reserva-fim-metade");
+} else if (isCheckoutVisivel) {
+    div.classList.add("reserva-fim-metade");
+    cel.dataset.tipo = "fim";
 
-                } else {
-                    div.classList.add("reserva-meio");
-                }
+} else {
+    div.classList.add("reserva-meio");
+    cel.dataset.tipo = "meio";
+}
+
 
                 cel.setAttribute("data-info", tooltipTexto);
                 cel.appendChild(div);
@@ -273,8 +277,41 @@ Obs: ${r.comentarios || "-"}
             // depois de desenhar todas as células desta reserva neste apartamento,
             // colocamos o nome na célula do meio
             if (indicesCelulas.length > 0) {
-                const meioIndex = indicesCelulas[Math.floor(indicesCelulas.length / 2)];
-                const celMeio = document.getElementById(`cel-${ap}-${meioIndex}`);
+                // 1. Obter apenas as células cheias (meio)
+const indicesCheios = indicesCelulas.filter(i => {
+    const c = document.getElementById(`cel-${ap}-${i}`);
+    return c && c.dataset.tipo === "meio";
+});
+
+// 2. Se não houver cheias (reserva de 1 dia), usar todas
+const base = indicesCheios.length > 0 ? indicesCheios : indicesCelulas;
+
+// 3. Calcular o centro geométrico do intervalo
+const inicioCheio = base[0];
+const fimCheio = base[base.length - 1];
+const centro = (inicioCheio + fimCheio) / 2;
+
+// 4. Encontrar a célula mais próxima do centro
+let melhorIndex = base[0];
+let melhorDist = Math.abs(base[0] - centro);
+
+for (const idx of base) {
+    const dist = Math.abs(idx - centro);
+    if (dist < melhorDist) {
+        melhorDist = dist;
+        melhorIndex = idx;
+    }
+}
+
+// 5. Inserir o nome nessa célula
+const celMeio = document.getElementById(`cel-${ap}-${melhorIndex}`);
+if (celMeio) {
+    const nome = document.createElement("div");
+    nome.classList.add("reserva-nome");
+    nome.textContent = nomeCurto(r.cliente);
+    celMeio.appendChild(nome);
+}
+
                 if (celMeio) {
                     const nome = document.createElement("div");
                     nome.classList.add("reserva-nome");
