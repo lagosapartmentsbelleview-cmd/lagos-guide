@@ -159,42 +159,52 @@ window.addEventListener("load", function () {
     // EXPORTAR PDF
     window.exportarPDF = function () {
 
-        const secoes = document.querySelectorAll(".secao");
-        const listaSecao = secoes[0];
-        const calendarioSecao = secoes[1];
+    // 1) Esconder calendário WEB
+    const calendarioWeb = document.getElementById("calendarioContainer");
+    const overlay = document.querySelector(".overlay-nomes");
+    if (calendarioWeb) calendarioWeb.style.display = "none";
+    if (overlay) overlay.style.display = "none";
 
-        if (!listaSecao || !calendarioSecao) {
-            alert("Erro ao gerar PDF: secções não encontradas.");
-            return;
-        }
+    // 2) Mostrar calendário PRINT
+    const calendarioPrint = document.getElementById("calendarioPrint");
+    calendarioPrint.style.display = "block";
 
-        const wrapper = document.createElement("div");
-        wrapper.style.width = "100%";
-        wrapper.style.boxSizing = "border-box";
+    // 3) Clonar secções
+    const secoes = document.querySelectorAll(".secao");
+    const listaSecao = secoes[0];
+    const calendarioSecao = secoes[1];
 
-        const listaClone = listaSecao.cloneNode(true);
-        wrapper.appendChild(listaClone);
+    const wrapper = document.createElement("div");
+    wrapper.style.width = "100%";
+    wrapper.style.boxSizing = "border-box";
 
-        const calendarioClone = calendarioSecao.cloneNode(true);
-        calendarioClone.style.pageBreakBefore = "always";
-        wrapper.appendChild(calendarioClone);
+    const listaClone = listaSecao.cloneNode(true);
+    wrapper.appendChild(listaClone);
 
-        document.body.appendChild(wrapper);
+    const calendarioClone = calendarioSecao.cloneNode(true);
+    calendarioClone.style.pageBreakBefore = "always";
+    wrapper.appendChild(calendarioClone);
 
-        const opt = {
-            margin: [10, 5, 10, 0],
-            filename: "limpeza_completa.pdf",
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-            pagebreak: { mode: ['css', 'legacy'] }
-        };
+    document.body.appendChild(wrapper);
 
-        html2pdf().set(opt).from(wrapper).save().then(() => {
-            document.body.removeChild(wrapper);
-        });
+    const opt = {
+        margin: [10, 5, 10, 0],
+        filename: "limpeza_completa.pdf",
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+        pagebreak: { mode: ['css', 'legacy'] }
     };
 
-});
+    html2pdf().set(opt).from(wrapper).save().then(() => {
+
+        // 4) Restaurar estado original
+        document.body.removeChild(wrapper);
+        calendarioWeb.style.display = "";
+        if (overlay) overlay.style.display = "";
+        calendarioPrint.style.display = "none";
+    });
+};
+
 
 // Exportar PDF + WhatsApp
 window.exportarEEnviarWhatsApp = function () {
