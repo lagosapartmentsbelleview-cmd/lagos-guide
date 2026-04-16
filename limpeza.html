@@ -195,7 +195,7 @@ window.addEventListener("load", function () {
         pagebreak: { mode: ['css', 'legacy'] }
     };
 
-    html2pdf().set(opt).from(wrapper).save().then(() => {
+        html2pdf().set(opt).from(wrapper).save().then(() => {
 
         // 4) Restaurar estado original
         document.body.removeChild(wrapper);
@@ -204,11 +204,10 @@ window.addEventListener("load", function () {
         calendarioPrint.style.display = "none";
     });
 };
+</script>
 
-    };
-
-
-// Exportar PDF + WhatsApp
+<!-- Exportar PDF + WhatsApp -->
+<script>
 window.exportarEEnviarWhatsApp = function () {
     window.exportarPDF();
     setTimeout(() => {
@@ -218,6 +217,7 @@ window.exportarEEnviarWhatsApp = function () {
     }, 2000);
 };
 </script>
+
 
 <!-- ========================================================= -->
 <!-- FIREBASE + PROTEÇÃO + LOGOUT (sempre antes dos scripts da página) -->
