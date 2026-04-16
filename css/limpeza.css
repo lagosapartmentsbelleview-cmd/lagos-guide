@@ -261,11 +261,6 @@ h2 {
 }
 
 .reserva-nome {
-    z-index: 10;
-} 
-
-.reserva-nome {
-    position: relative; /* antes era absolute */
-    z-index: 50;        /* bem acima da barra */
+    position: relative !important;
+    z-index: 999 !important;
 }
-
