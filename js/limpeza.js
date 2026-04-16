@@ -135,7 +135,7 @@ function preencherLista(reservas) {
 }
 
 // -------------------------------------------------------------
-// 7) CALENDÁRIO DE LIMPEZA — VERSÃO FINAL (NOME SEMPRE VISÍVEL)
+// 7) CALENDÁRIO DE LIMPEZA — VERSÃO FINAL (WEB + PDF)
 // -------------------------------------------------------------
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
@@ -172,7 +172,7 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
     html += `</tbody></table></div>`;
     container.innerHTML = html;
 
-    // contêiner global para nomes (FICA POR CIMA DA TABELA)
+    // overlay global para nomes (WEB)
     const overlay = document.createElement("div");
     overlay.classList.add("overlay-nomes");
     document.getElementById("calendarioWrapper").appendChild(overlay);
@@ -276,7 +276,7 @@ Obs: ${r.comentarios || "-"}
             });
 
             // ---------------------------------------------------------
-            // NOME — AGORA NO OVERLAY GLOBAL (NUNCA MAIS FICA POR BAIXO)
+            // NOME — OVERLAY (WEB)
             // ---------------------------------------------------------
             if (indicesCelulas.length > 0) {
 
@@ -288,28 +288,43 @@ Obs: ${r.comentarios || "-"}
 
                 const rectPrimeira = celPrimeira.getBoundingClientRect();
                 const rectUltima = celUltima.getBoundingClientRect();
-
                 const wrapperRect = document.getElementById("calendarioWrapper").getBoundingClientRect();
 
                 const nome = document.createElement("div");
                 nome.classList.add("overlay-nome");
                 nome.textContent = nomeCurto(r.cliente);
 
-                // posição vertical (linha do apartamento)
+                // centro vertical
                 nome.style.top = (rectPrimeira.top - wrapperRect.top + rectPrimeira.height / 2) + "px";
-                nome.style.transform = "translate(-50%, -50%)";
 
-                // posição horizontal (centro geométrico)
+                // centro horizontal
                 const centro = (rectPrimeira.left + rectUltima.right) / 2;
                 nome.style.left = (centro - wrapperRect.left) + "px";
 
                 overlay.appendChild(nome);
             }
 
+            // ---------------------------------------------------------
+            // NOME PARA PDF — DENTRO DA CÉLULA DO MEIO
+            // ---------------------------------------------------------
+            if (indicesCelulas.length > 0) {
+
+                const meio = indicesCelulas[Math.floor(indicesCelulas.length / 2)];
+                const celPdf = document.getElementById(`cel-${ap}-${meio}`);
+
+                if (celPdf) {
+                    const nomePdf = document.createElement("div");
+                    nomePdf.classList.add("reserva-nome-pdf");
+                    nomePdf.textContent = nomeCurto(r.cliente);
+                    celPdf.appendChild(nomePdf);
+                }
+            }
+
         });
 
     });
 }
+
 
 
 // -------------------------------------------------------------
