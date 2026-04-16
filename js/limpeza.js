@@ -305,20 +305,22 @@ Obs: ${r.comentarios || "-"}
             }
 
             // ---------------------------------------------------------
-            // NOME PARA PDF — DENTRO DA CÉLULA DO MEIO
-            // ---------------------------------------------------------
-            if (indicesCelulas.length > 0) {
+// NOME PARA PDF — DENTRO DA CÉLULA DO MEIO
+// ---------------------------------------------------------
+if (indicesCelulas.length > 0) {
 
-                const meio = indicesCelulas[Math.floor(indicesCelulas.length / 2)];
-                const celPdf = document.getElementById(`cel-${ap}-${meio}`);
+    // escolhe a célula do meio das células visíveis
+    const meio = indicesCelulas[Math.floor(indicesCelulas.length / 2)];
+    const celPdf = document.getElementById(`cel-${ap}-${meio}`);
 
-                if (celPdf) {
-                    const nomePdf = document.createElement("div");
-                    nomePdf.classList.add("reserva-nome-pdf");
-                    nomePdf.textContent = nomeCurto(r.cliente);
-                    celPdf.appendChild(nomePdf);
-                }
-            }
+    if (celPdf) {
+        const nomePdf = document.createElement("div");
+        nomePdf.classList.add("reserva-nome-pdf");
+        nomePdf.textContent = nomeCurto(r.cliente);
+        celPdf.appendChild(nomePdf);
+    }
+}
+
 
         });
 
