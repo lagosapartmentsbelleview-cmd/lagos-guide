@@ -135,7 +135,7 @@ function preencherLista(reservas) {
 }
 
 // -------------------------------------------------------------
-// 7) CALENDÁRIO DE LIMPEZA — VERSÃO FINAL (CENTRAMENTO PERFEITO)
+// 7) CALENDÁRIO DE LIMPEZA — VERSÃO FINAL (NOME SEMPRE VISÍVEL)
 // -------------------------------------------------------------
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
@@ -154,7 +154,10 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
     const apartamentos = ["2301", "2203", "2204"];
 
-    let html = `<div id="calendarioWrapper"><table class="calendario"><thead><tr><th>Apt</th>`;
+    // tabela
+    let html = `<div id="calendarioWrapper" style="position:relative;">
+                    <table class="calendario">
+                        <thead><tr><th>Apt</th>`;
     dias.forEach(dia => html += `<th>${dia.getDate()}</th>`);
     html += `</tr></thead><tbody>`;
 
@@ -168,6 +171,11 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
     html += `</tbody></table></div>`;
     container.innerHTML = html;
+
+    // contêiner global para nomes (FICA POR CIMA DA TABELA)
+    const overlay = document.createElement("div");
+    overlay.classList.add("overlay-nomes");
+    document.getElementById("calendarioWrapper").appendChild(overlay);
 
     function nomeCurto(nome) {
         if (!nome) return "";
@@ -268,56 +276,40 @@ Obs: ${r.comentarios || "-"}
             });
 
             // ---------------------------------------------------------
-            // CENTRAMENTO MATEMÁTICO PERFEITO (OPÇÃO B + OPÇÃO 1)
+            // NOME — AGORA NO OVERLAY GLOBAL (NUNCA MAIS FICA POR BAIXO)
             // ---------------------------------------------------------
             if (indicesCelulas.length > 0) {
 
-                const indicesCheios = indicesCelulas.filter(i => {
-                    const c = document.getElementById(`cel-${ap}-${i}`);
-                    return c && c.dataset.tipo === "meio";
-                });
-
-                const base = indicesCheios.length > 0 ? indicesCheios : indicesCelulas;
-
-                const idxPrimeira = base[0];
-                const idxUltima = base[base.length - 1];
+                const idxPrimeira = indicesCelulas[0];
+                const idxUltima = indicesCelulas[indicesCelulas.length - 1];
 
                 const celPrimeira = document.getElementById(`cel-${ap}-${idxPrimeira}`);
                 const celUltima = document.getElementById(`cel-${ap}-${idxUltima}`);
 
+                const rectPrimeira = celPrimeira.getBoundingClientRect();
+                const rectUltima = celUltima.getBoundingClientRect();
+
+                const wrapperRect = document.getElementById("calendarioWrapper").getBoundingClientRect();
+
                 const nome = document.createElement("div");
-                nome.classList.add("reserva-nome");
+                nome.classList.add("overlay-nome");
                 nome.textContent = nomeCurto(r.cliente);
 
-                // criar um contêiner absoluto que cobre o bloco inteiro
-                const containerNome = document.createElement("div");
-                containerNome.classList.add("reserva-nome-container");
+                // posição vertical (linha do apartamento)
+                nome.style.top = (rectPrimeira.top - wrapperRect.top) + "px";
 
-                // inserir o nome dentro do contêiner
-                containerNome.appendChild(nome);
+                // posição horizontal (centro geométrico)
+                const centro = (rectPrimeira.left + rectUltima.right) / 2;
+                nome.style.left = (centro - wrapperRect.left) + "px";
 
-                // inserir o contêiner na célula PRIMEIRA (mas ele vai cobrir todas)
-                celPrimeira.appendChild(containerNome);
-
-
-                requestAnimationFrame(() => {
-                    const rectPrimeira = celPrimeira.getBoundingClientRect();
-                    const rectUltima = celUltima.getBoundingClientRect();
-                    const rectNome = nome.getBoundingClientRect();
-
-                    const centroBloco = (rectPrimeira.left + rectUltima.right) / 2;
-                    const centroNome = rectNome.left + rectNome.width / 2;
-
-                    const deslocamento = centroBloco - centroNome;
-
-                    nome.style.transform = `translateX(${deslocamento}px)`;
-                });
+                overlay.appendChild(nome);
             }
 
         });
 
     });
 }
+
 
 // -------------------------------------------------------------
 // 8) TOTAIS ADMIN
