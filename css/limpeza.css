@@ -98,7 +98,7 @@ h2 {
 .dia-celula {
     position: relative;
     padding: 0;
-    overflow: hidden; /* mantém grelha limpa */
+    overflow: hidden;
     background: transparent;
     border: 1px solid #dcdcdc;
 }
@@ -140,7 +140,7 @@ h2 {
 }
 
 /* ---------------------------------------------------------
-   OVERLAY GLOBAL PARA NOMES (NUNCA MAIS FICA POR BAIXO)
+   OVERLAY GLOBAL PARA NOMES (WEB)
 --------------------------------------------------------- */
 .overlay-nomes {
     position: absolute;
@@ -157,11 +157,10 @@ h2 {
     white-space: nowrap;
     font-size: 11px;
     font-weight: 600;
-    color: white;
+    color: white !important; /* GARANTE branco no site */
     pointer-events: none;
     transform: translate(-50%, -50%);
 }
-
 
 /* ---------------------------------------------------------
    TOOLTIP
@@ -239,60 +238,14 @@ h2 {
 }
 
 /* ---------------------------------------------------------
-   PDF
+   PDF — NOME DENTRO DA CÉLULA DO MEIO
 --------------------------------------------------------- */
-.secao-calendario-pdf-break {
-    page-break-before: always;
-}
-
-#calendarioContainer {
-    width: 100%;
-    box-sizing: border-box;
-    padding-left: 0;
-    margin-left: 0;
-}
-
 @media print {
 
     .overlay-nomes {
         display: none !important;
     }
 
-    .reserva-nome-pdf {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 11px;
-        font-weight: 600;
-        color: black;
-        pointer-events: none;
-        z-index: 9999;
-        white-space: nowrap;
-    }
-}
-
-    .overlay-nome {
-        color: black !important; /* opcional, se quiseres preto no PDF */
-    }
-}
-
-.overlay-nome {
-    color: white !important;
-}
-
-@media print {
-
-    /* esconder overlay no PDF */
-    .overlay-nomes {
-        display: none !important;
-    }
-
-    /* nome dentro da célula, sempre centrado */
     .reserva-nome-pdf {
         position: absolute;
         top: 50%;
@@ -306,5 +259,3 @@ h2 {
         z-index: 9999;
     }
 }
-
-
