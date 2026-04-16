@@ -81,6 +81,8 @@ async function gerarLimpeza() {
 
     preencherLista(filtradas);
     desenharCalendarioLimpeza(filtradas, dataInicio, dataFim);
+    desenharCalendarioLimpezaPrint(filtradas, dataInicio, dataFim);
+
 
     if (isAdmin) calcularTotais(filtradas);
 }
@@ -327,6 +329,88 @@ if (window.matchMedia("print").matches && indicesCelulas.length > 0) {
 
         });
 
+    });
+}
+
+// -------------------------------------------------------------
+// 7B) CALENDÁRIO DE LIMPEZA — VERSÃO PRINT (SEM ABSOLUTE)
+// -------------------------------------------------------------
+function desenharCalendarioLimpezaPrint(reservas, inicio, fim) {
+
+    inicio = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate());
+    fim    = new Date(fim.getFullYear(),    fim.getMonth(),    fim.getDate());
+
+    const container = document.getElementById("calendarioPrint");
+    container.innerHTML = "";
+
+    const dias = [];
+    let d = new Date(inicio);
+    while (d <= fim) {
+        dias.push(new Date(d));
+        d.setDate(d.getDate() + 1);
+    }
+
+    const apartamentos = ["2301", "2203", "2204"];
+
+    let html = `<table class="calendario calendario-print">
+                    <thead><tr><th>Apt</th>`;
+    dias.forEach(dia => html += `<th>${dia.getDate()}</th>`);
+    html += `</tr></thead><tbody>`;
+
+    apartamentos.forEach(ap => {
+        html += `<tr><td>${ap}</td>`;
+
+        dias.forEach((dia, i) => {
+            html += `<td id="pcel-${ap}-${i}" class="dia-print"></td>`;
+        });
+
+        html += `</tr>`;
+    });
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+
+    function nomeCurto(nome) {
+        if (!nome) return "";
+        const partes = nome.trim().split(" ");
+        if (partes.length === 1) return partes[0];
+        return partes[0] + " " + partes[partes.length - 1];
+    }
+
+    reservas.forEach(r => {
+
+        const listaAps = Array.isArray(r.apartamentos) ? r.apartamentos : [];
+        const ci = parseDataPt(r.checkin);
+        const co = parseDataPt(r.checkout);
+        if (!ci || !co) return;
+
+        listaAps.forEach(ap => {
+
+            dias.forEach((dia, i) => {
+
+                if (dia >= ci && dia <= co) {
+
+                    const cel = document.getElementById(`pcel-${ap}-${i}`);
+                    if (!cel) return;
+
+                    cel.classList.add("dia-com-reserva-print");
+
+                    // barra azul
+                    cel.style.background = "#1976d2";
+                    cel.style.color = "white";
+                    cel.style.fontWeight = "600";
+
+                    // nome apenas no meio
+                    const totalDias = Math.round((co - ci) / 86400000) + 1;
+                    const meio = Math.floor(totalDias / 2);
+                    const pos = Math.round((dia - ci) / 86400000);
+
+                    if (pos === meio) {
+                        cel.textContent = nomeCurto(r.cliente);
+                    }
+                }
+            });
+        });
     });
 }
 
