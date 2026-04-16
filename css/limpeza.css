@@ -119,8 +119,10 @@ h2 {
     height: 100%;
     background: #1976d2;
     border-radius: 0;
-    z-index: 1;
+    z-index: 2;
+    pointer-events: none; /* ESSENCIAL */
 }
+
 
 /* Metade direita — CHECK-IN */
 .reserva-inicio-metade {
@@ -256,19 +258,6 @@ h2 {
 
 [data-info]::after {
     z-index: 999999 !important;
-}
-
-.reserva {
-    pointer-events: auto;
-}
-
-.reserva:hover::after {
-    z-index: 999999 !important;
-}
-
-/* Garantir que o tooltip fica acima da barra azul */
-.reserva {
-    z-index: 2; /* antes era 1 */
 }
 
 .reserva-nome {
