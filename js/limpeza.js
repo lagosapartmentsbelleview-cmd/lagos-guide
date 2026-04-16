@@ -223,8 +223,8 @@ Obs: ${r.comentarios || "-"}
                 const cel = document.getElementById(`cel-${ap}-${index}`);
                 if (!cel) return;
 
-                const isCheckinVisivel  = dtN.getTime() === visInicio.getTime();
-                const isCheckoutVisivel = dtN.getTime() === visFim.getTime();
+                const isCheckinVisivel  = !truncadoNoInicio && dtN.getTime() === visInicio.getTime();
+                const isCheckoutVisivel = !truncadoNoFim    && dtN.getTime() === visFim.getTime();
 
                 const div = document.createElement("div");
                 div.classList.add("reserva");
