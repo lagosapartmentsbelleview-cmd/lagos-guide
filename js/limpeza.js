@@ -296,7 +296,8 @@ Obs: ${r.comentarios || "-"}
                 nome.textContent = nomeCurto(r.cliente);
 
                 // posição vertical (linha do apartamento)
-                nome.style.top = (rectPrimeira.top - wrapperRect.top) + "px";
+                nome.style.top = (rectPrimeira.top - wrapperRect.top + rectPrimeira.height / 2) + "px";
+                nome.style.transform = "translate(-50%, -50%)";
 
                 // posição horizontal (centro geométrico)
                 const centro = (rectPrimeira.left + rectUltima.right) / 2;
