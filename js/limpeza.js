@@ -135,7 +135,7 @@ function preencherLista(reservas) {
 }
 
 // -------------------------------------------------------------
-// 7) CALENDÁRIO DE LIMPEZA — BLOCO ÚNICO
+// 7) CALENDÁRIO DE LIMPEZA — VERSÃO FINAL (SEM MASTER)
 // -------------------------------------------------------------
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
@@ -159,7 +159,7 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
     html += `</tr></thead><tbody>`;
 
     apartamentos.forEach(ap => {
-        html += `<tr id="linha-${ap}" style="position:relative;"><td>${ap}</td>`;
+        html += `<tr><td>${ap}</td>`;
         dias.forEach((_, i) => {
             html += `<td class="dia-celula" id="cel-${ap}-${i}"></td>`;
         });
@@ -194,6 +194,13 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
         const visFim = realFim > fim ? normalizar(fim) : realFim;
         if (visInicio > visFim) return;
 
+        const diasVisiveis = [];
+        let dt = new Date(visInicio);
+        while (dt <= visFim) {
+            diasVisiveis.push(new Date(dt));
+            dt.setDate(dt.getDate() + 1);
+        }
+
         const tooltipTexto = `
 ${r.cliente}
 Check-in: ${realInicio.toLocaleDateString("pt-PT")}
@@ -206,61 +213,79 @@ Obs: ${r.comentarios || "-"}
 
         listaAps.forEach(ap => {
 
-            const linha = document.getElementById(`linha-${ap}`);
-            if (!linha) return;
+            const indicesCelulas = [];
 
-            // encontrar primeira e última célula
-            const indexInicio = dias.findIndex(x => x.getTime() === visInicio.getTime());
-            const indexFim    = dias.findIndex(x => x.getTime() === visFim.getTime());
-            if (indexInicio === -1 || indexFim === -1) return;
+            diasVisiveis.forEach(dtN => {
 
-            const celInicio = document.getElementById(`cel-${ap}-${indexInicio}`);
-            const celFim    = document.getElementById(`cel-${ap}-${indexFim}`);
-            if (!celInicio || !celFim) return;
+                const index = dias.findIndex(x => x.getTime() === dtN.getTime());
+                if (index === -1) return;
 
-            const rectInicio = celInicio.getBoundingClientRect();
-            const rectFim    = celFim.getBoundingClientRect();
-            const rectLinha  = linha.getBoundingClientRect();
+                const cel = document.getElementById(`cel-${ap}-${index}`);
+                if (!cel) return;
 
-            const left = rectInicio.left - rectLinha.left;
-            const width = (rectFim.right - rectInicio.left);
+                const isCheckinVisivel  = dtN.getTime() === visInicio.getTime();
+                const isCheckoutVisivel = dtN.getTime() === visFim.getTime();
 
-            // detectar truncamentos
-            const truncadoNoInicio = realInicio < inicio;
-            const truncadoNoFim    = realFim > fim;
+                const div = document.createElement("div");
+                div.classList.add("reserva");
 
-            // criar bloco único
-            const bloco = document.createElement("div");
-            bloco.classList.add("reserva-bloco");
-            bloco.style.position = "absolute";
-            bloco.style.top = "0";
-            bloco.style.left = left + "px";
-            bloco.style.width = width + "px";
-            bloco.style.height = "100%";
-            bloco.setAttribute("data-info", tooltipTexto);
+                // detectar truncamentos
+                const truncadoNoInicio = realInicio < inicio;
+                const truncadoNoFim    = realFim > fim;
 
-            // bordas
-            if (!truncadoNoInicio) {
-                bloco.style.borderTopLeftRadius = "12px";
-                bloco.style.borderBottomLeftRadius = "12px";
+                // decidir forma da barra
+                if (isCheckinVisivel && isCheckoutVisivel) {
+
+                    if (!truncadoNoInicio && truncadoNoFim) {
+                        // começa aqui e continua para o mês seguinte → "("
+                        div.classList.add("reserva-inicio-metade");
+
+                    } else if (truncadoNoInicio && !truncadoNoFim) {
+                        // vem de antes e termina aqui → ")"
+                        div.classList.add("reserva-fim-metade");
+
+                    } else {
+                        // reserva realmente de 1 dia
+                        div.classList.add("reserva-meio");
+                    }
+
+                } else if (isCheckinVisivel) {
+                    div.classList.add("reserva-inicio-metade");
+
+                } else if (isCheckoutVisivel) {
+                    div.classList.add("reserva-fim-metade");
+
+                } else {
+                    div.classList.add("reserva-meio");
+                }
+
+                div.setAttribute("data-info", tooltipTexto);
+                cel.appendChild(div);
+
+                // marcar célula como tendo reserva (para o CSS da grelha)
+                cel.classList.add("dia-com-reserva");
+
+                // guardar índice desta célula para depois pôr o nome no meio
+                indicesCelulas.push(index);
+            });
+
+            // depois de desenhar todas as células desta reserva neste apartamento,
+            // colocamos o nome na célula do meio
+            if (indicesCelulas.length > 0) {
+                const meioIndex = indicesCelulas[Math.floor(indicesCelulas.length / 2)];
+                const celMeio = document.getElementById(`cel-${ap}-${meioIndex}`);
+                if (celMeio) {
+                    const nome = document.createElement("div");
+                    nome.classList.add("reserva-nome");
+                    nome.textContent = nomeCurto(r.cliente);
+                    celMeio.appendChild(nome);
+                }
             }
-            if (!truncadoNoFim) {
-                bloco.style.borderTopRightRadius = "12px";
-                bloco.style.borderBottomRightRadius = "12px";
-            }
 
-            // nome centrado
-            const nome = document.createElement("div");
-            nome.classList.add("reserva-nome");
-            nome.textContent = nomeCurto(r.cliente);
-            bloco.appendChild(nome);
-
-            linha.appendChild(bloco);
         });
 
     });
 }
-
 
 // -------------------------------------------------------------
 // 8) TOTAIS ADMIN
