@@ -260,7 +260,7 @@ Obs: ${r.comentarios || "-"}
                     div.classList.add("reserva-meio");
                 }
 
-                div.setAttribute("data-info", tooltipTexto);
+                cel.setAttribute("data-info", tooltipTexto);
                 cel.appendChild(div);
 
                 // marcar célula como tendo reserva (para o CSS da grelha)
