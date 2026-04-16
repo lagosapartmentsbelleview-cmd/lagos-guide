@@ -304,22 +304,25 @@ Obs: ${r.comentarios || "-"}
                 overlay.appendChild(nome);
             }
 
-            // ---------------------------------------------------------
-// NOME PARA PDF — DENTRO DA CÉLULA DO MEIO
 // ---------------------------------------------------------
-if (indicesCelulas.length > 0) {
+// NOME PARA PDF — DENTRO DA BARRA AZUL (SÓ NO PRINT)
+// ---------------------------------------------------------
+if (window.matchMedia("print").matches && indicesCelulas.length > 0) {
 
-    // escolhe a célula do meio das células visíveis
     const meio = indicesCelulas[Math.floor(indicesCelulas.length / 2)];
     const celPdf = document.getElementById(`cel-${ap}-${meio}`);
 
     if (celPdf) {
-        const nomePdf = document.createElement("div");
-        nomePdf.classList.add("reserva-nome-pdf");
-        nomePdf.textContent = nomeCurto(r.cliente);
-        celPdf.appendChild(nomePdf);
+        const barra = celPdf.querySelector(".reserva");
+        if (barra) {
+            const nomePdf = document.createElement("div");
+            nomePdf.classList.add("reserva-nome-pdf");
+            nomePdf.textContent = nomeCurto(r.cliente);
+            barra.appendChild(nomePdf);
+        }
     }
 }
+
 
 
         });
