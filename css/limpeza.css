@@ -99,10 +99,12 @@ h2 {
 .dia-celula {
     position: relative;
     padding: 0;
-    overflow: hidden;
+    overflow: visible;   /* ← deixar o nome respirar */
     background: transparent;
-    border: 1px solid #dcdcdc; /* AQUI! */
+    border: 1px solid #dcdcdc;
+    z-index: 1;          /* junta já o z-index aqui */
 }
+
 
 /* quando há reserva, grelha desaparece */
 .dia-celula.dia-com-reserva {
@@ -261,11 +263,6 @@ h2 {
     font-size: 11px;
     font-weight: 600;
     color: white;
-}
-
-.dia-celula {
-    position: relative;
-    z-index: 1;
 }
 
 .dia-celula .reserva {
