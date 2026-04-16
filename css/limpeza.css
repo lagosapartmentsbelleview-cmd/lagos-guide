@@ -251,3 +251,16 @@ h2 {
     padding-left: 0;
     margin-left: 0;
 }
+
+@media print {
+    .overlay-nomes {
+        position: absolute;
+        z-index: 999999 !important;
+        display: block !important;
+    }
+
+    .overlay-nome {
+        color: black !important; /* opcional, se quiseres preto no PDF */
+    }
+}
+
