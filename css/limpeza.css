@@ -268,6 +268,46 @@ h2 {
     #calendarioContainer {
         display: none !important;
     }
+
+/* ---------------------------------------------------------
+   PRINT — ESCONDER WEB E MOSTRAR CALENDÁRIO PRINT
+--------------------------------------------------------- */
+@media print {
+
+    /* esconder overlay e barras absolutas do calendário WEB */
+    .overlay-nomes,
+    .reserva,
+    .dia-celula,
+    #calendarioWrapper,
+    #calendarioContainer {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+    }
+
+    /* mostrar apenas o calendário PRINT */
+    .print-only {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* nome dentro da barra azul no PRINT */
+    .reserva-nome-pdf {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+        font-size: 11px;
+        font-weight: 600;
+        color: white !important;
+        pointer-events: none;
+        z-index: 9999;
+    }
+}
+
     .print-only {
         display: block !important;
     }
