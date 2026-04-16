@@ -281,3 +281,30 @@ h2 {
     }
 }
 
+.overlay-nome {
+    color: white !important;
+}
+
+@media print {
+
+    /* esconder overlay no PDF */
+    .overlay-nomes {
+        display: none !important;
+    }
+
+    /* nome dentro da célula, sempre centrado */
+    .reserva-nome-pdf {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+        font-size: 11px;
+        font-weight: 600;
+        color: black !important;
+        pointer-events: none;
+        z-index: 9999;
+    }
+}
+
+
