@@ -91,41 +91,57 @@ h2 {
     background: #fafafa;
 }
 
-/* ESSENCIAL PARA BLOCOS ÚNICOS */
-.calendario tr {
-    position: relative;
-    overflow: visible;
-}
-
 /* ---------------------------------------------------------
    CÉLULAS DE DIA
 --------------------------------------------------------- */
+
+/* por defeito, grelha visível */
 .dia-celula {
     position: relative;
     padding: 0;
     overflow: hidden;
     background: transparent;
-    border: 1px solid #dcdcdc;
+    border: 1px solid #dcdcdc; /* AQUI! */
 }
 
+/* quando há reserva, grelha desaparece */
 .dia-celula.dia-com-reserva {
     border: none !important;
 }
 
 /* ---------------------------------------------------------
-   BLOCO ÚNICO DE RESERVA
+   BARRAS DE RESERVA — LIMPEZA (SEM MASTER)
 --------------------------------------------------------- */
-.reserva-bloco {
+
+.reserva {
     position: absolute;
     top: 0;
     height: 100%;
     background: #1976d2;
-    border-radius: 12px;
-    z-index: 5;
-    overflow: visible;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 0;
+    z-index: 1;
+}
+
+/* Metade direita — CHECK-IN */
+.reserva-inicio-metade {
+    width: 50%;
+    right: 0;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+/* Metade esquerda — CHECK-OUT */
+.reserva-fim-metade {
+    width: 50%;
+    left: 0;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* Dia intermédio — 100% */
+.reserva-meio {
+    width: 100%;
+    left: 0;
 }
 
 /* ---------------------------------------------------------
@@ -133,7 +149,11 @@ h2 {
 --------------------------------------------------------- */
 .reserva-nome {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0; /* ESSENCIAL */
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -141,7 +161,7 @@ h2 {
     font-weight: 600;
     color: white;
     pointer-events: none;
-    z-index: 10;
+    z-index: 5;
 }
 
 /* ---------------------------------------------------------
@@ -163,7 +183,7 @@ h2 {
     padding: 6px 8px;
     border-radius: 4px;
     white-space: pre;
-    z-index: 999999;
+    z-index: 9999;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.15s ease-in-out;
@@ -171,11 +191,6 @@ h2 {
 
 [data-info]:hover::after {
     opacity: 1;
-}
-
-/* Tooltip aplicado ao bloco único */
-.reserva-bloco[data-info]::after {
-    z-index: 999999 !important;
 }
 
 /* ---------------------------------------------------------
@@ -219,6 +234,7 @@ h2 {
         min-width: 70px;
     }
 
+    .reserva,
     .reserva-nome {
         font-size: 10px;
     }
@@ -237,3 +253,24 @@ h2 {
     padding-left: 0;
     margin-left: 0;
 }
+
+[data-info]::after {
+    z-index: 999999 !important;
+}
+
+.reserva {
+    pointer-events: auto;
+}
+
+.reserva:hover::after {
+    z-index: 999999 !important;
+}
+
+/* Garantir que o tooltip fica acima da barra azul */
+.reserva {
+    z-index: 2; /* antes era 1 */
+}
+
+.reserva-nome {
+    z-index: 10;
+} 
