@@ -53,6 +53,7 @@ h2 {
 #calendarioWrapper {
     overflow-x: auto;
     padding-bottom: 10px;
+    position: relative; /* ESSENCIAL para overlay */
 }
 
 .calendario {
@@ -94,27 +95,21 @@ h2 {
 /* ---------------------------------------------------------
    CÉLULAS DE DIA
 --------------------------------------------------------- */
-
-/* por defeito, grelha visível */
 .dia-celula {
     position: relative;
     padding: 0;
-    overflow: visible;   /* ← deixar o nome respirar */
+    overflow: hidden; /* mantém grelha limpa */
     background: transparent;
     border: 1px solid #dcdcdc;
-    z-index: 1;          /* junta já o z-index aqui */
 }
 
-
-/* quando há reserva, grelha desaparece */
 .dia-celula.dia-com-reserva {
     border: none !important;
 }
 
 /* ---------------------------------------------------------
-   BARRAS DE RESERVA — LIMPEZA (SEM MASTER)
+   BARRAS DE RESERVA
 --------------------------------------------------------- */
-
 .reserva {
     position: absolute;
     top: 0;
@@ -122,11 +117,9 @@ h2 {
     background: #1976d2;
     border-radius: 0;
     z-index: 2;
-    pointer-events: none; /* ESSENCIAL */
+    pointer-events: none;
 }
 
-
-/* Metade direita — CHECK-IN */
 .reserva-inicio-metade {
     width: 50%;
     right: 0;
@@ -134,7 +127,6 @@ h2 {
     border-bottom-left-radius: 12px;
 }
 
-/* Metade esquerda — CHECK-OUT */
 .reserva-fim-metade {
     width: 50%;
     left: 0;
@@ -142,10 +134,32 @@ h2 {
     border-bottom-right-radius: 12px;
 }
 
-/* Dia intermédio — 100% */
 .reserva-meio {
     width: 100%;
     left: 0;
+}
+
+/* ---------------------------------------------------------
+   OVERLAY GLOBAL PARA NOMES (NUNCA MAIS FICA POR BAIXO)
+--------------------------------------------------------- */
+.overlay-nomes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.overlay-nome {
+    position: absolute;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+    pointer-events: none;
 }
 
 /* ---------------------------------------------------------
@@ -167,7 +181,7 @@ h2 {
     padding: 6px 8px;
     border-radius: 4px;
     white-space: pre;
-    z-index: 9999;
+    z-index: 999999;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.15s ease-in-out;
@@ -218,8 +232,7 @@ h2 {
         min-width: 70px;
     }
 
-    .reserva,
-    .reserva-nome {
+    .overlay-nome {
         font-size: 10px;
     }
 }
@@ -237,48 +250,3 @@ h2 {
     padding-left: 0;
     margin-left: 0;
 }
-
-[data-info]::after {
-    z-index: 999999 !important;
-}
-
-/* ---------------------------------------------------------
-   NOME CENTRADO NO BLOCO (OPÇÃO B — CENTRAMENTO MATEMÁTICO)
---------------------------------------------------------- */
-.reserva-nome {
-    position: relative !important;
-    display: inline-block !important;
-    white-space: nowrap !important;
-    z-index: 999 !important;
-    pointer-events: none !important;
-    isolation: isolate !important;
-
-    width: auto !important;
-    height: auto !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-
-    font-size: 11px;
-    font-weight: 600;
-    color: white;
-}
-
-.dia-celula .reserva {
-    z-index: 2;
-}
-
-.dia-celula .reserva-nome {
-    z-index: 3 !important;
-}
-
-.reserva-nome-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999; /* acima de tudo */
-}
-
