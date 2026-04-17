@@ -398,12 +398,12 @@ window.exportarPDF = async function () {
 
     // 1) Capturar LISTA
     const lista = document.querySelectorAll(".secao")[0];
-    const listaCanvas = await html2canvas(lista, { scale: 2 });
+    const listaCanvas = await html2canvas(lista, { scale: 4 });
     const listaImg = listaCanvas.toDataURL("image/png");
 
     // 2) Capturar CALENDÁRIO
     const calendario = document.querySelectorAll(".secao")[1];
-    const calendarioCanvas = await html2canvas(calendario, { scale: 2 });
+    const calendarioCanvas = await html2canvas(calendario, { scale: 4 });
     const calendarioImg = calendarioCanvas.toDataURL("image/png");
 
     // 3) Criar PDF
