@@ -336,11 +336,9 @@ function desenharCalendarioLimpezaPrint(reservas, inicio, fim) {
 
     apartamentos.forEach(ap => {
         html += `<tr><td>${ap}</td>`;
-
         dias.forEach((dia, i) => {
             html += `<td id="pcel-${ap}-${i}" class="dia-print"></td>`;
         });
-
         html += `</tr>`;
     });
 
@@ -370,23 +368,16 @@ function desenharCalendarioLimpezaPrint(reservas, inicio, fim) {
                     const cel = document.getElementById(`pcel-${ap}-${i}`);
                     if (!cel) return;
 
+                    // barra azul
                     cel.classList.add("dia-com-reserva-print");
 
-                    cel.style.background = "#1976d2";
-                    cel.style.color = "white";
-                    cel.style.fontWeight = "600";
-
+                    // nome no centro
                     const totalDias = Math.round((co - ci) / 86400000) + 1;
                     const meio = Math.floor(totalDias / 2);
                     const pos = Math.round((dia - ci) / 86400000);
 
                     if (pos === meio) {
-                        cel.style.display = "flex";
-                        cel.style.alignItems = "center";
-                        cel.style.justifyContent = "center";
-                        cel.style.fontWeight = "600";
-                        cel.style.color = "white";
-                        cel.style.fontSize = "11px";
+                        cel.classList.add("nome-centro");
                         cel.textContent = nomeCurto(r.cliente);
                     }
                 }
