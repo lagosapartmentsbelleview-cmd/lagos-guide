@@ -195,7 +195,7 @@ window.addEventListener("load", function () {
         pagebreak: { mode: ['css', 'legacy'] }
     };
 
-        html2pdf().set(opt).from(wrapper).save().then(() => {
+            html2pdf().set(opt).from(wrapper).save().then(() => {
 
         // 4) Restaurar estado original
         document.body.removeChild(wrapper);
@@ -218,27 +218,19 @@ window.exportarEEnviarWhatsApp = function () {
 };
 </script>
 
-
-<!-- ========================================================= -->
-<!-- FIREBASE + PROTEÇÃO + LOGOUT (sempre antes dos scripts da página) -->
-<!-- ========================================================= -->
-
 <!-- Firebase compat v9 -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
-<!-- Configuração Firebase -->
 <script src="js/firebase-config.js"></script>
 
-<!-- Proteção -->
 <script>
 firebase.auth().onAuthStateChanged(user => {
     if (!user) window.location.href = "login.html";
 });
 </script>
 
-<!-- Logout -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const btnLogout = document.getElementById("btnLogout");
@@ -252,15 +244,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<!-- Scripts da página -->
 <script src="js/reservas-core.js"></script>
 <script src="js/limpeza.js"></script>
 
-<!-- Bibliotecas externas -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<!-- Menu -->
 <script src="js/menu.js"></script>
 
 </body>
