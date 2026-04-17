@@ -80,11 +80,10 @@ async function gerarLimpeza() {
     const filtradas = filtrarPorDatas(reservas, dataInicio, dataFim);
 
     preencherLista(filtradas);
-    desenharCalendarioLimpeza(filtradas, dataInicio, dataFim);
-    desenharCalendarioLimpezaPrint(filtradas, dataInicio, dataFim);
-
+    desenharCalendarioLimpeza(filtradas, dataInicio, dataFim); // WEB + clone A1
 
     if (isAdmin) calcularTotais(filtradas);
+
 }
 
 // -------------------------------------------------------------
@@ -137,7 +136,7 @@ function preencherLista(reservas) {
 }
 
 // -------------------------------------------------------------
-// 7) CALENDÁRIO DE LIMPEZA — VERSÃO FINAL (WEB + PDF)
+// 7) CALENDÁRIO DE LIMPEZA — VERSÃO WEB (mantido)
 // -------------------------------------------------------------
 function desenharCalendarioLimpeza(reservas, inicio, fim) {
 
@@ -307,18 +306,20 @@ Obs: ${r.comentarios || "-"}`
         });
 
     });
-}
 
+    // ⭐ NOVO: gerar clone A1 automaticamente
+    gerarCloneCalendarioA1(reservas, inicio, fim);
+}
 // -------------------------------------------------------------
-// 7B) CALENDÁRIO DE LIMPEZA — VERSÃO PRINT (SEM ABSOLUTE)
+// 7B) CALENDÁRIO WEB — CLONE A1 (para PDF e CTRL+P)
 // -------------------------------------------------------------
-function desenharCalendarioLimpezaPrint(reservas, inicio, fim) {
+function gerarCloneCalendarioA1(reservas, inicio, fim) {
+
+    const cloneContainer = document.getElementById("calendarioWebPrintClone");
+    cloneContainer.innerHTML = "";
 
     inicio = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate());
     fim    = new Date(fim.getFullYear(),    fim.getMonth(),    fim.getDate());
-
-    const container = document.getElementById("calendarioPrint");
-    container.innerHTML = "";
 
     const dias = [];
     let d = new Date(inicio);
@@ -329,7 +330,7 @@ function desenharCalendarioLimpezaPrint(reservas, inicio, fim) {
 
     const apartamentos = ["2301", "2203", "2204"];
 
-    let html = `<table class="calendario calendario-print">
+    let html = `<table class="calendario-web-print">
                     <thead><tr><th>Apt</th>`;
     dias.forEach(dia => html += `<th>${dia.getDate()}</th>`);
     html += `</tr></thead><tbody>`;
@@ -337,19 +338,18 @@ function desenharCalendarioLimpezaPrint(reservas, inicio, fim) {
     apartamentos.forEach(ap => {
         html += `<tr><td>${ap}</td>`;
         dias.forEach((dia, i) => {
-            html += `<td id="pcel-${ap}-${i}" class="dia-print"></td>`;
+            html += `<td id="clone-${ap}-${i}"></td>`;
         });
         html += `</tr>`;
     });
 
     html += `</tbody></table>`;
-    container.innerHTML = html;
+    cloneContainer.innerHTML = html;
 
     function nomeCurto(nome) {
         if (!nome) return "";
         const partes = nome.trim().split(" ");
-        if (partes.length === 1) return partes[0];
-        return partes[0] + " " + partes[partes.length - 1];
+        return partes.length === 1 ? partes[0] : partes[0] + " " + partes[partes.length - 1];
     }
 
     reservas.forEach(r => {
@@ -365,30 +365,70 @@ function desenharCalendarioLimpezaPrint(reservas, inicio, fim) {
 
                 if (dia >= ci && dia <= co) {
 
-                    const cel = document.getElementById(`pcel-${ap}-${i}`);
+                    const cel = document.getElementById(`clone-${ap}-${i}`);
                     if (!cel) return;
 
-                    // barra azul
-                    cel.classList.add("dia-com-reserva-print");
-
-                    // nome no centro
                     const totalDias = Math.round((co - ci) / 86400000) + 1;
-                    const meio = Math.floor(totalDias / 2);
+                    const meioReal = (totalDias - 1) / 2; // centro geométrico real
                     const pos = Math.round((dia - ci) / 86400000);
 
-                    if (pos === meio) {
-                        cel.classList.add("nome-centro");
-                        cel.textContent = nomeCurto(r.cliente);
-                    }
+                    let tipo = "meio";
+                    if (pos === 0) tipo = "inicio";
+                    if (pos === totalDias - 1) tipo = "fim";
+
+                    // célula mais próxima do centro geométrico
+                    const posCentro = Math.round(meioReal);
+
+                    cel.innerHTML = `
+                        <div class="reserva-print ${tipo}">
+                            ${pos === posCentro ? nomeCurto(r.cliente) : ""}
+                        </div>
+                    `;
                 }
             });
         });
     });
 }
+// -------------------------------------------------------------
+// 8) EXPORTAR PDF — LISTA + CALENDÁRIO (2 páginas)
+// -------------------------------------------------------------
+window.exportarPDF = function () {
 
-// -------------------------------------------------------------
-// 8) TOTAIS ADMIN
-// -------------------------------------------------------------
+    const secoes = document.querySelectorAll(".secao");
+    const listaSecao = secoes[0];
+    const calendarioClone = document.getElementById("calendarioWebPrintClone");
+
+    const wrapper = document.createElement("div");
+    wrapper.style.width = "100%";
+
+    // Página 1 — Lista
+    wrapper.appendChild(listaSecao.cloneNode(true));
+
+    // Página 2 — Calendário
+    const calPage = document.createElement("div");
+    calPage.style.pageBreakBefore = "always";
+    calPage.appendChild(calendarioClone.cloneNode(true));
+    wrapper.appendChild(calPage);
+
+    document.body.appendChild(wrapper);
+
+    const opt = {
+        margin: [10, 5, 10, 5],
+        filename: "limpeza.pdf",
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" }
+    };
+
+    html2pdf().set(opt).from(wrapper).save().then(() => {
+        document.body.removeChild(wrapper);
+    });
+};
+window.exportarEEnviarWhatsApp = function () {
+    window.exportarPDF();
+    setTimeout(() => {
+        window.open("https://chat.whatsapp.com/D98y5fnPZ7A7IeYZuNjlt1", "_blank");
+    }, 2000);
+};
 function calcularTotais(reservas) {
     let totalBase = 0;
     let totalExtras = 0;
