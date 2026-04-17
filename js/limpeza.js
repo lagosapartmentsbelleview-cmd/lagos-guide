@@ -402,7 +402,7 @@ window.exportarPDF = async function () {
     const listaImg = listaCanvas.toDataURL("image/png");
 
     // 2) Capturar CALENDÁRIO
-    const calendario = document.getElementById("calendarioWebPrintClone");
+    const calendario = document.querySelectorAll(".secao")[1];
     const calendarioCanvas = await html2canvas(calendario, { scale: 3 });
     const calendarioImg = calendarioCanvas.toDataURL("image/png");
 
