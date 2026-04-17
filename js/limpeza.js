@@ -406,6 +406,15 @@ function desenharCalendarioLimpezaPrint(reservas, inicio, fim) {
                     const pos = Math.round((dia - ci) / 86400000);
 
                     if (pos === meio) {
+    cel.style.display = "flex";
+    cel.style.alignItems = "center";
+    cel.style.justifyContent = "center";
+    cel.style.fontWeight = "600";
+    cel.style.color = "white";
+    cel.style.fontSize = "11px";
+    cel.textContent = nomeCurto(r.cliente);
+}
+
                         cel.textContent = nomeCurto(r.cliente);
                     }
                 }
