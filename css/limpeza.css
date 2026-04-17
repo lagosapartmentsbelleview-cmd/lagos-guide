@@ -244,7 +244,18 @@ h2 {
     display: none;
 }
 
+/* ---------------------------------------------------------
+   PRINT — CALENDÁRIO PROFISSIONAL
+--------------------------------------------------------- */
 @media print {
+
+    body {
+        background: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 
     /* esconder completamente o calendário WEB */
     #calendarioContainer,
@@ -265,17 +276,47 @@ h2 {
         opacity: 1 !important;
     }
 
-    /* nome dentro da barra azul no PRINT */
-    .reserva-nome-pdf {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        white-space: nowrap;
+    /* tabela PRINT */
+    .calendario-print {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
         font-size: 11px;
+        background: white !important;
+    }
+
+    .calendario-print th,
+    .calendario-print td {
+        border: 1px solid #ccc;
+        padding: 4px;
+        text-align: center;
+        width: 28px;
+        height: 28px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .calendario-print th:first-child,
+    .calendario-print td:first-child {
+        width: 70px !important;
         font-weight: 600;
+        background: #f2f2f2 !important;
+    }
+
+    /* barra azul */
+    .dia-com-reserva-print {
+        background: #1976d2 !important;
         color: white !important;
-        pointer-events: none;
-        z-index: 9999;
+        font-weight: 600;
+    }
+
+    /* nome centrado */
+    .nome-centro {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        color: white !important;
     }
 }
