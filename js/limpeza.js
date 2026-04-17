@@ -394,10 +394,14 @@ function gerarCloneCalendarioA1(reservas, inicio, fim) {
 // -------------------------------------------------------------
 window.exportarPDF = function () {
 
-    const secoes = document.querySelectorAll(".secao");
+    // 1) Mostrar clone A1 temporariamente
+    const clone = document.getElementById("calendarioWebPrintClone");
+    clone.style.display = "block";
 
-    const listaSecao = secoes[0];      // página 1
-    const calendarioSecao = secoes[1]; // página 2 (inclui o clone A1)
+    // 2) Clonar secções
+    const secoes = document.querySelectorAll(".secao");
+    const listaSecao = secoes[0];
+    const calendarioSecao = secoes[1];
 
     const wrapper = document.createElement("div");
     wrapper.style.width = "100%";
@@ -421,9 +425,14 @@ window.exportarPDF = function () {
     };
 
     html2pdf().set(opt).from(wrapper).save().then(() => {
+
+        // 3) Esconder clone A1 outra vez
+        clone.style.display = "";
+
         document.body.removeChild(wrapper);
     });
 };
+
 
 window.exportarEEnviarWhatsApp = function () {
     window.exportarPDF();
