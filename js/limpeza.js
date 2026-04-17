@@ -211,15 +211,15 @@ function desenharCalendarioLimpeza(reservas, inicio, fim) {
             dt.setDate(dt.getDate() + 1);
         }
 
-        const tooltipTexto = `
-${r.cliente}
+        const tooltipTexto = (
+`${r.cliente}
 Check-in: ${realInicio.toLocaleDateString("pt-PT")}
 Check-out: ${realFim.toLocaleDateString("pt-PT")}
 ${r.hospedes} pessoas (${r.adultos}A + ${r.criancas}C)
 Idades: ${r.idadesCriancas || "-"}
 Berço: ${r.berco ? "Sim" : "Não"}
-Obs: ${r.comentarios || "-"}
-        `.trim();
+Obs: ${r.comentarios || "-"}`
+        ).trim();
 
         listaAps.forEach(ap => {
 
@@ -296,36 +296,13 @@ Obs: ${r.comentarios || "-"}
                 nome.classList.add("overlay-nome");
                 nome.textContent = nomeCurto(r.cliente);
 
-                // centro vertical
                 nome.style.top = (rectPrimeira.top - wrapperRect.top + rectPrimeira.height / 2) + "px";
 
-                // centro horizontal
                 const centro = (rectPrimeira.left + rectUltima.right) / 2;
                 nome.style.left = (centro - wrapperRect.left) + "px";
 
                 overlay.appendChild(nome);
             }
-
-// ---------------------------------------------------------
-// NOME PARA PDF — DENTRO DA BARRA AZUL (SÓ NO PRINT)
-// ---------------------------------------------------------
-if (window.matchMedia("print").matches && indicesCelulas.length > 0) {
-
-    const meio = indicesCelulas[Math.floor(indicesCelulas.length / 2)];
-    const celPdf = document.getElementById(`cel-${ap}-${meio}`);
-
-    if (celPdf) {
-        const barra = celPdf.querySelector(".reserva");
-        if (barra) {
-            const nomePdf = document.createElement("div");
-            nomePdf.classList.add("reserva-nome-pdf");
-            nomePdf.textContent = nomeCurto(r.cliente);
-            barra.appendChild(nomePdf);
-        }
-    }
-}
-
-
 
         });
 
@@ -395,26 +372,21 @@ function desenharCalendarioLimpezaPrint(reservas, inicio, fim) {
 
                     cel.classList.add("dia-com-reserva-print");
 
-                    // barra azul
                     cel.style.background = "#1976d2";
                     cel.style.color = "white";
                     cel.style.fontWeight = "600";
 
-                    // nome apenas no meio
                     const totalDias = Math.round((co - ci) / 86400000) + 1;
                     const meio = Math.floor(totalDias / 2);
                     const pos = Math.round((dia - ci) / 86400000);
 
                     if (pos === meio) {
-    cel.style.display = "flex";
-    cel.style.alignItems = "center";
-    cel.style.justifyContent = "center";
-    cel.style.fontWeight = "600";
-    cel.style.color = "white";
-    cel.style.fontSize = "11px";
-    cel.textContent = nomeCurto(r.cliente);
-}
-
+                        cel.style.display = "flex";
+                        cel.style.alignItems = "center";
+                        cel.style.justifyContent = "center";
+                        cel.style.fontWeight = "600";
+                        cel.style.color = "white";
+                        cel.style.fontSize = "11px";
                         cel.textContent = nomeCurto(r.cliente);
                     }
                 }
@@ -422,8 +394,6 @@ function desenharCalendarioLimpezaPrint(reservas, inicio, fim) {
         });
     });
 }
-
-
 
 // -------------------------------------------------------------
 // 8) TOTAIS ADMIN
