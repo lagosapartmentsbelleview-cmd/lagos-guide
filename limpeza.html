@@ -79,141 +79,51 @@
             </table>
         </section>
 
-        <!-- CALENDÁRIO -->
+        <!-- CALENDÁRIO WEB -->
         <section class="secao">
             <h2>Calendário</h2>
             <div id="calendarioContainer"></div>
-            <div id="calendarioPrint" class="print-only"></div>
         </section>
+
+        <!-- CLONE / PRINT AREA (vamos usar no passo 2/3) -->
+        <div id="calendarioWebPrintClone" class="print-only"></div>
     </div>
 
-<!-- ========================================================= -->
-<!-- FUNÇÕES DA PÁGINA -->
-<!-- ========================================================= -->
+    <!-- Firebase compat v9 -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
-<script>
-window.addEventListener("load", function () {
+    <script src="js/firebase-config.js"></script>
 
-    /* ===========================
-       EXPORTAR EXCEL
-    ============================ */
-    window.exportarExcel = function () {
-        const tabela = document.querySelector("#tabelaLimpeza");
+    <script>
+    firebase.auth().onAuthStateChanged(user => {
+        if (!user) window.location.href = "login.html";
+    });
+    </script>
 
-        const ws = XLSX.utils.table_to_sheet(tabela);
-        const range = XLSX.utils.decode_range(ws['!ref']);
-
-        const colWidths = [];
-        for (let C = range.s.c; C <= range.e.c; ++C) {
-            let maxWidth = 10;
-            for (let R = range.s.r; R <= range.e.r; ++R) {
-                const cell = ws[XLSX.utils.encode_cell({ r: R, c: C })];
-                if (cell && cell.v) {
-                    const len = cell.v.toString().length;
-                    if (len > maxWidth) maxWidth = len;
-                }
-            }
-            colWidths.push({ wch: maxWidth + 2 });
-        }
-        ws['!cols'] = colWidths;
-
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Limpeza");
-
-        XLSX.writeFile(wb, "limpeza_formatado.xlsx");
-    };
-
-    /* ===========================
-       EXPORTAR PDF
-    ============================ */
-    window.exportarPDF = function () {
-
-        const calendarioWeb = document.getElementById("calendarioContainer");
-        const overlay = document.querySelector(".overlay-nomes");
-        if (calendarioWeb) calendarioWeb.style.display = "none";
-        if (overlay) overlay.style.display = "none";
-
-        const calendarioPrint = document.getElementById("calendarioPrint");
-        calendarioPrint.style.display = "block";
-
-        const secoes = document.querySelectorAll(".secao");
-        const listaSecao = secoes[0];
-        const calendarioSecao = secoes[1];
-
-        const wrapper = document.createElement("div");
-        wrapper.style.width = "100%";
-        wrapper.style.boxSizing = "border-box";
-
-        wrapper.appendChild(listaSecao.cloneNode(true));
-
-        const calendarioClone = calendarioSecao.cloneNode(true);
-        calendarioClone.style.pageBreakBefore = "always";
-        wrapper.appendChild(calendarioClone);
-
-        document.body.appendChild(wrapper);
-
-        const opt = {
-            margin: [10, 5, 10, 0],
-            filename: "limpeza_completa.pdf",
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-            pagebreak: { mode: ['css', 'legacy'] }
-        };
-
-        html2pdf().set(opt).from(wrapper).save().then(() => {
-            document.body.removeChild(wrapper);
-            calendarioWeb.style.display = "";
-            if (overlay) overlay.style.display = "";
-            calendarioPrint.style.display = "none";
-        });
-    };
-
-}); /* fecha window.addEventListener */
-</script>
-
-<!-- Exportar PDF + WhatsApp -->
-<script>
-window.exportarEEnviarWhatsApp = function () {
-    window.exportarPDF();
-    setTimeout(() => {
-        window.open("https://chat.whatsapp.com/D98y5fnPZ7A7IeYZuNjlt1", "_blank");
-    }, 2000);
-};
-</script>
-
-<!-- Firebase compat v9 -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
-<script src="js/firebase-config.js"></script>
-
-<script>
-firebase.auth().onAuthStateChanged(user => {
-    if (!user) window.location.href = "login.html";
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const btnLogout = document.getElementById("btnLogout");
-    if (btnLogout) {
-        btnLogout.addEventListener("click", () => {
-            firebase.auth().signOut().then(() => {
-                window.location.href = "login.html";
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnLogout = document.getElementById("btnLogout");
+        if (btnLogout) {
+            btnLogout.addEventListener("click", () => {
+                firebase.auth().signOut().then(() => {
+                    window.location.href = "login.html";
+                });
             });
-        });
-    }
-});
-</script>
+        }
+    });
+    </script>
 
-<script src="js/reservas-core.js"></script>
-<script src="js/limpeza.js"></script>
+    <!-- Núcleo de reservas + lógica de limpeza (vamos alinhar no PASSO 2) -->
+    <script src="js/reservas-core.js"></script>
+    <script src="js/limpeza.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Bibliotecas externas -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<script src="js/menu.js"></script>
+    <script src="js/menu.js"></script>
 
 </body>
 </html>
