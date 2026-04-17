@@ -390,56 +390,47 @@ function gerarCloneCalendarioA1(reservas, inicio, fim) {
     });
 }
 // -------------------------------------------------------------
-// 8) EXPORTAR PDF — LISTA + CALENDÁRIO (2 páginas)
+// 8) EXPORTAR PDF — Screenshot da Lista + Screenshot do Calendário
 // -------------------------------------------------------------
-window.exportarPDF = function () {
+window.exportarPDF = async function () {
 
-    // 1) Mostrar clone A1 temporariamente
-    const clone = document.getElementById("calendarioWebPrintClone");
-    clone.style.display = "block";
+    const { jsPDF } = window.jspdf;
 
-    // 2) Clonar secções
-    const secoes = document.querySelectorAll(".secao");
-    const listaSecao = secoes[0];
-    const calendarioSecao = secoes[1];
+    // 1) Capturar LISTA
+    const lista = document.querySelectorAll(".secao")[0];
+    const listaCanvas = await html2canvas(lista, { scale: 2 });
+    const listaImg = listaCanvas.toDataURL("image/png");
 
-    const wrapper = document.createElement("div");
-    wrapper.style.width = "100%";
+    // 2) Capturar CALENDÁRIO
+    const calendario = document.querySelectorAll(".secao")[1];
+    const calendarioCanvas = await html2canvas(calendario, { scale: 2 });
+    const calendarioImg = calendarioCanvas.toDataURL("image/png");
+
+    // 3) Criar PDF
+    const pdf = new jsPDF("landscape", "mm", "a4");
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
 
     // Página 1 — Lista
-    wrapper.appendChild(listaSecao.cloneNode(true));
+    pdf.addImage(listaImg, "PNG", 0, 0, pageWidth, pageHeight);
 
-    // Página 2 — Calendário (WEB + clone A1)
-    const calPage = document.createElement("div");
-    calPage.style.pageBreakBefore = "always";
-    calPage.appendChild(calendarioSecao.cloneNode(true));
-    wrapper.appendChild(calPage);
+    // Página 2 — Calendário
+    pdf.addPage();
+    pdf.addImage(calendarioImg, "PNG", 0, 0, pageWidth, pageHeight);
 
-    document.body.appendChild(wrapper);
-
-    const opt = {
-        margin: [10, 5, 10, 5],
-        filename: "limpeza.pdf",
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" }
-    };
-
-    html2pdf().set(opt).from(wrapper).save().then(() => {
-
-        // 3) Esconder clone A1 outra vez
-        clone.style.display = "";
-
-        document.body.removeChild(wrapper);
-    });
+    // 4) Guardar
+    pdf.save("limpeza.pdf");
 };
 
 
-window.exportarEEnviarWhatsApp = function () {
-    window.exportarPDF();
+window.exportarEEnviarWhatsApp = async function () {
+    await window.exportarPDF();
     setTimeout(() => {
         window.open("https://chat.whatsapp.com/D98y5fnPZ7A7IeYZuNjlt1", "_blank");
-    }, 2000);
+    }, 1500);
 };
+
 function calcularTotais(reservas) {
     let totalBase = 0;
     let totalExtras = 0;
