@@ -195,7 +195,7 @@ window.addEventListener("load", function () {
         pagebreak: { mode: ['css', 'legacy'] }
     };
 
-            html2pdf().set(opt).from(wrapper).save().then(() => {
+    html2pdf().set(opt).from(wrapper).save().then(() => {
 
         // 4) Restaurar estado original
         document.body.removeChild(wrapper);
