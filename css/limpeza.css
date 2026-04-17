@@ -330,3 +330,26 @@ h2 {
     }
 }
 
+/* ============================================================
+   CLONE A1 — invisível no site, capturável no PDF
+   ============================================================ */
+.print-only {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: 0;
+    height: auto !important;
+    pointer-events: none !important;
+}
+
+/* largura total */
+#calendarioWebPrintClone {
+    width: 100% !important;
+}
+
+/* fundo sólido evita distorção */
+#calendarioWebPrintClone table {
+    background: #ffffff !important;
+}
+
