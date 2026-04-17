@@ -8,10 +8,6 @@ body {
     color: #222;
 }
 
-.topo h1 {
-    margin: 0 0 10px 0;
-}
-
 .secao {
     margin: 25px;
     background: white;
@@ -70,8 +66,8 @@ h2 {
 .calendario th,
 .calendario td {
     width: 32px;
-    max-width: 32px;
     min-width: 32px;
+    max-width: 32px;
     text-align: center;
     font-size: 12px;
     padding: 0;
@@ -88,6 +84,7 @@ h2 {
 .calendario td:first-child,
 .calendario th:first-child {
     min-width: 80px;
+    max-width: 80px;
     font-weight: 600;
     background: #fafafa;
 }
@@ -238,26 +235,23 @@ h2 {
 }
 
 /* ---------------------------------------------------------
-   PRINT — ESCONDER WEB E MOSTRAR CALENDÁRIO PRINT
+   PRINT — CLONE A1 (CALENDÁRIO PROFISSIONAL)
 --------------------------------------------------------- */
 .print-only {
     display: none;
 }
 
-/* ---------------------------------------------------------
-   PRINT — CALENDÁRIO PROFISSIONAL
---------------------------------------------------------- */
 @media print {
 
     body {
         background: white !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
         margin: 0 !important;
         padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
-    /* esconder completamente o calendário WEB */
+    /* esconder o calendário WEB */
     #calendarioContainer,
     #calendarioWrapper,
     .overlay-nomes,
@@ -269,54 +263,69 @@ h2 {
         height: 0 !important;
     }
 
-    /* mostrar apenas o calendário PRINT */
+    /* mostrar o clone */
     .print-only {
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
     }
 
-    /* tabela PRINT */
-    .calendario-print {
+    /* tabela PRINT (clone A1) */
+    .calendario-web-print {
         width: 100%;
         border-collapse: collapse;
         table-layout: fixed;
-        font-size: 11px;
         background: white !important;
+        font-size: 11px;
+        border-radius: 10px;
+        overflow: hidden;
     }
 
-    .calendario-print th,
-    .calendario-print td {
+    .calendario-web-print th,
+    .calendario-web-print td {
         border: 1px solid #ccc;
-        padding: 4px;
+        width: 32px !important;
+        min-width: 32px !important;
+        max-width: 32px !important;
+        height: 32px;
         text-align: center;
-        width: 28px;
-        height: 28px;
+        padding: 0;
         overflow: hidden;
         white-space: nowrap;
     }
 
-    .calendario-print th:first-child,
-    .calendario-print td:first-child {
-        width: 70px !important;
-        font-weight: 600;
+    .calendario-web-print th:first-child,
+    .calendario-web-print td:first-child {
+        width: 80px !important;
+        min-width: 80px !important;
+        max-width: 80px !important;
         background: #f2f2f2 !important;
-    }
-
-    /* barra azul */
-    .dia-com-reserva-print {
-        background: #1976d2 !important;
-        color: white !important;
         font-weight: 600;
     }
 
-    /* nome centrado */
-    .nome-centro {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 11px !important;
-        font-weight: 600 !important;
+    /* barras arredondadas iguais ao WEB */
+    .reserva-print {
+        background: #1976d2 !important;
+        height: 100%;
         color: white !important;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0;
+    }
+
+    .reserva-print.inicio {
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+    }
+
+    .reserva-print.fim {
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+
+    .reserva-print.meio {
+        border-radius: 0;
     }
 }
