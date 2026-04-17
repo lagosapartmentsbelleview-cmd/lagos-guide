@@ -88,13 +88,15 @@
     </div>
 
 <!-- ========================================================= -->
-<!-- FUNÇÕES DA PÁGINA (mantidas exatamente como estavam) -->
+<!-- FUNÇÕES DA PÁGINA -->
 <!-- ========================================================= -->
 
 <script>
 window.addEventListener("load", function () {
 
-    // EXPORTAR EXCEL
+    /* ===========================
+       EXPORTAR EXCEL
+    ============================ */
     window.exportarExcel = function () {
         const tabela = document.querySelector("#tabelaLimpeza");
 
@@ -115,104 +117,66 @@ window.addEventListener("load", function () {
         }
         ws['!cols'] = colWidths;
 
-        for (let C = range.s.c; C <= range.e.c; ++C) {
-            const cellRef = XLSX.utils.encode_cell({ r: 0, c: C });
-            if (ws[cellRef]) {
-                ws[cellRef].s = {
-                    fill: { fgColor: { rgb: "D9E1F2" } },
-                    font: { bold: true },
-                    alignment: { horizontal: "center", vertical: "center" },
-                    border: {
-                        top: { style: "thin", color: { rgb: "000000" } },
-                        bottom: { style: "thin", color: { rgb: "000000" } },
-                        left: { style: "thin", color: { rgb: "000000" } },
-                        right: { style: "thin", color: { rgb: "000000" } }
-                    }
-                };
-            }
-        }
-
-        const dateCols = [2, 3];
-        for (let C of dateCols) {
-            for (let R = 1; R <= range.e.r; ++R) {
-                const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
-                const cell = ws[cellRef];
-                if (cell && typeof cell.v === "string" && cell.v.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
-                    const [dia, mes, ano] = cell.v.split("/");
-                    const jsDate = new Date(`${ano}-${mes}-${dia}`);
-                    cell.v = jsDate;
-                    cell.t = "d";
-                    cell.z = "dd/mm/yyyy";
-                }
-            }
-        }
-
-        ws['!autofilter'] = { ref: XLSX.utils.encode_range(range) };
-        ws['!freeze'] = { xSplit: 0, ySplit: 1 };
-
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Limpeza");
 
         XLSX.writeFile(wb, "limpeza_formatado.xlsx");
     };
 
-    // EXPORTAR PDF
+    /* ===========================
+       EXPORTAR PDF
+    ============================ */
     window.exportarPDF = function () {
 
-    // 1) Esconder calendário WEB
-    const calendarioWeb = document.getElementById("calendarioContainer");
-    const overlay = document.querySelector(".overlay-nomes");
-    if (calendarioWeb) calendarioWeb.style.display = "none";
-    if (overlay) overlay.style.display = "none";
+        const calendarioWeb = document.getElementById("calendarioContainer");
+        const overlay = document.querySelector(".overlay-nomes");
+        if (calendarioWeb) calendarioWeb.style.display = "none";
+        if (overlay) overlay.style.display = "none";
 
-    // 2) Mostrar calendário PRINT
-    const calendarioPrint = document.getElementById("calendarioPrint");
-    calendarioPrint.style.display = "block";
+        const calendarioPrint = document.getElementById("calendarioPrint");
+        calendarioPrint.style.display = "block";
 
-    // 3) Clonar secções
-    const secoes = document.querySelectorAll(".secao");
-    const listaSecao = secoes[0];
-    const calendarioSecao = secoes[1];
+        const secoes = document.querySelectorAll(".secao");
+        const listaSecao = secoes[0];
+        const calendarioSecao = secoes[1];
 
-    const wrapper = document.createElement("div");
-    wrapper.style.width = "100%";
-    wrapper.style.boxSizing = "border-box";
+        const wrapper = document.createElement("div");
+        wrapper.style.width = "100%";
+        wrapper.style.boxSizing = "border-box";
 
-    const listaClone = listaSecao.cloneNode(true);
-    wrapper.appendChild(listaClone);
+        wrapper.appendChild(listaSecao.cloneNode(true));
 
-    const calendarioClone = calendarioSecao.cloneNode(true);
-    calendarioClone.style.pageBreakBefore = "always";
-    wrapper.appendChild(calendarioClone);
+        const calendarioClone = calendarioSecao.cloneNode(true);
+        calendarioClone.style.pageBreakBefore = "always";
+        wrapper.appendChild(calendarioClone);
 
-    document.body.appendChild(wrapper);
+        document.body.appendChild(wrapper);
 
-    const opt = {
-        margin: [10, 5, 10, 0],
-        filename: "limpeza_completa.pdf",
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-        pagebreak: { mode: ['css', 'legacy'] }
+        const opt = {
+            margin: [10, 5, 10, 0],
+            filename: "limpeza_completa.pdf",
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+            pagebreak: { mode: ['css', 'legacy'] }
+        };
+
+        html2pdf().set(opt).from(wrapper).save().then(() => {
+            document.body.removeChild(wrapper);
+            calendarioWeb.style.display = "";
+            if (overlay) overlay.style.display = "";
+            calendarioPrint.style.display = "none";
+        });
     };
 
-    html2pdf().set(opt).from(wrapper).save().then(() => {
-
-        // 4) Restaurar estado original
-        document.body.removeChild(wrapper);
-        calendarioWeb.style.display = "";
-        if (overlay) overlay.style.display = "";
-        calendarioPrint.style.display = "none";
-    });
-};
+}); /* fecha window.addEventListener */
+</script>
 
 <!-- Exportar PDF + WhatsApp -->
 <script>
 window.exportarEEnviarWhatsApp = function () {
     window.exportarPDF();
     setTimeout(() => {
-        const grupo = "D98y5fnPZ7A7IeYZuNjlt1";
-        const link = `https://chat.whatsapp.com/${grupo}`;
-        window.open(link, "_blank");
+        window.open("https://chat.whatsapp.com/D98y5fnPZ7A7IeYZuNjlt1", "_blank");
     }, 2000);
 };
 </script>
