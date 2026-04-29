@@ -211,6 +211,9 @@ document.getElementById("btnExportPDFFaturas")
 
     // 🔹 Atualizar UI da aba Limpeza
     atualizarUI();
+
+    // 🔹 Inicializar aba Condomínio
+    initAbaCondominio();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
