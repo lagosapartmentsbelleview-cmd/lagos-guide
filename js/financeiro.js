@@ -1436,7 +1436,9 @@ function calcularTotalMes(ano, mes) {
         const checkoutDate = parseDataBR(r.checkout);
 
         if (checkoutDate >= inicio && checkoutDate < fim && r.status !== "cancelado") {
-            totalLimpezas += Number(r.limpeza);
+            const qtdAptos = Array.isArray(r.apartamentos) ? r.apartamentos.length : 1;
+            totalLimpezas += Number(r.limpeza) * qtdAptos;
+
         }
     });
 
