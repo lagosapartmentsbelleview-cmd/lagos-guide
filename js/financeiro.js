@@ -1720,7 +1720,7 @@ function irParaCategorias() {
 
 // cache em memória
 let condoConfigCache = {};      // { ano: { "2301": valor, "2203": valor, "2204": valor } }
-let condoMesesCache = {};       // { "2026_01": { extras: [...], pago: number, dataPagamento: "YYYY-MM-DD" } }
+let condoMesesCache = {};       // { "2026_01": { extrasTotal, valorPago, dataPagamento } }
 
 // helpers
 const CONDO_APTOS = ["2301", "2203", "2204"];
@@ -1749,8 +1749,7 @@ async function carregarCondominio(ano) {
         .get();
 
     snap.forEach(doc => {
-        const d = doc.data();
-        condoMesesCache[doc.id] = d;
+        condoMesesCache[doc.id] = doc.data();
     });
 
     preencherUICondominio(ano);
@@ -1761,26 +1760,22 @@ async function carregarCondominio(ano) {
 // ===============================
 
 function preencherUICondominio(ano) {
-    // preencher inputs de config
     const cfg = condoConfigCache[ano] || {};
+
     document.getElementById("condoValor2301").value = cfg["2301"] ?? "";
     document.getElementById("condoValor2203").value = cfg["2203"] ?? "";
     document.getElementById("condoValor2204").value = cfg["2204"] ?? "";
 
-    // gerar tabela
     const tbody = document.querySelector("#tabelaCondominio tbody");
     tbody.innerHTML = "";
 
-    let total2301 = 0;
-    let total2203 = 0;
-    let total2204 = 0;
-    let totalExtras = 0;
-    let totalPago = 0;
-    let totalEmFalta = 0;
+    let total2301 = 0, total2203 = 0, total2204 = 0;
+    let totalExtras = 0, totalPago = 0, totalEmFalta = 0;
 
     for (let mes = 1; mes <= 12; mes++) {
         const docId = condoDocId(ano, mes);
         const linha = condoMesesCache[docId] || {};
+
         const extras = Number(linha.extrasTotal || 0);
         const pago = Number(linha.valorPago || 0);
         const dataPag = linha.dataPagamento || "";
@@ -1800,17 +1795,19 @@ function preencherUICondominio(ano) {
         totalEmFalta += emFalta;
 
         const tr = document.createElement("tr");
+        tr.dataset.docId = docId;
+
         tr.innerHTML = `
             <td>${CONDO_MESES[mes-1]}</td>
             <td>${v2301.toFixed(2)}</td>
             <td>${v2203.toFixed(2)}</td>
             <td>${v2204.toFixed(2)}</td>
-            <td>${extras.toFixed(2)}</td>
-            <td>${pago.toFixed(2)}</td>
-            <td>${emFalta.toFixed(2)}</td>
-            <td>${dataPag ? new Date(dataPag).toLocaleDateString("pt-PT") : "—"}</td>
-            <td>
-                <button onclick="editarCondoMes('${docId}')">Editar</button>
+            <td class="c-extras">${extras.toFixed(2)}</td>
+            <td class="c-pago">${pago.toFixed(2)}</td>
+            <td class="c-falta">${emFalta.toFixed(2)}</td>
+            <td class="c-data">${dataPag ? new Date(dataPag).toLocaleDateString("pt-PT") : "—"}</td>
+            <td class="c-acoes">
+                <button class="btn-edit" onclick="entrarEdicaoCondoMes('${docId}', this)">Editar</button>
             </td>
         `;
         tbody.appendChild(tr);
@@ -1830,11 +1827,12 @@ function preencherUICondominio(ano) {
 
 async function guardarCondoConfigAno() {
     const ano = Number(document.getElementById("condoAnoSelect").value);
-    const v2301 = Number(document.getElementById("condoValor2301").value || 0);
-    const v2203 = Number(document.getElementById("condoValor2203").value || 0);
-    const v2204 = Number(document.getElementById("condoValor2204").value || 0);
 
-    const cfg = { "2301": v2301, "2203": v2203, "2204": v2204 };
+    const cfg = {
+        "2301": Number(document.getElementById("condoValor2301").value || 0),
+        "2203": Number(document.getElementById("condoValor2203").value || 0),
+        "2204": Number(document.getElementById("condoValor2204").value || 0)
+    };
 
     await db.collection("condominio_config").doc(String(ano)).set(cfg, { merge: true });
 
@@ -1843,45 +1841,162 @@ async function guardarCondoConfigAno() {
 }
 
 // ===============================
-//  EDITAR UM MÊS (EXTRAS + PAGAMENTO)
+//  CRUD PROFISSIONAL — EDIÇÃO EM LINHA
 // ===============================
 
-async function editarCondoMes(docId) {
+function entrarEdicaoCondoMes(docId, botao) {
+    const tr = botao.closest("tr");
     const linha = condoMesesCache[docId] || {};
-    const extrasAtual = Number(linha.extrasTotal || 0);
-    const pagoAtual = Number(linha.valorPago || 0);
-    const dataAtual = linha.dataPagamento || "";
 
-    const novoExtras = prompt("Total de extras (€) para este mês:", extrasAtual);
-    if (novoExtras === null) return;
+    const extras = Number(linha.extrasTotal || 0);
+    const pago = Number(linha.valorPago || 0);
+    const data = linha.dataPagamento || "";
 
-    const novoPago = prompt("Valor pago (€) neste mês (pode ser 0):", pagoAtual);
-    if (novoPago === null) return;
+    tr.querySelector(".c-extras").innerHTML =
+        `<input type="number" step="0.01" value="${extras}">`;
 
-    const novaData = prompt("Data de pagamento (YYYY-MM-DD) ou vazio:", dataAtual);
+    tr.querySelector(".c-pago").innerHTML =
+        `<input type="number" step="0.01" value="${pago}">`;
+
+    tr.querySelector(".c-data").innerHTML =
+        `<input type="date" value="${data}">`;
+
+    tr.querySelector(".c-acoes").innerHTML = `
+        <button class="btn-add" onclick="guardarEdicaoCondoMes('${docId}', this)">Guardar</button>
+        <button class="btn-danger" onclick="cancelarEdicaoCondoMes('${docId}', this)">Cancelar</button>
+    `;
+}
+
+async function guardarEdicaoCondoMes(docId, botao) {
+    const tr = botao.closest("tr");
+    const ano = Number(document.getElementById("condoAnoSelect").value);
+
+    const extras = Number(tr.querySelector(".c-extras input").value || 0);
+    const pago = Number(tr.querySelector(".c-pago input").value || 0);
+    const dataPag = tr.querySelector(".c-data input").value || "";
+
+    const [anoStr, mesStr] = docId.split("_");
 
     const dados = {
-        extrasTotal: Number(novoExtras || 0),
-        valorPago: Number(novoPago || 0),
+        ano: Number(anoStr),
+        mes: Number(mesStr),
+        extrasTotal: extras,
+        valorPago: pago,
+        dataPagamento: dataPag
     };
-
-    if (novaData && novaData.trim()) {
-        dados.dataPagamento = novaData.trim();
-    } else {
-        dados.dataPagamento = "";
-    }
-
-    // garantir ano/mes no doc
-    const [anoStr, mesStr] = docId.split("_");
-    dados.ano = Number(anoStr);
-    dados.mes = Number(mesStr);
 
     await db.collection("condominio_meses").doc(docId).set(dados, { merge: true });
 
-    condoMesesCache[docId] = { ...(condoMesesCache[docId] || {}), ...dados };
+    condoMesesCache[docId] = dados;
 
+    preencherUICondominio(ano);
+}
+
+function cancelarEdicaoCondoMes(docId) {
     const ano = Number(document.getElementById("condoAnoSelect").value);
     preencherUICondominio(ano);
+}
+
+// ===============================
+//  MARCAR PERÍODO COMO PAGO
+// ===============================
+
+async function marcarPeriodoPago() {
+    const ano = Number(document.getElementById("condoAnoSelect").value);
+    if (!ano) return alert("Selecione um ano primeiro.");
+
+    const inicio = Number(prompt("Mês inicial (1-12):"));
+    if (!inicio || inicio < 1 || inicio > 12) return;
+
+    const fim = Number(prompt("Mês final (1-12):"));
+    if (!fim || fim < inicio || fim > 12) return;
+
+    const valorPagoTotal = Number(prompt("Valor total pago (€):"));
+    if (isNaN(valorPagoTotal)) return;
+
+    const dataPag = prompt("Data do pagamento (YYYY-MM-DD):") || "";
+
+    const meses = fim - inicio + 1;
+    const valorPorMes = valorPagoTotal / meses;
+
+    for (let mes = inicio; mes <= fim; mes++) {
+        const docId = condoDocId(ano, mes);
+
+        const dados = {
+            ano,
+            mes,
+            valorPago: valorPorMes,
+            dataPagamento: dataPag
+        };
+
+        await db.collection("condominio_meses").doc(docId).set(dados, { merge: true });
+
+        condoMesesCache[docId] = {
+            ...(condoMesesCache[docId] || {}),
+            ...dados
+        };
+    }
+
+    preencherUICondominio(ano);
+}
+
+// ===============================
+//  EXPORTAR EXCEL
+// ===============================
+
+function exportarCondoExcel() {
+    const tabela = document.getElementById("tabelaCondominio");
+    if (!tabela) return alert("Tabela não encontrada.");
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.table_to_sheet(tabela);
+
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    const colWidths = [];
+
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+        let maxWidth = 10;
+        for (let R = range.s.r; R <= range.e.r; ++R) {
+            const cell = ws[XLSX.utils.encode_cell({ r: R, c: C })];
+            if (cell && cell.v) maxWidth = Math.max(maxWidth, cell.v.toString().length);
+        }
+        colWidths.push({ wch: maxWidth + 2 });
+    }
+
+    ws['!cols'] = colWidths;
+
+    XLSX.utils.book_append_sheet(wb, ws, "Condominio");
+    XLSX.writeFile(wb, "condominio.xlsx");
+}
+
+// ===============================
+//  EXPORTAR PDF
+// ===============================
+
+function exportarCondoPDF() {
+    const tabela = document.getElementById("tabelaCondominio");
+    if (!tabela) return alert("Tabela não encontrada.");
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "landscape" });
+
+    doc.setFontSize(16);
+    doc.text("Plano Anual de Condomínio", 14, 15);
+
+    doc.autoTable({
+        html: "#tabelaCondominio",
+        startY: 25,
+        theme: "grid",
+        headStyles: {
+            fillColor: [25, 118, 210],
+            textColor: 255,
+            fontSize: 12
+        },
+        bodyStyles: { fontSize: 10 },
+        styles: { cellPadding: 3 }
+    });
+
+    doc.save("condominio.pdf");
 }
 
 // ===============================
@@ -1892,7 +2007,6 @@ function initAbaCondominio() {
     const selectAno = document.getElementById("condoAnoSelect");
     if (!selectAno) return;
 
-    // preencher anos
     selectAno.innerHTML = "";
     for (let ano = 2020; ano <= 2050; ano++) {
         const opt = document.createElement("option");
@@ -1905,19 +2019,24 @@ function initAbaCondominio() {
     selectAno.value = hoje.getFullYear();
 
     selectAno.addEventListener("change", () => {
-        const anoSel = Number(selectAno.value);
-        carregarCondominio(anoSel);
+        carregarCondominio(Number(selectAno.value));
     });
 
     document.getElementById("btnCondoGuardarConfig")
         ?.addEventListener("click", guardarCondoConfigAno);
 
-    // exportações podem ser ligadas depois
-    // document.getElementById("btnCondoExportExcel")...
-    // document.getElementById("btnCondoExportPDF")...
+    document.getElementById("btnCondoExportExcel")
+        ?.addEventListener("click", exportarCondoExcel);
+
+    document.getElementById("btnCondoExportPDF")
+        ?.addEventListener("click", exportarCondoPDF);
+
+    document.getElementById("btnCondoMarcarPagoPeriodo")
+        ?.addEventListener("click", marcarPeriodoPago);
 
     carregarCondominio(Number(selectAno.value));
 }
+
 
 
 /* ============================================================
