@@ -215,8 +215,9 @@ document.getElementById("btnExportPDFFaturas")
     // 🔹 Inicializar aba Condomínio
     initAbaCondominio();
 
-    // 🔹 Inicializar aba Seguros
-    initAbaSeguros();
+    // 🔹 Inicializar aba Seguros (adiado para garantir que o DOM existe)
+    setTimeout(initAbaSeguros, 50);
+
 
 }
 
