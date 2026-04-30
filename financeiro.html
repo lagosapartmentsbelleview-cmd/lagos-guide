@@ -421,6 +421,61 @@
         </table>
     </div>
 
+<div class="tab-content" id="tab-seguros">
+
+    <h2>Seguros</h2>
+
+    <!-- Seleção de ano -->
+    <div class="filtros-custos">
+        <label>Ano:</label>
+        <select id="segurosAnoSelect"></select>
+    </div>
+
+    <!-- Tabela anual -->
+    <div class="card">
+        <h3>Plano Anual de Seguros</h3>
+
+        <div class="acoes-financeiro">
+            <button id="btnSegurosExportExcel">Exportar Excel</button>
+            <button id="btnSegurosExportPDF">Exportar PDF</button>
+        </div>
+
+        <table id="tabelaSeguros" class="tabela-estilo">
+           <thead>
+    <tr>
+        <th>Apartamento</th>
+        <th>Tipo de Seguro</th>
+        <th>Nº Apólice</th>
+        <th>Valor (€)</th>
+        <th>Data Início</th>
+        <th>Data Fim</th>
+        <th>Data Pagamento</th>
+        <th>Observações</th>
+        <th>Pago (€)</th>
+        <th>Em Falta (€)</th>
+        <th>Ações</th>
+    </tr>
+</thead>
+
+            <tbody></tbody>
+
+            <tfoot>
+                <tr>
+                    <th colspan="3">Totais</th>
+                    <th id="segurosTotalAno">0 €</th>
+                    <th></th>
+                    <th></th>
+                    <th id="segurosTotalPago">0 €</th>
+                    <th id="segurosTotalFalta">0 €</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>
+
+
 </div>
 
 <div class="tab-content" id="tab-impostos"></div>
