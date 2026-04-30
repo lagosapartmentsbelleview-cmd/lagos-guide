@@ -214,6 +214,10 @@ document.getElementById("btnExportPDFFaturas")
 
     // 🔹 Inicializar aba Condomínio
     initAbaCondominio();
+
+    // 🔹 Inicializar aba Seguros
+    initAbaSeguros();
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -2037,6 +2041,219 @@ function initAbaCondominio() {
     carregarCondominio(Number(selectAno.value));
 }
 
+// ===============================
+//  SEGUROS — MODELO DE DADOS
+// ===============================
+
+let segurosCache = {}; // { "2026_2301": {...}, ... }
+const SEGUROS_APTOS = ["2301", "2203", "2204"];
+
+// ===============================
+//  CARREGAR SEGUROS DO ANO
+// ===============================
+
+async function carregarSeguros(ano) {
+    segurosCache = {};
+
+    const snap = await db.collection("seguros_manuais")
+        .where("ano", "==", ano)
+        .get();
+
+    snap.forEach(doc => {
+        segurosCache[doc.id] = doc.data();
+    });
+
+    preencherUISeguros(ano);
+}
+
+// ===============================
+//  PREENCHER UI
+// ===============================
+
+function preencherUISeguros(ano) {
+    const tbody = document.querySelector("#tabelaSeguros tbody");
+    tbody.innerHTML = "";
+
+    let totalAno = 0;
+    let totalPago = 0;
+    let totalFalta = 0;
+
+    SEGUROS_APTOS.forEach(apto => {
+        const docId = `${ano}_${apto}`;
+        const linha = segurosCache[docId] || {};
+
+        const tipo = linha.tipo || "";
+        const apolice = linha.apolice || "";
+        const valor = Number(linha.valor || 0);
+        const dataPag = linha.dataPagamento || "";
+        const obs = linha.observacoes || "";
+        const pago = Number(linha.valorPago || 0);
+        const falta = Math.max(0, valor - pago);
+
+        totalAno += valor;
+        totalPago += pago;
+        totalFalta += falta;
+
+        const tr = document.createElement("tr");
+        tr.dataset.docId = docId;
+
+        tr.innerHTML = `
+    <td>${apto}</td>
+    <td class="s-tipo">${tipo}</td>
+    <td class="s-apolice">${apolice}</td>
+    <td class="s-valor">${valor.toFixed(2)}</td>
+    <td class="s-inicio">${linha.dataInicio || "—"}</td>
+    <td class="s-fim">${linha.dataFim || "—"}</td>
+    <td class="s-data">${dataPag ? new Date(dataPag).toLocaleDateString("pt-PT") : "—"}</td>
+    <td class="s-obs">${obs}</td>
+    <td class="s-pago">${pago.toFixed(2)}</td>
+    <td class="s-falta">${falta.toFixed(2)}</td>
+    <td class="s-acoes">
+        <button onclick="editarSeguro('${docId}', this)">Editar</button>
+    </td>
+`;
+
+
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("segurosTotalAno").textContent = totalAno.toFixed(2) + " €";
+    document.getElementById("segurosTotalPago").textContent = totalPago.toFixed(2) + " €";
+    document.getElementById("segurosTotalFalta").textContent = totalFalta.toFixed(2) + " €";
+}
+
+// ===============================
+//  CRUD — EDIÇÃO EM LINHA
+// ===============================
+
+function editarSeguro(docId, botao) {
+    const tr = botao.closest("tr");
+    const linha = segurosCache[docId] || {};
+
+    tr.querySelector(".s-tipo").innerHTML =
+        `<input type="text" value="${linha.tipo || ""}">`;
+
+    tr.querySelector(".s-apolice").innerHTML =
+        `<input type="text" value="${linha.apolice || ""}">`;
+
+    tr.querySelector(".s-valor").innerHTML =
+        `<input type="number" step="0.01" value="${linha.valor || 0}">`;
+
+    tr.querySelector(".s-inicio").innerHTML =
+        `<input type="date" value="${linha.dataInicio || ""}">`;
+
+    tr.querySelector(".s-fim").innerHTML =
+        `<input type="date" value="${linha.dataFim || ""}">`;
+
+    tr.querySelector(".s-data").innerHTML =
+        `<input type="date" value="${linha.dataPagamento || ""}">`;
+
+    tr.querySelector(".s-obs").innerHTML =
+        `<input type="text" value="${linha.observacoes || ""}">`;
+
+    tr.querySelector(".s-pago").innerHTML =
+        `<input type="number" step="0.01" value="${linha.valorPago || 0}">`;
+
+    tr.querySelector(".s-acoes").innerHTML = `
+        <button onclick="guardarSeguro('${docId}', this)">Guardar</button>
+        <button onclick="cancelarSeguro('${docId}')">Cancelar</button>
+    `;
+}
+
+
+async function guardarSeguro(docId, botao) {
+    const tr = botao.closest("tr");
+    const ano = Number(document.getElementById("segurosAnoSelect").value);
+
+    const dados = {
+        ano,
+        apartamento: docId.split("_")[1],
+        tipo: tr.querySelector(".s-tipo input").value,
+        apolice: tr.querySelector(".s-apolice input").value,
+        valor: Number(tr.querySelector(".s-valor input").value || 0),
+        dataInicio: tr.querySelector(".s-inicio input").value || "",
+        dataFim: tr.querySelector(".s-fim input").value || "",
+        dataPagamento: tr.querySelector(".s-data input").value || "",
+        observacoes: tr.querySelector(".s-obs input").value,
+        valorPago: Number(tr.querySelector(".s-pago input").value || 0)
+    };
+
+    await db.collection("seguros_manuais").doc(docId).set(dados, { merge: true });
+
+    segurosCache[docId] = dados;
+
+    preencherUISeguros(ano);
+}
+
+
+function cancelarSeguro(docId) {
+    const ano = Number(document.getElementById("segurosAnoSelect").value);
+    preencherUISeguros(ano);
+}
+
+// ===============================
+//  EXPORTAR EXCEL
+// ===============================
+
+function exportarSegurosExcel() {
+    const tabela = document.getElementById("tabelaSeguros");
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.table_to_sheet(tabela);
+    XLSX.utils.book_append_sheet(wb, ws, "Seguros");
+    XLSX.writeFile(wb, "seguros.xlsx");
+}
+
+// ===============================
+//  EXPORTAR PDF
+// ===============================
+
+function exportarSegurosPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "landscape" });
+
+    doc.setFontSize(16);
+    doc.text("Plano Anual de Seguros", 14, 15);
+
+    doc.autoTable({
+        html: "#tabelaSeguros",
+        startY: 25,
+        theme: "grid"
+    });
+
+    doc.save("seguros.pdf");
+}
+
+// ===============================
+//  INICIALIZAÇÃO DA ABA SEGUROS
+// ===============================
+
+function initAbaSeguros() {
+    const selectAno = document.getElementById("segurosAnoSelect");
+    if (!selectAno) return;
+
+    selectAno.innerHTML = "";
+    for (let ano = 2020; ano <= 2050; ano++) {
+        const opt = document.createElement("option");
+        opt.value = ano;
+        opt.textContent = ano;
+        selectAno.appendChild(opt);
+    }
+
+    const hoje = new Date();
+    selectAno.value = hoje.getFullYear();
+
+    selectAno.addEventListener("change", () => {
+        carregarSeguros(Number(selectAno.value));
+    });
+
+    document.getElementById("btnSegurosExportExcel")
+        ?.addEventListener("click", exportarSegurosExcel);
+
+    document.getElementById("btnSegurosExportPDF")
+        ?.addEventListener("click", exportarSegurosPDF);
+
+    carregarSeguros(Number(selectAno.value));
+}
 
 
 /* ============================================================
