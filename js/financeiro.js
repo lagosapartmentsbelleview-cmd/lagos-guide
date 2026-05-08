@@ -218,6 +218,8 @@ document.getElementById("btnExportPDFFaturas")
     // 🔹 Inicializar aba Seguros (adiado para garantir que o DOM existe)
     setTimeout(initAbaSeguros, 50);
 
+    // 🔹 Inicializar aba Impostos
+    initAbaImpostos();
 
 }
 
@@ -2255,6 +2257,176 @@ function initAbaSeguros() {
 
     carregarSeguros(Number(selectAno.value));
 }
+
+// ===============================
+//  IMPOSTOS — MODELO DE DADOS
+// ===============================
+
+let impostosCache = {};
+const IMPOSTOS_APTOS = ["2301", "2203", "2204"];
+
+async function carregarImpostos(ano) {
+    impostosCache = {};
+
+    const snap = await db.collection("impostos_manuais")
+        .where("ano", "==", ano)
+        .get();
+
+    snap.forEach(doc => {
+        impostosCache[doc.id] = doc.data();
+    });
+
+    preencherUIImpostos(ano);
+}
+
+function preencherUIImpostos(ano) {
+    const tbody = document.querySelector("#tabelaImpostos tbody");
+    tbody.innerHTML = "";
+
+    let totalAno = 0;
+    let totalPago = 0;
+    let totalFalta = 0;
+
+    IMPOSTOS_APTOS.forEach(apto => {
+        const docId = `${ano}_${apto}`;
+        const linha = impostosCache[docId] || {};
+
+        const tipo = linha.tipo || "";
+        const valor = Number(linha.valor || 0);
+        const pago = Number(linha.valorPago || 0);
+        const falta = Math.max(0, valor - pago);
+
+        totalAno += valor;
+        totalPago += pago;
+        totalFalta += falta;
+
+        const tr = document.createElement("tr");
+        tr.dataset.docId = docId;
+
+        tr.innerHTML = `
+            <td>${apto}</td>
+            <td class="i-tipo">${tipo}</td>
+            <td class="i-valor">${valor.toFixed(2)}</td>
+            <td class="i-data">${linha.dataPagamento || "—"}</td>
+            <td class="i-obs">${linha.observacoes || ""}</td>
+            <td class="i-pago">${pago.toFixed(2)}</td>
+            <td class="i-falta">${falta.toFixed(2)}</td>
+            <td class="i-acoes">
+                <button onclick="editarImposto('${docId}', this)">Editar</button>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("impTotalAno").textContent = totalAno.toFixed(2) + " €";
+    document.getElementById("impTotalPago").textContent = totalPago.toFixed(2) + " €";
+    document.getElementById("impTotalFalta").textContent = totalFalta.toFixed(2) + " €";
+}
+
+function editarImposto(docId, botao) {
+    const tr = botao.closest("tr");
+    const linha = impostosCache[docId] || {};
+
+    tr.querySelector(".i-tipo").innerHTML =
+        `<input type="text" value="${linha.tipo || ""}">`;
+
+    tr.querySelector(".i-valor").innerHTML =
+        `<input type="number" step="0.01" value="${linha.valor || 0}">`;
+
+    tr.querySelector(".i-data").innerHTML =
+        `<input type="date" value="${linha.dataPagamento || ""}">`;
+
+    tr.querySelector(".i-obs").innerHTML =
+        `<input type="text" value="${linha.observacoes || ""}">`;
+
+    tr.querySelector(".i-pago").innerHTML =
+        `<input type="number" step="0.01" value="${linha.valorPago || 0}">`;
+
+    tr.querySelector(".i-acoes").innerHTML = `
+        <button onclick="guardarImposto('${docId}', this)">Guardar</button>
+        <button onclick="cancelarImposto('${docId}')">Cancelar</button>
+    `;
+}
+
+async function guardarImposto(docId, botao) {
+    const tr = botao.closest("tr");
+    const ano = Number(document.getElementById("impostosAnoSelect").value);
+
+    const dados = {
+        ano,
+        apartamento: docId.split("_")[1],
+        tipo: tr.querySelector(".i-tipo input").value,
+        valor: Number(tr.querySelector(".i-valor input").value || 0),
+        dataPagamento: tr.querySelector(".i-data input").value || "",
+        observacoes: tr.querySelector(".i-obs input").value,
+        valorPago: Number(tr.querySelector(".i-pago input").value || 0)
+    };
+
+    await db.collection("impostos_manuais").doc(docId).set(dados, { merge: true });
+
+    impostosCache[docId] = dados;
+
+    preencherUIImpostos(ano);
+}
+
+function cancelarImposto(docId) {
+    const ano = Number(document.getElementById("impostosAnoSelect").value);
+    preencherUIImpostos(ano);
+}
+
+function exportarImpostosExcel() {
+    const tabela = document.getElementById("tabelaImpostos");
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.table_to_sheet(tabela);
+    XLSX.utils.book_append_sheet(wb, ws, "Impostos");
+    XLSX.writeFile(wb, "impostos.xlsx");
+}
+
+function exportarImpostosPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "landscape" });
+
+    doc.setFontSize(16);
+    doc.text("Plano Anual de Impostos", 14, 15);
+
+    doc.autoTable({
+        html: "#tabelaImpostos",
+        startY: 25,
+        theme: "grid"
+    });
+
+    doc.save("impostos.pdf");
+}
+
+function initAbaImpostos() {
+    const selectAno = document.getElementById("impostosAnoSelect");
+    if (!selectAno) return;
+
+    selectAno.innerHTML = "";
+    for (let ano = 2020; ano <= 2050; ano++) {
+        const opt = document.createElement("option");
+        opt.value = ano;
+        opt.textContent = ano;
+        selectAno.appendChild(opt);
+    }
+
+    const hoje = new Date();
+    selectAno.value = hoje.getFullYear();
+
+    selectAno.addEventListener("change", () => {
+        carregarImpostos(Number(selectAno.value));
+    });
+
+    document.getElementById("btnImpostosExportExcel")
+        ?.addEventListener("click", exportarImpostosExcel);
+
+    document.getElementById("btnImpostosExportPDF")
+        ?.addEventListener("click", exportarImpostosPDF);
+
+    carregarImpostos(Number(selectAno.value));
+}
+
 
 
 /* ============================================================
