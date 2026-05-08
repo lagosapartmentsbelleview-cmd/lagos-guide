@@ -485,7 +485,57 @@
 
 
 <!-- ABA IMPOSTOS -->
-<div class="tab-content" id="tab-impostos"></div>
+
+<div class="tab-content" id="tab-impostos">
+
+    <h2>Impostos</h2>
+
+    <!-- Seleção de ano -->
+    <div class="filtros-custos">
+        <label>Ano:</label>
+        <select id="impostosAnoSelect"></select>
+    </div>
+
+    <div class="card">
+        <h3>Plano Anual de Impostos</h3>
+
+        <div class="acoes-financeiro">
+            <button id="btnImpostosExportExcel">Exportar Excel</button>
+            <button id="btnImpostosExportPDF">Exportar PDF</button>
+        </div>
+
+        <table id="tabelaImpostos" class="tabela-estilo">
+            <thead>
+                <tr>
+                    <th>Apartamento</th>
+                    <th>Tipo de Imposto</th>
+                    <th>Valor (€)</th>
+                    <th>Data Pagamento</th>
+                    <th>Observações</th>
+                    <th>Pago (€)</th>
+                    <th>Em Falta (€)</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+
+            <tfoot>
+                <tr>
+                    <th colspan="2">Totais</th>
+                    <th id="impTotalAno">0 €</th>
+                    <th></th>
+                    <th></th>
+                    <th id="impTotalPago">0 €</th>
+                    <th id="impTotalFalta">0 €</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>
+
 
 <!-- ABA EQUIPAMENTOS -->
 <div class="tab-content" id="tab-equipamentos"></div>
