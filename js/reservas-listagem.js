@@ -913,9 +913,10 @@ async function guardarReserva() {
     // -----------------------------
     // 1) IDENTIFICAÇÃO
     // -----------------------------
-    const origem = document.getElementById("origem").value;
-    let bookingId = document.getElementById("bookingId").value.trim();
-    const reservadoPor = document.getElementById("reservadoPor").value.trim();
+    const getVal = (id) => document.getElementById(id)?.value?.trim() ?? "";
+
+    const origem = getVal("origem");
+    let bookingId = getVal("bookingId");
 
     // Se não for Booking → gerar ID automático
     if (origem !== "Booking") {
@@ -926,20 +927,20 @@ async function guardarReserva() {
     // -----------------------------
     // 2) HÓSPEDE
     // -----------------------------
-    const cliente = formatarNome(document.getElementById("cliente").value.trim());
-    const paisCliente = document.getElementById("paisCliente").value.trim();
-    const morada = document.getElementById("morada").value.trim();
-    const telefone = document.getElementById("telefone").value.trim();
-    const email = document.getElementById("email").value.trim();
-
-    const adultos = Number(document.getElementById("adultos").value || 0);
-    const criancas = Number(document.getElementById("criancas").value || 0);
-    const idadesCriancas = document.getElementById("idadesCriancas").value.trim();
-
-    let hospedes = Number(document.getElementById("hospedes").value || 0);
+    const cliente       = formatarNome(getVal("cliente"));
+    const idadesCriancas = getVal("idadesCriancas");
+    const adultos       = Number(document.getElementById("adultos")?.value  || 0);
+    const criancas      = Number(document.getElementById("criancas")?.value || 0);
+    let   hospedes      = Number(document.getElementById("hospedes")?.value || 0);
     if (!hospedes) hospedes = adultos + criancas;
 
-    const modoViagem = document.getElementById("modoViagem").value.trim();
+    // Campos ausentes do modal → preservar valor original do Firestore
+    const reservadoPor          = getVal("reservadoPor")           || reservaAtual?.reservadoPor          || "";
+    const paisCliente           = getVal("paisCliente")             || reservaAtual?.paisCliente           || "";
+    const morada                = getVal("morada")                  || reservaAtual?.morada                || "";
+    const telefone              = getVal("telefone")                || reservaAtual?.telefone              || "";
+    const email                 = getVal("email")                   || reservaAtual?.email                 || "";
+    const modoViagem            = getVal("modoViagem")              || reservaAtual?.modoViagem            || "";
 
     // -----------------------------
     // 3) ALOJAMENTO
@@ -981,22 +982,22 @@ async function guardarReserva() {
     const statusPagamento = document.getElementById("statusPagamento").value;
     const berco = document.getElementById("berco").value === "true";
 
-    // -----------------------------
+    /// -----------------------------
     // 5) SISTEMA
     // -----------------------------
-    const status = document.getElementById("status").value;
-    const estadoPagamentoOrigem = document.getElementById("estadoPagamentoOrigem").value.trim();
-    const dataCancelamento = document.getElementById("dataCancelamento").value.trim() || null;
-
+    const status                = getVal("status")                  || reservaAtual?.status                || "alocado";
+    const estadoPagamentoOrigem = getVal("estadoPagamentoOrigem")   || reservaAtual?.estadoPagamentoOrigem || "";
+    const dataCancelamento      = getVal("dataCancelamento")        || reservaAtual?.dataCancelamento      || null;
+    
     // -----------------------------
     // 6) CÁLCULOS AUTOMÁTICOS
     // -----------------------------
     const noites = calcularNoites(checkin, checkout);
     const precoNoite = noites > 0 ? totalBruto / noites : 0;
 
-    const comissaoExtra = 0; // só editável no modal detalhe
+    const comissaoExtra = reservaAtual?.comissaoExtra ?? 0; // preserva o 1,4% já calculado
     const comissaoTotal = comissao + comissaoExtra;
-
+    
     const liquido = totalBruto - comissaoTotal;
     const liquidoReal = liquido - limpeza;
     const totalLiquidoFinal = liquidoReal;
