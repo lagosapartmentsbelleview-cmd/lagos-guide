@@ -219,7 +219,17 @@ function desenharReservas(mes, anoAtual) {
         const dataFim = parseDataReserva(r.checkout);
         if (!dataInicio || !dataFim) return;
 
-        const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
+        // const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1; 
+
+        const diasNoMesAtual = new Date(anoAtual, mes + 1, 0).getDate();
+
+        const fimVisivel = dataFim.getFullYear() === anoAtual && dataFim.getMonth() === mes
+            ? dataFim.getDate()
+            : diasNoMesAtual + 1;
+
+        const totalDias = fimVisivel - dataInicio.getDate();
+
+        // Fim da alteração const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1; 
 
         listaAps.forEach((ap, indexApto) => {
 
