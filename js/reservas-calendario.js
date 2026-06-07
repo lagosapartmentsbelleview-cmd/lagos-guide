@@ -219,15 +219,17 @@ function desenharReservas(mes, anoAtual) {
         const dataFim = parseDataReserva(r.checkout);
         if (!dataInicio || !dataFim) return;
 
-        // const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1; 
+        // Inicio da alteração const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
 
+        const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1; 
+
+        // Dias visíveis neste mês a partir do checkin
         const diasNoMesAtual = new Date(anoAtual, mes + 1, 0).getDate();
+        const ultimoDiaVisivel = (dataFim.getMonth() === mes && dataFim.getFullYear() === anoAtual)
+        ? dataFim.getDate()
+        : diasNoMesAtual + 1;
 
-        const fimVisivel = dataFim.getFullYear() === anoAtual && dataFim.getMonth() === mes
-            ? dataFim.getDate()
-            : diasNoMesAtual + 1;
-
-        const totalDias = fimVisivel - dataInicio.getDate();
+        const diasVisiveis = ultimoDiaVisivel - dataInicio.getDate();
 
         // Fim da alteração const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1; 
 
@@ -258,7 +260,7 @@ function desenharReservas(mes, anoAtual) {
                     master.textContent = nomeCurto(r.cliente);
 
                     // Barra cobre todas as células da reserva
-                    master.style.width = `calc(${totalDias * 100}%)`;
+                    master.style.width = `calc(${diasVisiveis * 100}%)`;
                     master.style.left = "0";
 
                     const checkinPt = dataInicio.toLocaleDateString("pt-PT");
