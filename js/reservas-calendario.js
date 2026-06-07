@@ -221,15 +221,15 @@ function desenharReservas(mes, anoAtual) {
 
         // Inicio da alteração const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
 
-        const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1; 
+        const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1;
 
-        // Dias visíveis neste mês a partir do checkin
-        const diasNoMesAtual = new Date(anoAtual, mes + 1, 0).getDate();
-        const ultimoDiaVisivel = (dataFim.getMonth() === mes && dataFim.getFullYear() === anoAtual)
-        ? dataFim.getDate()
-        : diasNoMesAtual + 1;
+        // Só calcular dias visíveis se a reserva atravessa o fim do mês
+        const atravessaFimMes = dataFim.getMonth() !== mes || dataFim.getFullYear() !== anoAtual;
+        const diasNoMesAtual  = new Date(anoAtual, mes + 1, 0).getDate();
 
-        const diasVisiveis = ultimoDiaVisivel - dataInicio.getDate();
+        const diasVisiveis = atravessaFimMes
+        ? (diasNoMesAtual - dataInicio.getDate() + 1)
+        : totalDias;
 
         // Fim da alteração const totalDias = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + 1; 
 
