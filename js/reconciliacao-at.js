@@ -153,11 +153,18 @@ function parseTextoAT(texto) {
         const valoresLinha = linhas[i+5] || "";
 
         // A linha 6 tem 4 valores separados por espaços ou tabs
-        const partes = valoresLinha.split(/\s+/);
+        // Extrair apenas números com vírgula ou ponto
+        const numeros = valoresLinha.match(/[\d.,]+/g) || [];
 
-        const baseTrib = partes[0] || "0";
-        const iva = partes[1] || "0";
-        const dedutivel = partes[2] || "0";
+        // Base tributável
+        const baseTrib = numeros[0] || "0";
+
+        // IVA total
+        const iva = numeros[1] || "0";
+
+        // IVA dedutível
+        const dedutivel = numeros[2] || "0";
+
 
         // Normalizar valores
         const brutoNum = parseFloat(baseTrib.replace("€","").replace(",","."));
