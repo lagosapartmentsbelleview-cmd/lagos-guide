@@ -139,67 +139,54 @@ function parseTextoAT(texto) {
 
     while (i < linhas.length) {
 
-        // Ignorar cabeçalhos
-        if (["Documento", "Identificação", "Data Emissão", "Base Tributável", "IVA", "Valor Deduzido", "Percentagem Deduzida"].includes(linhas[i])) {
+        // Tipo (Fatura / Fatura simplificada)
+        const tipo = linhas[i];
+        if (!tipo.toLowerCase().includes("fatura")) {
             i++;
             continue;
         }
 
-        // Bloco de 9 linhas
-        const tipo = linhas[i] || "";
         const identificacao = linhas[i+1] || "";
-        const fornecedor = linhas[i+2] || "";
-        const nif = linhas[i+3] || "";
-        const data = linhas[i+4] || "";
-        const baseTrib = linhas[i+5] || "";
-        const iva = linhas[i+6] || "";
-        const valorDeduzido = linhas[i+7] || "";
-        const percentagem = linhas[i+8] || "";
+        const data = linhas[i+2] || "";
+        const fornecedor = linhas[i+3] || "";
+        const nif = linhas[i+4] || "";
+        const valoresLinha = linhas[i+5] || "";
 
-        // Validar bloco
-        if (!identificacao || !nif || !data) {
-            i++;
-            continue;
-        }
+        // A linha 6 tem 4 valores separados por espaços ou tabs
+        const partes = valoresLinha.split(/\s+/);
+
+        const baseTrib = partes[0] || "0";
+        const iva = partes[1] || "0";
+        const dedutivel = partes[2] || "0";
 
         // Normalizar valores
-        const bruto = parseFloat(baseTrib.replace("€","").replace(",",".").trim()) || 0;
-        const ivaNum = parseFloat(iva.replace("€","").replace(",",".").trim()) || 0;
+        const brutoNum = parseFloat(baseTrib.replace("€","").replace(",","."));
+        const ivaNum = parseFloat(iva.replace("€","").replace(",","."));
+        const dedNum = parseFloat(dedutivel.replace("€","").replace(",","."));
 
         // Normalizar data
         const dataISO = normalizarData(data);
 
-        // Criar fatura
-faturas.push({
-    tipo,
-    identificacao,
-    fornecedor,
-    nif,
-    dataISO,
+        faturas.push({
+            tipo,
+            identificacao,
+            fornecedor,
+            nif,
+            dataISO,
+            valorBruto: brutoNum + ivaNum,
+            valorIVA: ivaNum,
+            valorDedutivel: dedNum,
+            valorIliquido: brutoNum,
+            numeroFatura: identificacao,
+            atcud: identificacao
+        });
 
-    // 🔥 Valor total da fatura (Bruto = Base Tributável + IVA)
-    valorBruto: bruto + ivaNum,
-
-    // Mantemos o IVA total
-    valorIVA: ivaNum,
-
-    // 🔥 IVA dedutível (AT)
-    valorDedutivel: parseFloat(valorDeduzido.replace("€","").replace(",",".").trim()) || 0,
-
-    // Opcional: valor ilíquido
-    valorIliquido: bruto,
-
-    // Usamos a identificação como número e ATCUD
-    numeroFatura: identificacao,
-    atcud: identificacao
-});
-
-
-        i += 9; // avançar para o próximo bloco
+        i += 6; // avançar para o próximo bloco
     }
 
     return faturas;
 }
+
 
 
 function normalizarData(dataStr) {
