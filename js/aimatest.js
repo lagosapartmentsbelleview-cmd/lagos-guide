@@ -1277,24 +1277,8 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
 
   const t = texts[currentLang];
 
-  // 1️⃣ Garantir que o input hidden "subject" existe
-let subjectInput = document.querySelector('input[name="subject"]');
-
-if (!subjectInput) {
-  subjectInput = document.createElement("input");
-  subjectInput.type = "hidden";
-  subjectInput.name = "subject";
-  this.appendChild(subjectInput);
-}
-
-// 2️⃣ Atualizar subject dinamicamente
-const firstGuestName =
-  document.querySelector('input[name="guest_1_fullName"]')?.value || "Hóspede";
-
-subjectInput.value = `Novo Formulário AIMA Recebido de ${firstGuestName}`;
-
   // ------------------------------
-  // VALIDAR CAMPOS OBRIGATÓRIOS
+  // 1️⃣ VALIDAR CAMPOS OBRIGATÓRIOS
   // ------------------------------
   const invalid = [...this.querySelectorAll("[required]")].some(input => {
     return !input.value || input.value.trim() === "";
@@ -1306,7 +1290,7 @@ subjectInput.value = `Novo Formulário AIMA Recebido de ${firstGuestName}`;
   }
 
   // ------------------------------
-  // VALIDAR CHECK-IN < CHECK-OUT
+  // 2️⃣ VALIDAR CHECK-IN < CHECK-OUT
   // ------------------------------
   const checkin = document.getElementById("checkinDate").value;
   const checkout = document.getElementById("checkoutDate").value;
@@ -1322,7 +1306,7 @@ subjectInput.value = `Novo Formulário AIMA Recebido de ${firstGuestName}`;
   }
 
   // ------------------------------
-  // VALIDAR DATAS DE NASCIMENTO
+  // 3️⃣ VALIDAR DATAS DE NASCIMENTO
   // ------------------------------
   const birthDates = [...document.querySelectorAll("input[name$='_birthDate']")];
 
@@ -1349,13 +1333,40 @@ subjectInput.value = `Novo Formulário AIMA Recebido de ${firstGuestName}`;
   }
 
   // ------------------------------
-  // ENVIO VIA WEB3FORMS
+  // 4️⃣ PREPARAR OS DADOS DO FORMULÁRIO
   // ------------------------------
-  const formData = new FormData(this);
+  const adults = parseInt(document.getElementById("adults")?.value || "0", 10);
+  const children = parseInt(document.getElementById("children")?.value || "0", 10);
+  const totalGuests = adults + children;
 
-  formData.append("access_key", "950b90bc-37f4-4f5b-9d69-3e56389a054d");
-  formData.append("to", "belleview@sapo.pt");
-  
+  const hospedes = [];
+  for (let i = 1; i <= totalGuests; i++) {
+    hospedes.push({
+      nome: document.querySelector(`[name="guest_${i}_fullName"]`)?.value || "",
+      dataNascimento: document.querySelector(`[name="guest_${i}_birthDate"]`)?.value || "",
+      nacionalidade: document.querySelector(`[name="guest_${i}_nationality"]`)?.value || "",
+      paisResidencia: document.querySelector(`[name="guest_${i}_residenceCountry"]`)?.value || "",
+      docTipo: document.querySelector(`[name="guest_${i}_docType"]`)?.value || "",
+      docNumero: document.querySelector(`[name="guest_${i}_docNumber"]`)?.value || "",
+      docOutroDesc: document.querySelector(`[name="guest_${i}_docOther"]`)?.value || "",
+      docPaisEmissor: document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || ""
+    });
+  }
+
+  const novoBoletim = {
+    criadoEm: new Date().toISOString(),
+    dataCheckin: checkin,
+    dataCheckout: checkout,
+    numAdultos: adults,
+    numCriancas: children,
+    hospedes: hospedes,
+    alojamentoId: null,             // Será atribuído no teu painel
+    status: "PENDENTE_ATRIBUICAO"  // Estado inicial
+  };
+
+  // ------------------------------
+  // 5️⃣ GRAVAR NO FIRESTORE
+  // ------------------------------
   const submitBtn = this.querySelector('button[type="submit"]');
   const originalText = submitBtn.textContent;
 
@@ -1363,48 +1374,30 @@ subjectInput.value = `Novo Formulário AIMA Recebido de ${firstGuestName}`;
   submitBtn.disabled = true;
 
   try {
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData
-    });
+    // Guarda na coleção 'boletins' da tua base de dados
+    await db.collection("boletins").add(novoBoletim);
 
-    const result = await response.json();
-
-    if (response.ok) {
-
-      // ------------------------------
-      // MENSAGEM FINAL TRADUZIDA
-      // ------------------------------
-      const successMessages = {
-        pt: "Formulário enviado com sucesso!",
-        en: "Form submitted successfully!",
-        es: "Formulario enviado con éxito!",
-        fr: "Formulaire envoyé avec succès!",
-        de: "Formular erfolgreich gesendet!",
-        it: "Modulo inviato con successo!"
-      };
-
-      // POPUP DE SUCESSO MULTILINGUE
-      const popup = document.getElementById("aimaSuccessPopup");
+    // Exibir Popup de Sucesso multilíngue
+    const popup = document.getElementById("aimaSuccessPopup");
+    if (popup) {
       const popupText = popup.querySelector(".success-popup-text");
-
-      popupText.textContent = texts[currentLang].aima_success;
+      if (popupText) popupText.textContent = texts[currentLang].aima_success;
       popup.style.display = "flex";
 
       setTimeout(() => {
-      popup.style.display = "none";
+        popup.style.display = "none";
       }, 3000);
+    }
 
-
-      this.reset();
+    // Limpar o formulário e recriar os campos
+    this.reset();
+    if (typeof generateGuestFields === "function") {
       generateGuestFields();
-
-    } else {
-      alert(t.alert_error || ("Erro: " + result.message));
     }
 
   } catch (error) {
-    alert(t.alert_comm_error || "Erro de comunicação. Tente novamente.");
+    console.error("Erro ao guardar no Firestore:", error);
+    alert(t.alert_comm_error || "Erro ao guardar os dados. Tente novamente.");
   } finally {
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
