@@ -1103,7 +1103,7 @@ function setLanguage(lang) {
   document.getElementById("checkinDate").placeholder = t.placeholder_checkin;
   document.getElementById("checkoutDate").placeholder = t.placeholder_checkout;
 
-  // 🟢 TRADUÇÕES DA CÓPIA DE E-MAIL (ADICIONAR AQUI)
+  // Tradução da opção de cópia por e-mail
   if (document.getElementById("labelWantsCopy"))
     document.getElementById("labelWantsCopy").textContent = t.wants_copy_title;
 
@@ -1130,32 +1130,19 @@ function setLanguage(lang) {
     }
   });
 
-  // 3️⃣ Reaplicar evento do FAQ (DEVE SER SEMPRE NO FIM)
-  setTimeout(() => {
-    const openFaqBtn = document.getElementById("openFaqModal");
-    if (openFaqBtn) {
-      openFaqBtn.onclick = () => {
-        document.getElementById("faqTitle").textContent = faqTitles[currentLang];
-        loadFaq();
-        faqModal.style.display = "block";
-      };
-    }
-  }, 0);
-}
-  // -----------------------------------------
-  // REAPLICAR EVENTO DO LINK FAQ APÓS MUDAR IDIOMA
-  // -----------------------------------------
+  // 3️⃣ Reaplicar evento do FAQ
   const openFaqBtn = document.getElementById("openFaqModal");
-if (openFaqBtn) {
-  openFaqBtn.addEventListener("click", () => {
-    document.getElementById("faqTitle").textContent = faqTitles[currentLang];
-    loadFaq();
-    faqModal.style.display = "block";
-  });
+  if (openFaqBtn) {
+    openFaqBtn.onclick = () => {
+      document.getElementById("faqTitle").textContent = faqTitles[currentLang];
+      loadFaq();
+      faqModal.style.display = "block";
+    };
+  }
 }
 
 // ------------------------------
-// GERAR CAMPOS PARA HÓSPEDES (ATUALIZADO E CORRIGIDO)
+// GERAR CAMPOS PARA HÓSPEDES
 // ------------------------------
 function generateGuestFields() {
   const t = texts[currentLang];
@@ -1240,7 +1227,7 @@ function generateGuestFields() {
 
     guestsContainerEl.appendChild(card);
 
-    // Mostrar campo "Outro → Qual?"
+    // Mostrar/esconder campo "Outro → Qual?"
     const docTypeSelect = card.querySelector(`#docType_${i}`);
     const otherField = card.querySelector(`#otherDocField_${i}`);
 
@@ -1248,7 +1235,7 @@ function generateGuestFields() {
       otherField.style.display = docTypeSelect.value === "other" ? "block" : "none";
     });
 
-    // Corrigir comportamento da data de nascimento (placeholder multilíngue)
+    // Datas de nascimento com placeholder
     const birthInput = card.querySelector(`input[name="guest_${i}_birthDate"]`);
     birthInput.type = "text";
     birthInput.addEventListener("focus", () => birthInput.type = "date");
@@ -1258,63 +1245,19 @@ function generateGuestFields() {
   }
 }
 
-// ------------------------------
-// EVENTOS PARA ATUALIZAR HÓSPEDES
-// ------------------------------
+// Eventos para atualizar número de hóspedes
 adultsInput.addEventListener("input", generateGuestFields);
 childrenInput.addEventListener("input", generateGuestFields);
 
 // ------------------------------
-// GERAR RESUMO DO FORMULÁRIO
-// ------------------------------
-function generateSummary() {
-  const t = texts[currentLang];
-
-  const box = document.getElementById("summaryContent");
-  box.innerHTML = ""; // limpa antes de gerar
-
-  let html = `
-    <h3>${t.formTitle}</h3>
-    <p><strong>${t.checkinLabel}:</strong> ${document.getElementById("checkinDate").value}</p>
-    <p><strong>${t.checkoutLabel}:</strong> ${document.getElementById("checkoutDate").value}</p>
-    <p><strong>${t.adultsLabel}:</strong> ${document.getElementById("adults").value}</p>
-    <p><strong>${t.childrenLabel}:</strong> ${document.getElementById("children").value}</p>
-    <hr>
-  `;
-
-  const totalGuests =
-    parseInt(document.getElementById("adults").value || 0) +
-    parseInt(document.getElementById("children").value || 0);
-
-  for (let i = 1; i <= totalGuests; i++) {
-    html += `
-      <h4>${t.guestTitle(i)}</h4>
-      <p><strong>${t.fields.fullName}:</strong> ${document.querySelector(`[name="guest_${i}_fullName"]`).value}</p>
-      <p><strong>${t.fields.birthDate}:</strong> ${document.querySelector(`[name="guest_${i}_birthDate"]`).value}</p>
-      <p><strong>${t.fields.nationality}:</strong> ${document.querySelector(`[name="guest_${i}_nationality"]`).value}</p>
-      <p><strong>${t.fields.residenceCountry}:</strong> ${document.querySelector(`[name="guest_${i}_residenceCountry"]`).value}</p>
-      <p><strong>${t.fields.docNumber}:</strong> ${document.querySelector(`[name="guest_${i}_docNumber"]`).value}</p>
-      <p><strong>${t.fields.docType}:</strong> ${document.querySelector(`[name="guest_${i}_docType"]`).value}</p>
-      <p><strong>${t.fields.docCountry}:</strong> ${document.querySelector(`[name="guest_${i}_docCountry"]`).value}</p>
-      <hr>
-    `;
-  }
-
-  box.insertAdjacentHTML("beforeend", html);
-}
-
-
-// ------------------------------
-// SUBMISSÃO DO FORMULÁRIO (SEM MODAL, ALERTAS TRADUZIDOS)
+// SUBMISSÃO DO FORMULÁRIO
 // ------------------------------
 document.getElementById("aimaForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const t = texts[currentLang];
 
-  // ------------------------------
-  // 1️⃣ VALIDAR CAMPOS OBRIGATÓRIOS
-  // ------------------------------
+  // 1️⃣ Validar campos obrigatórios
   const invalid = [...this.querySelectorAll("[required]")].some(input => {
     return !input.value || input.value.trim() === "";
   });
@@ -1324,9 +1267,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     return;
   }
 
-  // ------------------------------
-  // 2️⃣ VALIDAR CHECK-IN < CHECK-OUT
-  // ------------------------------
+  // 2️⃣ Validar datas de check-in / check-out
   const checkin = document.getElementById("checkinDate").value;
   const checkout = document.getElementById("checkoutDate").value;
 
@@ -1340,36 +1281,22 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     return;
   }
 
-  // ------------------------------
-  // 3️⃣ VALIDAR DATAS DE NASCIMENTO
-  // ------------------------------
+  // 3️⃣ Validar datas de nascimento
   const birthDates = [...document.querySelectorAll("input[name$='_birthDate']")];
-
   for (const bd of birthDates) {
     const value = bd.value;
-
     if (!value) {
       alert(t.alert_birth_missing || "Por favor preencha todas as datas de nascimento.");
       return;
     }
-
     const birth = new Date(value);
-    const today = new Date();
-
-    if (birth > today) {
-      alert(t.alert_birth_future || "A data de nascimento não pode ser no futuro.");
-      return;
-    }
-
-    if (birth.getFullYear() < 1900) {
-      alert(t.alert_birth_invalid || "A data de nascimento é inválida.");
+    if (birth > new Date() || birth.getFullYear() < 1900) {
+      alert(t.alert_birth_invalid || "Data de nascimento inválida.");
       return;
     }
   }
 
-  // ------------------------------
-  // 4️⃣ PREPARAR OS DADOS DO FORMULÁRIO
-  // ------------------------------
+  // 4️⃣ Preparar dados
   const adults = parseInt(document.getElementById("adults")?.value || "0", 10);
   const children = parseInt(document.getElementById("children")?.value || "0", 10);
   const totalGuests = adults + children;
@@ -1388,7 +1315,6 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     });
   }
 
-  // 🟢 LER A OPÇÃO SELECCIONADA (SIM / NÃO)
   const selectedCopy = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
   const wantsCopy = selectedCopy === "sim";
   const clientEmail = wantsCopy ? (document.getElementById("clientEmail")?.value || "") : "";
@@ -1399,16 +1325,14 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     dataCheckout: checkout,
     numAdultos: adults,
     numCriancas: children,
-    emailCliente: clientEmail,     // Guarda o e-mail preenchido se escolheu "Sim"
-    pediuCopia: wantsCopy,          // Guarda true (se "Sim") ou false (se "Não")
+    emailCliente: clientEmail,
+    pediuCopia: wantsCopy,
     hospedes: hospedes,
-    alojamentoId: null,             // Será atribuído no teu painel
-    status: "PENDENTE_ATRIBUICAO"  // Estado inicial
+    alojamentoId: null,
+    status: "PENDENTE_ATRIBUICAO"
   };
 
-  // ------------------------------
-  // 5️⃣ GRAVAR NO FIRESTORE
-  // ------------------------------
+  // 5️⃣ Gravar no Firestore
   const submitBtn = this.querySelector('button[type="submit"]');
   const originalText = submitBtn.textContent;
 
@@ -1416,10 +1340,8 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   submitBtn.disabled = true;
 
   try {
-    // Guarda na coleção 'boletins' da tua base de dados
     await db.collection("boletins").add(novoBoletim);
 
-    // Exibir Popup de Sucesso multilíngue
     const popup = document.getElementById("aimaSuccessPopup");
     if (popup) {
       const popupText = popup.querySelector(".success-popup-text");
@@ -1431,11 +1353,8 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
       }, 3000);
     }
 
-    // Limpar o formulário e recriar os campos
     this.reset();
-    if (typeof generateGuestFields === "function") {
-      generateGuestFields();
-    }
+    generateGuestFields();
 
   } catch (error) {
     console.error("Erro ao guardar no Firestore:", error);
@@ -1446,23 +1365,25 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   }
 });
 
-// FECHAR FAQ
-document.getElementById("closeFaqModal").addEventListener("click", () => {
-  document.getElementById("faqModal").style.display = "none";
-});
+// Fechar FAQ Modal
+const closeFaqBtn = document.getElementById("closeFaqModal");
+if (closeFaqBtn) {
+  closeFaqBtn.addEventListener("click", () => {
+    document.getElementById("faqModal").style.display = "none";
+  });
+}
 
-// Corrigir inputs de data para permitir placeholder
+// Configuração de datas
 ["checkinDate", "checkoutDate"].forEach(id => {
   const el = document.getElementById(id);
-  el.type = "text";
-  el.addEventListener("focus", () => el.type = "date");
-  el.addEventListener("blur", () => {
-    if (!el.value) el.type = "text";
-  });
+  if (el) {
+    el.type = "text";
+    el.addEventListener("focus", () => el.type = "date");
+    el.addEventListener("blur", () => {
+      if (!el.value) el.type = "text";
+    });
+  }
 });
 
-
-// INICIAR EM PT
+// Iniciar com Português
 setLanguage("pt");
-
-
