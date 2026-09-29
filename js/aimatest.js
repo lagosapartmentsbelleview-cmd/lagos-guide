@@ -81,6 +81,10 @@ const texts = {
     checkoutLabel: "Data de Check-out:",
     adultsLabel: "Nº de Hóspedes Adultos:",
     childrenLabel: "Nº de Hóspedes Crianças:",
+    wants_copy_title: "Pretende cópia deste formulário no seu e-mail?",
+    radio_yes: "Sim",
+    radio_no: "Não",
+    email_label: "O seu E-mail:",
     guestTitle: i => `Hóspede ${i}`,
     fields: {
       fullName: "Nome Completo:",
@@ -174,6 +178,10 @@ const texts = {
   checkoutLabel: "Check‑out Date:",
   adultsLabel: "Number of Adult Guests:",
   childrenLabel: "Number of Child Guests:",
+  wants_copy_title: "Would you like a copy of this form sent to your email?",
+  radio_yes: "Yes",
+  radio_no: "No",
+  email_label: "Your Email:",
   guestTitle: i => `Guest ${i}`,
   fields: {
     fullName: "Full Name:",
@@ -267,6 +275,10 @@ const texts = {
   checkoutLabel: "Fecha de Check‑out:",
   adultsLabel: "Número de Huéspedes Adultos:",
   childrenLabel: "Número de Huéspedes Niños:",
+  wants_copy_title: "¿Desea una copia de este formulario en su correo electrónico?",
+  radio_yes: "Sí",
+  radio_no: "No",
+  email_label: "Su Correo Electrónico:",
   guestTitle: i => `Huésped ${i}`,
   fields: {
     fullName: "Nombre Completo:",
@@ -360,6 +372,10 @@ const texts = {
   checkoutLabel: "Date de Départ :",
   adultsLabel: "Nombre d’Adultes :",
   childrenLabel: "Nombre d’Enfants :",
+  wants_copy_title: "Souhaitez-vous recevoir une copie de ce formulaire par e-mail ?",
+  radio_yes: "Oui",
+  radio_no: "Non",
+  email_label: "Votre E-mail :",
   guestTitle: i => `Hôte ${i}`,
   fields: {
     fullName: "Nom Complet :",
@@ -453,6 +469,10 @@ const texts = {
   checkoutLabel: "Data di Check‑out:",
   adultsLabel: "Numero di Ospiti Adulti:",
   childrenLabel: "Numero di Ospiti Bambini:",
+  wants_copy_title: "Desideri una copia di questo modulo via e-mail?",
+  radio_yes: "Sì",
+  radio_no: "No",
+  email_label: "La tua E-mail:",
   guestTitle: i => `Ospite ${i}`,
   fields: {
     fullName: "Nome Completo:",
@@ -547,6 +567,10 @@ const texts = {
   checkoutLabel: "Check‑out‑Datum:",
   adultsLabel: "Anzahl der erwachsenen Gäste:",
   childrenLabel: "Anzahl der Kinder:",
+  wants_copy_title: "Möchten Sie eine Kopie dieses Formulars per E-Mail erhalten?",
+  radio_yes: "Ja",
+  radio_no: "Nein",
+  email_label: "Ihre E-Mail-Adresse:",
   guestTitle: i => `Gast ${i}`,
   fields: {
     fullName: "Vollständiger Name:",
@@ -1049,7 +1073,6 @@ const adultsLabelEl = document.getElementById("adultsLabel");
 const childrenLabelEl = document.getElementById("childrenLabel");
 const guestsContainerEl = document.getElementById("guestsContainer");
 const submitBtnEl = document.getElementById("submitLabel");
-
 const adultsInput = document.getElementById("adults");
 const childrenInput = document.getElementById("children");
 
@@ -1080,6 +1103,19 @@ function setLanguage(lang) {
   document.getElementById("checkinDate").placeholder = t.placeholder_checkin;
   document.getElementById("checkoutDate").placeholder = t.placeholder_checkout;
 
+  // 🟢 TRADUÇÕES DA CÓPIA DE E-MAIL (ADICIONAR AQUI)
+  if (document.getElementById("labelWantsCopy"))
+    document.getElementById("labelWantsCopy").textContent = t.wants_copy_title;
+
+  if (document.getElementById("labelRadioYes"))
+    document.getElementById("labelRadioYes").textContent = t.radio_yes;
+
+  if (document.getElementById("labelRadioNo"))
+    document.getElementById("labelRadioNo").textContent = t.radio_no;
+
+  if (document.getElementById("labelClientEmail"))
+    document.getElementById("labelClientEmail").textContent = t.email_label;
+
   // 1️⃣ Gerar campos dos hóspedes
   generateGuestFields();
 
@@ -1106,7 +1142,6 @@ function setLanguage(lang) {
     }
   }, 0);
 }
-
   // -----------------------------------------
   // REAPLICAR EVENTO DO LINK FAQ APÓS MUDAR IDIOMA
   // -----------------------------------------
