@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="pt">
 <head>
   <meta charset="UTF-8">
+  <!-- Adapta a página a telemóveis e tablets -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <title>Apartments Belleview Lagos — Boletim de Alojamento</title>
+  
+  <!-- O teu ficheiro de estilos -->
   <link rel="stylesheet" href="css/aima.css">
+
+  <!-- Gerador de PDF (já tinhas) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <!-- 1. EmailJS (Para envio da cópia por e-mail) -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+  <!-- 2. Firebase SDKs (Para guardar na base de dados Firestore) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
