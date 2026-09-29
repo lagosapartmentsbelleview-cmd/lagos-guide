@@ -1353,12 +1353,18 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     });
   }
 
+  // LER O E-MAIL CASO O CLIENTE TENHA PEDIDO CÓPIA
+  const wantsCopy = document.getElementById("wantsCopy")?.checked || false;
+  const clientEmail = wantsCopy ? (document.getElementById("clientEmail")?.value || "") : "";
+
   const novoBoletim = {
     criadoEm: new Date().toISOString(),
     dataCheckin: checkin,
     dataCheckout: checkout,
     numAdultos: adults,
     numCriancas: children,
+    emailCliente: clientEmail,     // Guarda o e-mail preenchido
+    pediuCopia: wantsCopy,          // guarda true ou false
     hospedes: hospedes,
     alojamentoId: null,             // Será atribuído no teu painel
     status: "PENDENTE_ATRIBUICAO"  // Estado inicial
