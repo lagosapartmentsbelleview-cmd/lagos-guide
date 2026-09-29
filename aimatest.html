@@ -2,7 +2,6 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <!-- Adapta a página a telemóveis e tablets -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Apartments Belleview Lagos — Boletim de Alojamento</title>
@@ -10,20 +9,16 @@
   <!-- O teu ficheiro de estilos -->
   <link rel="stylesheet" href="css/aima.css">
 
-  <!-- Gerador de PDF (já tinhas) -->
+  <!-- Gerador de PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-  <!-- 1. EmailJS (Para envio da cópia por e-mail) -->
+  <!-- EmailJS SDK (Para envio da cópia por e-mail) -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
-  <!-- 2. Firebase SDKs (Para guardar na base de dados Firestore) -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
 
-<!-- HEADER IGUAL AO GUIDE -->
+<!-- HEADER -->
 <header class="guide-header">
     <a href="#" class="logo">
         <svg width="36" height="36" viewBox="0 0 100 100" class="belleview-logo">
@@ -43,7 +38,7 @@
         <h1 class="main-title">Boletim de Alojamento / Guest Registration Form</h1>
         <p class="subtitle" id="subtitle-text"></p>
 
-        <!-- BOTÕES DE IDIOMA IGUAIS AO GUIDE -->
+        <!-- BOTÕES DE IDIOMA -->
         <div class="lang-buttons">
             <button onclick="setLanguage('pt')">
                 <img src="https://flagcdn.com/w40/pt.png" alt="PT"> Português
@@ -104,44 +99,44 @@
                     <input type="number" id="children" name="children" min="0" value="0" required>
                 </div>
 
-              <!-- OPÇÃO DE CÓPIA POR E-MAIL (SIM / NÃO) -->
-<div class="form-row" style="flex-direction: column; align-items: flex-start; margin-top: 15px;">
-    <label id="labelWantsCopy" style="font-weight: bold; margin-bottom: 8px;"></label>
-    
-    <div style="display: flex; gap: 20px;">
-        <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            <input type="radio" name="wantsCopyRadio" value="sim" required onchange="toggleEmailInput()">
-            <span id="labelRadioYes"></span>
-        </label>
-        
-        <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            <input type="radio" name="wantsCopyRadio" value="nao" required onchange="toggleEmailInput()">
-            <span id="labelRadioNo"></span>
-        </label>
-    </div>
-</div>
+                <!-- OPÇÃO DE CÓPIA POR E-MAIL (SIM / NÃO) -->
+                <div class="form-row" style="flex-direction: column; align-items: flex-start; margin-top: 15px;">
+                    <label id="labelWantsCopy" style="font-weight: bold; margin-bottom: 8px;"></label>
+                    
+                    <div style="display: flex; gap: 20px;">
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                            <input type="radio" name="wantsCopyRadio" value="sim" required onchange="toggleEmailInput()">
+                            <span id="labelRadioYes"></span>
+                        </label>
+                        
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                            <input type="radio" name="wantsCopyRadio" value="nao" required onchange="toggleEmailInput()">
+                            <span id="labelRadioNo"></span>
+                        </label>
+                    </div>
+                </div>
 
-<div class="form-row" id="emailCopyContainer" style="display: none; margin-top: 10px;">
-    <label for="clientEmail" id="labelClientEmail"></label>
-    <input type="email" id="clientEmail" name="clientEmail" placeholder="exemplo@email.com">
-</div>
+                <div class="form-row" id="emailCopyContainer" style="display: none; margin-top: 10px;">
+                    <label for="clientEmail" id="labelClientEmail"></label>
+                    <input type="email" id="clientEmail" name="clientEmail" placeholder="exemplo@email.com">
+                </div>
 
-<script>
-  function toggleEmailInput() {
-    const selected = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
-    const emailContainer = document.getElementById("emailCopyContainer");
-    const emailInput = document.getElementById("clientEmail");
+                <script>
+                  function toggleEmailInput() {
+                    const selected = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
+                    const emailContainer = document.getElementById("emailCopyContainer");
+                    const emailInput = document.getElementById("clientEmail");
 
-    if (selected === "sim") {
-      emailContainer.style.display = "flex";
-      emailInput.required = true;
-    } else {
-      emailContainer.style.display = "none";
-      emailInput.required = false;
-      emailInput.value = "";
-    }
-  }
-</script>
+                    if (selected === "sim") {
+                      emailContainer.style.display = "flex";
+                      emailInput.required = true;
+                    } else {
+                      emailContainer.style.display = "none";
+                      emailInput.required = false;
+                      emailInput.value = "";
+                    }
+                  }
+                </script>
             </div>
 
             <!-- HÓSPEDES GERADOS DINAMICAMENTE -->
@@ -153,7 +148,7 @@
 
 </main>
 
-<!-- FOOTER IGUAL AO GUIDE -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-content">
 
@@ -167,30 +162,30 @@
     <p class="footer-title">Apartments Belleview Lagos</p>
 
     <p>
-    Rua Quinta do Landeiro Lote 22, 23<br>
-    Urbanização Marina Park<br>
-    8600-302 Lagos, Algarve - Portugal<br>
+      Rua Quinta do Landeiro Lote 22, 23<br>
+      Urbanização Marina Park<br>
+      8600-302 Lagos, Algarve - Portugal<br>
+    </p>
 
     <p>
-  Tel: <a href="tel:+351910051588" class="footer-link">+351 910 051 588</a><br>
-  <span id="footer-call">(Chamada para a rede fixa nacional)</span><br>
+      Tel: <a href="tel:+351910051588" class="footer-link">+351 910 051 588</a><br>
+      <span id="footer-call">(Chamada para a rede fixa nacional)</span><br>
 
-  Whatsapp: <a href="https://wa.me/351910051588" class="footer-link">+351 910 051 588</a><br>
+      Whatsapp: <a href="https://wa.me/351910051588" class="footer-link">+351 910 051 588</a><br>
 
-  Email: <a href="mailto:belleview@sapo.pt" class="footer-link">belleview@sapo.pt</a>
-</p>
+      Email: <a href="mailto:belleview@sapo.pt" class="footer-link">belleview@sapo.pt</a>
+    </p>
 
-<p>
-  <span id="footer-reg">Nº de Registos AL</span>: 26313/AL, 116670/AL, 116671/AL<br>
-  <span id="footer-operator">Entidade Exploradora</span>: Luís Ferreira.
-</p>
+    <p>
+      <span id="footer-reg">Nº de Registos AL</span>: 26313/AL, 116670/AL, 116671/AL<br>
+      <span id="footer-operator">Entidade Exploradora</span>: Luís Ferreira.
+    </p>
 
-<div class="footer-links"></div>
+    <div class="footer-links"></div>
 
-<p class="footer-copy">
-  © 2025 Apartments Belleview Lagos — <span id="footer-rights">Todos os direitos reservados.</span>
-</p>
-
+    <p class="footer-copy">
+      © 2025 Apartments Belleview Lagos — <span id="footer-rights">Todos os direitos reservados.</span>
+    </p>
 
   </div>
 </footer>
@@ -205,7 +200,7 @@
     </div>
 </div>
 
-<!-- MODAL FAQ (Português) -->
+<!-- MODAL FAQ -->
 <div id="faqModal" class="faq-modal">
   <div class="faq-modal-content">
 
@@ -218,15 +213,13 @@
   </div>
 </div>
   
-<!-- Firebase compat v9 -->
+<!-- Firebase compat SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-<!-- Configuração do Firebase -->
+<!-- Configuração do Firebase e scripts de aplicação -->
 <script src="js/firebase-config.js"></script>
-
-<!-- Scripts de Teste -->
 <script src="js/aimatest.js"></script> 
 <script src="js/aima-lang.js"></script>
 
