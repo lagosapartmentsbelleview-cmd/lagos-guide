@@ -90,7 +90,7 @@
                     <input type="number" id="children" name="children" min="0" value="0" required>
                 </div>
 
-               <!-- OPÇÃO DE CÓPIA POR E-MAIL (SIM / NÃO) -->
+              <!-- OPÇÃO DE CÓPIA POR E-MAIL (SIM / NÃO) -->
 <div class="form-row" style="flex-direction: column; align-items: flex-start; margin-top: 15px;">
     <label id="labelWantsCopy" style="font-weight: bold; margin-bottom: 8px;"></label>
     
@@ -119,22 +119,6 @@
     const emailInput = document.getElementById("clientEmail");
 
     if (selected === "sim") {
-      emailContainer.style.display = "flex";
-      emailInput.required = true;
-    } else {
-      emailContainer.style.display = "none";
-      emailInput.required = false;
-      emailInput.value = "";
-    }
-  }
-</script>
-  // Função simples para mostrar/esconder o campo de e-mail
-  function toggleEmailInput() {
-    const checkBox = document.getElementById("wantsCopy");
-    const emailContainer = document.getElementById("emailCopyContainer");
-    const emailInput = document.getElementById("clientEmail");
-
-    if (checkBox.checked) {
       emailContainer.style.display = "flex";
       emailInput.required = true;
     } else {
