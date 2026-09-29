@@ -1355,15 +1355,15 @@ try {
   if (clientEmail) {
     try {
       await emailjs.send(
-        "TEU_SERVICE_ID",   // Substitui pelo teu Service ID do EmailJS
-        "TEU_TEMPLATE_ID",  // Substitui pelo teu Template ID do EmailJS
+        "service_funp519",   // Substitui pelo teu Service ID do EmailJS
+        "template_0oqqqy3",  // Substitui pelo teu Template ID do EmailJS
         {
           to_email: clientEmail,
           guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
           checkin: novoBoletim.checkin || "",
           checkout: novoBoletim.checkout || ""
         },
-        "TUA_PUBLIC_KEY"     // Substitui pela tua Public Key do EmailJS
+        "imhA9ilHaWGF1hxYz"     // Substitui pela tua Public Key do EmailJS
       );
       console.log("Cópia enviada com sucesso para:", clientEmail);
     } catch (emailErr) {
