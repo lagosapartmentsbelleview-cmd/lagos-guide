@@ -1388,8 +1388,9 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     });
   }
 
-  // LER O E-MAIL CASO O CLIENTE TENHA PEDIDO CÓPIA
-  const wantsCopy = document.getElementById("wantsCopy")?.checked || false;
+  // 🟢 LER A OPÇÃO SELECCIONADA (SIM / NÃO)
+  const selectedCopy = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
+  const wantsCopy = selectedCopy === "sim";
   const clientEmail = wantsCopy ? (document.getElementById("clientEmail")?.value || "") : "";
 
   const novoBoletim = {
@@ -1398,8 +1399,8 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     dataCheckout: checkout,
     numAdultos: adults,
     numCriancas: children,
-    emailCliente: clientEmail,     // Guarda o e-mail preenchido
-    pediuCopia: wantsCopy,          // guarda true ou false
+    emailCliente: clientEmail,     // Guarda o e-mail preenchido se escolheu "Sim"
+    pediuCopia: wantsCopy,          // Guarda true (se "Sim") ou false (se "Não")
     hospedes: hospedes,
     alojamentoId: null,             // Será atribuído no teu painel
     status: "PENDENTE_ATRIBUICAO"  // Estado inicial
