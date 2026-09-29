@@ -90,20 +90,44 @@
                     <input type="number" id="children" name="children" min="0" value="0" required>
                 </div>
 
-                <!-- CAMPO OPCIONAL DE E-MAIL PARA CÓPIA -->
-<div class="form-row" style="margin-top: 15px;">
-    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-        <input type="checkbox" id="wantsCopy" name="wantsCopy" onchange="toggleEmailInput()">
-        <span>Deseja receber uma cópia do boletim por e-mail?</span>
-    </label>
+               <!-- OPÇÃO DE CÓPIA POR E-MAIL (SIM / NÃO) -->
+<div class="form-row" style="flex-direction: column; align-items: flex-start; margin-top: 15px;">
+    <label id="labelWantsCopy" style="font-weight: bold; margin-bottom: 8px;"></label>
+    
+    <div style="display: flex; gap: 20px;">
+        <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+            <input type="radio" name="wantsCopyRadio" value="sim" required onchange="toggleEmailInput()">
+            <span id="labelRadioYes"></span>
+        </label>
+        
+        <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+            <input type="radio" name="wantsCopyRadio" value="nao" required onchange="toggleEmailInput()">
+            <span id="labelRadioNo"></span>
+        </label>
+    </div>
 </div>
 
-<div class="form-row" id="emailCopyContainer" style="display: none;">
-    <label for="clientEmail">O seu E-mail:</label>
+<div class="form-row" id="emailCopyContainer" style="display: none; margin-top: 10px;">
+    <label for="clientEmail" id="labelClientEmail"></label>
     <input type="email" id="clientEmail" name="clientEmail" placeholder="exemplo@email.com">
 </div>
 
 <script>
+  function toggleEmailInput() {
+    const selected = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
+    const emailContainer = document.getElementById("emailCopyContainer");
+    const emailInput = document.getElementById("clientEmail");
+
+    if (selected === "sim") {
+      emailContainer.style.display = "flex";
+      emailInput.required = true;
+    } else {
+      emailContainer.style.display = "none";
+      emailInput.required = false;
+      emailInput.value = "";
+    }
+  }
+</script>
   // Função simples para mostrar/esconder o campo de e-mail
   function toggleEmailInput() {
     const checkBox = document.getElementById("wantsCopy");
