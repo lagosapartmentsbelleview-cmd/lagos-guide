@@ -1142,7 +1142,7 @@ function setLanguage(lang) {
 }
 
 // ------------------------------
-// GERAR CAMPOS PARA HÓSPEDES
+// GERAR CAMPOS PARA HÓSPEDES (COM PRESERVAÇÃO DE DADOS)
 // ------------------------------
 function generateGuestFields() {
   const t = texts[currentLang];
@@ -1150,11 +1150,31 @@ function generateGuestFields() {
   const children = parseInt(childrenInput.value || "0", 10);
   const total = adults + children;
 
+  // 1. Guardar dados atuais preenchidos nos inputs para não perder informação
+  const existingData = [];
+  const currentCards = guestsContainerEl.querySelectorAll(".guest-card");
+  currentCards.forEach((card, index) => {
+    const idx = index + 1;
+    existingData.push({
+      fullName: card.querySelector(`[name="guest_${idx}_fullName"]`)?.value || "",
+      birthDate: card.querySelector(`[name="guest_${idx}_birthDate"]`)?.value || "",
+      nationality: card.querySelector(`[name="guest_${idx}_nationality"]`)?.value || "",
+      residenceCountry: card.querySelector(`[name="guest_${idx}_residenceCountry"]`)?.value || "",
+      docNumber: card.querySelector(`[name="guest_${idx}_docNumber"]`)?.value || "",
+      docType: card.querySelector(`[name="guest_${idx}_docType"]`)?.value || "",
+      docOther: card.querySelector(`[name="guest_${idx}_docOther"]`)?.value || "",
+      docCountry: card.querySelector(`[name="guest_${idx}_docCountry"]`)?.value || ""
+    });
+  });
+
   guestsContainerEl.innerHTML = "";
 
   for (let i = 1; i <= total; i++) {
     const card = document.createElement("div");
     card.className = "form-card guest-card";
+
+    // Recupera dados salvos previamente se existirem
+    const saved = existingData[i - 1] || {};
 
     card.innerHTML = `
       <h4>${t.guestTitle(i)}</h4>
@@ -1162,24 +1182,21 @@ function generateGuestFields() {
       <!-- Nome completo -->
       <div class="form-row">
         <label>${t.fields.fullName}</label>
-        <input type="text" name="guest_${i}_fullName" required>
+        <input type="text" name="guest_${i}_fullName" value="${saved.fullName || ''}" required>
       </div>
 
       <!-- Data de nascimento -->
       <div class="form-row">
         <label>${t.fields.birthDate}</label>
-        <input type="text"
-               name="guest_${i}_birthDate"
-               placeholder="${t.placeholder_checkin}"
-               required>
+        <input type="date" name="guest_${i}_birthDate" value="${saved.birthDate || ''}" required>
       </div>
 
       <!-- Nacionalidade -->
       <div class="form-row">
         <label>${t.fields.nationality}</label>
         <select name="guest_${i}_nationality" required>
-          <option value="" disabled selected hidden>${t.placeholder_select}</option>
-          ${countries.map(c => `<option value="${c}">${c}</option>`).join("")}
+          <option value="" disabled hidden ${!saved.nationality ? 'selected' : ''}>${t.placeholder_select}</option>
+          ${countries.map(c => `<option value="${c}" ${saved.nationality === c ? 'selected' : ''}>${c}</option>`).join("")}
         </select>
       </div>
 
@@ -1187,60 +1204,60 @@ function generateGuestFields() {
       <div class="form-row">
         <label>${t.fields.residenceCountry}</label>
         <select name="guest_${i}_residenceCountry" required>
-          <option value="" disabled selected hidden>${t.placeholder_select}</option>
-          ${countries.map(c => `<option value="${c}">${c}</option>`).join("")}
+          <option value="" disabled hidden ${!saved.residenceCountry ? 'selected' : ''}>${t.placeholder_select}</option>
+          ${countries.map(c => `<option value="${c}" ${saved.residenceCountry === c ? 'selected' : ''}>${c}</option>`).join("")}
         </select>
       </div>
 
       <!-- Número do documento -->
       <div class="form-row">
         <label>${t.fields.docNumber}</label>
-        <input type="text" name="guest_${i}_docNumber" required>
+        <input type="text" name="guest_${i}_docNumber" value="${saved.docNumber || ''}" required>
       </div>
 
       <!-- Tipo de documento -->
       <div class="form-row">
         <label>${t.fields.docType}</label>
         <select name="guest_${i}_docType" id="docType_${i}" required>
-          <option value="" disabled selected hidden>${t.placeholder_select}</option>
-          <option value="passport">${t.fields.docTypePassport}</option>
-          <option value="id">${t.fields.docTypeID}</option>
-          <option value="other">${t.fields.docTypeOther || "Outro"}</option>
+          <option value="" disabled hidden ${!saved.docType ? 'selected' : ''}>${t.placeholder_select}</option>
+          <option value="passport" ${saved.docType === 'passport' ? 'selected' : ''}>${t.fields.docTypePassport}</option>
+          <option value="id" ${saved.docType === 'id' ? 'selected' : ''}>${t.fields.docTypeID}</option>
+          <option value="other" ${saved.docType === 'other' ? 'selected' : ''}>${t.fields.docTypeOther || "Outro"}</option>
         </select>
       </div>
 
       <!-- Campo "Outro → Qual?" -->
-      <div class="form-row" id="otherDocField_${i}" style="display:none;">
+      <div class="form-row" id="otherDocField_${i}" style="display: ${saved.docType === 'other' ? 'block' : 'none'};">
         <label>${t.fields.docTypeOtherLabel || "Qual?"}</label>
-        <input type="text" name="guest_${i}_docOther">
+        <input type="text" name="guest_${i}_docOther" value="${saved.docOther || ''}" ${saved.docType === 'other' ? 'required' : ''}>
       </div>
 
       <!-- País emissor -->
       <div class="form-row">
         <label>${t.fields.docCountry}</label>
         <select name="guest_${i}_docCountry" required>
-          <option value="" disabled selected hidden>${t.placeholder_select}</option>
-          ${countries.map(c => `<option value="${c}">${c}</option>`).join("")}
+          <option value="" disabled hidden ${!saved.docCountry ? 'selected' : ''}>${t.placeholder_select}</option>
+          ${countries.map(c => `<option value="${c}" ${saved.docCountry === c ? 'selected' : ''}>${c}</option>`).join("")}
         </select>
       </div>
     `;
 
     guestsContainerEl.appendChild(card);
 
-    // Mostrar/esconder campo "Outro → Qual?"
+    // Controlo do campo "Outro → Qual?" com validação obrigatória dinâmica
     const docTypeSelect = card.querySelector(`#docType_${i}`);
     const otherField = card.querySelector(`#otherDocField_${i}`);
+    const otherInput = otherField.querySelector("input");
 
     docTypeSelect.addEventListener("change", () => {
-      otherField.style.display = docTypeSelect.value === "other" ? "block" : "none";
-    });
-
-    // Datas de nascimento com placeholder
-    const birthInput = card.querySelector(`input[name="guest_${i}_birthDate"]`);
-    birthInput.type = "text";
-    birthInput.addEventListener("focus", () => birthInput.type = "date");
-    birthInput.addEventListener("blur", () => {
-      if (!birthInput.value) birthInput.type = "text";
+      const isOther = docTypeSelect.value === "other";
+      otherField.style.display = isOther ? "block" : "none";
+      if (isOther) {
+        otherInput.setAttribute("required", "required");
+      } else {
+        otherInput.removeAttribute("required");
+        otherInput.value = "";
+      }
     });
   }
 }
@@ -1257,13 +1274,9 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
 
   const t = texts[currentLang];
 
-  // 1️⃣ Validar campos obrigatórios
-  const invalid = [...this.querySelectorAll("[required]")].some(input => {
-    return !input.value || input.value.trim() === "";
-  });
-
-  if (invalid) {
-    alert(t.alert_required || "Por favor preencha todos os campos obrigatórios.");
+  // 1️⃣ Validar campos obrigatórios HTML5
+  if (!this.checkValidity()) {
+    this.reportValidity();
     return;
   }
 
@@ -1271,56 +1284,49 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   const checkin = document.getElementById("checkinDate").value;
   const checkout = document.getElementById("checkoutDate").value;
 
-  if (!checkin || !checkout) {
-    alert(t.alert_dates_missing || "Por favor preencha as datas de check-in e check-out.");
-    return;
-  }
-
   if (new Date(checkin) >= new Date(checkout)) {
     alert(t.alert_checkout_invalid || "A data de check-out deve ser posterior à data de check-in.");
     return;
   }
 
   // 3️⃣ Validar datas de nascimento
-  const birthDates = [...document.querySelectorAll("input[name$='_birthDate']")];
-  for (const bd of birthDates) {
-    const value = bd.value;
-    if (!value) {
-      alert(t.alert_birth_missing || "Por favor preencha todas as datas de nascimento.");
-      return;
-    }
-    const birth = new Date(value);
-    if (birth > new Date() || birth.getFullYear() < 1900) {
+  const birthInputs = [...document.querySelectorAll("input[name$='_birthDate']")];
+  const today = new Date();
+  
+  for (const bd of birthInputs) {
+    const birth = new Date(bd.value);
+    if (birth > today || birth.getFullYear() < 1900) {
       alert(t.alert_birth_invalid || "Data de nascimento inválida.");
+      bd.focus();
       return;
     }
   }
 
-  // 4️⃣ Preparar dados
-  const adults = parseInt(document.getElementById("adults")?.value || "0", 10);
-  const children = parseInt(document.getElementById("children")?.value || "0", 10);
+  // 4️⃣ Preparar objeto final
+  const adults = parseInt(adultsInput.value || "0", 10);
+  const children = parseInt(childrenInput.value || "0", 10);
   const totalGuests = adults + children;
 
   const hospedes = [];
   for (let i = 1; i <= totalGuests; i++) {
     hospedes.push({
-      nome: document.querySelector(`[name="guest_${i}_fullName"]`)?.value || "",
+      nome: document.querySelector(`[name="guest_${i}_fullName"]`)?.value.trim() || "",
       dataNascimento: document.querySelector(`[name="guest_${i}_birthDate"]`)?.value || "",
       nacionalidade: document.querySelector(`[name="guest_${i}_nationality"]`)?.value || "",
       paisResidencia: document.querySelector(`[name="guest_${i}_residenceCountry"]`)?.value || "",
       docTipo: document.querySelector(`[name="guest_${i}_docType"]`)?.value || "",
-      docNumero: document.querySelector(`[name="guest_${i}_docNumber"]`)?.value || "",
-      docOutroDesc: document.querySelector(`[name="guest_${i}_docOther"]`)?.value || "",
+      docNumero: document.querySelector(`[name="guest_${i}_docNumber"]`)?.value.trim() || "",
+      docOutroDesc: document.querySelector(`[name="guest_${i}_docOther"]`)?.value.trim() || "",
       docPaisEmissor: document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || ""
     });
   }
 
   const selectedCopy = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
   const wantsCopy = selectedCopy === "sim";
-  const clientEmail = wantsCopy ? (document.getElementById("clientEmail")?.value || "") : "";
+  const clientEmail = wantsCopy ? (document.getElementById("clientEmail")?.value.trim() || "") : "";
 
   const novoBoletim = {
-    criadoEm: new Date().toISOString(),
+    criadoEm: firebase.firestore.FieldValue.serverTimestamp(), // Usa timestamp do servidor para precisão
     dataCheckin: checkin,
     dataCheckout: checkout,
     numAdultos: adults,
@@ -1333,7 +1339,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   };
 
   // 5️⃣ Gravar no Firestore
-  const submitBtn = this.querySelector('button[type="submit"]');
+  const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
   const originalText = submitBtn.textContent;
 
   submitBtn.textContent = t.sending || "A enviar...";
@@ -1345,7 +1351,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     const popup = document.getElementById("aimaSuccessPopup");
     if (popup) {
       const popupText = popup.querySelector(".success-popup-text");
-      if (popupText) popupText.textContent = texts[currentLang].aima_success;
+      if (popupText) popupText.textContent = t.aima_success;
       popup.style.display = "flex";
 
       setTimeout(() => {
@@ -1372,18 +1378,6 @@ if (closeFaqBtn) {
     document.getElementById("faqModal").style.display = "none";
   });
 }
-
-// Configuração de datas
-["checkinDate", "checkoutDate"].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) {
-    el.type = "text";
-    el.addEventListener("focus", () => el.type = "date");
-    el.addEventListener("blur", () => {
-      if (!el.value) el.type = "text";
-    });
-  }
-});
 
 // Iniciar com Português
 setLanguage("pt");
