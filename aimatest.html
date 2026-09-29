@@ -89,6 +89,37 @@
                     <label id="childrenLabel"></label>
                     <input type="number" id="children" name="children" min="0" value="0" required>
                 </div>
+
+                <!-- CAMPO OPCIONAL DE E-MAIL PARA CÓPIA -->
+<div class="form-row" style="margin-top: 15px;">
+    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+        <input type="checkbox" id="wantsCopy" name="wantsCopy" onchange="toggleEmailInput()">
+        <span>Deseja receber uma cópia do boletim por e-mail?</span>
+    </label>
+</div>
+
+<div class="form-row" id="emailCopyContainer" style="display: none;">
+    <label for="clientEmail">O seu E-mail:</label>
+    <input type="email" id="clientEmail" name="clientEmail" placeholder="exemplo@email.com">
+</div>
+
+<script>
+  // Função simples para mostrar/esconder o campo de e-mail
+  function toggleEmailInput() {
+    const checkBox = document.getElementById("wantsCopy");
+    const emailContainer = document.getElementById("emailCopyContainer");
+    const emailInput = document.getElementById("clientEmail");
+
+    if (checkBox.checked) {
+      emailContainer.style.display = "flex";
+      emailInput.required = true;
+    } else {
+      emailContainer.style.display = "none";
+      emailInput.required = false;
+      emailInput.value = "";
+    }
+  }
+</script>
             </div>
 
             <!-- HÓSPEDES GERADOS DINAMICAMENTE -->
