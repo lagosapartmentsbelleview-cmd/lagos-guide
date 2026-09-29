@@ -1338,37 +1338,62 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     status: "PENDENTE_ATRIBUICAO"
   };
 
-  // 5️⃣ Gravar no Firestore
-  const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
-  const originalText = submitBtn.textContent;
+// 5️⃣ Gravar no Firestore
+const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
+const originalText = submitBtn.textContent;
 
-  submitBtn.textContent = t.sending || "A enviar...";
-  submitBtn.disabled = true;
+submitBtn.textContent = t.sending || "A enviar...";
+submitBtn.disabled = true;
 
-  try {
-    await db.collection("boletins").add(novoBoletim);
+try {
+  // 1. Grava no Firestore
+  await db.collection("boletins").add(novoBoletim);
 
-    const popup = document.getElementById("aimaSuccessPopup");
-    if (popup) {
-      const popupText = popup.querySelector(".success-popup-text");
-      if (popupText) popupText.textContent = t.aima_success;
-      popup.style.display = "flex";
-
-      setTimeout(() => {
-        popup.style.display = "none";
-      }, 3000);
+  // 2. ENVIAR CÓPIA POR E-MAIL VIA EMAILJS (Código novo adicionado aqui)
+  const clientEmail = novoBoletim.email || (document.getElementById("email") ? document.getElementById("email").value : "");
+  
+  if (clientEmail) {
+    try {
+      await emailjs.send(
+        "TEU_SERVICE_ID",   // Substitui pelo teu Service ID do EmailJS
+        "TEU_TEMPLATE_ID",  // Substitui pelo teu Template ID do EmailJS
+        {
+          to_email: clientEmail,
+          guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
+          checkin: novoBoletim.checkin || "",
+          checkout: novoBoletim.checkout || ""
+        },
+        "TUA_PUBLIC_KEY"     // Substitui pela tua Public Key do EmailJS
+      );
+      console.log("Cópia enviada com sucesso para:", clientEmail);
+    } catch (emailErr) {
+      console.error("Erro ao enviar e-mail via EmailJS:", emailErr);
+      // Não bloqueia a experiência do cliente se o e-mail falhar, o registo já está salvo
     }
-
-    this.reset();
-    generateGuestFields();
-
-  } catch (error) {
-    console.error("Erro ao guardar no Firestore:", error);
-    alert(t.alert_comm_error || "Erro ao guardar os dados. Tente novamente.");
-  } finally {
-    submitBtn.textContent = originalText;
-    submitBtn.disabled = false;
   }
+
+  // 3. Mostra a mensagem de sucesso (Já tinhas este código)
+  const popup = document.getElementById("aimaSuccessPopup");
+  if (popup) {
+    const popupText = popup.querySelector(".success-popup-text");
+    if (popupText) popupText.textContent = t.aima_success;
+    popup.style.display = "flex";
+
+    setTimeout(() => {
+      popup.style.display = "none";
+    }, 3000);
+  }
+
+  this.reset();
+  generateGuestFields();
+
+} catch (error) {
+  console.error("Erro ao guardar no Firestore:", error);
+  alert(t.alert_comm_error || "Erro ao guardar os dados. Tente novamente.");
+} finally {
+  submitBtn.textContent = originalText;
+  submitBtn.disabled = false;
+}
 });
 
 // Fechar FAQ Modal
