@@ -1349,6 +1349,39 @@ try {
   // 1. Grava no Firestore
   await db.collection("boletins").add(novoBoletim);
 
+  // --- LINHAS DE DIAGNÓSTICO (ADICIONA AQUI) ---
+  console.log("=== DIAGNÓSTICO EMAILJS ===");
+  console.log("Objeto novoBoletim:", novoBoletim);
+  
+  const clientEmail = novoBoletim.email || 
+                      (novoBoletim.hospedes && novoBoletim.hospedes[0] ? novoBoletim.hospedes[0].email : "") ||
+                      (document.getElementById("email") ? document.getElementById("email").value : "");
+                      
+  console.log("E-mail capturado:", clientEmail);
+  // ---------------------------------------------
+
+  if (clientEmail) {
+    try {
+      console.log("A tentar enviar via EmailJS...");
+      const res = await emailjs.send(
+        "O_TEU_SERVICE_ID",   // O teu Service ID real
+        "O_TEU_TEMPLATE_ID",  // O teu Template ID real
+        {
+          to_email: clientEmail,
+          guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
+          checkin: novoBoletim.checkin || "",
+          checkout: novoBoletim.checkout || ""
+        },
+        "A_TUA_PUBLIC_KEY"     // A tua Public Key real
+      );
+      console.log("Cópia enviada com sucesso!", res);
+    } catch (emailErr) {
+      console.error("ERRO EMAILJS:", emailErr);
+    }
+  } else {
+    console.warn("AVISO: Nenhum e-mail foi encontrado no formulário!");
+  }
+
   // 2. ENVIAR CÓPIA POR E-MAIL VIA EMAILJS (Código novo adicionado aqui)
   const clientEmail = novoBoletim.email || (document.getElementById("email") ? document.getElementById("email").value : "");
   
