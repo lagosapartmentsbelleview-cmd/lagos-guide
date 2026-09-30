@@ -671,49 +671,150 @@ if (childrenInput) childrenInput.addEventListener("input", generateGuestFields);
 
 
 // ============================================================
-// 7. CONSTRUTOR DO RESUMO DO E-MAIL (HTML)
+// CONSTRUTOR DO E-MAIL PROFISSIONAL (HTML INLINE COMPATÍVEL)
 // ============================================================
 function buildEmailSummaryHtml(boletim, lang) {
   const t = texts[lang] || texts.pt;
   
-  let html = `<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto;">`;
+  // URL do seu logótipo (substitua pelo link real do seu logótipo)
+  const logoUrl = "https://apartmentsbelleview.com/logo.png"; 
   
-  // Bloco Estadia
-  html += `<div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #0056b3;">`;
-  html += `<h3 style="margin-top: 0; color: #0056b3; font-size: 16px;">${t.stayDataTitle}</h3>`;
-  html += `<p style="margin: 4px 0;"><strong>${t.checkinLabel}</strong> ${boletim.dataCheckin}</p>`;
-  html += `<p style="margin: 4px 0;"><strong>${t.checkoutLabel}</strong> ${boletim.dataCheckout}</p>`;
-  html += `<p style="margin: 4px 0;"><strong>${t.adultsLabel}</strong> ${boletim.numAdultos}</p>`;
-  html += `<p style="margin: 4px 0;"><strong>${t.childrenLabel}</strong> ${boletim.numCriancas}</p>`;
-  html += `</div>`;
+  let html = `
+  <div style="background-color: #f4f6f9; padding: 20px 10px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333333; margin: 0;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="max-width: 620px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+      
+      <!-- CABEÇALHO / LOGÓTIPO -->
+      <tr>
+        <td align="center" style="background-color: #0d233a; padding: 30px 20px; border-bottom: 3px solid #c5a059;">
+          <img src="${logoUrl}" alt="Apartamentos Belleview" style="max-width: 200px; height: auto; display: block;" onerror="this.style.display='none'; document.getElementById('alt-logo-text').style.display='block';" />
+          <h1 id="alt-logo-text" style="display:none; color: #ffffff; margin: 0; font-size: 24px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase;">
+            Apartamentos <span style="color: #c5a059; font-weight: 600;">Belleview</span>
+          </h1>
+        </td>
+      </tr>
 
-  // Bloco Hóspedes
-  html += `<h3 style="color: #0056b3; font-size: 18px; margin-bottom: 12px;">${t.formTitle}</h3>`;
-  
+      <!-- MENSAGEM DE BOAS-VINDAS -->
+      <tr>
+        <td style="padding: 25px 30px 10px 30px;">
+          <h2 style="color: #0d233a; margin-top: 0; font-size: 20px; font-weight: 600;">
+            ${t.greeting} ${boletim.hospedes?.[0]?.nome || "Hóspede"},
+          </h2>
+          <p style="color: #555555; font-size: 15px; line-height: 1.6; margin: 0;">
+            ${t.confirmation}
+          </p>
+        </td>
+      </tr>
+
+      <!-- CARTÃO: DADOS DA ESTADIA -->
+      <tr>
+        <td style="padding: 15px 30px;">
+          <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px;">
+            <h3 style="margin-top: 0; margin-bottom: 15px; color: #0d233a; font-size: 16px; border-bottom: 2px solid #c5a059; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+              📌 ${t.stayDataTitle}
+            </h3>
+            
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="font-size: 14px; color: #475569;">
+              <tr>
+                <td style="padding: 6px 0; width: 50%;"><strong>📅 ${t.checkinLabel}</strong></td>
+                <td style="padding: 6px 0; color: #0d233a; font-weight: 600;">${boletim.dataCheckin}</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px 0;"><strong>📅 ${t.checkoutLabel}</strong></td>
+                <td style="padding: 6px 0; color: #0d233a; font-weight: 600;">${boletim.dataCheckout}</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px 0;"><strong>👤 ${t.adultsLabel}</strong></td>
+                <td style="padding: 6px 0; color: #0d233a; font-weight: 600;">${boletim.numAdultos}</td>
+              </tr>
+              <tr>
+                <td style="padding: 6px 0;"><strong>👶 ${t.childrenLabel}</strong></td>
+                <td style="padding: 6px 0; color: #0d233a; font-weight: 600;">${boletim.numCriancas}</td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+
+      <!-- SECÇÃO DE HÓSPEDES -->
+      <tr>
+        <td style="padding: 10px 30px 20px 30px;">
+          <h3 style="color: #0d233a; font-size: 18px; margin-top: 10px; margin-bottom: 15px; font-weight: 600;">
+            📄 ${t.formTitle}
+          </h3>
+  `;
+
+  // CARTÃO DE CADA HÓSPEDE
   boletim.hospedes.forEach((h, idx) => {
     let docTypeLabel = h.docTipo;
     if (h.docTipo === "passport") docTypeLabel = t.fields.docTypePassport;
     else if (h.docTipo === "id") docTypeLabel = t.fields.docTypeID;
     else if (h.docTipo === "other") docTypeLabel = h.docOutroDesc || t.fields.docTypeOther;
 
-    html += `<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; margin-bottom: 15px;">`;
-    html += `<h4 style="margin-top: 0; color: #2d3748; border-bottom: 1px solid #edf2f7; padding-bottom: 8px; font-size: 15px;">${t.guestTitle(idx + 1)}</h4>`;
-    html += `<table style="width: 100%; border-collapse: collapse; font-size: 14px;">`;
-    html += `<tr><td style="padding: 4px 0; color: #718096; width: 45%;"><strong>${t.fields.fullName}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.nome}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.birthDate}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.dataNascimento}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.nationality}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.nacionalidade}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.residenceCountry}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.paisResidencia}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docType}</strong></td><td style="padding: 4px 0; color: #1a202c;">${docTypeLabel}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docNumber}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.docNumero}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docCountry}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.docPaisEmissor}</td></tr>`;
-    html += `</table>`;
-    html += `</div>`;
+    html += `
+          <div style="background-color: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 15px; overflow: hidden;">
+            <div style="background-color: #f1f5f9; padding: 10px 15px; border-bottom: 1px solid #cbd5e1; color: #0d233a; font-weight: bold; font-size: 14px;">
+              👥 ${t.guestTitle(idx + 1)} — ${h.nome}
+            </div>
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="font-size: 13px; border-collapse: collapse;">
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px 15px; color: #64748b; width: 40%;"><strong>${t.fields.fullName}</strong></td>
+                <td style="padding: 8px 15px; color: #1e293b;">${h.nome}</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f1f5f9; background-color: #fafafa;">
+                <td style="padding: 8px 15px; color: #64748b;"><strong>${t.fields.birthDate}</strong></td>
+                <td style="padding: 8px 15px; color: #1e293b;">${h.dataNascimento}</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px 15px; color: #64748b;"><strong>${t.fields.nationality}</strong></td>
+                <td style="padding: 8px 15px; color: #1e293b;">${h.nacionalidade}</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f1f5f9; background-color: #fafafa;">
+                <td style="padding: 8px 15px; color: #64748b;"><strong>${t.fields.residenceCountry}</strong></td>
+                <td style="padding: 8px 15px; color: #1e293b;">${h.paisResidencia}</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px 15px; color: #64748b;"><strong>${t.fields.docType}</strong></td>
+                <td style="padding: 8px 15px; color: #1e293b;">${docTypeLabel}</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f1f5f9; background-color: #fafafa;">
+                <td style="padding: 8px 15px; color: #64748b;"><strong>${t.fields.docNumber}</strong></td>
+                <td style="padding: 8px 15px; color: #1e293b;">${h.docNumero}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 15px; color: #64748b;"><strong>${t.fields.docCountry}</strong></td>
+                <td style="padding: 8px 15px; color: #1e293b;">${h.docPaisEmissor}</td>
+              </tr>
+            </table>
+          </div>
+    `;
   });
 
-  html += `</div>`;
+  // RODAPÉ INSTITUCIONAL
+  html += `
+        </td>
+      </tr>
+
+      <tr>
+        <td align="center" style="background-color: #0d233a; padding: 25px 20px; color: #ffffff; font-size: 13px;">
+          <p style="margin: 0 0 8px 0; font-size: 15px; font-weight: 500; color: #c5a059;">
+            ${t.footer}
+          </p>
+          <p style="margin: 0 0 12px 0; color: #94a3b8;">
+            Apartamentos Belleview — Lagos, Portugal
+          </p>
+          <p style="margin: 0; font-size: 12px;">
+            <a href="https://apartmentsbelleview.com" target="_blank" style="color: #c5a059; text-decoration: none; margin: 0 8px;">www.apartmentsbelleview.com</a> | 
+            <a href="mailto:lagosapartmentsbelleview@gmail.com" style="color: #c5a059; text-decoration: none; margin: 0 8px;">Contacto</a>
+          </p>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+  `;
+
   return html;
 }
-
 
 // ============================================================
 // 8. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS)
