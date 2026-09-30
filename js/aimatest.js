@@ -2,77 +2,196 @@
 // 1. INICIALIZAÇÃO E REMOÇÃO DE VALIDAÇÃO NATIVA
 // ============================================================
 document.addEventListener("DOMContentLoaded", () => {
-  // Remover todos os required nativos para evitar alertas padrão do browser
   document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
 });
 
 
 // ============================================================
-// 2. DICIONÁRIO DE TEXTOS E IDIOMAS (TEXTS)
+// 2. LISTAS DE PAÍSES TRADUZIDAS E ORDENADAS POR IDIOMA
+// ============================================================
+const countryLists = {
+  pt: [
+    "Afeganistão","África do Sul","Albânia","Alemanha","Andorra","Angola","Antígua e Barbuda","Arábia Saudita","Argélia","Argentina","Arménia","Austrália","Áustria","Azerbaijão",
+    "Bahamas","Bangladesh","Barbados","Barém","Bélgica","Belize","Benim","Bielorrússia","Bolívia","Bósnia e Herzegovina","Botsuana","Brasil","Brunei","Bulgária","Burquina Faso","Burundi","Butão",
+    "Cabo Verde","Camarões","Camboja","Canadá","Catar","Cazaquistão","Chade","Chile","China","Chipre","Colômbia","Comores","Coreia do Norte","Coreia do Sul","Costa do Marfim","Costa Rica","Croácia","Cuba",
+    "Dinamarca","Dominica",
+    "Egipto","Emirados Árabes Unidos","Equador","Eritreia","Eslováquia","Eslovénia","Espanha","Estados Unidos","Estónia","Etiópia",
+    "Fiji","Filipinas","Finlândia","França",
+    "Gabão","Gâmbia","Gana","Geórgia","Granada","Grécia","Guatemala","Guiana","Guiné","Guiné-Bissau","Guiné Equatorial",
+    "Haiti","Honduras","Hungria",
+    "Iémen","Ilhas Marechal","Índia","Indonésia","Irão","Iraque","Irlanda","Islândia","Israel","Itália",
+    "Jamaica","Japão","Jordânia",
+    "Koweit",
+    "Laos","Lesoto","Letónia","Líbano","Libéria","Líbia","Liechtenstein","Lituânia","Luxemburgo",
+    "Macedónia do Norte","Madagáscar","Malásia","Malaui","Maldivas","Mali","Malta","Marrocos","Maurícia","Mauritânia","México","Micronésia","Moçambique","Moldávia","Mónaco","Mongólia","Montenegro","Mianmar",
+    "Namíbia","Nauru","Nepal","Nicarágua","Níger","Nigéria","Noruega","Nova Zelândia",
+    "Omã",
+    "Países Baixos","Paquistão","Palau","Panamá","Papua-Nova Guiné","Paraguai","Peru","Polónia","Portugal",
+    "Reino Unido","República Centro-Africana","República Checa","República Democrática do Congo","República do Congo","República Dominicana","Roménia","Ruanda","Rússia",
+    "Samoa","Santa Lúcia","São Cristóvão e Neves","São Marino","São Tomé e Príncipe","São Vicente e Granadinas","Senegal","Serra Leoa","Sérvia","Seicheles","Singapura","Síria","Somália","Sri Lanka","Eswatini","Sudão","Sudão do Sul","Suécia","Suíça","Suriname",
+    "Tailândia","Taiwan","Tajiquistão","Tanzânia","Timor-Leste","Togo","Tonga","Trinidad e Tobago","Tunísia","Turquemenistão","Turquia","Tuvalu",
+    "Ucrânia","Uganda","Uruguai","Uzbequistão",
+    "Vanuatu","Vaticano","Venezuela","Vietname",
+    "Zâmbia","Zimbabué"
+  ],
+
+  en: [
+    "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria","Azerbaijan",
+    "Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi",
+    "Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic",
+    "Democratic Republic of the Congo","Denmark","Djibouti","Dominica","Dominican Republic",
+    "Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia",
+    "Fiji","Finland","France",
+    "Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana",
+    "Haiti","Honduras","Hungary",
+    "Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Ivory Coast",
+    "Jamaica","Japan","Jordan",
+    "Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan",
+    "Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg",
+    "Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar",
+    "Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway",
+    "Oman",
+    "Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal",
+    "Qatar",
+    "Romania","Russia","Rwanda",
+    "Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria",
+    "Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu",
+    "Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan",
+    "Vanuatu","Vatican City","Venezuela","Vietnam",
+    "Yemen",
+    "Zambia","Zimbabwe"
+  ],
+
+  fr: [
+    "Afghanistan","Afrique du Sud","Albanie","Algérie","Allemagne","Andorre","Angola","Antigua-et-Barbuda","Arabie Saoudite","Argentine","Arménie","Australie","Autriche","Azerbaïdjan",
+    "Bahamas","Bahreïn","Bangladesh","Barbade","Belgique","Bélize","Bénin","Bhoutan","Biélorussie","Birmanie","Bolivie","Bosnie-Herzégovine","Botswana","Brésil","Brunei","Bulgarie","Burkina Faso","Burundi",
+    "Cabo Verde","Cambodge","Cameroun","Canada","Qatar","Rép. Centrafricaine","Tchad","Chili","Chine","Chypre","Colombie","Comores","Corée du Nord","Corée du Sud","Costa Rica","Côte d'Ivoire","Croatie","Cuba",
+    "Danemark","Dominique",
+    "Égypte","Émirats Arabes Unis","Équateur","Érythrée","Espagne","Estonie","Eswatini","États-Unis","Éthiopie",
+    "Fidji","Finlande","France",
+    "Gabon","Gambie","Géorgie","Ghana","Grèce","Grenade","Guatemala","Guinée","Guinée-Bissau","Guinée Équatoriale","Guyana",
+    "Haïti","Honduras","Hongrie",
+    "Inde","Indonésie","Irak","Iran","Irlande","Islande","Israël","Italie",
+    "Jamaïque","Japon","Jordanie",
+    "Kazakhstan","Kényia","Kirghizistan","Kiribati","Koweït",
+    "Laos","Lesotho","Lettonie","Liban","Libéria","Libye","Liechtenstein","Lituanie","Luxembourg",
+    "Macédoine du Nord","Madagascar","Malaisie","Malawi","Maldives","Mali","Malte","Maroc","Maurice","Mauritanie","Mexique","Micronésie","Moldavie","Monaco","Mongolie","Monténégro","Mozambique",
+    "Namibie","Nauru","Népal","Nicaragua","Niger","Nigéria","Norvège","Nouvelle-Zélande",
+    "Oman","Ouganda","Ouzbékistan",
+    "Pakistan","Palaos","Panama","Papouasie-Nouvelle-Guinée","Paraguay","Pays-Bas","Pérou","Philippines","Pologne","Portugal",
+    "Rép. Dém. du Congo","République Tchèque","Roumanie","Royaume-Uni","Russie","Rwanda",
+    "Saint-Kitts-et-Nevis","Sainte-Lucie","Saint-Marin","Saint-Vincent-et-les-Grenadines","Salomon","Samoa","São Tomé-et-Príncipe","Sénégal","Serbie","Seychelles","Sierra Leone","Singapour","Slovaquie","Slovénie","Somalie","Soudan","Soudan du Sud","Sri Lanka","Suède","Suisse","Suriname","Syrie",
+    "Tadjikistan","Taïwan","Tanzanie","Thaïlande","Timor oriental","Togo","Tonga","Trinité-et-Tobago","Tunisie","Turkménistan","Turquie","Tuvalu",
+    "Ukraine","Uruguay",
+    "Vanuatu","Vatican","Venezuela","Viêt Nam",
+    "Yémen",
+    "Zambie","Zimbabwe"
+  ],
+
+  es: [
+    "Afganistán","Albania","Alemania","Andorra","Angola","Antigua y Barbuda","Arabia Saudita","Argelia","Argentina","Armenia","Australia","Austria","Azerbaiyán",
+    "Bahamas","Bangladés","Barbados","Baréin","Bélgica","Belice","Benín","Bielorrusia","Birmania","Bolivia","Bosnia y Herzegovina","Botsuana","Brasil","Brunéi","Bulgaria","Burkina Faso","Burundi","Bután",
+    "Cabo Verde","Camboya","Camerún","Canadá","Catar","Chad","Chile","China","Chipre","Colombia","Comoras","Corea del Norte","Corea del Sur","Costa de Marfil","Costa Rica","Croacia","Cuba",
+    "Dinamarca","Dominica",
+    "Ecuador","Egipto","El Salvador","Emiratos Árabes Unidos","Eritrea","Eslovaquia","Eslovenia","España","Estados Unidos","Estonia","Eswatini","Etiopía",
+    "Filipinas","Finlandia","Fiyi","Francia",
+    "Gabón","Gambia","Georgia","Ghana","Granada","Grecia","Guatemala","Guyana","Guinea","Guinea-Bisáu","Guinea Ecuatorial",
+    "Haití","Honduras","Hungría",
+    "India","Indonesia","Irak","Irán","Irlanda","Islandia","Islas Marshall","Israel","Italia",
+    "Jamaica","Japón","Jordania",
+    "Kazajistán","Kenia","Kirguistán","Kiribati","Kuwait",
+    "Laos","Lesoto","Letonia","Líbano","Liberia","Libia","Liechtenstein","Lituania","Luxemburgo",
+    "Macedonia del Norte","Madagascar","Malasia","Malaui","Maldivas me","Malí","Malta","Marruecos","Mauricio","Mauritania","México","Micronesia","Moldavia","Mónaco","Mongolia","Montenegro","Mozambique",
+    "Namibia","Nauru","Nepal","Nicaragua","Níger","Nigeria","Noruega","Nueva Zelanda",
+    "Omán",
+    "Países Bajos","Pakistán","Palaos","Panamá","Papúa Nueva Guinea","Paraguay","Perú","Polonia","Portugal",
+    "Reino Unido","República Centroafricana","República Checa","República del Congo","República Democrática del Congo","República Dominicana","Ruanda","Rumanía","Rusia",
+    "Samoa","San Cristóbal y Nieves","San Marino","San Vicente y las Granadinas","Santa Lucía","Santo Tomé y Príncipe","Senegal","Serbia","Seychelles","Sierra Leona","Singapur","Siria","Somalia","Sri Lanka","Sudáfrica","Sudán","Sudán del Sur","Suecia","Suiza","Surinam",
+    "Tailandia","Taiwán","Tanzania","Tayikistán","Timor Oriental","Togo","Tonga","Trinidad y Tobago","Túnez","Turkmenistán","Turquía","Tuvalu",
+    "Ucrânia","Uganda","Uruguay","Uzbekistán",
+    "Vanuatu","Vaticano","Venezuela","Vietnam",
+    "Yemen",
+    "Yibuti","Zambia","Zimbabue"
+  ],
+
+  it: [
+    "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua e Barbuda","Arabia Saudita","Argentina","Armenia","Australia","Austria","Azerbaigian",
+    "Bahamas","Bahrein","Bangladesh","Barbados","Belgio","Belize","Benin","Bhutan","Bielorussia","Birmania","Bolivia","Bosnia ed Erzegovina","Botswana","Brasile","Brunei","Bulgaria","Burkina Faso","Burundi",
+    "Cabo Verde","Cambogia","Camerun","Canada","Ciad","Cile","Cina","Cipro","Città del Vaticano","Colombia","Comore","Corea del Nord","Corea del Sud","Costa d'Avorio","Costa Rica","Croazia","Cuba",
+    "Danimarca","Dominica",
+    "Ecuador","Egitto","El Salvador","Emirati Arabi Uniti","Eritrea","Estonia","Eswatini","Etiopia",
+    "Figi","Filippine","Finlandia","Francia",
+    "Gabon","Gambia","Georgia","Germania","Ghana","Giamaica","Giappone","Gibuti","Giordania","Grecia","Grenada","Guatemala","Guinea","Guinea-Bissau","Guinea Equatoriale","Guyana",
+    "Haiti","Honduras",
+    "India","Indonesia","Iran","Iraq","Irlanda","Islanda","Isole Marshall","Israele","Italia",
+    "Kazakistan","Kenya","Kirghizistan","Kiribati","Kuwait",
+    "Laos","Lesotho","Lettonia","Libano","Liberia","Libia","Liechtenstein","Lituania","Lussemburgo",
+    "Macedonia del Nord","Madagascar","Malawi","Malesia","Maldive","Mali","Malta","Marocco","Mauritania","Mauritius","Messico","Micronesia","Moldavia","Monaco","Mongolia","Montenegro","Mozambico",
+    "Namibia","Nauru","Nepal","Nicaragua","Niger","Nigeria","Norvegia","Nuova Zelanda",
+    "Oman",
+    "Paesi Bassi","Pakistan","Palau","Panama","Papua Nuova Guinea","Paraguay","Perù","Polonia","Portogallo",
+    "Qatar",
+    "Regno Unito","Repubblica Ceca","Repubblica Centrafricana","Repubblica del Congo","Repubblica Democratica del Congo","Repubblica Dominicana","Romania","Ruanda","Russia",
+    "Saint Kitts e Nevis","Saint Lucia","Saint Vincent e Grenadine","Salomone","Samoa","San Marino","Sao Tomé e Principe","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Siria","Slovacchia","Slovenia","Somalia","Spagna","Sri Lanka","Stati Uniti","Sudafrica","Sudan","Sudan del Sud","Suriname","Svezia","Svizzera",
+    "Tagikistan","Taiwan","Tanzania","Thailandia","Timor Est","Togo","Tonga","Trinidad e Tobago","Tunisia","Turchia","Turkmenistan","Tuvalu",
+    "Ucraina","Uganda","Ungheria","Uruguay","Uzbekistan",
+    "Vanuatu","Venezuela","Vietnam",
+    "Yemen",
+    "Zambia","Zimbabwe"
+  ],
+
+  de: [
+    "Afghanistan","Ägypten","Albanien","Algerien","Andorra","Angola","Antigua und Barbuda","Äquatorialguinea","Argentinien","Armenien","Aserbaidschan","Äthiopien","Australien",
+    "Bahamas","Bahrain","Bangladesch","Barbados","Belgien","Belize","Benin","Bhutan","Bolivien","Bosnien und Herzegowina","Botswana","Brasilien","Brunei","Bulgarien","Burkina Faso","Burundi",
+    "Chile","China","Costa Rica",
+    "Dänemark","Deutschland","Dominica","Dominikanische Republik","Dschibuti",
+    "Ecuador","El Salvador","Eritrea","Estland","Eswatini",
+    "Fidschi","Finnland","Frankreich",
+    "Gabun","Gambia","Georgia","Ghana","Grenada","Griechenland","Guatemala","Guinea","Guinea-Bissau","Guyana",
+    "Haiti","Honduras",
+    "Indien","Indonesien","Irak","Iran","Irland","Island","Israel","Italien",
+    "Jamaika","Japan","Jemen","Jordanien",
+    "Kambodscha","Kamerun","Kanada","Kap Verde","Kasachstan","Katar","Kenia","Kirgisistan","Kiribati","Kolumbien","Komoren","Kongo","Kroatien","Kuba","Kuwait",
+    "Laos","Lesotho","Lettland","Libanon","Liberia","Libyen","Liechtenstein","Litauen","Luxemburg",
+    "Madagaskar","Malawi","Malaysia","Malediven","Mali","Malta","Marokko","Marshallinseln","Mauretanien","Mauritius","Mexiko","Mikronesien","Moldau","Monaco","Mongolei","Montenegro","Mosambik","Myanmar",
+    "Namibia","Nauru","Nepal","Neuseeland","Nicaragua","Niederlande","Niger","Nigeria","Nordkorea","Nordmazedonien","Norwegen",
+    "Oman","Österreich",
+    "Pakistan","Palau","Panama","Papua-Neuguinea","Paraguay","Peru","Philippinen","Polen","Portugal",
+    "Ruanda","Rumänien","Russland",
+    "Salomonen","Sambia","Samoa","San Marino","São Tomé und Príncipe","Saudi-Arabien","Schweden","Schweiz","Senegal","Serbien","Seychellen","Sierra Leone","Simbabwe","Singapur","Slowakei","Slowenien","Somalia","Spanien","Sri Lanka","St. Kitts und Nevis","St. Lucia","St. Vincent und die Grenadinen","Südafrika","Sudan","Südkorea","Südsudan","Suriname","Syrien",
+    "Tadschikistan","Taiwan","Tansania","Thailand","Osttimor","Togo","Tonga","Trinidad und Tobago","Tschad","Tschechien","Tunesien","Türkei","Turkmenistan","Tuvalu",
+    "Uganda","Ukraine","Ungarn","Uruguay","Usbekistan",
+    "Vanuatu","Vatikanstadt","Venezuela","Vereinigte Arabische Emirate","Vereinigte Staaten","Vereinigtes Königreich","Vietnam",
+    "Weißrussland","Zentralafrikanische Republik","Zypern"
+  ]
+};
+
+
+// ============================================================
+// 3. DICIONÁRIO DE TEXTOS E IDIOMAS (TEXTS)
 // ============================================================
 const texts = {
   pt: {
     subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).",
     legalHtml: `
       <h3><strong>Aviso Legal Obrigatório — Registo de Hóspedes (AIMA/SIBA)</strong></h3>
-
-      <p>Este formulário recolhe os dados obrigatórios de identificação de todos os hóspedes,
-      conforme exigido pela legislação portuguesa para comunicação à AIMA (Agência para a
-      Integração, Migrações e Asilo), através da plataforma SIBA.</p>
-
+      <p>Este formulário recolhe os dados obrigatórios de identificação de todos os hóspedes, conforme exigido pela legislação portuguesa para comunicação à AIMA (Agência para a Integração, Migrações e Asilo), através da plataforma SIBA.</p>
       <h4><strong>Por que motivo os seus dados são obrigatórios?</strong></h4>
-      <p>Nos termos do <strong>Artigo 45.º da Lei n.º 23/2007</strong>, todos os estabelecimentos
-      de Alojamento Local são legalmente obrigados a comunicar às autoridades de fronteira
-      a entrada, permanência e saída de cidadãos estrangeiros no território nacional.</p>
-
-      <p>Esta obrigação aplica-se a <strong>todos os hóspedes sem nacionalidade portuguesa</strong>,
-      incluindo <strong>crianças e bebés</strong>, sem exceção.</p>
-
+      <p>Nos termos do <strong>Artigo 45.º da Lei n.º 23/2007</strong>, todos os estabelecimentos de Alojamento Local são legalmente obrigados a comunicar às autoridades de fronteira a entrada, permanência e saída de cidadãos estrangeiros no território nacional.</p>
+      <p>Esta obrigação aplica-se a <strong>todos os hóspedes sem nacionalidade portuguesa</strong>, incluindo <strong>crianças e bebés</strong>, sem exceção.</p>
       <h4><strong>Para que servem estes dados?</strong></h4>
       <ul>
-          <li><strong>Segurança Nacional:</strong> Apoiam a prevenção e investigação de crimes
-          graves, terrorismo e redes transfronteiriças.</li>
-
-          <li><strong>Proteção do Hóspede:</strong> Em caso de acidente, emergência médica,
-          catástrofe natural ou desaparecimento, permitem às autoridades e embaixadas
-          identificar e localizar rapidamente os cidadãos.</li>
-
-          <li><strong>Gestão Pública:</strong> Contribuem para estatísticas oficiais e políticas
-          de migração e turismo.</li>
+          <li><strong>Segurança Nacional:</strong> Apoiam a prevenção e investigação de crimes graves, terrorismo e redes transfronteiriças.</li>
+          <li><strong>Proteção do Hóspede:</strong> Em caso de acidente, emergência médica, catástrofe natural ou desaparecimento, permitem às autoridades e embaixadas identificar e localizar rapidamente os cidadãos.</li>
+          <li><strong>Gestão Pública:</strong> Contribuem para estatísticas oficiais e políticas de migração e turismo.</li>
       </ul>
-
       <h4><strong>Obrigatoriedade e consequências da recusa</strong></h4>
-      <p>A prestação destes dados é <strong>estritamente obrigatória por lei</strong>. A recusa
-      em fornecer as informações necessárias impede legalmente a realização do check-in e
-      implica a <strong>anulação imediata da reserva sem direito a reembolso</strong>, por
-      incumprimento das normas legais aplicáveis.</p>
-
-      <p>Para o proprietário do alojamento, a não comunicação destes dados constitui uma
-      <strong>contraordenação grave</strong>, punível com coimas significativas.</p>
-
+      <p>A prestação destes dados é <strong>estritamente obrigatória por lei</strong>. A recusa em fornecer as informações necessárias impede legalmente a realização do check-in e implica a <strong>anulação imediata da reserva sem direito a reembolso</strong>.</p>
+      <p>Para o proprietário do alojamento, a não comunicação destes dados constitui uma <strong>contraordenação grave</strong>, punível com coimas significativas.</p>
       <h4><strong>Privacidade e proteção dos seus dados</strong></h4>
-      <p>Os dados recolhidos são utilizados exclusivamente para cumprimento desta obrigação
-      legal e tratados em conformidade com o <strong>Regulamento Geral sobre a Proteção de
-      Dados (RGPD)</strong>. Não são partilhados com terceiros para fins comerciais.</p>
-
-      <h4><strong>Informação adicional e legislação</strong></h4>
-
-      <p>
-        <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
-          Verificar a informação em PDF
-        </a>
-      </p>
-
-      <p>
-        <a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a>
-      </p>
-
-      <p>
-        <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
-           target="_blank" class="pdf-link">
-           Lei n.º 23/2007 — Versão Consolidada (Diário da República)
-        </a>
-      </p>
+      <p>Os dados recolhidos são utilizados exclusivamente para cumprimento desta obrigação legal e tratados em conformidade com o <strong>Regulamento Geral sobre a Proteção de Dados (RGPD)</strong>.</p>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Verificar a informação em PDF</a></p>
+      <p><a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a></p>
     `,
     formTitle: "Boletim de Alojamento",
     requiredNotice: "Preenchimento e envio obrigatório dos dados de todos os hóspedes adultos e crianças",
@@ -89,14 +208,14 @@ const texts = {
     fields: {
       fullName: "Nome Completo:",
       birthDate: "Data de Nascimento:",
-      birthPlace: "Local de Nascimento:",
       nationality: "Nacionalidade:",
-      residencePlace: "Local de Residência:",
       residenceCountry: "País de Residência:",
       docNumber: "Número do Documento:",
       docType: "Tipo de Documento:",
       docTypePassport: "Passaporte",
       docTypeID: "Bilhete de Identidade / Cartão de Cidadão",
+      docTypeOther: "Outro",
+      docTypeOtherLabel: "Qual?",
       docCountry: "País Emissor do Documento:"
     },
     placeholder_checkin: "dd/mm/aaaa", 
@@ -108,70 +227,27 @@ const texts = {
     label_checkin: "Data de Check-in",
     label_checkout: "Data de Check-out",
     footer: "Desejamos-lhe uma excelente estadia!",
-    submit: "Enviar Boletim de Alojamento"
+    submit: "Enviar Boletim de Alojamento",
+    aima_success: "Formulário enviado com sucesso!"
   },
 
   en: {
     subtitle: "Mandatory Accommodation Registration Form (AIMA, formerly SEF).",
     legalHtml: `
       <h3><strong>Mandatory Legal Notice — Guest Registration (AIMA/SIBA)</strong></h3>
-
-      <p>This form collects the mandatory identification data of all guests,
-      as required by Portuguese law for communication to AIMA (Agency for
-      Integration, Migration and Asylum) through the SIBA platform.</p>
-
+      <p>This form collects the mandatory identification data of all guests, as required by Portuguese law for communication to AIMA through the SIBA platform.</p>
       <h4><strong>Why is this information mandatory?</strong></h4>
-      <p>Under <strong>Article 45 of Law 23/2007</strong>, all accommodation
-      establishments are legally required to report the entry, stay and exit
-      of foreign citizens in Portugal.</p>
-
-      <p>This obligation applies to <strong>all guests without Portuguese nationality</strong>,
-      including <strong>children and infants</strong>, without exception.</p>
-
+      <p>Under <strong>Article 45 of Law 23/2007</strong>, all accommodation establishments are legally required to report the entry, stay and exit of foreign citizens in Portugal.</p>
+      <p>This obligation applies to <strong>all guests without Portuguese nationality</strong>, including <strong>children and infants</strong>, without exception.</p>
       <h4><strong>What is this information used for?</strong></h4>
       <ul>
-          <li><strong>National Security:</strong> Supports the prevention and investigation
-          of serious crimes, terrorism and cross‑border networks.</li>
-
-          <li><strong>Guest Protection:</strong> In case of accident, medical emergency,
-          natural disaster or disappearance, it allows authorities and embassies
-          to quickly identify and locate citizens.</li>
-
-          <li><strong>Public Administration:</strong> Contributes to official statistics
-          and migration/tourism policies.</li>
+          <li><strong>National Security:</strong> Supports the prevention and investigation of serious crimes and terrorism.</li>
+          <li><strong>Guest Protection:</strong> In case of emergency or disaster, it allows authorities to locate citizens quickly.</li>
       </ul>
-
       <h4><strong>Obligation and consequences of refusal</strong></h4>
-      <p>Providing this information is <strong>strictly mandatory by law</strong>. Refusing
-      to provide the required data legally prevents check‑in and results in the
-      <strong>immediate cancellation of the reservation without refund</strong>.</p>
-
-      <p>For the accommodation owner, failure to report this data constitutes a
-      <strong>serious administrative offence</strong>, punishable by significant fines.</p>
-
-      <h4><strong>Privacy and data protection</strong></h4>
-      <p>The collected data is used exclusively to comply with this legal obligation
-      and is processed in accordance with the <strong>General Data Protection Regulation (GDPR)</strong>.
-      It is not shared with third parties for commercial purposes.</p>
-
-      <h4><strong>Additional information and legislation</strong></h4>
-
-      <p>
-        <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
-          View information in PDF
-        </a>
-      </p>
-
-      <p>
-        <a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a>
-      </p>
-
-      <p>
-        <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
-           target="_blank" class="pdf-link">
-           Law 23/2007 — Consolidated Version (Official Gazette)
-        </a>
-      </p>
+      <p>Providing this information is <strong>strictly mandatory by law</strong>. Refusing to provide data legally prevents check‑in and results in cancellation without refund.</p>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">View information in PDF</a></p>
+      <p><a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a></p>
     `,
     formTitle: "Accommodation Registration Form",
     requiredNotice: "Mandatory completion and submission of all data for every adult and child guest",
@@ -188,14 +264,14 @@ const texts = {
     fields: {
       fullName: "Full Name:",
       birthDate: "Date of Birth:",
-      birthPlace: "Place of Birth:",
       nationality: "Nationality:",
-      residencePlace: "Place of Residence:",
       residenceCountry: "Country of Residence:",
       docNumber: "Document Number:",
       docType: "Document Type:",
       docTypePassport: "Passport",
       docTypeID: "Identity Card",
+      docTypeOther: "Other",
+      docTypeOtherLabel: "Which one?",
       docCountry: "Issuing Country:"
     },
     placeholder_checkin: "dd/mm/yyyy", 
@@ -207,70 +283,20 @@ const texts = {
     label_checkin: "Check-in Date",
     label_checkout: "Check-out Date",
     footer: "We wish you a pleasant stay!",
-    submit: "Submit Accommodation Form"
+    submit: "Submit Accommodation Form",
+    aima_success: "Form submitted successfully!"
   },
 
   es: {
     subtitle: "Formulario obligatorio de Registro de Alojamiento (AIMA, antiguo SEF).",
     legalHtml: `
       <h3><strong>Aviso Legal Obligatorio — Registro de Huéspedes (AIMA/SIBA)</strong></h3>
-
-      <p>Este formulario recoge los datos obligatorios de identificación de todos los huéspedes,
-      según lo exige la legislación portuguesa para su comunicación a AIMA (Agencia para la
-      Integración, Migraciones y Asilo) a través de la plataforma SIBA.</p>
-
+      <p>Este formulario recoge los datos obligatorios de identificación de todos los huéspedes para su comunicación a AIMA a través de la plataforma SIBA.</p>
       <h4><strong>¿Por qué son obligatorios estos datos?</strong></h4>
-      <p>Según el <strong>Artículo 45 de la Ley n.º 23/2007</strong>, todos los alojamientos
-      están legalmente obligados a comunicar a las autoridades fronterizas la entrada,
-      estancia y salida de ciudadanos extranjeros en territorio portugués.</p>
-
-      <p>Esta obligación se aplica a <strong>todos los huéspedes sin nacionalidad portuguesa</strong>,
-      incluidos <strong>niños y bebés</strong>, sin excepción.</p>
-
-      <h4><strong>¿Para qué se utilizan estos datos?</strong></h4>
-      <ul>
-          <li><strong>Seguridad Nacional:</strong> Ayudan a prevenir e investigar delitos graves,
-          terrorismo y redes transfronterizas.</li>
-
-          <li><strong>Protección del Huésped:</strong> En caso de accidente, emergencia médica,
-          catástrofe natural o desaparición, permiten a las autoridades y embajadas identificar
-          y localizar rápidamente a los ciudadanos.</li>
-
-          <li><strong>Gestión Pública:</strong> Contribuyen a estadísticas oficiales y políticas
-          de migración y turismo.</li>
-      </ul>
-
-      <h4><strong>Obligatoriedad y consecuencias de la negativa</strong></h4>
-      <p>La entrega de estos datos es <strong>estrictamente obligatoria por ley</strong>. Negarse
-      a proporcionar la información necesaria impide legalmente realizar el check‑in y puede
-      implicar la <strong>cancelación inmediata de la reserva sin derecho a reembolso</strong>.</p>
-
-      <p>Para el propietario del alojamiento, no comunicar estos datos constituye una
-      <strong>infracción grave</strong>, sancionada con multas significativas.</p>
-
-      <h4><strong>Privacidad y protección de datos</strong></h4>
-      <p>Los datos recogidos se utilizan exclusivamente para cumplir esta obligación legal y se
-      tratan conforme al <strong>Reglamento General de Protección de Datos (RGPD)</strong>.
-      No se comparten con terceros con fines comerciales.</p>
-
-      <h4><strong>Información adicional y legislación</strong></h4>
-
-      <p>
-        <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
-          Ver información en PDF
-        </a>
-      </p>
-
-      <p>
-        <a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a>
-      </p>
-
-      <p>
-        <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
-           target="_blank" class="pdf-link">
-           Ley n.º 23/2007 — Versión Consolidada (Diario Oficial)
-        </a>
-      </p>
+      <p>Según el <strong>Artículo 45 de la Ley n.º 23/2007</strong>, todos los alojamientos están obligados a comunicar la estancia de ciudadanos extranjeros.</p>
+      <p>Esta obligación se aplica a <strong>todos los huéspedes sin nacionalidad portuguesa</strong>, incluidos <strong>niños y bebés</strong>.</p>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Ver información en PDF</a></p>
+      <p><a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a></p>
     `,
     formTitle: "Registro de Alojamiento",
     requiredNotice: "Relleno y envío obligatorios de los datos de todos los huéspedes adultos y niños",
@@ -287,14 +313,14 @@ const texts = {
     fields: {
       fullName: "Nombre Completo:",
       birthDate: "Fecha de Nacimiento:",
-      birthPlace: "Lugar de Nacimiento:",
       nationality: "Nacionalidad:",
-      residencePlace: "Lugar de Residencia:",
       residenceCountry: "País de Residencia:",
       docNumber: "Número del Documento:",
       docType: "Tipo de Documento:",
       docTypePassport: "Pasaporte",
       docTypeID: "Documento de Identidad",
+      docTypeOther: "Otro",
+      docTypeOtherLabel: "¿Cuál?",
       docCountry: "País Emisor del Documento:"
     },
     placeholder_checkin: "dd/mm/aaaa", 
@@ -306,70 +332,20 @@ const texts = {
     label_checkin: "Fecha de Check-in",
     label_checkout: "Fecha de Check-out",
     footer: "¡Le deseamos una excelente estancia!",
-    submit: "Enviar Registro de Alojamiento"
+    submit: "Enviar Registro de Alojamiento",
+    aima_success: "Formulario enviado con éxito!"
   },
 
   fr: {
     subtitle: "Formulaire obligatoire d’Enregistrement des Hébergements (AIMA, ancien SEF).",
     legalHtml: `
       <h3><strong>Avis Légal Obligatoire — Enregistrement des Hôtes (AIMA/SIBA)</strong></h3>
-
-      <p>Ce formulaire recueille les données d’identification obligatoires de tous les hôtes,
-      conformément à la législation portugaise pour la communication à l’AIMA (Agence pour
-      l’Intégration, les Migrations et l’Asile) via la plateforme SIBA.</p>
-
+      <p>Ce formulaire recueille les données d’identification obligatoires de tous les hôtes, conformément à la législation portugaise via la plateforme SIBA.</p>
       <h4><strong>Pourquoi ces informations sont-elles obligatoires ?</strong></h4>
-      <p>Selon <strong>l’Article 45 de la Loi n.º 23/2007</strong>, tous les établissements
-      d’hébergement sont légalement tenus de déclarer l’entrée, le séjour et la sortie
-      des citoyens étrangers sur le territoire portugais.</p>
-
-      <p>Cette obligation s’applique à <strong>tous les hôtes n’ayant pas la nationalité portugaise</strong>,
-      y compris <strong>les enfants et les bébés</strong>, sans exception.</p>
-
-      <h4><strong>À quoi servent ces données ?</strong></h4>
-      <ul>
-          <li><strong>Sécurité Nationale :</strong> Aident à prévenir et enquêter les crimes graves,
-          le terrorisme et les réseaux transfrontaliers.</li>
-
-          <li><strong>Protection de l’Hôte :</strong> En cas d’accident, d’urgence médicale,
-          de catastrophe naturelle ou de disparition, elles permettent aux autorités et
-          ambassades d’identifier et de localiser rapidement les citoyens.</li>
-
-          <li><strong>Gestion Publique :</strong> Contribuent aux statistiques officielles et aux
-          politiques de migration et de tourisme.</li>
-      </ul>
-
-      <h4><strong>Obligation et conséquences du refus</strong></h4>
-      <p>La fourniture de ces données est <strong>strictly obligatoire par la loi</strong>.
-      Le refus de fournir les informations nécessaires empêche légalement l’enregistrement
-      (check‑in) et peut entraîner <strong>l’annulation immédiate de la réservation sans remboursement</strong>.</p>
-
-      <p>Pour le propriétaire de l’hébergement, le non-respect de cette obligation constitue
-      une <strong>infraction grave</strong>, passible d’amendes importantes.</p>
-
-      <h4><strong>Confidentialité et protection des données</strong></h4>
-      <p>Les données recueillies sont utilisées exclusivement pour respecter cette obligation
-      légale et sont traitées conformément au <strong>Règlement Général sur la Protection des
-      Données (RGPD)</strong>. Elles ne sont pas partagées avec des tiers à des fins commerciales.</p>
-
-      <h4><strong>Informations supplémentaires et législation</strong></h4>
-
-      <p>
-        <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
-          Consulter les informations en PDF
-        </a>
-      </p>
-
-      <p>
-        <a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a>
-      </p>
-
-      <p>
-        <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
-           target="_blank" class="pdf-link">
-           Loi n.º 23/2007 — Version Consolidée (Journal Officiel)
-        </a>
-      </p>
+      <p>Selon <strong>l’Article 45 de la Loi n.º 23/2007</strong>, tous les hébergements doivent déclarer le séjour des citoyens étrangers.</p>
+      <p>Cette obligation s’applique à <strong>tous les hôtes n’ayant pas la nationalité portugaise</strong>, y compris <strong>les enfants et les bébés</strong>.</p>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Consulter les informations en PDF</a></p>
+      <p><a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a></p>
     `,
     formTitle: "Formulaire d’Enregistrement",
     requiredNotice: "Remplissage et envoi obligatoires des données de tous les hôtes, adultes et enfants",
@@ -386,14 +362,14 @@ const texts = {
     fields: {
       fullName: "Nom Complet :",
       birthDate: "Date de Naissance :",
-      birthPlace: "Lieu de Naissance :",
       nationality: "Nationalité :",
-      residencePlace: "Lieu de Résidence :",
       residenceCountry: "Pays de Résidence :",
       docNumber: "Numéro du Document :",
       docType: "Type de Document :",
       docTypePassport: "Passeport",
       docTypeID: "Carte d’Identité",
+      docTypeOther: "Autre",
+      docTypeOtherLabel: "Lequel ?",
       docCountry: "Pays Émetteur :"
     },
     placeholder_checkin: "jj/mm/aaaa", 
@@ -405,70 +381,17 @@ const texts = {
     label_checkin: "Date d'arrivée",
     label_checkout: "Date de départ",
     footer: "Nous vous souhaitons un agréable séjour !",
-    submit: "Envoyer le Formulaire"
+    submit: "Envoyer le Formulaire",
+    aima_success: "Formulaire envoyé avec succès!"
   },
 
   it: {
     subtitle: "Modulo obbligatorio di Registrazione degli Ospiti (AIMA, ex SEF).",
     legalHtml: `
       <h3><strong>Avviso Legale Obbligatorio — Registrazione degli Ospiti (AIMA/SIBA)</strong></h3>
-
-      <p>Questo modulo raccoglie i dati identificativi obbligatori di tutti gli ospiti,
-      come richiesto dalla legislazione portoghese per la comunicazione ad AIMA
-      (Agenzia per l’Integrazione, le Migrazioni e l’Asilo) tramite la piattaforma SIBA.</p>
-
-      <h4><strong>Perché questi dati sono obbligatori?</strong></h4>
-      <p>Ai sensi dell’<strong>Articolo 45 della Legge n.º 23/2007</strong>, tutte le strutture
-      ricettive sono legalmente obbligate a comunicare alle autorità di frontiera
-      l’ingresso, il soggiorno e l’uscita dei cittadini stranieri in Portogallo.</p>
-
-      <p>Questo obbligo si applica a <strong>tutti gli ospiti senza cittadinanza portoghese</strong>,
-      inclusi <strong>bambini e neonati</strong>, senza eccezioni.</p>
-
-      <h4><strong>A cosa servono questi dati?</strong></h4>
-      <ul>
-          <li><strong>Sicurezza Nazionale:</strong> Aiutano a prevenire e investigare reati gravi,
-          terrorismo e reti transfrontaliere.</li>
-
-          <li><strong>Protezione dell’Ospite:</strong> In caso di incidente, emergenza medica,
-          catastrofe naturale o scomparsa, permettono alle autorità e alle ambasciate
-          di identificare e localizzare rapidamente i cittadini.</li>
-
-          <li><strong>Gestione Pubblica:</strong> Contribuiscono alle statistiche ufficiali e alle
-          politiche di migrazione e turismo.</li>
-      </ul>
-
-      <h4><strong>Obbligatorietà e conseguenze del rifiuto</strong></h4>
-      <p>Il conferimento di questi dati è <strong>strettamente obbligatorio per legge</strong>.
-      Il rifiuto di fornire le informazioni necessarie impedisce legalmente il check‑in
-      e può comportare <strong>l’annullamento immediato della prenotazione senza rimborso</strong>.</p>
-
-      <p>Per il proprietario dell’alloggio, la mancata comunicazione di questi dati costituisce
-      una <strong>infrazione grave</strong>, punibile con sanzioni significative.</p>
-
-      <h4><strong>Privacy e protezione dei dati</strong></h4>
-      <p>I dati raccolti vengono utilizzati esclusivamente per adempiere a questo obbligo legale
-      e sono trattati in conformità al <strong>Regolamento Generale sulla Protezione dei Dati (GDPR)</strong>.
-      Non vengono condivisi con terzi per scopi commerciali.</p>
-
-      <h4><strong>Informazioni aggiuntive e legislazione</strong></h4>
-
-      <p>
-        <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
-          Visualizza le informazioni in PDF
-        </a>
-      </p>
-
-      <p>
-        <a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a>
-      </p>
-
-      <p>
-        <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
-           target="_blank" class="pdf-link">
-           Legge n.º 23/2007 — Versione Consolidata (Gazzetta Ufficiale)
-        </a>
-      </p>
+      <p>Questo modulo raccoglie i dati identificativi obbligatori di tutti gli ospiti come richiesto dalla legge portoghese.</p>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Visualizza le informazioni in PDF</a></p>
+      <p><a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a></p>
     `,
     formTitle: "Modulo di Registrazione",
     requiredNotice: "Compilazione e invio obbligatori dei dati di tutti gli ospiti adulti e bambini",
@@ -485,14 +408,14 @@ const texts = {
     fields: {
       fullName: "Nome Completo:",
       birthDate: "Data di Nascita:",
-      birthPlace: "Luogo di Nascita:",
       nationality: "Nazionalità:",
-      residencePlace: "Luogo di Residenza:",
       residenceCountry: "Paese di Residenza:",
       docNumber: "Numero del Documento:",
       docType: "Tipo di Documento:",
       docTypePassport: "Passaporto",
       docTypeID: "Carta d’Identità",
+      docTypeOther: "Altro",
+      docTypeOtherLabel: "Quale?",
       docCountry: "Paese di Emissione:"
     },
     placeholder_checkin: "gg/mm/aaaa", 
@@ -504,71 +427,17 @@ const texts = {
     label_checkin: "Data di Check-in",
     label_checkout: "Data di Check-out",
     footer: "Vi auguriamo un piacevole soggiorno!",
-    submit: "Invia Modulo di Registrazione"
+    submit: "Invia Modulo di Registrazione",
+    aima_success: "Modulo inviato con successo!"
   },
 
   de: {
     subtitle: "Pflichtformular zur Gästeanmeldung (AIMA, ehemals SEF).",
     legalHtml: `
       <h3><strong>Gesetzlich vorgeschriebener Hinweis — Gästeanmeldung (AIMA/SIBA)</strong></h3>
-
-      <p>Dieses Formular erfasst die obligatorischen Identifikationsdaten aller Gäste,
-      wie es das portugiesische Gesetz für die Meldung an AIMA (Agentur für Integration,
-      Migration und Asyl) über die SIBA‑Plattform vorschreibt.</p>
-
-      <h4><strong>Warum sind diese Daten verpflichtend?</strong></h4>
-      <p>Gemäß <strong>Artikel 45 des Gesetzes Nr. 23/2007</strong> sind alle
-      Beherbergungsbetriebe gesetzlich verpflichtet, den Eintritt, Aufenthalt und
-      die Abreise ausländischer Staatsbürger in Portugal zu melden.</p>
-
-      <p>Diese Verpflichtung gilt für <strong>alle Gäste ohne portugiesische Staatsangehörigkeit</strong>,
-      einschließlich <strong>Kinder und Babys</strong>, ohne Ausnahme.</p>
-
-      <h4><strong>Wofür werden diese Daten verwendet?</strong></h4>
-      <ul>
-          <li><strong>Nationale Sicherheit:</strong> Unterstützung bei der Verhinderung und
-          Aufklärung schwerer Straftaten, Terrorismus und grenzüberschreitender Netzwerke.</li>
-
-          <li><strong>Gästeschutz:</strong> Im Falle eines Unfalls, medizinischen Notfalls,
-          einer Naturkatastrophe oder eines Verschwindens ermöglichen sie den Behörden
-          und Botschaften eine schnelle Identifizierung und Lokalisierung.</li>
-
-          <li><strong>Öffentliche Verwaltung:</strong> Beitrag zu offiziellen Statistiken
-          sowie zu Migrations‑ und Tourismuspolitiken.</li>
-      </ul>
-
-      <h4><strong>Verpflichtung und Folgen einer Weigerung</strong></h4>
-      <p>Die Bereitstellung dieser Daten ist <strong>gesetzlich zwingend vorgeschrieben</strong>.
-      Eine Weigerung macht den Check‑in rechtlich unmöglich und kann zur
-      <strong>sofortigen Stornierung der Reservierung ohne Erstattung</strong> führen.</p>
-
-      <p>Für den Unterkunftsbetreiber stellt die Nichtmeldung dieser Daten eine
-      <strong>schwere Ordnungswidrigkeit</strong> dar, die mit erheblichen Geldbußen
-      geahndet werden kann.</p>
-
-      <h4><strong>Datenschutz und Privatsphäre</strong></h4>
-      <p>Die erhobenen Daten werden ausschließlich zur Erfüllung dieser gesetzlichen
-      Verpflichtung verwendet und gemäß der <strong>Datenschutz‑Grundverordnung (DSGVO)</strong>
-      verarbeitet. Sie werden nicht zu kommerziellen Zwecken an Dritte weitergegeben.</p>
-
-      <h4><strong>Zusätzliche Informationen und Gesetzgebung</strong></h4>
-
-      <p>
-        <a href="/docs/sef.pdf" target="_blank" class="pdf-link">
-          Informationen als PDF ansehen
-        </a>
-      </p>
-
-      <p>
-        <a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a>
-      </p>
-
-      <p>
-        <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445"
-           target="_blank" class="pdf-link">
-           Gesetz Nr. 23/2007 — Konsolidierte Fassung (Amtsblatt)
-        </a>
-      </p>
+      <p>Dieses Formular erfasst die obligatorischen Identifikationsdaten aller Gäste gemäß portugiesischem Gesetz.</p>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Informationen als PDF ansehen</a></p>
+      <p><a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a></p>
     `,
     formTitle: "Gästeanmeldeformular",
     requiredNotice: "Pflichtangabe und Übermittlung der Daten aller erwachsenen Gäste und Kinder",
@@ -585,14 +454,14 @@ const texts = {
     fields: {
       fullName: "Vollständiger Name:",
       birthDate: "Geburtsdatum:",
-      birthPlace: "Geburtsort:",
       nationality: "Staatsangehörigkeit:",
-      residencePlace: "Wohnort:",
       residenceCountry: "Wohnsitzland:",
       docNumber: "Dokumentnummer:",
       docType: "Dokumenttyp:",
       docTypePassport: "Reisepass",
       docTypeID: "Personalausweis",
+      docTypeOther: "Sonstiges",
+      docTypeOtherLabel: "Welche?",
       docCountry: "Ausstellungsland:"
     },
     placeholder_checkin: "TT/MM/JJJJ", 
@@ -604,423 +473,27 @@ const texts = {
     label_checkin: "Anreisedatum",
     label_checkout: "Abreisedatum",
     footer: "Wir wünschen Ihnen einen angenehmen Aufenthalt!",
-    submit: "Formular absenden"
+    submit: "Formular absenden",
+    aima_success: "Formular erfolgreich gesendet!"
   }
 };
 
-// Mensagens de sucesso multilingue para o popup AIMA
-texts.pt.aima_success = "Formulário enviado com sucesso!";
-texts.en.aima_success = "Form submitted successfully!";
-texts.es.aima_success = "Formulario enviado con éxito!";
-texts.fr.aima_success = "Formulaire envoyé avec succès!";
-texts.it.aima_success = "Modulo inviato con successo!";
-texts.de.aima_success = "Formular erfolgreich gesendet!";
-
 
 // ============================================================
-// 3. TRADUÇÕES PARA E-MAILS (EMAILTRANSLATIONS)
+// 4. TRADUÇÕES DE E-MAIL
 // ============================================================
 const emailTranslations = {
-  pt: {
-    subject: texts.pt.subject,
-    greeting: texts.pt.greeting,
-    confirmation: texts.pt.confirmation,
-    label_checkin: texts.pt.label_checkin,
-    label_checkout: texts.pt.label_checkout,
-    footer: texts.pt.footer
-  },
-  en: {
-    subject: texts.en.subject,
-    greeting: texts.en.greeting,
-    confirmation: texts.en.confirmation,
-    label_checkin: texts.en.label_checkin,
-    label_checkout: texts.en.label_checkout,
-    footer: texts.en.footer
-  },
-  es: {
-    subject: texts.es.subject,
-    greeting: texts.es.greeting,
-    confirmation: texts.es.confirmation,
-    label_checkin: texts.es.label_checkin,
-    label_checkout: texts.es.label_checkout,
-    footer: texts.es.footer
-  },
-  fr: {
-    subject: texts.fr.subject,
-    greeting: texts.fr.greeting,
-    confirmation: texts.fr.confirmation,
-    label_checkin: texts.fr.label_checkin,
-    label_checkout: texts.fr.label_checkout,
-    footer: texts.fr.footer
-  },
-  it: {
-    subject: texts.it.subject,
-    greeting: texts.it.greeting,
-    confirmation: texts.it.confirmation,
-    label_checkin: texts.it.label_checkin,
-    label_checkout: texts.it.label_checkout,
-    footer: texts.it.footer
-  },
-  de: {
-    subject: texts.de.subject,
-    greeting: texts.de.greeting,
-    confirmation: texts.de.confirmation,
-    label_checkin: texts.de.label_checkin,
-    label_checkout: texts.de.label_checkout,
-    footer: texts.de.footer
-  }
+  pt: { subject: texts.pt.subject, greeting: texts.pt.greeting, confirmation: texts.pt.confirmation, footer: texts.pt.footer },
+  en: { subject: texts.en.subject, greeting: texts.en.greeting, confirmation: texts.en.confirmation, footer: texts.en.footer },
+  es: { subject: texts.es.subject, greeting: texts.es.greeting, confirmation: texts.es.confirmation, footer: texts.es.footer },
+  fr: { subject: texts.fr.subject, greeting: texts.fr.greeting, confirmation: texts.fr.confirmation, footer: texts.fr.footer },
+  it: { subject: texts.it.subject, greeting: texts.it.greeting, confirmation: texts.it.confirmation, footer: texts.it.footer },
+  de: { subject: texts.de.subject, greeting: texts.de.greeting, confirmation: texts.de.confirmation, footer: texts.de.footer }
 };
 
 
 // ============================================================
-// 4. TEXTOS E PERGUNTAS FREQUENTES (FAQ)
-// ============================================================
-const faqTitles = {
-  pt: "Perguntas Frequentes (FAQ)",
-  en: "Frequently Asked Questions (FAQ)",
-  es: "Preguntas Frecuentes (FAQ)",
-  fr: "Foire aux Questions (FAQ)",
-  it: "Domande Frequenti (FAQ)",
-  de: "Häufig gestellte Fragen (FAQ)"
-};
-
-const faqTexts = {
-  pt: `
-<h3>1. Obrigatoriedade e finalidade</h3>
-<p><strong>Porque tenho de fornecer os meus dados ao alojamento?</strong><br>
-A lei portuguesa obriga todos os alojamentos a comunicar à AIMA a entrada e saída de cidadãos estrangeiros. É uma medida de segurança nacional e proteção do hóspede.</p>
-<p><strong>O que é o SIBA?</strong><br>
-O SIBA é o sistema oficial onde os alojamentos registam eletronicamente os dados dos hóspedes estrangeiros.</p>
-<p><strong>Sou cidadão europeu. Também tenho de preencher o boletim?</strong><br>
-Sim. A obrigação aplica-se a todos os cidadãos que não tenham nacionalidade portuguesa.</p>
-<p><strong>Bebés e crianças também têm de ser comunicados?</strong><br>
-Sim. A comunicação é obrigatória para todas as idades.</p>
-<p><strong>O que acontece se eu me recusar a fornecer os meus dados?</strong><br>
-O alojamento não pode legalmente realizar o check-in. A reserva pode ser anulada sem reembolso.</p>
-
-<h3>2. Documentos de identificação</h3>
-<p><strong>Que documentos são aceites?</strong><br>
-Passaporte, Bilhete de Identidade/Cartão de Cidadão, título de residência, laissez-passer, documentos de tripulantes e boletim de nascimento (menores).</p>
-<p><strong>Posso alojar-me sem documento?</strong><br>
-Não. É obrigatório apresentar um documento válido.</p>
-<p><strong>E se os meus filhos não tiverem documento?</strong><br>
-Podem ser usados boletins de nascimento ou equivalentes.</p>
-<p><strong>O alojamento pode ficar com o meu documento?</strong><br>
-Só com o seu consentimento. Apenas autoridades policiais podem reter documentos sem consentimento.</p>
-<p><strong>Quem assina o boletim no caso de menores?</strong><br>
-O progenitor, o responsável do grupo ou um dos cônjuges.</p>
-
-<h3>3. Privacidade e proteção de dados</h3>
-<p><strong>Como são tratados os meus dados pessoais?</strong><br>
-Com total confidencialidade e em conformidade com o RGPD.</p>
-<p><strong>Os meus dados são partilhados?</strong><br>
-Não. São enviados apenas para a AIMA.</p>
-<p><strong>Durante quanto tempo ficam guardados?</strong><br>
-Até 1 ano, salvo exceções legais.</p>
-<p><strong>Os meus dados são usados para fins comerciais?</strong><br>
-Nunca.</p>
-<p><strong>O alojamento pode alterar os meus dados depois de enviados?</strong><br>
-Não. Apenas pode visualizar o que foi submetido.</p>
-
-<h3>4. Situações especiais</h3>
-<p><strong>Ficar em casa de amigos ou familiares também obriga a comunicação?</strong><br>
-Não, desde que a estadia seja gratuita.</p>
-<p><strong>Posso alojar-me se estiver em situação irregular?</strong><br>
-Sim. Mas a comunicação é sempre obrigatória.</p>
-<p><strong>Se fizer parte de um grupo, basta um preencher?</strong><br>
-Não. Todos os hóspedes estrangeiros devem ser comunicados individualmente.</p>
-<p><strong>Se o alojamento for oferecido, também é obrigatório comunicar?</strong><br>
-Sim.</p>
-
-<h3>5. Questões práticas</h3>
-<p><strong>O que acontece se um hóspede sair sem pagar?</strong><br>
-O alojamento deve apresentar queixa à PSP ou GNR.</p>
-<p><strong>Quem é responsável pela comunicação?</strong><br>
-O alojamento. O hóspede apenas fornece os dados.</p>
-<p><strong>O que acontece se houver um erro nos meus dados?</strong><br>
-Pode ser corrigido antes do envio. Depois, só a AIMA pode intervir.</p>
-
-<h3>6. Informação adicional</h3>
-<p>Informação oficial completa: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
-`,
-
-  en: `
-<h3>1. Obligation and purpose</h3>
-<p><strong>Why do I have to provide my personal data?</strong><br>
-Portuguese law requires all accommodations to report the entry and exit of foreign citizens to AIMA. This is a national security and guest‑protection measure.</p>
-<p><strong>What is SIBA?</strong><br>
-SIBA is the official platform where accommodations register guest information electronically.</p>
-<p><strong>I am an EU citizen. Do I still need to fill this form?</strong><br>
-Yes. The obligation applies to all non‑Portuguese citizens.</p>
-<p><strong>Are babies and children also reported?</strong><br>
-Yes. Reporting is mandatory for all ages.</p>
-<p><strong>What happens if I refuse to provide my data?</strong><br>
-The accommodation cannot legally complete your check‑in. The reservation may be cancelled without refund.</p>
-
-<h3>2. Identification documents</h3>
-<p><strong>Which documents are accepted?</strong><br>
-Passport, ID card, residence permit, laissez‑passer, crew documents and birth certificates (minors).</p>
-<p><strong>Can I stay without a valid document?</strong><br>
-No. A valid identification document is required.</p>
-<p><strong>What if my children do not have documents?</strong><br>
-Birth certificates or equivalent documents may be used.</p>
-<p><strong>Can the accommodation keep my document?</strong><br>
-Only with your consent. Only police authorities may retain documents without consent.</p>
-<p><strong>Who signs the form for minors?</strong><br>
-A parent, group leader, or spouse.</p>
-
-<h3>3. Privacy and data protection</h3>
-<p><strong>How are my personal data processed?</strong><br>
-With total confidentiality and in compliance with the GDPR.</p>
-<p><strong>Are my data shared?</strong><br>
-No. They are sent only to AIMA.</p>
-<p><strong>How long are they stored?</strong><br>
-Up to 1 year, subject to legal exceptions.</p>
-<p><strong>Are my data used for commercial purposes?</strong><br>
-Never.</p>
-<p><strong>Can the accommodation edit my data after submission?</strong><br>
-No. They can only view what was submitted.</p>
-
-<h3>4. Special situations</h3>
-<p><strong>Does staying with friends or family also require notification?</strong><br>
-No, as long as the stay is free of charge.</p>
-<p><strong>Can I check in if I am in an irregular status?</strong><br>
-Yes. But communication is always mandatory.</p>
-<p><strong>If traveling in a group, is one form enough?</strong><br>
-No. All foreign guests must be reported individually.</p>
-<p><strong>If the accommodation is gifted or free, is it still mandatory?</strong><br>
-Yes.</p>
-
-<h3>5. Practical questions</h3>
-<p><strong>What happens if a guest leaves without paying?</strong><br>
-The accommodation must file a police report with PSP or GNR.</p>
-<p><strong>Who is responsible for communication?</strong><br>
-The accommodation. The guest only provides the data.</p>
-<p><strong>What happens if there is an error in my data?</strong><br>
-It can be corrected before submission. After that, only AIMA can intervene.</p>
-
-<h3>6. Additional information</h3>
-<p>Official full information: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
-`,
-
-  es: `
-<h3>1. Obligatoriedad y finalidad</h3>
-<p><strong>¿Por qué tengo que proporcionar mis datos?</strong><br>
-La ley portuguesa obliga a todos los alojamientos a comunicar a AIMA la entrada y salida de ciudadanos extranjeros. Es una medida de seguridad nacional y protección al huésped.</p>
-<p><strong>¿Qué es SIBA?</strong><br>
-SIBA es la plataforma oficial donde los alojamientos registran electrónicamente la información de los huéspedes.</p>
-<p><strong>Soy ciudadano europeo. ¿También tengo que rellenar el formulario?</strong><br>
-Sí. La obligación se aplica a todos los ciudadanos que no tengan nacionalidad portuguesa.</p>
-<p><strong>¿Se declaran también los bebés y niños?</strong><br>
-Sí. La comunicación es obligatoria para todas las edades.</p>
-<p><strong>¿Qué ocurre si me niego a proporcionar mis datos?</strong><br>
-El alojamiento no puede realizar legalmente el check-in. La reserva puede ser cancelada sin reembolso.</p>
-
-<h3>2. Documentos de identificación</h3>
-<p><strong>¿Qué documentos se aceptan?</strong><br>
-Pasaporte, Documento de Identidad, permiso de residencia, laissez-passer, documentos de tripulación y certificados de nacimiento (menores).</p>
-<p><strong>¿Puedo alojarme sin documento válido?</strong><br>
-No. Se requiere un documento de identidad válido.</p>
-<p><strong>¿Y si mis hijos no tienen documento?</strong><br>
-Pueden utilizarse certificados de nacimiento o documentos equivalentes.</p>
-<p><strong>¿El alojamiento puede quedarse con mi documento?</strong><br>
-Solo con su consentimiento. Solo las autoridades policiales pueden retener documentos sin consentimiento.</p>
-<p><strong>¿Quién firma el formulario en el caso de menores?</strong><br>
-El progenitor, el responsable del grupo o el cónyuge.</p>
-
-<h3>3. Privacidad y protección de datos</h3>
-<p><strong>¿Cómo se tratan mis datos personales?</strong><br>
-Con total confidencialidad y en conformidad con el RGPD.</p>
-<p><strong>¿Se comparten mis datos?</strong><br>
-No. Se envían exclusivamente a AIMA.</p>
-<p><strong>¿Durante cuánto tiempo se guardan?</strong><br>
-Hasta 1 año, salvo excepciones legales.</p>
-<p><strong>¿Se usan mis datos con fines comerciales?</strong><br>
-Nunca.</p>
-<p><strong>¿Puede el alojamiento modificar mis datos tras el envío?</strong><br>
-No. Solo puede visualizar lo que se ha enviado.</p>
-
-<h3>4. Situaciones especiales</h3>
-<p><strong>¿Alojarse en casa de amigos o familiares también exige comunicación?</strong><br>
-No, siempre que la estancia sea gratuita.</p>
-<p><strong>¿Puedo alojarme si estoy en situación irregular?</strong><br>
-Sí. Pero la comunicación es siempre obligatoria.</p>
-<p><strong>Si viajo en grupo, ¿basta con que lo rellene uno?</strong><br>
-No. Todos los huéspedes extranjeros deben ser comunicados individualmente.</p>
-<p><strong>Si el alojamiento es un regalo, ¿sigue siendo obligatorio?</strong><br>
-Sí.</p>
-
-<h3>5. Cuestiones prácticas</h3>
-<p><strong>¿Qué ocurre si un huésped se va sin pagar?</strong><br>
-El alojamiento debe presentar una denuncia ante la PSP o GNR.</p>
-<p><strong>¿Quién es responsable de la comunicación?</strong><br>
-El alojamiento. El huésped solo proporciona los datos.</p>
-<p><strong>¿Qué pasa si hay un error en mis datos?</strong><br>
-Puede corregirse antes del envío. Después, solo AIMA puede intervenir.</p>
-
-<h3>6. Información adicional</h3>
-<p>Información oficial completa: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
-`,
-
-  fr: `
-<h3>1. Obligation et finalité</h3>
-<p><strong>Pourquoi dois-je fournir mes données personnelles ?</strong><br>
-La loi portugaise oblige tous les hébergements à déclarer l'entrée et la sortie des citoyens étrangers à l'AIMA. C'est une mesure de sécurité nationale et de protection des clients.</p>
-<p><strong>Qu'est-ce que le SIBA ?</strong><br>
-Le SIBA est la plateforme officielle sur laquelle les hébergements enregistrent électroniquement les données des clients.</p>
-<p><strong>Je suis citoyen européen. Dois-je également remplir ce formulaire ?</strong><br>
-Oui. L'obligation s'applique à tous les citoyens qui n'ont pas la nationalité portugaise.</p>
-<p><strong>Les bébés et les enfants sont-ils également déclarés ?</strong><br>
-Oui. La déclaration est obligatoire pour tous les âges.</p>
-<p><strong>Que se passe-t-il si je refuse de fournir mes données ?</strong><br>
-L'hébergement ne peut pas procéder légalement au check-in. La réservation peut être annulée sans remboursement.</p>
-
-<h3>2. Documents d'identification</h3>
-<p><strong>Quels documents sont acceptés ?</strong><br>
-Passeport, carte d'identité, titre de séjour, laissez-passer, documents d'équipage et actes de naissance (mineurs).</p>
-<p><strong>Puis-je séjourner sans document valide ?</strong><br>
-Non. Un document d'identité valide est obligatoire.</p>
-<p><strong>Et si mes enfants n'ont pas de document ?</strong><br>
-Des actes de naissance ou des documents équivalents peuvent être utilisés.</p>
-<p><strong>L'établissement peut-il conserver mon document ?</strong><br>
-Uniquement avec votre consentement. Seules les autorités policières peuvent retenir des documents sans consentement.</p>
-<p><strong>Qui signe le formulaire pour les mineurs ?</strong><br>
-Un parent, le responsable du groupe ou le conjoint.</p>
-
-<h3>3. Confidentialité et protection des données</h3>
-<p><strong>Comment mes données personnelles sont-elles traitées ?</strong><br>
-En toute confidentialité et conformément au RGPD.</p>
-<p><strong>Mes données sont-elles partagées ?</strong><br>
-Non. Elles sont envoyées uniquement à l'AIMA.</p>
-<p><strong>Pendant combien de temps sont-elles conservées ?</strong><br>
-Jusqu'à 1 an, sauf exceptions légales.</p>
-<p><strong>Mes données sont-elles utilisées à des fins commerciales ?</strong><br>
-Jamais.</p>
-
-<h3>4. Situations particulières</h3>
-<p><strong>Séjourner chez des amis ou de la famille exige-t-il aussi une déclaration ?</strong><br>
-Non, à condition que le séjour soit gratuit.</p>
-<p><strong>Puis-je m'héberger si je suis en situation irregular ?</strong><br>
-Oui. Mais la communication reste obligatoire.</p>
-
-<h3>5. Questions pratiques</h3>
-<p><strong>Qui est responsable de la communication ?</strong><br>
-L'hébergement. Le client fournit uniquement les données.</p>
-
-<h3>6. Informations complémentaires</h3>
-<p>Informations officielles complètes : <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
-`,
-
-  it: `
-<h3>1. Obbligatorietà e finalità</h3>
-<p><strong>Perché devo fornire i miei dati personali?</strong><br>
-La legge portoghese impone a tutte le strutture ricettive di comunicare ad AIMA l'ingresso e l'uscita dei cittadini stranieri. È una misura di sicurezza nazionale e protezione dell'ospite.</p>
-<p><strong>Che cos'è il SIBA?</strong><br>
-Il SIBA è la piattaforma ufficiale in cui le strutture registrano elettronicamente i dati degli ospiti.</p>
-<p><strong>Sono un cittadino europeo. Devo compilare il modulo?</strong><br>
-Sì. L'obbligo si applica a tutti i cittadini che non hanno la cittadinanza portoghese.</p>
-<p><strong>Anche i bambini e i neonati devono essere comunicati?</strong><br>
-Sì. La comunicazione è obbligatoria per tutte le età.</p>
-<p><strong>Cosa succede se mi rifiuto di fornire i miei dati?</strong><br>
-La struttura non può effettuare legalmente il check-in. La prenotazione può essere annullata senza rimborso.</p>
-
-<h3>2. Documenti di identificazione</h3>
-<p><strong>Quali documenti sono accettati?</strong><br>
-Passaporto, carta d'identità, permesso di soggiorno, laissez-passer, documenti dell'equipaggio e certificato di nascita (minori).</p>
-<p><strong>Posso soggiornare senza un documento valido?</strong><br>
-No. È obbligatorio presentare un documento di identità valido.</p>
-
-<h3>3. Privacy e protezione dei dati</h3>
-<p><strong>Come vengono trattati i miei dati personali?</strong><br>
-Con la massima riservatezza e nel rispetto del GDPR.</p>
-<p><strong>I miei dati vengono condivisi?</strong><br>
-No. Vengono inviati esclusivamente ad AIMA.</p>
-
-<h3>4. Situazioni speciali</h3>
-<p><strong>Soggiornare da amici o parenti richiede la comunicazione?</strong><br>
-No, purché il soggiorno sia gratuito.</p>
-
-<h3>5. Questioni pratiche</h3>
-<p><strong>Chi è responsabile della comunicazione?</strong><br>
-La struttura ricettiva. L'ospite si limita a fornire i dati.</p>
-
-<h3>6. Informazioni aggiuntive</h3>
-<p>Informazioni ufficiali complete: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
-`,
-
-  de: `
-<h3>1. Verpflichtung und Zweck</h3>
-<p><strong>Warum muss ich meine Daten angeben?</strong><br>
-Das portugiesische Gesetz verpflichtet alle Unterkünfte, die Ein- und Ausreise ausländischer Staatsbürger an AIMA zu melden. Dies dient der nationalen Sicherheit und dem Gästeschutz.</p>
-<p><strong>Was ist SIBA?</strong><br>
-SIBA ist die offizielle Plattform, auf der Unterkünfte die Gästedaten elektronisch erfassen.</p>
-<p><strong>Ich bin EU-Bürger. Muss ich das Formular trotzdem ausfüllen?</strong><br>
-Ja. Die Pflicht gilt für alle Personen ohne portugiesische Staatsangehörigkeit.</p>
-<p><strong>Müssen auch Babys und Kinder gemeldet werden?</strong><br>
-Ja. Die Meldung ist für alle Altersgruppen verpflichtend.</p>
-<p><strong>Was passiert, wenn ich meine Daten nicht angeben möchte?</strong><br>
-Die Unterkunft darf den Check-in rechtlich nicht durchführen. Die Buchung kann ohne Erstattung storniert werden.</p>
-
-<h3>2. Ausweisdokumente</h3>
-<p><strong>Welche Dokumente werden akzeptiert?</strong><br>
-Reisepass, Personalausweis, Aufenthaltstitel, Laissez-Passer, Dokumente für Besatzungsmitglieder und Geburtsurkunden (Minderjährige).</p>
-
-<h3>3. Datenschutz und Privatsphäre</h3>
-<p><strong>Wie werden meine Daten verarbeitet?</strong><br>
-Absolut vertraulich und gemäß der DSGVO.</p>
-
-<h3>4. Besondere Situationen</h3>
-<p><strong>Muss ein Aufenthalt bei Freunden oder Familie gemeldet werden?</strong><br>
-Nein, solange der Aufenthalt kostenlos ist.</p>
-
-<h3>5. Praktische Fragen</h3>
-<p><strong>Wer ist für die Meldung verantwortlich?</strong><br>
-Die Unterkunft. Der Gast stellt lediglich die Daten zur Verfügung.</p>
-
-<h3>6. Zusätzliche Informationen</h3>
-<p>Vollständige offizielle Informationen: <a href="https://siba.ssi.gov.pt/" target="_blank">https://siba.ssi.gov.pt/</a></p>
-`
-};
-
-function loadFaq() {
-  const faqContent = document.getElementById("faqContent");
-  if (faqContent) {
-    faqContent.innerHTML = faqTexts[currentLang];
-  }
-}
-
-
-// ============================================================
-// 5. LISTA DE PAÍSES (ISO 3166)
-// ============================================================
-const countries = [
-"Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia",
-"Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium",
-"Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria",
-"Burkina Faso","Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic",
-"Chad","Chile","China","Colombia","Comoros","Congo (Congo-Brazzaville)","Costa Rica","Croatia","Cuba",
-"Cyprus","Czech Republic","Democratic Republic of the Congo","Denmark","Djibouti","Dominica",
-"Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini",
-"Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada",
-"Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India",
-"Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya",
-"Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein",
-"Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands",
-"Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco",
-"Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger",
-"Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea",
-"Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis",
-"Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia",
-"Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia",
-"South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland",
-"Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago",
-"Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom",
-"United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
-];
-
-
-// ============================================================
-// 6. SELEÇÃO DE ELEMENTOS DO DOM
+// 5. SELEÇÃO DE ELEMENTOS E CONTROLADOR DE IDIOMA
 // ============================================================
 let currentLang = "pt";
 
@@ -1038,16 +511,11 @@ const submitBtnEl = document.getElementById("submitLabel");
 const adultsInput = document.getElementById("adults");
 const childrenInput = document.getElementById("children");
 
-
-// ============================================================
-// 7. FUNÇÃO DE MUDANÇA DE IDIOMA (SETLANGUAGE)
-// ============================================================
 function setLanguage(lang) {
   currentLang = lang;
   const t = texts[lang];
   document.documentElement.lang = lang;
 
-  // Títulos e textos principais
   if (subtitleEl) subtitleEl.textContent = t.subtitle;
   if (legalInfoEl) legalInfoEl.innerHTML = t.legalHtml;
   if (formSectionEl) formSectionEl.style.display = "block";
@@ -1059,33 +527,22 @@ function setLanguage(lang) {
   if (childrenLabelEl) childrenLabelEl.textContent = t.childrenLabel;
   if (submitBtnEl) submitBtnEl.textContent = t.submit;
 
-  // Aviso obrigatório
   const reqNoticeEl = document.getElementById("requiredNotice");
   if (reqNoticeEl) reqNoticeEl.textContent = t.requiredNotice;
 
-  // Placeholders das datas
   const checkinInputEl = document.getElementById("checkinDate");
   const checkoutInputEl = document.getElementById("checkoutDate");
   if (checkinInputEl) checkinInputEl.placeholder = t.placeholder_checkin;
   if (checkoutInputEl) checkoutInputEl.placeholder = t.placeholder_checkout;
 
-  // Tradução da opção de cópia por e-mail
-  if (document.getElementById("labelWantsCopy"))
-    document.getElementById("labelWantsCopy").textContent = t.wants_copy_title;
+  if (document.getElementById("labelWantsCopy")) document.getElementById("labelWantsCopy").textContent = t.wants_copy_title;
+  if (document.getElementById("labelRadioYes")) document.getElementById("labelRadioYes").textContent = t.radio_yes;
+  if (document.getElementById("labelRadioNo")) document.getElementById("labelRadioNo").textContent = t.radio_no;
+  if (document.getElementById("labelClientEmail")) document.getElementById("labelClientEmail").textContent = t.email_label;
 
-  if (document.getElementById("labelRadioYes"))
-    document.getElementById("labelRadioYes").textContent = t.radio_yes;
-
-  if (document.getElementById("labelRadioNo"))
-    document.getElementById("labelRadioNo").textContent = t.radio_no;
-
-  if (document.getElementById("labelClientEmail"))
-    document.getElementById("labelClientEmail").textContent = t.email_label;
-
-  // 1. Gerar campos dos hóspedes
+  // Gerar e traduzir os campos dos hóspedes com a lista de países correta do idioma ativo
   generateGuestFields();
 
-  // 2. Traduzir o "Selecione" de TODOS os selects
   document.querySelectorAll("select").forEach(sel => {
     const firstOption = sel.querySelector("option[value='']");
     if (firstOption) {
@@ -1095,31 +552,20 @@ function setLanguage(lang) {
       firstOption.selected = true;
     }
   });
-
-  // 3. Reaplicar evento do FAQ
-  const openFaqBtn = document.getElementById("openFaqModal");
-  if (openFaqBtn) {
-    openFaqBtn.onclick = () => {
-      const faqTitleEl = document.getElementById("faqTitle");
-      const faqModalEl = document.getElementById("faqModal");
-      if (faqTitleEl) faqTitleEl.textContent = faqTitles[currentLang];
-      loadFaq();
-      if (faqModalEl) faqModalEl.style.display = "block";
-    };
-  }
 }
 
 
 // ============================================================
-// 8. GERAÇÃO DINÂMICA DE CAMPOS DE HÓSPEDES
+// 6. GERAÇÃO DINÂMICA DOS CAMPOS COM PAÍSES TRADUZIDOS
 // ============================================================
 function generateGuestFields() {
   const t = texts[currentLang];
+  const activeCountries = countryLists[currentLang] || countryLists.en;
+  
   const adults = parseInt(adultsInput.value || "0", 10);
   const children = parseInt(childrenInput.value || "0", 10);
   const total = adults + children;
 
-  // Guardar dados atuais preenchidos nos inputs para não perder informação ao mudar contagem/idioma
   const existingData = [];
   const currentCards = guestsContainerEl.querySelectorAll(".guest-card");
   currentCards.forEach((card, index) => {
@@ -1141,79 +587,68 @@ function generateGuestFields() {
   for (let i = 1; i <= total; i++) {
     const card = document.createElement("div");
     card.className = "form-card guest-card";
-
-    // Recupera dados salvos previamente se existirem
     const saved = existingData[i - 1] || {};
 
     card.innerHTML = `
       <h4>${t.guestTitle(i)}</h4>
 
-      <!-- Nome completo -->
       <div class="form-row">
         <label>${t.fields.fullName}</label>
         <input type="text" name="guest_${i}_fullName" value="${saved.fullName || ''}" required>
       </div>
 
-      <!-- Data de nascimento -->
       <div class="form-row">
         <label>${t.fields.birthDate}</label>
         <input type="date" name="guest_${i}_birthDate" value="${saved.birthDate || ''}" required>
       </div>
 
-      <!-- Nacionalidade -->
       <div class="form-row">
         <label>${t.fields.nationality}</label>
         <select name="guest_${i}_nationality" required>
           <option value="" disabled hidden ${!saved.nationality ? 'selected' : ''}>${t.placeholder_select}</option>
-          ${countries.map(c => `<option value="${c}" ${saved.nationality === c ? 'selected' : ''}>${c}</option>`).join("")}
+          ${activeCountries.map(c => `<option value="${c}" ${saved.nationality === c ? 'selected' : ''}>${c}</option>`).join("")}
         </select>
       </div>
 
-      <!-- País de residência -->
       <div class="form-row">
         <label>${t.fields.residenceCountry}</label>
         <select name="guest_${i}_residenceCountry" required>
           <option value="" disabled hidden ${!saved.residenceCountry ? 'selected' : ''}>${t.placeholder_select}</option>
-          ${countries.map(c => `<option value="${c}" ${saved.residenceCountry === c ? 'selected' : ''}>${c}</option>`).join("")}
+          ${activeCountries.map(c => `<option value="${c}" ${saved.residenceCountry === c ? 'selected' : ''}>${c}</option>`).join("")}
         </select>
       </div>
 
-      <!-- Número do documento -->
       <div class="form-row">
         <label>${t.fields.docNumber}</label>
         <input type="text" name="guest_${i}_docNumber" value="${saved.docNumber || ''}" required>
       </div>
 
-      <!-- Tipo de documento -->
       <div class="form-row">
         <label>${t.fields.docType}</label>
         <select name="guest_${i}_docType" id="docType_${i}" required>
           <option value="" disabled hidden ${!saved.docType ? 'selected' : ''}>${t.placeholder_select}</option>
           <option value="passport" ${saved.docType === 'passport' ? 'selected' : ''}>${t.fields.docTypePassport}</option>
           <option value="id" ${saved.docType === 'id' ? 'selected' : ''}>${t.fields.docTypeID}</option>
-          <option value="other" ${saved.docType === 'other' ? 'selected' : ''}>${t.fields.docTypeOther || "Outro"}</option>
+          <option value="other" ${saved.docType === 'other' ? 'selected' : ''}>${t.fields.docTypeOther}</option>
         </select>
       </div>
 
-      <!-- Campo "Outro → Qual?" -->
       <div class="form-row" id="otherDocField_${i}" style="display: ${saved.docType === 'other' ? 'block' : 'none'};">
-        <label>${t.fields.docTypeOtherLabel || "Qual?"}</label>
+        <label>${t.fields.docTypeOtherLabel}</label>
         <input type="text" name="guest_${i}_docOther" value="${saved.docOther || ''}" ${saved.docType === 'other' ? 'required' : ''}>
       </div>
 
-      <!-- País emissor -->
       <div class="form-row">
         <label>${t.fields.docCountry}</label>
         <select name="guest_${i}_docCountry" required>
           <option value="" disabled hidden ${!saved.docCountry ? 'selected' : ''}>${t.placeholder_select}</option>
-          ${countries.map(c => `<option value="${c}" ${saved.docCountry === c ? 'selected' : ''}>${c}</option>`).join("")}
+          ${activeCountries.map(c => `<option value="${c}" ${saved.docCountry === c ? 'selected' : ''}>${c}</option>`).join("")}
         </select>
       </div>
     `;
 
     guestsContainerEl.appendChild(card);
 
-    // Controlo do campo "Outro → Qual?" com validação obrigatória dinâmica
     const docTypeSelect = card.querySelector(`#docType_${i}`);
     const otherField = card.querySelector(`#otherDocField_${i}`);
     const otherInput = otherField.querySelector("input");
@@ -1231,47 +666,46 @@ function generateGuestFields() {
   }
 }
 
-// Eventos para atualizar o número de hóspedes
 if (adultsInput) adultsInput.addEventListener("input", generateGuestFields);
 if (childrenInput) childrenInput.addEventListener("input", generateGuestFields);
 
 
 // ============================================================
-// 9. FUNÇÃO PARA GERAR O RESUMO FORMATADO DO E-MAIL (HTML)
+// 7. CONSTRUTOR DO RESUMO DO E-MAIL (HTML)
 // ============================================================
 function buildEmailSummaryHtml(boletim, lang) {
   const t = texts[lang] || texts.pt;
   
-  let html = `<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px;">`;
+  let html = `<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto;">`;
   
-  // Seção da Estadia
+  // Bloco Estadia
   html += `<div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #0056b3;">`;
-  html += `<h3 style="margin-top: 0; color: #0056b3;">${t.stayDataTitle}</h3>`;
-  html += `<p style="margin: 5px 0;"><strong>${t.checkinLabel}</strong> ${boletim.dataCheckin}</p>`;
-  html += `<p style="margin: 5px 0;"><strong>${t.checkoutLabel}</strong> ${boletim.dataCheckout}</p>`;
-  html += `<p style="margin: 5px 0;"><strong>${t.adultsLabel}</strong> ${boletim.numAdultos}</p>`;
-  html += `<p style="margin: 5px 0;"><strong>${t.childrenLabel}</strong> ${boletim.numCriancas}</p>`;
+  html += `<h3 style="margin-top: 0; color: #0056b3; font-size: 16px;">${t.stayDataTitle}</h3>`;
+  html += `<p style="margin: 4px 0;"><strong>${t.checkinLabel}</strong> ${boletim.dataCheckin}</p>`;
+  html += `<p style="margin: 4px 0;"><strong>${t.checkoutLabel}</strong> ${boletim.dataCheckout}</p>`;
+  html += `<p style="margin: 4px 0;"><strong>${t.adultsLabel}</strong> ${boletim.numAdultos}</p>`;
+  html += `<p style="margin: 4px 0;"><strong>${t.childrenLabel}</strong> ${boletim.numCriancas}</p>`;
   html += `</div>`;
 
-  // Seção de Hóspedes
-  html += `<h3 style="color: #0056b3;">${t.formTitle}</h3>`;
+  // Bloco Hóspedes
+  html += `<h3 style="color: #0056b3; font-size: 18px; margin-bottom: 12px;">${t.formTitle}</h3>`;
   
   boletim.hospedes.forEach((h, idx) => {
     let docTypeLabel = h.docTipo;
     if (h.docTipo === "passport") docTypeLabel = t.fields.docTypePassport;
     else if (h.docTipo === "id") docTypeLabel = t.fields.docTypeID;
-    else if (h.docTipo === "other") docTypeLabel = h.docOutroDesc || "Outro";
+    else if (h.docTipo === "other") docTypeLabel = h.docOutroDesc || t.fields.docTypeOther;
 
     html += `<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; margin-bottom: 15px;">`;
-    html += `<h4 style="margin-top: 0; color: #2d3748; border-bottom: 1px solid #edf2f7; padding-bottom: 8px;">${t.guestTitle(idx + 1)}</h4>`;
+    html += `<h4 style="margin-top: 0; color: #2d3748; border-bottom: 1px solid #edf2f7; padding-bottom: 8px; font-size: 15px;">${t.guestTitle(idx + 1)}</h4>`;
     html += `<table style="width: 100%; border-collapse: collapse; font-size: 14px;">`;
-    html += `<tr><td style="padding: 4px 0; color: #718096; width: 45%;"><strong>${t.fields.fullName}</strong></td><td style="padding: 4px 0;">${h.nome}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.birthDate}</strong></td><td style="padding: 4px 0;">${h.dataNascimento}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.nationality}</strong></td><td style="padding: 4px 0;">${h.nacionalidade}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.residenceCountry}</strong></td><td style="padding: 4px 0;">${h.paisResidencia}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docType}</strong></td><td style="padding: 4px 0;">${docTypeLabel}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docNumber}</strong></td><td style="padding: 4px 0;">${h.docNumero}</td></tr>`;
-    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docCountry}</strong></td><td style="padding: 4px 0;">${h.docPaisEmissor}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096; width: 45%;"><strong>${t.fields.fullName}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.nome}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.birthDate}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.dataNascimento}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.nationality}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.nacionalidade}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.residenceCountry}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.paisResidencia}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docType}</strong></td><td style="padding: 4px 0; color: #1a202c;">${docTypeLabel}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docNumber}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.docNumero}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docCountry}</strong></td><td style="padding: 4px 0; color: #1a202c;">${h.docPaisEmissor}</td></tr>`;
     html += `</table>`;
     html += `</div>`;
   });
@@ -1282,42 +716,26 @@ function buildEmailSummaryHtml(boletim, lang) {
 
 
 // ============================================================
-// 10. SUBMISSÃO DO FORMULÁRIO (FIRESTORE + EMAILJS)
+// 8. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS)
 // ============================================================
 document.getElementById("aimaForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const t = texts[currentLang];
 
-  // 1. Validar campos obrigatórios HTML5
   if (!this.checkValidity()) {
     this.reportValidity();
     return;
   }
 
-  // 2. Validar datas de check-in / check-out
   const checkin = document.getElementById("checkinDate").value;
   const checkout = document.getElementById("checkoutDate").value;
 
   if (new Date(checkin) >= new Date(checkout)) {
-    alert(t.alert_checkout_invalid || "A data de check-out deve ser posterior à data de check-in.");
+    alert("Check-out deve ser posterior ao Check-in.");
     return;
   }
 
-  // 3. Validar datas de nascimento
-  const birthInputs = [...document.querySelectorAll("input[name$='_birthDate']")];
-  const today = new Date();
-  
-  for (const bd of birthInputs) {
-    const birth = new Date(bd.value);
-    if (birth > today || birth.getFullYear() < 1900) {
-      alert(t.alert_birth_invalid || "Data de nascimento inválida.");
-      bd.focus();
-      return;
-    }
-  }
-
-  // 4. Preparar objeto final
   const adults = parseInt(adultsInput.value || "0", 10);
   const children = parseInt(childrenInput.value || "0", 10);
   const totalGuests = adults + children;
@@ -1355,55 +773,42 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     status: "PENDENTE_ATRIBUICAO"
   };
 
-  // 5. Gravar no Firestore e Enviar E-mail
   const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
   const originalText = submitBtn.textContent;
 
-  submitBtn.textContent = t.sending || "A enviar...";
+  submitBtn.textContent = "A enviar...";
   submitBtn.disabled = true;
 
   try {
-    // 1. Grava no Firestore
+    // 1. Gravar no Firestore
     await db.collection("boletins").add(novoBoletim);
-    console.log("Registo guardado no Firestore com sucesso!");
 
-    // 2. Seleciona a tradução certa do e-mail com base no idioma atual do site
-    const tEmail = emailTranslations[currentLang] || emailTranslations["en"];
-
-    // 3. Monta a estrutura HTML com TODOS os dados preenchidos
-    const guestsDetailsHtml = buildEmailSummaryHtml(novoBoletim, currentLang);
-
-    // 4. Envia o e-mail via EmailJS com os textos no idioma do cliente + resumo completo
+    // 2. Enviar via EmailJS se o utilizador preencheu o e-mail
     if (emailDigitado) {
-      console.log(`A enviar e-mail em [${currentLang.toUpperCase()}] para:`, emailDigitado);
-      try {
-        const res = await emailjs.send(
-          "service_funp519",
-          "template_0oqqqy3",
-          {
-            to_email: emailDigitado,
-            subject_text: tEmail.subject,
-            greeting: tEmail.greeting,
-            guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
-            confirmation_text: tEmail.confirmation,
-            label_checkin: tEmail.label_checkin,
-            checkin: novoBoletim.dataCheckin || "",
-            label_checkout: tEmail.label_checkout,
-            checkout: novoBoletim.dataCheckout || "",
-            guests_details: guestsDetailsHtml, // <--- TODOS OS DADOS DO FORMULÁRIO AQUI
-            footer_text: tEmail.footer
-          },
-          "imhA9ilHaWGF1hxYz"
-        );
-        console.log("Cópia enviada com sucesso!", res);
-      } catch (emailErr) {
-        console.error("Erro ao enviar e-mail via EmailJS:", emailErr);
-      }
-    } else {
-      console.warn("Nenhum e-mail foi preenchido no formulário.");
+      const tEmail = emailTranslations[currentLang] || emailTranslations["en"];
+      const guestsDetailsHtml = buildEmailSummaryHtml(novoBoletim, currentLang);
+
+      await emailjs.send(
+        "service_funp519",
+        "template_0oqqqy3",
+        {
+          to_email: emailDigitado,
+          subject_text: tEmail.subject,
+          greeting: tEmail.greeting,
+          guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
+          confirmation_text: tEmail.confirmation,
+          label_checkin: tEmail.label_checkin,
+          checkin: novoBoletim.dataCheckin || "",
+          label_checkout: tEmail.label_checkout,
+          checkout: novoBoletim.dataCheckout || "",
+          guests_details: guestsDetailsHtml,
+          footer_text: tEmail.footer
+        },
+        "imhA9ilHaWGF1hxYz"
+      );
     }
 
-    // 5. Mostra a mensagem de sucesso na interface
+    // 3. Popup de Sucesso
     const popup = document.getElementById("aimaSuccessPopup");
     if (popup) {
       const popupText = popup.querySelector(".success-popup-text");
@@ -1419,8 +824,8 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     generateGuestFields();
 
   } catch (error) {
-    console.error("Erro ao guardar no Firestore:", error);
-    alert(t.alert_comm_error || "Erro ao guardar os dados. Tente novamente.");
+    console.error("Erro ao processar:", error);
+    alert("Erro ao guardar dados. Tente novamente.");
   } finally {
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
@@ -1428,17 +833,5 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
 });
 
 
-// ============================================================
-// 11. EVENTOS COMPLEMENTARES E INICIALIZAÇÃO
-// ============================================================
-// Fechar FAQ Modal
-const closeFaqBtn = document.getElementById("closeFaqModal");
-if (closeFaqBtn) {
-  closeFaqBtn.addEventListener("click", () => {
-    const faqModalEl = document.getElementById("faqModal");
-    if (faqModalEl) faqModalEl.style.display = "none";
-  });
-}
-
-// Iniciar a aplicação em Português
+// Inicialização padrão em Português
 setLanguage("pt");
