@@ -104,7 +104,7 @@ const texts = {
     placeholder_select: "Selecione",
     subject: "Cópia do Registo de Hóspedes - AIMA",
     greeting: "Olá",
-    confirmation: "Confirmamos com sucesso a receção do seu registo de hóspedes.",
+    confirmation: "Confirmamos com sucesso a receção do seu registo de hóspedes com os seguintes dados:",
     label_checkin: "Data de Check-in",
     label_checkout: "Data de Check-out",
     footer: "Desejamos-lhe uma excelente estadia!",
@@ -203,7 +203,7 @@ const texts = {
     placeholder_select: "Select",
     subject: "Guest Registration Copy - AIMA",
     greeting: "Hello",
-    confirmation: "We have successfully received your guest registration.",
+    confirmation: "We have successfully received your guest registration with the following details:",
     label_checkin: "Check-in Date",
     label_checkout: "Check-out Date",
     footer: "We wish you a pleasant stay!",
@@ -302,7 +302,7 @@ const texts = {
     placeholder_select: "Seleccionar",
     subject: "Copia del Registro de Huéspedes - AIMA",
     greeting: "Hola",
-    confirmation: "Hemos recibido con éxito su registro de huéspedes.",
+    confirmation: "Hemos recibido con éxito su registro de huéspedes con los siguientes datos:",
     label_checkin: "Fecha de Check-in",
     label_checkout: "Fecha de Check-out",
     footer: "¡Le deseamos una excelente estancia!",
@@ -401,7 +401,7 @@ const texts = {
     placeholder_select: "Sélectionner",
     subject: "Copie de l'Enregistrement des Clients - AIMA",
     greeting: "Bonjour",
-    confirmation: "Nous avons bien reçu votre enregistrement de client.",
+    confirmation: "Nous avons bien reçu votre enregistrement de client avec les détails suivants :",
     label_checkin: "Date d'arrivée",
     label_checkout: "Date de départ",
     footer: "Nous vous souhaitons un agréable séjour !",
@@ -500,7 +500,7 @@ const texts = {
     placeholder_select: "Seleziona",
     subject: "Copia della Registrazione Ospiti - AIMA",
     greeting: "Ciao",
-    confirmation: "Abbiamo ricevuto con successo la registrazione degli ospiti.",
+    confirmation: "Abbiamo ricevuto con successo la registrazione degli ospiti con i seguenti dettagli:",
     label_checkin: "Data di Check-in",
     label_checkout: "Data di Check-out",
     footer: "Vi auguriamo un piacevole soggiorno!",
@@ -600,7 +600,7 @@ const texts = {
     placeholder_select: "Auswählen",
     subject: "Kopie der Gästeregistrierung - AIMA",
     greeting: "Hallo",
-    confirmation: "Wir haben Ihre Gästeregistrierung erfolgreich erhalten.",
+    confirmation: "Wir haben Ihre Gästeregistrierung mit folgenden Daten erfolgreich erhalten:",
     label_checkin: "Anreisedatum",
     label_checkout: "Abreisedatum",
     footer: "Wir wünschen Ihnen einen angenehmen Aufenthalt!",
@@ -1119,7 +1119,7 @@ function generateGuestFields() {
   const children = parseInt(childrenInput.value || "0", 10);
   const total = adults + children;
 
-  // 1. Guardar dados atuais preenchidos nos inputs para não perder informação ao mudar contagem/idioma
+  // Guardar dados atuais preenchidos nos inputs para não perder informação ao mudar contagem/idioma
   const existingData = [];
   const currentCards = guestsContainerEl.querySelectorAll(".guest-card");
   currentCards.forEach((card, index) => {
@@ -1237,7 +1237,52 @@ if (childrenInput) childrenInput.addEventListener("input", generateGuestFields);
 
 
 // ============================================================
-// 9. SUBMISSÃO DO FORMULÁRIO (FIRESTORE + EMAILJS)
+// 9. FUNÇÃO PARA GERAR O RESUMO FORMATADO DO E-MAIL (HTML)
+// ============================================================
+function buildEmailSummaryHtml(boletim, lang) {
+  const t = texts[lang] || texts.pt;
+  
+  let html = `<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px;">`;
+  
+  // Seção da Estadia
+  html += `<div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #0056b3;">`;
+  html += `<h3 style="margin-top: 0; color: #0056b3;">${t.stayDataTitle}</h3>`;
+  html += `<p style="margin: 5px 0;"><strong>${t.checkinLabel}</strong> ${boletim.dataCheckin}</p>`;
+  html += `<p style="margin: 5px 0;"><strong>${t.checkoutLabel}</strong> ${boletim.dataCheckout}</p>`;
+  html += `<p style="margin: 5px 0;"><strong>${t.adultsLabel}</strong> ${boletim.numAdultos}</p>`;
+  html += `<p style="margin: 5px 0;"><strong>${t.childrenLabel}</strong> ${boletim.numCriancas}</p>`;
+  html += `</div>`;
+
+  // Seção de Hóspedes
+  html += `<h3 style="color: #0056b3;">${t.formTitle}</h3>`;
+  
+  boletim.hospedes.forEach((h, idx) => {
+    let docTypeLabel = h.docTipo;
+    if (h.docTipo === "passport") docTypeLabel = t.fields.docTypePassport;
+    else if (h.docTipo === "id") docTypeLabel = t.fields.docTypeID;
+    else if (h.docTipo === "other") docTypeLabel = h.docOutroDesc || "Outro";
+
+    html += `<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; margin-bottom: 15px;">`;
+    html += `<h4 style="margin-top: 0; color: #2d3748; border-bottom: 1px solid #edf2f7; padding-bottom: 8px;">${t.guestTitle(idx + 1)}</h4>`;
+    html += `<table style="width: 100%; border-collapse: collapse; font-size: 14px;">`;
+    html += `<tr><td style="padding: 4px 0; color: #718096; width: 45%;"><strong>${t.fields.fullName}</strong></td><td style="padding: 4px 0;">${h.nome}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.birthDate}</strong></td><td style="padding: 4px 0;">${h.dataNascimento}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.nationality}</strong></td><td style="padding: 4px 0;">${h.nacionalidade}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.residenceCountry}</strong></td><td style="padding: 4px 0;">${h.paisResidencia}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docType}</strong></td><td style="padding: 4px 0;">${docTypeLabel}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docNumber}</strong></td><td style="padding: 4px 0;">${h.docNumero}</td></tr>`;
+    html += `<tr><td style="padding: 4px 0; color: #718096;"><strong>${t.fields.docCountry}</strong></td><td style="padding: 4px 0;">${h.docPaisEmissor}</td></tr>`;
+    html += `</table>`;
+    html += `</div>`;
+  });
+
+  html += `</div>`;
+  return html;
+}
+
+
+// ============================================================
+// 10. SUBMISSÃO DO FORMULÁRIO (FIRESTORE + EMAILJS)
 // ============================================================
 document.getElementById("aimaForm").addEventListener("submit", async function (e) {
   e.preventDefault();
@@ -1325,7 +1370,10 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     // 2. Seleciona a tradução certa do e-mail com base no idioma atual do site
     const tEmail = emailTranslations[currentLang] || emailTranslations["en"];
 
-    // 3. Envia o e-mail via EmailJS com os textos no idioma do cliente
+    // 3. Monta a estrutura HTML com TODOS os dados preenchidos
+    const guestsDetailsHtml = buildEmailSummaryHtml(novoBoletim, currentLang);
+
+    // 4. Envia o e-mail via EmailJS com os textos no idioma do cliente + resumo completo
     if (emailDigitado) {
       console.log(`A enviar e-mail em [${currentLang.toUpperCase()}] para:`, emailDigitado);
       try {
@@ -1342,6 +1390,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
             checkin: novoBoletim.dataCheckin || "",
             label_checkout: tEmail.label_checkout,
             checkout: novoBoletim.dataCheckout || "",
+            guests_details: guestsDetailsHtml, // <--- TODOS OS DADOS DO FORMULÁRIO AQUI
             footer_text: tEmail.footer
           },
           "imhA9ilHaWGF1hxYz"
@@ -1354,7 +1403,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
       console.warn("Nenhum e-mail foi preenchido no formulário.");
     }
 
-    // 4. Mostra a mensagem de sucesso na interface
+    // 5. Mostra a mensagem de sucesso na interface
     const popup = document.getElementById("aimaSuccessPopup");
     if (popup) {
       const popupText = popup.querySelector(".success-popup-text");
@@ -1380,7 +1429,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
 
 
 // ============================================================
-// 10. EVENTOS COMPLEMENTARES E INICIALIZAÇÃO
+// 11. EVENTOS COMPLEMENTARES E INICIALIZAÇÃO
 // ============================================================
 // Fechar FAQ Modal
 const closeFaqBtn = document.getElementById("closeFaqModal");
