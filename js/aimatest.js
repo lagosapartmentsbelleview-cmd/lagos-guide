@@ -1299,6 +1299,7 @@ function buildEmailSummaryHtml(boletim, lang) {
             <strong>Tel:</strong> <a href="tel:+351910051588" style="color: #60a5fa; text-decoration: none;">+351 910 051 588</a><br>
             <strong>WhatsApp:</strong> <a href="https://wa.me/351910051588" style="color: #60a5fa; text-decoration: none;">+351 910 051 588</a><br>
             <strong>Email:</strong> <a href="mailto:belleview@sapo.pt" style="color: #60a5fa; text-decoration: none;">belleview@sapo.pt</a>
+            <strong>Web:</strong> <a href="https://www.apartmentsbelleview.com" target="_blank" style="color: #60a5fa; text-decoration: none;">www.apartmentsbelleview.com</a>
           </p>
 
           <p style="margin: 0 0 12px 0; color: #94a3b8; font-size: 11px; border-top: 1px solid #1e293b; padding-top: 10px;">
