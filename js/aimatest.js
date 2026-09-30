@@ -104,6 +104,13 @@ const texts = {
    placeholder_checkin: "dd/mm/aaaa", 
    placeholder_checkout: "dd/mm/aaaa", 
    placeholder_select: "Selecione",
+
+   subject: "Cópia do Registo de Hóspedes - AIMA",
+    greeting: "Olá",
+    confirmation: "Confirmamos com sucesso a receção do seu registo de hóspedes.",
+    label_checkin: "Data de Check-in",
+    label_checkout: "Data de Check-out",
+    footer: "Desejamos-lhe uma excelente estadia!"
      
     submit: "Enviar Boletim de Alojamento"
 },
@@ -200,6 +207,13 @@ const texts = {
   placeholder_checkin: "dd/mm/yyyy", 
   placeholder_checkout: "dd/mm/yyyy", 
   placeholder_select: "Select",
+
+    subject: "Guest Registration Copy - AIMA",
+    greeting: "Hello",
+    confirmation: "We have successfully received your guest registration.",
+    label_checkin: "Check-in Date",
+    label_checkout: "Check-out Date",
+    footer: "We wish you a pleasant stay!"
     
   submit: "Submit Accommodation Form"
 },
@@ -297,6 +311,13 @@ const texts = {
   placeholder_checkin: "dd/mm/aaaa", 
   placeholder_checkout: "dd/mm/aaaa", 
   placeholder_select: "Seleccionar",
+
+    subject: "Copia del Registro de Huéspedes - AIMA",
+    greeting: "Hola",
+    confirmation: "Hemos recibido con éxito su registro de huéspedes.",
+    label_checkin: "Fecha de Check-in",
+    label_checkout: "Fecha de Check-out",
+    footer: "¡Le deseamos una excelente estancia!"
     
   submit: "Enviar Registro de Alojamiento"
 },
@@ -394,6 +415,13 @@ const texts = {
   placeholder_checkin: "jj/mm/aaaa", 
   placeholder_checkout: "jj/mm/aaaa", 
   placeholder_select: "Sélectionner",
+
+    subject: "Copie de l'Enregistrement des Clients - AIMA",
+    greeting: "Bonjour",
+    confirmation: "Nous avons bien reçu votre enregistrement de client.",
+    label_checkin: "Date d'arrivée",
+    label_checkout: "Date de départ",
+    footer: "Nous vous souhaitons un agréable séjour !"
     
   submit: "Envoyer le Formulaire"
 },
@@ -491,6 +519,13 @@ const texts = {
   placeholder_checkin: "gg/mm/aaaa", 
   placeholder_checkout: "gg/mm/aaaa", 
   placeholder_select: "Seleziona",
+
+    subject: "Copia della Registrazione Ospiti - AIMA",
+    greeting: "Ciao",
+    confirmation: "Abbiamo ricevuto con successo la registrazione degli ospiti.",
+    label_checkin: "Data di Check-in",
+    label_checkout: "Data di Check-out",
+    footer: "Vi auguriamo un piacevole soggiorno!"
   
   submit: "Invia Modulo di Registrazione"
 },
@@ -589,6 +624,13 @@ const texts = {
     placeholder_checkin: "TT/MM/JJJJ", 
     placeholder_checkout: "TT/MM/JJJJ", 
     placeholder_select: "Auswählen",
+
+      subject: "Kopie der Gästeregistrierung - AIMA",
+    greeting: "Hallo",
+    confirmation: "Wir haben Ihre Gästeregistrierung erfolgreich erhalten.",
+    label_checkin: "Anreisedatum",
+    label_checkout: "Abreisedatum",
+    footer: "Wir wünschen Ihnen einen angenehmen Aufenthalt!"
     
     submit: "Formular absenden"
 }
