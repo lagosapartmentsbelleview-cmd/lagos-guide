@@ -1366,7 +1366,6 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
   const selectedCopy = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
   const wantsCopy = selectedCopy === "sim";
   
-  // Apanha o e-mail do campo do formulário
   const emailDigitado = document.getElementById("clientEmail")?.value.trim() || 
                         document.getElementById("email")?.value.trim() || "";
 
@@ -1395,20 +1394,29 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     await db.collection("boletins").add(novoBoletim);
     console.log("Registo guardado no Firestore com sucesso!");
 
-    // 2. Enviar cópia por e-mail via EmailJS (se houver e-mail)
+    // 2. Seleciona a tradução certa com base no idioma atual do site
+    const tEmail = emailTranslations[currentLang] || emailTranslations["en"];
+
+    // 3. Envia o e-mail via EmailJS com os textos no idioma do cliente
     if (emailDigitado) {
-      console.log("A enviar e-mail via EmailJS para:", emailDigitado);
+      console.log(`A enviar e-mail em [${currentLang.toUpperCase()}] para:`, emailDigitado);
       try {
         const res = await emailjs.send(
-          "service_funp519",   // O teu Service ID
-          "template_0oqqqy3",  // O teu Template ID
+          "service_funp519",
+          "template_0oqqqy3",
           {
             to_email: emailDigitado,
+            subject_text: tEmail.subject,
+            greeting: tEmail.greeting,
             guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
+            confirmation_text: tEmail.confirmation,
+            label_checkin: tEmail.label_checkin,
             checkin: novoBoletim.dataCheckin || "",
-            checkout: novoBoletim.dataCheckout || ""
+            label_checkout: tEmail.label_checkout,
+            checkout: novoBoletim.dataCheckout || "",
+            footer_text: tEmail.footer
           },
-          "imhA9ilHaWGF1hxYz"     // A tua Public Key
+          "imhA9ilHaWGF1hxYz"
         );
         console.log("Cópia enviada com sucesso!", res);
       } catch (emailErr) {
@@ -1418,7 +1426,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
       console.warn("Nenhum e-mail foi preenchido no formulário.");
     }
 
-    // 3. Mostra a mensagem de sucesso
+    // 4. Mostra a mensagem de sucesso na interface
     const popup = document.getElementById("aimaSuccessPopup");
     if (popup) {
       const popupText = popup.querySelector(".success-popup-text");
@@ -1441,7 +1449,6 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     submitBtn.disabled = false;
   }
 });
-
 // Fechar FAQ Modal
 const closeFaqBtn = document.getElementById("closeFaqModal");
 if (closeFaqBtn) {
