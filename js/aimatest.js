@@ -1277,12 +1277,12 @@ function buildEmailSummaryHtml(boletim, lang) {
     `;
   });
 
-  // RODAPÉ INSTITUCIONAL
+  // RODAPÉ INSTITUCIONAL SIMPLIFICADO E NEUTRO
   html += `
         </td>
       </tr>
 
-      <!-- RODAPÉ COM DADOS DE CONTACTO E LEGAIS -->
+      <!-- RODAPÉ SIMPLIFICADO -->
       <tr>
         <td align="center" style="background-color: ${darkNavy}; padding: 25px 20px; color: #ffffff; font-size: 12px; line-height: 1.6; text-align: center;">
           <p style="margin: 0 0 10px 0; font-size: 15px; font-weight: 700; color: #ffffff;">
@@ -1302,18 +1302,11 @@ function buildEmailSummaryHtml(boletim, lang) {
           </p>
 
           <p style="margin: 0 0 12px 0; color: #94a3b8; font-size: 11px; border-top: 1px solid #1e293b; padding-top: 10px;">
-            <strong>Registo AL:</strong> 26313/AL, 116670/AL, 116671/AL<br>
-            <strong>Entidade Exploradora:</strong> Luís Ferreira
+            <strong>AL:</strong> 26313/AL, 116670/AL, 116671/AL
           </p>
 
-          <div style="margin-bottom: 12px; font-size: 11px;">
-            <a href="https://apartmentsbelleview.com/legal/politica-de-reservas.html" target="_blank" style="color: #94a3b8; text-decoration: underline; margin: 0 4px;">Política de Reservas</a> | 
-            <a href="https://apartmentsbelleview.com/legal/politica-de-privacidade.html" target="_blank" style="color: #94a3b8; text-decoration: underline; margin: 0 4px;">Privacidade</a> | 
-            <a href="https://apartmentsbelleview.com/legal/termos-e-condicoes.html" target="_blank" style="color: #94a3b8; text-decoration: underline; margin: 0 4px;">Termos</a>
-          </div>
-
           <p style="margin: 0; color: #64748b; font-size: 11px;">
-            © 2025 Apartments Belleview Lagos — Todos os direitos reservados.
+            © 2026 Apartments Belleview Lagos
           </p>
         </td>
       </tr>
@@ -1324,7 +1317,6 @@ function buildEmailSummaryHtml(boletim, lang) {
 
   return html;
 }
-
 
 // ============================================================
 // 9. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS)
