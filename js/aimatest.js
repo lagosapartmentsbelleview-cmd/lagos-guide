@@ -1323,110 +1323,81 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
 
   const selectedCopy = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
   const wantsCopy = selectedCopy === "sim";
-  const clientEmail = wantsCopy ? (document.getElementById("clientEmail")?.value.trim() || "") : "";
+  
+  // Apanha o e-mail do campo do formulário
+  const emailDigitado = document.getElementById("clientEmail")?.value.trim() || 
+                        document.getElementById("email")?.value.trim() || "";
 
   const novoBoletim = {
-    criadoEm: firebase.firestore.FieldValue.serverTimestamp(), // Usa timestamp do servidor para precisão
+    criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
     dataCheckin: checkin,
     dataCheckout: checkout,
     numAdultos: adults,
     numCriancas: children,
-    emailCliente: clientEmail,
+    emailCliente: emailDigitado,
     pediuCopia: wantsCopy,
     hospedes: hospedes,
     alojamentoId: null,
     status: "PENDENTE_ATRIBUICAO"
   };
 
-// 5️⃣ Gravar no Firestore
-const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
-const originalText = submitBtn.textContent;
+  // 5️⃣ Gravar no Firestore e Enviar E-mail
+  const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
 
-submitBtn.textContent = t.sending || "A enviar...";
-submitBtn.disabled = true;
+  submitBtn.textContent = t.sending || "A enviar...";
+  submitBtn.disabled = true;
 
-try {
-  // 1. Grava no Firestore
-  await db.collection("boletins").add(novoBoletim);
+  try {
+    // 1. Grava no Firestore
+    await db.collection("boletins").add(novoBoletim);
+    console.log("Registo guardado no Firestore com sucesso!");
 
-  // --- LINHAS DE DIAGNÓSTICO (ADICIONA AQUI) ---
-  console.log("=== DIAGNÓSTICO EMAILJS ===");
-  console.log("Objeto novoBoletim:", novoBoletim);
-  
-  const clientEmail = novoBoletim.email || 
-                      (novoBoletim.hospedes && novoBoletim.hospedes[0] ? novoBoletim.hospedes[0].email : "") ||
-                      (document.getElementById("email") ? document.getElementById("email").value : "");
-                      
-  console.log("E-mail capturado:", clientEmail);
-  // ---------------------------------------------
-
-  if (clientEmail) {
-    try {
-      console.log("A tentar enviar via EmailJS...");
-      const res = await emailjs.send(
-        "O_TEU_SERVICE_ID",   // O teu Service ID real
-        "O_TEU_TEMPLATE_ID",  // O teu Template ID real
-        {
-          to_email: clientEmail,
-          guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
-          checkin: novoBoletim.checkin || "",
-          checkout: novoBoletim.checkout || ""
-        },
-        "A_TUA_PUBLIC_KEY"     // A tua Public Key real
-      );
-      console.log("Cópia enviada com sucesso!", res);
-    } catch (emailErr) {
-      console.error("ERRO EMAILJS:", emailErr);
+    // 2. Enviar cópia por e-mail via EmailJS (se houver e-mail)
+    if (emailDigitado) {
+      console.log("A enviar e-mail via EmailJS para:", emailDigitado);
+      try {
+        const res = await emailjs.send(
+          "service_funp519",   // O teu Service ID
+          "template_0oqqqy3",  // O teu Template ID
+          {
+            to_email: emailDigitado,
+            guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
+            checkin: novoBoletim.dataCheckin || "",
+            checkout: novoBoletim.dataCheckout || ""
+          },
+          "imhA9ilHaWGF1hxYz"     // A tua Public Key
+        );
+        console.log("Cópia enviada com sucesso!", res);
+      } catch (emailErr) {
+        console.error("Erro ao enviar e-mail via EmailJS:", emailErr);
+      }
+    } else {
+      console.warn("Nenhum e-mail foi preenchido no formulário.");
     }
-  } else {
-    console.warn("AVISO: Nenhum e-mail foi encontrado no formulário!");
-  }
 
-  // 2. ENVIAR CÓPIA POR E-MAIL VIA EMAILJS (Código novo adicionado aqui)
-  const clientEmail = novoBoletim.email || (document.getElementById("email") ? document.getElementById("email").value : "");
-  
-  if (clientEmail) {
-    try {
-      await emailjs.send(
-        "service_funp519",   // Substitui pelo teu Service ID do EmailJS
-        "template_0oqqqy3",  // Substitui pelo teu Template ID do EmailJS
-        {
-          to_email: clientEmail,
-          guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
-          checkin: novoBoletim.checkin || "",
-          checkout: novoBoletim.checkout || ""
-        },
-        "imhA9ilHaWGF1hxYz"     // Substitui pela tua Public Key do EmailJS
-      );
-      console.log("Cópia enviada com sucesso para:", clientEmail);
-    } catch (emailErr) {
-      console.error("Erro ao enviar e-mail via EmailJS:", emailErr);
-      // Não bloqueia a experiência do cliente se o e-mail falhar, o registo já está salvo
+    // 3. Mostra a mensagem de sucesso
+    const popup = document.getElementById("aimaSuccessPopup");
+    if (popup) {
+      const popupText = popup.querySelector(".success-popup-text");
+      if (popupText) popupText.textContent = t.aima_success;
+      popup.style.display = "flex";
+
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 3000);
     }
+
+    this.reset();
+    generateGuestFields();
+
+  } catch (error) {
+    console.error("Erro ao guardar no Firestore:", error);
+    alert(t.alert_comm_error || "Erro ao guardar os dados. Tente novamente.");
+  } finally {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
   }
-
-  // 3. Mostra a mensagem de sucesso (Já tinhas este código)
-  const popup = document.getElementById("aimaSuccessPopup");
-  if (popup) {
-    const popupText = popup.querySelector(".success-popup-text");
-    if (popupText) popupText.textContent = t.aima_success;
-    popup.style.display = "flex";
-
-    setTimeout(() => {
-      popup.style.display = "none";
-    }, 3000);
-  }
-
-  this.reset();
-  generateGuestFields();
-
-} catch (error) {
-  console.error("Erro ao guardar no Firestore:", error);
-  alert(t.alert_comm_error || "Erro ao guardar os dados. Tente novamente.");
-} finally {
-  submitBtn.textContent = originalText;
-  submitBtn.disabled = false;
-}
 });
 
 // Fechar FAQ Modal
