@@ -676,33 +676,21 @@ if (childrenInput) childrenInput.addEventListener("input", generateGuestFields);
 function buildEmailSummaryHtml(boletim, lang) {
   const t = texts[lang] || texts.pt;
   
-  // Cores oficiais do site apartmentsbelleview.com
-  const primaryBlue = "#0070ba";   // Azul da marca (ícone B e detalhes)
-  const darkNavy    = "#0a2540";   // Azul escuro dos títulos e rodapé
-  const lightBg     = "#f4f7fa";   // Fundo geral do e-mail
+  // Cores oficiais do site
+  const primaryBlue = "#0070ba";   // Azul da marca
+  const darkNavy    = "#0a2540";   // Azul escuro institucional
+  const lightBg     = "#f4f7fa";   // Fundo do e-mail
 
   let html = `
   <div style="background-color: ${lightBg}; padding: 25px 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #2d3748; margin: 0;">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
       
-      <!-- CABEÇALHO COM O LOGÓTIPO EXACTO DO SITE (SEM DEPENDER DE IMAGEM EXTERNA) -->
+      <!-- CABEÇALHO APENAS COM TEXTO DA MARCA -->
       <tr>
-        <td align="center" style="background-color: #ffffff; padding: 25px 20px; border-bottom: 3px solid ${primaryBlue};">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center">
-            <tr>
-              <td valign="middle" style="padding-right: 12px;">
-                <!-- Ícone Círculo "B" -->
-                <div style="width: 44px; height: 44px; background-color: ${primaryBlue}; border-radius: 50%; text-align: center; line-height: 44px; color: #ffffff; font-weight: 700; font-size: 26px; font-family: Arial, sans-serif;">
-                  B
-                </div>
-              </td>
-              <td valign="middle" style="text-align: left;">
-                <span style="font-size: 20px; font-weight: 700; color: ${darkNavy}; letter-spacing: -0.3px;">
-                  Apartments Belleview <span style="color: ${primaryBlue};">Lagos</span>
-                </span>
-              </td>
-            </tr>
-          </table>
+        <td align="center" style="background-color: #ffffff; padding: 28px 20px; border-bottom: 3px solid ${primaryBlue};">
+          <h1 style="margin: 0; font-size: 22px; font-weight: 700; color: ${darkNavy}; letter-spacing: -0.3px; font-family: inherit;">
+            Apartments Belleview <span style="color: ${primaryBlue};">Lagos</span>
+          </h1>
         </td>
       </tr>
 
@@ -801,30 +789,17 @@ function buildEmailSummaryHtml(boletim, lang) {
     `;
   });
 
-  // RODAPÉ INSTITUCIONAL EXACTO DO SITE APARTMENTSBELLEVIEW.COM
+  // RODAPÉ INSTITUCIONAL
   html += `
         </td>
       </tr>
 
-      <!-- RODAPÉ COM A IDENTIDADE E DADOS COMPLETOS -->
+      <!-- RODAPÉ COM DADOS DE CONTACTO E LEGAIS -->
       <tr>
         <td align="center" style="background-color: ${darkNavy}; padding: 25px 20px; color: #ffffff; font-size: 12px; line-height: 1.6; text-align: center;">
-          
-          <!-- LOGO MINI NO RODAPÉ -->
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 0 auto 12px auto;">
-            <tr>
-              <td valign="middle" style="padding-right: 8px;">
-                <div style="width: 32px; height: 32px; background-color: #ffffff; border-radius: 50%; text-align: center; line-height: 32px; color: ${primaryBlue}; font-weight: bold; font-size: 18px; font-family: Arial, sans-serif;">
-                  B
-                </div>
-              </td>
-              <td valign="middle">
-                <span style="font-size: 15px; font-weight: 700; color: #ffffff;">
-                  Apartments Belleview Lagos
-                </span>
-              </td>
-            </tr>
-          </table>
+          <p style="margin: 0 0 10px 0; font-size: 15px; font-weight: 700; color: #ffffff;">
+            Apartments Belleview Lagos
+          </p>
 
           <p style="margin: 0 0 10px 0; color: #cbd5e1; font-size: 12px;">
             Rua Quinta do Landeiro Lote 22, 23<br>
