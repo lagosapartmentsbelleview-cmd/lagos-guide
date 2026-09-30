@@ -1,12 +1,15 @@
-// js/aima.js
-// Remover todos os required para evitar alertas do browser
+// ============================================================
+// 1. INICIALIZAÇÃO E REMOÇÃO DE VALIDAÇÃO NATIVA
+// ============================================================
 document.addEventListener("DOMContentLoaded", () => {
+  // Remover todos os required nativos para evitar alertas padrão do browser
   document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
 });
 
-// ------------------------------
-// TEXTOS POR IDIOMA
-// ------------------------------
+
+// ============================================================
+// 2. DICIONÁRIO DE TEXTOS E IDIOMAS (TEXTS)
+// ============================================================
 const texts = {
   pt: {
     subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).",
@@ -605,9 +608,7 @@ const texts = {
   }
 };
 
-// ============================================================
-// MENSAGEM DE SUCESSO MULTILINGUE PARA O POPUP AIMA
-// ============================================================
+// Mensagens de sucesso multilingue para o popup AIMA
 texts.pt.aima_success = "Formulário enviado com sucesso!";
 texts.en.aima_success = "Form submitted successfully!";
 texts.es.aima_success = "Formulario enviado con éxito!";
@@ -615,9 +616,65 @@ texts.fr.aima_success = "Formulaire envoyé avec succès!";
 texts.it.aima_success = "Modulo inviato con successo!";
 texts.de.aima_success = "Formular erfolgreich gesendet!";
 
-// ------------------------------
-// FAQ TITULO DO MODAL POR IDIOMA
-// ------------------------------
+
+// ============================================================
+// 3. TRADUÇÕES PARA E-MAILS (EMAILTRANSLATIONS)
+// ============================================================
+const emailTranslations = {
+  pt: {
+    subject: texts.pt.subject,
+    greeting: texts.pt.greeting,
+    confirmation: texts.pt.confirmation,
+    label_checkin: texts.pt.label_checkin,
+    label_checkout: texts.pt.label_checkout,
+    footer: texts.pt.footer
+  },
+  en: {
+    subject: texts.en.subject,
+    greeting: texts.en.greeting,
+    confirmation: texts.en.confirmation,
+    label_checkin: texts.en.label_checkin,
+    label_checkout: texts.en.label_checkout,
+    footer: texts.en.footer
+  },
+  es: {
+    subject: texts.es.subject,
+    greeting: texts.es.greeting,
+    confirmation: texts.es.confirmation,
+    label_checkin: texts.es.label_checkin,
+    label_checkout: texts.es.label_checkout,
+    footer: texts.es.footer
+  },
+  fr: {
+    subject: texts.fr.subject,
+    greeting: texts.fr.greeting,
+    confirmation: texts.fr.confirmation,
+    label_checkin: texts.fr.label_checkin,
+    label_checkout: texts.fr.label_checkout,
+    footer: texts.fr.footer
+  },
+  it: {
+    subject: texts.it.subject,
+    greeting: texts.it.greeting,
+    confirmation: texts.it.confirmation,
+    label_checkin: texts.it.label_checkin,
+    label_checkout: texts.it.label_checkout,
+    footer: texts.it.footer
+  },
+  de: {
+    subject: texts.de.subject,
+    greeting: texts.de.greeting,
+    confirmation: texts.de.confirmation,
+    label_checkin: texts.de.label_checkin,
+    label_checkout: texts.de.label_checkout,
+    footer: texts.de.footer
+  }
+};
+
+
+// ============================================================
+// 4. TEXTOS E PERGUNTAS FREQUENTES (FAQ)
+// ============================================================
 const faqTitles = {
   pt: "Perguntas Frequentes (FAQ)",
   en: "Frequently Asked Questions (FAQ)",
@@ -627,9 +684,6 @@ const faqTitles = {
   de: "Häufig gestellte Fragen (FAQ)"
 };
 
-// ------------------------------
-// FAQ POR IDIOMA — CONTEÚDO HTML
-// ------------------------------
 const faqTexts = {
   pt: `
 <h3>1. Obrigatoriedade e finalidade</h3>
@@ -846,7 +900,7 @@ Jamais.</p>
 <h3>4. Situations particulières</h3>
 <p><strong>Séjourner chez des amis ou de la famille exige-t-il aussi une déclaration ?</strong><br>
 Non, à condition que le séjour soit gratuit.</p>
-<p><strong>Puis-je m'héberger si je suis en situation irrégulière ?</strong><br>
+<p><strong>Puis-je m'héberger si je suis en situation irregular ?</strong><br>
 Oui. Mais la communication reste obligatoire.</p>
 
 <h3>5. Questions pratiques</h3>
@@ -929,13 +983,16 @@ Die Unterkunft. Der Gast stellt lediglich die Daten zur Verfügung.</p>
 };
 
 function loadFaq() {
-  faqContent.innerHTML = faqTexts[currentLang];
+  const faqContent = document.getElementById("faqContent");
+  if (faqContent) {
+    faqContent.innerHTML = faqTexts[currentLang];
+  }
 }
 
 
-// ------------------------------
-// LISTA COMPLETA DE PAÍSES (ISO 3166)
-// ------------------------------
+// ============================================================
+// 5. LISTA DE PAÍSES (ISO 3166)
+// ============================================================
 const countries = [
 "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia",
 "Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium",
@@ -962,10 +1019,9 @@ const countries = [
 ];
 
 
-
-// ------------------------------
-// ELEMENTOS DO DOM
-// ------------------------------
+// ============================================================
+// 6. SELEÇÃO DE ELEMENTOS DO DOM
+// ============================================================
 let currentLang = "pt";
 
 const subtitleEl = document.getElementById("subtitle-text");
@@ -982,32 +1038,36 @@ const submitBtnEl = document.getElementById("submitLabel");
 const adultsInput = document.getElementById("adults");
 const childrenInput = document.getElementById("children");
 
-// ------------------------------
-// FUNÇÃO PARA DEFINIR IDIOMA
-// ------------------------------
+
+// ============================================================
+// 7. FUNÇÃO DE MUDANÇA DE IDIOMA (SETLANGUAGE)
+// ============================================================
 function setLanguage(lang) {
   currentLang = lang;
   const t = texts[lang];
   document.documentElement.lang = lang;
 
   // Títulos e textos principais
-  subtitleEl.textContent = t.subtitle;
-  legalInfoEl.innerHTML = t.legalHtml;
-  formSectionEl.style.display = "block";
-  formTitleEl.textContent = t.formTitle;
-  stayDataTitleEl.textContent = t.stayDataTitle;
-  checkinLabelEl.textContent = t.checkinLabel;
-  checkoutLabelEl.textContent = t.checkoutLabel;
-  adultsLabelEl.textContent = t.adultsLabel;
-  childrenLabelEl.textContent = t.childrenLabel;
-  submitBtnEl.textContent = t.submit;
+  if (subtitleEl) subtitleEl.textContent = t.subtitle;
+  if (legalInfoEl) legalInfoEl.innerHTML = t.legalHtml;
+  if (formSectionEl) formSectionEl.style.display = "block";
+  if (formTitleEl) formTitleEl.textContent = t.formTitle;
+  if (stayDataTitleEl) stayDataTitleEl.textContent = t.stayDataTitle;
+  if (checkinLabelEl) checkinLabelEl.textContent = t.checkinLabel;
+  if (checkoutLabelEl) checkoutLabelEl.textContent = t.checkoutLabel;
+  if (adultsLabelEl) adultsLabelEl.textContent = t.adultsLabel;
+  if (childrenLabelEl) childrenLabelEl.textContent = t.childrenLabel;
+  if (submitBtnEl) submitBtnEl.textContent = t.submit;
 
   // Aviso obrigatório
-  document.getElementById("requiredNotice").textContent = t.requiredNotice;
+  const reqNoticeEl = document.getElementById("requiredNotice");
+  if (reqNoticeEl) reqNoticeEl.textContent = t.requiredNotice;
 
   // Placeholders das datas
-  document.getElementById("checkinDate").placeholder = t.placeholder_checkin;
-  document.getElementById("checkoutDate").placeholder = t.placeholder_checkout;
+  const checkinInputEl = document.getElementById("checkinDate");
+  const checkoutInputEl = document.getElementById("checkoutDate");
+  if (checkinInputEl) checkinInputEl.placeholder = t.placeholder_checkin;
+  if (checkoutInputEl) checkoutInputEl.placeholder = t.placeholder_checkout;
 
   // Tradução da opção de cópia por e-mail
   if (document.getElementById("labelWantsCopy"))
@@ -1022,10 +1082,10 @@ function setLanguage(lang) {
   if (document.getElementById("labelClientEmail"))
     document.getElementById("labelClientEmail").textContent = t.email_label;
 
-  // 1️⃣ Gerar campos dos hóspedes
+  // 1. Gerar campos dos hóspedes
   generateGuestFields();
 
-  // 2️⃣ Traduzir o "Selecione" de TODOS os selects
+  // 2. Traduzir o "Selecione" de TODOS os selects
   document.querySelectorAll("select").forEach(sel => {
     const firstOption = sel.querySelector("option[value='']");
     if (firstOption) {
@@ -1036,27 +1096,30 @@ function setLanguage(lang) {
     }
   });
 
-  // 3️⃣ Reaplicar evento do FAQ
+  // 3. Reaplicar evento do FAQ
   const openFaqBtn = document.getElementById("openFaqModal");
   if (openFaqBtn) {
     openFaqBtn.onclick = () => {
-      document.getElementById("faqTitle").textContent = faqTitles[currentLang];
+      const faqTitleEl = document.getElementById("faqTitle");
+      const faqModalEl = document.getElementById("faqModal");
+      if (faqTitleEl) faqTitleEl.textContent = faqTitles[currentLang];
       loadFaq();
-      faqModal.style.display = "block";
+      if (faqModalEl) faqModalEl.style.display = "block";
     };
   }
 }
 
-// ------------------------------
-// GERAR CAMPOS PARA HÓSPEDES (COM PRESERVAÇÃO DE DADOS)
-// ------------------------------
+
+// ============================================================
+// 8. GERAÇÃO DINÂMICA DE CAMPOS DE HÓSPEDES
+// ============================================================
 function generateGuestFields() {
   const t = texts[currentLang];
   const adults = parseInt(adultsInput.value || "0", 10);
   const children = parseInt(childrenInput.value || "0", 10);
   const total = adults + children;
 
-  // 1. Guardar dados atuais preenchidos nos inputs para não perder informação
+  // 1. Guardar dados atuais preenchidos nos inputs para não perder informação ao mudar contagem/idioma
   const existingData = [];
   const currentCards = guestsContainerEl.querySelectorAll(".guest-card");
   currentCards.forEach((card, index) => {
@@ -1168,25 +1231,26 @@ function generateGuestFields() {
   }
 }
 
-// Eventos para atualizar número de hóspedes
-adultsInput.addEventListener("input", generateGuestFields);
-childrenInput.addEventListener("input", generateGuestFields);
+// Eventos para atualizar o número de hóspedes
+if (adultsInput) adultsInput.addEventListener("input", generateGuestFields);
+if (childrenInput) childrenInput.addEventListener("input", generateGuestFields);
 
-// ------------------------------
-// SUBMISSÃO DO FORMULÁRIO
-// ------------------------------
+
+// ============================================================
+// 9. SUBMISSÃO DO FORMULÁRIO (FIRESTORE + EMAILJS)
+// ============================================================
 document.getElementById("aimaForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const t = texts[currentLang];
 
-  // 1️⃣ Validar campos obrigatórios HTML5
+  // 1. Validar campos obrigatórios HTML5
   if (!this.checkValidity()) {
     this.reportValidity();
     return;
   }
 
-  // 2️⃣ Validar datas de check-in / check-out
+  // 2. Validar datas de check-in / check-out
   const checkin = document.getElementById("checkinDate").value;
   const checkout = document.getElementById("checkoutDate").value;
 
@@ -1195,7 +1259,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     return;
   }
 
-  // 3️⃣ Validar datas de nascimento
+  // 3. Validar datas de nascimento
   const birthInputs = [...document.querySelectorAll("input[name$='_birthDate']")];
   const today = new Date();
   
@@ -1208,7 +1272,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     }
   }
 
-  // 4️⃣ Preparar objeto final
+  // 4. Preparar objeto final
   const adults = parseInt(adultsInput.value || "0", 10);
   const children = parseInt(childrenInput.value || "0", 10);
   const totalGuests = adults + children;
@@ -1246,7 +1310,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     status: "PENDENTE_ATRIBUICAO"
   };
 
-  // 5️⃣ Gravar no Firestore e Enviar E-mail
+  // 5. Gravar no Firestore e Enviar E-mail
   const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
   const originalText = submitBtn.textContent;
 
@@ -1258,7 +1322,7 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     await db.collection("boletins").add(novoBoletim);
     console.log("Registo guardado no Firestore com sucesso!");
 
-    // 2. Seleciona a tradução certa com base no idioma atual do site
+    // 2. Seleciona a tradução certa do e-mail com base no idioma atual do site
     const tEmail = emailTranslations[currentLang] || emailTranslations["en"];
 
     // 3. Envia o e-mail via EmailJS com os textos no idioma do cliente
@@ -1313,13 +1377,19 @@ document.getElementById("aimaForm").addEventListener("submit", async function (e
     submitBtn.disabled = false;
   }
 });
+
+
+// ============================================================
+// 10. EVENTOS COMPLEMENTARES E INICIALIZAÇÃO
+// ============================================================
 // Fechar FAQ Modal
 const closeFaqBtn = document.getElementById("closeFaqModal");
 if (closeFaqBtn) {
   closeFaqBtn.addEventListener("click", () => {
-    document.getElementById("faqModal").style.display = "none";
+    const faqModalEl = document.getElementById("faqModal");
+    if (faqModalEl) faqModalEl.style.display = "none";
   });
 }
 
-// Iniciar com Português
+// Iniciar a aplicação em Português
 setLanguage("pt");
