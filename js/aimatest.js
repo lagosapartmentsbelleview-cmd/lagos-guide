@@ -676,37 +676,43 @@ if (childrenInput) childrenInput.addEventListener("input", generateGuestFields);
 function buildEmailSummaryHtml(boletim, lang) {
   const t = texts[lang] || texts.pt;
   
-  // Cor oficial da marca (retirada do seu logo)
-  const brandColor = "#005c99";
+  // Cores oficiais do site apartmentsbelleview.com
+  const primaryBlue = "#0070ba";   // Azul da marca (ícone B e detalhes)
+  const darkNavy    = "#0a2540";   // Azul escuro dos títulos e rodapé
+  const lightBg     = "#f4f7fa";   // Fundo geral do e-mail
 
   let html = `
-  <div style="background-color: #f0f4f8; padding: 25px 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333333; margin: 0;">
-    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid #dbe2ea;">
+  <div style="background-color: ${lightBg}; padding: 25px 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #2d3748; margin: 0;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" align="center" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
       
-      <!-- CABEÇALHO COM LOGÓTIPO "B" E NOME OFICIAL -->
+      <!-- CABEÇALHO COM O LOGÓTIPO EXACTO DO SITE (SEM DEPENDER DE IMAGEM EXTERNA) -->
       <tr>
-        <td align="center" style="background-color: ${brandColor}; padding: 30px 20px; color: #ffffff;">
-          <!-- Círculo do Logótipo com B -->
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+        <td align="center" style="background-color: #ffffff; padding: 25px 20px; border-bottom: 3px solid ${primaryBlue};">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center">
             <tr>
-              <td align="center" valign="middle" style="width: 56px; height: 56px; background-color: #ffffff; border-radius: 50%; font-family: Arial, sans-serif; font-size: 32px; font-weight: bold; color: ${brandColor}; text-align: center;">
-                B
+              <td valign="middle" style="padding-right: 12px;">
+                <!-- Ícone Círculo "B" -->
+                <div style="width: 44px; height: 44px; background-color: ${primaryBlue}; border-radius: 50%; text-align: center; line-height: 44px; color: #ffffff; font-weight: 700; font-size: 26px; font-family: Arial, sans-serif;">
+                  B
+                </div>
+              </td>
+              <td valign="middle" style="text-align: left;">
+                <span style="font-size: 20px; font-weight: 700; color: ${darkNavy}; letter-spacing: -0.3px;">
+                  Apartments Belleview <span style="color: ${primaryBlue};">Lagos</span>
+                </span>
               </td>
             </tr>
           </table>
-          <h1 style="margin: 15px 0 0 0; font-size: 22px; font-weight: 700; letter-spacing: 0.5px; color: #ffffff;">
-            Apartments Belleview Lagos
-          </h1>
         </td>
       </tr>
 
       <!-- MENSAGEM DE BOAS-VINDAS -->
       <tr>
         <td style="padding: 25px 30px 10px 30px;">
-          <h2 style="color: ${brandColor}; margin-top: 0; font-size: 19px; font-weight: 600;">
+          <h2 style="color: ${darkNavy}; margin-top: 0; font-size: 18px; font-weight: 600;">
             ${t.greeting} ${boletim.hospedes?.[0]?.nome || "Hóspede"},
           </h2>
-          <p style="color: #4b5563; font-size: 15px; line-height: 1.6; margin: 0;">
+          <p style="color: #4a5568; font-size: 14px; line-height: 1.6; margin: 0;">
             ${t.confirmation}
           </p>
         </td>
@@ -715,26 +721,26 @@ function buildEmailSummaryHtml(boletim, lang) {
       <!-- DADOS DA ESTADIA -->
       <tr>
         <td style="padding: 15px 30px;">
-          <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid ${brandColor}; border-radius: 6px; padding: 18px;">
-            <h3 style="margin-top: 0; margin-bottom: 12px; color: ${brandColor}; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">
+          <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid ${primaryBlue}; border-radius: 8px; padding: 18px;">
+            <h3 style="margin-top: 0; margin-bottom: 12px; color: ${primaryBlue}; font-size: 13px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700;">
               📌 ${t.stayDataTitle}
             </h3>
             <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="font-size: 14px; color: #334155;">
               <tr>
-                <td style="padding: 5px 0; width: 45%;"><strong>📅 ${t.checkinLabel}:</strong></td>
-                <td style="padding: 5px 0; color: #0f172a; font-weight: 600;">${boletim.dataCheckin}</td>
+                <td style="padding: 6px 0; width: 45%;"><strong>📅 ${t.checkinLabel}:</strong></td>
+                <td style="padding: 6px 0; color: ${darkNavy}; font-weight: 600;">${boletim.dataCheckin}</td>
               </tr>
               <tr>
-                <td style="padding: 5px 0;"><strong>📅 ${t.checkoutLabel}:</strong></td>
-                <td style="padding: 5px 0; color: #0f172a; font-weight: 600;">${boletim.dataCheckout}</td>
+                <td style="padding: 6px 0;"><strong>📅 ${t.checkoutLabel}:</strong></td>
+                <td style="padding: 6px 0; color: ${darkNavy}; font-weight: 600;">${boletim.dataCheckout}</td>
               </tr>
               <tr>
-                <td style="padding: 5px 0;"><strong>👤 ${t.adultsLabel}:</strong></td>
-                <td style="padding: 5px 0; color: #0f172a; font-weight: 600;">${boletim.numAdultos}</td>
+                <td style="padding: 6px 0;"><strong>👤 ${t.adultsLabel}:</strong></td>
+                <td style="padding: 6px 0; color: ${darkNavy}; font-weight: 600;">${boletim.numAdultos}</td>
               </tr>
               <tr>
-                <td style="padding: 5px 0;"><strong>👶 ${t.childrenLabel}:</strong></td>
-                <td style="padding: 5px 0; color: #0f172a; font-weight: 600;">${boletim.numCriancas}</td>
+                <td style="padding: 6px 0;"><strong>👶 ${t.childrenLabel}:</strong></td>
+                <td style="padding: 6px 0; color: ${darkNavy}; font-weight: 600;">${boletim.numCriancas}</td>
               </tr>
             </table>
           </div>
@@ -744,7 +750,7 @@ function buildEmailSummaryHtml(boletim, lang) {
       <!-- DETALHES DOS HÓSPEDES -->
       <tr>
         <td style="padding: 10px 30px 20px 30px;">
-          <h3 style="color: ${brandColor}; font-size: 17px; margin-top: 10px; margin-bottom: 15px; font-weight: 600;">
+          <h3 style="color: ${darkNavy}; font-size: 16px; margin-top: 10px; margin-bottom: 15px; font-weight: 600;">
             📄 ${t.formTitle}
           </h3>
   `;
@@ -758,7 +764,7 @@ function buildEmailSummaryHtml(boletim, lang) {
 
     html += `
           <div style="background-color: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 15px; overflow: hidden;">
-            <div style="background-color: ${brandColor}; padding: 10px 15px; color: #ffffff; font-weight: 600; font-size: 14px;">
+            <div style="background-color: #f1f5f9; border-bottom: 1px solid #cbd5e1; padding: 10px 15px; color: ${darkNavy}; font-weight: 600; font-size: 13px;">
               👤 ${t.guestTitle(idx + 1)} — ${h.nome}
             </div>
             <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="font-size: 13px; border-collapse: collapse;">
@@ -795,33 +801,57 @@ function buildEmailSummaryHtml(boletim, lang) {
     `;
   });
 
-  // RODAPÉ INSTITUCIONAL FIEL AO WEBSITE
+  // RODAPÉ INSTITUCIONAL EXACTO DO SITE APARTMENTSBELLEVIEW.COM
   html += `
         </td>
       </tr>
 
-      <!-- RODAPÉ INSTITUCIONAL -->
+      <!-- RODAPÉ COM A IDENTIDADE E DADOS COMPLETOS -->
       <tr>
-        <td align="center" style="background-color: ${brandColor}; padding: 25px 20px; color: #ffffff; font-size: 12px; line-height: 1.6;">
-          <p style="margin: 0 0 8px 0; font-size: 15px; font-weight: 700; color: #ffffff;">
-            Apartments Belleview Lagos
-          </p>
-          <p style="margin: 0 0 10px 0; color: #e2e8f0; font-size: 12px;">
+        <td align="center" style="background-color: ${darkNavy}; padding: 25px 20px; color: #ffffff; font-size: 12px; line-height: 1.6; text-align: center;">
+          
+          <!-- LOGO MINI NO RODAPÉ -->
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 0 auto 12px auto;">
+            <tr>
+              <td valign="middle" style="padding-right: 8px;">
+                <div style="width: 32px; height: 32px; background-color: #ffffff; border-radius: 50%; text-align: center; line-height: 32px; color: ${primaryBlue}; font-weight: bold; font-size: 18px; font-family: Arial, sans-serif;">
+                  B
+                </div>
+              </td>
+              <td valign="middle">
+                <span style="font-size: 15px; font-weight: 700; color: #ffffff;">
+                  Apartments Belleview Lagos
+                </span>
+              </td>
+            </tr>
+          </table>
+
+          <p style="margin: 0 0 10px 0; color: #cbd5e1; font-size: 12px;">
             Rua Quinta do Landeiro Lote 22, 23<br>
             Urbanização Marina Park<br>
             8600-302 Lagos, Algarve - Portugal
           </p>
-          <p style="margin: 0 0 10px 0; color: #e2e8f0; font-size: 12px;">
-            Tel / WhatsApp: <a href="tel:+351910051588" style="color: #ffffff; text-decoration: underline;">+351 910 051 588</a><br>
-            Email: <a href="mailto:belleview@sapo.pt" style="color: #ffffff; text-decoration: underline;">belleview@sapo.pt</a>
+
+          <p style="margin: 0 0 12px 0; color: #cbd5e1; font-size: 12px;">
+            <strong>Tel:</strong> <a href="tel:+351910051588" style="color: #60a5fa; text-decoration: none;">+351 910 051 588</a><br>
+            <strong>WhatsApp:</strong> <a href="https://wa.me/351910051588" style="color: #60a5fa; text-decoration: none;">+351 910 051 588</a><br>
+            <strong>Email:</strong> <a href="mailto:belleview@sapo.pt" style="color: #60a5fa; text-decoration: none;">belleview@sapo.pt</a>
           </p>
-          <p style="margin: 0 0 12px 0; color: #cbd5e1; font-size: 11px;">
+
+          <p style="margin: 0 0 12px 0; color: #94a3b8; font-size: 11px; border-top: 1px solid #1e293b; padding-top: 10px;">
             <strong>Registo AL:</strong> 26313/AL, 116670/AL, 116671/AL<br>
             <strong>Entidade Exploradora:</strong> Luís Ferreira
           </p>
-          <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 12px; font-size: 11px; color: #cbd5e1;">
-            © 2025 Apartments Belleview Lagos — Todos os direitos reservados.
+
+          <div style="margin-bottom: 12px; font-size: 11px;">
+            <a href="https://apartmentsbelleview.com/legal/politica-de-reservas.html" target="_blank" style="color: #94a3b8; text-decoration: underline; margin: 0 4px;">Política de Reservas</a> | 
+            <a href="https://apartmentsbelleview.com/legal/politica-de-privacidade.html" target="_blank" style="color: #94a3b8; text-decoration: underline; margin: 0 4px;">Privacidade</a> | 
+            <a href="https://apartmentsbelleview.com/legal/termos-e-condicoes.html" target="_blank" style="color: #94a3b8; text-decoration: underline; margin: 0 4px;">Termos</a>
           </div>
+
+          <p style="margin: 0; color: #64748b; font-size: 11px;">
+            © 2025 Apartments Belleview Lagos — Todos os direitos reservados.
+          </p>
         </td>
       </tr>
 
@@ -831,7 +861,6 @@ function buildEmailSummaryHtml(boletim, lang) {
 
   return html;
 }
-
 // ============================================================
 // 8. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS)
 // ============================================================
