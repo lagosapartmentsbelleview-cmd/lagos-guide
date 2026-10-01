@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão SIBA / AIMA — Apartments Belleview Lagos</title>
   
+  <!-- Previne o erro 404 do favicon no navegador -->
+  <link rel="icon" href="data:,">
+
   <!-- CSS Global do Sistema -->
   <link rel="stylesheet" href="css/global.css">
   
-  <!-- Estilos complementares específicos do SIBA (sem reescrever o global) -->
+  <!-- Estilos específicos do SIBA (complementares ao global.css) -->
   <style>
     .badge-status {
       padding: 4px 10px;
@@ -21,7 +24,7 @@
     .badge-enviado { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
     .badge-erro { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
-    /* Modal de detalhes reutilizando o padrão modal do global.css */
+    /* Modal de detalhes */
     .siba-modal {
       position: fixed;
       top: 0; left: 0;
@@ -137,7 +140,6 @@
   <!-- SCRIPTS -->
   <script src="js/aimasiba.js"></script>
   <script>
-    const SIBA_STORAGE_KEY = "boletins_siba_pendentes";
     let listaBoletinsMemoria = [];
 
     // Toggle do menu superior
@@ -150,12 +152,17 @@
       document.getElementById("detalhesModal").style.display = "none";
     }
 
+    // Função auxiliar para obter a chave do localStorage (evita erro de duplicado)
+    function getStorageKey() {
+      return typeof SIBA_STORAGE_KEY !== "undefined" ? SIBA_STORAGE_KEY : "boletins_siba_pendentes";
+    }
+
     // Carregar e renderizar dados
     function carregarBoletins() {
       if (typeof obterBoletinsSiba === "function") {
         listaBoletinsMemoria = obterBoletinsSiba();
       } else {
-        const raw = localStorage.getItem(SIBA_STORAGE_KEY);
+        const raw = localStorage.getItem(getStorageKey());
         listaBoletinsMemoria = raw ? JSON.parse(raw) : [];
       }
       
@@ -258,12 +265,16 @@
       document.getElementById("detalhesModal").style.display = "flex";
     }
 
+    function guardarListaAtualizada() {
+      localStorage.setItem(getStorageKey(), JSON.stringify(listaBoletinsMemoria));
+    }
+
     function alterarEstado(id, novoEstado) {
       listaBoletinsMemoria = listaBoletinsMemoria.map(item => {
         if (item.id === id) item.estado = novoEstado;
         return item;
       });
-      localStorage.setItem(SIBA_STORAGE_KEY, JSON.stringify(listaBoletinsMemoria));
+      guardarListaAtualizada();
       carregarBoletins();
       fecharModal();
     }
@@ -271,9 +282,13 @@
     function eliminarBoletim(id) {
       if (confirm("Tem a certeza que deseja eliminar este boletim do SIBA?")) {
         listaBoletinsMemoria = listaBoletinsMemoria.filter(item => item.id !== id);
-        localStorage.setItem(SIBA_STORAGE_KEY, JSON.stringify(listaBoletinsMemoria));
+        guardarListaAtualizada();
         carregarBoletins();
       }
+    }
+
+    function logout() {
+      window.location.href = "login.html";
     }
 
     // Inicialização
