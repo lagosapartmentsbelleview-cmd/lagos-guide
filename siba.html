@@ -86,16 +86,20 @@
 </head>
 <body>
 
-  <!-- MENU SUPERIOR GLOBAL -->
-  <header class="top-menu">
-    <button class="menu-button" onclick="toggleMenu()">☰ Menu</button>
-    <div id="dropdownMenu" class="dropdown-menu">
-      <a href="dashboard.html">Dashboard / Início</a>
-      <a href="siba.html">Gestão SIBA / AIMA</a>
-      <a href="aimatest.html" target="_blank">Formulário de Alojamento (Cliente)</a>
-      <a href="#" class="sair" onclick="logout()">Sair</a>
+ <div class="top-menu">
+    <button id="toggleMenu" class="menu-button">☰ Menu</button>
+
+    <div id="dropdown-menu" class="dropdown-menu" style="display: none;">
+        <a href="listagem-reservas.html">Reservas</a>
+        <a href="calendario.html">Calendario</a>
+        <a href="precos.html">Preços</a>
+        <a href="financeiro.html">Financeiro</a>
+        <a href="resultados.html">Resultados</a>
+        <a href="operacional.html">Operacional</a>
+        <a href="siba.html">SIBA</a>
+        <button id="btnLogout" class="sair">Sair</button>
     </div>
-  </header>
+</div>
 
   <!-- CONTEÚDO PRINCIPAL -->
   <main class="content">
@@ -553,5 +557,6 @@ async function enviarBoletimParaSIBA(id) {
       });
     }
   </script>
+  <script src="menu.js"></script>
 </body>
 </html>
