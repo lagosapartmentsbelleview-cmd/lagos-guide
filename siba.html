@@ -39,18 +39,40 @@
       background: white;
       padding: 24px;
       width: 90%;
-      max-width: 650px;
+      max-width: 700px;
       border-radius: 8px;
-      max-height: 85vh;
+      max-height: 90vh;
       overflow-y: auto;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
     .guest-box {
       background: #f8f9fa;
       border-left: 4px solid #1976d2;
-      padding: 10px 14px;
-      margin-bottom: 10px;
+      padding: 12px 16px;
+      margin-bottom: 15px;
       border-radius: 0 4px 4px 0;
+    }
+    .guest-box label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #555;
+      display: block;
+      margin-top: 8px;
+    }
+    .guest-box input, .guest-box select {
+      width: 100%;
+      padding: 6px 8px;
+      margin-top: 2px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+    .form-row > div {
+      flex: 1;
     }
     .unidade-select-box {
       background: #e3f2fd;
@@ -131,10 +153,10 @@
 
   </main>
 
-  <!-- MODAL DE DETALHES DO BOLETIM -->
+  <!-- MODAL DE DETALHES E EDIÇÃO DO BOLETIM -->
   <div id="detalhesModal" class="siba-modal">
     <div class="siba-modal-content">
-      <h2 style="margin-top:0; color:#1976d2;">Detalhes do Boletim</h2>
+      <h2 style="margin-top:0; color:#1976d2;">Editar / Processar Boletim</h2>
       <hr style="border:0; border-top:1px solid #eee; margin-bottom:15px;">
       
       <div id="modalDetalhesConteudo"></div>
@@ -152,6 +174,10 @@
 
   <!-- Configuração e Lógica -->
   <script>
+    // ⚙️ ENDPOINT DO CLOUDFLARE WORKER
+    // Substitua o URL abaixo pelo URL exato do seu Worker no Cloudflare
+    const CLOUDFLARE_WORKER_URL = "https://enviar-siba.SEU-SUBDOMINIO.workers.dev";
+
     const firebaseConfig = {
       apiKey: "AIzaSyD70hv-PgWJKDbK-tcxeRuB1FE1cVs-FBs",
       authDomain: "reservas-marina-park.firebaseapp.com",
@@ -280,6 +306,7 @@
       });
     }
 
+    // ✏️ CARREGA E PERMITE EDITAR OS DADOS NO MODAL
     function verDetalhes(id) {
       const item = listaBoletinsMemoria.find(b => b.id === id);
       if (!item) return;
@@ -288,14 +315,53 @@
       const container = document.getElementById("modalDetalhesConteudo");
       
       let htmlHospedes = "";
-      (dados.hospedes || []).forEach((h, index) => {
+      const hospedesLista = dados.hospedes || [];
+
+      hospedesLista.forEach((h, index) => {
         htmlHospedes += `
-          <div class="guest-box">
-            <strong>Hóspede ${index + 1}: ${h.nome}</strong><br>
-            <small>
-              Data Nasc: ${h.dataNascimento} | Nasc: ${h.nacionalidade} | Res: ${h.paisResidencia}<br>
-              Doc: ${h.docTipo} - ${h.docNumero} (${h.docPaisEmissor})
-            </small>
+          <div class="guest-box" id="box_hospede_${index}">
+            <h5 style="margin: 0 0 8px 0; color:#1976d2;">Hóspede ${index + 1}</h5>
+            
+            <label>Nome Completo:</label>
+            <input type="text" class="edit-hospede-nome" value="${h.nome || ''}">
+
+            <div class="form-row">
+              <div>
+                <label>Data de Nascimento:</label>
+                <input type="date" class="edit-hospede-nasc" value="${h.dataNascimento || ''}">
+              </div>
+              <div>
+                <label>Nacionalidade (Ex: PRT):</label>
+                <input type="text" class="edit-hospede-nac" value="${h.nacionalidade || 'PRT'}" maxlength="3">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label>Tipo de Documento:</label>
+                <select class="edit-hospede-doctipo">
+                  <option value="P" ${h.docTipo === 'P' ? 'selected' : ''}>Passaporte (P)</option>
+                  <option value="B" ${h.docTipo === 'B' ? 'selected' : ''}>Bilhete de Identidade / CC (B)</option>
+                  <option value="I" ${h.docTipo === 'I' ? 'selected' : ''}>Cartão Cidadão / ID (I)</option>
+                  <option value="O" ${!['P','B','I'].includes(h.docTipo) ? 'selected' : ''}>Outro (O)</option>
+                </select>
+              </div>
+              <div>
+                <label>Número do Documento:</label>
+                <input type="text" class="edit-hospede-docnum" value="${h.docNumero || ''}">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label>País Emissor (Ex: PRT):</label>
+                <input type="text" class="edit-hospede-docpais" value="${h.docPaisEmissor || 'PRT'}" maxlength="3">
+              </div>
+              <div>
+                <label>País de Residência (Ex: PRT):</label>
+                <input type="text" class="edit-hospede-residencia" value="${h.paisResidencia || 'PRT'}" maxlength="3">
+              </div>
+            </div>
           </div>
         `;
       });
@@ -303,24 +369,38 @@
       const unidadeGuardada = dados.unidade !== undefined ? dados.unidade : "0";
 
       container.innerHTML = `
-        <p><strong>Datas da Estadia:</strong> ${dados.dataCheckin} até ${dados.dataCheckout}</p>
+        <div style="background:#f0f4f8; padding:12px; border-radius:6px; margin-bottom:15px;">
+          <h4 style="margin-top:0; margin-bottom:10px; color:#333;">Datas da Estadia</h4>
+          <div class="form-row">
+            <div>
+              <label>Data Check-in (Entrada):</label>
+              <input type="date" id="editDataCheckin" value="${dados.dataCheckin || ''}">
+            </div>
+            <div>
+              <label>Data Check-out (Saída):</label>
+              <input type="date" id="editDataCheckout" value="${dados.dataCheckout || ''}">
+            </div>
+          </div>
+        </div>
+
         <p><strong>E-mail de Contacto:</strong> ${dados.emailCliente || "Não facultado"}</p>
         <p><strong>Estado Atual:</strong> <strong>${item.estado}</strong></p>
         
-        <h4>Lista de Hóspedes (${dados.hospedes?.length || 0}):</h4>
+        <h4>Lista de Hóspedes (${hospedesLista.length}):</h4>
         ${htmlHospedes}
         
         <div class="unidade-select-box">
           <label for="selectUnidadeModal"><strong>Selecione o Apartamento / Alojamento:</strong></label><br>
           <select id="selectUnidadeModal" style="margin-top: 5px; padding: 6px; width: 100%;">
-            <option value="0" ${unidadeGuardada == "0" ? "selected" : ""}>Apartamento 0</option>
-            <option value="1" ${unidadeGuardada == "1" ? "selected" : ""}>Apartamento 1</option>
-            <option value="2" ${unidadeGuardada == "2" ? "selected" : ""}>Apartamento 2</option>
+            <option value="0" ${unidadeGuardada == "0" ? "selected" : ""}>Apartamento 0 (Estúdio)</option>
+            <option value="1" ${unidadeGuardada == "1" ? "selected" : ""}>Apartamento 1 (T1)</option>
+            <option value="2" ${unidadeGuardada == "2" ? "selected" : ""}>Apartamento 2 (T2)</option>
           </select>
         </div>
 
         <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; display: flex; gap: 8px; flex-wrap: wrap;">
           <button class="btn-add" id="btnEnviarSibaModal" onclick="enviarBoletimParaSIBA('${item.id}')">🚀 Enviar para o SIBA WebService</button>
+          <button class="btn-edit" style="background:#28a745; color:white;" onclick="guardarEdicoesLocal('${item.id}')">💾 Guardar Alterações</button>
           <button class="btn-edit" onclick="alterarEstado('${item.id}', 'ENVIADO')">Marcar Manualmente como ENVIADO</button>
           <button class="btn-edit" style="background:#6c757d;" onclick="alterarEstado('${item.id}', 'PENDENTE')">Marcar como PENDENTE</button>
         </div>
@@ -329,26 +409,86 @@
       document.getElementById("detalhesModal").style.display = "flex";
     }
 
-    // 🚀 FUNÇÃO PRINCIPAL DE COMUNICAÇÃO COM O CLOUDFLARE WORKER
-    async function enviarBoletimParaSIBA(id) {
-      const item = listaBoletinsMemoria.find(b => b.id === id);
-      if (!item) return;
+    // 📋 EXTRAI OS DADOS EDITADOS DOS CAMPOS DO MODAL
+    function recolherDadosEditadosDoModal() {
+      const checkin = document.getElementById("editDataCheckin").value;
+      const checkout = document.getElementById("editDataCheckout").value;
+      
+      const boxesHospedes = document.querySelectorAll(".guest-box");
+      const hospedes = [];
 
+      boxesHospedes.forEach(box => {
+        hospedes.push({
+          nome: box.querySelector(".edit-hospede-nome").value,
+          dataNascimento: box.querySelector(".edit-hospede-nasc").value,
+          nacionalidade: box.querySelector(".edit-hospede-nac").value,
+          docTipo: box.querySelector(".edit-hospede-doctipo").value,
+          docNumero: box.querySelector(".edit-hospede-docnum").value,
+          docPaisEmissor: box.querySelector(".edit-hospede-docpais").value,
+          paisResidencia: box.querySelector(".edit-hospede-residencia").value
+        });
+      });
+
+      return {
+        dataCheckin: checkin,
+        dataCheckout: checkout,
+        hospedes: hospedes
+      };
+    }
+
+    // 💾 APENAS GUARDAR AS ALTERAÇÕES NO FIREBASE
+    async function guardarEdicoesLocal(id) {
+      const dadosEditados = recolherDadosEditadosDoModal();
+      const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
+
+      try {
+        await db.collection("boletins").doc(id).update({
+          dataCheckin: dadosEditados.dataCheckin,
+          dataCheckout: dadosEditados.dataCheckout,
+          hospedes: dadosEditados.hospedes,
+          unidade: unidadeSelecionada
+        });
+        alert("✅ Alterações guardadas com sucesso no Firebase!");
+        fecharModal();
+        carregarBoletins();
+      } catch (err) {
+        console.error("Erro ao guardar alterações:", err);
+        alert("❌ Erro ao guardar alterações no Firebase.");
+      }
+    }
+
+    // 🚀 ENVIO PARA O CLOUDFLARE WORKER COM DADOS REAIS/EDITADOS
+    async function enviarBoletimParaSIBA(id) {
+      const dadosEditados = recolherDadosEditadosDoModal();
       const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
       const btn = document.getElementById("btnEnviarSibaModal");
       
+      if (!CLOUDFLARE_WORKER_URL || CLOUDFLARE_WORKER_URL.includes("SEU-SUBDOMINIO")) {
+        alert("⚠️ Por favor configure a variável CLOUDFLARE_WORKER_URL no topo do script com o endereço real do seu Worker no Cloudflare.");
+        return;
+      }
+
       btn.disabled = true;
       btn.textContent = "A enviar para o SIBA...";
 
+      // Junta as edições manuais com os restantes dados em memória
+      const itemOriginal = listaBoletinsMemoria.find(b => b.id === id);
+      const boletimParaEnvio = {
+        ...(itemOriginal?.dados || {}),
+        dataCheckin: dadosEditados.dataCheckin,
+        dataCheckout: dadosEditados.dataCheckout,
+        hospedes: dadosEditados.hospedes
+      };
+
       try {
-        const response = await fetch("https://apartmentsbelleview.com/api/enviar-siba", {
+        const response = await fetch(CLOUDFLARE_WORKER_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
             unidade: unidadeSelecionada,
-            boletim: item.dados
+            boletim: boletimParaEnvio
           })
         });
 
@@ -356,22 +496,27 @@
 
         if (resultado.success) {
           alert("✅ Boletim enviado com sucesso para o WebService do SIBA!");
-          // Atualiza o estado automaticamente para ENVIADO no Firebase
+          
+          // Atualiza o registo no Firebase com as alterações e o novo estado
           await db.collection("boletins").doc(id).update({ 
             status: "ENVIADO",
-            unidade: unidadeSelecionada 
+            unidade: unidadeSelecionada,
+            dataCheckin: dadosEditados.dataCheckin,
+            dataCheckout: dadosEditados.dataCheckout,
+            hospedes: dadosEditados.hospedes
           });
+
           fecharModal();
           carregarBoletins();
         } else {
           console.error("Resposta de erro do SIBA:", resultado);
-          alert("⚠️ Erro ao enviar para o SIBA: " + (resultado.message || "Verifique os dados ou as credenciais no Cloudflare."));
+          alert("⚠️ Erro ao enviar para o SIBA: " + (resultado.message || resultado.respostaSiba || "Verifique as credenciais no Cloudflare."));
           btn.disabled = false;
           btn.textContent = "🚀 Enviar para o SIBA WebService";
         }
       } catch (error) {
         console.error("Erro na comunicação com o Cloudflare Worker:", error);
-        alert("❌ Erro de ligação ao servidor de envio. Verifique a ligação à internet.");
+        alert("❌ Erro de ligação ao Cloudflare Worker. Verifique se o endereço do Worker está correto.");
         btn.disabled = false;
         btn.textContent = "🚀 Enviar para o SIBA WebService";
       }
