@@ -1319,7 +1319,7 @@ function buildEmailSummaryHtml(boletim, lang) {
   return html;
 }
 // ============================================================
-// 9. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS)
+// 9. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS + SIBA)
 // ============================================================
 const aimaFormEl = document.getElementById("aimaForm");
 if (aimaFormEl) {
@@ -1413,7 +1413,12 @@ if (aimaFormEl) {
         );
       }
 
-      // 3. Apresentar Popup de Sucesso
+      // 3. GUARDAR NO PAINEL SIBA (aimasiba.js)
+      if (typeof guardarBoletimPendente === "function") {
+        guardarBoletimPendente(novoBoletim);
+      }
+
+      // 4. Apresentar Popup de Sucesso
       const popup = document.getElementById("aimaSuccessPopup");
       if (popup) {
         const popupText = popup.querySelector(".success-popup-text");
