@@ -174,9 +174,8 @@
 
   <!-- Configuração e Lógica -->
   <script>
-    // ⚙️ ENDPOINT DO CLOUDFLARE WORKER
-    // Substitua o URL abaixo pelo URL exato do seu Worker no Cloudflare
-    const CLOUDFLARE_WORKER_URL = "https://enviar-siba.SEU-SUBDOMINIO.workers.dev";
+    // ⚙️ ENDPOINT DO CLOUDFLARE WORKER (CONFIGURADO)
+    const CLOUDFLARE_WORKER_URL = "https://enviar-siba.lagosapartmentsbelleview.workers.dev";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD70hv-PgWJKDbK-tcxeRuB1FE1cVs-FBs",
@@ -462,11 +461,6 @@
       const dadosEditados = recolherDadosEditadosDoModal();
       const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
       const btn = document.getElementById("btnEnviarSibaModal");
-      
-      if (!CLOUDFLARE_WORKER_URL || CLOUDFLARE_WORKER_URL.includes("SEU-SUBDOMINIO")) {
-        alert("⚠️ Por favor configure a variável CLOUDFLARE_WORKER_URL no topo do script com o endereço real do seu Worker no Cloudflare.");
-        return;
-      }
 
       btn.disabled = true;
       btn.textContent = "A enviar para o SIBA...";
