@@ -11,7 +11,7 @@
   <!-- CSS Global do Sistema -->
   <link rel="stylesheet" href="css/global.css">
   
-  <!-- Estilos específicos do SIBA (complementares ao global.css) -->
+  <!-- Estilos específicos do SIBA -->
   <style>
     .badge-status {
       padding: 4px 10px;
@@ -72,7 +72,7 @@
     
     <h1>Gestão de Boletins de Alojamento (SIBA / AIMA)</h1>
 
-    <!-- CARTÕES DE RESUMO (GRID GLOBAL) -->
+    <!-- CARTÕES DE RESUMO -->
     <div class="totais-grid">
       <div class="total-card">
         Pendentes
@@ -103,7 +103,7 @@
       <button onclick="carregarBoletins()">Atualizar</button>
     </div>
 
-    <!-- TABELA ESTILIZADA DE ACORDO COM O GLOBAL.CSS -->
+    <!-- TABELA -->
     <table id="tabelaTotaisAno" style="margin-bottom: 30px;">
       <thead>
         <tr>
@@ -117,7 +117,7 @@
         </tr>
       </thead>
       <tbody id="tabelaBoletinsCorpo">
-        <!-- As linhas serão inseridas dinamicamente via JS -->
+        <tr><td colspan="7" style="text-align:center; padding: 20px;">A verificar autenticação...</td></tr>
       </tbody>
     </table>
 
@@ -137,12 +137,42 @@
     </div>
   </div>
 
-  <!-- SCRIPTS -->
-  <script src="js/aimasiba.js"></script>
+  <!-- Firebase SDK v8 (Igual ao login.html) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <!-- Configuração e Lógica -->
   <script>
+    // Inicialização do Firebase com as credenciais do seu login.html
+    const firebaseConfig = {
+      apiKey: "AIzaSyD70hv-PgWJKDbK-tcxeRuB1FE1cVs-FBs",
+      authDomain: "reservas-marina-park.firebaseapp.com",
+      projectId: "reservas-marina-park",
+      storageBucket: "reservas-marina-park.firebasestorage.app",
+      messagingSenderId: "1048056704068",
+      appId: "1:1048056704068:web:a2793d5db5e5e5573c6011",
+      measurementId: "G-14GR64WXHS"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    
+    const db = firebase.firestore();
     let listaBoletinsMemoria = [];
 
-    // Toggle do menu superior
+    // 🔒 VERIFICAÇÃO DE SEGURANÇA (LOGIN OBRIGATÓRIO)
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        // Utilizador não autenticado -> redireciona para o login
+        window.location.href = "login.html";
+      } else {
+        // Utilizador autenticado -> carrega os dados do Firebase
+        carregarBoletins();
+      }
+    });
+
     function toggleMenu() {
       const drop = document.getElementById("dropdownMenu");
       drop.style.display = drop.style.display === "flex" ? "none" : "flex";
@@ -152,22 +182,40 @@
       document.getElementById("detalhesModal").style.display = "none";
     }
 
-    // Função auxiliar para obter a chave do localStorage (evita erro de duplicado)
-    function getStorageKey() {
-      return typeof SIBA_STORAGE_KEY !== "undefined" ? SIBA_STORAGE_KEY : "boletins_siba_pendentes";
-    }
+    // Carregar boletins diretamente da coleção 'boletins' do Firebase
+    async function carregarBoletins() {
+      const tbody = document.getElementById("tabelaBoletinsCorpo");
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 20px;">A carregar dados do Firebase...</td></tr>`;
 
-    // Carregar e renderizar dados
-    function carregarBoletins() {
-      if (typeof obterBoletinsSiba === "function") {
-        listaBoletinsMemoria = obterBoletinsSiba();
-      } else {
-        const raw = localStorage.getItem(getStorageKey());
-        listaBoletinsMemoria = raw ? JSON.parse(raw) : [];
+      try {
+        const snapshot = await db.collection("boletins").orderBy("criadoEm", "desc").get();
+        
+        listaBoletinsMemoria = snapshot.docs.map(doc => {
+          const data = doc.data();
+          
+          let estadoTratado = data.status || "PENDENTE";
+          if (estadoTratado === "PENDENTE_ATRIBUICAO") estadoTratado = "PENDENTE";
+
+          let dataRececaoFormatada = "—";
+          if (data.criadoEm && data.criadoEm.toDate) {
+            dataRececaoFormatada = data.criadoEm.toDate().toLocaleString("pt-PT");
+          }
+
+          return {
+            id: doc.id,
+            dataRececao: dataRececaoFormatada,
+            estado: estadoTratado,
+            dados: data
+          };
+        });
+
+        atualizarContadores();
+        filtrarTabela();
+
+      } catch (err) {
+        console.error("Erro ao carregar do Firebase:", err);
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red; padding: 20px;">Erro ao carregar dados do Firebase. Consulte a consola.</td></tr>`;
       }
-      
-      atualizarContadores();
-      filtrarTabela();
     }
 
     function atualizarContadores() {
@@ -206,7 +254,6 @@
         const dados = item.dados || {};
         const hospedePrincipal = dados.hospedes?.[0]?.nome || "Não especificado";
         const totalHospedes = dados.hospedes?.length || (dados.numAdultos + dados.numCriancas) || 0;
-        const dataFormatada = new Date(item.dataRececao).toLocaleString("pt-PT");
         
         let badgeClass = "badge-pendente";
         if (item.estado === "ENVIADO") badgeClass = "badge-enviado";
@@ -214,7 +261,7 @@
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td>${dataFormatada}</td>
+          <td>${item.dataRececao}</td>
           <td><strong>${hospedePrincipal}</strong></td>
           <td>${totalHospedes} pessoa(s)</td>
           <td>${dados.dataCheckin || "-"} a ${dados.dataCheckout || "-"}</td>
@@ -265,34 +312,37 @@
       document.getElementById("detalhesModal").style.display = "flex";
     }
 
-    function guardarListaAtualizada() {
-      localStorage.setItem(getStorageKey(), JSON.stringify(listaBoletinsMemoria));
-    }
-
-    function alterarEstado(id, novoEstado) {
-      listaBoletinsMemoria = listaBoletinsMemoria.map(item => {
-        if (item.id === id) item.estado = novoEstado;
-        return item;
-      });
-      guardarListaAtualizada();
-      carregarBoletins();
-      fecharModal();
-    }
-
-    function eliminarBoletim(id) {
-      if (confirm("Tem a certeza que deseja eliminar este boletim do SIBA?")) {
-        listaBoletinsMemoria = listaBoletinsMemoria.filter(item => item.id !== id);
-        guardarListaAtualizada();
+    async function alterarEstado(id, novoEstado) {
+      try {
+        await db.collection("boletins").doc(id).update({ status: novoEstado });
+        fecharModal();
         carregarBoletins();
+      } catch (err) {
+        console.error("Erro ao alterar estado no Firebase:", err);
+        alert("Erro ao atualizar o estado no Firebase.");
       }
     }
 
-    function logout() {
-      window.location.href = "login.html";
+    async function eliminarBoletim(id) {
+      if (confirm("Tem a certeza que deseja eliminar este boletim do Firebase?")) {
+        try {
+          await db.collection("boletins").doc(id).delete();
+          carregarBoletins();
+        } catch (err) {
+          console.error("Erro ao eliminar do Firebase:", err);
+          alert("Erro ao eliminar o boletim.");
+        }
+      }
     }
 
-    // Inicialização
-    document.addEventListener("DOMContentLoaded", carregarBoletins);
+    // Função de Terminar Sessão (Logout)
+    function logout() {
+      firebase.auth().signOut().then(() => {
+        window.location.href = "login.html";
+      }).catch((error) => {
+        console.error("Erro ao fazer logout:", error);
+      });
+    }
   </script>
 </body>
 </html>
