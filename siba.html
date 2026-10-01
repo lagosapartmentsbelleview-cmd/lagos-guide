@@ -456,65 +456,71 @@
       }
     }
 
-    // 🚀 ENVIO PARA O CLOUDFLARE WORKER COM DADOS REAIS/EDITADOS
-    async function enviarBoletimParaSIBA(id) {
-      const dadosEditados = recolherDadosEditadosDoModal();
-      const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
-      const btn = document.getElementById("btnEnviarSibaModal");
+    // 🚀 ENVIO PARA O CLOUDFLARE WORKER COM EXTRAÇÃO DE ERRO SOAP
+async function enviarBoletimParaSIBA(id) {
+  const dadosEditados = recolherDadosEditadosDoModal();
+  const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
+  const btn = document.getElementById("btnEnviarSibaModal");
 
-      btn.disabled = true;
-      btn.textContent = "A enviar para o SIBA...";
+  btn.disabled = true;
+  btn.textContent = "A enviar para o SIBA...";
 
-      // Junta as edições manuais com os restantes dados em memória
-      const itemOriginal = listaBoletinsMemoria.find(b => b.id === id);
-      const boletimParaEnvio = {
-        ...(itemOriginal?.dados || {}),
+  const itemOriginal = listaBoletinsMemoria.find(b => b.id === id);
+  const boletimParaEnvio = {
+    ...(itemOriginal?.dados || {}),
+    dataCheckin: dadosEditados.dataCheckin,
+    dataCheckout: dadosEditados.dataCheckout,
+    hospedes: dadosEditados.hospedes
+  };
+
+  try {
+    const response = await fetch(CLOUDFLARE_WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        unidade: unidadeSelecionada,
+        boletim: boletimParaEnvio
+      })
+    });
+
+    const resultado = await response.json();
+
+    if (resultado.success) {
+      alert("✅ Boletim enviado com sucesso para o WebService do SIBA!");
+      
+      await db.collection("boletins").doc(id).update({ 
+        status: "ENVIADO",
+        unidade: unidadeSelecionada,
         dataCheckin: dadosEditados.dataCheckin,
         dataCheckout: dadosEditados.dataCheckout,
         hospedes: dadosEditados.hospedes
-      };
+      });
 
+      fecharModal();
+      carregarBoletins();
+    } else {
+      console.error("Resposta de erro do SIBA:", resultado);
+
+      // Extrai o texto limpo da tag <faultstring> dentro do XML
+      let textoErro = resultado.respostaSiba || resultado.message || "Erro desconhecido";
       try {
-        const response = await fetch(CLOUDFLARE_WORKER_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            unidade: unidadeSelecionada,
-            boletim: boletimParaEnvio
-          })
-        });
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(resultado.respostaSiba, "text/xml");
+        const faultNode = xmlDoc.querySelector("faultstring");
+        if (faultNode) textoErro = faultNode.textContent;
+      } catch (e) {}
 
-        const resultado = await response.json();
-
-        if (resultado.success) {
-          alert("✅ Boletim enviado com sucesso para o WebService do SIBA!");
-          
-          // Atualiza o registo no Firebase com as alterações e o novo estado
-          await db.collection("boletins").doc(id).update({ 
-            status: "ENVIADO",
-            unidade: unidadeSelecionada,
-            dataCheckin: dadosEditados.dataCheckin,
-            dataCheckout: dadosEditados.dataCheckout,
-            hospedes: dadosEditados.hospedes
-          });
-
-          fecharModal();
-          carregarBoletins();
-        } else {
-          console.error("Resposta de erro do SIBA:", resultado);
-          alert("⚠️ Erro ao enviar para o SIBA: " + (resultado.message || resultado.respostaSiba || "Verifique as credenciais no Cloudflare."));
-          btn.disabled = false;
-          btn.textContent = "🚀 Enviar para o SIBA WebService";
-        }
-      } catch (error) {
-        console.error("Erro na comunicação com o Cloudflare Worker:", error);
-        alert("❌ Erro de ligação ao Cloudflare Worker. Verifique se o endereço do Worker está correto.");
-        btn.disabled = false;
-        btn.textContent = "🚀 Enviar para o SIBA WebService";
-      }
+      alert("⚠️ Erro devolvido pelo SIBA:\n\n" + textoErro);
+      btn.disabled = false;
+      btn.textContent = "🚀 Enviar para o SIBA WebService";
     }
+  } catch (error) {
+    console.error("Erro na comunicação com o Cloudflare Worker:", error);
+    alert("❌ Erro de ligação ao Cloudflare Worker. Verifique a consola do navegador.");
+    btn.disabled = false;
+    btn.textContent = "🚀 Enviar para o SIBA WebService";
+  }
+}
 
     async function alterarEstado(id, novoEstado) {
       try {
