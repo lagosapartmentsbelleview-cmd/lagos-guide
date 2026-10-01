@@ -1415,7 +1415,11 @@ if (aimaFormEl) {
 
       // 3. GUARDAR NO PAINEL SIBA (aimasiba.js)
       if (typeof guardarBoletimPendente === "function") {
-        guardarBoletimPendente(novoBoletim);
+      const boletimParaSiba = {
+      ...novoBoletim,
+      criadoEm: new Date().toISOString() // Converte a data para texto compatível com localStorage
+      };
+      guardarBoletimPendente(boletimParaSiba);
       }
 
       // 4. Apresentar Popup de Sucesso
