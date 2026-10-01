@@ -52,6 +52,14 @@
       margin-bottom: 10px;
       border-radius: 0 4px 4px 0;
     }
+    .unidade-select-box {
+      background: #e3f2fd;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #bbdefb;
+    }
   </style>
 </head>
 <body>
@@ -137,14 +145,13 @@
     </div>
   </div>
 
-  <!-- Firebase SDK v8 (Igual ao login.html) -->
+  <!-- Firebase SDK v8 -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
   <!-- Configuração e Lógica -->
   <script>
-    // Inicialização do Firebase com as credenciais do seu login.html
     const firebaseConfig = {
       apiKey: "AIzaSyD70hv-PgWJKDbK-tcxeRuB1FE1cVs-FBs",
       authDomain: "reservas-marina-park.firebaseapp.com",
@@ -165,10 +172,8 @@
     // 🔒 VERIFICAÇÃO DE SEGURANÇA (LOGIN OBRIGATÓRIO)
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
-        // Utilizador não autenticado -> redireciona para o login
         window.location.href = "login.html";
       } else {
-        // Utilizador autenticado -> carrega os dados do Firebase
         carregarBoletins();
       }
     });
@@ -182,7 +187,6 @@
       document.getElementById("detalhesModal").style.display = "none";
     }
 
-    // Carregar boletins diretamente da coleção 'boletins' do Firebase
     async function carregarBoletins() {
       const tbody = document.getElementById("tabelaBoletinsCorpo");
       tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 20px;">A carregar dados do Firebase...</td></tr>`;
@@ -296,20 +300,81 @@
         `;
       });
 
+      const unidadeGuardada = dados.unidade !== undefined ? dados.unidade : "0";
+
       container.innerHTML = `
         <p><strong>Datas da Estadia:</strong> ${dados.dataCheckin} até ${dados.dataCheckout}</p>
         <p><strong>E-mail de Contacto:</strong> ${dados.emailCliente || "Não facultado"}</p>
         <p><strong>Estado Atual:</strong> <strong>${item.estado}</strong></p>
+        
         <h4>Lista de Hóspedes (${dados.hospedes?.length || 0}):</h4>
         ${htmlHospedes}
         
-        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd;">
-          <button class="btn-add" onclick="alterarEstado('${item.id}', 'ENVIADO')">Marcar como ENVIADO (SIBA)</button>
-          <button class="btn-edit" onclick="alterarEstado('${item.id}', 'PENDENTE')">Marcar como PENDENTE</button>
+        <div class="unidade-select-box">
+          <label for="selectUnidadeModal"><strong>Selecione o Apartamento / Alojamento:</strong></label><br>
+          <select id="selectUnidadeModal" style="margin-top: 5px; padding: 6px; width: 100%;">
+            <option value="0" ${unidadeGuardada == "0" ? "selected" : ""}>Apartamento 0</option>
+            <option value="1" ${unidadeGuardada == "1" ? "selected" : ""}>Apartamento 1</option>
+            <option value="2" ${unidadeGuardada == "2" ? "selected" : ""}>Apartamento 2</option>
+          </select>
+        </div>
+
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn-add" id="btnEnviarSibaModal" onclick="enviarBoletimParaSIBA('${item.id}')">🚀 Enviar para o SIBA WebService</button>
+          <button class="btn-edit" onclick="alterarEstado('${item.id}', 'ENVIADO')">Marcar Manualmente como ENVIADO</button>
+          <button class="btn-edit" style="background:#6c757d;" onclick="alterarEstado('${item.id}', 'PENDENTE')">Marcar como PENDENTE</button>
         </div>
       `;
 
       document.getElementById("detalhesModal").style.display = "flex";
+    }
+
+    // 🚀 FUNÇÃO PRINCIPAL DE COMUNICAÇÃO COM O CLOUDFLARE WORKER
+    async function enviarBoletimParaSIBA(id) {
+      const item = listaBoletinsMemoria.find(b => b.id === id);
+      if (!item) return;
+
+      const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
+      const btn = document.getElementById("btnEnviarSibaModal");
+      
+      btn.disabled = true;
+      btn.textContent = "A enviar para o SIBA...";
+
+      try {
+        const response = await fetch("https://apartmentsbelleview.com/api/enviar-siba", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            unidade: unidadeSelecionada,
+            boletim: item.dados
+          })
+        });
+
+        const resultado = await response.json();
+
+        if (resultado.success) {
+          alert("✅ Boletim enviado com sucesso para o WebService do SIBA!");
+          // Atualiza o estado automaticamente para ENVIADO no Firebase
+          await db.collection("boletins").doc(id).update({ 
+            status: "ENVIADO",
+            unidade: unidadeSelecionada 
+          });
+          fecharModal();
+          carregarBoletins();
+        } else {
+          console.error("Resposta de erro do SIBA:", resultado);
+          alert("⚠️ Erro ao enviar para o SIBA: " + (resultado.message || "Verifique os dados ou as credenciais no Cloudflare."));
+          btn.disabled = false;
+          btn.textContent = "🚀 Enviar para o SIBA WebService";
+        }
+      } catch (error) {
+        console.error("Erro na comunicação com o Cloudflare Worker:", error);
+        alert("❌ Erro de ligação ao servidor de envio. Verifique a ligação à internet.");
+        btn.disabled = false;
+        btn.textContent = "🚀 Enviar para o SIBA WebService";
+      }
     }
 
     async function alterarEstado(id, novoEstado) {
@@ -335,7 +400,6 @@
       }
     }
 
-    // Função de Terminar Sessão (Logout)
     function logout() {
       firebase.auth().signOut().then(() => {
         window.location.href = "login.html";
