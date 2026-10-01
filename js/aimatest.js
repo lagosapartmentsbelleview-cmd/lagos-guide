@@ -1277,7 +1277,7 @@ function buildEmailSummaryHtml(boletim, lang) {
     `;
   });
 
-  // RODAPÉ INSTITUCIONAL SIMPLIFICADO E NEUTRO
+  // RODAPÉ INSTITUCIONAL SIMPLIFICADO E NEUTRO COM SITE EM LINHA PRÓPRIA
   html += `
         </td>
       </tr>
@@ -1318,7 +1318,6 @@ function buildEmailSummaryHtml(boletim, lang) {
 
   return html;
 }
-
 // ============================================================
 // 9. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS)
 // ============================================================
