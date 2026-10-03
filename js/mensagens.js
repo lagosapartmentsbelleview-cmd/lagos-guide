@@ -5,7 +5,7 @@ auth.onAuthStateChanged(user => {
     if (!user) {
         window.location.href = 'login.html';
     } else {
-        carregarReservas('todos'); // Carrega 'todos' por defeito no arranque
+        carregarReservas('todos');
     }
 });
 
@@ -43,81 +43,82 @@ let tipoTemplateAtual = 'checkin';
 function normalizarReserva(doc) {
     const d = doc.data();
 
-    // 1. Extração Inteligente de Check-In (Trata Strings, Timestamps e vários nomes)
-    let checkInRaw = d.checkIn || d.checkin || d.dataCheckIn || d.data_checkin || d.entrada || d.dataEntrada || d.check_in || '';
+    // 1. Extração Inteligente de Check-In
+    let checkInRaw = d.checkIn || d.checkin || d.dataCheckIn || d.data_checkin || d.entrada || d.dataEntrada || d.check_in || d.startDate || '';
     let checkInStr = 'N/A';
 
     if (checkInRaw) {
         if (typeof checkInRaw.toDate === 'function') {
-            // Se for um Timestamp do Firebase
             checkInStr = checkInRaw.toDate().toISOString().split('T')[0];
+        } else if (checkInRaw instanceof Date) {
+            checkInStr = checkInRaw.toISOString().split('T')[0];
         } else if (typeof checkInRaw === 'string') {
             let limpo = checkInRaw.trim();
             if (limpo.includes('/')) {
-                // Converte DD/MM/YYYY para YYYY-MM-DD
                 const p = limpo.split('/');
                 if (p.length === 3) checkInStr = `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
+            } else if (limpo.includes('-')) {
+                const p = limpo.split('-');
+                if (p.length === 3 && p[0].length === 2) {
+                    checkInStr = `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
+                } else {
+                    checkInStr = limpo;
+                }
             } else {
                 checkInStr = limpo;
             }
         }
     }
 
-    // 2. Extração Inteligente do País
-    let pais = d.pais || d.nacionalidade || d.country || d.origem || d.paisOrigem || '';
+    // 2. Leitura do campo 'paisCliente'
+    let rawPais = (d.paisCliente !== undefined && d.paisCliente !== null) ? String(d.paisCliente).trim().toLowerCase() : '';
+    
+    let bandeira = '🔴'; // Padrão: Bolinha vermelha para campos em branco
+    let idiomaCalculado = 'en'; // Padrão de mensagem quando o país está em branco
+    let paisDisplay = 'Não registado';
 
-    // 3. Extração de Telefone
-    let telefone = d.telefone || d.telemovel || d.phone || d.tel || '';
+    if (rawPais === 'pt' || rawPais.includes('portugal') || rawPais.includes('brasil') || rawPais === 'br') {
+        bandeira = '🇵🇹';
+        idiomaCalculado = 'pt';
+        paisDisplay = 'Portugal / PT';
+    } else if (rawPais === 'es' || rawPais.includes('espanha') || rawPais.includes('spain') || rawPais.includes('españa')) {
+        bandeira = '🇪🇸';
+        idiomaCalculado = 'es';
+        paisDisplay = 'Espanha / ES';
+    } else if (rawPais === 'en' || rawPais === 'gb' || rawPais === 'uk' || rawPais.includes('inglaterra') || rawPais.includes('reino unido')) {
+        bandeira = '🇬🇧';
+        idiomaCalculado = 'en';
+        paisDisplay = 'Reino Unido / EN';
+    } else if (rawPais !== '') {
+        // Se houver algum outro código de país preenchido (ex: "fr", "de")
+        bandeira = '🌐';
+        idiomaCalculado = 'en';
+        paisDisplay = rawPais.toUpperCase();
+    }
 
-    // 4. Nome do Cliente
+    // 3. Nome do Hóspede
     let cliente = d.cliente || d.nome || d.guest || d.hospede || 'Hóspede';
 
-    // 5. Apartamento
+    // 4. Apartamento
     let apartamento = '---';
     if (d.apartamento) apartamento = d.apartamento;
     else if (Array.isArray(d.apartamentos) && d.apartamentos.length > 0) apartamento = d.apartamentos[0];
     else if (d.apto) apartamento = d.apto;
 
-    // 6. Número de Hóspedes
+    // 5. Número de Hóspedes
     let hospedes = d.hospedes || d.numHospedes || d.pessoas || d.guests || 2;
 
     return {
         id: doc.id,
         cliente,
         checkIn: checkInStr,
-        pais,
-        telefone,
+        pais: paisDisplay,
+        bandeira,
+        idiomaCalculado,
         apartamento,
         hospedes,
         mensagens: d.mensagens || {}
     };
-}
-
-// ==========================================================================
-// DETEÇÃO AUTOMÁTICA DE IDIOMA POR PAÍS
-// ==========================================================================
-function detetarIdiomaPorPais(pais) {
-    if (!pais) return 'en';
-    
-    const p = pais.toLowerCase().trim();
-
-    // Países / Nomes de Língua Portuguesa
-    const paisesPT = [
-        'pt', 'portugal', 'br', 'brasil', 'brazil', 'portuguesa', 'brasileira',
-        'angola', 'moçambique', 'mocambique', 'cabo verde', 'são tomé'
-    ];
-
-    // Países / Nomes de Língua Espanhola
-    const paisesES = [
-        'es', 'espanha', 'spain', 'españa', 'espanhola', 'española',
-        'ar', 'argentina', 'mx', 'mexico', 'méxico', 'co', 'colombia', 
-        'cl', 'chile', 'pe', 'peru', 'uy', 'uruguai', 'uruguay', 've', 'venezuela'
-    ];
-
-    if (paisesPT.some(item => p === item || p.includes(item))) return 'pt';
-    if (paisesES.some(item => p === item || p.includes(item))) return 'es';
-
-    return 'en';
 }
 
 // ==========================================================================
@@ -278,7 +279,6 @@ async function carregarReservas(modoFiltro) {
         
         listaReservasGlobal = [];
         snapshot.forEach(doc => {
-            // Normaliza cada documento
             listaReservasGlobal.push(normalizarReserva(doc));
         });
 
@@ -365,23 +365,16 @@ function renderizarListaHospedes(lista) {
         const enviadoCheckin = r.mensagens && r.mensagens.checkin;
         const enviadoAima = r.mensagens && r.mensagens.aima;
 
-        // Deteção da bandeira
-        const langReserva = detetarIdiomaPorPais(r.pais);
-        let bandeira = '🌐';
-        if (langReserva === 'pt') bandeira = '🇵🇹';
-        if (langReserva === 'es') bandeira = '🇪🇸';
-        if (langReserva === 'en') bandeira = '🇬🇧';
-
         const card = document.createElement('div');
         card.className = `hospede-card ${reservaSelecionada && reservaSelecionada.id === r.id ? 'active' : ''}`;
         card.onclick = () => selecionarHospede(r);
 
         card.innerHTML = `
             <div class="hospede-header">
-                <span>${bandeira} ${r.cliente || 'Hóspede'}</span>
+                <span>${r.bandeira} ${r.cliente}</span>
                 <span style="color: #2563eb; font-weight: 700;">Apto ${r.apartamento}</span>
             </div>
-            <div class="hospede-sub">Check-in: ${r.checkIn || 'N/A'} | Hóspedes: ${r.hospedes || 2}</div>
+            <div class="hospede-sub">Check-in: ${r.checkIn} | Hóspedes: ${r.hospedes}</div>
             <div class="badges-status">
                 <span class="badge-check ${enviadoCheckin ? 'enviado' : ''}">${enviadoCheckin ? '✓ Check-in' : '⏳ Check-in'}</span>
                 <span class="badge-check ${enviadoAima ? 'enviado' : ''}">${enviadoAima ? '✓ AIMA' : '⏳ AIMA'}</span>
@@ -400,11 +393,11 @@ function selecionarHospede(reserva) {
     document.getElementById('painelVazio').style.display = 'none';
     document.getElementById('painelMensagem').style.display = 'flex';
 
-    // Deteção Automática do Idioma
-    idiomaAtual = detetarIdiomaPorPais(reserva.pais);
+    // Define o idioma automaticamente (ou assume Inglês se o país estiver em branco)
+    idiomaAtual = reserva.idiomaCalculado;
 
     document.getElementById('nomeHospedeSel').innerText = `${reserva.cliente} (Apto ${reserva.apartamento})`;
-    document.getElementById('detalhesReservaSel').innerText = `Check-in: ${reserva.checkIn} | Tel: ${reserva.telefone || 'Sem telefone'} | País: ${reserva.pais || 'N/A'}`;
+    document.getElementById('detalhesReservaSel').innerText = `Check-in: ${reserva.checkIn} | País: ${reserva.pais}`;
 
     atualizarBotoesIdioma();
     carregarTemplate(tipoTemplateAtual);
@@ -452,13 +445,9 @@ function copiarTexto() {
 }
 
 function abrirWhatsApp() {
-    if (!reservaSelecionada || !reservaSelecionada.telefone) {
-        alert('Esta reserva não possui número de telefone registado.');
-        return;
-    }
-    const tel = reservaSelecionada.telefone.replace(/[^0-9]/g, '');
+    if (!reservaSelecionada) return;
     const txt = encodeURIComponent(document.getElementById('textoMensagem').value);
-    window.open(`https://wa.me/${tel}?text=${txt}`, '_blank');
+    window.open(`https://wa.me/?text=${txt}`, '_blank');
 }
 
 async function alternarEstadoEnviado() {
