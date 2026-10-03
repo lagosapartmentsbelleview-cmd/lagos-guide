@@ -1,6 +1,9 @@
 // ==========================================================================
-// INICIALIZAÇÃO E AUTENTICAÇÃO VIA FIREBASE CENTRAL
+// INICIALIZAÇÃO VIA FIREBASE CENTRAL (firebase-config.js)
 // ==========================================================================
+// Reutiliza auth e db do firebase-config.js
+if (typeof auth === 'undefined') var auth = firebase.auth();
+if (typeof db === 'undefined') var db = firebase.firestore();
 
 // Verificação de sessão de utilizador
 auth.onAuthStateChanged(user => {
@@ -11,16 +14,24 @@ auth.onAuthStateChanged(user => {
     }
 });
 
-function logout() {
-    auth.signOut().then(() => window.location.href = 'login.html');
-}
+// Event Listeners para o Menu Superior
+document.addEventListener('DOMContentLoaded', () => {
+    const btnToggle = document.getElementById('toggleMenu');
+    const menu = document.getElementById('dropdown-menu');
+    const btnLogout = document.getElementById('btnLogout');
 
-function toggleMenu() {
-    const menu = document.getElementById('dropdownMenu');
-    if (menu) {
-        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    if (btnToggle && menu) {
+        btnToggle.addEventListener('click', () => {
+            menu.style.display = (menu.style.display === 'flex' || menu.style.display === 'block') ? 'none' : 'flex';
+        });
     }
-}
+
+    if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+            auth.signOut().then(() => window.location.href = 'login.html');
+        });
+    }
+});
 
 // ==========================================================================
 // ESTADO GLOBAL
@@ -30,6 +41,38 @@ let listaFiltradaAtual = [];
 let reservaSelecionada = null;
 let idiomaAtual = 'pt';
 let tipoTemplateAtual = 'checkin';
+
+// ==========================================================================
+// DETEÇÃO AUTOMÁTICA DE IDIOMA POR PAÍS
+// ==========================================================================
+function detetarIdiomaPorPais(pais) {
+    if (!pais) return 'en';
+    
+    const p = pais.toLowerCase().trim();
+
+    // Países / Siglas de Língua Portuguesa
+    const paisesPT = [
+        'pt', 'portugal', 'br', 'brasil', 'brazil', 
+        'angola', 'moçambique', 'mocambique', 'cabo verde', 
+        'guiné-bissau', 'guine-bissau', 'são tomé', 'sao tome'
+    ];
+
+    // Países / Siglas de Língua Espanhola
+    const paisesES = [
+        'es', 'espanha', 'spain', 'españa', 'ar', 'argentina', 
+        'mx', 'mexico', 'méxico', 'co', 'colombia', 'cl', 'chile', 
+        'pe', 'peru', 'uy', 'uruguai', 'uruguay', 've', 'venezuela', 
+        'ec', 'equador', 'ecuador', 'bo', 'bolivia', 'py', 'paraguai', 'paraguay',
+        'cr', 'costa rica', 'pa', 'panama', 'panamá', 'do', 'republica dominicana',
+        'gt', 'guatemala', 'hn', 'honduras', 'sv', 'el salvador', 'ni', 'nicaragua', 'cuba'
+    ];
+
+    if (paisesPT.some(item => p === item || p.includes(item))) return 'pt';
+    if (paisesES.some(item => p === item || p.includes(item))) return 'es';
+
+    // Todos os outros idiomas/países vão para Inglês
+    return 'en';
+}
 
 // ==========================================================================
 // MODELOS DE MENSAGENS (TEMPLATES DINÂMICOS PT / ES / EN)
@@ -43,7 +86,7 @@ Esperamos que se encontre bem!
 A sua chegada ao apartamento Belleview, em Lagos, está para breve, com check-in agendado para ${r.checkIn}. Queremos garantir que tenha uma experiência agradável e sem preocupações.
 
 A sua chegada e acesso ao apartamento
-Ao chegar ao Complexo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), dirija-se diretamente ao apartamento [${r.apartamento}] atribuído à sua reserva (consulte a imagem anexa para a localização exata no Lote 22/23).
+Ao chegar ao Complexo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), dirija-se diretamente ao apartamento [${r.apartamento}] atribuído à sua reserva.
 
 👉 Localização no Google Maps: https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
 
@@ -226,7 +269,6 @@ async function carregarReservas(modoFiltro) {
 function aplicarFiltroData(tipo) {
     document.querySelectorAll('.quick-dates button').forEach(b => b.classList.remove('active'));
     
-    // Obter data atual YYYY-MM-DD
     const hojeObj = new Date();
     const hojeStr = hojeObj.toISOString().split('T')[0];
 
@@ -252,7 +294,6 @@ function aplicarFiltroData(tipo) {
         filtradas = [...listaReservasGlobal];
     }
 
-    // Ordenar por data de Check-in mais próxima
     filtradas.sort((a, b) => (a.checkIn || '').localeCompare(b.checkIn || ''));
 
     listaFiltradaAtual = filtradas;
@@ -298,14 +339,12 @@ function renderizarListaHospedes(lista) {
         const enviadoCheckin = r.mensagens && r.mensagens.checkin;
         const enviadoAima = r.mensagens && r.mensagens.aima;
 
-        // Bandeira por país
+        // Deteção da bandeira para a lista
+        const langReserva = detetarIdiomaPorPais(r.pais);
         let bandeira = '🌐';
-        const p = (r.pais || '').toUpperCase();
-        if (p === 'PT' || p === 'PORTUGAL') bandeira = '🇵🇹';
-        if (p === 'ES' || p === 'ESPANHA' || p === 'SPAIN') bandeira = '🇪🇸';
-        if (p === 'UK' || p === 'GB' || p === 'INGLATERRA' || p === 'UNITED KINGDOM') bandeira = '🇬🇧';
-        if (p === 'FR' || p === 'FRANCA' || p === 'FRANCE') bandeira = '🇫🇷';
-        if (p === 'DE' || p === 'ALEMANHA' || p === 'GERMANY') bandeira = '🇩🇪';
+        if (langReserva === 'pt') bandeira = '🇵🇹';
+        if (langReserva === 'es') bandeira = '🇪🇸';
+        if (langReserva === 'en') bandeira = '🇬🇧';
 
         const card = document.createElement('div');
         card.className = `hospede-card ${reservaSelecionada && reservaSelecionada.id === r.id ? 'active' : ''}`;
@@ -335,20 +374,17 @@ function selecionarHospede(reserva) {
     document.getElementById('painelVazio').style.display = 'none';
     document.getElementById('painelMensagem').style.display = 'flex';
 
-    // Deteção Automática do Idioma
-    const p = (reserva.pais || '').toUpperCase();
-    idiomaAtual = 'en';
-    if (p === 'PT' || p === 'PORTUGAL') idiomaAtual = 'pt';
-    if (p === 'ES' || p === 'ESPANHA' || p === 'SPAIN') idiomaAtual = 'es';
+    // Deteção Automática Alargada do Idioma
+    idiomaAtual = detetarIdiomaPorPais(reserva.pais);
 
     const apto = Array.isArray(reserva.apartamentos) ? reserva.apartamentos[0] : (reserva.apartamento || '2301');
     document.getElementById('nomeHospedeSel').innerText = `${reserva.cliente || 'Hóspede'} (Apto ${apto})`;
-    document.getElementById('detalhesReservaSel').innerText = `Check-in: ${reserva.checkIn || 'N/A'} | Tel: ${reserva.telefone || 'Sem telefone'}`;
+    document.getElementById('detalhesReservaSel').innerText = `Check-in: ${reserva.checkIn || 'N/A'} | Tel: ${reserva.telefone || 'Sem telefone'} | País: ${reserva.pais || 'N/A'}`;
 
     atualizarBotoesIdioma();
     carregarTemplate(tipoTemplateAtual);
     atualizarBotaoEnviado();
-    renderizarListaHospedes(listaFiltradaAtual); // Atualiza destaque ativo na lista
+    renderizarListaHospedes(listaFiltradaAtual);
 }
 
 function alterarIdioma(lang) {
