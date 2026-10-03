@@ -550,6 +550,77 @@ td:last-child button:last-child, td:last-child .btn-danger {
     border-color: #fecaca !important;
 }
 
+/* ==========================================================================
+   AJUSTE DE DENSIDADE MAXIMA (CARDS EM 1 LINHA + TABELA COMPLETA)
+   ========================================================================== */
+
+/* 1. CARTÕES DE RESUMO EM APENAS UMA LINHA */
+.totais-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important; /* Força todos os 8 cartões na mesma linha */
+    gap: 6px !important;
+    margin: 8px 0 14px 0 !important;
+    width: 100% !important;
+}
+
+.total-card {
+    flex: 1 1 0 !important; /* Divide a largura igualmente entre os cartões */
+    min-width: 0 !important;  /* Permite encolher sem quebrar a linha */
+    padding: 6px 8px !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+}
+
+.total-card span {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+}
+
+.total-card strong {
+    font-size: 13px !important; /* Valor reduzido para caber confortavelmente */
+    font-weight: 700 !important;
+    margin-top: 2px !important;
+    color: #1e293b !important;
+    white-space: nowrap !important;
+}
+
+
+/* 2. TABELA COMPACTA PARA CABER TODAS AS COLUNAS NO ECRÃ */
+table {
+    width: 100% !important;
+    table-layout: auto !important;
+}
+
+th {
+    padding: 6px 6px !important;  /* Margem interna mínima */
+    font-size: 10px !important;   /* Títulos das colunas mais pequenos */
+    white-space: nowrap !important;
+}
+
+td {
+    padding: 5px 6px !important;  /* Altura da linha ultra reduzida */
+    font-size: 11px !important;   /* Texto dos dados ligeiramente menor */
+    white-space: nowrap !important;
+}
+
+/* Reduz o tamanho das caixas de pesquisa/filtros para poupar espaço vertical */
+.filtros {
+    padding: 6px 10px !important;
+    gap: 6px !important;
+}
+
+.filtros input, .filtros select {
+    height: 28px !important;
+    font-size: 11px !important;
+    padding: 0 6px !important;
+}
 td:last-child button:last-child:hover, td:last-child .btn-danger:hover {
     background-color: #ef4444 !important;
     color: #ffffff !important;
