@@ -252,18 +252,22 @@
 </head>
 <body>
 
-<!-- Menu Superior -->
+<!-- ========================= -->
+<!--        MENU SUPERIOR      -->
+<!-- ========================= -->
 <div class="top-menu">
-    <button class="menu-button" onclick="toggleMenu()">☰ Menu</button>
-    <span style="font-weight: 700; color: #1e293b;">Belleview AL — Central de Mensagens</span>
-    <button class="menu-button" onclick="logout()">Sair</button>
-</div>
+    <span class="menu-button" id="toggleMenu">☰ Menu</span>
 
-<div class="dropdown-menu" id="dropdownMenu">
-    <a href="dashboard.html">Dashboard</a>
-    <a href="listagem-reservas.html">Reservas</a>
-    <a href="mensagens.html">Mensagens</a>
-    <a href="#" onclick="logout()" class="sair">Sair</a>
+    <div class="dropdown-menu" id="dropdown-menu">
+        <a href="calendario.html">Calendario</a>
+        <a href="limpeza.html">Limpeza</a>
+        <a href="precos.html">Preços</a>
+        <a href="financeiro.html">Financeiro</a>
+        <a href="resultados.html">Resultados</a>
+        <a href="operacional.html">Operacional</a>
+        <a href="mensagens.html">Mensagens</a>
+        <button id="btnLogout" class="sair">Sair</button>
+    </div>
 </div>
 
 <div class="content">
