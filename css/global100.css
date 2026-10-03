@@ -447,3 +447,110 @@ tbody tr:hover td {
     margin-top: 4px;
     margin-bottom: 10px;
 }
+
+/* ==========================================================================
+   CORREÇÃO ESPECÍFICA PARA A TABELA DE RESERVAS
+   ========================================================================== */
+
+/* 1. Limpeza Estrutural da Tabela */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-top: 16px;
+}
+
+/* 2. Cabeçalho Clean e Elegante */
+th {
+    background-color: #f8fafc !important;
+    color: #475569 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 10px 12px !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* 3. Células de Dados */
+td {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+    color: #1e293b !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    vertical-align: middle;
+}
+
+/* 4. Substituição do Verde Néon por Fundo Branco / Destaque Soft */
+tbody tr {
+    background-color: #ffffff !important; /* Limpa o verde forte */
+    transition: background-color 0.15s ease;
+}
+
+tbody tr:hover {
+    background-color: #f8fafc !important; /* Realce suave ao passar o rato */
+}
+
+/* Se a linha for de reserva paga/confirmada, usa um tom ultra-suave */
+tbody tr[style*="background"], tbody tr.paga, tbody tr.confirmada {
+    background-color: #f0fdf4 !important; /* Verde pastel muito discreto */
+}
+
+/* 5. Crachá de Origem (Booking / Particular) */
+td .badge, td span[style*="background-color"] {
+    display: inline-flex !important;
+    align-items: center;
+    padding: 3px 8px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    border-radius: 12px !important;
+    background-color: #eff6ff !important;
+    color: #1d4ed8 !important;
+    border: 1px solid #bfdbfe !important;
+}
+
+/* 6. Reformulação da Coluna de AÇÕES (Botões de Ícone Limpos) */
+td:last-child {
+    white-space: nowrap;
+}
+
+td:last-child button, td:last-child .btn, td:last-child a {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    padding: 0 !important;
+    margin: 0 2px !important;
+    border-radius: 6px !important;
+    border: 1px solid #e2e8f0 !important;
+    background-color: #ffffff !important;
+    color: #64748b !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: none !important;
+}
+
+td:last-child button:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+
+/* Botão de Apagar (Vermelho Discreto) */
+td:last-child button:last-child, td:last-child .btn-danger {
+    background-color: #fef2f2 !important;
+    color: #ef4444 !important;
+    border-color: #fecaca !important;
+}
+
+td:last-child button:last-child:hover, td:last-child .btn-danger:hover {
+    background-color: #ef4444 !important;
+    color: #ffffff !important;
+}
