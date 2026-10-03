@@ -1,13 +1,11 @@
 // ==========================================================================
-// INICIALIZAÇÃO E AUTENTICAÇÃO VIA FIREBASE CENTRAL
+// INICIALIZAÇÃO VIA FIREBASE CENTRAL (firebase-config.js)
 // ==========================================================================
-
-// Usamos diretamente o 'auth' e 'db' que já vêm do firebase-config.js
 auth.onAuthStateChanged(user => {
     if (!user) {
         window.location.href = 'login.html';
     } else {
-        carregarReservas('hoje');
+        carregarReservas('todos'); // Carrega 'todos' por defeito no arranque
     }
 });
 
@@ -40,6 +38,62 @@ let idiomaAtual = 'pt';
 let tipoTemplateAtual = 'checkin';
 
 // ==========================================================================
+// TRATAMENTO E NORMALIZAÇÃO DE DADOS DO FIRESTORE
+// ==========================================================================
+function normalizarReserva(doc) {
+    const d = doc.data();
+
+    // 1. Extração Inteligente de Check-In (Trata Strings, Timestamps e vários nomes)
+    let checkInRaw = d.checkIn || d.checkin || d.dataCheckIn || d.data_checkin || d.entrada || d.dataEntrada || d.check_in || '';
+    let checkInStr = 'N/A';
+
+    if (checkInRaw) {
+        if (typeof checkInRaw.toDate === 'function') {
+            // Se for um Timestamp do Firebase
+            checkInStr = checkInRaw.toDate().toISOString().split('T')[0];
+        } else if (typeof checkInRaw === 'string') {
+            let limpo = checkInRaw.trim();
+            if (limpo.includes('/')) {
+                // Converte DD/MM/YYYY para YYYY-MM-DD
+                const p = limpo.split('/');
+                if (p.length === 3) checkInStr = `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
+            } else {
+                checkInStr = limpo;
+            }
+        }
+    }
+
+    // 2. Extração Inteligente do País
+    let pais = d.pais || d.nacionalidade || d.country || d.origem || d.paisOrigem || '';
+
+    // 3. Extração de Telefone
+    let telefone = d.telefone || d.telemovel || d.phone || d.tel || '';
+
+    // 4. Nome do Cliente
+    let cliente = d.cliente || d.nome || d.guest || d.hospede || 'Hóspede';
+
+    // 5. Apartamento
+    let apartamento = '---';
+    if (d.apartamento) apartamento = d.apartamento;
+    else if (Array.isArray(d.apartamentos) && d.apartamentos.length > 0) apartamento = d.apartamentos[0];
+    else if (d.apto) apartamento = d.apto;
+
+    // 6. Número de Hóspedes
+    let hospedes = d.hospedes || d.numHospedes || d.pessoas || d.guests || 2;
+
+    return {
+        id: doc.id,
+        cliente,
+        checkIn: checkInStr,
+        pais,
+        telefone,
+        apartamento,
+        hospedes,
+        mensagens: d.mensagens || {}
+    };
+}
+
+// ==========================================================================
 // DETEÇÃO AUTOMÁTICA DE IDIOMA POR PAÍS
 // ==========================================================================
 function detetarIdiomaPorPais(pais) {
@@ -47,32 +101,27 @@ function detetarIdiomaPorPais(pais) {
     
     const p = pais.toLowerCase().trim();
 
-    // Países / Siglas de Língua Portuguesa
+    // Países / Nomes de Língua Portuguesa
     const paisesPT = [
-        'pt', 'portugal', 'br', 'brasil', 'brazil', 
-        'angola', 'moçambique', 'mocambique', 'cabo verde', 
-        'guiné-bissau', 'guine-bissau', 'são tomé', 'sao tome'
+        'pt', 'portugal', 'br', 'brasil', 'brazil', 'portuguesa', 'brasileira',
+        'angola', 'moçambique', 'mocambique', 'cabo verde', 'são tomé'
     ];
 
-    // Países / Siglas de Língua Espanhola
+    // Países / Nomes de Língua Espanhola
     const paisesES = [
-        'es', 'espanha', 'spain', 'españa', 'ar', 'argentina', 
-        'mx', 'mexico', 'méxico', 'co', 'colombia', 'cl', 'chile', 
-        'pe', 'peru', 'uy', 'uruguai', 'uruguay', 've', 'venezuela', 
-        'ec', 'equador', 'ecuador', 'bo', 'bolivia', 'py', 'paraguai', 'paraguay',
-        'cr', 'costa rica', 'pa', 'panama', 'panamá', 'do', 'republica dominicana',
-        'gt', 'guatemala', 'hn', 'honduras', 'sv', 'el salvador', 'ni', 'nicaragua', 'cuba'
+        'es', 'espanha', 'spain', 'españa', 'espanhola', 'española',
+        'ar', 'argentina', 'mx', 'mexico', 'méxico', 'co', 'colombia', 
+        'cl', 'chile', 'pe', 'peru', 'uy', 'uruguai', 'uruguay', 've', 'venezuela'
     ];
 
     if (paisesPT.some(item => p === item || p.includes(item))) return 'pt';
     if (paisesES.some(item => p === item || p.includes(item))) return 'es';
 
-    // Todos os outros idiomas/países vão para Inglês
     return 'en';
 }
 
 // ==========================================================================
-// MODELOS DE MENSAGENS (TEMPLATES DINÂMICOS PT / ES / EN)
+// MODELOS DE MENSAGENS (TEMPLATES)
 // ==========================================================================
 const templates = {
     checkin: {
@@ -197,33 +246,9 @@ Luís Ferreira
     },
 
     aima: {
-        pt: (r) => `Estimado(a) ${r.cliente},
-
-Lembramos que, conforme a legislação portuguesa (AIMA/SIBA), é estritamente obrigatório o registo de todos os hóspedes de nacionalidade não portuguesa antes do check-in.
-
-Por favor, preencha o formulário rápido através do link abaixo:
-👉 https://apartmentsbelleview.com/aima
-
-Agradecemos a colaboração e ficamos à disposição!
-Belleview AL (+351 910 051 588)`,
-        es: (r) => `Estimado/a ${r.cliente},
-
-Le recordamos que, por ley en Portugal (AIMA/SIBA), es obligatorio registrar a todos los huéspedes de nacionalidad no portuguesa antes del check-in.
-
-Por favor, complete el formulario en el siguiente enlace:
-👉 https://apartmentsbelleview.com/aima
-
-¡Muchas gracias por su colaboración!
-Belleview AL (+351 910 051 588)`,
-        en: (r) => `Dear ${r.cliente},
-
-This is a gentle reminder that Portuguese law (AIMA/SIBA) requires all non-Portuguese guests to register prior to check-in.
-
-Please complete the quick form here:
-👉 https://apartmentsbelleview.com/aima
-
-Thank you for your cooperation!
-Belleview AL (+351 910 051 588)`
+        pt: (r) => `Estimado(a) ${r.cliente},\n\nLembramos que, conforme a legislação portuguesa (AIMA/SIBA), é estritamente obrigatório o registo de todos os hóspedes de nacionalidade não portuguesa antes do check-in.\n\nPor favor, preencha o formulário rápido através do link abaixo:\n👉 https://apartmentsbelleview.com/aima\n\nAgradecemos a colaboração!\nBelleview AL (+351 910 051 588)`,
+        es: (r) => `Estimado/a ${r.cliente},\n\nLe recordamos que, por ley en Portugal (AIMA/SIBA), es obligatorio registrar a todos los huéspedes de nacionalidad no portuguesa antes del check-in.\n\nPor favor, complete el formulario:\n👉 https://apartmentsbelleview.com/aima\n\n¡Muchas gracias!\nBelleview AL (+351 910 051 588)`,
+        en: (r) => `Dear ${r.cliente},\n\nThis is a gentle reminder that Portuguese law (AIMA/SIBA) requires all non-Portuguese guests to register prior to check-in.\n\nPlease complete the quick form here:\n👉 https://apartmentsbelleview.com/aima\n\nThank you!\nBelleview AL (+351 910 051 588)`
     },
 
     horas: {
@@ -233,14 +258,14 @@ Belleview AL (+351 910 051 588)`
     },
 
     checkout: {
-        pt: (r) => `Estimado(a) ${r.cliente}, esperamos que tenha desfrutado da sua estadia em Lagos! Lembramos que o check-out é até às 10h. Por favor, devolva o cartão e as pulseiras na receção Vitasol para reaver o seu depósito. Tenha um excelente regresso!`,
-        es: (r) => `Estimado/a ${r.cliente}, ¡esperamos que haya disfrutado su estancia en Lagos! Le recordamos que el check-out es hasta las 10:00. Por favor, entregue la tarjeta y las pulseras en la recepción Vitasol. ¡Buen viaje de vuelta!`,
-        en: (r) => `Dear ${r.cliente}, we hope you enjoyed your stay in Lagos! Friendly reminder that check-out is by 10:00 AM. Please return the card and pool wristbands to the Vitasol reception to recover your deposit. Safe travels home!`
+        pt: (r) => `Estimado(a) ${r.cliente}, esperamos que tenha desfrutado da sua estadia em Lagos! Lembramos que o check-out é até às 10h. Por favor, devolva o cartão e as pulseiras na receção Vitasol. Tenha um excelente regresso!`,
+        es: (r) => `Estimado/a ${r.cliente}, ¡esperamos que haya disfrutado su estancia en Lagos! Le recordamos que el check-out es hasta las 10:00. Por favor, entregue la tarjeta y las pulseras en la recepción Vitasol. ¡Buen viaje!`,
+        en: (r) => `Dear ${r.cliente}, we hope you enjoyed your stay in Lagos! Friendly reminder that check-out is by 10:00 AM. Please return the card and pool wristbands to the Vitasol reception. Safe travels!`
     }
 };
 
 // ==========================================================================
-// CONSULTA E FILTRAGEM DE RESERVAS NO FIRESTORE
+// CONSULTA E FILTRAGEM
 // ==========================================================================
 async function carregarReservas(modoFiltro) {
     const listaContainer = document.getElementById('listaHospedes');
@@ -253,10 +278,11 @@ async function carregarReservas(modoFiltro) {
         
         listaReservasGlobal = [];
         snapshot.forEach(doc => {
-            listaReservasGlobal.push({ id: doc.id, ...doc.data() });
+            // Normaliza cada documento
+            listaReservasGlobal.push(normalizarReserva(doc));
         });
 
-        aplicarFiltroData(modoFiltro || 'hoje');
+        aplicarFiltroData(modoFiltro || 'todos');
     } catch (err) {
         console.error("Erro ao carregar reservas:", err);
         listaContainer.innerHTML = '<p style="color:red; text-align:center; padding: 10px; font-size: 12px;">Erro ao carregar dados do Firebase.</p>';
@@ -272,22 +298,26 @@ function aplicarFiltroData(tipo) {
     let filtradas = [];
 
     if (tipo === 'hoje') {
-        document.getElementById('btnHoje').classList.add('active');
+        const btn = document.getElementById('btnHoje');
+        if (btn) btn.classList.add('active');
         filtradas = listaReservasGlobal.filter(r => r.checkIn === hojeStr);
     } else if (tipo === '3dias') {
-        document.getElementById('btn3Dias').classList.add('active');
+        const btn = document.getElementById('btn3Dias');
+        if (btn) btn.classList.add('active');
         const limite = new Date();
         limite.setDate(limite.getDate() + 3);
         const limiteStr = limite.toISOString().split('T')[0];
         filtradas = listaReservasGlobal.filter(r => r.checkIn >= hojeStr && r.checkIn <= limiteStr);
     } else if (tipo === '7dias') {
-        document.getElementById('btn7Dias').classList.add('active');
+        const btn = document.getElementById('btn7Dias');
+        if (btn) btn.classList.add('active');
         const limite = new Date();
         limite.setDate(limite.getDate() + 7);
         const limiteStr = limite.toISOString().split('T')[0];
         filtradas = listaReservasGlobal.filter(r => r.checkIn >= hojeStr && r.checkIn <= limiteStr);
     } else {
-        document.getElementById('btnTodos').classList.add('active');
+        const btn = document.getElementById('btnTodos');
+        if (btn) btn.classList.add('active');
         filtradas = [...listaReservasGlobal];
     }
 
@@ -316,7 +346,7 @@ function filtrarListaLocal() {
     const termo = document.getElementById('searchHospede').value.toLowerCase();
     const filtradas = listaFiltradaAtual.filter(r => {
         const cliente = (r.cliente || '').toLowerCase();
-        const apto = (Array.isArray(r.apartamentos) ? r.apartamentos.join(' ') : String(r.apartamento || '')).toLowerCase();
+        const apto = String(r.apartamento || '').toLowerCase();
         return cliente.includes(termo) || apto.includes(termo);
     });
     renderizarListaHospedes(filtradas);
@@ -332,11 +362,10 @@ function renderizarListaHospedes(lista) {
     }
 
     lista.forEach(r => {
-        const apto = Array.isArray(r.apartamentos) ? r.apartamentos[0] : (r.apartamento || '---');
         const enviadoCheckin = r.mensagens && r.mensagens.checkin;
         const enviadoAima = r.mensagens && r.mensagens.aima;
 
-        // Deteção da bandeira para a lista
+        // Deteção da bandeira
         const langReserva = detetarIdiomaPorPais(r.pais);
         let bandeira = '🌐';
         if (langReserva === 'pt') bandeira = '🇵🇹';
@@ -350,7 +379,7 @@ function renderizarListaHospedes(lista) {
         card.innerHTML = `
             <div class="hospede-header">
                 <span>${bandeira} ${r.cliente || 'Hóspede'}</span>
-                <span style="color: #2563eb; font-weight: 700;">Apto ${apto}</span>
+                <span style="color: #2563eb; font-weight: 700;">Apto ${r.apartamento}</span>
             </div>
             <div class="hospede-sub">Check-in: ${r.checkIn || 'N/A'} | Hóspedes: ${r.hospedes || 2}</div>
             <div class="badges-status">
@@ -363,7 +392,7 @@ function renderizarListaHospedes(lista) {
 }
 
 // ==========================================================================
-// SELEÇÃO E GERADOR DE TEXTO
+// SELEÇÃO E GERADOR DE MENSAGENS
 // ==========================================================================
 function selecionarHospede(reserva) {
     reservaSelecionada = reserva;
@@ -371,12 +400,11 @@ function selecionarHospede(reserva) {
     document.getElementById('painelVazio').style.display = 'none';
     document.getElementById('painelMensagem').style.display = 'flex';
 
-    // Deteção Automática Alargada do Idioma
+    // Deteção Automática do Idioma
     idiomaAtual = detetarIdiomaPorPais(reserva.pais);
 
-    const apto = Array.isArray(reserva.apartamentos) ? reserva.apartamentos[0] : (reserva.apartamento || '2301');
-    document.getElementById('nomeHospedeSel').innerText = `${reserva.cliente || 'Hóspede'} (Apto ${apto})`;
-    document.getElementById('detalhesReservaSel').innerText = `Check-in: ${reserva.checkIn || 'N/A'} | Tel: ${reserva.telefone || 'Sem telefone'} | País: ${reserva.pais || 'N/A'}`;
+    document.getElementById('nomeHospedeSel').innerText = `${reserva.cliente} (Apto ${reserva.apartamento})`;
+    document.getElementById('detalhesReservaSel').innerText = `Check-in: ${reserva.checkIn} | Tel: ${reserva.telefone || 'Sem telefone'} | País: ${reserva.pais || 'N/A'}`;
 
     atualizarBotoesIdioma();
     carregarTemplate(tipoTemplateAtual);
@@ -408,21 +436,13 @@ function carregarTemplate(tipo) {
 
     if (!reservaSelecionada) return;
 
-    const apto = Array.isArray(reservaSelecionada.apartamentos) ? reservaSelecionada.apartamentos[0] : (reservaSelecionada.apartamento || '2301');
-    const dados = {
-        cliente: reservaSelecionada.cliente || 'Hóspede',
-        checkIn: reservaSelecionada.checkIn || '',
-        apartamento: apto,
-        hospedes: reservaSelecionada.hospedes || 2
-    };
-
     const fnTemplate = templates[tipo][idiomaAtual] || templates[tipo]['en'];
-    document.getElementById('textoMensagem').value = fnTemplate(dados);
+    document.getElementById('textoMensagem').value = fnTemplate(reservaSelecionada);
     atualizarBotaoEnviado();
 }
 
 // ==========================================================================
-// AÇÕES DO PAINEL DE MENSAGENS
+// AÇÕES
 // ==========================================================================
 function copiarTexto() {
     const txt = document.getElementById('textoMensagem');
