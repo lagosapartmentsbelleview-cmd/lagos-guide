@@ -38,7 +38,18 @@ let idiomaAtual = 'pt';
 let tipoTemplateAtual = 'checkin';
 
 // ==========================================================================
-// FORMATAÇÃO DE DATA POR EXTENSO (ex: "sábado, 5 de setembro de 2026")
+// DETERMINAÇÃO DO CÓDIGO DO COFRE POR APARTAMENTO
+// ==========================================================================
+function obterCodigoCofre(apartamento) {
+    const aptStr = String(apartamento || '').trim();
+    if (aptStr.includes('2301')) return '9110';
+    if (aptStr.includes('2203')) return '9120';
+    if (aptStr.includes('2204')) return '9130';
+    return '9110'; // Padrão caso não corresponda
+}
+
+// ==========================================================================
+// FORMATAÇÃO DE DATA POR EXTENSO (ex: "domingo, 4 de outubro de 2026")
 // ==========================================================================
 function formatarDataExtenso(dataStr, lang) {
     if (!dataStr || dataStr === 'N/A') return dataStr;
@@ -114,7 +125,6 @@ function processarPaisEIdioma(rawPais) {
         return { bandeira: '🇬🇧', idioma: 'en', paisDisplay: p.toUpperCase() };
     }
 
-    // Caso seja outro país (ex: França "fr", Alemanha "de")
     return { bandeira: '🌐', idioma: 'en', paisDisplay: p.toUpperCase() };
 }
 
@@ -151,30 +161,62 @@ function normalizarReserva(doc) {
         }
     }
 
-    // 2. Processamento do 'paisCliente'
+    // 2. Extração de Check-Out
+    let checkOutRaw = d.checkOut || d.checkout || d.dataCheckOut || d.data_checkout || d.saida || d.dataSaida || d.endDate || '';
+    let checkOutStr = 'N/A';
+
+    if (checkOutRaw) {
+        if (typeof checkOutRaw.toDate === 'function') {
+            checkOutStr = checkOutRaw.toDate().toISOString().split('T')[0];
+        } else if (checkOutRaw instanceof Date) {
+            checkOutStr = checkOutRaw.toISOString().split('T')[0];
+        } else if (typeof checkOutRaw === 'string') {
+            let limpo = checkOutRaw.trim();
+            if (limpo.includes('/')) {
+                const p = limpo.split('/');
+                if (p.length === 3) checkOutStr = `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
+            } else if (limpo.includes('-')) {
+                const p = limpo.split('-');
+                if (p.length === 3 && p[0].length === 2) {
+                    checkOutStr = `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
+                } else {
+                    checkOutStr = limpo;
+                }
+            } else {
+                checkOutStr = limpo;
+            }
+        }
+    }
+
+    // 3. Processamento do 'paisCliente'
     const infoPais = processarPaisEIdioma(d.paisCliente);
 
-    // 3. Nome do Hóspede
+    // 4. Nome do Hóspede
     let cliente = d.cliente || d.nome || d.guest || d.hospede || 'Hóspede';
 
-    // 4. Apartamento
+    // 5. Apartamento
     let apartamento = '---';
     if (d.apartamento) apartamento = d.apartamento;
     else if (Array.isArray(d.apartamentos) && d.apartamentos.length > 0) apartamento = d.apartamentos[0];
     else if (d.apto) apartamento = d.apto;
 
-    // 5. Número de Hóspedes
+    // 6. Número de Hóspedes
     let hospedes = d.hospedes || d.numHospedes || d.pessoas || d.guests || 2;
+
+    // 7. Código do Cofre
+    let codigoCofre = d.codigoCofre || obterCodigoCofre(apartamento);
 
     return {
         id: doc.id,
         cliente,
         checkIn: checkInStr,
+        checkOut: checkOutStr,
         pais: infoPais.paisDisplay,
         bandeira: infoPais.bandeira,
         idiomaCalculado: infoPais.idioma,
         apartamento,
         hospedes,
+        codigoCofre,
         mensagens: d.mensagens || {}
     };
 }
@@ -290,10 +332,10 @@ Não são partilhados com terceiros para fins comerciais.
 Desejamos-lhe uma excelente viagem e uma estadia memorável em Lagos!
 
 Atenciosamente,
-Luis Ferreira
+Luís Ferreira
 📩 belleview@sapo.pt
 📞 +351 910 051 588
-🌍 https://www.facebook.com/Belleview`;
+🌍 https://www.facebook.com/Belleview/`;
         },
 
         es: (r) => {
@@ -382,10 +424,10 @@ Según el artículo 45.º de la Ley n.º 23/2007, todos los alojamientos turíst
 Deseamos que tenga un excelente viaje y una estancia memorable en Lagos.
 
 Atentamente,
-Luis Ferreira
+Luís Ferreira
 📩 belleview@sapo.pt
 📞 +351 910 051 588
-🌍 https://www.facebook.com/Belleview`;
+🌍 https://www.facebook.com/Belleview/`;
         },
 
         en: (r) => {
@@ -471,10 +513,10 @@ This form is for collecting mandatory identification details for all non-Portugu
 We wish you a safe journey and a memorable stay in Lagos!
 
 Kind regards,
-Luis Ferreira
+Luís Ferreira
 📩 belleview@sapo.pt
 📞 +351 910 051 588
-🌍 https://www.facebook.com/Belleview`;
+🌍 https://www.facebook.com/Belleview/`;
         }
     },
 
@@ -491,9 +533,131 @@ Luis Ferreira
     },
 
     checkout: {
-        pt: (r) => `Estimado(a) ${r.cliente}, esperamos que tenha desfrutado da sua estadia em Lagos! Lembramos que o check-out é até às 10h. Por favor, devolva o cartão e as pulseiras na receção Vitasol. Tenha um excelente regresso!`,
-        es: (r) => `Estimado/a ${r.cliente}, ¡esperamos que haya disfrutado su estancia en Lagos! Le recordamos que el check-out es hasta las 10:00. Por favor, entregue la tarjeta y las pulseras en la recepción Vitasol. ¡Buen viaje!`,
-        en: (r) => `Dear ${r.cliente}, we hope you enjoyed your stay in Lagos! Friendly reminder that check-out is by 10:00 AM. Please return the card and pool wristbands to the Vitasol reception. Safe travels!`
+        pt: (r) => {
+            const dataExt = formatarDataExtenso(r.checkOut !== 'N/A' ? r.checkOut : r.checkIn, 'pt');
+            return `Assunto: 📌 Informação Importante – Check-out | Apartamento Belleview
+
+Olá, Estimado(a) Cliente ${r.cliente},
+
+Desejamos-lhe um ótimo dia!
+
+Esperamos do fundo do coração que esteja a desfrutar da sua estadia no Apartamento Belleview e que esteja a ter uma experiência memorável e muito agradável na nossa bonita cidade de Lagos.
+
+Amanhã, ${dataExt}, será o seu dia de partida. Para garantir que todo o processo decorra de forma simples, tranquila e sem preocupações, pedimos a gentileza de consultar as informações e orientações de check-out abaixo:
+
+🔹 Horário de Check-out
+O check-out deve ser concluído impreterivelmente até às 10:00, uma vez que iremos receber novos hóspedes no mesmo dia e precisamos de preparar o apartamento com todo o carinho.
+
+🔑 Devolução de Chaves e Comando da Garagem
+• Comando da garagem: Por favor, coloque-o em cima do móvel vermelho localizado no corredor do apartamento.
+• Chaves (3 chaves): Devem ser colocadas dentro do cofre exterior com o código ( ${r.codigoCofre} ).
+• Após colocar as chaves no cofre, pedimos que o feche bem e baralhe os números para garantir a segurança do espaço.
+
+📌 Antes de sair, solicitamos que:
+✅ Verifique se não deixa nenhum pertence pessoal no apartamento.
+✅ Deposite o lixo doméstico nos contentores adequados do complexo Marina Park.
+✅ Por favor, deixe a louça lavada.
+
+📌 Saída antecipada:
+Se decidir realizar o check-out antes das 10:00, pedimos o favor de nos avisar com antecedência através desta mensagem.
+
+Aproveitamos também para pedir sinceras desculpas por qualquer eventual imprevisto ou inconveniente que possa ter surgido durante a sua estadia. Estamos e estaremos sempre inteiramente à sua disposição caso necessite de qualquer informação ou apoio adicional.
+
+🙏 Um agradecimento muito especial por ter escolhido ficar connosco!
+Foi um enorme prazer recebê-lo(a) nos nossos apartamentos. Desejamos a si e a todos os seus familiares e entes queridos muita saúde, paz e felicidades.
+
+Desejamos-lhe uma excelente viagem de regresso a casa e esperamos ter o privilégio de o(a) acolher novamente em breve!
+
+Com os melhores cumprimentos,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        },
+
+        es: (r) => {
+            const dataExt = formatarDataExtenso(r.checkOut !== 'N/A' ? r.checkOut : r.checkIn, 'es');
+            return `Asunto: 📌 Información Importante – Check-out | Apartamento Belleview
+
+Estimado/a Cliente ${r.cliente},
+
+¡Buenos días!
+
+Esperamos de todo corazón que esté disfrutando de su estancia en el Apartamento Belleview y que esté teniendo una experiencia inolvidable en la hermosa ciudad de Lagos.
+
+Mañana, ${dataExt}, es su día de salida. Para garantizar un proceso ágil, cómodo y sin inconvenientes, le pedimos amablemente que consulte las siguientes indicaciones de check-out:
+
+🔹 Horario de Check-out
+El check-out debe realizarse como máximo a las 10:00, ya que recibiremos a nuevos huéspedes el mismo día y debemos preparar el apartamento impecablemente.
+
+🔑 Devolución de Llaves y Mando del Garaje
+• Mando del garaje: Por favor, déjelo encima del mueble rojo ubicado en el pasillo del apartamento.
+• Llaves (3 llaves): Deben colocarse dentro de la caja fuerte exterior utilizando el código ( ${r.codigoCofre} ).
+• Tras introducir las llaves, le rogamos cerrar bien la caja fuerte y girar los números para que quede bloqueada.
+
+📌 Antes de salir, le pedimos por favor:
+✅ Comprobar que no olvida ningún objeto personal en el apartamento.
+✅ Depositar la basura en los contenedores correspondientes del complejo Marina Park.
+✅ Dejar los platos y utensilios de cocina lavados.
+
+📌 Aviso de salida anticipada:
+Si planea salir antes de las 10:00, le agradeceríamos que nos lo informe con antelación respondiendo a este mensaje.
+
+Aprovechamos también para pedirle disculpas sinceras por cualquier imprevisto que haya podido surgir durante su estancia. Estamos a su entera disposición para todo lo que pueda necesitar.
+
+🙏 ¡Muchísimas gracias por su estancia y por confiar en nosotros!
+Ha sido un verdadero placer recibirle. Deseamos para usted y todos sus seres queridos mucha salud, paz y felicidad.
+
+¡Le deseamos un feliz y seguro viaje de regreso a casa y esperamos volver a darle la bienvenida muy pronto!
+
+Atentamente,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        },
+
+        en: (r) => {
+            const dataExt = formatarDataExtenso(r.checkOut !== 'N/A' ? r.checkOut : r.checkIn, 'en');
+            return `Subject: 📌 Important Information – Check-out | Apartment Belleview
+
+Dear Guest ${r.cliente},
+
+Good morning!
+
+We hope from the bottom of our hearts that you are enjoying your stay at Apartment Belleview and having a wonderful experience in our beautiful city of Lagos.
+
+Tomorrow, ${dataExt}, is your departure day. To ensure a smooth and hassle-free process, we kindly ask you to review the check-out guidelines below:
+
+🔹 Check-out Time
+Check-out must be completed by 10:00 AM at the latest, as new guests will be arriving on the same day and we need to prepare the apartment for them.
+
+🔑 Return of Keys and Garage Remote
+• Garage Remote: Please place it on top of the red furniture located in the apartment hallway.
+• Keys (3 keys): Must be placed inside the exterior key safe using the code ( ${r.codigoCofre} ).
+• After placing the keys inside, please close the safe securely and scramble the numbers to ensure it is locked.
+
+📌 Before Leaving, Please Ensure You:
+✅ Double-check that no personal belongings are left behind in the apartment.
+✅ Dispose of all trash in the appropriate bins at the Marina Park complex.
+✅ Please wash any used dishes and kitchen utensils.
+
+📌 Early Departure Notice:
+If you plan to depart before 10:00 AM, kindly let us know in advance by replying to this message.
+
+We would also like to apologize for any unforeseen issues or inconveniences that may have occurred during your stay. Please do not hesitate to reach out if you need any assistance or information.
+
+🙏 Thank you so much for staying with us!
+It has been an absolute pleasure hosting you. We wish you and all your loved ones good health, peace, and happiness.
+
+We wish you a safe and pleasant journey home, and we hope to welcome you back soon!
+
+Best regards,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        }
     }
 };
 
@@ -625,7 +789,6 @@ function selecionarHospede(reserva) {
     document.getElementById('painelVazio').style.display = 'none';
     document.getElementById('painelMensagem').style.display = 'flex';
 
-    // Define o idioma automaticamente conforme o país detetado
     idiomaAtual = reserva.idiomaCalculado;
 
     document.getElementById('nomeHospedeSel').innerText = `${reserva.cliente} (Apto ${reserva.apartamento})`;
