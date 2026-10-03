@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Mensagens — Belleview AL</title>
+    <link rel="stylesheet" href="css/global.css">
+    <style>
+        /* ==========================================================================
+           LAYOUT DA CENTRAL DE MENSAGENS (ESTILO INBOX 2 COLUNAS)
+           ========================================================================== */
+        .inbox-container {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 16px;
+            height: calc(100vh - 100px);
+            margin-top: 10px;
+        }
+
+        /* Coluna da Esquerda: Filtros e Lista */
+        .inbox-sidebar {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .inbox-filter-bar {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quick-dates {
+            display: flex;
+            gap: 4px;
+        }
+
+        .quick-dates button {
+            flex: 1;
+            height: 28px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 0;
+            background: #ffffff;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .quick-dates button.active {
+            background: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        .inputs-datas-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .inputs-datas-grid input {
+            height: 28px !important;
+            font-size: 11px !important;
+            padding: 0 6px !important;
+        }
+
+        .hospedes-lista {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .hospede-card {
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #ffffff;
+        }
+
+        .hospede-card:hover {
+            border-color: #bfdbfe;
+            background: #f0fdf4;
+        }
+
+        .hospede-card.active {
+            border-color: #2563eb;
+            background: #eff6ff;
+            box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .hospede-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 13px;
+            color: #0f172a;
+        }
+
+        .hospede-sub {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 3px;
+        }
+
+        .badges-status {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .badge-check {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #f1f5f9;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+        }
+
+        .badge-check.enviado {
+            background: #dcfce7;
+            color: #15803d;
+            border-color: #bbf7d0;
+            font-weight: 600;
+        }
+
+        /* Coluna da Direita: Estúdio de Mensagens */
+        .inbox-main {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .template-selector, .lang-selector {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .template-selector button, .lang-selector button {
+            height: 32px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #f8fafc;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0 10px;
+            cursor: pointer;
+        }
+
+        .template-selector button.active, .lang-selector button.active {
+            background: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        .textarea-preview {
+            width: 100%;
+            flex: 1;
+            min-height: 260px;
+            font-family: inherit;
+            font-size: 13px;
+            line-height: 1.5;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            resize: vertical;
+            background-color: #fafafa;
+            color: #1e293b;
+        }
+
+        .textarea-preview:focus {
+            background-color: #ffffff;
+            border-color: #2563eb;
+            outline: none;
+        }
+
+        .anexos-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 10px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .anexo-thumb {
+            width: 42px;
+            height: 42px;
+            border-radius: 4px;
+            object-fit: cover;
+            border: 1px solid #cbd5e1;
+        }
+
+        .actions-toolbar {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .actions-toolbar button {
+            height: 36px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 0 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-whatsapp {
+            background: #25d366 !important;
+            color: #ffffff !important;
+            border: 1px solid #1ebc57 !important;
+        }
+
+        .btn-whatsapp:hover {
+            background: #1ebc57 !important;
+        }
+
+        @media (max-width: 900px) {
+            .inbox-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Menu Superior -->
+<div class="top-menu">
+    <button class="menu-button" onclick="toggleMenu()">☰ Menu</button>
+    <span style="font-weight: 700; color: #1e293b;">Belleview AL — Central de Mensagens</span>
+    <button class="menu-button" onclick="logout()">Sair</button>
+</div>
+
+<div class="dropdown-menu" id="dropdownMenu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="listagem-reservas.html">Reservas</a>
+    <a href="mensagens.html">Mensagens</a>
+    <a href="#" onclick="logout()" class="sair">Sair</a>
+</div>
+
+<div class="content">
+    <div class="inbox-container">
+        
+        <!-- ESQUERDA: LISTA DE HÓSPEDES & FILTROS -->
+        <div class="inbox-sidebar">
+            <div class="inbox-filter-bar">
+                <div class="quick-dates">
+                    <button id="btnHoje" onclick="aplicarFiltroData('hoje')" class="active">Hoje</button>
+                    <button id="btn3Dias" onclick="aplicarFiltroData('3dias')">3 Dias</button>
+                    <button id="btn7Dias" onclick="aplicarFiltroData('7dias')">7 Dias</button>
+                    <button id="btnTodos" onclick="aplicarFiltroData('todos')">Todos</button>
+                </div>
+                <div class="inputs-datas-grid">
+                    <input type="date" id="dataInicio" onchange="aplicarFiltroDataCustom()">
+                    <input type="date" id="dataFim" onchange="aplicarFiltroDataCustom()">
+                </div>
+                <input type="text" id="searchHospede" placeholder="Pesquisar hóspede / apto..." onkeyup="filtrarListaLocal()">
+            </div>
+
+            <div class="hospedes-lista" id="listaHospedes">
+                <!-- Inserido dinamicamente via JS -->
+            </div>
+        </div>
+
+        <!-- DIREITA: ESTÚDIO DE MENSAGENS -->
+        <div class="inbox-main" id="painelMensagem" style="display: none;">
+            
+            <!-- Cabeçalho do Hóspede Selecionado -->
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">
+                <div>
+                    <h2 id="nomeHospedeSel" style="font-size: 16px; font-weight: 700; margin: 0; color: #0f172a;">--</h2>
+                    <span id="detalhesReservaSel" style="font-size: 12px; color: #64748b;">--</span>
+                </div>
+                <div class="lang-selector">
+                    <button id="langPT" onclick="alterarIdioma('pt')">🇵🇹 PT</button>
+                    <button id="langES" onclick="alterarIdioma('es')">🇪🇸 ES</button>
+                    <button id="langEN" onclick="alterarIdioma('en')">🇬🇧 EN</button>
+                </div>
+            </div>
+
+            <!-- Seleção de Tipo de Mensagem -->
+            <div class="template-selector">
+                <button id="tplCheckin" onclick="carregarTemplate('checkin')" class="active">🚀 Check-in</button>
+                <button id="tplAima" onclick="carregarTemplate('aima')">⚠️ Lembrete AIMA</button>
+                <button id="tplHoras" onclick="carregarTemplate('horas')">⏰ Horário Chegada</button>
+                <button id="tplCheckout" onclick="carregarTemplate('checkout')">👋 Check-out</button>
+            </div>
+
+            <!-- Editor / Preview do Texto -->
+            <textarea id="textoMensagem" class="textarea-preview"></textarea>
+
+            <!-- Anexos Visuais / Imagens Úteis -->
+            <div class="anexos-box" id="caixaAnexos">
+                <img src="https://apartmentsbelleview.com/img/mapa-marinapark.jpg" class="anexo-thumb" alt="Mapa" onerror="this.style.display='none'">
+                <div style="flex: 1;">
+                    <strong style="font-size: 12px; display: block; color: #1e293b;">Anexo Recomendado: Mapa Lote 22/23</strong>
+                    <span style="font-size: 11px; color: #64748b;">O link do mapa já está no texto. Pode descarregar a imagem se quiser anexar manualmente.</span>
+                </div>
+                <a href="https://apartmentsbelleview.com/img/mapa-marinapark.jpg" target="_blank" style="font-size: 11px; padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 4px; text-decoration: none; color: #334155; background: #fff;">Ver / Download</a>
+            </div>
+
+            <!-- Barra de Ações Rápidas -->
+            <div class="actions-toolbar">
+                <button onclick="copiarTexto()" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155;">📋 Copiar Texto</button>
+                <button onclick="abrirWhatsApp()" class="btn-whatsapp">💬 Abrir WhatsApp</button>
+                <button id="btnMarcarEnviado" onclick="alternarEstadoEnviado()" style="background: #ffffff; border: 1px solid #cbd5e1; color: #334155;">✓ Marcar como Enviado</button>
+            </div>
+
+        </div>
+
+        <!-- Estado Vazio -->
+        <div id="painelVazio" class="inbox-main" style="align-items: center; justify-content: center; color: #94a3b8; text-align: center;">
+            <p style="font-size: 14px;">👈 Selecione um hóspede na lista à esquerda para preparar e enviar mensagens.</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- SDKs do Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<!-- Ficheiro Central do Firebase -->
+<script src="js/firebase-config.js"></script>
+
+<!-- Script Específico das Mensagens -->
+<script src="js/mensagens.js"></script>
+
+</body>
+</html>
