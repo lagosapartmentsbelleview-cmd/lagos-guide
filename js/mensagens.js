@@ -1,8 +1,6 @@
 // ==========================================================================
 // INICIALIZAÇÃO E AUTENTICAÇÃO VIA FIREBASE CENTRAL
 // ==========================================================================
-const auth = firebase.auth();
-const db = firebase.firestore();
 
 // Verificação de sessão de utilizador
 auth.onAuthStateChanged(user => {
