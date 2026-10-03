@@ -310,6 +310,15 @@
                 </div>
             </div>
 
+            <!-- Campo para ver e atualizar o Horário Previsto de Chegada -->
+            <div style="background: #f1f5f9; padding: 10px; border-radius: 8px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+            <label for="inputHoraChegada" style="font-size: 12px; font-weight: bold; color: #334155;">⏰ Hora Prevista Chegada:</label>
+            <div style="display: flex; gap: 6px;">
+            <input type="time" id="inputHoraChegada" style="padding: 4px 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
+            <button onclick="guardarHorarioChegadaManual()" style="background: #2563eb; color: white; border: none; padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600;">Gravar</button>
+            </div>
+            </div>
+
             <!-- Seleção de Tipo de Mensagem -->
             <div class="template-selector">
                 <button id="tplCheckin" onclick="carregarTemplate('checkin')" class="active">🚀 Check-in</button>
