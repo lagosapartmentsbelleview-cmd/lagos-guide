@@ -45,7 +45,7 @@ function obterCodigoCofre(apartamento) {
     if (aptStr.includes('2301')) return '9110';
     if (aptStr.includes('2203')) return '9120';
     if (aptStr.includes('2204')) return '9130';
-    return '9110'; // Padrão
+    return '9110';
 }
 
 // ==========================================================================
@@ -184,6 +184,7 @@ function normalizarReserva(doc) {
 
     let hospedes = d.hospedes || d.numHospedes || d.pessoas || d.guests || 2;
     let codigoCofre = d.codigoCofre || obterCodigoCofre(apartamento);
+    let horaChegadaPrevista = d.horarioChegada || d.horaChegada || d.horaPrevista || '';
 
     return {
         id: doc.id,
@@ -196,29 +197,33 @@ function normalizarReserva(doc) {
         apartamento,
         hospedes,
         codigoCofre,
+        horarioChegada: horaChegadaPrevista,
         mensagens: d.mensagens || {},
         respostas: d.respostas || { aima: false, horario: false }
     };
 }
 
 // ==========================================================================
-// MODELOS DE MENSAGENS (TEMPLATES COMPLETOS E PROFISSIONAIS)
+// MODELOS DE MENSAGENS (COM LINKS DE IMAGEM E HORÁRIO DE CHEGADA)
 // ==========================================================================
 const templates = {
     checkin: {
         pt: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'pt');
+            const infoHora = r.horarioChegada ? ` (previsto para as ${r.horarioChegada})` : '';
             return `Estimado(a) Cliente ${r.cliente},
 
 Esperamos que se encontre bem!
 
-A sua chegada ao apartamento Belleview, em Lagos, está para breve, com check-in agendado para ${dataExt}. Queremos garantir que tenha uma experiência agradável e sem preocupações.
+A sua chegada ao apartamento Belleview, em Lagos, está para breve, com check-in agendado para ${dataExt}${infoHora}. Queremos garantir que tenha uma experiência agradável e sem preocupações.
 
-A sua chegada e acesso ao apartamento
-Ao chegar ao Complexo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), dirija-se diretamente ao apartamento [${r.apartamento}] atribuído à sua reserva (consulte a imagem anexa para a localização exata no Lote 22/23).
+📍 A sua chegada e acesso ao apartamento
+Ao chegar ao Complexo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), dirija-se diretamente ao apartamento [${r.apartamento}] atribuído à sua reserva.
 
-Localização no Google Maps:
-👉 https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
+📌 Links para consulta e navegação:
+👉 Localização no Google Maps: https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
+🖼️ Mapa de Acesso ao Lote 22/23: https://apartmentsbelleview.com/img/mapa-marina-park.jpg
+🖼️ Imagem de Acesso ao Apartamento / Cofre: https://apartmentsbelleview.com/img/acesso-cofre.jpg
 
 Assim que estiver à porta do apartamento, entre em contacto connosco através do número +351 910 051 588 para receber o código da Master Lock de entrada.
 
@@ -231,17 +236,13 @@ Horários importantes
 Check-in: a partir das 15h
 Check-out: até às 10h
 
-Pedimos, por gentileza, que nos informe com antecedência o horário estimado da sua chegada, para melhor organizarmos a sua receção.
-
 Acesso à piscina
 Para aceder à área da piscina, será necessário um cartão branco e uma pulseira para cada hóspede.
 Dirija-se à receção principal (Vitasol), localizada na entrada do Marina Park, informe o número do apartamento [${r.apartamento}] e solicite o cartão e as [${r.hospedes}] pulseiras (caução de 1 € por unidade, devolvida no check-out).
 
 Faturação
 Para a emissão da sua fatura, por favor envie-nos:
-• Nome completo
-• Morada
-• Número de Contribuinte (NIF)
+• Nome completo | Morada | Número de Contribuinte (NIF)
 
 Informações úteis sobre Lagos e o apartamento:
 👉 Guia da Cidade: https://apartmentsbelleview.com/guide
@@ -264,17 +265,20 @@ Luís Ferreira
 
         es: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'es');
+            const infoHora = r.horarioChegada ? ` (previsto para las ${r.horarioChegada})` : '';
             return `Estimado/a Cliente ${r.cliente},
 
 ¡Esperamos que se encuentre bien!
 
-Su llegada al apartamento Belleview, en Lagos, se aproxima, con check-in programado para el ${dataExt}. Queremos garantizar que tenga una experiencia agradable y sin preocupaciones.
+Su llegada al apartamento Belleview, en Lagos, se aproxima, con check-in programado para el ${dataExt}${infoHora}. Queremos garantizar que tenga una experiencia agradable y sin preocupaciones.
 
-Su llegada y acceso al apartamento
-Al llegar al Complejo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), diríjase directamente al apartamento [${r.apartamento}] asignado a su reserva (consulte la imagen adjunta para la ubicación exacta en el Lote 22/23).
+📍 Su llegada y acceso al apartamento
+Al llegar al Complejo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), diríjase directamente al apartamento [${r.apartamento}] asignado a su reserva.
 
-Ubicación en Google Maps:
-👉 https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
+📌 Enlaces de ayuda e imágenes:
+👉 Ubicación en Google Maps: https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
+🖼️ Mapa de Acceso en el Complejo: https://apartmentsbelleview.com/img/mapa-marina-park.jpg
+🖼️ Imagen del Acceso / Caja Fuerte: https://apartmentsbelleview.com/img/acesso-cofre.jpg
 
 Una vez en la puerta del apartamento, contáctenos a través del número +351 910 051 588 para recibir el código del Master Lock de entrada.
 
@@ -300,17 +304,20 @@ Luís Ferreira
 
         en: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'en');
+            const infoHora = r.horarioChegada ? ` (expected at ${r.horarioChegada})` : '';
             return `Dear Guest ${r.cliente},
 
 We hope you are doing well!
 
-Your arrival at Belleview Apartment in Lagos is coming up soon, with check-in scheduled for ${dataExt}. We want to ensure you have a smooth and worry-free stay.
+Your arrival at Belleview Apartment in Lagos is coming up soon, with check-in scheduled for ${dataExt}${infoHora}. We want to ensure you have a smooth and worry-free stay.
 
-Arrival and Apartment Access
-Upon arriving at Marina Park Resort (37°07'01.6"N 8°40'16.4"W), head directly to apartment [${r.apartamento}] assigned to your reservation (check attached image for exact location at Lot 22/23).
+📍 Arrival and Apartment Access
+Upon arriving at Marina Park Resort (37°07'01.6"N 8°40'16.4"W), head directly to apartment [${r.apartamento}] assigned to your reservation.
 
-Google Maps Location:
-👉 https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
+📌 Location links and images:
+👉 Google Maps Location: https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
+🖼️ Resort Access Map: https://apartmentsbelleview.com/img/mapa-marina-park.jpg
+🖼️ Key Safe / Door Access Image: https://apartmentsbelleview.com/img/acesso-cofre.jpg
 
 Once at the apartment door, please contact us at +351 910 051 588 to receive your Master Lock entry code.
 
@@ -338,7 +345,7 @@ Luís Ferreira
     aima: {
         pt: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'pt');
-            return `Assunto: ⚠️️ Importante – Obrigatoriedade de Envio de Dados para o SEF (AIMA)
+            return `Assunto: ⚠️ Importante – Obrigatoriedade de Envio de Dados para o SEF (AIMA)
 
 Caro(a) ${r.cliente},
 
@@ -355,12 +362,9 @@ O seu check-in está para muito breve, ${dataExt}, e gostaríamos de relembrar q
 👉 https://apartmentsbelleview.com/aima
 
 📌 Dados obrigatórios para cada hóspede estrangeiro:
-• Nome completo
-• Data de nascimento
-• País de origem
-• País de residência
-• Número de identificação (Passaporte ou Cartão de Cidadão)
-• País emissor do documento de identificação
+• Nome completo | Data de nascimento | País de origem
+• País de residência | Número de Identificação (Passaporte / CC)
+• País emissor do documento
 
 🔹 Para qualquer esclarecimento ou questão:
 📩 E-mail: belleview@sapo.pt
@@ -401,11 +405,8 @@ Su check-in está muy próximo, el ${dataExt}, y nos gustaría recordarle que, d
 👉 https://apartmentsbelleview.com/aima
 
 📌 Datos obligatorios para cada huésped extranjero:
-• Nombre completo
-• Fecha de nacimiento
-• País de origen
-• País de residencia
-• Número de documento de identidad (Pasaporte o DNI)
+• Nombre completo | Fecha de nacimiento | País de origen
+• País de residencia | Número de Documento (Pasaporte o DNI)
 • País emisor del documento
 
 🔹 Para cualquier consulta o aclaración:
@@ -447,18 +448,15 @@ Your check-in is coming up soon, on ${dataExt}, and we would like to remind you 
 👉 https://apartmentsbelleview.com/aima
 
 📌 Mandatory details per foreign guest:
-• Full Name
-• Date of Birth
-• Country of Origin
-• Country of Residence
-• Passport or ID Card Number
+• Full Name | Date of Birth | Country of Origin
+• Country of Residence | Passport or ID Card Number
 • Document Issuing Country
 
 🔹 For questions or assistance:
 📩 E-mail: belleview@sapo.pt
 📲 WhatsApp: +351 910 051 588
 
-⚠️️ Please Note: Failure to submit these mandatory details prior to check-in will legally prevent access to the apartment and may incur severe legal fines.
+⚠️ Please Note: Failure to submit these mandatory details prior to check-in will legally prevent access to the apartment and may incur severe legal fines.
 
 📌 Legal Base:
 Portuguese Laws No. 23/2007 and No. 102/2017 in compliance with the Schengen Agreement.
@@ -769,7 +767,7 @@ function filtrarListaLocal() {
 }
 
 // ==========================================================================
-// ALTERNAR RESPOSTAS DO CLIENTE (GUARDA NO FIREBASE)
+// ALTERNAR RESPOSTAS DO CLIENTE & GRAVAR HORÁRIO NO FIREBASE
 // ==========================================================================
 async function alternarRespostaCliente(event, idReserva, tipoResposta) {
     event.stopPropagation();
@@ -799,6 +797,29 @@ async function alternarRespostaCliente(event, idReserva, tipoResposta) {
     }
 }
 
+async function guardarHorarioChegadaManual() {
+    if (!reservaSelecionada) return;
+
+    const input = document.getElementById('inputHoraChegada');
+    if (!input) return;
+
+    const novaHora = input.value;
+    reservaSelecionada.horarioChegada = novaHora;
+
+    try {
+        await db.collection('reservas').doc(reservaSelecionada.id).set({
+            horarioChegada: novaHora
+        }, { merge: true });
+
+        carregarTemplate(tipoTemplateAtual);
+        renderizarListaHospedes(listaFiltradaAtual);
+        alert('Horário de chegada guardado!');
+    } catch (err) {
+        console.error("Erro ao guardar horário:", err);
+        alert('Erro ao guardar o horário de chegada.');
+    }
+}
+
 // ==========================================================================
 // RENDERIZAÇÃO DA LISTA DE HÓSPEDES
 // ==========================================================================
@@ -822,6 +843,8 @@ function renderizarListaHospedes(lista) {
         const aimaRecebido = r.respostas && r.respostas.aima;
         const horarioRecebido = r.respostas && r.respostas.horario;
 
+        const infoHora = r.horarioChegada ? ` | ⏰ <strong>${r.horarioChegada}</strong>` : '';
+
         const card = document.createElement('div');
         card.className = `hospede-card ${reservaSelecionada && reservaSelecionada.id === r.id ? 'active' : ''}`;
         card.onclick = () => selecionarHospede(r);
@@ -833,7 +856,7 @@ function renderizarListaHospedes(lista) {
             </div>
             <div class="hospede-sub">
                 🗓️ <strong>In:</strong> ${r.checkIn} ➜ <strong>Out:</strong> ${r.checkOut}<br>
-                👥 Hóspedes: ${r.hospedes}
+                👥 Hóspedes: ${r.hospedes}${infoHora}
             </div>
 
             <!-- LINHA 1: Estado das Mensagens Enviadas -->
@@ -862,23 +885,34 @@ function renderizarListaHospedes(lista) {
 }
 
 // ==========================================================================
-// SELEÇÃO E GERADOR DE MENSAGENS
+// SELEÇÃO E GERADOR DE MENSAGENS (COM NAVEGAÇÃO SUAVE NO TELEMÓVEL)
 // ==========================================================================
 function selecionarHospede(reserva) {
     reservaSelecionada = reserva;
     
     document.getElementById('painelVazio').style.display = 'none';
-    document.getElementById('painelMensagem').style.display = 'flex';
+    const painelMsg = document.getElementById('painelMensagem');
+    painelMsg.style.display = 'flex';
 
     idiomaAtual = reserva.idiomaCalculado;
 
     document.getElementById('nomeHospedeSel').innerText = `${reserva.cliente} (Apto ${reserva.apartamento})`;
     document.getElementById('detalhesReservaSel').innerText = `Check-in: ${reserva.checkIn} | Check-out: ${reserva.checkOut} | País: ${reserva.pais}`;
 
+    const inputHora = document.getElementById('inputHoraChegada');
+    if (inputHora) {
+        inputHora.value = reserva.horarioChegada || '';
+    }
+
     atualizarBotoesIdioma();
     carregarTemplate(tipoTemplateAtual);
     atualizarBotaoEnviado();
     renderizarListaHospedes(listaFiltradaAtual);
+
+    // 📱 DESLOCAMENTO AUTOMÁTICO NO TELEMÓVEL (Android/iOS)
+    if (window.innerWidth <= 768) {
+        painelMsg.scrollIntoView({ behavior: 'smooth' });
+    }
 }
 
 function alterarIdioma(lang) {
