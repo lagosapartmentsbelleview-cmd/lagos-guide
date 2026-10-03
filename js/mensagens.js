@@ -1,11 +1,8 @@
 // ==========================================================================
-// INICIALIZAÇÃO VIA FIREBASE CENTRAL (firebase-config.js)
+// INICIALIZAÇÃO E AUTENTICAÇÃO VIA FIREBASE CENTRAL
 // ==========================================================================
-// Reutiliza auth e db do firebase-config.js
-if (typeof auth === 'undefined') var auth = firebase.auth();
-if (typeof db === 'undefined') var db = firebase.firestore();
 
-// Verificação de sessão de utilizador
+// Usamos diretamente o 'auth' e 'db' que já vêm do firebase-config.js
 auth.onAuthStateChanged(user => {
     if (!user) {
         window.location.href = 'login.html';
