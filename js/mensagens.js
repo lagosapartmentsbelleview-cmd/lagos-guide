@@ -598,7 +598,7 @@ El check-out debe realizarse como máximo a las 10:00, ya que recibiremos a nuev
 📌 Antes de salir, le pedimos por favor:
 ✅ Comprobar que no olvida ningún objeto personal en el apartamento.
 ✅ Depositar la basura en los contenedores correspondientes del complejo Marina Park.
-✅ Dejar los platos y utensilios de cocina lavados.
+✅ Por favor, deje los platos y utensilios de cocina lavados.
 
 📌 Aviso de salida anticipada:
 Si planea salir antes de las 10:00, le agradeceríamos que nos lo informe con antelación respondiendo a este mensaje.
