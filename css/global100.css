@@ -625,3 +625,192 @@ td:last-child button:last-child:hover, td:last-child .btn-danger:hover {
     background-color: #ef4444 !important;
     color: #ffffff !important;
 }
+
+/* ==========================================================================
+   1. BOTÕES DE AÇÃO DO TOPO (DESIGN PROFISSIONAL)
+   ========================================================================== */
+.acoes-topo, .botoes-topo, div:has(> button) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+/* Estilo Base para todos os botões do topo */
+.acoes-topo button, .botoes-topo button {
+    height: 32px !important;
+    padding: 0 12px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    color: #334155 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.15s ease !important;
+}
+
+.acoes-topo button:hover, .botoes-topo button:hover {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    border-color: #94a3b8 !important;
+}
+
+/* Botão Principal (Nova Reserva) */
+.acoes-topo button:first-child, button[onclick*="nova"], button[onclick*="Nova"] {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border-color: #1d4ed8 !important;
+}
+.acoes-topo button:first-child:hover, button[onclick*="nova"]:hover {
+    background: #1d4ed8 !important;
+}
+
+/* Botão Destrutivo (Apagar Selecionadas) */
+button[onclick*="apagar"], button[onclick*="Apagar"], button[onclick*="limpar"] {
+    background: #fef2f2 !important;
+    color: #dc2626 !important;
+    border-color: #fecaca !important;
+}
+button[onclick*="apagar"]:hover, button[onclick*="Apagar"]:hover {
+    background: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+
+/* ==========================================================================
+   2. FILTROS COMPACTOS (POUPA ESPAÇO VERTICAL)
+   ========================================================================== */
+.filtros {
+    padding: 8px 12px !important;
+    gap: 6px !important;
+    margin-bottom: 12px !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+}
+
+.filtros input, .filtros select {
+    height: 28px !important;
+    font-size: 12px !important;
+    padding: 0 8px !important;
+    border-radius: 4px !important;
+    border: 1px solid #cbd5e1 !important;
+    background-color: #f8fafc !important;
+}
+
+.filtros input:focus, .filtros select:focus {
+    background-color: #ffffff !important;
+    border-color: #2563eb !important;
+}
+
+
+/* ==========================================================================
+   3. CARDS DE RESULTADOS COM COR E HIERARQUIA VISUAL
+   ========================================================================== */
+.totais-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    margin: 12px 0 !important;
+}
+
+.total-card {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    padding: 8px 10px !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-left: 4px solid #94a3b8 !important; /* Barra lateral neutra por padrão */
+    border-radius: 6px !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Cores específicas por tipo de indicador */
+.total-card:nth-child(1) { border-left-color: #64748b !important; } /* Reservas */
+.total-card:nth-child(2) { border-left-color: #64748b !important; } /* Noites */
+
+.total-card:nth-child(3) { border-left-color: #2563eb !important; } /* Valor Bruto (Azul) */
+.total-card:nth-child(3) strong { color: #2563eb !important; }
+
+.total-card:nth-child(4) { border-left-color: #f59e0b !important; } /* Comissão (Laranja) */
+.total-card:nth-child(4) strong { color: #d97706 !important; }
+
+.total-card:nth-child(5) { border-left-color: #6366f1 !important; } /* Limpeza (Roxo) */
+
+.total-card:nth-child(6) { border-left-color: #10b981 !important; } /* Total Líquido (Verde) */
+.total-card:nth-child(6) strong { color: #059669 !important; }
+
+.total-card:nth-child(7) { border-left-color: #0284c7 !important; } /* Booking */
+.total-card:nth-child(8) { border-left-color: #8b5cf6 !important; } /* Particular */
+
+.total-card span {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    color: #64748b !important;
+    text-transform: uppercase !important;
+}
+
+.total-card strong {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    display: block !important;
+    margin-top: 2px !important;
+}
+
+
+/* ==========================================================================
+   4. RESPONSIVIDADE PARA MÓVEL (MOBILE READY)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .content {
+        padding: 55px 10px 20px 10px !important;
+    }
+
+    /* Botões no topo adaptáveis */
+    .acoes-topo, .botoes-topo {
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        padding-bottom: 4px !important;
+        white-space: nowrap !important;
+    }
+
+    .acoes-topo button, .botoes-topo button {
+        flex: 0 0 auto !important;
+    }
+
+    /* Cartões em grelha 2x4 no ecrã do telemóvel */
+    .totais-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 6px !important;
+    }
+
+    .total-card {
+        padding: 6px 8px !important;
+    }
+
+    .total-card strong {
+        font-size: 13px !important;
+    }
+
+    /* Filtros empilhados no telemóvel */
+    .filtros {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .filtros input, .filtros select {
+        width: 100% !important;
+    }
+
+    /* Tabela com scroll horizontal suave no telemóvel */
+    .tabela-wrapper, table {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch;
+    }
+}
