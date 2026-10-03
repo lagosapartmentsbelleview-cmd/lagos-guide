@@ -1,0 +1,449 @@
+/* ==========================================================================
+   GLOBAL100.CSS — DESIGN SYSTEM COMPACTO & PROFISSIONAL
+   ========================================================================== */
+
+:root {
+    /* Cores Principais */
+    --primary: #2563eb;          /* Azul corporativo moderno */
+    --primary-hover: #1d4ed8;
+    --primary-light: #eff6ff;
+    --primary-border: #bfdbfe;
+
+    /* Cores Neutras */
+    --bg-body: #f8fafc;           /* Fundo da página */
+    --bg-surface: #ffffff;        /* Fundo de tabelas e cartões */
+    --text-main: #0f172a;         /* Texto principal */
+    --text-muted: #64748b;        /* Texto secundário */
+    --border-color: #e2e8f0;      /* Bordas suaves */
+
+    /* Cores de Estado e Ação */
+    --success: #10b981;
+    --success-hover: #059669;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --info: #3b82f6;
+
+    /* Tipografia e Dimensões de Alta Densidade */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --height-control: 34px;       /* Altura compacta para botões e inputs */
+
+    /* Sombras Suaves */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    /* Transições */
+    --transition: all 0.15s ease-in-out;
+}
+
+/* ==========================================================================
+   RESET & BASE
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    line-height: 1.4;
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   MENU SUPERIOR (TOP BAR)
+   ========================================================================== */
+.top-menu {
+    width: 100%;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 16px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-button {
+    color: var(--text-main);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.menu-button:hover {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary-border);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 16px;
+    background: var(--bg-surface);
+    min-width: 180px;
+    margin-top: 6px;
+    padding: 6px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dropdown-menu a {
+    color: var(--text-main);
+    text-decoration: none;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--primary-light);
+    color: var(--primary);
+}
+
+.dropdown-menu .sair {
+    color: var(--danger);
+}
+
+.dropdown-menu .sair:hover {
+    background-color: #fef2f2;
+    color: var(--danger-hover);
+}
+
+/* ==========================================================================
+   CONTEÚDO E ESTRUTURA
+   ========================================================================== */
+.content {
+    padding-top: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.content h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+}
+
+.barra-entidades {
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 16px;
+    margin: 12px 0;
+    border-radius: var(--radius-md);
+}
+
+.barra-entidades h1 {
+    margin: 0;
+    font-size: 18px;
+    color: white;
+}
+
+/* ==========================================================================
+   BOTÕES E CONTROLOS UNIVERSAIS
+   ========================================================================== */
+button, .btn, #btnMostrarMais {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: var(--font-family);
+    font-size: 13px;
+    font-weight: 600;
+    height: var(--height-control);
+    padding: 0 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    background-color: var(--primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+button:hover, .btn:hover, #btnMostrarMais:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Variantes de Ação */
+.btn-add, button.btn-add {
+    background-color: var(--success);
+    color: white;
+}
+.btn-add:hover, button.btn-add:hover {
+    background-color: var(--success-hover);
+}
+
+.btn-edit, button.btn-edit {
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    box-shadow: none;
+}
+.btn-edit:hover, button.btn-edit:hover {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary-border);
+}
+
+.btn-delete, button.btn-delete {
+    background-color: #fef2f2;
+    color: var(--danger);
+    border: 1px solid #fecaca;
+    box-shadow: none;
+}
+.btn-delete:hover, button.btn-delete:hover {
+    background-color: var(--danger);
+    color: white;
+}
+
+/* Botões Alternadores / Modos */
+.modo-btn {
+    background-color: var(--bg-surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    box-shadow: none;
+}
+
+.modo-btn.ativo {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary-border);
+}
+
+/* ==========================================================================
+   FORMULÁRIOS, INPUTS E FILTROS
+   ========================================================================== */
+.filtros {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    background: var(--bg-surface);
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.filtros label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+input, select {
+    font-family: var(--font-family);
+    font-size: 13px;
+    height: var(--height-control);
+    padding: 0 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+    outline: none;
+    transition: var(--transition);
+}
+
+input:focus, select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+/* ==========================================================================
+   TABELAS DE ALTA DENSIDADE
+   ========================================================================== */
+table, #tabelaTotaisAno, #tabelaEntidades, .crud-entidades table, .crud-categorias table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 10px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+th {
+    background-color: #f1f5f9;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+td {
+    padding: 7px 10px;
+    font-size: 13px;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+tbody tr:hover td {
+    background-color: var(--primary-light);
+}
+
+/* Destaque para Colunas de Totais */
+#tabelaTotaisAno td:last-child {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Mini Tabelas Embutidas */
+.mini-tabela td {
+    border: none !important;
+    background: transparent !important;
+    padding: 2px 4px !important;
+    font-size: 12px !important;
+}
+
+/* ==========================================================================
+   ABAS / TABS
+   ========================================================================== */
+.tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 4px;
+}
+
+.tabs .tab {
+    height: 30px;
+    background-color: transparent;
+    color: var(--text-muted);
+    border: none;
+    padding: 0 12px;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    font-size: 13px;
+    box-shadow: none;
+}
+
+.tabs .tab:hover {
+    background-color: var(--primary-light);
+    color: var(--primary);
+}
+
+.tabs .tab.active {
+    background-color: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   CARTÕES DE TOTAIS / DASHBOARD (GRID COMPACTA)
+   ========================================================================== */
+.totais-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin: 12px 0;
+}
+
+.total-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.total-card:hover {
+    border-color: var(--primary-border);
+    box-shadow: var(--shadow-md);
+}
+
+.total-card span {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.total-card strong {
+    font-size: 18px;
+    font-weight: 700;
+    display: block;
+    margin-top: 2px;
+    color: var(--primary);
+}
+
+/* ==========================================================================
+   MODAIS
+   ========================================================================== */
+.modal, .crud-entidades .modal, .crud-categorias .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(2px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content, .crud-entidades .modal-content, .crud-categorias .modal-content {
+    background: var(--bg-surface);
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+}
+
+.modal-content input, .modal-content select {
+    width: 100%;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
