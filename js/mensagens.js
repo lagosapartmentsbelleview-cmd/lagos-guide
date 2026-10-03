@@ -770,7 +770,10 @@ function renderizarListaHospedes(lista) {
                 <span>${r.bandeira} ${r.cliente}</span>
                 <span style="color: #2563eb; font-weight: 700;">Apto ${r.apartamento}</span>
             </div>
-            <div class="hospede-sub">Check-in: ${r.checkIn} | Hóspedes: ${r.hospedes}</div>
+            <div class="hospede-sub">
+                🗓️ <strong>In:</strong> ${r.checkIn} ➜ <strong>Out:</strong> ${r.checkOut}<br>
+                👥 Hóspedes: ${r.hospedes}
+            </div>
             <div class="badges-status">
                 <span class="badge-check ${enviadoCheckin ? 'enviado' : ''}">${enviadoCheckin ? '✓ Check-in' : '⏳ Check-in'}</span>
                 <span class="badge-check ${enviadoAima ? 'enviado' : ''}">${enviadoAima ? '✓ AIMA' : '⏳ AIMA'}</span>
