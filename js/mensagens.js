@@ -204,7 +204,7 @@ function normalizarReserva(doc) {
 }
 
 // ==========================================================================
-// MODELOS DE MENSAGENS (COM LINKS DE IMAGEM E HORÁRIO DE CHEGADA)
+// MODELOS DE MENSAGENS
 // ==========================================================================
 const templates = {
     checkin: {
@@ -545,7 +545,7 @@ Luís Ferreira
 📩 belleview@sapo.pt
 📞 +351 910 051 588
 🌍 https://www.facebook.com/Belleview`;
-   }
+        }
     },
 
     aima: {
@@ -822,7 +822,7 @@ El check-out debe realizarse como máximo a las 10:00, ya que recibiremos a nuev
 📌 Antes de salir, le pedimos por favor:
 ✅ Comprobar que no olvida ningún objeto personal en el apartamento.
 ✅ Depositar la basura en los contenedores correspondientes del complejo Marina Park.
-✅ Por favor, deje los platos y utensilios de cocina lavados.
+✅ Por favor, deje los platos y utensils de cocina lavados.
 
 📌 Aviso de salida anticipada:
 Si planea salir antes de las 10:00, le agradeceríamos que nos lo informe con antelación respondiendo a este mensaje.
@@ -886,7 +886,7 @@ Luís Ferreira
 };
 
 // ==========================================================================
-// CONSULTA E FILTRAGEM
+// CONSULTA E FILTRAGEM COM JANELA OPERACIONAL (-1 DIA A +1 DIA)
 // ==========================================================================
 async function carregarReservas(modoFiltro) {
     const listaContainer = document.getElementById('listaHospedes');
@@ -909,40 +909,66 @@ async function carregarReservas(modoFiltro) {
     }
 }
 
+function eReservaOperacional(r) {
+    if (!r.checkIn || r.checkIn === 'N/A' || !r.checkOut || r.checkOut === 'N/A') return false;
+
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+
+    const checkInDate = new Date(r.checkIn + 'T00:00:00');
+    const checkOutDate = new Date(r.checkOut + 'T00:00:00');
+
+    // Margem de -1 dia no Check-in
+    const margemIn = new Date(checkInDate);
+    margemIn.setDate(margemIn.getDate() - 1);
+
+    // Margem de +1 dia no Check-out
+    const margemOut = new Date(checkOutDate);
+    margemOut.setDate(margemOut.getDate() + 1);
+
+    return hoje >= margemIn && hoje <= margemOut;
+}
+
 function aplicarFiltroData(tipo) {
     document.querySelectorAll('.quick-dates button').forEach(b => b.classList.remove('active'));
-    
+
     const hojeObj = new Date();
     const hojeStr = hojeObj.toISOString().split('T')[0];
 
-    let filtradas = [];
+    const limite15 = new Date(hojeObj);
+    limite15.setDate(limite15.getDate() + 15);
+    const limite15Str = limite15.toISOString().split('T')[0];
 
-    if (tipo === 'hoje') {
-        const btn = document.getElementById('btnHoje');
+    const limite1Mes = new Date(hojeObj);
+    limite1Mes.setDate(limite1Mes.getDate() + 30);
+    const limite1MesStr = limite1Mes.toISOString().split('T')[0];
+
+    if (tipo === '15dias') {
+        const btn = document.getElementById('btn15Dias');
         if (btn) btn.classList.add('active');
-        filtradas = listaReservasGlobal.filter(r => r.checkIn === hojeStr);
-    } else if (tipo === '3dias') {
-        const btn = document.getElementById('btn3Dias');
+    } else if (tipo === '1mes') {
+        const btn = document.getElementById('btn1Mes');
         if (btn) btn.classList.add('active');
-        const limite = new Date();
-        limite.setDate(limite.getDate() + 3);
-        const limiteStr = limite.toISOString().split('T')[0];
-        filtradas = listaReservasGlobal.filter(r => r.checkIn >= hojeStr && r.checkIn <= limiteStr);
-    } else if (tipo === '7dias') {
-        const btn = document.getElementById('btn7Dias');
-        if (btn) btn.classList.add('active');
-        const limite = new Date();
-        limite.setDate(limite.getDate() + 7);
-        const limiteStr = limite.toISOString().split('T')[0];
-        filtradas = listaReservasGlobal.filter(r => r.checkIn >= hojeStr && r.checkIn <= limiteStr);
     } else {
         const btn = document.getElementById('btnTodos');
         if (btn) btn.classList.add('active');
-        filtradas = [...listaReservasGlobal];
     }
 
-    filtradas.sort((a, b) => (a.checkIn || '').localeCompare(b.checkIn || ''));
+    const filtradas = listaReservasGlobal.filter(r => {
+        // 1. Janela operacional (-1 dia a +1 dia): aparece SEMPRE!
+        if (eReservaOperacional(r)) return true;
 
+        // 2. Filtros normais
+        if (tipo === '15dias') {
+            return r.checkIn >= hojeStr && r.checkIn <= limite15Str;
+        } else if (tipo === '1mes') {
+            return r.checkIn >= hojeStr && r.checkIn <= limite1MesStr;
+        } else { // 'todos'
+            return true;
+        }
+    });
+
+    filtradas.sort((a, b) => (a.checkIn || '').localeCompare(b.checkIn || ''));
     listaFiltradaAtual = filtradas;
     renderizarListaHospedes(filtradas);
 }
@@ -955,9 +981,12 @@ function aplicarFiltroDataCustom() {
 
     document.querySelectorAll('.quick-dates button').forEach(b => b.classList.remove('active'));
 
-    const filtradas = listaReservasGlobal.filter(r => r.checkIn >= dInicio && r.checkIn <= dFim);
-    filtradas.sort((a, b) => (a.checkIn || '').localeCompare(b.checkIn || ''));
+    const filtradas = listaReservasGlobal.filter(r => {
+        if (eReservaOperacional(r)) return true;
+        return r.checkIn >= dInicio && r.checkIn <= dFim;
+    });
 
+    filtradas.sort((a, b) => (a.checkIn || '').localeCompare(b.checkIn || ''));
     listaFiltradaAtual = filtradas;
     renderizarListaHospedes(filtradas);
 }
@@ -1039,7 +1068,10 @@ function renderizarListaHospedes(lista) {
     }
 
     lista.forEach(r => {
-        // Mensagens Enviadas
+        // Verifica se a reserva está na janela operacional (-1 a +1 dia)
+        const eOperacional = eReservaOperacional(r);
+
+        // Mensagens Enviadas (Horário corrigido para verificar horas e horario)
         const enviadoCheckin = r.mensagens && r.mensagens.checkin;
         const enviadoAima = r.mensagens && r.mensagens.aima;
         const enviadoHorario = r.mensagens && (r.mensagens.horas || r.mensagens.horario);
@@ -1052,12 +1084,23 @@ function renderizarListaHospedes(lista) {
         const infoHora = r.horarioChegada ? ` | ⏰ <strong>${r.horarioChegada}</strong>` : '';
 
         const card = document.createElement('div');
+        
+        // Estilo especial para reservas ativas/a decorrer
+        const estiloOperacional = eOperacional 
+            ? 'background-color: #f0f9ff; border-left: 5px solid #0284c7; box-shadow: 0 2px 4px rgba(2,132,199,0.15);' 
+            : '';
+
         card.className = `hospede-card ${reservaSelecionada && reservaSelecionada.id === r.id ? 'active' : ''}`;
+        card.style.cssText = estiloOperacional;
         card.onclick = () => selecionarHospede(r);
+
+        const badgeStatusOperacional = eOperacional 
+            ? `<span style="background: #e0f2fe; color: #0369a1; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 6px;">⚡ A DECORRER / ATIVA</span>` 
+            : '';
 
         card.innerHTML = `
             <div class="hospede-header">
-                <span>${r.bandeira} ${r.cliente}</span>
+                <span>${r.bandeira} ${r.cliente} ${badgeStatusOperacional}</span>
                 <span style="color: #2563eb; font-weight: 700;">Apto ${r.apartamento}</span>
             </div>
             <div class="hospede-sub">
@@ -1115,7 +1158,6 @@ function selecionarHospede(reserva) {
     atualizarBotaoEnviado();
     renderizarListaHospedes(listaFiltradaAtual);
 
-    // 📱 DESLOCAMENTO AUTOMÁTICO NO TELEMÓVEL (Android/iOS)
     if (window.innerWidth <= 768) {
         painelMsg.scrollIntoView({ behavior: 'smooth' });
     }
