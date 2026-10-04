@@ -545,8 +545,8 @@ Luís Ferreira
 📩 belleview@sapo.pt
 📞 +351 910 051 588
 🌍 https://www.facebook.com/Belleview`;
-        }
-    }
+   }
+    },
 
     aima: {
         pt: (r) => {
