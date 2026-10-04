@@ -211,136 +211,342 @@ const templates = {
         pt: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'pt');
             const infoHora = r.horarioChegada ? ` (previsto para as ${r.horarioChegada})` : '';
-            return `Estimado(a) Cliente ${r.cliente},
+            return `Estimado(a) ${r.cliente},
 
 Esperamos que se encontre bem!
 
-A sua chegada ao apartamento Belleview, em Lagos, está para breve, com check-in agendado para ${dataExt}${infoHora}. Queremos garantir que tenha uma experiência agradável e sem preocupações.
+A sua chegada ao apartamento Belleview, em Lagos, está para breve, com check‑in agendado para ${dataExt}${infoHora}. Queremos garantir que tenha uma experiência agradável e sem preocupações.
 
 📍 A sua chegada e acesso ao apartamento
-Ao chegar ao Complexo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), dirija-se diretamente ao apartamento [${r.apartamento}] atribuído à sua reserva.
+Ao chegar ao Complexo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), dirija-se diretamente ao apartamento [${r.apartamento}] atribuído à sua reserva (veja a imagem anexada para a localização exata no Lote 22/23).
 
-📌 Links para consulta e navegação:
-👉 Localização no Google Maps: https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
-🖼️ Mapa de Acesso ao Lote 22/23: https://apartmentsbelleview.com/img/mapa-marina-park.jpg
-🖼️ Imagem de Acesso ao Apartamento / Cofre: https://apartmentsbelleview.com/img/acesso-cofre.jpg
+Localização no Google Maps:
+
+👉 https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
 
 Assim que estiver à porta do apartamento, entre em contacto connosco através do número +351 910 051 588 para receber o código da Master Lock de entrada.
 
-Normas e boas práticas
+🏡 Normas da casa e boas práticas
+Para garantir uma estadia harmoniosa e preservar o espaço, pedimos a gentileza de seguir estas orientações:
+
 • Utilize com cuidado todos os equipamentos e instalações do apartamento e das áreas comuns.
-• Respeite a convivência com os vizinhos, especialmente no que se refere aos horários de descanso.
-• Deposite regularmente o lixo doméstico nos contentores apropriados disponíveis no complexo turístico.
+• Respeite os vizinhos, especialmente no que se refere aos horários de descanso.
+• Deposite regularmente o lixo doméstico nos contentores apropriados disponíveis no complexo.
 
-Horários importantes
-Check-in: a partir das 15h
-Check-out: até às 10h
+⏰ Horários importantes
+Check‑in: a partir das 15:00
+Check‑out: até às 10:00
 
-Acesso à piscina
-Para aceder à área da piscina, será necessário um cartão branco e uma pulseira para cada hóspede.
-Dirija-se à receção principal (Vitasol), localizada na entrada do Marina Park, informe o número do apartamento [${r.apartamento}] e solicite o cartão e as [${r.hospedes}] pulseiras (caução de 1 € por unidade, devolvida no check-out).
+Pedimos a gentileza de nos informar com antecedência a sua hora prevista de chegada para podermos organizar melhor a sua receção.
 
-Faturação
-Para a emissão da sua fatura, por favor envie-nos:
-• Nome completo | Morada | Número de Contribuinte (NIF)
+🏊 Acesso à piscina
+Para aceder à área da piscina, precisará de um cartão branco e uma pulseira por hóspede.
 
-Informações úteis sobre Lagos e o apartamento:
-👉 Guia da Cidade: https://apartmentsbelleview.com/guide
-👉 Livro de Informações (PDF): https://www.apartmentsbelleview.com/docs/info-pt.pdf
-👉 Máquina de Café (Delta Q): https://www.apartmentsbelleview.com/deltaq.html
-👉 Máquina de Lavar Roupa: https://www.apartmentsbelleview.com/docs/zanussi-pt.pdf
+Dirija-se à receção principal, chamada Vitasol, localizada na entrada do Marina Park.
+
+Na receção, informe o número do apartamento [${r.apartamento}] e solicite o cartão e as [${r.hospedes}] pulseiras de piscina.
+
+Cada pulseira e o cartão exigem uma caução reembolsável de 1 € por unidade, que será devolvida no check‑out.
+
+🧾 Faturação
+Para a emissão da sua fatura, por favor envie-nos os seguintes dados:
+
+• Nome completo
+• Morada
+• Número de Contribuinte (NIF)
+
+ℹ️ Informações úteis sobre Lagos e o apartamento
+Preparámos um guia com informações relevantes sobre a cidade e o alojamento. Pode aceder aqui:
+
+👉 https://apartmentsbelleview.com/guide
+
+Informações adicionais importantes:
+
+Livro de Informações do Apartamento (PDF):
+
+👉 https://www.apartmentsbelleview.com/docs/info-pt.pdf
+
+Guia da Máquina de Café (Delta Q):
+
+👉 https://www.apartmentsbelleview.com/deltaq.html
+
+Manual da Máquina de Lavar Roupa (Zanussi):
+
+👉 https://www.apartmentsbelleview.com/docs/zanussi-pt.pdf
 
 ⚠️ Importante para hóspedes estrangeiros
-É obrigatório por lei o envio antecipado dos dados de todos os hóspedes estrangeiros (incluindo crianças e bebés):
+Se a reserva incluir hóspedes que não tenham nacionalidade portuguesa, é legalmente obrigatório o envio antecipado dos dados de identificação de todos os hóspedes, incluindo menores (crianças e bebés).
+
+Por favor, preencha o formulário obrigatório através do link abaixo:
+
 👉 https://apartmentsbelleview.com/aima
+
+Se tiver alguma dúvida sobre o formulário, pode consultar a legislação e a secção de perguntas frequentes na introdução. Estamos também sempre disponíveis para qualquer esclarecimento adicional:
+
+💬 WhatsApp: +351 910 051 588
+📩 E-mail: belleview@sapo.pt
+
+📌 Aviso Legal Obrigatório — Registo de Hóspedes (AIMA/SIBA)
+Este formulário destina-se à recolha dos dados de identificação obrigatórios de todos os hóspedes, exigidos pela legislação portuguesa, para comunicação à AIMA (Agência para a Integração, Migrações e Asilo) através da plataforma SIBA.
+
+Por que razão os seus dados são necessários?
+
+Ao abrigo do Artigo 45.º da Lei n.º 23/2007, todos os estabelecimentos de Alojamento Local são legalmente obrigados a comunicar a entrada, permanência e saída de cidadãos estrangeiros em Portugal.
+
+Esta obrigação aplica-se a todos os cidadãos não portugueses, incluindo crianças e bebés, sem exceção.
+
+Para que servem estes dados?
+
+• Segurança nacional
+• Proteção dos hóspedes
+• Administração pública e estatísticas
+
+Obrigatoriedade e consequências da recusa
+
+A prestação destas informações é estritamente obrigatória por lei.
+A recusa impede legalmente o check‑in e pode resultar no cancelamento imediato da reserva sem reembolso.
+Para o proprietário, a não comunicação destes dados constitui uma contraordenação grave, sujeita a coimas elevadas.
+
+Privacidade e proteção de dados
+
+Os dados recolhidos são utilizados exclusivamente para cumprir esta obrigação legal e são tratados em conformidade com o RGPD.
+Não são partilhados com terceiros para fins comerciais.
 
 Desejamos-lhe uma excelente viagem e uma estadia memorável em Lagos!
 
-Atenciosamente,
+Com os melhores cumprimentos,
 Luís Ferreira
 📩 belleview@sapo.pt
 📞 +351 910 051 588
-🌍 https://www.facebook.com/Belleview/`;
+🌍 https://www.facebook.com/Belleview`;
         },
 
         es: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'es');
             const infoHora = r.horarioChegada ? ` (previsto para las ${r.horarioChegada})` : '';
-            return `Estimado/a Cliente ${r.cliente},
+            return `Estimado/a ${r.cliente},
 
 ¡Esperamos que se encuentre bien!
 
-Su llegada al apartamento Belleview, en Lagos, se aproxima, con check-in programado para el ${dataExt}${infoHora}. Queremos garantizar que tenga una experiencia agradable y sin preocupaciones.
+Su llegada al apartamento Belleview en Lagos se aproxima, con check‑in programado para el ${dataExt}${infoHora}. Queremos garantizar que tenga una experiencia agradable y sin preocupaciones.
 
 📍 Su llegada y acceso al apartamento
-Al llegar al Complejo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), diríjase directamente al apartamento [${r.apartamento}] asignado a su reserva.
+Al llegar al Complejo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), diríjase directamente al apartamento [${r.apartamento}] asignado a su reserva (vea la imagen adjunta para la ubicación exacta en el Lote 22/23).
 
-📌 Enlaces de ayuda e imágenes:
-👉 Ubicación en Google Maps: https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
-🖼️ Mapa de Acceso en el Complejo: https://apartmentsbelleview.com/img/mapa-marina-park.jpg
-🖼️ Imagen del Acceso / Caja Fuerte: https://apartmentsbelleview.com/img/acesso-cofre.jpg
+Ubicación en Google Maps:
+
+👉 https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
 
 Una vez en la puerta del apartamento, contáctenos a través del número +351 910 051 588 para recibir el código del Master Lock de entrada.
 
-Horarios importantes
-Check-in: a partir de las 15:00
-Check-out: hasta las 10:00
+🏡 Normas de la casa y buenas prácticas
+Para garantizar una estancia armoniosa y preservar el espacio, le pedimos amablemente que siga estas indicaciones:
 
-Acceso a la piscina
-Diríjase a la recepción principal (Vitasol) en la entrada de Marina Park, indique el apartamento [${r.apartamento}] y solicite la tarjeta y las [${r.hospedes}] pulseras (depósito reembolsable de 1 € por unidad).
+• Utilice con cuidado todos los equipos e instalaciones del apartamento y de las áreas comunes.
+• Respete a los vecinos, especialmente en lo relativo a los horarios de descanso.
+• Deposite regularmente la basura doméstica en los contenedores adecuados disponibles en el complejo.
+
+⏰ Horarios importantes
+Check‑in: a partir de las 15:00
+Check‑out: hasta las 10:00
+
+Le pedimos amablemente que nos informe con antelación de su hora prevista de llegada para organizar de la mejor manera su recepción.
+
+🏊 Acceso a la piscina
+Para acceder a la zona de la piscina, necesitará una tarjeta blanca y una pulsera por huésped.
+
+Diríjase a la recepción principal, llamada Vitasol, ubicada a la entrada de Marina Park.
+
+En la recepción, indique el número de su apartamento [${r.apartamento}] y solicite la tarjeta y las [${r.hospedes}] pulseras de piscina.
+
+Cada pulsera y la tarjeta requieren un depósito reembolsable de 1 € por unidad, que se devolverá en el check‑out.
+
+🧾 Facturación
+Para la emisión de su factura, por favor envíenos la siguiente información:
+
+• Nombre completo
+• Dirección
+• Número de Identificación Fiscal (NIF / DNI)
+
+ℹ️ Información útil sobre Lagos y el apartamento
+Hemos preparado una guía con información relevante sobre la ciudad y el alojamiento. Puede acceder aquí:
+
+👉 https://apartmentsbelleview.com/guide
+
+Información adicional importante:
+
+Libro de Información del Apartamento (PDF):
+
+👉 https://www.apartmentsbelleview.com/docs/info-es.pdf
+
+Guía de la Cafetera (Delta Q):
+
+👉 https://www.apartmentsbelleview.com/deltaq.html
+
+Manual de la Lavadora (Zanussi):
+
+👉 https://www.apartmentsbelleview.com/docs/zanussi-es.pdf
 
 ⚠️ Importante para huéspedes extranjeros
-Por ley en Portugal, es obligatorio el envío anticipado de los datos de todos los huéspedes que no tengan nacionalidad portuguesa:
+Si la reserva incluye huéspedes que no posean la nacionalidad portuguesa, es legalmente obligatorio el envío anticipado de los datos de identificación de todos los huéspedes, incluidos menores (niños y bebés).
+
+Por favor, complete el formulario obligatorio a través del siguiente enlace:
+
 👉 https://apartmentsbelleview.com/aima
 
-Deseamos que tenga un excelente viaje y una estancia memorable en Lagos.
+Si tiene alguna duda sobre el formulario, puede consultar la legislación y la sección de preguntas frecuentes en su introducción. Estamos siempre a su disposición para cualquier aclaración adicional:
+
+💬 WhatsApp: +351 910 051 588
+📩 E-mail: belleview@sapo.pt
+
+📌 Aviso Legal Obligatorio — Registro de Huéspedes (AIMA/SIBA)
+Este formulario se utiliza para recopilar los datos de identificación obligatorios de todos los huéspedes, exigidos por la legislación portuguesa, para su comunicación a AIMA (Agencia para la Integración, Migraciones y Asilo) a través de la plataforma SIBA.
+
+¿Por qué son necesarios sus datos?
+
+En virtud del Artículo 45 de la Ley n.º 23/2007, todos los establecimientos de Alojamiento Local están obligados legalmente a informar sobre la entrada, permanencia y salida de ciudadanos extranjeros en Portugal.
+
+Esta obligación se aplica a todos los ciudadanos no portugueses, incluidos niños y bebés, sin excepción.
+
+¿Para qué sirven estos datos?
+
+• Seguridad nacional
+• Protección de los huéspedes
+• Administración pública y estadísticas
+
+Obligatoriedad y consecuencias de la negativa
+
+El envío de esta información es estrictamente obligatorio por ley.
+La negativa impide legalmente el check‑in y puede dar lugar a la cancelación inmediata de la reserva sin reembolso.
+Para el propietario, no comunicar estos datos constituye una infracción grave, sujeta a elevadas sanciones.
+
+Privacidad y protección de datos
+
+Los datos recopilados se utilizan exclusivamente para cumplir con esta obligación legal y se tratan de conformidad con el RGPD.
+No se comparten con terceros con fines comerciales.
+
+¡Le deseamos un excelente viaje y una feliz estancia en Lagos!
 
 Atentamente,
 Luís Ferreira
 📩 belleview@sapo.pt
 📞 +351 910 051 588
-🌍 https://www.facebook.com/Belleview/`;
+🌍 https://www.facebook.com/Belleview`;
         },
 
         en: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'en');
             const infoHora = r.horarioChegada ? ` (expected at ${r.horarioChegada})` : '';
-            return `Dear Guest ${r.cliente},
+            return `Dear ${r.cliente},
 
 We hope you are doing well!
 
-Your arrival at Belleview Apartment in Lagos is coming up soon, with check-in scheduled for ${dataExt}${infoHora}. We want to ensure you have a smooth and worry-free stay.
+Your arrival at the Belleview apartment in Lagos is approaching, with check‑in scheduled for ${dataExt}${infoHora}. We want to ensure you have a pleasant and worry‑free experience.
 
-📍 Arrival and Apartment Access
-Upon arriving at Marina Park Resort (37°07'01.6"N 8°40'16.4"W), head directly to apartment [${r.apartamento}] assigned to your reservation.
+📍 Your arrival and access to the apartment
+Upon arriving at the Marina Park Tourist Complex (37°07'01.6"N 8°40'16.4"W), please go directly to the apartment [${r.apartamento}] assigned to your reservation (see the attached image for the exact location in Lot 22/23).
 
-📌 Location links and images:
-👉 Google Maps Location: https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
-🖼️ Resort Access Map: https://apartmentsbelleview.com/img/mapa-marina-park.jpg
-🖼️ Key Safe / Door Access Image: https://apartmentsbelleview.com/img/acesso-cofre.jpg
+Google Maps location:
 
-Once at the apartment door, please contact us at +351 910 051 588 to receive your Master Lock entry code.
+👉 https://maps.app.goo.gl/2643i4rtjnYvtPEZ8
 
-Important Times
-Check-in: from 3:00 PM (15:00)
-Check-out: by 10:00 AM
+Once you are at the apartment door, please contact us at +351 910 051 588 to receive the Master Lock entry code.
 
-Pool Access
-Please visit the main reception (Vitasol) at the entrance of Marina Park, provide your apartment number [${r.apartamento}] and request the pool card and [${r.hospedes}] wristbands (€1 refundable deposit per unit).
+🏡 House rules and good practices
+To ensure a harmonious stay and preserve the space, we kindly ask you to follow these guidelines:
 
-⚠️ Important for Foreign Guests
-By Portuguese law, all non-Portuguese citizens must submit identification details prior to check-in:
+• Use all equipment and facilities in the apartment and common areas with care.
+• Respect the neighbours, especially regarding quiet hours.
+• Dispose of household waste regularly in the appropriate containers available throughout the complex.
+
+⏰ Important times
+Check‑in: from 3:00 PM
+Check‑out: until 10:00 AM
+
+We kindly ask you to inform us in advance of your estimated arrival time so we can better organise your reception.
+
+🏊 Swimming pool access
+To access the pool area, you will need a white card and one wristband per guest.
+
+Please go to the main reception, called Vitasol, located at the entrance of Marina Park.
+
+At the reception, provide your apartment number [${r.apartamento}] and request the card and [${r.hospedes}] pool wristbands.
+
+Each wristband and the card require a refundable deposit of €1 per unit, which will be returned at check‑out.
+
+🧾 Invoicing
+To issue your invoice, please send us the following information:
+
+• Full name
+• Address
+• Tax Identification Number
+
+ℹ️ Useful information about Lagos and the apartment
+We have prepared a guide with relevant information about the city and the accommodation. You can access it here:
+
+👉 https://apartmentsbelleview.com/guide
+
+Additional important information:
+
+Apartment Information Book (PDF):
+
+👉 https://www.apartmentsbelleview.com/docs/info-en.pdf
+
+Coffee Machine Guide (Delta Q):
+
+👉 https://www.apartmentsbelleview.com/deltaq.html
+
+Washing Machine Manual (Zanussi):
+
+👉 https://www.apartmentsbelleview.com/docs/zanussi-en.pdf
+
+⚠️ Important for foreign guests
+If the reservation includes guests who are not Portuguese nationals, it is legally mandatory to send the identification details of all guests in advance, including minors (children and babies).
+
+Please complete the mandatory form using the link below:
+
 👉 https://apartmentsbelleview.com/aima
 
-We wish you a safe journey and a memorable stay in Lagos!
+If you have any questions about the form, you can consult the legislation and the FAQ section included in its introduction. We are also always available for any additional clarification:
+
+💬 WhatsApp: +351 910 051 588
+📩 Email: belleview@sapo.pt
+
+📌 Mandatory Legal Notice — Guest Registration (AIMA/SIBA)
+This form is used to collect the mandatory identification data of all guests, as required by Portuguese law, for communication to AIMA (Agency for Integration, Migration and Asylum) through the SIBA platform.
+
+Why are your details required?
+
+Under Article 45 of Law 23/2007, all Local Accommodation establishments are legally required to report the entry, stay, and departure of foreign citizens in Portugal.
+
+This obligation applies to all non‑Portuguese nationals, including children and babies, without exception.
+
+What are these data used for?
+
+• National security
+• Guest protection
+• Public administration and statistics
+
+Obligation and consequences of refusal
+
+Providing this information is strictly mandatory by law.
+Refusal legally prevents check‑in and may result in immediate cancellation of the reservation without refund.
+For the property owner, failure to report this data constitutes a serious offence, subject to significant fines.
+
+Privacy and data protection
+
+The collected data are used exclusively to comply with this legal obligation and are processed in accordance with the GDPR.
+They are not shared with third parties for commercial purposes.
+
+We wish you a safe trip and a memorable stay in Lagos!
 
 Kind regards,
 Luís Ferreira
 📩 belleview@sapo.pt
 📞 +351 910 051 588
-🌍 https://www.facebook.com/Belleview/`;
+🌍 https://www.facebook.com/Belleview`;
         }
-    },
+    }
 
     aima: {
         pt: (r) => {
