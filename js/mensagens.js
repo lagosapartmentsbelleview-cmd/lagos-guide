@@ -1042,7 +1042,7 @@ function renderizarListaHospedes(lista) {
         // Mensagens Enviadas
         const enviadoCheckin = r.mensagens && r.mensagens.checkin;
         const enviadoAima = r.mensagens && r.mensagens.aima;
-        const enviadoHorario = r.mensagens && r.mensagens.horario;
+        const enviadoHorario = r.mensagens && (r.mensagens.horas || r.mensagens.horario);
         const enviadoCheckout = r.mensagens && r.mensagens.checkout;
 
         // Respostas Recebidas do Cliente
