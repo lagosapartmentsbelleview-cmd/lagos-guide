@@ -270,19 +270,19 @@ ${descritivo}`;
         }
     },
 
-    lixo: {
+   lixo: {
         pt: (r) => {
             return `Assunto: 🗑️ Localização dos Contentores de Lixo e Reciclagem | Apartments Belleview
 
 Olá, estimado(a) ${r.cliente},
 
-Para sua comodidade e para ajudar a manter o nosso complexo limpo e agradável durante a sua estadia, informamos que os contentores para depósito de lixo doméstico e ecoponto (reciclagem de plástico/metal, papel/cartão e vidro) encontram-se localizados no interior da urbanização Marina Park.
+Para sua comodidade e para ajudar a manter a qualidade e o conforto da sua estadia, informamos que os contentores para depósito de lixo doméstico e ecoponto (reciclagem de plástico/metal, papel/cartão e vidro) encontram-se localizados no interior da urbanização Marina Park.
 
 📍 Enviamos em anexo a imagem com a localização exata dos contentores perto do seu apartamento.
 
-Para manter o espaço limpo e agradável para todos, pedimos a gentileza de depositar o lixo diretamente nos contentores indicados.
+De forma a assegurar as melhores condições de higiene e salubridade no interior do apartamento, solicitamos a gentileza de depositar o lixo com regularidade nos respetivos contentores.
 
-Agradecemos desde já a sua colaboração!
+Agradecemos desde já a sua atenção e colaboração!
 
 Com os melhores cumprimentos,
 Luís Ferreira
@@ -296,13 +296,13 @@ Luís Ferreira
 
 Estimado/a ${r.cliente},
 
-Para su comodidad y para mantener nuestra urbanización limpia y agradable durante su estancia, le informamos que los contenedores de basura orgánica y reciclaje (plástico/metal, papel/cartón y vidrio) se encuentran dentro del complejo Marina Park.
+Para su comodidad y para garantizar la calidad y el confort durante su estancia, le informamos que los contenedores de basura orgánica y reciclaje (plástico/metal, papel/cartón y vidrio) se encuentran dentro del complejo Marina Park.
 
 📍 Le adjuntamos una imagen indicando la ubicación exacta de los contenedores cerca de su apartamento.
 
-Para mantener un entorno agradable y limpio para todos, le agradecemos depositar la basura directamente en los contenedores indicados.
+Con el fin de mantener las mejores condiciones de higiene y salubridad en el interior del apartamento, le solicitamos amablemente depositar la basura con regularidad en los contenedores correspondientes.
 
-¡Agradecemos de antemano su amable colaboración!
+¡Agradecemos de antemano su atención y colaboración!
 
 Atentamente,
 Luís Ferreira
@@ -316,13 +316,13 @@ Luís Ferreira
 
 Dear ${r.cliente},
 
-For your convenience and to help keep our complex clean and pleasant during your stay, please note that the garbage and recycling containers (plastics/metal, paper/cardboard, and glass) are located inside the Marina Park complex.
+For your convenience and to ensure a comfortable stay, please note that the garbage and recycling containers (plastics/metal, paper/cardboard, and glass) are located inside the Marina Park complex.
 
 📍 Attached is an image showing the exact location of the trash containers near your apartment.
 
-To keep the property clean and comfortable for everyone, we kindly ask that all waste be placed directly inside the designated containers.
+To maintain optimal standards of hygiene and cleanliness inside the apartment, we kindly ask that waste be disposed of regularly in the designated containers.
 
-Thank you in advance for your cooperation!
+Thank you in advance for your attention and cooperation!
 
 Best regards,
 Luís Ferreira
