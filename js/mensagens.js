@@ -399,71 +399,70 @@ Luís Ferreira
     },
 
     cortesia: {
-        pt: (r) => {
-            return `Assunto: 🌟 Boas-vindas ao Apartamento Belleview | Está tudo em conformidade?
+    pt: (r) => {
+        return `Assunto: 🌟 Boas-vindas ao Apartamento Belleview
 
-Olá, estimado(a) ${r.cliente},
+Olá, Sr.(a) ${r.cliente},
 
-Boa tarde!
+Como está? Já se encontra devidamente acomodado no apartamento?
 
-Espero que tenha tido uma viagem tranquila e que a sua instalação no apartamento tenha decorrido da melhor forma.
+Entro em contacto apenas para confirmar se encontrou tudo em ordem e em perfeitas condições. Está tudo ok?
 
-Entro em contacto para confirmar se encontrou tudo em ordem, em perfeitas condições de limpeza e conforto, e se precisa de alguma informação adicional para a sua estadia. A sua satisfação é a nossa prioridade.
+Estou sempre disponível caso tenha necessidade de alguma informação adicional. A sua satisfação é a nossa prioridade.
 
 Desejo-lhe uma excelente estadia e umas ótimas férias em Lagos!
 
-Permaneco inteiramente à sua disposição para qualquer apoio que necessite.
+Permaneço inteiramente à sua disposição para qualquer apoio que necessite.
 
 Com os melhores cumprimentos,
 Luís Ferreira
 📞 +351 910 051 588
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
-        },
-        es: (r) => {
-            return `Asunto: 🌟 Bienvenido/a al Apartamento Belleview | ¿Todo en orden?
+    },
+    es: (r) => {
+        return `Asunto: 🌟 Bienvenido/a al Apartamento Belleview
 
-Estimado/a ${r.cliente},
+Hola, Sr./Sra. ${r.cliente}:
 
-¡Buenas tardes!
+¿Cómo está? ¿Ya se encuentra debidamente acomodado/a en el apartamento?
 
-Espero que haya tenido un viaje tranquilo y que su acomodación en el apartamento haya sido muy agradable.
+Le escribo solo para confirmar si ha encontrado todo en orden y en perfectas condiciones. ¿Está todo ok?
 
-Le escribo para confirmar si ha encontrado todo en perfecto estado, cómodo y de su agrado, o si requiere cualquier información adicional para su estancia. Su comodidad es nuestra máxima prioridad.
+Estoy siempre disponible en caso de que necesite alguna información adicional. Su satisfacción es nuestra prioridad.
 
-¡Le deseo una estancia fantástica y unas excelentes vacaciones en Lagos!
+¡Le deseo una excelente estancia y unas fantásticas vacaciones en Lagos!
 
-Quedo a su entera disposición para cualquier cosa que pueda necesitar.
+Quedo a su entera disposición para cualquier apoyo que necesite.
 
 Atentamente,
 Luís Ferreira
 📞 +351 910 051 588
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
-        },
-        en: (r) => {
-            return `Subject: 🌟 Welcome to Apartments Belleview | Is everything to your satisfaction?
+    },
+    en: (r) => {
+        return `Subject: 🌟 Welcome to Belleview Apartment
 
-Dear ${r.cliente},
+Hello Mr./Ms. ${r.cliente},
 
-Good afternoon!
+How are you? Are you fully settled in at the apartment?
 
-I hope you had a safe trip and that you have settled in comfortably.
+I am reaching out just to confirm if you found everything in order and in perfect condition. Is everything OK?
 
-I am reaching out to ensure that everything in the apartment is in order and to your satisfaction, and to check if you need any additional assistance. Your comfort and well-being are our top priority.
+I am always available should you need any additional information. Your satisfaction is our priority.
 
-I wish you a wonderful stay and fantastic holidays in Lagos!
+I wish you a wonderful stay and great holidays in Lagos!
 
-Please feel free to reach out if you need anything at all.
+I remain entirely at your disposal for any support you may need.
 
 Best regards,
 Luís Ferreira
 📞 +351 910 051 588
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
-        }
-    },
-
+    }
+},
     checkin: {
         pt: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'pt');
