@@ -202,12 +202,12 @@ function normalizarReserva(doc) {
     let codigoCofre = d.codigoCofre || obterCodigoCofre(apartamento);
     let horaChegadaPrevista = d.horarioChegada || d.horaChegada || d.horaPrevista || '';
 
-    // Referência do número da reserva para a Fatura
-    let refReserva = d.numeroReserva || d.ref || d.reservaId || d.idReserva || doc.id;
+    // Referência do número da reserva (prioridade ao campo bookingId)
+    let refReserva = d.bookingId || d.numeroReserva || d.ref || d.reservaId || d.idReserva || doc.id;
 
     return {
         id: doc.id,
-        refReserva,
+        refReserva, // Passa o bookingId correto para a fatura
         cliente,
         checkIn: checkInStr,
         checkOut: checkOutStr,
