@@ -38,7 +38,7 @@ let idiomaAtual = 'pt';
 let tipoTemplateAtual = 'checkin';
 
 // ==========================================================================
-// DETERMINAÇÃO DO CÓDIGO DO COFRE POR APARTAMENTO
+// AUXILIARES: COFRE, REGISTO AL E FORMATO DE DATAS
 // ==========================================================================
 function obterCodigoCofre(apartamento) {
     const aptStr = String(apartamento || '').trim();
@@ -48,9 +48,25 @@ function obterCodigoCofre(apartamento) {
     return '9110';
 }
 
-// ==========================================================================
-// FORMATAÇÃO DE DATA POR EXTENSO
-// ==========================================================================
+// Retorna o Subtítulo / Registo AL consoante o Apartamento
+function obterInfoAL(apartamento) {
+    const aptStr = String(apartamento || '').trim();
+    if (aptStr.includes('2301')) return 'Estadia em Alojamento Local Mpark 2301 - 26313/AL';
+    if (aptStr.includes('2203')) return 'Estadia em Alojamento Local Mpark 2203 - 116671/AL';
+    if (aptStr.includes('2204')) return 'Estadia em Alojamento Local Mpark 2204 - 116670/AL';
+    return `Estadia em Alojamento Local Mpark ${aptStr}`;
+}
+
+// Formata YYYY-MM-DD para DD/MM/AAAA
+function formatarDataCurta(dataStr) {
+    if (!dataStr || dataStr === 'N/A') return dataStr;
+    const p = dataStr.split('-');
+    if (p.length === 3) {
+        return `${p[2]}/${p[1]}/${p[0]}`;
+    }
+    return dataStr;
+}
+
 function formatarDataExtenso(dataStr, lang) {
     if (!dataStr || dataStr === 'N/A') return dataStr;
     try {
@@ -186,8 +202,12 @@ function normalizarReserva(doc) {
     let codigoCofre = d.codigoCofre || obterCodigoCofre(apartamento);
     let horaChegadaPrevista = d.horarioChegada || d.horaChegada || d.horaPrevista || '';
 
+    // Referência do número da reserva para a Fatura
+    let refReserva = d.numeroReserva || d.ref || d.reservaId || d.idReserva || doc.id;
+
     return {
         id: doc.id,
+        refReserva,
         cliente,
         checkIn: checkInStr,
         checkOut: checkOutStr,
@@ -204,9 +224,28 @@ function normalizarReserva(doc) {
 }
 
 // ==========================================================================
-// MODELOS DE MENSAGENS
+// MODELOS DE MENSAGENS (INCLUINDO FATURAR)
 // ==========================================================================
 const templates = {
+    faturar: {
+        pt: (r) => {
+            const sub = obterInfoAL(r.apartamento);
+            const inFormatado = formatarDataCurta(r.checkIn);
+            const outFormatado = formatarDataCurta(r.checkOut);
+            const ref = r.refReserva || r.id;
+
+            const descritivo = `${sub} - ${inFormatado} a ${outFormatado} - Alojamento Mobilado para Turistas Ref ${ref}`;
+
+            return `SUBTÍTULO:
+${sub}
+
+DESCRITIVO DA FATURA:
+${descritivo}`;
+        },
+        es: (r) => templates.faturar.pt(r),
+        en: (r) => templates.faturar.pt(r)
+    },
+
     checkin: {
         pt: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'pt');
@@ -303,7 +342,7 @@ Para que servem estes dados?
 
 Obrigatoriedade e consequências da recusa
 
-A prestação destas informações é estritamente obrigatória por lei.
+A prestação destas informações é strictly obrigatória por lei.
 A recusa impede legalmente o check‑in e pode resultar no cancelamento imediato da reserva sem reembolso.
 Para o proprietário, a não comunicação destes dados constitui uma contraordenação grave, sujeita a coimas elevadas.
 
@@ -801,7 +840,7 @@ Luís Ferreira
 
         es: (r) => {
             const dataExt = formatarDataExtenso(r.checkOut !== 'N/A' ? r.checkOut : r.checkIn, 'es');
-            return `Asunto: 📌 Información Importante – Check-out | Apartamento Belleview
+            return `Assunto: 📌 Información Importante – Check-out | Apartamento Belleview
 
 Estimado/a Cliente ${r.cliente},
 
@@ -918,11 +957,9 @@ function eReservaOperacional(r) {
     const checkInDate = new Date(r.checkIn + 'T00:00:00');
     const checkOutDate = new Date(r.checkOut + 'T00:00:00');
 
-    // Margem de -1 dia no Check-in
     const margemIn = new Date(checkInDate);
     margemIn.setDate(margemIn.getDate() - 1);
 
-    // Margem de +1 dia no Check-out
     const margemOut = new Date(checkOutDate);
     margemOut.setDate(margemOut.getDate() + 1);
 
@@ -955,15 +992,13 @@ function aplicarFiltroData(tipo) {
     }
 
     const filtradas = listaReservasGlobal.filter(r => {
-        // 1. Janela operacional (-1 dia a +1 dia): aparece SEMPRE!
         if (eReservaOperacional(r)) return true;
 
-        // 2. Filtros normais
         if (tipo === '15dias') {
             return r.checkIn >= hojeStr && r.checkIn <= limite15Str;
         } else if (tipo === '1mes') {
             return r.checkIn >= hojeStr && r.checkIn <= limite1MesStr;
-        } else { // 'todos'
+        } else {
             return true;
         }
     });
@@ -1068,16 +1103,14 @@ function renderizarListaHospedes(lista) {
     }
 
     lista.forEach(r => {
-        // Verifica se a reserva está na janela operacional (-1 a +1 dia)
         const eOperacional = eReservaOperacional(r);
 
-        // Mensagens Enviadas (Horário corrigido para verificar horas e horario)
         const enviadoCheckin = r.mensagens && r.mensagens.checkin;
         const enviadoAima = r.mensagens && r.mensagens.aima;
         const enviadoHorario = r.mensagens && (r.mensagens.horas || r.mensagens.horario);
         const enviadoCheckout = r.mensagens && r.mensagens.checkout;
+        const enviadoFaturar = r.mensagens && r.mensagens.faturar;
 
-        // Respostas Recebidas do Cliente
         const aimaRecebido = r.respostas && r.respostas.aima;
         const horarioRecebido = r.respostas && r.respostas.horario;
 
@@ -1085,7 +1118,6 @@ function renderizarListaHospedes(lista) {
 
         const card = document.createElement('div');
         
-        // Estilo especial para reservas ativas/a decorrer
         const estiloOperacional = eOperacional 
             ? 'background-color: #f0f9ff; border-left: 5px solid #0284c7; box-shadow: 0 2px 4px rgba(2,132,199,0.15);' 
             : '';
@@ -1104,7 +1136,7 @@ function renderizarListaHospedes(lista) {
                 <span style="color: #2563eb; font-weight: 700;">Apto ${r.apartamento}</span>
             </div>
             <div class="hospede-sub">
-                🗓️ <strong>In:</strong> ${r.checkIn} ➜ <strong>Out:</strong> ${r.checkOut}<br>
+                🗓️️ <strong>In:</strong> ${r.checkIn} ➜ <strong>Out:</strong> ${r.checkOut}<br>
                 👥 Hóspedes: ${r.hospedes}${infoHora}
             </div>
 
@@ -1114,6 +1146,7 @@ function renderizarListaHospedes(lista) {
                 <span class="badge-check ${enviadoAima ? 'enviado' : ''}">${enviadoAima ? '✓ AIMA' : '⏳ AIMA'}</span>
                 <span class="badge-check ${enviadoHorario ? 'enviado' : ''}">${enviadoHorario ? '✓ Horário' : '⏳ Horário'}</span>
                 <span class="badge-check ${enviadoCheckout ? 'enviado' : ''}">${enviadoCheckout ? '✓ Check-out' : '⏳ Check-out'}</span>
+                <span class="badge-check ${enviadoFaturar ? 'enviado' : ''}">${enviadoFaturar ? '✓ Fatura' : '⏳ Fatura'}</span>
             </div>
 
             <!-- LINHA 2: Confirmação de Respostas Recebidas do Cliente -->
@@ -1134,7 +1167,7 @@ function renderizarListaHospedes(lista) {
 }
 
 // ==========================================================================
-// SELEÇÃO E GERADOR DE MENSAGENS (COM NAVEGAÇÃO SUAVE NO TELEMÓVEL)
+// SELEÇÃO E GERADOR DE MENSAGENS
 // ==========================================================================
 function selecionarHospede(reserva) {
     reservaSelecionada = reserva;
@@ -1184,10 +1217,14 @@ function carregarTemplate(tipo) {
     if (tipo === 'aima') document.getElementById('tplAima').classList.add('active');
     if (tipo === 'horas') document.getElementById('tplHoras').classList.add('active');
     if (tipo === 'checkout') document.getElementById('tplCheckout').classList.add('active');
+    if (tipo === 'faturar') {
+        const btnFaturar = document.getElementById('tplFaturar');
+        if (btnFaturar) btnFaturar.classList.add('active');
+    }
 
     if (!reservaSelecionada) return;
 
-    const fnTemplate = templates[tipo][idiomaAtual] || templates[tipo]['en'];
+    const fnTemplate = templates[tipo][idiomaAtual] || templates[tipo]['pt'];
     document.getElementById('textoMensagem').value = fnTemplate(reservaSelecionada);
     atualizarBotaoEnviado();
 }
@@ -1238,12 +1275,12 @@ function atualizarBotaoEnviado() {
     const enviado = reservaSelecionada && reservaSelecionada.mensagens && reservaSelecionada.mensagens[tipoTemplateAtual];
 
     if (enviado) {
-        btn.innerText = '✓ Enviado (Clique p/ desmarcar)';
+        btn.innerText = '✓ Processado (Clique p/ desmarcar)';
         btn.style.background = '#dcfce7';
         btn.style.color = '#15803d';
         btn.style.borderColor = '#86efac';
     } else {
-        btn.innerText = '✓ Marcar como Enviado';
+        btn.innerText = '✓ Marcar como Processado/Enviado';
         btn.style.background = '#ffffff';
         btn.style.color = '#334155';
         btn.style.borderColor = '#cbd5e1';
