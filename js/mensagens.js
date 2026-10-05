@@ -1237,6 +1237,7 @@ function renderizarListaHospedes(lista) {
                 <span class="badge-check ${enviadoAima ? 'enviado' : ''}">${enviadoAima ? '✓ AIMA' : '⏳ AIMA'}</span>
                 <span class="badge-check ${enviadoHorario ? 'enviado' : ''}">${enviadoHorario ? '✓ Horário' : '⏳ Horário'}</span>
                 <span class="badge-check ${enviadoCheckout ? 'enviado' : ''}">${enviadoCheckout ? '✓ Check-out' : '⏳ Check-out'}</span>
+                <span class="badge-check ${enviadoLixo ? 'enviado' : ''}">${enviadoLixo ? '✓ Lixo' : '⏳ Lixo'}</span>
                 <span class="badge-check ${enviadoFaturar ? 'enviado' : ''}">${enviadoFaturar ? '✓ Fatura' : '⏳ Fatura'}</span>
             </div>
 
