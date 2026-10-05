@@ -224,7 +224,7 @@ function normalizarReserva(doc) {
 }
 
 // ==========================================================================
-// MODELOS DE MENSAGENS (INCLUINDO FATURAR)
+// MODELOS DE MENSAGENS
 // ==========================================================================
 const templates = {
     faturar: {
@@ -242,10 +242,100 @@ ${sub}
 DESCRITIVO DA FATURA:
 ${descritivo}`;
         },
-        es: (r) => templates.faturar.pt(r),
-        en: (r) => templates.faturar.pt(r)
+        es: (r) => {
+            const sub = obterInfoAL(r.apartamento);
+            const inFormatado = formatarDataCurta(r.checkIn);
+            const outFormatado = formatarDataCurta(r.checkOut);
+            const ref = r.refReserva || r.id;
+
+            const descritivo = `${sub} - ${inFormatado} a ${outFormatado} - Alojamento Mobilado para Turistas Ref ${ref}`;
+
+            return `SUBTÍTULO DE LA FACTURA:
+${sub}
+
+DESCRIPCIÓN DE LA FACTURA:
+${descritivo}`;
+        },
+        en: (r) => {
+            const sub = obterInfoAL(r.apartamento);
+            const inFormatado = formatarDataCurta(r.checkIn);
+            const outFormatado = formatarDataCurta(r.checkOut);
+            const ref = r.refReserva || r.id;
+
+            const descritivo = `${sub} - ${inFormatado} to ${outFormatado} - Furnished Accommodation for Tourists Ref ${ref}`;
+
+            return `INVOICE SUBTITLE:
+${sub}
+
+INVOICE DESCRIPTION:
+${descritivo}`;
+        }
     },
 
+    lixo: {
+        pt: (r) => {
+            return `Assunto: 🗑️ Localização dos Contentores de Lixo e Reciclagem | Apartments Belleview
+
+Olá, estimado(a) ${r.cliente},
+
+Para sua comodidade e para ajudar a manter o nosso complexo limpo e agradável durante a sua estadia, informamos que os contentores para depósito de lixo doméstico e ecoponto (reciclagem de plástico/metal, papel/cartão e vidro) encontram-se localizados no interior da urbanização Marina Park.
+
+📍 Enviamos em anexo a imagem com a localização exata dos contentores perto do seu apartamento.
+
+Lembramos amavelmente que é estritamente proibido deixar sacos de lixo nos corredores, escadas ou junto às portas do edifício.
+
+Agradecemos desde já a sua colaboração!
+
+Com os melhores cumprimentos,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        },
+
+        es: (r) => {
+            return `Asunto: 🗑️️ Ubicación de los Contenedores de Basura y Reciclaje | Apartments Belleview
+
+Estimado/a ${r.cliente},
+
+Para su comodidad y para mantener nuestra urbanización limpia y agradable durante su estancia, le informamos que los contenedores de basura orgánica y reciclaje (plástico/metal, papel/cartón y vidrio) se encuentran dentro del complejo Marina Park.
+
+📍 Le adjuntamos una imagen indicando la ubicación exacta de los contenedores cerca de su apartamento.
+
+Le recordamos amablemente que está estrictamente prohibido dejar bolsas de basura en los pasillos, escaleras o junto a las puertas del edificio.
+
+¡Agradecemos de antemano su amable colaboración!
+
+Atentamente,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        },
+
+        en: (r) => {
+            return `Subject: 🗑️ Trash & Recycling Containers Location | Apartments Belleview
+
+Dear ${r.cliente},
+
+For your convenience and to help keep our complex clean and pleasant during your stay, please note that the garbage and recycling containers (plastics/metal, paper/cardboard, and glass) are located inside the Marina Park complex.
+
+📍 Attached is an image showing the exact location of the trash containers near your apartment.
+
+We kindly remind you that leaving trash bags in hallways, staircases, or near building entrances is strictly prohibited.
+
+Thank you in advance for your cooperation!
+
+Best regards,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        }
+    },
+
+    // ... (restantes templates: checkin, aima, horas, checkout mantêm-se iguais)
+};
     checkin: {
         pt: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'pt');
