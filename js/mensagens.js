@@ -48,7 +48,6 @@ function obterCodigoCofre(apartamento) {
     return '9110';
 }
 
-// Retorna o Subtítulo / Registo AL consoante o Apartamento
 function obterInfoAL(apartamento) {
     const aptStr = String(apartamento || '').trim();
     if (aptStr.includes('2301')) return 'Estadia em Alojamento Local Mpark 2301 - 26313/AL';
@@ -57,7 +56,6 @@ function obterInfoAL(apartamento) {
     return `Estadia em Alojamento Local Mpark ${aptStr}`;
 }
 
-// Formata YYYY-MM-DD para DD/MM/AAAA
 function formatarDataCurta(dataStr) {
     if (!dataStr || dataStr === 'N/A') return dataStr;
     const p = dataStr.split('-');
@@ -135,7 +133,7 @@ function processarPaisEIdioma(rawPais) {
 }
 
 // ==========================================================================
-// NORMALIZAÇÃO DE DADOS DO FIRESTORE
+// NORMALIZAÇÃO DE DADOS DO FIRESTORE (COM BOOKINGID)
 // ==========================================================================
 function normalizarReserva(doc) {
     const d = doc.data();
@@ -202,12 +200,12 @@ function normalizarReserva(doc) {
     let codigoCofre = d.codigoCofre || obterCodigoCofre(apartamento);
     let horaChegadaPrevista = d.horarioChegada || d.horaChegada || d.horaPrevista || '';
 
-    // Referência do número da reserva (prioridade ao campo bookingId)
+    // Prioridade total ao campo bookingId guardado na reserva
     let refReserva = d.bookingId || d.numeroReserva || d.ref || d.reservaId || d.idReserva || doc.id;
 
     return {
         id: doc.id,
-        refReserva, // Passa o bookingId correto para a fatura
+        refReserva,
         cliente,
         checkIn: checkInStr,
         checkOut: checkOutStr,
@@ -224,7 +222,7 @@ function normalizarReserva(doc) {
 }
 
 // ==========================================================================
-// MODELOS DE MENSAGENS
+// MODELOS DE MENSAGENS (TODAS AS LÍNGUAS E TIPOS)
 // ==========================================================================
 const templates = {
     faturar: {
@@ -292,9 +290,8 @@ Luís Ferreira
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
         },
-
         es: (r) => {
-            return `Asunto: 🗑️️ Ubicación de los Contenedores de Basura y Reciclaje | Apartments Belleview
+            return `Asunto: 🗑 Ubicación de los Contenedores de Basura y Reciclaje | Apartments Belleview
 
 Estimado/a ${r.cliente},
 
@@ -312,9 +309,8 @@ Luís Ferreira
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
         },
-
         en: (r) => {
-            return `Subject: 🗑️ Trash & Recycling Containers Location | Apartments Belleview
+            return `Subject: 🗑️️ Trash & Recycling Containers Location | Apartments Belleview
 
 Dear ${r.cliente},
 
@@ -334,8 +330,6 @@ Luís Ferreira
         }
     },
 
-    // ... (restantes templates: checkin, aima, horas, checkout mantêm-se iguais)
-};
     checkin: {
         pt: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'pt');
@@ -449,7 +443,6 @@ Luís Ferreira
 📞 +351 910 051 588
 🌍 https://www.facebook.com/Belleview`;
         },
-
         es: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'es');
             const infoHora = r.horarioChegada ? ` (previsto para las ${r.horarioChegada})` : '';
@@ -460,7 +453,7 @@ Luís Ferreira
 Su llegada al apartamento Belleview en Lagos se aproxima, con check‑in programado para el ${dataExt}${infoHora}. Queremos garantizar que tenga una experiencia agradable y sin preocupaciones.
 
 📍 Su llegada y acceso al apartamento
-Al llegar al Complejo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), diríjase directamente al apartamento [${r.apartamento}] asignado a su reserva (vea la imagen adjunta para la ubicación exacta en el Lote 22/23).
+Al llegar al Complejo Turístico Marina Park (37°07'01.6"N 8°40'16.4"W), diríjasе directamente al apartamento [${r.apartamento}] asignado a su reserva (vea la imagen adjunta para la ubicación exacta en el Lote 22/23).
 
 Ubicación en Google Maps:
 
@@ -562,7 +555,6 @@ Luís Ferreira
 📞 +351 910 051 588
 🌍 https://www.facebook.com/Belleview`;
         },
-
         en: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'en');
             const infoHora = r.horarioChegada ? ` (expected at ${r.horarioChegada})` : '';
@@ -720,7 +712,6 @@ Luís Ferreira
 📞 +351 910 051 588
 🔗 https://www.facebook.com/Belleview/`;
         },
-
         es: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'es');
             return `Asunto: ⚠️ Importante – Obligatoriedad de Envío de Datos para AIMA (antiguo SEF)
@@ -763,7 +754,6 @@ Luís Ferreira
 📞 +351 910 051 588
 🔗 https://www.facebook.com/Belleview/`;
         },
-
         en: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'en');
             return `Subject: ⚠️ Important – Mandatory Guest Data Submission for AIMA (Immigration)
@@ -833,7 +823,6 @@ Luís Ferreira
 📩 belleview@sapo.pt
 🔗 https://www.facebook.com/Belleview/`;
         },
-
         es: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'es');
             return `Asunto: ⏰ Horario de Llegada | Apartamento Belleview
@@ -858,7 +847,6 @@ Luís Ferreira
 📩 belleview@sapo.pt
 🔗 https://www.facebook.com/Belleview/`;
         },
-
         en: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'en');
             return `Subject: ⏰ Estimated Arrival Time | Apartment Belleview
@@ -927,7 +915,6 @@ Luís Ferreira
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
         },
-
         es: (r) => {
             const dataExt = formatarDataExtenso(r.checkOut !== 'N/A' ? r.checkOut : r.checkIn, 'es');
             return `Assunto: 📌 Información Importante – Check-out | Apartamento Belleview
@@ -969,7 +956,6 @@ Luís Ferreira
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
         },
-
         en: (r) => {
             const dataExt = formatarDataExtenso(r.checkOut !== 'N/A' ? r.checkOut : r.checkIn, 'en');
             return `Subject: 📌 Important Information – Check-out | Apartment Belleview
@@ -1227,7 +1213,7 @@ function renderizarListaHospedes(lista) {
                 <span style="color: #2563eb; font-weight: 700;">Apto ${r.apartamento}</span>
             </div>
             <div class="hospede-sub">
-                🗓️️ <strong>In:</strong> ${r.checkIn} ➜ <strong>Out:</strong> ${r.checkOut}<br>
+                🗓 <strong>In:</strong> ${r.checkIn} ➜ <strong>Out:</strong> ${r.checkOut}<br>
                 👥 Hóspedes: ${r.hospedes}${infoHora}
             </div>
 
