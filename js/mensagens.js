@@ -200,7 +200,6 @@ function normalizarReserva(doc) {
     let codigoCofre = d.codigoCofre || obterCodigoCofre(apartamento);
     let horaChegadaPrevista = d.horarioChegada || d.horaChegada || d.horaPrevista || '';
 
-    // Prioridade total ao campo bookingId guardado na reserva
     let refReserva = d.bookingId || d.numeroReserva || d.ref || d.reservaId || d.idReserva || doc.id;
 
     return {
@@ -270,7 +269,7 @@ ${descritivo}`;
         }
     },
 
-   lixo: {
+    lixo: {
         pt: (r) => {
             return `Assunto: 🗑️ Localização dos Contentores de Lixo e Reciclagem | Apartments Belleview
 
@@ -290,9 +289,8 @@ Luís Ferreira
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
         },
-
         es: (r) => {
-            return `Asunto: 🗑️ Ubicación de los Contenedores de Basura y Reciclaje | Apartments Belleview
+            return `Asunto: 🗑️️ Ubicación de los Contenedores de Basura y Reciclaje | Apartments Belleview
 
 Estimado/a ${r.cliente},
 
@@ -310,7 +308,6 @@ Luís Ferreira
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
         },
-
         en: (r) => {
             return `Subject: 🗑️ Trash & Recycling Containers Location | Apartments Belleview
 
@@ -331,6 +328,142 @@ Luís Ferreira
 🌍 https://www.facebook.com/Belleview/`;
         }
     },
+
+    vitasol: {
+        pt: (r) => {
+            return `Assunto: 🏊 Cartão e Pulseiras de Acesso à Piscina | Receção Vitasol
+
+Olá, estimado(a) ${r.cliente},
+
+Para poder desfrutar da área de lazer e da piscina do complexo Marina Park, ser-lhe-á necessário recolher o cartão de acesso e as respetivas pulseiras na receção da Vitasol, localizada no início/entrada do complexo (numa das lojas principais).
+
+📍 Enviamos em anexo a imagem com a localização exata da receção Vitasol.
+
+Informações Importantes para a Recolha:
+• Quantidade: 1 Cartão de acesso + ${r.hospedes} pulseira(s) (1 por hóspede).
+• Caução Reembolsável: É exigida uma caução de 1 € por cada cartão e 1 € por cada pulseira (a pagar no momento da recolha na receção).
+• Devolução: O valor total da caução ser-lhe-á integralmente devolvido no final da estadia, mediante a entrega de todos os itens no mesmo local de recolha.
+
+Desejamos-lhe excelentes momentos de lazer!
+
+Com os melhores cumprimentos,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        },
+        es: (r) => {
+            return `Asunto: 🏊 Tarjeta y Pulseras de Acceso a la Piscina | Recepción Vitasol
+
+Estimado/a ${r.cliente},
+
+Para poder disfrutar de la piscina y las zonas de ocio del complejo Marina Park, es necesario recoger la tarjeta de acceso y las pulseras correspondientes en la recepción de Vitasol, ubicada a la entrada del complejo (en una de las tiendas principales).
+
+📍 Le adjuntamos una imagen con la ubicación exacta de la recepción Vitasol.
+
+Información Importante para la Recogida:
+• Cantidad: 1 Tarjeta de acceso + ${r.hospedes} pulsera(s) (1 por huésped).
+• Depósito Reembolsable: Se requiere un depósito de 1 € por cada tarjeta y 1 € por cada pulsera (a abonar al recogerlas en la recepción).
+• Devolución: El importe total del depósito se le devolverá íntegramente al final de su estancia, tras entregar todos los elementos en el mismo lugar.
+
+¡Le deseamos excelentes momentos de descanso y ocio!
+
+Atentamente,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        },
+        en: (r) => {
+            return `Subject: 🏊 Pool Access Card and Wristbands | Vitasol Reception
+
+Dear ${r.cliente},
+
+To access the swimming pool and leisure areas at the Marina Park complex, you will need to collect the access card and wristbands from the Vitasol reception, located at the main entrance of the complex (in one of the front shops).
+
+📍 Attached is an image showing the exact location of the Vitasol reception.
+
+Important Details for Collection:
+• Items: 1 Access card + ${r.hospedes} wristband(s) (1 per guest).
+• Refundable Deposit: A refundable deposit of €1 per card and €1 per wristband is required upon collection at reception.
+• Return: The total deposit will be fully refunded at check-out when returning all items to the same reception.
+
+We wish you a wonderful and relaxing time!
+
+Best regards,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        }
+    },
+
+    cortesia: {
+        pt: (r) => {
+            return `Assunto: 🌟 Boas-vindas ao Apartamento Belleview | Está tudo em conformidade?
+
+Olá, estimado(a) ${r.cliente},
+
+Boa tarde!
+
+Espero que tenha tido uma viagem tranquila e que a sua instalação no apartamento tenha decorrido da melhor forma.
+
+Entro em contacto para confirmar se encontrou tudo em ordem, em perfeitas condições de limpeza e conforto, e se precisa de alguma informação adicional para a sua estadia. A sua satisfação é a nossa prioridade.
+
+Desejo-lhe uma excelente estadia e umas ótimas férias em Lagos!
+
+Permaneco inteiramente à sua disposição para qualquer apoio que necessite.
+
+Com os melhores cumprimentos,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        },
+        es: (r) => {
+            return `Asunto: 🌟 Bienvenido/a al Apartamento Belleview | ¿Todo en orden?
+
+Estimado/a ${r.cliente},
+
+¡Buenas tardes!
+
+Espero que haya tenido un viaje tranquilo y que su acomodación en el apartamento haya sido muy agradable.
+
+Le escribo para confirmar si ha encontrado todo en perfecto estado, cómodo y de su agrado, o si requiere cualquier información adicional para su estancia. Su comodidad es nuestra máxima prioridad.
+
+¡Le deseo una estancia fantástica y unas excelentes vacaciones en Lagos!
+
+Quedo a su entera disposición para cualquier cosa que pueda necesitar.
+
+Atentamente,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        },
+        en: (r) => {
+            return `Subject: 🌟 Welcome to Apartments Belleview | Is everything to your satisfaction?
+
+Dear ${r.cliente},
+
+Good afternoon!
+
+I hope you had a safe trip and that you have settled in comfortably.
+
+I am reaching out to ensure that everything in the apartment is in order and to your satisfaction, and to check if you need any additional assistance. Your comfort and well-being are our top priority.
+
+I wish you a wonderful stay and fantastic holidays in Lagos!
+
+Please feel free to reach out if you need anything at all.
+
+Best regards,
+Luís Ferreira
+📞 +351 910 051 588
+📩 belleview@sapo.pt
+🌍 https://www.facebook.com/Belleview/`;
+        }
+    },
+
     checkin: {
         pt: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'pt');
@@ -510,7 +643,7 @@ Manual de la Lavadora (Zanussi):
 
 👉 https://www.apartmentsbelleview.com/docs/zanussi-es.pdf
 
-⚠️ Importante para huéspedes extranjeros
+⚠️️ Importante para huéspedes extranjeros
 Si la reserva incluye huéspedes que no posean la nacionalidad portuguesa, es legalmente obligatorio el envío anticipado de los datos de identificación de todos los huéspedes, incluidos menores (niños y bebés).
 
 Por favor, complete el formulario obligatorio a través del siguiente enlace:
@@ -793,7 +926,6 @@ We wish you a safe journey and a wonderful stay in Lagos!
 
 Kind regards,
 Luís Ferreira
-📩 belleview@sapo.pt
 📞 +351 910 051 588
 🔗 https://www.facebook.com/Belleview/`;
         }
@@ -939,7 +1071,7 @@ El check-out debe realizarse como máximo a las 10:00, ya que recibiremos a nuev
 📌 Antes de salir, le pedimos por favor:
 ✅ Comprobar que no olvida ningún objeto personal en el apartamento.
 ✅ Depositar la basura en los contenedores correspondientes del complejo Marina Park.
-✅ Por favor, deje los platos y utensils de cocina lavados.
+✅ Por favor, deje los platos y utensilios de cocina lavados.
 
 📌 Aviso de salida anticipada:
 Si planea salir antes de las 10:00, le agradeceríamos que nos lo informe con antelación respondiendo a este mensaje.
@@ -1185,6 +1317,8 @@ function renderizarListaHospedes(lista) {
         const enviadoCheckin = r.mensagens && r.mensagens.checkin;
         const enviadoAima = r.mensagens && r.mensagens.aima;
         const enviadoHorario = r.mensagens && (r.mensagens.horas || r.mensagens.horario);
+        const enviadoVitasol = r.mensagens && r.mensagens.vitasol;
+        const enviadoCortesia = r.mensagens && r.mensagens.cortesia;
         const enviadoCheckout = r.mensagens && r.mensagens.checkout;
         const enviadoLixo = r.mensagens && r.mensagens.lixo;
         const enviadoFaturar = r.mensagens && r.mensagens.faturar;
@@ -1223,8 +1357,10 @@ function renderizarListaHospedes(lista) {
                 <span class="badge-check ${enviadoCheckin ? 'enviado' : ''}">${enviadoCheckin ? '✓ Check-in' : '⏳ Check-in'}</span>
                 <span class="badge-check ${enviadoAima ? 'enviado' : ''}">${enviadoAima ? '✓ AIMA' : '⏳ AIMA'}</span>
                 <span class="badge-check ${enviadoHorario ? 'enviado' : ''}">${enviadoHorario ? '✓ Horário' : '⏳ Horário'}</span>
-                <span class="badge-check ${enviadoCheckout ? 'enviado' : ''}">${enviadoCheckout ? '✓ Check-out' : '⏳ Check-out'}</span>
+                <span class="badge-check ${enviadoVitasol ? 'enviado' : ''}">${enviadoVitasol ? '✓ Vitasol' : '⏳ Vitasol'}</span>
+                <span class="badge-check ${enviadoCortesia ? 'enviado' : ''}">${enviadoCortesia ? '✓ Apoio' : '⏳ Apoio'}</span>
                 <span class="badge-check ${enviadoLixo ? 'enviado' : ''}">${enviadoLixo ? '✓ Lixo' : '⏳ Lixo'}</span>
+                <span class="badge-check ${enviadoCheckout ? 'enviado' : ''}">${enviadoCheckout ? '✓ Check-out' : '⏳ Check-out'}</span>
                 <span class="badge-check ${enviadoFaturar ? 'enviado' : ''}">${enviadoFaturar ? '✓ Fatura' : '⏳ Fatura'}</span>
             </div>
 
@@ -1296,6 +1432,14 @@ function carregarTemplate(tipo) {
     if (tipo === 'aima') document.getElementById('tplAima').classList.add('active');
     if (tipo === 'horas') document.getElementById('tplHoras').classList.add('active');
     if (tipo === 'checkout') document.getElementById('tplCheckout').classList.add('active');
+    if (tipo === 'vitasol') {
+        const btnVitasol = document.getElementById('tplVitasol');
+        if (btnVitasol) btnVitasol.classList.add('active');
+    }
+    if (tipo === 'cortesia') {
+        const btnCortesia = document.getElementById('tplCortesia');
+        if (btnCortesia) btnCortesia.classList.add('active');
+    }
     if (tipo === 'lixo') {
         const btnLixo = document.getElementById('tplLixo');
         if (btnLixo) btnLixo.classList.add('active');
