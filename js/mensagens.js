@@ -280,7 +280,7 @@ Para sua comodidade e para ajudar a manter o nosso complexo limpo e agradável d
 
 📍 Enviamos em anexo a imagem com a localização exata dos contentores perto do seu apartamento.
 
-Lembramos amavelmente que é estritamente proibido deixar sacos de lixo nos corredores, escadas ou junto às portas do edifício.
+Para manter o espaço limpo e agradável para todos, pedimos a gentileza de depositar o lixo diretamente nos contentores indicados.
 
 Agradecemos desde já a sua colaboração!
 
@@ -290,8 +290,9 @@ Luís Ferreira
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
         },
+
         es: (r) => {
-            return `Asunto: 🗑 Ubicación de los Contenedores de Basura y Reciclaje | Apartments Belleview
+            return `Asunto: 🗑️ Ubicación de los Contenedores de Basura y Reciclaje | Apartments Belleview
 
 Estimado/a ${r.cliente},
 
@@ -299,7 +300,7 @@ Para su comodidad y para mantener nuestra urbanización limpia y agradable duran
 
 📍 Le adjuntamos una imagen indicando la ubicación exacta de los contenedores cerca de su apartamento.
 
-Le recordamos amablemente que está estrictamente prohibido dejar bolsas de basura en los pasillos, escaleras o junto a las puertas del edificio.
+Para mantener un entorno agradable y limpio para todos, le agradecemos depositar la basura directamente en los contenedores indicados.
 
 ¡Agradecemos de antemano su amable colaboración!
 
@@ -309,8 +310,9 @@ Luís Ferreira
 📩 belleview@sapo.pt
 🌍 https://www.facebook.com/Belleview/`;
         },
+
         en: (r) => {
-            return `Subject: 🗑️️ Trash & Recycling Containers Location | Apartments Belleview
+            return `Subject: 🗑️ Trash & Recycling Containers Location | Apartments Belleview
 
 Dear ${r.cliente},
 
@@ -318,7 +320,7 @@ For your convenience and to help keep our complex clean and pleasant during your
 
 📍 Attached is an image showing the exact location of the trash containers near your apartment.
 
-We kindly remind you that leaving trash bags in hallways, staircases, or near building entrances is strictly prohibited.
+To keep the property clean and comfortable for everyone, we kindly ask that all waste be placed directly inside the designated containers.
 
 Thank you in advance for your cooperation!
 
@@ -329,7 +331,6 @@ Luís Ferreira
 🌍 https://www.facebook.com/Belleview/`;
         }
     },
-
     checkin: {
         pt: (r) => {
             const dataExt = formatarDataExtenso(r.checkIn, 'pt');
