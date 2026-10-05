@@ -1199,6 +1199,7 @@ function renderizarListaHospedes(lista) {
         const enviadoAima = r.mensagens && r.mensagens.aima;
         const enviadoHorario = r.mensagens && (r.mensagens.horas || r.mensagens.horario);
         const enviadoCheckout = r.mensagens && r.mensagens.checkout;
+        const enviadoLixo = r.mensagens && r.mensagens.lixo;
         const enviadoFaturar = r.mensagens && r.mensagens.faturar;
 
         const aimaRecebido = r.respostas && r.respostas.aima;
@@ -1307,6 +1308,10 @@ function carregarTemplate(tipo) {
     if (tipo === 'aima') document.getElementById('tplAima').classList.add('active');
     if (tipo === 'horas') document.getElementById('tplHoras').classList.add('active');
     if (tipo === 'checkout') document.getElementById('tplCheckout').classList.add('active');
+    if (tipo === 'lixo') {
+        const btnLixo = document.getElementById('tplLixo');
+        if (btnLixo) btnLixo.classList.add('active');
+    }
     if (tipo === 'faturar') {
         const btnFaturar = document.getElementById('tplFaturar');
         if (btnFaturar) btnFaturar.classList.add('active');
