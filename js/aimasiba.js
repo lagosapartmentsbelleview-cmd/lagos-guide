@@ -1,45 +1,14 @@
 // ============================================================
-// AIMASIBA.JS — GESTÃO SIBA / AIMA (WEB SERVICE + XML + CRUD)
+// AIMASIBA.JS — GESTÃO SIBA / AIMA VIA CLOUDFLARE WORKER
 // ============================================================
 
-// 1. CONFIGURAÇÃO DE AMBIENTE E APARTAMENTOS
-const SIBA_CONFIG = {
-  // Alterar para false quando passar para Produção
-  modoTeste: true, 
-
-  // URLs do Web Service SIBA
-  endpoints: {
-    teste: "https://ws.siba.sef.pt/testes/endpoint",    // Endpoint de Homologação/Testes
-    producao: "https://ws.siba.sef.pt/producao/endpoint" // Endpoint Oficial de Produção
-  },
-
-  // Configuração dos 3 Registos AL (Apartamentos 0, 1 e 2)
-  apartamentos: {
-    "0": {
-      nome: "Apartamento 0",
-      al: "26313/AL",
-      chaveTeste: "CHAVE_TESTE_APT0",
-      chaveProducao: "CHAVE_PRODUCAO_APT0"
-    },
-    "1": {
-      nome: "Apartamento 1",
-      al: "116670/AL",
-      chaveTeste: "CHAVE_TESTE_APT1",
-      chaveProducao: "CHAVE_PRODUCAO_APT1"
-    },
-    "2": {
-      nome: "Apartamento 2",
-      al: "116671/AL",
-      chaveTeste: "CHAVE_TESTE_APT2",
-      chaveProducao: "CHAVE_PRODUCAO_APT2"
-    }
-  }
-};
+// ⚠️ ALTERE APENAS ESTA URL PARA A URL REAL DO SEU CLOUDFLARE WORKER
+const CLOUDFLARE_WORKER_URL = "https://enviar-siba.SEU-SUBDOMINIO.workers.dev";
 
 const SIBA_STORAGE_KEY = "belleview_boletins_siba";
 
 // ============================================================
-// 2. FUNÇÃO PARA GUARDAR COMO PENDENTE (Chamada do aimatest.js)
+// 1. GUARDAR BOLETIM LOCALMENTE (Chamada do aimatest.js)
 // ============================================================
 function guardarBoletimPendente(dadosFormulario) {
   const lista = obterBoletinsSiba();
@@ -48,7 +17,7 @@ function guardarBoletimPendente(dadosFormulario) {
     id: "BOL-" + Date.now(),
     dataRececao: new Date().toISOString(),
     estado: "PENDENTE", // PENDENTE, SUBMETIDO_WS, ERRO_WS, DESCARREGADO_XML
-    apartamento: null,  // 0, 1 ou 2
+    apartamento: null,  // "2301", "2203", "2204" (ou "0", "1", "2")
     respostaWebService: null,
     dados: dadosFormulario
   };
@@ -59,87 +28,69 @@ function guardarBoletimPendente(dadosFormulario) {
 }
 
 // ============================================================
-// 3. OPERAÇÕES DE SUBMISSÃO (OPÇÃO A: WEB SERVICE | OPÇÃO B: XML)
+// 2. ENVIAR VIA WEBSERVICE (CLOUDFLARE WORKER)
 // ============================================================
-
-/**
- * OPÇÃO A: Enviar diretamente para o Web Service do SIBA
- */
 async function enviarParaSibaWebService(idBoletim, aptNum) {
   const boletim = obterBoletimPorId(idBoletim);
-  if (!validarSelecaoApartamento(boletim, aptNum)) return;
+  if (!boletim) {
+    alert("Boletim não encontrado!");
+    return;
+  }
 
-  const aptInfo = SIBA_CONFIG.apartamentos[String(aptNum)];
-  const isTeste = SIBA_CONFIG.modoTeste;
-  const endpoint = isTeste ? SIBA_CONFIG.endpoints.teste : SIBA_CONFIG.endpoints.producao;
-  const chaveAcesso = isTeste ? aptInfo.chaveTeste : aptInfo.chaveProducao;
-
-  const xmlContent = gerarXmlSiba(boletim.dados, aptInfo.al);
+  const aptValido = String(aptNum).trim();
+  if (!["2301", "2203", "2204", "0", "1", "2"].includes(aptValido)) {
+    alert("Selecione um apartamento válido (2301, 2203 ou 2204).");
+    return;
+  }
 
   try {
-    // Chamada ao Web Service
-    const response = await fetch(endpoint, {
+    const response = await fetch(CLOUDFLARE_WORKER_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/xml",
-        "Authorization": "Bearer " + chaveAcesso
-      },
-      body: xmlContent
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        unidade: aptValido,
+        boletim: boletim.dados
+      })
     });
 
-    const resultadoTexto = await response.text();
+    const resultado = await response.json();
 
-    if (response.ok) {
+    if (response.ok && resultado.success) {
       atualizarEstadoBoletim(idBoletim, {
         estado: "SUBMETIDO_WS",
-        apartamento: String(aptNum),
-        respostaWebService: resultadoTexto,
-        ambiente: isTeste ? "TESTE" : "PRODUCAO"
+        apartamento: aptValido,
+        respostaWebService: resultado.mensagem || resultado.respostaSibaRaw,
+        ambiente: resultado.modo || "TESTE (bawsdev)"
       });
-      alert(`[${isTeste ? 'TESTE' : 'PRODUÇÃO'}] Boletim enviado com sucesso via Web Service para ${aptInfo.nome}!`);
+      alert(`[${resultado.modo || 'TESTE'}] Enviado com sucesso!\n\nResposta SIBA: ${resultado.mensagem}`);
     } else {
-      atualizarEstadoBoletim(idBoletim, { estado: "ERRO_WS", respostaWebService: resultadoTexto });
-      alert(`Erro no Web Service (${response.status}): ${resultadoTexto}`);
+      const msgErro = resultado.mensagem || resultado.message || "Erro de validação no servidor do SIBA";
+      atualizarEstadoBoletim(idBoletim, { 
+        estado: "ERRO_WS", 
+        respostaWebService: msgErro 
+      });
+      alert(`Erro na submissão ao SIBA (${response.status}):\n${msgErro}`);
     }
   } catch (error) {
-    console.error("Erro na comunicação com SIBA:", error);
-    alert("Falha de rede ao contactar o Web Service do SIBA.");
+    console.error("Erro na comunicação com o Cloudflare Worker:", error);
+    alert("Falha de rede ao contactar o servidor Cloudflare Worker.");
   }
 }
 
-/**
- * OPÇÃO B: Descarregar apenas o ficheiro XML (Submissão Manual)
- */
+// ============================================================
+// 3. DESCARREGAR XML MANUALMENTE (OPÇÃO DE BACKUP)
+// ============================================================
 function descarregarXmlSibaManual(idBoletim, aptNum) {
   const boletim = obterBoletimPorId(idBoletim);
-  if (!validarSelecaoApartamento(boletim, aptNum)) return;
+  if (!boletim) {
+    alert("Boletim não encontrado!");
+    return;
+  }
 
-  const aptInfo = SIBA_CONFIG.apartamentos[String(aptNum)];
-  const xmlContent = gerarXmlSiba(boletim.dados, aptInfo.al);
-
-  atualizarEstadoBoletim(idBoletim, {
-    estado: "DESCARREGADO_XML",
-    apartamento: String(aptNum)
-  });
-
-  // Download do ficheiro
-  const blob = new Blob([xmlContent], { type: "application/xml" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `SIBA_Apt${aptNum}_${aptInfo.al.replace('/','-')}_${boletim.id}.xml`;
-  a.click();
-}
-
-// ============================================================
-// 4. AUXILIARES E GERADOR XML
-// ============================================================
-function gerarXmlSiba(dados, registoAL) {
   const docTypes = { passport: "P", id: "I", other: "O" };
 
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<BoletinsAlojamento>\n`;
-  xml += `  <Estabelecimento>${registoAL}</Estabelecimento>\n`;
-
-  dados.hospedes.forEach((h) => {
+  let xml = `<?xml version="1.0" encoding="utf-8"?>\n<Boletins>\n`;
+  (boletim.dados.hospedes || []).forEach((h) => {
     xml += `  <Boletim>\n`;
     xml += `    <Nome>${escapeXml(h.nome)}</Nome>\n`;
     xml += `    <DataNascimento>${h.dataNascimento}</DataNascimento>\n`;
@@ -148,17 +99,29 @@ function gerarXmlSiba(dados, registoAL) {
     xml += `    <TipoDocumento>${docTypes[h.docTipo] || "O"}</TipoDocumento>\n`;
     xml += `    <NumeroDocumento>${escapeXml(h.docNumero)}</NumeroDocumento>\n`;
     xml += `    <PaisEmissor>${escapeXml(h.docPaisEmissor)}</PaisEmissor>\n`;
-    xml += `    <DataEntrada>${dados.dataCheckin}</DataEntrada>\n`;
-    xml += `    <DataSaida>${dados.dataCheckout}</DataSaida>\n`;
+    xml += `    <DataEntrada>${boletim.dados.dataCheckin}</DataEntrada>\n`;
+    xml += `    <DataSaida>${boletim.dados.dataCheckout}</DataSaida>\n`;
     xml += `  </Boletim>\n`;
   });
+  xml += `</Boletins>`;
 
-  xml += `</BoletinsAlojamento>`;
-  return xml;
+  atualizarEstadoBoletim(idBoletim, {
+    estado: "DESCARREGADO_XML",
+    apartamento: String(aptNum)
+  });
+
+  const blob = new Blob([xml], { type: "application/xml;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `BAL_Apto${aptNum}_${boletim.id}.xml`;
+  a.click();
 }
 
+// ============================================================
+// 4. AUXILIARES E LOCAL STORAGE
+// ============================================================
 function escapeXml(str) {
-  return str ? String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+  return str ? String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;") : "";
 }
 
 function obterBoletinsSiba() {
@@ -167,15 +130,6 @@ function obterBoletinsSiba() {
 
 function obterBoletimPorId(id) {
   return obterBoletinsSiba().find(b => b.id === id);
-}
-
-function validarSelecaoApartamento(boletim, aptNum) {
-  if (!boletim) { alert("Boletim não encontrado!"); return false; }
-  if (!["0", "1", "2"].includes(String(aptNum))) {
-    alert("Selecione um Apartamento válido (0, 1 ou 2).");
-    return false;
-  }
-  return true;
 }
 
 function atualizarEstadoBoletim(id, alteracoes) {
