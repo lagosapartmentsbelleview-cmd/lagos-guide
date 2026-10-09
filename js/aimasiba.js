@@ -1,265 +1,126 @@
 // ============================================================
-// AIMASIBA.JS — INTEGRAÇÃO INTEGRAL COM CLOUDFLARE WORKER & SIBA
+// AIMASIBA.JS — GESTÃO SIBA / AIMA (WEB SERVICE WORKER + XML + CRUD)
 // ============================================================
 
-// 1. CONFIGURAÇÃO DA URL PÚBLICA DO CLOUDFLARE WORKER
 const CLOUDFLARE_WORKER_URL = "https://enviar-siba.lagosapartmentsbelleview.workers.dev";
+const SIBA_STORAGE_KEY = "belleview_boletins_siba";
 
-// ============================================================
-// 2. DICIONÁRIO COMPLETO ISO-3 (ISO 3166-1 ALPHA-3)
-// ============================================================
-const iso3Map = {
-  // A
-  "afghanistan": "AFG", "afeganistão": "AFG",
-  "albania": "ALB", "albânia": "ALB",
-  "algeria": "DZA", "argélia": "DZA",
-  "andorra": "AND",
-  "angola": "AGO",
-  "argentina": "ARG",
-  "armenia": "ARM", "arménia": "ARM",
-  "australia": "AUS", "austrália": "AUS",
-  "austria": "AUT", "áustria": "AUT",
-  // B
-  "bahamas": "BHS", "bangladesh": "BGD", "barbados": "BRB",
-  "belgium": "BEL", "bélgica": "BEL", "belgique": "BEL", "belgien": "BEL",
-  "belize": "BLZ", "benin": "BEN", "benim": "BEN",
-  "bhutan": "BTN", "butão": "BTN",
-  "bolivia": "BOL", "bolívia": "BOL",
-  "bosnia and herzegovina": "BIH", "bósnia e herzegovina": "BIH",
-  "botswana": "BWA", "botsuana": "BWA",
-  "brazil": "BRA", "brasil": "BRA", "brésil": "BRA", "brasilien": "BRA",
-  "bulgaria": "BGR", "bulgária": "BGR",
-  // C
-  "canada": "CAN", "canadá": "CAN",
-  "cape verde": "CPV", "cabo verde": "CPV",
-  "chile": "CHL", "china": "CHN", "colombia": "COL", "colômbia": "COL",
-  "costa rica": "CRI", "croatia": "HRV", "croácia": "HRV",
-  "cuba": "CUB", "cyprus": "CYP", "chipre": "CYP",
-  "czech republic": "CZE", "república checa": "CZE", "czechia": "CZE",
-  // D
-  "denmark": "DNK", "dinamarca": "DNK",
-  "dominican republic": "DOM", "república dominicana": "DOM",
-  // E
-  "ecuador": "ECU", "equador": "ECU",
-  "egypt": "EGY", "egipto": "EGY", "egito": "EGY",
-  "estonia": "EST", "estónia": "EST",
-  "ethiopia": "ETH", "etiópia": "ETH",
-  // F
-  "finland": "FIN", "finlândia": "FIN",
-  "france": "FRA", "frança": "FRA", "francia": "FRA", "frankreich": "FRA",
-  // G
-  "georgia": "GEO", "geórgia": "GEO",
-  "germany": "DEU", "alemanha": "DEU", "allemagne": "DEU", "deutschland": "DEU",
-  "greece": "GRC", "grécia": "GRC", "guatemala": "GTM",
-  // H
-  "haiti": "HTI", "honduras": "HND", "hungary": "HUN", "hungria": "HUN",
-  // I
-  "iceland": "ISL", "islândia": "ISL",
-  "india": "IND", "índia": "IND",
-  "indonesia": "IDN", "indonésia": "IDN",
-  "iran": "IRN", "irão": "IRN", "iraq": "IRQ", "iraque": "IRQ",
-  "ireland": "IRL", "irlanda": "IRL", "israel": "ISR",
-  "italy": "ITA", "itália": "ITA", "italie": "ITA", "italien": "ITA",
-  "ivory coast": "CIV", "costa do marfim": "CIV",
-  // J
-  "jamaica": "JAM", "japan": "JPN", "japão": "JPN", "jordan": "JOR", "jordânia": "JOR",
-  // K
-  "kazakhstan": "KAZ", "cazaquistão": "KAZ", "kenya": "KEN", "quénia": "KEN",
-  "kuwait": "KWT", "koweit": "KWT",
-  // L
-  "latvia": "LVA", "letónia": "LVA", "lebanon": "LBN", "líbano": "LBN",
-  "lithuania": "LTU", "lituânia": "LTU", "luxembourg": "LUX", "luxemburgo": "LUX",
-  // M
-  "madagascar": "MDG", "madagáscar": "MDG", "malaysia": "MYS", "malásia": "MYS",
-  "maldives": "MDV", "maldivas": "MDV", "malta": "MLT",
-  "mexico": "MEX", "méxico": "MEX", "moldova": "MDA", "moldávia": "MDA",
-  "monaco": "MCO", "mónaco": "MCO", "montenegro": "MNE",
-  "morocco": "MAR", "marrocos": "MAR", "mozambique": "MOZ", "moçambique": "MOZ",
-  // N
-  "nepal": "NPL",
-  "netherlands": "NLD", "países baixos": "NLD", "holanda": "NLD", "pays-bas": "NLD", "niederlande": "NLD",
-  "new zealand": "NZL", "nova zelândia": "NZL", "nicaragua": "NIC", "nicarágua": "NIC",
-  "nigeria": "NGA", "nigéria": "NGA", "north macedonia": "MKD", "macedónia do norte": "MKD",
-  "norway": "NOR", "noruega": "NOR",
-  // O
-  "oman": "OMN", "omã": "OMN",
-  // P
-  "pakistan": "PAK", "paquistão": "PAK", "panama": "PAN", "panamá": "PAN",
-  "paraguay": "PRY", "paraguai": "PRY", "peru": "PER", "philippines": "PHL", "filipinas": "PHL",
-  "poland": "POL", "polónia": "POL", "pologne": "POL", "polonia": "POL", "polen": "POL",
-  "portugal": "PRT", "portogallo": "PRT",
-  // Q
-  "qatar": "QAT", "catar": "QAT",
-  // R
-  "romania": "ROU", "roménia": "ROU", "russia": "RUS", "rússia": "RUS",
-  // S
-  "saudi arabia": "SAU", "arábia saudita": "SAU", "senegal": "SEN", "serbia": "SRB", "sérvia": "SRB",
-  "singapore": "SGP", "singapura": "SGP", "slovakia": "SVK", "eslováquia": "SVK",
-  "slovenia": "SVN", "eslovénia": "SVN", "south africa": "ZAF", "áfrica do sul": "ZAF",
-  "south korea": "KOR", "coreia do sul": "KOR",
-  "spain": "ESP", "espanha": "ESP", "españa": "ESP", "espagne": "ESP", "spanien": "ESP", "spagna": "ESP",
-  "sri lanka": "LKA", "sweden": "SWE", "suécia": "SWE", "suède": "SWE", "suecia": "SWE", "schweden": "SWE",
-  "switzerland": "CHE", "suíça": "CHE", "suisse": "CHE", "suiza": "CHE", "schweiz": "CHE",
-  // T
-  "taiwan": "TWN", "thailand": "THA", "tailândia": "THA", "tunisia": "TUN", "tunísia": "TUN",
-  "turkey": "TUR", "turquia": "TUR",
-  // U
-  "ukraine": "UKR", "ucrânia": "UKR", "united arab emirates": "ARE", "emirados árabes unidos": "ARE",
-  "united kingdom": "GBR", "reino unido": "GBR", "royaume-uni": "GBR", "regno unito": "GBR", "großbritannien": "GBR", "uk": "GBR",
-  "united states": "USA", "estados unidos": "USA", "états-unis": "USA", "stati uniti": "USA", "usa": "USA", "us": "USA",
-  "uruguay": "URY", "uruguai": "URY", "uzbekistan": "UZB", "uzbequistão": "UZB",
-  // V
-  "venezuela": "VEN", "vietnam": "VNM", "vietname": "VNM",
-  // Z
-  "zambia": "ZMB", "zâmbia": "ZMB", "zimbabwe": "ZWE", "zimbabué": "ZWE"
+const SIBA_CONFIG = {
+  modoTeste: true,
+  apartamentos: {
+    "0": { nome: "Apartamento 0", al: "26313/AL", codigoWorker: "2301" },
+    "1": { nome: "Apartamento 1", al: "116670/AL", codigoWorker: "2203" },
+    "2": { nome: "Apartamento 2", al: "116671/AL", codigoWorker: "2204" }
+  }
 };
 
 // ============================================================
-// 3. FUNÇÕES AUXILIARES DE NORMALIZAÇÃO
+// DICIONÁRIO DE CONVERSÃO ISO-3 PARA AIMA/SIBA
 // ============================================================
+const iso3Lookup = {
+  "portugal": "PRT", "portogallo": "PRT",
+  "espanha": "ESP", "spain": "ESP", "españa": "ESP", "espagne": "ESP", "spagna": "ESP", "spanien": "ESP",
+  "frança": "FRA", "france": "FRA", "francia": "FRA", "frankreich": "FRA",
+  "alemanha": "DEU", "germany": "DEU", "allemagne": "DEU", "alemania": "DEU", "germania": "DEU", "deutschland": "DEU",
+  "reino unido": "GBR", "united kingdom": "GBR", "royaume-uni": "GBR", "regno unito": "GBR", "großbritannien": "GBR", "uk": "GBR",
+  "estados unidos": "USA", "united states": "USA", "états-unis": "USA", "stati uniti": "USA", "usa": "USA",
+  "itália": "ITA", "italy": "ITA", "italie": "ITA", "italien": "ITA",
+  "países baixos": "NLD", "netherlands": "NLD", "pays-bas": "NLD", "niederlande": "NLD", "holanda": "NLD",
+  "bélgica": "BEL", "belgium": "BEL", "belgique": "BEL", "belgio": "BEL", "belgien": "BEL",
+  "suíça": "CHE", "switzerland": "CHE", "suisse": "CHE", "suiza": "CHE", "svizzera": "CHE", "schweiz": "CHE",
+  "irlanda": "IRL", "ireland": "IRL", "irlande": "IRL", "irland": "IRL",
+  "brasil": "BRA", "brazil": "BRA", "brésil": "BRA", "brasile": "BRA", "brasilien": "BRA",
+  "canadá": "CAN", "canada": "CAN", "kanada": "CAN",
+  "polónia": "POL", "poland": "POL", "pologne": "POL", "polonia": "POL", "polen": "POL",
+  "bhutan": "BTN", "bhoutan": "BTN", "butão": "BTN", "bután": "BTN",
+  "bolivia": "BOL", "bolívia": "BOL", "bolivie": "BOL",
+  "áustria": "AUT", "austria": "AUT", "autriche": "AUT", "österreich": "AUT",
+  "dinamarca": "DNK", "denmark": "DNK", "danemark": "DNK", "dänemark": "DNK",
+  "suécia": "SWE", "sweden": "SWE", "suède": "SWE", "suecia": "SWE", "svezia": "SWE", "schweden": "SWE",
+  "noruega": "NOR", "norway": "NOR", "norvège": "NOR", "norvegia": "NOR", "norwegen": "NOR",
+  "finlândia": "FIN", "finland": "FIN", "finlande": "FIN", "finlandia": "FIN", "finnland": "FIN"
+};
 
-// Normaliza nomes de país para códigos ISO-3 de 3 letras
-function normalizarIso3(paisTexto) {
+function converterParaIso3(paisTexto) {
   if (!paisTexto) return "PRT";
   const p = String(paisTexto).trim();
-  
-  // Se já for um código ISO-3 válido de 3 letras maiúsculas
   if (/^[A-Z]{3}$/.test(p)) return p;
-  
   const pLower = p.toLowerCase();
-  if (iso3Map[pLower]) return iso3Map[pLower];
-
-  // Tenta extrair código se estiver no formato "Portugal (PRT)" ou "PRT - Portugal"
-  const match = p.match(/\b([A-Za-z]{3})\b/);
-  if (match && match[1].toUpperCase() in Object.values(iso3Map)) {
-    return match[1].toUpperCase();
-  }
-
-  return "PRT"; // Fallback por defeito
+  return iso3Lookup[pLower] || "PRT";
 }
 
-// Normaliza o Tipo de Documento para P, I ou O
-function normalizarTipoDocumento(docTipo) {
+function converterTipoDoc(docTipo) {
   if (!docTipo) return "P";
-  const str = String(docTipo).trim().toLowerCase();
-  if (str.includes("pass") || str === "p" || str.includes("(p)")) return "P";
-  if (str.includes("id") || str.includes("cidad") || str.includes("bi") || str === "i" || str.includes("(i)")) return "I";
-  if (str.includes("outr") || str.includes("other") || str === "o" || str.includes("(o)")) return "O";
-  return "P";
+  const d = String(docTipo).toLowerCase();
+  if (d.includes("pass") || d === "p" || d === "passport") return "P";
+  if (d.includes("id") || d.includes("cidad") || d.includes("bi") || d === "i") return "I";
+  return "O";
 }
 
-// Normaliza datas para o formato estrito AAAA-MM-DD
-function normalizarDataIso(dataStr) {
+function converterDataIso(dataStr) {
   if (!dataStr) return "";
   const str = String(dataStr).trim();
-
-  // Formato DD/MM/AAAA ou DD-MM-AAAA
   if (/^\d{2}[\/\-]\d{2}[\/\-]\d{4}$/.test(str)) {
     const parts = str.split(/[\/\-]/);
     return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
   }
-  // Formato AAAA-MM-DD
-  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
-    return str;
-  }
-  // Tentar parse nativo
-  const d = new Date(str);
-  if (!isNaN(d.getTime())) {
-    return d.toISOString().split("T")[0];
-  }
   return str;
 }
 
-// Normaliza o código de apartamento
-function normalizarApartamento(apt) {
-  if (!apt) return "2301";
-  const str = String(apt).trim().toUpperCase();
-  if (str.includes("2301") || str.includes("0BELLEVIEW") || str === "1") return "2301";
-  if (str.includes("2203") || str.includes("1BELLEVIEW") || str === "2") return "2203";
-  if (str.includes("2204") || str.includes("2BELLEVIEW") || str === "3") return "2204";
-  return apt;
+// ============================================================
+// 2. FUNÇÃO PARA GUARDAR COMO PENDENTE (Chamada do aimatest.js)
+// ============================================================
+function guardarBoletimPendente(dadosFormulario) {
+  const lista = obterBoletinsSiba();
+  
+  const novoBoletim = {
+    id: "BOL-" + Date.now(),
+    dataRececao: new Date().toISOString(),
+    estado: "PENDENTE",
+    apartamento: null,
+    respostaWebService: null,
+    dados: dadosFormulario
+  };
+
+  lista.push(novoBoletim);
+  localStorage.setItem(SIBA_STORAGE_KEY, JSON.stringify(lista));
+  return novoBoletim;
 }
 
 // ============================================================
-// 4. GESTÃO DO LOCALSTORAGE
+// 3. OPERAÇÕES DE SUBMISSÃO (WEB SERVICE WORKER + XML MANUAL)
 // ============================================================
-function obterBoletinsSiba() {
-  try {
-    const dados = localStorage.getItem("boletinsSiba");
-    return dados ? JSON.parse(dados) : [];
-  } catch (e) {
-    console.error("Erro ao ler LocalStorage:", e);
-    return [];
-  }
-}
 
-function guardarBoletinsSiba(boletins) {
-  try {
-    localStorage.setItem("boletinsSiba", JSON.stringify(boletins));
-  } catch (e) {
-    console.error("Erro ao guardar LocalStorage:", e);
-  }
-}
+async function enviarParaSibaWebService(idBoletim, aptNum) {
+  const boletim = obterBoletimPorId(idBoletim);
+  if (!validarSelecaoApartamento(boletim, aptNum)) return;
 
-function guardarBoletimPendente(boletim) {
-  const boletins = obterBoletinsSiba();
-  if (!boletim.id) {
-    boletim.id = "BOL-" + Date.now();
-  }
-  boletins.unshift(boletim);
-  guardarBoletinsSiba(boletins);
-  return boletim;
-}
+  const aptInfo = SIBA_CONFIG.apartamentos[String(aptNum)];
+  const aptCodigo = aptInfo ? aptInfo.codigoWorker : "2301";
 
-// ============================================================
-// 5. ENVIO PRINCIPAL PARA O CLOUDFLARE WORKER & AIMA SIBA
-// ============================================================
-async function enviarParaSibaWebService(idOuBoletim, apartamentoInput) {
-  let boletim = null;
-  let boletins = obterBoletinsSiba();
-
-  if (typeof idOuBoletim === "object" && idOuBoletim !== null) {
-    boletim = idOuBoletim;
-  } else if (typeof idOuBoletim === "string") {
-    boletim = boletins.find(b => b.id === idOuBoletim || b.idBoletim === idOuBoletim || String(b.criadoEm) === idOuBoletim);
-  }
-
-  // Se não encontrou por ID, assume o primeiro pendente
-  if (!boletim && boletins.length > 0) {
-    boletim = boletins[0];
-  }
-
-  if (!boletim) {
-    alert("⚠️ Nenhum boletim encontrado para enviar.");
-    return { success: false, mensagem: "Boletim não encontrado" };
-  }
-
-  // Código do apartamento
-  const aptoCodigo = normalizarApartamento(apartamentoInput || boletim.apartamento || boletim.alojamento || "2301");
-
-  // Normalizar todos os hóspedes estritamente para as regras AIMA/SIBA
-  const hospedesNormalizados = (boletim.hospedes || []).map(h => ({
-    nome: String(h.nome || h.fullName || "").trim(),
-    dataNascimento: normalizarDataIso(h.dataNascimento || h.birthDate),
-    nacionalidade: normalizarIso3(h.nacionalidade || h.nationality),
-    paisResidencia: normalizarIso3(h.paisResidencia || h.residenceCountry),
-    docTipo: normalizarTipoDocumento(h.docTipo || h.docType),
-    docNumero: String(h.docNumero || h.docNumber || "").trim(),
-    docOutroDesc: String(h.docOutroDesc || h.docOther || "").trim(),
-    docPaisEmissor: normalizarIso3(h.docPaisEmissor || h.docCountry)
+  // Prepara e normaliza os dados especificamente para o WebService da AIMA
+  const hospedesNormalizados = (boletim.dados.hospedes || []).map(h => ({
+    nome: h.nome || "",
+    dataNascimento: converterDataIso(h.dataNascimento),
+    nacionalidade: converterParaIso3(h.nacionalidade),
+    paisResidencia: converterParaIso3(h.paisResidencia),
+    docTipo: converterTipoDoc(h.docTipo),
+    docNumero: h.docNumero || "",
+    docOutroDesc: h.docOutroDesc || "",
+    docPaisEmissor: converterParaIso3(h.docPaisEmissor)
   }));
 
   const payload = {
-    apartamento: aptoCodigo,
-    dataCheckin: normalizarDataIso(boletim.dataCheckin),
-    dataCheckout: normalizarDataIso(boletim.dataCheckout),
-    numAdultos: parseInt(boletim.numAdultos || 1, 10),
-    numCriancas: parseInt(boletim.numCriancas || 0, 10),
-    emailCliente: boletim.emailCliente || "",
+    apartamento: aptCodigo,
+    dataCheckin: converterDataIso(boletim.dados.dataCheckin),
+    dataCheckout: converterDataIso(boletim.dados.dataCheckout),
+    numAdultos: parseInt(boletim.dados.numAdultos || 1, 10),
+    numCriancas: parseInt(boletim.dados.numCriancas || 0, 10),
+    emailCliente: boletim.dados.emailCliente || "",
     hospedes: hospedesNormalizados
   };
 
-  console.log("A enviar payload normalizado para Cloudflare Worker:", payload);
+  console.log("A enviar para o Cloudflare Worker:", payload);
 
   try {
     const response = await fetch(CLOUDFLARE_WORKER_URL, {
@@ -268,31 +129,97 @@ async function enviarParaSibaWebService(idOuBoletim, apartamentoInput) {
       body: JSON.stringify(payload)
     });
 
-    const result = await response.json();
-    console.log("Resposta do Cloudflare Worker / SIBA:", result);
+    const resultado = await response.json();
+    console.log("Resposta SIBA/Worker:", resultado);
 
-    if (result.success) {
-      boletim.status = "ENVIADO";
-      boletim.enviadoEm = new Date().toISOString();
-      guardarBoletinsSiba(boletins);
-
-      alert(`[${result.modo}] Enviado com sucesso para a AIMA/SIBA!\nEstabelecimento: ${result.estabelecimento || aptoCodigo}`);
-      return result;
+    if (resultado.success) {
+      atualizarEstadoBoletim(idBoletim, {
+        estado: "SUBMETIDO_WS",
+        apartamento: String(aptNum),
+        respostaWebService: JSON.stringify(resultado),
+        ambiente: resultado.modo || "TESTE"
+      });
+      alert(`[${resultado.modo || 'TESTE'}] Boletim enviado com sucesso via Web Service para ${aptInfo.nome}!`);
     } else {
-      let msgErro = result.mensagem || "Erro de processamento no SIBA";
-      if (result.respostaSibaRaw && result.respostaSibaRaw.includes("faultstring")) {
-        const match = result.respostaSibaRaw.match(/<faultstring>(.*?)<\/faultstring>/);
-        if (match) msgErro += `:\n${match[1]}`;
-      }
-      alert(`⚠️ Erro devolvido pelo SIBA:\n${msgErro}`);
-      return result;
+      atualizarEstadoBoletim(idBoletim, { estado: "ERRO_WS", respostaWebService: JSON.stringify(resultado) });
+      alert(`Erro no SIBA: ${resultado.mensagem || "Erro no envio"}`);
     }
-  } catch (err) {
-    console.error("Erro na comunicação com o Worker:", err);
-    alert("⚠️ Erro ao contactar o Cloudflare Worker. Verifique a ligação ou a URL do Worker.");
-    return { success: false, mensagem: err.message };
+  } catch (error) {
+    console.error("Erro na comunicação com o Worker:", error);
+    alert("Falha de rede ao contactar o servidor do SIBA via Worker.");
   }
 }
 
-// Garantir compatibilidade com qualquer chamada no siba.html
-const enviarBoletimParaSIBA = enviarParaSibaWebService;
+function descarregarXmlSibaManual(idBoletim, aptNum) {
+  const boletim = obterBoletimPorId(idBoletim);
+  if (!validarSelecaoApartamento(boletim, aptNum)) return;
+
+  const aptInfo = SIBA_CONFIG.apartamentos[String(aptNum)];
+  const xmlContent = gerarXmlSiba(boletim.dados, aptInfo.al);
+
+  atualizarEstadoBoletim(idBoletim, {
+    estado: "DESCARREGADO_XML",
+    apartamento: String(aptNum)
+  });
+
+  const blob = new Blob([xmlContent], { type: "application/xml" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `SIBA_Apt${aptNum}_${aptInfo.al.replace('/','-')}_${boletim.id}.xml`;
+  a.click();
+}
+
+// ============================================================
+// 4. AUXILIARES E GERADOR XML
+// ============================================================
+function gerarXmlSiba(dados, registoAL) {
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<BoletinsAlojamento>\n`;
+  xml += `  <Estabelecimento>${registoAL}</Estabelecimento>\n`;
+
+  (dados.hospedes || []).forEach((h) => {
+    xml += `  <Boletim>\n`;
+    xml += `    <Nome>${escapeXml(h.nome)}</Nome>\n`;
+    xml += `    <DataNascimento>${converterDataIso(h.dataNascimento)}</DataNascimento>\n`;
+    xml += `    <Nacionalidade>${converterParaIso3(h.nacionalidade)}</Nacionalidade>\n`;
+    xml += `    <PaisResidencia>${converterParaIso3(h.paisResidencia)}</PaisResidencia>\n`;
+    xml += `    <TipoDocumento>${converterTipoDoc(h.docTipo)}</TipoDocumento>\n`;
+    xml += `    <NumeroDocumento>${escapeXml(h.docNumero)}</NumeroDocumento>\n`;
+    xml += `    <PaisEmissor>${converterParaIso3(h.docPaisEmissor)}</PaisEmissor>\n`;
+    xml += `    <DataEntrada>${converterDataIso(dados.dataCheckin)}</DataEntrada>\n`;
+    xml += `    <DataSaida>${converterDataIso(dados.dataCheckout)}</DataSaida>\n`;
+    xml += `  </Boletim>\n`;
+  });
+
+  xml += `</BoletinsAlojamento>`;
+  return xml;
+}
+
+function escapeXml(str) {
+  return str ? String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+}
+
+function obterBoletinsSiba() {
+  return JSON.parse(localStorage.getItem(SIBA_STORAGE_KEY) || "[]");
+}
+
+function obterBoletimPorId(id) {
+  return obterBoletinsSiba().find(b => b.id === id);
+}
+
+function validarSelecaoApartamento(boletim, aptNum) {
+  if (!boletim) { alert("Boletim não encontrado!"); return false; }
+  if (!["0", "1", "2"].includes(String(aptNum))) {
+    alert("Selecione um Apartamento válido (0, 1 ou 2).");
+    return false;
+  }
+  return true;
+}
+
+function atualizarEstadoBoletim(id, alteracoes) {
+  let lista = obterBoletinsSiba();
+  const index = lista.findIndex(b => b.id === id);
+  if (index !== -1) {
+    lista[index] = { ...lista[index], ...alteracoes, dataAtualizacao: new Date().toISOString() };
+    localStorage.setItem(SIBA_STORAGE_KEY, JSON.stringify(lista));
+  }
+}
