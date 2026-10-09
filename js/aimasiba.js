@@ -3,7 +3,7 @@
 // ============================================================
 
 // ⚠️ ALTERE APENAS ESTA URL PARA A URL REAL DO SEU CLOUDFLARE WORKER
-const CLOUDFLARE_WORKER_URL = "https://enviar-siba.SEU-SUBDOMINIO.workers.dev";
+const CLOUDFLARE_WORKER_URL = "https://enviar-siba.lagosapartmentsbelleview.workers.dev/";
 
 const SIBA_STORAGE_KEY = "belleview_boletins_siba";
 
