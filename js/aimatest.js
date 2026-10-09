@@ -1,9 +1,13 @@
 // ============================================================
-// 1. INICIALIZAÇÃO E MANIPULAÇÃO DO DOM
+// AIMATEST.JS — GESTÃO DO FORMULÁRIO DE REGISTO DE HÓSPEDES
 // ============================================================
+
+// 1. INICIALIZAÇÃO E MANIPULAÇÃO DO DOM
 document.addEventListener("DOMContentLoaded", () => {
+  // Remover validações nativas do browser para permitir gestão customizada via JS
   document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
 
+  // Gestão do Modal de FAQ
   const faqModal = document.getElementById("faqModal");
   const closeFaqBtn = document.getElementById("closeFaqModal") || 
                       document.querySelector(".close-faq") || 
@@ -22,57 +26,54 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
 // ============================================================
-// 2. LISTAS DE PAÍSES TRADUZIDAS
+// 2. LISTAS DE PAÍSES E MAPEAMENTO ISO-3 / DOCUMENTOS
 // ============================================================
 const countryLists = {
   pt: [
-    "Afeganistão","África do Sul","Albânia","Alemanha","Andorra","Angola","Antígua e Barbuda","Arábia Saudita","Argélia","Argentina","Arménia","Austrália","Áustria","Azerbaijão",
-    "Bahamas","Bangladesh","Barbados","Barém","Bélgica","Belize","Benim","Bielorrússia","Bolívia","Bósnia e Herzegovina","Botsuana","Brasil","Brunei","Bulgária","Burquina Faso","Burundi","Butão",
-    "Cabo Verde","Camarões","Camboja","Canadá","Catar","Cazaquistão","Chade","Chile","China","Chipre","Colômbia","Comores","Coreia do Norte","Coreia do Sul","Costa do Marfim","Costa Rica","Croácia","Cuba",
-    "Dinamarca","Dominica",
-    "Egipto","Emirados Árabes Unidos","Equador","Eritreia","Eslováquia","Eslovénia","Espanha","Estados Unidos","Estónia","Etiópia",
-    "Fiji","Filipinas","Finlândia","França",
-    "Gabão","Gâmbia","Gana","Geórgia","Granada","Grécia","Guatemala","Guiana","Guiné","Guiné-Bissau","Guiné Equatorial",
-    "Haiti","Honduras","Hungria",
-    "Iémen","Ilhas Marechal","Índia","Indonésia","Irão","Iraque","Irlanda","Islândia","Israel","Itália",
-    "Jamaica","Japão","Jordânia",
-    "Koweit",
-    "Laos","Lesoto","Letónia","Líbano","Libéria","Líbia","Liechtenstein","Lituânia","Luxemburgo",
+    "Portugal","Alemanha","Espanha","França","Reino Unido","Itália","Países Baixos","Bélgica","Suíça","Irlanda","Brasil","Canadá","Estados Unidos",
+    "Afeganistão","África do Sul","Albânia","Andorra","Angola","Antígua e Barbuda","Arábia Saudita","Argélia","Argentina","Arménia","Austrália","Áustria","Azerbaijão",
+    "Bahamas","Bangladesh","Barbados","Barém","Belize","Benim","Bielorrússia","Bolívia","Bósnia e Herzegovina","Botsuana","Brunei","Bulgária","Burquina Faso","Burundi","Butão",
+    "Cabo Verde","Camarões","Camboja","Catar","Cazaquistão","Chade","Chile","China","Chipre","Colômbia","Comores","Coreia do Norte","Coreia do Sul","Costa do Marfim","Costa Rica","Croácia","Cuba",
+    "Dinamarca","Dominica","Egipto","Emirados Árabes Unidos","Equador","Eritreia","Eslováquia","Eslovénia","Estónia","Etiópia",
+    "Fiji","Filipinas","Finlândia","Gabão","Gâmbia","Gana","Geórgia","Granada","Grécia","Guatemala","Guiana","Guiné","Guiné-Bissau","Guiné Equatorial",
+    "Haiti","Honduras","Hungria","Iémen","Ilhas Marechal","Índia","Indonésia","Irão","Iraque","Islândia","Israel",
+    "Jamaica","Japão","Jordânia","Koweit","Laos","Lesoto","Letónia","Líbano","Libéria","Líbia","Liechtenstein","Lituânia","Luxemburgo",
     "Macedónia do Norte","Madagáscar","Malásia","Malaui","Maldivas","Mali","Malta","Marrocos","Maurícia","Mauritânia","México","Micronésia","Moçambique","Moldávia","Mónaco","Mongólia","Montenegro","Mianmar",
-    "Namíbia","Nauru","Nepal","Nicarágua","Níger","Nigéria","Noruega","Nova Zelândia",
-    "Omã",
-    "Países Baixos","Paquistão","Palau","Panamá","Papua-Nova Guiné","Paraguai","Peru","Polónia","Portugal",
-    "Reino Unido","República Centro-Africana","República Checa","República Democrática do Congo","República do Congo","República Dominicana","Roménia","Ruanda","Rússia",
-    "Samoa","Santa Lúcia","São Cristóvão e Neves","São Marino","São Tomé e Príncipe","São Vicente e Granadinas","Senegal","Serra Leoa","Sérvia","Seicheles","Singapura","Síria","Somália","Sri Lanka","Eswatini","Sudão","Sudão do Sul","Suécia","Suíça","Suriname",
+    "Namíbia","Nauru","Nepal","Nicarágua","Níger","Nigéria","Noruega","Nova Zelândia","Omã","Paquistão","Palau","Panamá","Papua-Nova Guiné","Paraguai","Peru","Polónia",
+    "República Centro-Africana","República Checa","República Democrática do Congo","República do Congo","República Dominicana","Roménia","Ruanda","Rússia",
+    "Samoa","Santa Lúcia","São Cristóvão e Neves","São Marino","São Tomé e Príncipe","São Vicente e Granadinas","Senegal","Serra Leoa","Sérvia","Seicheles","Singapura","Síria","Somália","Sri Lanka","Eswatini","Sudão","Sudão do Sul","Suécia","Suriname",
     "Tailândia","Taiwan","Tajiquistão","Tanzânia","Timor-Leste","Togo","Tonga","Trinidad e Tobago","Tunísia","Turquemenistão","Turquia","Tuvalu",
-    "Ucrânia","Uganda","Uruguai","Uzbequistão",
-    "Vanuatu","Vaticano","Venezuela","Vietname",
-    "Zâmbia","Zimbabué"
+    "Ucrânia","Uganda","Uruguai","Uzbequistão","Vanuatu","Vaticano","Venezuela","Vietname","Zâmbia","Zimbabué"
   ],
-  en: ["Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Belgium","Brazil","Canada","China","Denmark","Egypt","Finland","France","Germany","Greece","India","Ireland","Israel","Italy","Japan","Luxembourg","Mexico","Morocco","Netherlands","New Zealand","Norway","Poland","Portugal","Romania","Russia","Spain","Sweden","Switzerland","Turkey","Ukraine","United Kingdom","United States"],
-  fr: ["Afghanistan","Afrique du Sud","Albanie","Algérie","Allemagne","Andorre","Angola","Argentine","Australie","Autriche","Belgique","Brésil","Canada","Chine","Danemark","Espagne","États-Unis","Finlande","France","Grèce","Irlande","Italie","Luxembourg","Maroc","Norvège","Pays-Bas","Pologne","Portugal","Royaume-Uni","Suède","Suisse"],
-  es: ["Afganistán","Alemania","Andorra","Angola","Argentina","Australia","Austria","Bélgica","Brasil","Canadá","Chile","China","Colombia","Dinamarca","Ecuador","España","Estados Unidos","Francia","Grecia","Irlanda","Italia","México","Noruega","Países Bajos","Perú","Polonia","Portugal","Reino Unido","Suecia","Suiza","Uruguay","Venezuela"],
-  it: ["Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Belgio","Brasile","Canada","Cina","Danimarca","Francia","Germania","Giappone","Grecia","Irlanda","Italia","Lussemburgo","Marocco","Norvegia","Paesi Bassi","Polonia","Portogallo","Regno Unito","Spagna","Stati Uniti","Svezia","Svizzera"],
-  de: ["Afghanistan","Ägypten","Albanien","Algerien","Andorra","Angola","Argentinien","Australien","Belgien","Brasilien","Dänemark","Deutschland","Frankreich","Griechenland","Großbritannien","Irland","Italien","Kanada","Luxemburg","Marokko","Niederlande","Norwegen","Österreich","Polen","Portugal","Schweden","Schweiz","Spanien","Tschechien","Türkei","USA"]
+  en: ["Portugal","United Kingdom","Germany","France","Spain","Italy","Netherlands","Belgium","Switzerland","Ireland","Brazil","Canada","United States","Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","China","Denmark","Egypt","Finland","Greece","India","Israel","Japan","Luxembourg","Mexico","Morocco","Norway","Poland","Romania","Russia","Sweden","Turkey","Ukraine"],
+  fr: ["Portugal","France","Royaume-Uni","Allemagne","Espagne","Italie","Belgique","Suisse","Pays-Bas","Irlande","Brésil","Canada","États-Unis","Afghanistan","Algérie","Andorre","Angola","Argentine","Australie","Autriche","Chine","Danemark","Finlande","Grèce","Luxembourg","Maroc","Norvège","Pologne","Suède"],
+  es: ["Portugal","España","Reino Unido","Alemania","Francia","Italia","Países Bajos","Bélgica","Suiza","Irlanda","Brasil","Argentina","Canadá","Chile","Colombia","Estados Unidos","México","Uruguay","Venezuela","Afganistán","Andorra","Angola","Australia","Austria","Dinamarca","Ecuador","Grecia","Noruega","Perú","Polonia","Suecia"],
+  it: ["Portogallo","Italia","Regno Unito","Germania","Francia","Spagna","Paesi Bassi","Belgio","Svizzera","Irlanda","Brasile","Canada","Stati Uniti","Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Cina","Danimarca","Giappone","Grecia","Lussemburgo","Marocco","Norvegia","Polonia","Svezia"],
+  de: ["Portugal","Deutschland","Großbritannien","Frankreich","Spanien","Italien","Niederlande","Belgien","Schweiz","Österreich","Irland","Brasilien","Kanada","USA","Afghanistan","Ägypten","Albanien","Algerien","Andorra","Angola","Argentinien","Australien","Dänemark","Finnland","Griechenland","Luxemburg","Marokko","Norwegen","Polen","Schweden","Tschechien","Türkei"]
 };
 
 // Conversor de Nomes de Países para Códigos ISO-3 (ISO 3166-1 Alpha-3 exigidos pelo SIBA)
 const iso3Map = {
-  "Portugal": "PRT", "Espanha": "ESP", "Spain": "ESP", "España": "ESP", "Espagne": "ESP", "Spagna": "ESP", "Spanien": "ESP",
+  "Portugal": "PRT", "Portogallo": "PRT",
+  "Espanha": "ESP", "Spain": "ESP", "España": "ESP", "Espagne": "ESP", "Spagna": "ESP", "Spanien": "ESP",
   "França": "FRA", "France": "FRA", "Francia": "FRA", "Frankreich": "FRA",
   "Alemanha": "DEU", "Germany": "DEU", "Allemagne": "DEU", "Alemania": "DEU", "Germania": "DEU", "Deutschland": "DEU",
   "Reino Unido": "GBR", "United Kingdom": "GBR", "Royaume-Uni": "GBR", "Regno Unito": "GBR", "Großbritannien": "GBR",
-  "Estados Unidos": "USA", "United States": "USA", "États-Unis": "USA", "Stati Uniti": "USA",
+  "Estados Unidos": "USA", "United States": "USA", "États-Unis": "USA", "Stati Uniti": "USA", "USA": "USA",
   "Itália": "ITA", "Italy": "ITA", "Italie": "ITA", "Italien": "ITA",
   "Países Baixos": "NLD", "Netherlands": "NLD", "Pays-Bas": "NLD", "Niederlande": "NLD",
-  "Bélgica": "BEL", "Belgium": "BEL", "Belgique": "BEL", "Bélgica": "BEL", "Belgio": "BEL", "Belgien": "BEL",
+  "Bélgica": "BEL", "Belgium": "BEL", "Belgique": "BEL", "Belgio": "BEL", "Belgien": "BEL",
   "Suíça": "CHE", "Switzerland": "CHE", "Suisse": "CHE", "Suiza": "CHE", "Svizzera": "CHE", "Schweiz": "CHE",
   "Irlanda": "IRL", "Ireland": "IRL", "Irlande": "IRL", "Irland": "IRL",
   "Brasil": "BRA", "Brazil": "BRA", "Brésil": "BRA", "Brasile": "BRA", "Brasilien": "BRA",
   "Canadá": "CAN", "Canada": "CAN", "Kanada": "CAN",
-  "Polónia": "POL", "Poland": "POL", "Pologne": "POL", "Polonia": "POL", "Polen": "POL", "Polonia": "POL"
+  "Polónia": "POL", "Poland": "POL", "Pologne": "POL", "Polonia": "POL", "Polen": "POL",
+  "Áustria": "AUT", "Austria": "AUT", "Autriche": "AUT", "Österreich": "AUT",
+  "Dinamarca": "DNK", "Denmark": "DNK", "Danemark": "DNK", "Dänemark": "DNK",
+  "Suécia": "SWE", "Sweden": "SWE", "Suède": "SWE", "Suecia": "SWE", "Svezia": "SWE", "Schweden": "SWE",
+  "Noruega": "NOR", "Norway": "NOR", "Norvège": "NOR", "Noruega": "NOR", "Norvegia": "NOR", "Norwegen": "NOR",
+  "Finlândia": "FIN", "Finland": "FIN", "Finlande": "FIN", "Finlandia": "FIN", "Finnland": "FIN"
 };
 
 function normalizarIso3(paisTexto) {
@@ -81,6 +82,16 @@ function normalizarIso3(paisTexto) {
   if (p.length === 3) return p.toUpperCase();
   return iso3Map[p] || "PRT";
 }
+
+// Mapeamento estrito do Tipo de Documento para os códigos SIBA (P = Passaporte, I = Identidade, O = Outro)
+const docTypeMap = {
+  passport: "P",
+  id: "I",
+  other: "O",
+  P: "P",
+  I: "I",
+  O: "O"
+};
 
 // ============================================================
 // 3. TEXTOS MULTILÍNGUES
@@ -291,15 +302,20 @@ document.getElementById("adults")?.addEventListener("input", generateGuestFields
 document.getElementById("children")?.addEventListener("input", generateGuestFields);
 
 // ============================================================
-// 5. ENVIO DO FORMULÁRIO
+// 5. ENVIO DO FORMULÁRIO (RECOLHA E CONVERSÃO SIBA)
 // ============================================================
 const aimaFormEl = document.getElementById("aimaForm");
 if (aimaFormEl) {
   aimaFormEl.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const checkin = document.getElementById("checkinDate").value;
-    const checkout = document.getElementById("checkoutDate").value;
+    const checkin = document.getElementById("checkinDate")?.value;
+    const checkout = document.getElementById("checkoutDate")?.value;
+
+    if (!checkin || !checkout) {
+      alert("Por favor selecione as datas de Check-in e Check-out.");
+      return;
+    }
 
     if (new Date(checkin) >= new Date(checkout)) {
       alert("Check-out deve ser posterior ao Check-in.");
@@ -315,20 +331,22 @@ if (aimaFormEl) {
       const nacBruta = document.querySelector(`[name="guest_${i}_nationality"]`)?.value || "";
       const resBruta = document.querySelector(`[name="guest_${i}_residenceCountry"]`)?.value || "";
       const docPaisBruto = document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || "";
+      const docTipoRaw = document.querySelector(`[name="guest_${i}_docType"]`)?.value || "passport";
 
       hospedes.push({
         nome: document.querySelector(`[name="guest_${i}_fullName"]`)?.value.trim() || "",
         dataNascimento: document.querySelector(`[name="guest_${i}_birthDate"]`)?.value || "",
         nacionalidade: normalizarIso3(nacBruta),
         paisResidencia: normalizarIso3(resBruta),
-        docTipo: document.querySelector(`[name="guest_${i}_docType"]`)?.value || "passport",
+        docTipo: docTypeMap[docTipoRaw] || "P", // Garante conversão estrita para 'P', 'I' ou 'O'
         docNumero: document.querySelector(`[name="guest_${i}_docNumber"]`)?.value.trim() || "",
         docOutroDesc: document.querySelector(`[name="guest_${i}_docOther"]`)?.value.trim() || "",
         docPaisEmissor: normalizarIso3(docPaisBruto)
       });
     }
 
-    const emailDigitado = document.getElementById("clientEmail")?.value.trim() || "";
+    const emailDigitado = document.getElementById("clientEmail")?.value.trim() || 
+                          document.getElementById("email")?.value.trim() || "";
 
     const novoBoletim = {
       criadoEm: new Date().toISOString(),
@@ -341,36 +359,42 @@ if (aimaFormEl) {
       status: "PENDENTE"
     };
 
-    const submitBtn = document.getElementById("submitLabel");
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = "A enviar...";
-    submitBtn.disabled = true;
+    const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.textContent : "Enviar";
+    if (submitBtn) {
+      submitBtn.textContent = "A enviar...";
+      submitBtn.disabled = true;
+    }
 
     try {
-      // 1. Guardar localmente para submissão SIBA
+      // Guardar localmente no LocalStorage via aimasiba.js
       if (typeof guardarBoletimPendente === "function") {
         guardarBoletimPendente(novoBoletim);
       }
 
-      // 2. Apresentar Popup de Sucesso
+      // Mostrar popup de sucesso se existir
       const popup = document.getElementById("aimaSuccessPopup");
       if (popup) {
         popup.style.display = "flex";
         setTimeout(() => { popup.style.display = "none"; }, 3000);
+      } else {
+        alert(texts[currentLang]?.aima_success || "Boletim guardado com sucesso!");
       }
 
       this.reset();
       generateGuestFields();
 
     } catch (error) {
-      console.error("Erro ao processar:", error);
-      alert("Erro ao guardar dados. Tente novamente.");
+      console.error("Erro ao processar o formulário:", error);
+      alert("Erro ao guardar os dados. Por favor tente novamente.");
     } finally {
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
+      if (submitBtn) {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
     }
   });
 }
 
-// Inicializar em Português
+// Inicializar em Português por defeito
 setLanguage("pt");
