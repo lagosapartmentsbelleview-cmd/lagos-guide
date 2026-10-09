@@ -219,7 +219,7 @@
     </div>
   </div>
 
-  <!-- FIREBASE COMPAT SDKs -->
+  <!-- FIREBASE COMPAT SDKs (ORDEM OBRIGATÓRIA DA SDK COMPAT) -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
@@ -232,13 +232,20 @@
     let listaBoletinsMemoria = [];
     let modalBootstrapInstance = null;
 
-    // MAPA GLOBAL DE PAÍSES PARA ISO-3
+    // MAPA DE REGISTOS AL OFICIAIS EXIGIDOS PELA AIMA
+    const MAPA_REGISTOS_AL = {
+      "2301": { al: "26313/AL", num: "26313" },
+      "2203": { al: "116670/AL", num: "116670" },
+      "2204": { al: "116671/AL", num: "116671" }
+    };
+
+    // MAPA GLOBAL DE PAÍSES PARA CÓDIGOS ISO-3
     const MAPA_PAISES_ISO3 = {
       "portugal": "PRT", "portogallo": "PRT",
       "espanha": "ESP", "spain": "ESP", "españa": "ESP", "espagne": "ESP", "spagna": "ESP", "spanien": "ESP",
       "franca": "FRA", "france": "FRA", "francia": "FRA", "frankreich": "FRA",
       "alemanha": "DEU", "germany": "DEU", "allemagne": "DEU", "alemania": "DEU", "germania": "DEU", "deutschland": "DEU",
-      "reino unido": "GBR", "united kingdom": "GBR", "royaume-uni": "GBR", "regno unito": "GBR", "uk": "GBR",
+      "reino unido": "GBR", "united kingdom": "GBR", "royaume-uni": "GBR", "regno unito": "GBR", "grossbritannien": "GBR", "uk": "GBR",
       "italia": "ITA", "italy": "ITA", "italie": "ITA", "italien": "ITA",
       "paises baixos": "NLD", "netherlands": "NLD", "pays-bas": "NLD", "niederlande": "NLD", "holanda": "NLD",
       "belgica": "BEL", "belgium": "BEL", "belgique": "BEL", "belgio": "BEL", "belgien": "BEL",
@@ -293,7 +300,7 @@
       return str;
     }
 
-    // CARREGAR REGISTOS
+    // CARREGAR REGISTOS (LOCALSTORAGE + FIRESTORE)
     async function carregarBoletins() {
       const filtro = document.getElementById("filtroEstado").value;
       const corpoTabela = document.getElementById("tabelaBoletinsCorpo");
@@ -310,7 +317,7 @@
             origem: "LOCAL",
             status: item.estado || item.status || "PENDENTE",
             dataRececao: item.dataRececao || item.criadoEm || new Date().toISOString(),
-            unidade: item.apartamento || "2203",
+            unidade: item.apartamento || item.unidade || "2203",
             dados: item.dados || item
           });
         });
@@ -318,7 +325,7 @@
         console.warn("Erro LocalStorage:", e);
       }
 
-      // 2. Ler dados do Firestore
+      // 2. Ler dados do Firestore com tratamento de erros de permissão
       if (typeof db !== "undefined") {
         try {
           const snapshot = await db.collection("boletins").get();
@@ -330,17 +337,17 @@
                 origem: "FIRESTORE",
                 status: data.status || "PENDENTE",
                 dataRececao: data.criadoEm?.toDate ? data.criadoEm.toDate().toISOString() : (data.criadoEm || new Date().toISOString()),
-                unidade: data.unidade || "2203",
+                unidade: data.unidade || data.apartamento || "2203",
                 dados: data
               });
             }
           });
         } catch (err) {
-          console.warn("Firestore restrito, a utilizar dados em memória:", err);
+          console.warn("Firestore restrito. A utilizar dados armazenados no LocalStorage:", err);
         }
       }
 
-      // Métricas
+      // Atualizar Métricas
       const pendentes = listaBoletinsMemoria.filter(b => b.status === "PENDENTE" || b.status === "PENDENTE_ATRIBUICAO").length;
       const enviados = listaBoletinsMemoria.filter(b => b.status === "ENVIADO" || b.status === "SUBMETIDO_WS").length;
       
@@ -391,7 +398,7 @@
       }).join("");
     }
 
-    // ABRIR MODAL PARA NOVO BOLETIM MANUAL (CÓPIAS PASSAPORTE/WHATSAPP)
+    // ABRIR MODAL PARA NOVO BOLETIM MANUAL (FOTOS PASSAPORTE/WHATSAPP)
     function abrirModalCriarNovo() {
       document.getElementById("modalTituloText").textContent = "+ Criar Novo Boletim Manual";
       document.getElementById("modalBoletimId").value = "NOVO-" + Date.now();
@@ -404,7 +411,7 @@
 
       const container = document.getElementById("modalHospedesContainer");
       container.innerHTML = "";
-      adicionarCardHospedeModal(); // Adiciona 1º hóspede vazio
+      adicionarCardHospedeModal(); // Cria o 1º formulário de hóspede vazio
 
       modalBootstrapInstance = new bootstrap.Modal(document.getElementById("modalEditar"));
       modalBootstrapInstance.show();
@@ -512,42 +519,52 @@
       };
     }
 
-    // ENVIO WORKER COM PARSER DE ERRO SOAP
+    // ENVIO WORKER COM MAREADOR DE REGISTO AL E PARSER DE ERRO SOAP
     async function executarEnvioWorker() {
       const id = document.getElementById("modalBoletimId").value;
       const dadosEditados = recolherDadosEditadosDoModal();
       const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
       const btn = document.getElementById("btnEnviarSibaModal");
 
+      // Obter código oficial AL para evitar erro .NET de conversão de string
+      const infoAL = MAPA_REGISTOS_AL[unidadeSelecionada] || { al: unidadeSelecionada, num: unidadeSelecionada };
+
       btn.disabled = true;
       btn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span> A enviar...`;
 
       const hospedesFormatados = (dadosEditados.hospedes || []).map(h => ({
-        nome: h.nome || "",
+        nome: String(h.nome || "").trim(),
         dataNascimento: normalizarDataIso(h.dataNascimento),
         nacionalidade: normalizarPaisISO3(h.nacionalidade),
         paisResidencia: normalizarPaisISO3(h.paisResidencia),
         docPaisEmissor: normalizarPaisISO3(h.docPaisEmissor),
         docTipo: normalizarDocTipo(h.docTipo),
-        docNumero: h.docNumero || "",
-        docOutroDesc: h.docOutroDesc || ""
+        docNumero: String(h.docNumero || "").trim(),
+        docOutroDesc: ""
       }));
 
+      // Payload Duplo com Registos AL Formatados (116670/AL)
       const payloadWorker = {
-        apartamento: unidadeSelecionada,
         unidade: unidadeSelecionada,
+        apartamento: unidadeSelecionada,
+        estabelecimento: infoAL.al,         // Envia "116670/AL"
+        registoAL: infoAL.al,              // Envia "116670/AL"
+        codigoEstabelecimento: infoAL.num, // Envia "116670"
         dataCheckin: normalizarDataIso(dadosEditados.dataCheckin),
         dataCheckout: normalizarDataIso(dadosEditados.dataCheckout),
-        numAdultos: hospedesFormatados.length,
+        numAdultos: hospedesFormatados.length || 1,
         numCriancas: 0,
-        emailCliente: document.getElementById("modalEmail").value,
+        emailCliente: document.getElementById("modalEmail").value || "",
         hospedes: hospedesFormatados,
         boletim: {
+          estabelecimento: infoAL.al,
           dataCheckin: normalizarDataIso(dadosEditados.dataCheckin),
           dataCheckout: normalizarDataIso(dadosEditados.dataCheckout),
           hospedes: hospedesFormatados
         }
       };
+
+      console.log("Payload Sanitizado Enviado ao Worker:", payloadWorker);
 
       try {
         const response = await fetch(CLOUDFLARE_WORKER_URL, {
@@ -557,6 +574,7 @@
         });
 
         const resultado = await response.json();
+        console.log("Resposta SIBA/Worker:", resultado);
 
         if (resultado.success) {
           alert("✅ Boletim submetido com sucesso no WebService da AIMA!");
@@ -576,17 +594,15 @@
         } else {
           console.error("Erro do SIBA:", resultado);
           
-          // Extração do Erro SOAP Raw se existir
           let detalheErro = resultado.mensagem || resultado.erro || "";
           if (resultado.respostaSibaRaw) {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(resultado.respostaSibaRaw, "text/xml");
             const faultString = xmlDoc.querySelector("faultstring")?.textContent || xmlDoc.querySelector("Text")?.textContent;
             if (faultString) detalheErro = faultString;
-            else detalheErro = resultado.respostaSibaRaw;
           }
 
-          alert(`⚠️ Resposta do Servidor SIBA/AIMA:\n\n${detalheErro}`);
+          alert(`⚠️ Rejeição do Servidor AIMA/SIBA:\n\n${detalheErro}`);
         }
       } catch (error) {
         console.error("Erro na comunicação:", error);
@@ -597,7 +613,7 @@
       }
     }
 
-    // GUARDAR ALTERAÇÕES LOCAL / FIRESTORE
+    // GUARDAR ALTERAÇÕES NO LOCALSTORAGE E FIRESTORE
     async function guardarAlteracoesModal() {
       const id = document.getElementById("modalBoletimId").value;
       const dadosEditados = recolherDadosEditadosDoModal();
@@ -617,14 +633,14 @@
         }
       };
 
-      // Guardar no LocalStorage
+      // 1. LocalStorage
       let localData = JSON.parse(localStorage.getItem(SIBA_STORAGE_KEY) || "[]");
       const idx = localData.findIndex(b => b.id === id);
       if (idx !== -1) localData[idx] = novoObjeto;
       else localData.push(novoObjeto);
       localStorage.setItem(SIBA_STORAGE_KEY, JSON.stringify(localData));
 
-      // Guardar no Firestore
+      // 2. Firestore
       if (typeof db !== "undefined") {
         try {
           await db.collection("boletins").doc(id).set({
@@ -637,7 +653,7 @@
             criadoEm: firebase.firestore.FieldValue.serverTimestamp()
           }, { merge: true });
         } catch (e) {
-          console.warn("Aviso ao guardar no Firestore:", e);
+          console.warn("Aviso Firestore:", e);
         }
       }
 
@@ -646,21 +662,21 @@
       carregarBoletins();
     }
 
-    // ELIMINAR BOLETIM
+    // ELIMINAR REGISTOS
     async function eliminarBoletimDirecto(id) {
       if (!confirm("Tem a certeza de que pretende eliminar este boletim definitivamente?")) return;
 
-      // Remover do LocalStorage
+      // LocalStorage
       let localData = JSON.parse(localStorage.getItem(SIBA_STORAGE_KEY) || "[]");
       localData = localData.filter(b => b.id !== id);
       localStorage.setItem(SIBA_STORAGE_KEY, JSON.stringify(localData));
 
-      // Remover do Firestore
+      // Firestore
       if (typeof db !== "undefined") {
         try {
           await db.collection("boletins").doc(id).delete();
         } catch (e) {
-          console.warn("Aviso ao apagar no Firestore:", e);
+          console.warn("Aviso eliminação Firestore:", e);
         }
       }
 
@@ -696,8 +712,8 @@
 
     function descarregarXmlManualCurrent() {
       const dadosEditados = recolherDadosEditadosDoModal();
-      const registoAL = document.getElementById("selectUnidadeModal").value === "2301" ? "26313/AL" : 
-                        document.getElementById("selectUnidadeModal").value === "2203" ? "116670/AL" : "116671/AL";
+      const unidade = document.getElementById("selectUnidadeModal").value;
+      const registoAL = MAPA_REGISTOS_AL[unidade]?.al || "116670/AL";
 
       let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<BoletinsAlojamento>\n`;
       xml += `  <Estabelecimento>${registoAL}</Estabelecimento>\n`;
