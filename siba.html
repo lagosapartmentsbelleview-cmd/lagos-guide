@@ -3,560 +3,664 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestão SIBA / AIMA — Apartments Belleview Lagos</title>
-  
-  <!-- Previne o erro 404 do favicon no navegador -->
-  <link rel="icon" href="data:,">
+  <title>Apartments Belleview Lagos — Gestão SIBA / AIMA</title>
 
-  <!-- CSS Global do Sistema -->
-  <link rel="stylesheet" href="css/global.css">
-  
-  <!-- Estilos específicos do SIBA -->
+  <!-- Estilos Base & Bootstrap/Icons -->
+  <link rel="stylesheet" href="css/aima.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
   <style>
-    .badge-status {
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: bold;
-      display: inline-block;
+    body {
+      background-color: #f4f7fa;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #2d3748;
     }
-    .badge-pendente { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
-    .badge-enviado { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-    .badge-erro { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .navbar-brand {
+      font-weight: 700;
+      color: #0a2540 !important;
+    }
+    .badge-pendente { background-color: #ffc107; color: #000; }
+    .badge-enviado { background-color: #198754; color: #fff; }
+    .badge-erro { background-color: #dc3545; color: #fff; }
+    
+    .card-metric {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+    .card-metric:hover { transform: translateY(-2px); }
 
-    /* Modal de detalhes */
-    .siba-modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
+    /* Modal Customizado */
+    .modal-dialog-custom {
+      max-width: 900px;
     }
-    .siba-modal-content {
-      background: white;
-      padding: 24px;
-      width: 90%;
-      max-width: 700px;
+    .guest-card-edit {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
       border-radius: 8px;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    .guest-box {
-      background: #f8f9fa;
-      border-left: 4px solid #1976d2;
-      padding: 12px 16px;
+      padding: 15px;
       margin-bottom: 15px;
-      border-radius: 0 4px 4px 0;
-    }
-    .guest-box label {
-      font-size: 12px;
-      font-weight: bold;
-      color: #555;
-      display: block;
-      margin-top: 8px;
-    }
-    .guest-box input, .guest-box select {
-      width: 100%;
-      padding: 6px 8px;
-      margin-top: 2px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    .form-row {
-      display: flex;
-      gap: 10px;
-    }
-    .form-row > div {
-      flex: 1;
-    }
-    .unidade-select-box {
-      background: #e3f2fd;
-      padding: 12px;
-      border-radius: 6px;
-      margin-top: 15px;
-      margin-bottom: 15px;
-      border: 1px solid #bbdefb;
     }
   </style>
 </head>
 <body>
 
- <div class="top-menu">
-    <button id="toggleMenu" class="menu-button">☰ Menu</button>
-
-    <div id="dropdown-menu" class="dropdown-menu" style="display: none;">
-        <a href="listagem-reservas.html">Reservas</a>
-        <a href="calendario.html">Calendario</a>
-        <a href="precos.html">Preços</a>
-        <a href="financeiro.html">Financeiro</a>
-        <a href="resultados.html">Resultados</a>
-        <a href="operacional.html">Operacional</a>
-        <a href="mensagens.html">Mensagens</a>
-        <button id="btnLogout" class="sair">Sair</button>
+  <!-- NAVBAR HEADER -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <svg width="32" height="32" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="46" fill="#005c99" stroke="#005c99" stroke-width="6"/>
+          <text x="50" y="67" text-anchor="middle" font-family="Poppins, sans-serif" font-size="42" font-weight="700" fill="#ffffff">B</text>
+        </svg>
+        <span>Apartments Belleview Lagos — <small class="text-muted fs-6">Painel SIBA/AIMA</small></span>
+      </a>
     </div>
-</div>
+  </nav>
 
   <!-- CONTEÚDO PRINCIPAL -->
-  <main class="content">
-    
-    <h1>Gestão de Boletins de Alojamento (SIBA / AIMA)</h1>
+  <div class="container-fluid px-4 py-4">
 
-    <!-- CARTÕES DE RESUMO -->
-    <div class="totais-grid">
-      <div class="total-card">
-        Pendentes
-        <strong id="countPendentes">0</strong>
+    <!-- MÉTRICAS -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="card card-metric bg-white p-3 border-start border-warning border-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small fw-bold">BOLETINS PENDENTES</div>
+              <div class="fs-3 fw-bold text-dark" id="metricPendentes">0</div>
+            </div>
+            <i class="bi bi-clock-history fs-1 text-warning"></i>
+          </div>
+        </div>
       </div>
-      <div class="total-card">
-        Enviados
-        <strong id="countEnviados" style="color: #2e7d32;">0</strong>
+
+      <div class="col-md-4">
+        <div class="card card-metric bg-white p-3 border-start border-success border-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small fw-bold">ENVIADOS COM SUCESSO</div>
+              <div class="fs-3 fw-bold text-dark" id="metricEnviados">0</div>
+            </div>
+            <i class="bi bi-check-circle-fill fs-1 text-success"></i>
+          </div>
+        </div>
       </div>
-      <div class="total-card">
-        Total de Boletins
-        <strong id="countTotal" style="color: #1976d2;">0</strong>
+
+      <div class="col-md-4">
+        <div class="card card-metric bg-white p-3 border-start border-primary border-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small fw-bold">TOTAL REGISTOS</div>
+              <div class="fs-3 fw-bold text-dark" id="metricTotal">0</div>
+            </div>
+            <i class="bi bi-folder-fill fs-1 text-primary"></i>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- FILTROS E PESQUISA -->
-    <div class="filtros">
-      <label for="searchGuest">Pesquisar:</label>
-      <input type="text" id="searchGuest" placeholder="Nome do hóspede..." onkeyup="filtrarTabela()">
-      
-      <label for="filterStatus">Estado:</label>
-      <select id="filterStatus" onchange="filtrarTabela()">
-        <option value="TODOS">Todos</option>
-        <option value="PENDENTE" selected>Pendentes</option>
-        <option value="ENVIADO">Enviados</option>
-      </select>
+    <!-- TABELA DE BOLETIINS -->
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold"><i class="bi bi-list-task me-2"></i>Gestão de Boletins de Alojamento</h5>
+        <div class="d-flex gap-2">
+          <select id="filtroEstado" class="form-select form-select-sm" onchange="carregarBoletins()">
+            <option value="TODOS">Todos os Estados</option>
+            <option value="PENDENTE" selected>Pendentes</option>
+            <option value="ENVIADO">Enviados</option>
+          </select>
+          <button class="btn btn-sm btn-outline-primary" onclick="carregarBoletins()"><i class="bi bi-arrow-clockwise"></i> Atualizar</button>
+        </div>
+      </div>
 
-      <button onclick="carregarBoletins()">Atualizar</button>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Data Receção</th>
+                <th>Hóspede Principal</th>
+                <th>Check-in / Out</th>
+                <th>Nº Hóspedes</th>
+                <th>Alojamento</th>
+                <th>Estado</th>
+                <th class="text-end pe-4">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tabelaBoletinsCorpo">
+              <!-- Preenchido via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <!-- TABELA -->
-    <table id="tabelaTotaisAno" style="margin-bottom: 30px;">
-      <thead>
-        <tr>
-          <th>Data Recepção</th>
-          <th>Hóspede Principal</th>
-          <th>N.º Hóspedes</th>
-          <th>Datas da Estadia</th>
-          <th>E-mail Cliente</th>
-          <th>Estado</th>
-          <th style="text-align: center;">Ações</th>
-        </tr>
-      </thead>
-      <tbody id="tabelaBoletinsCorpo">
-        <tr><td colspan="7" style="text-align:center; padding: 20px;">A verificar autenticação...</td></tr>
-      </tbody>
-    </table>
+  </div>
 
-  </main>
+  <!-- MODAL DE EDIÇÃO E PROCESSAMENTO -->
+  <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-custom modal-dialog-centered">
+      <div class="modal-content">
+        
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold" id="modalTitulo">Editar / Processar Boletim</h5>
+          <button type="button" class="btn-close btn-close-white" onclick="fecharModal()"></button>
+        </div>
 
-  <!-- MODAL DE DETALHES E EDIÇÃO DO BOLETIM -->
-  <div id="detalhesModal" class="siba-modal">
-    <div class="siba-modal-content">
-      <h2 style="margin-top:0; color:#1976d2;">Editar / Processar Boletim</h2>
-      <hr style="border:0; border-top:1px solid #eee; margin-bottom:15px;">
-      
-      <div id="modalDetalhesConteudo"></div>
+        <div class="modal-body p-4">
+          <form id="formModalBoletim">
+            <input type="hidden" id="modalBoletimId">
 
-      <div style="text-align: right; margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
-        <button class="btn-delete" onclick="fecharModal()">Fechar</button>
+            <!-- DADOS DA ESTADIA -->
+            <div class="card p-3 mb-3 bg-light border">
+              <h6 class="fw-bold text-primary mb-3"><i class="bi bi-calendar-event me-2"></i>Datas da Estadia & Contacto</h6>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label small fw-bold">Data Check-in (Entrada):</label>
+                  <input type="date" class="form-control" id="modalCheckin" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small fw-bold">Data Check-out (Saída):</label>
+                  <input type="date" class="form-control" id="modalCheckout" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small fw-bold">E-mail de Contacto:</label>
+                  <input type="email" class="form-control" id="modalEmail" readonly>
+                </div>
+              </div>
+            </div>
+
+            <!-- SELEÇÃO DE ALOJAMENTO / UNIDADE -->
+            <div class="card p-3 mb-3 border-info border-2 bg-info-subtle">
+              <label class="form-label fw-bold text-dark"><i class="bi bi-house-door-fill me-2"></i>Selecione o Apartamento / Alojamento:</label>
+              <select class="form-select fw-bold" id="selectUnidadeModal">
+                <option value="2301">Apartamento 0 (0BELLEVIEW - Registo 26313/AL)</option>
+                <option value="2203" selected>Apartamento 1 (1BELLEVIEW ONE - Registo 116670/AL)</option>
+                <option value="2204">Apartamento 2 (2BELLEVIEW TWO - Registo 116671/AL)</option>
+              </select>
+            </div>
+
+            <!-- LISTA DINÂMICA DE HÓSPEDES -->
+            <h6 class="fw-bold text-dark mb-2"><i class="bi bi-people-fill me-2"></i>Lista de Hóspedes:</h6>
+            <div id="modalHospedesContainer">
+              <!-- Hóspedes injetados aqui -->
+            </div>
+
+          </form>
+        </div>
+
+        <div class="modal-footer bg-light d-flex justify-content-between flex-wrap gap-2">
+          <div>
+            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="marcarEstado('PENDENTE')">Marcar como PENDENTE</button>
+            <button type="button" class="btn btn-sm btn-outline-success" onclick="marcarEstado('ENVIADO')">Marcar Manualmente como ENVIADO</button>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-secondary" onclick="fecharModal()">Fechar</button>
+            <button type="button" class="btn btn-info text-white fw-bold" onclick="descarregarXmlManualCurrent()">Descarregar XML</button>
+            <button type="button" class="btn btn-primary fw-bold" onclick="guardarAlteracoesModal()">Guardar Alterações</button>
+            <button type="button" class="btn btn-success fw-bold" id="btnEnviarSibaModal" onclick="executarEnvioWorker()">
+              <i class="bi bi-send-fill me-1"></i> Enviar para o SIBA WebService
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <!-- Firebase SDK v8 -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <!-- FIREBASE COMPAT SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Configuração e Lógica -->
   <script>
-    // ⚙️ ENDPOINT DO CLOUDFLARE WORKER (CONFIGURADO)
+    // ============================================================
+    // CONFIGURAÇÕES GLOBAIS DA AIMA / SIBA
+    // ============================================================
     const CLOUDFLARE_WORKER_URL = "https://enviar-siba.lagosapartmentsbelleview.workers.dev";
+    const SIBA_STORAGE_KEY = "belleview_boletins_siba";
+    let listaBoletinsMemoria = [];
+    let modalBootstrapInstance = null;
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyD70hv-PgWJKDbK-tcxeRuB1FE1cVs-FBs",
-      authDomain: "reservas-marina-park.firebaseapp.com",
-      projectId: "reservas-marina-park",
-      storageBucket: "reservas-marina-park.firebasestorage.app",
-      messagingSenderId: "1048056704068",
-      appId: "1:1048056704068:web:a2793d5db5e5e5573c6011",
-      measurementId: "G-14GR64WXHS"
+    // ============================================================
+    // MAPA DE PAÍSES PARA CÓDIGOS ISO-3 EXIGIDOS PELA AIMA
+    // ============================================================
+    const MAPA_PAISES_ISO3 = {
+      // Europa & União Europeia
+      "portugal": "PRT", "portogallo": "PRT",
+      "espanha": "ESP", "spain": "ESP", "españa": "ESP", "espagne": "ESP", "spagna": "ESP", "spanien": "ESP",
+      "franca": "FRA", "france": "FRA", "francia": "FRA", "frankreich": "FRA",
+      "alemanha": "DEU", "germany": "DEU", "allemagne": "DEU", "alemania": "DEU", "germania": "DEU", "deutschland": "DEU",
+      "reino unido": "GBR", "united kingdom": "GBR", "royaume-uni": "GBR", "regno unito": "GBR", "grossbritannien": "GBR", "uk": "GBR",
+      "italia": "ITA", "italy": "ITA", "italie": "ITA", "italien": "ITA",
+      "paises baixos": "NLD", "netherlands": "NLD", "pays-bas": "NLD", "niederlande": "NLD", "holanda": "NLD",
+      "belgica": "BEL", "belgium": "BEL", "belgique": "BEL", "belgio": "BEL", "belgien": "BEL",
+      "suica": "CHE", "switzerland": "CHE", "suisse": "CHE", "suiza": "CHE", "svizzera": "CHE", "schweiz": "CHE",
+      "irlanda": "IRL", "ireland": "IRL", "irlande": "IRL", "irland": "IRL",
+      "suecia": "SWE", "sweden": "SWE", "suede": "SWE", "svezia": "SWE", "schweden": "SWE",
+      "noruega": "NOR", "norway": "NOR", "norvege": "NOR", "norvegia": "NOR", "norwegen": "NOR",
+      "finlandia": "FIN", "finland": "FIN", "finlande": "FIN", "finnland": "FIN",
+      "dinamarca": "DNK", "denmark": "DNK", "danemark": "DNK",
+      "polonia": "POL", "poland": "POL", "pologne": "POL", "polen": "POL",
+      "eslovaquia": "SVK", "slovakia": "SVK", "slovaquie": "SVK", "slowakei": "SVK",
+      "eslovenia": "SVN", "slovenia": "SVN", "slovenie": "SVN", "slowenien": "SVN",
+      "republica checa": "CZE", "czech republic": "CZE", "czechia": "CZE",
+      "austria": "AUT", "autriche": "AUT", "osterreich": "AUT",
+      "hungria": "HUN", "hungary": "HUN", "hongrie": "HUN", "ungarn": "HUN",
+      "grecia": "GRC", "greece": "GRC", "grece": "GRC",
+      "romenia": "ROU", "romania": "ROU", "roumanie": "ROU",
+      "bulgaria": "BGR", "bulgarien": "BGR",
+      "croacia": "HRV", "croatia": "HRV", "croatie": "HRV",
+      "ucrania": "UKR", "ukraine": "UKR",
+      "russia": "RUS", "russland": "RUS", "russie": "RUS",
+
+      // Américas
+      "estados unidos": "USA", "united states": "USA", "etats-unis": "USA", "stati uniti": "USA", "usa": "USA",
+      "canada": "CAN", "kanada": "CAN",
+      "brasil": "BRA", "brazil": "BRA", "bresil": "BRA", "brasile": "BRA",
+      "argentina": "ARG", "argentinien": "ARG",
+      "mexico": "MEX", "mexiko": "MEX",
+      "colombia": "COL", "chile": "CHL", "peru": "PER", "venezuela": "VEN",
+      "uruguai": "URY", "uruguay": "URY", "paraguai": "PRY", "bolivia": "BOL", "bolivie": "BOL",
+
+      // Ásia, África e Oceânia
+      "china": "CHN", "japao": "JPN", "japan": "JPN", "japon": "JPN",
+      "india": "IND", "australia": "AUS", "nova zelandia": "NZL", "new zealand": "NZL",
+      "africa do sul": "ZAF", "south africa": "ZAF", "angola": "AGO", "mocambique": "MOZ",
+      "cabo verde": "CPV", "marrocos": "MAR", "morocco": "MAR", "turquia": "TUR", "turkey": "TUR",
+      "israel": "ISR", "islande": "ISL", "islandia": "ISL", "iceland": "ISL",
+      "bhutan": "BTN", "butao": "BTN", "butan": "BTN"
     };
 
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-    
-    const db = firebase.firestore();
-    let listaBoletinsMemoria = [];
+    // ============================================================
+    // FUNÇÕES DE NORMALIZAÇÃO AUTOMÁTICA DE DADOS (SANITIZADORES)
+    // ============================================================
+    function normalizarPaisISO3(pais) {
+      if (!pais) return "PRT";
+      const str = String(pais).trim();
+      // Se já forem exatamente 3 letras ISO-3
+      if (/^[A-Za-z]{3}$/.test(str)) return str.toUpperCase();
 
-    // 🔒 VERIFICAÇÃO DE SEGURANÇA (LOGIN OBRIGATÓRIO)
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        window.location.href = "login.html";
-      } else {
-        carregarBoletins();
+      // Normalizar texto tirando acentos
+      const pLimpo = str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      return MAPA_PAISES_ISO3[pLimpo] || "PRT";
+    }
+
+    function normalizarDocTipo(tipo) {
+      if (!tipo) return "O";
+      const t = String(tipo).toUpperCase();
+      if (t.includes("PASS") || t === "P" || t.includes("PASAPORTE")) return "P";
+      if (t.includes("BILHETE") || t.includes("CC") || t.includes("ID") || t.includes("IDENTI") || t === "I" || t.includes("(B)")) return "I";
+      return "O";
+    }
+
+    function normalizarDataIso(dataStr) {
+      if (!dataStr) return "";
+      const str = String(dataStr).trim();
+      if (str.includes("/")) {
+        const p = str.split("/");
+        if (p.length === 3) {
+          return `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
+        }
       }
-    });
-
-    function toggleMenu() {
-      const drop = document.getElementById("dropdownMenu");
-      drop.style.display = drop.style.display === "flex" ? "none" : "flex";
+      return str;
     }
 
-    function fecharModal() {
-      document.getElementById("detalhesModal").style.display = "none";
-    }
-
+    // ============================================================
+    // CARREGAR E SINCRONIZAR BOLETIINS (LOCALSTORAGE + FIREBASE)
+    // ============================================================
     async function carregarBoletins() {
-      const tbody = document.getElementById("tabelaBoletinsCorpo");
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 20px;">A carregar dados do Firebase...</td></tr>`;
+      const filtro = document.getElementById("filtroEstado").value;
+      const corpoTabela = document.getElementById("tabelaBoletinsCorpo");
+      corpoTabela.innerHTML = `<tr><td colspan="7" class="text-center py-4"><div class="spinner-border text-primary"></div></td></tr>`;
 
+      listaBoletinsMemoria = [];
+
+      // 1. Ler LocalStorage
       try {
-        const snapshot = await db.collection("boletins").orderBy("criadoEm", "desc").get();
-        
-        listaBoletinsMemoria = snapshot.docs.map(doc => {
-          const data = doc.data();
-          
-          let estadoTratado = data.status || "PENDENTE";
-          if (estadoTratado === "PENDENTE_ATRIBUICAO") estadoTratado = "PENDENTE";
-
-          let dataRececaoFormatada = "—";
-          if (data.criadoEm && data.criadoEm.toDate) {
-            dataRececaoFormatada = data.criadoEm.toDate().toLocaleString("pt-PT");
-          }
-
-          return {
-            id: doc.id,
-            dataRececao: dataRececaoFormatada,
-            estado: estadoTratado,
-            dados: data
-          };
+        const localData = JSON.parse(localStorage.getItem(SIBA_STORAGE_KEY) || localStorage.getItem("belleview_boletins_siba") || "[]");
+        localData.forEach(item => {
+          listaBoletinsMemoria.push({
+            id: item.id || ("LOCAL-" + Date.now()),
+            origem: "LOCAL",
+            status: item.estado || item.status || "PENDENTE",
+            dataRececao: item.dataRececao || item.criadoEm || new Date().toISOString(),
+            unidade: item.apartamento || "2203",
+            dados: item.dados || item
+          });
         });
-
-        atualizarContadores();
-        filtrarTabela();
-
-      } catch (err) {
-        console.error("Erro ao carregar do Firebase:", err);
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red; padding: 20px;">Erro ao carregar dados do Firebase. Consulte a consola.</td></tr>`;
+      } catch (e) {
+        console.warn("Erro ao ler LocalStorage:", e);
       }
-    }
 
-    function atualizarContadores() {
-      const pendentes = listaBoletinsMemoria.filter(b => b.estado === "PENDENTE").length;
-      const enviados = listaBoletinsMemoria.filter(b => b.estado === "ENVIADO").length;
+      // 2. Ler Firestore se disponível
+      if (typeof db !== "undefined") {
+        try {
+          const snapshot = await db.collection("boletins").get();
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            // Evitar duplicados pelo ID
+            if (!listaBoletinsMemoria.some(b => b.id === doc.id)) {
+              listaBoletinsMemoria.push({
+                id: doc.id,
+                origem: "FIRESTORE",
+                status: data.status || "PENDENTE",
+                dataRececao: data.criadoEm?.toDate ? data.criadoEm.toDate().toISOString() : (data.criadoEm || new Date().toISOString()),
+                unidade: data.unidade || "2203",
+                dados: data
+              });
+            }
+          });
+        } catch (err) {
+          console.warn("Aviso Firestore:", err);
+        }
+      }
+
+      // Atualizar Métricas
+      const pendentes = listaBoletinsMemoria.filter(b => b.status === "PENDENTE" || b.status === "PENDENTE_ATRIBUICAO").length;
+      const enviados = listaBoletinsMemoria.filter(b => b.status === "ENVIADO" || b.status === "SUBMETIDO_WS").length;
       
-      document.getElementById("countPendentes").textContent = pendentes;
-      document.getElementById("countEnviados").textContent = enviados;
-      document.getElementById("countTotal").textContent = listaBoletinsMemoria.length;
-    }
+      document.getElementById("metricPendentes").textContent = pendentes;
+      document.getElementById("metricEnviados").textContent = enviados;
+      document.getElementById("metricTotal").textContent = listaBoletinsMemoria.length;
 
-    function filtrarTabela() {
-      const termo = document.getElementById("searchGuest").value.toLowerCase();
-      const statusFiltro = document.getElementById("filterStatus").value;
+      // Filtrar Lista
+      let listaExibir = listaBoletinsMemoria;
+      if (filtro === "PENDENTE") {
+        listaExibir = listaBoletinsMemoria.filter(b => b.status === "PENDENTE" || b.status === "PENDENTE_ATRIBUICAO");
+      } else if (filtro === "ENVIADO") {
+        listaExibir = listaBoletinsMemoria.filter(b => b.status === "ENVIADO" || b.status === "SUBMETIDO_WS");
+      }
 
-      const filtrados = listaBoletinsMemoria.filter(item => {
-        const hospedePrincipal = item.dados?.hospedes?.[0]?.nome || "";
-        const matchNome = hospedePrincipal.toLowerCase().includes(termo);
-        const matchStatus = statusFiltro === "TODOS" || item.estado === statusFiltro;
-        return matchNome && matchStatus;
-      });
-
-      renderizarTabela(filtrados);
-    }
-
-    function renderizarTabela(boletins) {
-      const tbody = document.getElementById("tabelaBoletinsCorpo");
-      tbody.innerHTML = "";
-
-      if (boletins.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 20px;">Nenhum boletim encontrado.</td></tr>`;
+      // Renderizar Tabela
+      if (listaExibir.length === 0) {
+        corpoTabela.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted">Nenhum boletim encontrado.</td></tr>`;
         return;
       }
 
-      boletins.forEach(item => {
-        const dados = item.dados || {};
-        const hospedePrincipal = dados.hospedes?.[0]?.nome || "Não especificado";
-        const totalHospedes = dados.hospedes?.length || (dados.numAdultos + dados.numCriancas) || 0;
-        
-        let badgeClass = "badge-pendente";
-        if (item.estado === "ENVIADO") badgeClass = "badge-enviado";
-        if (item.estado === "ERRO") badgeClass = "badge-erro";
+      corpoTabela.innerHTML = listaExibir.map(b => {
+        const d = b.dados || {};
+        const hospedePrincipal = d.hospedes?.[0]?.nome || d.nome || "Hóspede sem Nome";
+        const totalHospedes = d.hospedes?.length || ((parseInt(d.numAdultos||1)+parseInt(d.numCriancas||0)));
+        const dataFmt = new Date(b.dataRececao).toLocaleString("pt-PT", { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${item.dataRececao}</td>
-          <td><strong>${hospedePrincipal}</strong></td>
-          <td>${totalHospedes} pessoa(s)</td>
-          <td>${dados.dataCheckin || "-"} a ${dados.dataCheckout || "-"}</td>
-          <td>${dados.emailCliente || "—"}</td>
-          <td><span class="badge-status ${badgeClass}">${item.estado}</span></td>
-          <td style="text-align: center;">
-            <button class="btn-edit" onclick="verDetalhes('${item.id}')">Ver / Processar</button>
-            <button class="btn-delete" onclick="eliminarBoletim('${item.id}')">✕</button>
-          </td>
+        let badgeClass = "badge-pendente";
+        if (b.status === "ENVIADO" || b.status === "SUBMETIDO_WS") badgeClass = "badge-enviado";
+        else if (b.status.includes("ERRO")) badgeClass = "badge-erro";
+
+        return `
+          <tr>
+            <td class="small">${dataFmt}</td>
+            <td class="fw-bold text-dark">${hospedePrincipal}</td>
+            <td class="small">${d.dataCheckin || ""} ➔ ${d.dataCheckout || ""}</td>
+            <td class="text-center"><span class="badge bg-secondary">${totalHospedes}</span></td>
+            <td><small class="fw-semibold">Apt ${b.unidade || '1'}</small></td>
+            <td><span class="badge ${badgeClass}">${b.status}</span></td>
+            <td class="text-end pe-4">
+              <button class="btn btn-sm btn-primary" onclick="abrirModalEditar('${b.id}')">
+                <i class="bi bi-pencil-square me-1"></i> Ver / Processar
+              </button>
+            </td>
+          </tr>
         `;
-        tbody.appendChild(tr);
-      });
+      }).join("");
     }
 
-    // ✏️ CARREGA E PERMITE EDITAR OS DADOS NO MODAL
-    function verDetalhes(id) {
+    // ============================================================
+    // ABRIR E PREENCHER MODAL
+    // ============================================================
+    function abrirModalEditar(id) {
       const item = listaBoletinsMemoria.find(b => b.id === id);
       if (!item) return;
 
-      const dados = item.dados || {};
-      const container = document.getElementById("modalDetalhesConteudo");
+      const d = item.dados || {};
+      document.getElementById("modalBoletimId").value = item.id;
+      document.getElementById("modalCheckin").value = normalizarDataIso(d.dataCheckin);
+      document.getElementById("checkoutDate") ? null : null;
+      document.getElementById("modalCheckout").value = normalizarDataIso(d.dataCheckout);
+      document.getElementById("modalEmail").value = d.emailCliente || d.email || "";
+
+      if (item.unidade) {
+        document.getElementById("selectUnidadeModal").value = item.unidade;
+      }
+
+      // Renderizar Hóspedes
+      const hospedes = d.hospedes || [];
+      const container = document.getElementById("modalHospedesContainer");
       
-      let htmlHospedes = "";
-      const hospedesLista = dados.hospedes || [];
-
-      hospedesLista.forEach((h, index) => {
-        htmlHospedes += `
-          <div class="guest-box" id="box_hospede_${index}">
-            <h5 style="margin: 0 0 8px 0; color:#1976d2;">Hóspede ${index + 1}</h5>
-            
-            <label>Nome Completo:</label>
-            <input type="text" class="edit-hospede-nome" value="${h.nome || ''}">
-
-            <div class="form-row">
-              <div>
-                <label>Data de Nascimento:</label>
-                <input type="date" class="edit-hospede-nasc" value="${h.dataNascimento || ''}">
+      if (hospedes.length === 0) {
+        container.innerHTML = `<p class="text-muted small">Sem dados de hóspedes registados.</p>`;
+      } else {
+        container.innerHTML = hospedes.map((h, i) => `
+          <div class="guest-card-edit" data-guest-index="${i}">
+            <h6 class="fw-bold text-secondary mb-2">Hóspede ${i + 1}</h6>
+            <div class="row g-2">
+              <div class="col-md-6">
+                <label class="form-label small mb-1">Nome Completo:</label>
+                <input type="text" class="form-control form-control-sm guest-nome" value="${h.nome || ''}">
               </div>
-              <div>
-                <label>Nacionalidade (Ex: PRT):</label>
-                <input type="text" class="edit-hospede-nac" value="${h.nacionalidade || 'PRT'}" maxlength="3">
+              <div class="col-md-3">
+                <label class="form-label small mb-1">Data Nascimento:</label>
+                <input type="date" class="form-control form-control-sm guest-nasc" value="${normalizarDataIso(h.dataNascimento)}">
               </div>
-            </div>
-
-            <div class="form-row">
-              <div>
-                <label>Tipo de Documento:</label>
-                <select class="edit-hospede-doctipo">
-                  <option value="P" ${h.docTipo === 'P' ? 'selected' : ''}>Passaporte (P)</option>
-                  <option value="B" ${h.docTipo === 'B' ? 'selected' : ''}>Bilhete de Identidade / CC (B)</option>
-                  <option value="I" ${h.docTipo === 'I' ? 'selected' : ''}>Cartão Cidadão / ID (I)</option>
-                  <option value="O" ${!['P','B','I'].includes(h.docTipo) ? 'selected' : ''}>Outro (O)</option>
+              <div class="col-md-3">
+                <label class="form-label small mb-1">Nacionalidade (Ex: PRT):</label>
+                <input type="text" class="form-control form-control-sm guest-nac" value="${h.nacionalidade || ''}">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label small mb-1">Tipo Documento:</label>
+                <select class="form-select form-select-sm guest-doctipo">
+                  <option value="P" ${normalizarDocTipo(h.docTipo)==='P'?'selected':''}>Passaporte (P)</option>
+                  <option value="I" ${normalizarDocTipo(h.docTipo)==='I'?'selected':''}>Bilhete de Identidade / CC (I)</option>
+                  <option value="O" ${normalizarDocTipo(h.docTipo)==='O'?'selected':''}>Outro (O)</option>
                 </select>
               </div>
-              <div>
-                <label>Número do Documento:</label>
-                <input type="text" class="edit-hospede-docnum" value="${h.docNumero || ''}">
+              <div class="col-md-3">
+                <label class="form-label small mb-1">Número Documento:</label>
+                <input type="text" class="form-control form-control-sm guest-docnum" value="${h.docNumero || ''}">
               </div>
-            </div>
-
-            <div class="form-row">
-              <div>
-                <label>País Emissor (Ex: PRT):</label>
-                <input type="text" class="edit-hospede-docpais" value="${h.docPaisEmissor || 'PRT'}" maxlength="3">
+              <div class="col-md-3">
+                <label class="form-label small mb-1">País Emissor (Ex: PRT):</label>
+                <input type="text" class="form-control form-control-sm guest-docpais" value="${h.docPaisEmissor || h.nacionalidade || ''}">
               </div>
-              <div>
-                <label>País de Residência (Ex: PRT):</label>
-                <input type="text" class="edit-hospede-residencia" value="${h.paisResidencia || 'PRT'}" maxlength="3">
+              <div class="col-md-3">
+                <label class="form-label small mb-1">País Residência (Ex: PRT):</label>
+                <input type="text" class="form-control form-control-sm guest-residencia" value="${h.paisResidencia || h.nacionalidade || ''}">
               </div>
             </div>
           </div>
-        `;
-      });
+        `).join("");
+      }
 
-      const unidadeGuardada = dados.unidade !== undefined ? dados.unidade : "0";
-
-      container.innerHTML = `
-        <div style="background:#f0f4f8; padding:12px; border-radius:6px; margin-bottom:15px;">
-          <h4 style="margin-top:0; margin-bottom:10px; color:#333;">Datas da Estadia</h4>
-          <div class="form-row">
-            <div>
-              <label>Data Check-in (Entrada):</label>
-              <input type="date" id="editDataCheckin" value="${dados.dataCheckin || ''}">
-            </div>
-            <div>
-              <label>Data Check-out (Saída):</label>
-              <input type="date" id="editDataCheckout" value="${dados.dataCheckout || ''}">
-            </div>
-          </div>
-        </div>
-
-        <p><strong>E-mail de Contacto:</strong> ${dados.emailCliente || "Não facultado"}</p>
-        <p><strong>Estado Atual:</strong> <strong>${item.estado}</strong></p>
-        
-        <h4>Lista de Hóspedes (${hospedesLista.length}):</h4>
-        ${htmlHospedes}
-        
-        <div class="unidade-select-box">
-          <label for="selectUnidadeModal"><strong>Selecione o Apartamento / Alojamento:</strong></label><br>
-          <select id="selectUnidadeModal" style="margin-top: 5px; padding: 6px; width: 100%;">
-            <option value="0" ${unidadeGuardada == "0" ? "selected" : ""}>Apartamento 0 (Estúdio)</option>
-            <option value="1" ${unidadeGuardada == "1" ? "selected" : ""}>Apartamento 1 (T1)</option>
-            <option value="2" ${unidadeGuardada == "2" ? "selected" : ""}>Apartamento 2 (T2)</option>
-          </select>
-        </div>
-
-        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; display: flex; gap: 8px; flex-wrap: wrap;">
-          <button class="btn-add" id="btnEnviarSibaModal" onclick="enviarBoletimParaSIBA('${item.id}')">🚀 Enviar para o SIBA WebService</button>
-          <button class="btn-edit" style="background:#28a745; color:white;" onclick="guardarEdicoesLocal('${item.id}')">💾 Guardar Alterações</button>
-          <button class="btn-edit" onclick="alterarEstado('${item.id}', 'ENVIADO')">Marcar Manualmente como ENVIADO</button>
-          <button class="btn-edit" style="background:#6c757d;" onclick="alterarEstado('${item.id}', 'PENDENTE')">Marcar como PENDENTE</button>
-        </div>
-      `;
-
-      document.getElementById("detalhesModal").style.display = "flex";
+      modalBootstrapInstance = new bootstrap.Modal(document.getElementById("modalEditar"));
+      modalBootstrapInstance.show();
     }
 
-    // 📋 EXTRAI OS DADOS EDITADOS DOS CAMPOS DO MODAL
-    function recolherDadosEditadosDoModal() {
-      const checkin = document.getElementById("editDataCheckin").value;
-      const checkout = document.getElementById("editDataCheckout").value;
-      
-      const boxesHospedes = document.querySelectorAll(".guest-box");
-      const hospedes = [];
+    function fecharModal() {
+      if (modalBootstrapInstance) modalBootstrapInstance.hide();
+    }
 
-      boxesHospedes.forEach(box => {
+    // ============================================================
+    // RECOLHER DADOS EDITADOS DO MODAL
+    // ============================================================
+    function recolherDadosEditadosDoModal() {
+      const hospedes = [];
+      document.querySelectorAll(".guest-card-edit").forEach(card => {
         hospedes.push({
-          nome: box.querySelector(".edit-hospede-nome").value,
-          dataNascimento: box.querySelector(".edit-hospede-nasc").value,
-          nacionalidade: box.querySelector(".edit-hospede-nac").value,
-          docTipo: box.querySelector(".edit-hospede-doctipo").value,
-          docNumero: box.querySelector(".edit-hospede-docnum").value,
-          docPaisEmissor: box.querySelector(".edit-hospede-docpais").value,
-          paisResidencia: box.querySelector(".edit-hospede-residencia").value
+          nome: card.querySelector(".guest-nome").value.trim(),
+          dataNascimento: card.querySelector(".guest-nasc").value,
+          nacionalidade: card.querySelector(".guest-nac").value.trim(),
+          docTipo: card.querySelector(".guest-doctipo").value,
+          docNumero: card.querySelector(".guest-docnum").value.trim(),
+          docPaisEmissor: card.querySelector(".guest-docpais").value.trim(),
+          paisResidencia: card.querySelector(".guest-residencia").value.trim()
         });
       });
 
       return {
-        dataCheckin: checkin,
-        dataCheckout: checkout,
+        dataCheckin: document.getElementById("modalCheckin").value,
+        dataCheckout: document.getElementById("modalCheckout").value,
         hospedes: hospedes
       };
     }
 
-    // 💾 APENAS GUARDAR AS ALTERAÇÕES NO FIREBASE
-    async function guardarEdicoesLocal(id) {
+    // ============================================================
+    // ENVIO PRINCIPAL PARA O CLOUDFLARE WORKER COM SANITIZAÇÃO
+    // ============================================================
+    async function executarEnvioWorker() {
+      const id = document.getElementById("modalBoletimId").value;
       const dadosEditados = recolherDadosEditadosDoModal();
       const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
+      const btn = document.getElementById("btnEnviarSibaModal");
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span> A enviar...`;
+
+      const itemOriginal = listaBoletinsMemoria.find(b => b.id === id);
+
+      // SANITIZAÇÃO COMPLETA AUTOMÁTICA
+      const hospedesFormatados = (dadosEditados.hospedes || []).map(h => ({
+        nome: h.nome || "",
+        dataNascimento: normalizarDataIso(h.dataNascimento),
+        nacionalidade: normalizarPaisISO3(h.nacionalidade),
+        paisResidencia: normalizarPaisISO3(h.paisResidencia),
+        docPaisEmissor: normalizarPaisISO3(h.docPaisEmissor),
+        docTipo: normalizarDocTipo(h.docTipo),
+        docNumero: h.docNumero || "",
+        docOutroDesc: h.docOutroDesc || ""
+      }));
+
+      const boletimParaEnvio = {
+        ...(itemOriginal?.dados || {}),
+        dataCheckin: normalizarDataIso(dadosEditados.dataCheckin),
+        dataCheckout: normalizarDataIso(dadosEditados.dataCheckout),
+        numAdultos: parseInt(itemOriginal?.dados?.numAdultos || 1, 10),
+        numCriancas: parseInt(itemOriginal?.dados?.numCriancas || 0, 10),
+        emailCliente: document.getElementById("modalEmail").value,
+        hospedes: hospedesFormatados
+      };
+
+      console.log("Payload sanitizado a enviar ao Worker:", { unidade: unidadeSelecionada, boletim: boletimParaEnvio });
 
       try {
-        await db.collection("boletins").doc(id).update({
-          dataCheckin: dadosEditados.dataCheckin,
-          dataCheckout: dadosEditados.dataCheckout,
-          hospedes: dadosEditados.hospedes,
-          unidade: unidadeSelecionada
+        const response = await fetch(CLOUDFLARE_WORKER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            unidade: unidadeSelecionada,
+            boletim: boletimParaEnvio
+          })
         });
-        alert("✅ Alterações guardadas com sucesso no Firebase!");
-        fecharModal();
-        carregarBoletins();
-      } catch (err) {
-        console.error("Erro ao guardar alterações:", err);
-        alert("❌ Erro ao guardar alterações no Firebase.");
-      }
-    }
 
-    // 🚀 ENVIO PARA O CLOUDFLARE WORKER COM EXTRAÇÃO DE ERRO SOAP
-async function enviarBoletimParaSIBA(id) {
-  const dadosEditados = recolherDadosEditadosDoModal();
-  const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
-  const btn = document.getElementById("btnEnviarSibaModal");
+        const resultado = await response.json();
+        console.log("Resposta SIBA/Worker:", resultado);
 
-  btn.disabled = true;
-  btn.textContent = "A enviar para o SIBA...";
+        if (resultado.success) {
+          alert("✅ Boletim submetido com sucesso no WebService da AIMA!");
 
-  const itemOriginal = listaBoletinsMemoria.find(b => b.id === id);
-  const boletimParaEnvio = {
-    ...(itemOriginal?.dados || {}),
-    dataCheckin: dadosEditados.dataCheckin,
-    dataCheckout: dadosEditados.dataCheckout,
-    hospedes: dadosEditados.hospedes
-  };
+          // Atualizar BD
+          if (typeof db !== "undefined") {
+            await db.collection("boletins").doc(id).update({
+              status: "ENVIADO",
+              unidade: unidadeSelecionada,
+              dataCheckin: boletimParaEnvio.dataCheckin,
+              dataCheckout: boletimParaEnvio.dataCheckout,
+              hospedes: boletimParaEnvio.hospedes
+            }).catch(e => console.warn("Firestore update:", e));
+          }
 
-  try {
-    const response = await fetch(CLOUDFLARE_WORKER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        unidade: unidadeSelecionada,
-        boletim: boletimParaEnvio
-      })
-    });
-
-    const resultado = await response.json();
-
-    if (resultado.success) {
-      alert("✅ Boletim enviado com sucesso para o WebService do SIBA!");
-      
-      await db.collection("boletins").doc(id).update({ 
-        status: "ENVIADO",
-        unidade: unidadeSelecionada,
-        dataCheckin: dadosEditados.dataCheckin,
-        dataCheckout: dadosEditados.dataCheckout,
-        hospedes: dadosEditados.hospedes
-      });
-
-      fecharModal();
-      carregarBoletins();
-    } else {
-      console.error("Resposta de erro do SIBA:", resultado);
-
-      // Extrai o texto limpo da tag <faultstring> dentro do XML
-      let textoErro = resultado.respostaSiba || resultado.message || "Erro desconhecido";
-      try {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(resultado.respostaSiba, "text/xml");
-        const faultNode = xmlDoc.querySelector("faultstring");
-        if (faultNode) textoErro = faultNode.textContent;
-      } catch (e) {}
-
-      alert("⚠️ Erro devolvido pelo SIBA:\n\n" + textoErro);
-      btn.disabled = false;
-      btn.textContent = "🚀 Enviar para o SIBA WebService";
-    }
-  } catch (error) {
-    console.error("Erro na comunicação com o Cloudflare Worker:", error);
-    alert("❌ Erro de ligação ao Cloudflare Worker. Verifique a consola do navegador.");
-    btn.disabled = false;
-    btn.textContent = "🚀 Enviar para o SIBA WebService";
-  }
-}
-
-    async function alterarEstado(id, novoEstado) {
-      try {
-        await db.collection("boletins").doc(id).update({ status: novoEstado });
-        fecharModal();
-        carregarBoletins();
-      } catch (err) {
-        console.error("Erro ao alterar estado no Firebase:", err);
-        alert("Erro ao atualizar o estado no Firebase.");
-      }
-    }
-
-    async function eliminarBoletim(id) {
-      if (confirm("Tem a certeza que deseja eliminar este boletim do Firebase?")) {
-        try {
-          await db.collection("boletins").doc(id).delete();
+          fecharModal();
           carregarBoletins();
-        } catch (err) {
-          console.error("Erro ao eliminar do Firebase:", err);
-          alert("Erro ao eliminar o boletim.");
+        } else {
+          console.error("Erro do SIBA:", resultado);
+          const msg = resultado.mensagem || resultado.erro || "Erro no envio ao servidor da AIMA.";
+          alert(`⚠️ O servidor SIBA devolveu um erro:\n\n${msg}`);
+        }
+      } catch (error) {
+        console.error("Erro na comunicação:", error);
+        alert("❌ Falha de rede ao contactar o servidor.");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="bi bi-send-fill me-1"></i> Enviar para o SIBA WebService`;
+      }
+    }
+
+    // ============================================================
+    // AUXILIARES DO MODAL (GUARDAR, XML, MUDAR ESTADO)
+    // ============================================================
+    async function guardarAlteracoesModal() {
+      const id = document.getElementById("modalBoletimId").value;
+      const dadosEditados = recolherDadosEditadosDoModal();
+      const unidade = document.getElementById("selectUnidadeModal").value;
+
+      if (typeof db !== "undefined") {
+        try {
+          await db.collection("boletins").doc(id).update({
+            unidade: unidade,
+            dataCheckin: dadosEditados.dataCheckin,
+            dataCheckout: dadosEditados.dataCheckout,
+            hospedes: dadosEditados.hospedes
+          });
+        } catch (e) {
+          console.warn(e);
         }
       }
+
+      alert("Alterações guardadas com sucesso.");
+      fecharModal();
+      carregarBoletins();
     }
 
-    function logout() {
-      firebase.auth().signOut().then(() => {
-        window.location.href = "login.html";
-      }).catch((error) => {
-        console.error("Erro ao fazer logout:", error);
-      });
+    async function marcarEstado(novoEstado) {
+      const id = document.getElementById("modalBoletimId").value;
+      if (typeof db !== "undefined") {
+        try {
+          await db.collection("boletins").doc(id).update({ status: novoEstado });
+        } catch (e) {
+          console.warn(e);
+        }
+      }
+      fecharModal();
+      carregarBoletins();
     }
+
+    function descarregarXmlManualCurrent() {
+      const dadosEditados = recolherDadosEditadosDoModal();
+      const registoAL = document.getElementById("selectUnidadeModal").value === "2301" ? "26313/AL" : 
+                        document.getElementById("selectUnidadeModal").value === "2203" ? "116670/AL" : "116671/AL";
+
+      let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<BoletinsAlojamento>\n`;
+      xml += `  <Estabelecimento>${registoAL}</Estabelecimento>\n`;
+
+      (dadosEditados.hospedes || []).forEach(h => {
+        xml += `  <Boletim>\n`;
+        xml += `    <Nome>${h.nome}</Nome>\n`;
+        xml += `    <DataNascimento>${normalizarDataIso(h.dataNascimento)}</DataNascimento>\n`;
+        xml += `    <Nacionalidade>${normalizarPaisISO3(h.nacionalidade)}</Nacionalidade>\n`;
+        xml += `    <PaisResidencia>${normalizarPaisISO3(h.paisResidencia)}</PaisResidencia>\n`;
+        xml += `    <TipoDocumento>${normalizarDocTipo(h.docTipo)}</TipoDocumento>\n`;
+        xml += `    <NumeroDocumento>${h.docNumero}</NumeroDocumento>\n`;
+        xml += `    <PaisEmissor>${normalizarPaisISO3(h.docPaisEmissor)}</PaisEmissor>\n`;
+        xml += `    <DataEntrada>${normalizarDataIso(dadosEditados.dataCheckin)}</DataEntrada>\n`;
+        xml += `    <DataSaida>${normalizarDataIso(dadosEditados.dataCheckout)}</DataSaida>\n`;
+        xml += `  </Boletim>\n`;
+      });
+
+      xml += `</BoletinsAlojamento>`;
+
+      const blob = new Blob([xml], { type: "application/xml" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `SIBA_Boletim_${Date.now()}.xml`;
+      a.click();
+    }
+
+    // Inicializar no carregamento da página
+    document.addEventListener("DOMContentLoaded", carregarBoletins);
   </script>
-  <script src="js/menu.js"></script>
 </body>
 </html>
