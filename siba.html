@@ -32,10 +32,6 @@
     }
     .card-metric:hover { transform: translateY(-2px); }
 
-    /* Modal Customizado */
-    .modal-dialog-custom {
-      max-width: 900px;
-    }
     .guest-card-edit {
       background: #f8fafc;
       border: 1px solid #cbd5e1;
@@ -102,7 +98,7 @@
       </div>
     </div>
 
-    <!-- TABELA DE BOLETIINS -->
+    <!-- TABELA DE BOLETINS -->
     <div class="card border-0 shadow-sm">
       <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
         <h5 class="mb-0 fw-bold"><i class="bi bi-list-task me-2"></i>Gestão de Boletins de Alojamento</h5>
@@ -142,11 +138,11 @@
 
   <!-- MODAL DE EDIÇÃO E PROCESSAMENTO -->
   <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-custom modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         
         <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title fw-bold" id="modalTitulo">Editar / Processar Boletim</h5>
+          <h5 class="modal-title fw-bold">Editar / Processar Boletim</h5>
           <button type="button" class="btn-close btn-close-white" onclick="fecharModal()"></button>
         </div>
 
@@ -186,7 +182,7 @@
             <!-- LISTA DINÂMICA DE HÓSPEDES -->
             <h6 class="fw-bold text-dark mb-2"><i class="bi bi-people-fill me-2"></i>Lista de Hóspedes:</h6>
             <div id="modalHospedesContainer">
-              <!-- Hóspedes injetados aqui -->
+              <!-- Injetado via JS -->
             </div>
 
           </form>
@@ -211,81 +207,58 @@
     </div>
   </div>
 
-  <!-- FIREBASE COMPAT SDKs -->
+  <!-- FIREBASE COMPAT SDKs (ORDEM CORRETA: APP -> FIRESTORE -> AUTH) -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // ============================================================
-    // CONFIGURAÇÕES GLOBAIS DA AIMA / SIBA
-    // ============================================================
     const CLOUDFLARE_WORKER_URL = "https://enviar-siba.lagosapartmentsbelleview.workers.dev";
     const SIBA_STORAGE_KEY = "belleview_boletins_siba";
     let listaBoletinsMemoria = [];
     let modalBootstrapInstance = null;
 
-    // ============================================================
-    // MAPA DE PAÍSES PARA CÓDIGOS ISO-3 EXIGIDOS PELA AIMA
-    // ============================================================
+    // MAPA GLOBAL DE PAÍSES PARA ISO-3
     const MAPA_PAISES_ISO3 = {
-      // Europa & União Europeia
       "portugal": "PRT", "portogallo": "PRT",
       "espanha": "ESP", "spain": "ESP", "españa": "ESP", "espagne": "ESP", "spagna": "ESP", "spanien": "ESP",
       "franca": "FRA", "france": "FRA", "francia": "FRA", "frankreich": "FRA",
       "alemanha": "DEU", "germany": "DEU", "allemagne": "DEU", "alemania": "DEU", "germania": "DEU", "deutschland": "DEU",
-      "reino unido": "GBR", "united kingdom": "GBR", "royaume-uni": "GBR", "regno unito": "GBR", "grossbritannien": "GBR", "uk": "GBR",
+      "reino unido": "GBR", "united kingdom": "GBR", "royaume-uni": "GBR", "regno unito": "GBR", "uk": "GBR",
       "italia": "ITA", "italy": "ITA", "italie": "ITA", "italien": "ITA",
       "paises baixos": "NLD", "netherlands": "NLD", "pays-bas": "NLD", "niederlande": "NLD", "holanda": "NLD",
       "belgica": "BEL", "belgium": "BEL", "belgique": "BEL", "belgio": "BEL", "belgien": "BEL",
       "suica": "CHE", "switzerland": "CHE", "suisse": "CHE", "suiza": "CHE", "svizzera": "CHE", "schweiz": "CHE",
-      "irlanda": "IRL", "ireland": "IRL", "irlande": "IRL", "irland": "IRL",
+      "irlanda": "IRL", "ireland": "IRL", "irlande": "IRL",
       "suecia": "SWE", "sweden": "SWE", "suede": "SWE", "svezia": "SWE", "schweden": "SWE",
-      "noruega": "NOR", "norway": "NOR", "norvege": "NOR", "norvegia": "NOR", "norwegen": "NOR",
-      "finlandia": "FIN", "finland": "FIN", "finlande": "FIN", "finnland": "FIN",
-      "dinamarca": "DNK", "denmark": "DNK", "danemark": "DNK",
-      "polonia": "POL", "poland": "POL", "pologne": "POL", "polen": "POL",
-      "eslovaquia": "SVK", "slovakia": "SVK", "slovaquie": "SVK", "slowakei": "SVK",
-      "eslovenia": "SVN", "slovenia": "SVN", "slovenie": "SVN", "slowenien": "SVN",
+      "noruega": "NOR", "norway": "NOR", "norvege": "NOR",
+      "finlandia": "FIN", "finland": "FIN", "finlande": "FIN",
+      "dinamarca": "DNK", "denmark": "DNK",
+      "polonia": "POL", "poland": "POL", "pologne": "POL",
+      "eslovaquia": "SVK", "slovakia": "SVK", "slovaquie": "SVK",
+      "eslovenia": "SVN", "slovenia": "SVN",
       "republica checa": "CZE", "czech republic": "CZE", "czechia": "CZE",
-      "austria": "AUT", "autriche": "AUT", "osterreich": "AUT",
-      "hungria": "HUN", "hungary": "HUN", "hongrie": "HUN", "ungarn": "HUN",
-      "grecia": "GRC", "greece": "GRC", "grece": "GRC",
-      "romenia": "ROU", "romania": "ROU", "roumanie": "ROU",
-      "bulgaria": "BGR", "bulgarien": "BGR",
-      "croacia": "HRV", "croatia": "HRV", "croatie": "HRV",
-      "ucrania": "UKR", "ukraine": "UKR",
-      "russia": "RUS", "russland": "RUS", "russie": "RUS",
-
-      // Américas
+      "austria": "AUT", "autriche": "AUT",
+      "hungria": "HUN", "hungary": "HUN",
+      "grecia": "GRC", "greece": "GRC",
+      "romenia": "ROU", "romania": "ROU",
+      "bulgaria": "BGR", "croacia": "HRV", "ucrania": "UKR", "russia": "RUS",
       "estados unidos": "USA", "united states": "USA", "etats-unis": "USA", "stati uniti": "USA", "usa": "USA",
       "canada": "CAN", "kanada": "CAN",
-      "brasil": "BRA", "brazil": "BRA", "bresil": "BRA", "brasile": "BRA",
-      "argentina": "ARG", "argentinien": "ARG",
-      "mexico": "MEX", "mexiko": "MEX",
-      "colombia": "COL", "chile": "CHL", "peru": "PER", "venezuela": "VEN",
-      "uruguai": "URY", "uruguay": "URY", "paraguai": "PRY", "bolivia": "BOL", "bolivie": "BOL",
-
-      // Ásia, África e Oceânia
-      "china": "CHN", "japao": "JPN", "japan": "JPN", "japon": "JPN",
-      "india": "IND", "australia": "AUS", "nova zelandia": "NZL", "new zealand": "NZL",
-      "africa do sul": "ZAF", "south africa": "ZAF", "angola": "AGO", "mocambique": "MOZ",
-      "cabo verde": "CPV", "marrocos": "MAR", "morocco": "MAR", "turquia": "TUR", "turkey": "TUR",
-      "israel": "ISR", "islande": "ISL", "islandia": "ISL", "iceland": "ISL",
-      "bhutan": "BTN", "butao": "BTN", "butan": "BTN"
+      "brasil": "BRA", "brazil": "BRA", "bresil": "BRA", "brasile": "BRA", "brasilien": "BRA",
+      "argentina": "ARG", "mexico": "MEX", "colombia": "COL", "chile": "CHL", "peru": "PER", "venezuela": "VEN",
+      "uruguai": "URY", "paraguai": "PRY", "bolivia": "BOL",
+      "china": "CHN", "japao": "JPN", "japan": "JPN", "india": "IND", "australia": "AUS", "nova zelandia": "NZL",
+      "africa do sul": "ZAF", "angola": "AGO", "mocambique": "MOZ", "cabo verde": "CPV", "marrocos": "MAR",
+      "turquia": "TUR", "israel": "ISR", "islande": "ISL", "bhutan": "BTN", "butao": "BTN"
     };
 
-    // ============================================================
-    // FUNÇÕES DE NORMALIZAÇÃO AUTOMÁTICA DE DADOS (SANITIZADORES)
-    // ============================================================
     function normalizarPaisISO3(pais) {
       if (!pais) return "PRT";
       const str = String(pais).trim();
-      // Se já forem exatamente 3 letras ISO-3
       if (/^[A-Za-z]{3}$/.test(str)) return str.toUpperCase();
-
-      // Normalizar texto tirando acentos
       const pLimpo = str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       return MAPA_PAISES_ISO3[pLimpo] || "PRT";
     }
@@ -303,16 +276,11 @@
       const str = String(dataStr).trim();
       if (str.includes("/")) {
         const p = str.split("/");
-        if (p.length === 3) {
-          return `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
-        }
+        if (p.length === 3) return `${p[2]}-${p[1].padStart(2, '0')}-${p[0].padStart(2, '0')}`;
       }
       return str;
     }
 
-    // ============================================================
-    // CARREGAR E SINCRONIZAR BOLETIINS (LOCALSTORAGE + FIREBASE)
-    // ============================================================
     async function carregarBoletins() {
       const filtro = document.getElementById("filtroEstado").value;
       const corpoTabela = document.getElementById("tabelaBoletinsCorpo");
@@ -320,7 +288,7 @@
 
       listaBoletinsMemoria = [];
 
-      // 1. Ler LocalStorage
+      // 1. Ler dados do LocalStorage (Sempre funciona sem auth)
       try {
         const localData = JSON.parse(localStorage.getItem(SIBA_STORAGE_KEY) || localStorage.getItem("belleview_boletins_siba") || "[]");
         localData.forEach(item => {
@@ -337,13 +305,12 @@
         console.warn("Erro ao ler LocalStorage:", e);
       }
 
-      // 2. Ler Firestore se disponível
+      // 2. Tentar ler do Firestore
       if (typeof db !== "undefined") {
         try {
           const snapshot = await db.collection("boletins").get();
           snapshot.forEach(doc => {
             const data = doc.data();
-            // Evitar duplicados pelo ID
             if (!listaBoletinsMemoria.some(b => b.id === doc.id)) {
               listaBoletinsMemoria.push({
                 id: doc.id,
@@ -356,7 +323,7 @@
             }
           });
         } catch (err) {
-          console.warn("Aviso Firestore:", err);
+          console.warn("Regras do Firestore restringiram a leitura, utilizando os dados locais do LocalStorage:", err);
         }
       }
 
@@ -368,7 +335,6 @@
       document.getElementById("metricEnviados").textContent = enviados;
       document.getElementById("metricTotal").textContent = listaBoletinsMemoria.length;
 
-      // Filtrar Lista
       let listaExibir = listaBoletinsMemoria;
       if (filtro === "PENDENTE") {
         listaExibir = listaBoletinsMemoria.filter(b => b.status === "PENDENTE" || b.status === "PENDENTE_ATRIBUICAO");
@@ -376,7 +342,6 @@
         listaExibir = listaBoletinsMemoria.filter(b => b.status === "ENVIADO" || b.status === "SUBMETIDO_WS");
       }
 
-      // Renderizar Tabela
       if (listaExibir.length === 0) {
         corpoTabela.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted">Nenhum boletim encontrado.</td></tr>`;
         return;
@@ -410,9 +375,6 @@
       }).join("");
     }
 
-    // ============================================================
-    // ABRIR E PREENCHER MODAL
-    // ============================================================
     function abrirModalEditar(id) {
       const item = listaBoletinsMemoria.find(b => b.id === id);
       if (!item) return;
@@ -420,7 +382,6 @@
       const d = item.dados || {};
       document.getElementById("modalBoletimId").value = item.id;
       document.getElementById("modalCheckin").value = normalizarDataIso(d.dataCheckin);
-      document.getElementById("checkoutDate") ? null : null;
       document.getElementById("modalCheckout").value = normalizarDataIso(d.dataCheckout);
       document.getElementById("modalEmail").value = d.emailCliente || d.email || "";
 
@@ -428,7 +389,6 @@
         document.getElementById("selectUnidadeModal").value = item.unidade;
       }
 
-      // Renderizar Hóspedes
       const hospedes = d.hospedes || [];
       const container = document.getElementById("modalHospedesContainer");
       
@@ -436,7 +396,7 @@
         container.innerHTML = `<p class="text-muted small">Sem dados de hóspedes registados.</p>`;
       } else {
         container.innerHTML = hospedes.map((h, i) => `
-          <div class="guest-card-edit" data-guest-index="${i}">
+          <div class="guest-card-edit">
             <h6 class="fw-bold text-secondary mb-2">Hóspede ${i + 1}</h6>
             <div class="row g-2">
               <div class="col-md-6">
@@ -448,7 +408,7 @@
                 <input type="date" class="form-control form-control-sm guest-nasc" value="${normalizarDataIso(h.dataNascimento)}">
               </div>
               <div class="col-md-3">
-                <label class="form-label small mb-1">Nacionalidade (Ex: PRT):</label>
+                <label class="form-label small mb-1">Nacionalidade:</label>
                 <input type="text" class="form-control form-control-sm guest-nac" value="${h.nacionalidade || ''}">
               </div>
               <div class="col-md-3">
@@ -464,11 +424,11 @@
                 <input type="text" class="form-control form-control-sm guest-docnum" value="${h.docNumero || ''}">
               </div>
               <div class="col-md-3">
-                <label class="form-label small mb-1">País Emissor (Ex: PRT):</label>
+                <label class="form-label small mb-1">País Emissor:</label>
                 <input type="text" class="form-control form-control-sm guest-docpais" value="${h.docPaisEmissor || h.nacionalidade || ''}">
               </div>
               <div class="col-md-3">
-                <label class="form-label small mb-1">País Residência (Ex: PRT):</label>
+                <label class="form-label small mb-1">País Residência:</label>
                 <input type="text" class="form-control form-control-sm guest-residencia" value="${h.paisResidencia || h.nacionalidade || ''}">
               </div>
             </div>
@@ -484,9 +444,6 @@
       if (modalBootstrapInstance) modalBootstrapInstance.hide();
     }
 
-    // ============================================================
-    // RECOLHER DADOS EDITADOS DO MODAL
-    // ============================================================
     function recolherDadosEditadosDoModal() {
       const hospedes = [];
       document.querySelectorAll(".guest-card-edit").forEach(card => {
@@ -508,9 +465,7 @@
       };
     }
 
-    // ============================================================
-    // ENVIO PRINCIPAL PARA O CLOUDFLARE WORKER COM SANITIZAÇÃO
-    // ============================================================
+    // ENVIO UNIVERSAL COM DUPLA ESTRUTURA PARA O WORKER
     async function executarEnvioWorker() {
       const id = document.getElementById("modalBoletimId").value;
       const dadosEditados = recolherDadosEditadosDoModal();
@@ -522,7 +477,7 @@
 
       const itemOriginal = listaBoletinsMemoria.find(b => b.id === id);
 
-      // SANITIZAÇÃO COMPLETA AUTOMÁTICA
+      // Sanitizar dados dos Hóspedes
       const hospedesFormatados = (dadosEditados.hospedes || []).map(h => ({
         nome: h.nome || "",
         dataNascimento: normalizarDataIso(h.dataNascimento),
@@ -534,7 +489,8 @@
         docOutroDesc: h.docOutroDesc || ""
       }));
 
-      const boletimParaEnvio = {
+      // Objeto interno sanitizado
+      const boletimSanitizado = {
         ...(itemOriginal?.dados || {}),
         dataCheckin: normalizarDataIso(dadosEditados.dataCheckin),
         dataCheckout: normalizarDataIso(dadosEditados.dataCheckout),
@@ -544,16 +500,26 @@
         hospedes: hospedesFormatados
       };
 
-      console.log("Payload sanitizado a enviar ao Worker:", { unidade: unidadeSelecionada, boletim: boletimParaEnvio });
+      // Payload Duplo: Satisfaz tanto scripts do Worker que leiem no topo (apartamento/unidade) como aninhados (boletim)
+      const payloadWorker = {
+        apartamento: unidadeSelecionada,
+        unidade: unidadeSelecionada,
+        dataCheckin: boletimSanitizado.dataCheckin,
+        dataCheckout: boletimSanitizado.dataCheckout,
+        numAdultos: boletimSanitizado.numAdultos,
+        numCriancas: boletimSanitizado.numCriancas,
+        emailCliente: boletimSanitizado.emailCliente,
+        hospedes: hospedesFormatados,
+        boletim: boletimSanitizado
+      };
+
+      console.log("A enviar Payload Sanitizado ao Worker:", payloadWorker);
 
       try {
         const response = await fetch(CLOUDFLARE_WORKER_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            unidade: unidadeSelecionada,
-            boletim: boletimParaEnvio
-          })
+          body: JSON.stringify(payloadWorker)
         });
 
         const resultado = await response.json();
@@ -562,36 +528,33 @@
         if (resultado.success) {
           alert("✅ Boletim submetido com sucesso no WebService da AIMA!");
 
-          // Atualizar BD
+          // Atualizar BD local e Firestore
           if (typeof db !== "undefined") {
             await db.collection("boletins").doc(id).update({
               status: "ENVIADO",
               unidade: unidadeSelecionada,
-              dataCheckin: boletimParaEnvio.dataCheckin,
-              dataCheckout: boletimParaEnvio.dataCheckout,
-              hospedes: boletimParaEnvio.hospedes
-            }).catch(e => console.warn("Firestore update:", e));
+              dataCheckin: boletimSanitizado.dataCheckin,
+              dataCheckout: boletimSanitizado.dataCheckout,
+              hospedes: boletimSanitizado.hospedes
+            }).catch(e => console.warn(e));
           }
 
           fecharModal();
           carregarBoletins();
         } else {
-          console.error("Erro do SIBA:", resultado);
-          const msg = resultado.mensagem || resultado.erro || "Erro no envio ao servidor da AIMA.";
-          alert(`⚠️ O servidor SIBA devolveu um erro:\n\n${msg}`);
+          console.error("Erro devolvido pelo SIBA/Worker:", resultado);
+          const msgDetalhe = resultado.mensagem || resultado.erro || JSON.stringify(resultado);
+          alert(`⚠️ O SIBA devolveu uma resposta de recusa:\n\n${msgDetalhe}`);
         }
       } catch (error) {
         console.error("Erro na comunicação:", error);
-        alert("❌ Falha de rede ao contactar o servidor.");
+        alert("❌ Falha de rede ao contactar o Cloudflare Worker.");
       } finally {
         btn.disabled = false;
         btn.innerHTML = `<i class="bi bi-send-fill me-1"></i> Enviar para o SIBA WebService`;
       }
     }
 
-    // ============================================================
-    // AUXILIARES DO MODAL (GUARDAR, XML, MUDAR ESTADO)
-    // ============================================================
     async function guardarAlteracoesModal() {
       const id = document.getElementById("modalBoletimId").value;
       const dadosEditados = recolherDadosEditadosDoModal();
@@ -610,7 +573,7 @@
         }
       }
 
-      alert("Alterações guardadas com sucesso.");
+      alert("Alterações guardadas.");
       fecharModal();
       carregarBoletins();
     }
@@ -659,7 +622,6 @@
       a.click();
     }
 
-    // Inicializar no carregamento da página
     document.addEventListener("DOMContentLoaded", carregarBoletins);
   </script>
 </body>
