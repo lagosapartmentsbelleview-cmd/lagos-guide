@@ -219,7 +219,7 @@
     </div>
   </div>
 
-  <!-- FIREBASE COMPAT SDKs (ORDEM OBRIGATÓRIA DA SDK COMPAT) -->
+  <!-- FIREBASE COMPAT SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
@@ -232,11 +232,11 @@
     let listaBoletinsMemoria = [];
     let modalBootstrapInstance = null;
 
-    // MAPA DE REGISTOS AL OFICIAIS EXIGIDOS PELA AIMA
+    // MAPA COM OS NOMES OFICIAIS REGISTADOS NO WEBSERVICE DA AIMA
     const MAPA_REGISTOS_AL = {
-      "2301": { al: "26313/AL", num: "26313" },
-      "2203": { al: "116670/AL", num: "116670" },
-      "2204": { al: "116671/AL", num: "116671" }
+      "2301": { nomeSiba: "0BELLEVIEW", num: "26313", al: "26313/AL" },
+      "2203": { nomeSiba: "1BELLEVIEW ONE", num: "116670", al: "116670/AL" },
+      "2204": { nomeSiba: "2BELLEVIEW TWO", num: "116671", al: "116671/AL" }
     };
 
     // MAPA GLOBAL DE PAÍSES PARA CÓDIGOS ISO-3
@@ -246,6 +246,7 @@
       "franca": "FRA", "france": "FRA", "francia": "FRA", "frankreich": "FRA",
       "alemanha": "DEU", "germany": "DEU", "allemagne": "DEU", "alemania": "DEU", "germania": "DEU", "deutschland": "DEU",
       "reino unido": "GBR", "united kingdom": "GBR", "royaume-uni": "GBR", "regno unito": "GBR", "grossbritannien": "GBR", "uk": "GBR",
+      "austria": "AUT", "autriche": "AUT", "österreich": "AUT",
       "italia": "ITA", "italy": "ITA", "italie": "ITA", "italien": "ITA",
       "paises baixos": "NLD", "netherlands": "NLD", "pays-bas": "NLD", "niederlande": "NLD", "holanda": "NLD",
       "belgica": "BEL", "belgium": "BEL", "belgique": "BEL", "belgio": "BEL", "belgien": "BEL",
@@ -259,7 +260,6 @@
       "eslovaquia": "SVK", "slovakia": "SVK", "slovaquie": "SVK",
       "eslovenia": "SVN", "slovenia": "SVN",
       "republica checa": "CZE", "czech republic": "CZE", "czechia": "CZE",
-      "austria": "AUT", "autriche": "AUT",
       "hungria": "HUN", "hungary": "HUN",
       "grecia": "GRC", "greece": "GRC",
       "romenia": "ROU", "romania": "ROU",
@@ -300,19 +300,19 @@
       return str;
     }
 
-    // CARREGAR REGISTOS (LOCALSTORAGE + FIRESTORE)
+    // CARREGAR REGISTOS COM DESDUPLICAÇÃO AUTOMÁTICA
     async function carregarBoletins() {
       const filtro = document.getElementById("filtroEstado").value;
       const corpoTabela = document.getElementById("tabelaBoletinsCorpo");
       corpoTabela.innerHTML = `<tr><td colspan="7" class="text-center py-4"><div class="spinner-border text-primary"></div></td></tr>`;
 
-      listaBoletinsMemoria = [];
+      let registosBrutos = [];
 
-      // 1. Ler dados do LocalStorage
+      // 1. Ler LocalStorage
       try {
         const localData = JSON.parse(localStorage.getItem(SIBA_STORAGE_KEY) || localStorage.getItem("belleview_boletins_siba") || "[]");
         localData.forEach(item => {
-          listaBoletinsMemoria.push({
+          registosBrutos.push({
             id: item.id || ("LOCAL-" + Date.now()),
             origem: "LOCAL",
             status: item.estado || item.status || "PENDENTE",
@@ -325,29 +325,49 @@
         console.warn("Erro LocalStorage:", e);
       }
 
-      // 2. Ler dados do Firestore com tratamento de erros de permissão
+      // 2. Ler Firestore
       if (typeof db !== "undefined") {
         try {
           const snapshot = await db.collection("boletins").get();
           snapshot.forEach(doc => {
             const data = doc.data();
-            if (!listaBoletinsMemoria.some(b => b.id === doc.id)) {
-              listaBoletinsMemoria.push({
-                id: doc.id,
-                origem: "FIRESTORE",
-                status: data.status || "PENDENTE",
-                dataRececao: data.criadoEm?.toDate ? data.criadoEm.toDate().toISOString() : (data.criadoEm || new Date().toISOString()),
-                unidade: data.unidade || data.apartamento || "2203",
-                dados: data
-              });
-            }
+            registosBrutos.push({
+              id: doc.id,
+              origem: "FIRESTORE",
+              status: data.status || "PENDENTE",
+              dataRececao: data.criadoEm?.toDate ? data.criadoEm.toDate().toISOString() : (data.criadoEm || new Date().toISOString()),
+              unidade: data.unidade || data.apartamento || "2203",
+              dados: data
+            });
           });
         } catch (err) {
-          console.warn("Firestore restrito. A utilizar dados armazenados no LocalStorage:", err);
+          console.warn("Firestore restrito. A utilizar dados em memória:", err);
         }
       }
 
-      // Atualizar Métricas
+      // 3. Desduplicação por Hóspede + Checkin + Checkout (Resolve os dois registos na tabela)
+      const mapaDesduplicado = new Map();
+
+      registosBrutos.forEach(item => {
+        const d = item.dados || {};
+        const nomePrincipal = (d.hospedes?.[0]?.nome || d.nome || "desconhecido").toLowerCase().trim();
+        const checkin = d.dataCheckin || "";
+        const checkout = d.dataCheckout || "";
+        const chaveUnica = `${nomePrincipal}_${checkin}_${checkout}`;
+
+        if (!mapaDesduplicado.has(chaveUnica)) {
+          mapaDesduplicado.set(chaveUnica, item);
+        } else {
+          const existente = mapaDesduplicado.get(chaveUnica);
+          if (item.status === "ENVIADO" || (item.status === "PENDENTE" && existente.status === "PENDENTE_ATRIBUICAO")) {
+            mapaDesduplicado.set(chaveUnica, item);
+          }
+        }
+      });
+
+      listaBoletinsMemoria = Array.from(mapaDesduplicado.values());
+
+      // Métricas
       const pendentes = listaBoletinsMemoria.filter(b => b.status === "PENDENTE" || b.status === "PENDENTE_ATRIBUICAO").length;
       const enviados = listaBoletinsMemoria.filter(b => b.status === "ENVIADO" || b.status === "SUBMETIDO_WS").length;
       
@@ -398,7 +418,6 @@
       }).join("");
     }
 
-    // ABRIR MODAL PARA NOVO BOLETIM MANUAL (FOTOS PASSAPORTE/WHATSAPP)
     function abrirModalCriarNovo() {
       document.getElementById("modalTituloText").textContent = "+ Criar Novo Boletim Manual";
       document.getElementById("modalBoletimId").value = "NOVO-" + Date.now();
@@ -411,13 +430,12 @@
 
       const container = document.getElementById("modalHospedesContainer");
       container.innerHTML = "";
-      adicionarCardHospedeModal(); // Cria o 1º formulário de hóspede vazio
+      adicionarCardHospedeModal();
 
       modalBootstrapInstance = new bootstrap.Modal(document.getElementById("modalEditar"));
       modalBootstrapInstance.show();
     }
 
-    // ABRIR MODAL PARA EDITAR
     function abrirModalEditar(id) {
       document.getElementById("modalTituloText").textContent = "Editar / Processar Boletim";
       const item = listaBoletinsMemoria.find(b => b.id === id);
@@ -519,15 +537,14 @@
       };
     }
 
-    // ENVIO WORKER COM MAREADOR DE REGISTO AL E PARSER DE ERRO SOAP
+    // ENVIO PARA O CLOUDFLARE WORKER EXISTENTE
     async function executarEnvioWorker() {
       const id = document.getElementById("modalBoletimId").value;
       const dadosEditados = recolherDadosEditadosDoModal();
       const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
       const btn = document.getElementById("btnEnviarSibaModal");
 
-      // Obter código oficial AL para evitar erro .NET de conversão de string
-      const infoAL = MAPA_REGISTOS_AL[unidadeSelecionada] || { al: unidadeSelecionada, num: unidadeSelecionada };
+      const infoAL = MAPA_REGISTOS_AL[unidadeSelecionada] || { nomeSiba: "1BELLEVIEW ONE", num: "116670", al: "116670/AL" };
 
       btn.disabled = true;
       btn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span> A enviar...`;
@@ -543,13 +560,14 @@
         docOutroDesc: ""
       }));
 
-      // Payload Duplo com Registos AL Formatados (116670/AL)
+      // Payload universal adaptado para qualquer variação do Worker
       const payloadWorker = {
+        nif: "163735972",
         unidade: unidadeSelecionada,
         apartamento: unidadeSelecionada,
-        estabelecimento: infoAL.al,         // Envia "116670/AL"
-        registoAL: infoAL.al,              // Envia "116670/AL"
-        codigoEstabelecimento: infoAL.num, // Envia "116670"
+        estabelecimento: infoAL.nomeSiba,
+        codigoEstabelecimento: infoAL.num,
+        registoAL: infoAL.al,
         dataCheckin: normalizarDataIso(dadosEditados.dataCheckin),
         dataCheckout: normalizarDataIso(dadosEditados.dataCheckout),
         numAdultos: hospedesFormatados.length || 1,
@@ -557,14 +575,14 @@
         emailCliente: document.getElementById("modalEmail").value || "",
         hospedes: hospedesFormatados,
         boletim: {
-          estabelecimento: infoAL.al,
+          estabelecimento: infoAL.nomeSiba,
           dataCheckin: normalizarDataIso(dadosEditados.dataCheckin),
           dataCheckout: normalizarDataIso(dadosEditados.dataCheckout),
           hospedes: hospedesFormatados
         }
       };
 
-      console.log("Payload Sanitizado Enviado ao Worker:", payloadWorker);
+      console.log("Payload Enviado ao Worker:", payloadWorker);
 
       try {
         const response = await fetch(CLOUDFLARE_WORKER_URL, {
@@ -613,7 +631,6 @@
       }
     }
 
-    // GUARDAR ALTERAÇÕES NO LOCALSTORAGE E FIRESTORE
     async function guardarAlteracoesModal() {
       const id = document.getElementById("modalBoletimId").value;
       const dadosEditados = recolherDadosEditadosDoModal();
@@ -633,14 +650,12 @@
         }
       };
 
-      // 1. LocalStorage
       let localData = JSON.parse(localStorage.getItem(SIBA_STORAGE_KEY) || "[]");
       const idx = localData.findIndex(b => b.id === id);
       if (idx !== -1) localData[idx] = novoObjeto;
       else localData.push(novoObjeto);
       localStorage.setItem(SIBA_STORAGE_KEY, JSON.stringify(localData));
 
-      // 2. Firestore
       if (typeof db !== "undefined") {
         try {
           await db.collection("boletins").doc(id).set({
@@ -662,16 +677,13 @@
       carregarBoletins();
     }
 
-    // ELIMINAR REGISTOS
     async function eliminarBoletimDirecto(id) {
       if (!confirm("Tem a certeza de que pretende eliminar este boletim definitivamente?")) return;
 
-      // LocalStorage
       let localData = JSON.parse(localStorage.getItem(SIBA_STORAGE_KEY) || "[]");
       localData = localData.filter(b => b.id !== id);
       localStorage.setItem(SIBA_STORAGE_KEY, JSON.stringify(localData));
 
-      // Firestore
       if (typeof db !== "undefined") {
         try {
           await db.collection("boletins").doc(id).delete();
@@ -713,10 +725,10 @@
     function descarregarXmlManualCurrent() {
       const dadosEditados = recolherDadosEditadosDoModal();
       const unidade = document.getElementById("selectUnidadeModal").value;
-      const registoAL = MAPA_REGISTOS_AL[unidade]?.al || "116670/AL";
+      const infoAL = MAPA_REGISTOS_AL[unidade] || { al: "116670/AL" };
 
       let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<BoletinsAlojamento>\n`;
-      xml += `  <Estabelecimento>${registoAL}</Estabelecimento>\n`;
+      xml += `  <Estabelecimento>${infoAL.al}</Estabelecimento>\n`;
 
       (dadosEditados.hospedes || []).forEach(h => {
         xml += `  <Boletim>\n`;
