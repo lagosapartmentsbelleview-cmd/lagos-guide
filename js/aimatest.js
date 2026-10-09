@@ -1,73 +1,58 @@
 // ============================================================
-// AIMATEST.JS — GESTÃO DO FORMULÁRIO DE REGISTO DE HÓSPEDES
+// 1. INICIALIZAÇÃO E MANIPULAÇÃO DO DOM
 // ============================================================
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
 
-// Reutilização segura de iso3Map sem conflitos de redeclaração
-if (typeof window.iso3Map === 'undefined') {
-  window.iso3Map = {
-    "Portugal": "PRT", "Portogallo": "PRT",
-    "Espanha": "ESP", "Spain": "ESP", "España": "ESP", "Espagne": "ESP", "Spagna": "ESP", "Spanien": "ESP",
-    "França": "FRA", "France": "FRA", "Francia": "FRA", "Frankreich": "FRA",
-    "Alemanha": "DEU", "Germany": "DEU", "Allemagne": "DEU", "Alemania": "DEU", "Germania": "DEU", "Deutschland": "DEU",
-    "Reino Unido": "GBR", "United Kingdom": "GBR", "Royaume-Uni": "GBR", "Regno Unito": "GBR", "Großbritannien": "GBR",
-    "Estados Unidos": "USA", "United States": "USA", "États-Unis": "USA", "Stati Uniti": "USA", "USA": "USA",
-    "Itália": "ITA", "Italy": "ITA", "Italie": "ITA", "Italien": "ITA",
-    "Países Baixos": "NLD", "Netherlands": "NLD", "Pays-Bas": "NLD", "Niederlande": "NLD",
-    "Bélgica": "BEL", "Belgium": "BEL", "Belgique": "BEL", "Belgio": "BEL", "Belgien": "BEL",
-    "Suíça": "CHE", "Switzerland": "CHE", "Suisse": "CHE", "Suiza": "CHE", "Svizzera": "CHE", "Schweiz": "CHE",
-    "Irlanda": "IRL", "Ireland": "IRL", "Irlande": "IRL", "Irland": "IRL",
-    "Brasil": "BRA", "Brazil": "BRA", "Brésil": "BRA", "Brasile": "BRA", "Brasilien": "BRA",
-    "Canadá": "CAN", "Canada": "CAN", "Kanada": "CAN",
-    "Polónia": "POL", "Poland": "POL", "Pologne": "POL", "Polonia": "POL", "Polen": "POL",
-    "Áustria": "AUT", "Austria": "AUT", "Autriche": "AUT", "Österreich": "AUT",
-    "Dinamarca": "DNK", "Denmark": "DNK", "Danemark": "DNK", "Dänemark": "DNK",
-    "Suécia": "SWE", "Sweden": "SWE", "Suède": "SWE", "Suecia": "SWE", "Svezia": "SWE", "Schweden": "SWE",
-    "Noruega": "NOR", "Norway": "NOR", "Norvège": "NOR", "Noruega": "NOR", "Norvegia": "NOR", "Norwegen": "NOR",
-    "Finlândia": "FIN", "Finland": "FIN", "Finlande": "FIN", "Finlandia": "FIN", "Finnland": "FIN"
-  };
-}
+  const faqModal = document.getElementById("faqModal");
+  const closeFaqBtn = document.getElementById("closeFaqModal") || 
+                      document.querySelector(".close-faq") || 
+                      document.querySelector("#faqModal .close");
 
-function normalizarIso3(paisTexto) {
-  if (!paisTexto) return "PRT";
-  const p = String(paisTexto).trim();
-  if (/^[A-Z]{3}$/.test(p)) return p;
-  return window.iso3Map[p] || "PRT";
-}
+  if (closeFaqBtn) {
+    closeFaqBtn.addEventListener("click", () => {
+      if (faqModal) faqModal.style.display = "none";
+    });
+  }
 
-var docTypeMap = {
-  passport: "P",
-  id: "I",
-  other: "O",
-  P: "P",
-  I: "I",
-  O: "O"
-};
+  window.addEventListener("click", (e) => {
+    if (faqModal && e.target === faqModal) {
+      faqModal.style.display = "none";
+    }
+  });
+});
 
-var countryLists = {
+// ============================================================
+// 2. LISTAS DE PAÍSES TRADUZIDAS E ORDENADAS
+// ============================================================
+const countryLists = {
   pt: [
-    "Portugal","Alemanha","Espanha","França","Reino Unido","Itália","Países Baixos","Bélgica","Suíça","Irlanda","Brasil","Canadá","Estados Unidos",
-    "Afeganistão","África do Sul","Albânia","Andorra","Angola","Antígua e Barbuda","Arábia Saudita","Argélia","Argentina","Arménia","Austrália","Áustria","Azerbaijão",
-    "Bahamas","Bangladesh","Barbados","Barém","Belize","Benim","Bielorrússia","Bolívia","Bósnia e Herzegovina","Botsuana","Brunei","Bulgária","Burquina Faso","Burundi","Butão",
-    "Cabo Verde","Camarões","Camboja","Catar","Cazaquistão","Chade","Chile","China","Chipre","Colômbia","Comores","Coreia do Norte","Coreia do Sul","Costa do Marfim","Costa Rica","Croácia","Cuba",
-    "Dinamarca","Dominica","Egipto","Emirados Árabes Unidos","Equador","Eritreia","Eslováquia","Eslovénia","Estónia","Etiópia",
-    "Fiji","Filipinas","Finlândia","Gabão","Gâmbia","Gana","Geórgia","Granada","Grécia","Guatemala","Guiana","Guiné","Guiné-Bissau","Guiné Equatorial",
-    "Haiti","Honduras","Hungria","Iémen","Ilhas Marechal","Índia","Indonésia","Irão","Iraque","Islândia","Israel",
-    "Jamaica","Japão","Jordânia","Koweit","Laos","Lesoto","Letónia","Líbano","Libéria","Líbia","Liechtenstein","Lituânia","Luxemburgo",
+    "Afeganistão","África do Sul","Albânia","Alemanha","Andorra","Angola","Antígua e Barbuda","Arábia Saudita","Argélia","Argentina","Arménia","Austrália","Áustria","Azerbaijão",
+    "Bahamas","Bangladesh","Barbados","Barém","Bélgica","Belize","Benim","Bielorrússia","Bolívia","Bósnia e Herzegovina","Botsuana","Brasil","Brunei","Bulgária","Burquina Faso","Burundi","Butão",
+    "Cabo Verde","Camarões","Camboja","Canadá","Catar","Cazaquistão","Chade","Chile","China","Chipre","Colômbia","Comores","Coreia do Norte","Coreia do Sul","Costa do Marfim","Costa Rica","Croácia","Cuba",
+    "Dinamarca","Dominica","Egipto","Emirados Árabes Unidos","Equador","Eritreia","Eslováquia","Eslovénia","Espanha","Estados Unidos","Estónia","Etiópia",
+    "Fiji","Filipinas","Finlândia","França","Gabão","Gâmbia","Gana","Geórgia","Granada","Grécia","Guatemala","Guiana","Guiné","Guiné-Bissau","Guiné Equatorial",
+    "Haiti","Honduras","Hungria","Iémen","Ilhas Marechal","Índia","Indonésia","Irão","Iraque","Irlanda","Islândia","Israel","Itália","Jamaica","Japão","Jordânia",
+    "Koweit","Laos","Lesoto","Letónia","Líbano","Libéria","Líbia","Liechtenstein","Lituânia","Luxemburgo",
     "Macedónia do Norte","Madagáscar","Malásia","Malaui","Maldivas","Mali","Malta","Marrocos","Maurícia","Mauritânia","México","Micronésia","Moçambique","Moldávia","Mónaco","Mongólia","Montenegro","Mianmar",
-    "Namíbia","Nauru","Nepal","Nicarágua","Níger","Nigéria","Noruega","Nova Zelândia","Omã","Paquistão","Palau","Panamá","Papua-Nova Guiné","Paraguai","Peru","Polónia",
-    "República Centro-Africana","República Checa","República Democrática do Congo","República do Congo","República Dominicana","Roménia","Ruanda","Rússia",
-    "Samoa","Santa Lúcia","São Cristóvão e Neves","São Marino","São Tomé e Príncipe","São Vicente e Granadinas","Senegal","Serra Leoa","Sérvia","Seicheles","Singapura","Síria","Somália","Sri Lanka","Eswatini","Sudão","Sudão do Sul","Suécia","Suriname",
+    "Namíbia","Nauru","Nepal","Nicarágua","Níger","Nigéria","Noruega","Nova Zelândia","Omã",
+    "Países Baixos","Paquistão","Palau","Panamá","Papua-Nova Guiné","Paraguai","Peru","Polónia","Portugal",
+    "Reino Unido","República Centro-Africana","República Checa","República Democrática do Congo","República do Congo","República Dominicana","Roménia","Ruanda","Rússia",
+    "Samoa","Santa Lúcia","São Cristóvão e Neves","São Marino","São Tomé e Príncipe","São Vicente e Granadinas","Senegal","Serra Leoa","Sérvia","Seicheles","Singapura","Síria","Somália","Sri Lanka","Eswatini","Sudão","Sudão do Sul","Suécia","Suíça","Suriname",
     "Tailândia","Taiwan","Tajiquistão","Tanzânia","Timor-Leste","Togo","Tonga","Trinidad e Tobago","Tunísia","Turquemenistão","Turquia","Tuvalu",
     "Ucrânia","Uganda","Uruguai","Uzbequistão","Vanuatu","Vaticano","Venezuela","Vietname","Zâmbia","Zimbabué"
   ],
-  en: ["Portugal","United Kingdom","Germany","France","Spain","Italy","Netherlands","Belgium","Switzerland","Ireland","Brazil","Canada","United States","Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","China","Denmark","Egypt","Finland","Greece","India","Israel","Japan","Luxembourg","Mexico","Morocco","Norway","Poland","Romania","Russia","Sweden","Turkey","Ukraine"],
-  fr: ["Portugal","France","Royaume-Uni","Allemagne","Espagne","Italie","Belgique","Suisse","Pays-Bas","Irlande","Brésil","Canada","États-Unis","Afghanistan","Algérie","Andorre","Angola","Argentine","Australie","Autriche","Chine","Danemark","Finlande","Grèce","Luxembourg","Maroc","Norvège","Pologne","Suède"],
-  es: ["Portugal","España","Reino Unido","Alemania","Francia","Italia","Países Bajos","Bélgica","Suiza","Irlanda","Brasil","Argentina","Canadá","Chile","Colombia","Estados Unidos","México","Uruguay","Venezuela","Afganistán","Andorra","Angola","Australia","Austria","Dinamarca","Ecuador","Grecia","Noruega","Perú","Polonia","Suecia"],
-  it: ["Portogallo","Italia","Regno Unito","Germania","Francia","Spagna","Paesi Bassi","Belgio","Svizzera","Irlanda","Brasile","Canada","Stati Uniti","Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Cina","Danimarca","Giappone","Grecia","Lussemburgo","Marocco","Norvegia","Polonia","Svezia"],
-  de: ["Portugal","Deutschland","Großbritannien","Frankreich","Spanien","Italien","Niederlande","Belgien","Schweiz","Österreich","Irland","Brasilien","Kanada","USA","Afghanistan","Ägypten","Albanien","Algerien","Andorra","Angola","Argentinien","Australien","Dänemark","Finnland","Griechenland","Luxemburg","Marokko","Norwegen","Polen","Schweden","Tschechien","Türkei"]
+  en: ["Portugal","United Kingdom","Germany","France","Spain","Italy","Netherlands","Belgium","Switzerland","Ireland","Brazil","Canada","United States","Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Bolivia","Bhutan","China","Denmark","Egypt","Finland","Greece","India","Israel","Japan","Luxembourg","Mexico","Morocco","Norway","Poland","Romania","Russia","Sweden","Turkey","Ukraine"],
+  fr: ["Portugal","France","Royaume-Uni","Allemagne","Espagne","Italie","Belgique","Suisse","Pays-Bas","Irlande","Brésil","Canada","États-Unis","Afghanistan","Algérie","Andorre","Angola","Argentine","Australie","Autriche","Bolivie","Bhoutan","Chine","Danemark","Finlande","Grèce","Luxembourg","Maroc","Norvège","Pologne","Suède"],
+  es: ["Portugal","España","Reino Unido","Alemania","Francia","Italia","Países Bajos","Bélgica","Suiza","Irlanda","Brasil","Argentina","Canadá","Chile","Colombia","Estados Unidos","México","Uruguay","Venezuela","Afganistán","Andorra","Angola","Australia","Austria","Bolivia","Bután","Dinamarca","Ecuador","Grecia","Noruega","Perú","Polonia","Suecia"],
+  it: ["Portogallo","Italia","Regno Unito","Germania","Francia","Spagna","Paesi Bassi","Belgio","Svizzera","Irlanda","Brasile","Canada","Stati Uniti","Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Bhutan","Bolivia","Cina","Danimarca","Giappone","Grecia","Lussemburgo","Marocco","Norvegia","Polonia","Svezia"],
+  de: ["Portugal","Deutschland","Großbritannien","Frankreich","Spanien","Italien","Niederlande","Belgien","Schweiz","Österreich","Irland","Brasilien","Kanada","USA","Afghanistan","Ägypten","Albanien","Algerien","Andorra","Angola","Argentinien","Australien","Bhutan","Bolivien","Dänemark","Finnland","Griechenland","Luxemburg","Marokko","Norwegen","Polen","Schweden","Tschechien","Türkei"]
 };
 
-var texts = {
+// ============================================================
+// 3. DICIONÁRIO DE TEXTOS E IDIOMAS (TEXTS)
+// ============================================================
+const texts = {
   pt: {
     subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).",
     legalHtml: `
@@ -85,8 +70,8 @@ var texts = {
       <h4><strong>Obrigatoriedade e consequências da recusa</strong></h4>
       <p>A prestação destes dados é <strong>estritamente obrigatória por lei</strong>. A recusa em fornecer as informações necessárias impede legalmente a realização do check-in e implica a <strong>anulação imediata da reserva sem direito a reembolso</strong>.</p>
       <h4><strong>Privacidade e proteção dos seus dados</strong></h4>
-      <p>Os dados recolhidos são utilizados exclusivamente para cumprimento desta obrigação legal (RGPD).</p>
-      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Verificar informação em PDF</a> | <a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a></p>
+      <p>Os dados recolhidos são utilizados exclusivamente para cumprimento desta obrigação legal e tratados em conformidade com o <strong>Regulamento Geral sobre a Proteção de Dados (RGPD)</strong>.</p>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Verificar a informação em PDF</a> | <a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a></p>
     `,
     formTitle: "Boletim de Alojamento",
     requiredNotice: "Preenchimento e envio obrigatório dos dados de todos os hóspedes adultos e crianças",
@@ -99,7 +84,7 @@ var texts = {
     radio_yes: "Sim",
     radio_no: "Não",
     email_label: "O seu E-mail:",
-    guestTitle: function(i) { return "Hóspede " + i; },
+    guestTitle: i => `Hóspede ${i}`,
     fields: {
       fullName: "Nome Completo:",
       birthDate: "Data de Nascimento:",
@@ -108,12 +93,16 @@ var texts = {
       docNumber: "Número do Documento:",
       docType: "Tipo de Documento:",
       docTypePassport: "Passaporte",
-      docTypeID: "Cartão de Cidadão / BI",
+      docTypeID: "Bilhete de Identidade / Cartão de Cidadão",
       docTypeOther: "Outro",
       docTypeOtherLabel: "Qual?",
       docCountry: "País Emissor do Documento:"
     },
     placeholder_select: "Selecione",
+    subject: "Cópia do Registo de Hóspedes - AIMA",
+    greeting: "Olá",
+    confirmation: "Confirmamos com sucesso a receção do seu registo de hóspedes com os seguintes dados:",
+    footer: "Desejamos-lhe uma excelente estadia!",
     submit: "Enviar Boletim de Alojamento",
     aima_success: "Formulário enviado com sucesso!"
   },
@@ -121,17 +110,17 @@ var texts = {
     subtitle: "Mandatory Accommodation Registration Form (AIMA, formerly SEF).",
     legalHtml: `<h3><strong>Mandatory Legal Notice — Guest Registration (AIMA/SIBA)</strong></h3><p>Portuguese law requires all non-Portuguese guests to register.</p>`,
     formTitle: "Accommodation Registration Form",
-    requiredNotice: "Mandatory completion for all adult and child guests",
+    requiredNotice: "Mandatory completion and submission of all data for every adult and child guest",
     stayDataTitle: "Stay Information",
-    checkinLabel: "Check-in Date:",
-    checkoutLabel: "Check-out Date:",
-    adultsLabel: "Adult Guests:",
-    childrenLabel: "Child Guests:",
-    wants_copy_title: "Would you like a copy sent to your email?",
+    checkinLabel: "Check‑in Date:",
+    checkoutLabel: "Check‑out Date:",
+    adultsLabel: "Number of Adult Guests:",
+    childrenLabel: "Number of Child Guests:",
+    wants_copy_title: "Would you like a copy of this form sent to your email?",
     radio_yes: "Yes",
     radio_no: "No",
     email_label: "Your Email:",
-    guestTitle: function(i) { return "Guest " + i; },
+    guestTitle: i => `Guest ${i}`,
     fields: {
       fullName: "Full Name:",
       birthDate: "Date of Birth:",
@@ -142,20 +131,24 @@ var texts = {
       docTypePassport: "Passport",
       docTypeID: "Identity Card",
       docTypeOther: "Other",
-      docTypeOtherLabel: "Which?",
+      docTypeOtherLabel: "Which one?",
       docCountry: "Issuing Country:"
     },
     placeholder_select: "Select",
-    submit: "Submit Form",
+    subject: "Guest Registration Copy - AIMA",
+    greeting: "Hello",
+    confirmation: "We have successfully received your guest registration with the following details:",
+    footer: "We wish you a pleasant stay!",
+    submit: "Submit Accommodation Form",
     aima_success: "Form submitted successfully!"
   }
 };
 
-var currentLang = "pt";
+let currentLang = "pt";
 
 function setLanguage(lang) {
   currentLang = texts[lang] ? lang : "pt";
-  var t = texts[currentLang];
+  const t = texts[currentLang];
   document.documentElement.lang = currentLang;
 
   if (document.getElementById("subtitle-text")) document.getElementById("subtitle-text").textContent = t.subtitle;
@@ -179,22 +172,22 @@ function setLanguage(lang) {
 }
 
 function generateGuestFields() {
-  var t = texts[currentLang] || texts.pt;
-  var activeCountries = countryLists[currentLang] || countryLists.pt;
+  const t = texts[currentLang] || texts.pt;
+  const activeCountries = countryLists[currentLang] || countryLists.pt;
   
-  var adultsInput = document.getElementById("adults");
-  var childrenInput = document.getElementById("children");
-  var guestsContainerEl = document.getElementById("guestsContainer");
+  const adultsInput = document.getElementById("adults");
+  const childrenInput = document.getElementById("children");
+  const guestsContainerEl = document.getElementById("guestsContainer");
 
-  var adults = parseInt(adultsInput ? adultsInput.value : "1", 10) || 1;
-  var children = parseInt(childrenInput ? childrenInput.value : "0", 10) || 0;
-  var total = adults + children;
+  const adults = parseInt(adultsInput?.value || "1", 10);
+  const children = parseInt(childrenInput?.value || "0", 10);
+  const total = adults + children;
 
   if (!guestsContainerEl) return;
   guestsContainerEl.innerHTML = "";
 
-  for (var i = 1; i <= total; i++) {
-    var card = document.createElement("div");
+  for (let i = 1; i <= total; i++) {
+    const card = document.createElement("div");
     card.className = "form-card guest-card";
 
     card.innerHTML = `
@@ -257,133 +250,129 @@ function generateGuestFields() {
 
     guestsContainerEl.appendChild(card);
 
-    (function(index) {
-      var docTypeSelect = card.querySelector('#docType_' + index);
-      var otherField = card.querySelector('#otherDocField_' + index);
-      if (docTypeSelect && otherField) {
-        docTypeSelect.addEventListener("change", function() {
-          otherField.style.display = docTypeSelect.value === "other" ? "block" : "none";
-        });
-      }
-    })(i);
+    const docTypeSelect = card.querySelector(`#docType_${i}`);
+    const otherField = card.querySelector(`#otherDocField_${i}`);
+    if (docTypeSelect && otherField) {
+      docTypeSelect.addEventListener("change", () => {
+        otherField.style.display = docTypeSelect.value === "other" ? "block" : "none";
+      });
+    }
   }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  document.querySelectorAll("[required]").forEach(function(el) { el.removeAttribute("required"); });
+// ============================================================
+// 9. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS + SIBA)
+// ============================================================
+const aimaFormEl = document.getElementById("aimaForm");
+if (aimaFormEl) {
+  aimaFormEl.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  var faqModal = document.getElementById("faqModal");
-  var closeFaqBtn = document.getElementById("closeFaqModal") || 
-                      document.querySelector(".close-faq") || 
-                      document.querySelector("#faqModal .close");
+    const t = texts[currentLang] || texts.pt;
 
-  if (closeFaqBtn) {
-    closeFaqBtn.addEventListener("click", function() {
-      if (faqModal) faqModal.style.display = "none";
-    });
-  }
+    const checkin = document.getElementById("checkinDate").value;
+    const checkout = document.getElementById("checkoutDate").value;
 
-  window.addEventListener("click", function(e) {
-    if (faqModal && e.target === faqModal) {
-      faqModal.style.display = "none";
+    if (new Date(checkin) >= new Date(checkout)) {
+      alert("Check-out deve ser posterior ao Check-in.");
+      return;
+    }
+
+    const adults = parseInt(document.getElementById("adults")?.value || "1", 10);
+    const children = parseInt(document.getElementById("children")?.value || "0", 10);
+    const totalGuests = adults + children;
+
+    const hospedes = [];
+    for (let i = 1; i <= totalGuests; i++) {
+      hospedes.push({
+        nome: document.querySelector(`[name="guest_${i}_fullName"]`)?.value.trim() || "",
+        dataNascimento: document.querySelector(`[name="guest_${i}_birthDate"]`)?.value || "",
+        nacionalidade: document.querySelector(`[name="guest_${i}_nationality"]`)?.value || "",
+        paisResidencia: document.querySelector(`[name="guest_${i}_residenceCountry"]`)?.value || "",
+        docTipo: document.querySelector(`[name="guest_${i}_docType"]`)?.value || "",
+        docNumero: document.querySelector(`[name="guest_${i}_docNumber"]`)?.value.trim() || "",
+        docOutroDesc: document.querySelector(`[name="guest_${i}_docOther"]`)?.value.trim() || "",
+        docPaisEmissor: document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || ""
+      });
+    }
+
+    const selectedCopy = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
+    const wantsCopy = selectedCopy === "sim";
+    
+    const emailDigitado = document.getElementById("clientEmail")?.value.trim() || 
+                          document.getElementById("email")?.value.trim() || "";
+
+    const novoBoletim = {
+      criadoEm: typeof firebase !== 'undefined' ? firebase.firestore.FieldValue.serverTimestamp() : new Date().toISOString(),
+      dataCheckin: checkin,
+      dataCheckout: checkout,
+      numAdultos: adults,
+      numCriancas: children,
+      emailCliente: emailDigitado,
+      pediuCopia: wantsCopy,
+      hospedes: hospedes,
+      alojamentoId: null,
+      status: "PENDENTE_ATRIBUICAO"
+    };
+
+    const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+
+    submitBtn.textContent = "A enviar...";
+    submitBtn.disabled = true;
+
+    try {
+      // 1. Gravar na BD oficial (Firestore)
+      if (typeof db !== 'undefined') {
+        await db.collection("boletins").add(novoBoletim);
+      }
+
+      // 2. Enviar cópia por EmailJS se o cliente solicitou
+      if (emailDigitado && typeof emailjs !== 'undefined') {
+        await emailjs.send(
+          "service_funp519",
+          "template_0oqqqy3",
+          {
+            to_email: emailDigitado,
+            subject_text: t.subject,
+            guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
+            checkin: novoBoletim.dataCheckin,
+            checkout: novoBoletim.dataCheckout
+          },
+          "imhA9ilHaWGF1hxYz"
+        );
+      }
+
+      // 3. GUARDAR NO PAINEL LOCAL SIBA (aimasiba.js)
+      if (typeof guardarBoletimPendente === "function") {
+        const boletimParaSiba = {
+          ...novoBoletim,
+          criadoEm: new Date().toISOString()
+        };
+        guardarBoletimPendente(boletimParaSiba);
+      }
+
+      // 4. Apresentar Popup de Sucesso
+      const popup = document.getElementById("aimaSuccessPopup");
+      if (popup) {
+        popup.style.display = "flex";
+        setTimeout(() => { popup.style.display = "none"; }, 3000);
+      } else {
+        alert(t.aima_success);
+      }
+
+      this.reset();
+      generateGuestFields();
+
+    } catch (error) {
+      console.error("Erro ao processar:", error);
+      alert("Erro ao guardar os dados. Por favor tente novamente.");
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
     }
   });
+}
 
-  var adultsEl = document.getElementById("adults");
-  var childrenEl = document.getElementById("children");
-  if (adultsEl) adultsEl.addEventListener("input", generateGuestFields);
-  if (childrenEl) childrenEl.addEventListener("input", generateGuestFields);
-
-  var aimaFormEl = document.getElementById("aimaForm");
-  if (aimaFormEl) {
-    aimaFormEl.addEventListener("submit", async function (e) {
-      e.preventDefault();
-
-      var checkin = document.getElementById("checkinDate") ? document.getElementById("checkinDate").value : "";
-      var checkout = document.getElementById("checkoutDate") ? document.getElementById("checkoutDate").value : "";
-
-      if (!checkin || !checkout) {
-        alert("Por favor selecione as datas de Check-in e Check-out.");
-        return;
-      }
-
-      if (new Date(checkin) >= new Date(checkout)) {
-        alert("Check-out deve ser posterior ao Check-in.");
-        return;
-      }
-
-      var adults = parseInt(document.getElementById("adults") ? document.getElementById("adults").value : "1", 10) || 1;
-      var children = parseInt(document.getElementById("children") ? document.getElementById("children").value : "0", 10) || 0;
-      var totalGuests = adults + children;
-
-      var hospedes = [];
-      for (var i = 1; i <= totalGuests; i++) {
-        var nacBruta = document.querySelector('[name="guest_' + i + '_nationality"]') ? document.querySelector('[name="guest_' + i + '_nationality"]').value : "";
-        var resBruta = document.querySelector('[name="guest_' + i + '_residenceCountry"]') ? document.querySelector('[name="guest_' + i + '_residenceCountry"]').value : "";
-        var docPaisBruto = document.querySelector('[name="guest_' + i + '_docCountry"]') ? document.querySelector('[name="guest_' + i + '_docCountry"]').value : "";
-        var docTipoRaw = document.querySelector('[name="guest_' + i + '_docType"]') ? document.querySelector('[name="guest_' + i + '_docType"]').value : "passport";
-
-        hospedes.push({
-          nome: document.querySelector('[name="guest_' + i + '_fullName"]') ? document.querySelector('[name="guest_' + i + '_fullName"]').value.trim() : "",
-          dataNascimento: document.querySelector('[name="guest_' + i + '_birthDate"]') ? document.querySelector('[name="guest_' + i + '_birthDate"]').value : "",
-          nacionalidade: normalizarIso3(nacBruta),
-          paisResidencia: normalizarIso3(resBruta),
-          docTipo: docTypeMap[docTipoRaw] || "P",
-          docNumero: document.querySelector('[name="guest_' + i + '_docNumber"]') ? document.querySelector('[name="guest_' + i + '_docNumber"]').value.trim() : "",
-          docOutroDesc: document.querySelector('[name="guest_' + i + '_docOther"]') ? document.querySelector('[name="guest_' + i + '_docOther"]').value.trim() : "",
-          docPaisEmissor: normalizarIso3(docPaisBruto)
-        });
-      }
-
-      var emailDigitado = (document.getElementById("clientEmail") ? document.getElementById("clientEmail").value.trim() : "") || 
-                            (document.getElementById("email") ? document.getElementById("email").value.trim() : "");
-
-      var novoBoletim = {
-        criadoEm: new Date().toISOString(),
-        dataCheckin: checkin,
-        dataCheckout: checkout,
-        numAdultos: adults,
-        numCriancas: children,
-        emailCliente: emailDigitado,
-        hospedes: hospedes,
-        status: "PENDENTE"
-      };
-
-      var submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
-      var originalText = submitBtn ? submitBtn.textContent : "Enviar";
-      if (submitBtn) {
-        submitBtn.textContent = "A enviar...";
-        submitBtn.disabled = true;
-      }
-
-      try {
-        if (typeof guardarBoletimPendente === "function") {
-          guardarBoletimPendente(novoBoletim);
-        }
-
-        var popup = document.getElementById("aimaSuccessPopup");
-        if (popup) {
-          popup.style.display = "flex";
-          setTimeout(function() { popup.style.display = "none"; }, 3000);
-        } else {
-          alert(texts[currentLang] ? texts[currentLang].aima_success : "Boletim guardado com sucesso!");
-        }
-
-        this.reset();
-        generateGuestFields();
-
-      } catch (error) {
-        console.error("Erro ao processar o formulário:", error);
-        alert("Erro ao guardar os dados. Por favor tente novamente.");
-      } finally {
-        if (submitBtn) {
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
-        }
-      }
-    });
-  }
-
-  // Inicializar o idioma em Português
-  setLanguage("pt");
-});
+// Inicializar idioma padrão
+setLanguage("pt");
