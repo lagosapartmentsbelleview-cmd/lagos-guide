@@ -2,34 +2,48 @@
 // AIMATEST.JS — GESTÃO DO FORMULÁRIO DE REGISTO DE HÓSPEDES
 // ============================================================
 
-// 1. INICIALIZAÇÃO E MANIPULAÇÃO DO DOM
-document.addEventListener("DOMContentLoaded", () => {
-  // Remover validações nativas do browser para permitir gestão customizada via JS
-  document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
+// Reutilização segura de iso3Map sem conflitos de redeclaração
+if (typeof window.iso3Map === 'undefined') {
+  window.iso3Map = {
+    "Portugal": "PRT", "Portogallo": "PRT",
+    "Espanha": "ESP", "Spain": "ESP", "España": "ESP", "Espagne": "ESP", "Spagna": "ESP", "Spanien": "ESP",
+    "França": "FRA", "France": "FRA", "Francia": "FRA", "Frankreich": "FRA",
+    "Alemanha": "DEU", "Germany": "DEU", "Allemagne": "DEU", "Alemania": "DEU", "Germania": "DEU", "Deutschland": "DEU",
+    "Reino Unido": "GBR", "United Kingdom": "GBR", "Royaume-Uni": "GBR", "Regno Unito": "GBR", "Großbritannien": "GBR",
+    "Estados Unidos": "USA", "United States": "USA", "États-Unis": "USA", "Stati Uniti": "USA", "USA": "USA",
+    "Itália": "ITA", "Italy": "ITA", "Italie": "ITA", "Italien": "ITA",
+    "Países Baixos": "NLD", "Netherlands": "NLD", "Pays-Bas": "NLD", "Niederlande": "NLD",
+    "Bélgica": "BEL", "Belgium": "BEL", "Belgique": "BEL", "Belgio": "BEL", "Belgien": "BEL",
+    "Suíça": "CHE", "Switzerland": "CHE", "Suisse": "CHE", "Suiza": "CHE", "Svizzera": "CHE", "Schweiz": "CHE",
+    "Irlanda": "IRL", "Ireland": "IRL", "Irlande": "IRL", "Irland": "IRL",
+    "Brasil": "BRA", "Brazil": "BRA", "Brésil": "BRA", "Brasile": "BRA", "Brasilien": "BRA",
+    "Canadá": "CAN", "Canada": "CAN", "Kanada": "CAN",
+    "Polónia": "POL", "Poland": "POL", "Pologne": "POL", "Polonia": "POL", "Polen": "POL",
+    "Áustria": "AUT", "Austria": "AUT", "Autriche": "AUT", "Österreich": "AUT",
+    "Dinamarca": "DNK", "Denmark": "DNK", "Danemark": "DNK", "Dänemark": "DNK",
+    "Suécia": "SWE", "Sweden": "SWE", "Suède": "SWE", "Suecia": "SWE", "Svezia": "SWE", "Schweden": "SWE",
+    "Noruega": "NOR", "Norway": "NOR", "Norvège": "NOR", "Noruega": "NOR", "Norvegia": "NOR", "Norwegen": "NOR",
+    "Finlândia": "FIN", "Finland": "FIN", "Finlande": "FIN", "Finlandia": "FIN", "Finnland": "FIN"
+  };
+}
 
-  // Gestão do Modal de FAQ
-  const faqModal = document.getElementById("faqModal");
-  const closeFaqBtn = document.getElementById("closeFaqModal") || 
-                      document.querySelector(".close-faq") || 
-                      document.querySelector("#faqModal .close");
+function normalizarIso3(paisTexto) {
+  if (!paisTexto) return "PRT";
+  const p = String(paisTexto).trim();
+  if (/^[A-Z]{3}$/.test(p)) return p;
+  return window.iso3Map[p] || "PRT";
+}
 
-  if (closeFaqBtn) {
-    closeFaqBtn.addEventListener("click", () => {
-      if (faqModal) faqModal.style.display = "none";
-    });
-  }
+var docTypeMap = {
+  passport: "P",
+  id: "I",
+  other: "O",
+  P: "P",
+  I: "I",
+  O: "O"
+};
 
-  window.addEventListener("click", (e) => {
-    if (faqModal && e.target === faqModal) {
-      faqModal.style.display = "none";
-    }
-  });
-});
-
-// ============================================================
-// 2. LISTAS DE PAÍSES E MAPEAMENTO ISO-3 / DOCUMENTOS
-// ============================================================
-const countryLists = {
+var countryLists = {
   pt: [
     "Portugal","Alemanha","Espanha","França","Reino Unido","Itália","Países Baixos","Bélgica","Suíça","Irlanda","Brasil","Canadá","Estados Unidos",
     "Afeganistão","África do Sul","Albânia","Andorra","Angola","Antígua e Barbuda","Arábia Saudita","Argélia","Argentina","Arménia","Austrália","Áustria","Azerbaijão",
@@ -53,50 +67,7 @@ const countryLists = {
   de: ["Portugal","Deutschland","Großbritannien","Frankreich","Spanien","Italien","Niederlande","Belgien","Schweiz","Österreich","Irland","Brasilien","Kanada","USA","Afghanistan","Ägypten","Albanien","Algerien","Andorra","Angola","Argentinien","Australien","Dänemark","Finnland","Griechenland","Luxemburg","Marokko","Norwegen","Polen","Schweden","Tschechien","Türkei"]
 };
 
-// Conversor de Nomes de Países para Códigos ISO-3 (ISO 3166-1 Alpha-3 exigidos pelo SIBA)
-const iso3Map = {
-  "Portugal": "PRT", "Portogallo": "PRT",
-  "Espanha": "ESP", "Spain": "ESP", "España": "ESP", "Espagne": "ESP", "Spagna": "ESP", "Spanien": "ESP",
-  "França": "FRA", "France": "FRA", "Francia": "FRA", "Frankreich": "FRA",
-  "Alemanha": "DEU", "Germany": "DEU", "Allemagne": "DEU", "Alemania": "DEU", "Germania": "DEU", "Deutschland": "DEU",
-  "Reino Unido": "GBR", "United Kingdom": "GBR", "Royaume-Uni": "GBR", "Regno Unito": "GBR", "Großbritannien": "GBR",
-  "Estados Unidos": "USA", "United States": "USA", "États-Unis": "USA", "Stati Uniti": "USA", "USA": "USA",
-  "Itália": "ITA", "Italy": "ITA", "Italie": "ITA", "Italien": "ITA",
-  "Países Baixos": "NLD", "Netherlands": "NLD", "Pays-Bas": "NLD", "Niederlande": "NLD",
-  "Bélgica": "BEL", "Belgium": "BEL", "Belgique": "BEL", "Belgio": "BEL", "Belgien": "BEL",
-  "Suíça": "CHE", "Switzerland": "CHE", "Suisse": "CHE", "Suiza": "CHE", "Svizzera": "CHE", "Schweiz": "CHE",
-  "Irlanda": "IRL", "Ireland": "IRL", "Irlande": "IRL", "Irland": "IRL",
-  "Brasil": "BRA", "Brazil": "BRA", "Brésil": "BRA", "Brasile": "BRA", "Brasilien": "BRA",
-  "Canadá": "CAN", "Canada": "CAN", "Kanada": "CAN",
-  "Polónia": "POL", "Poland": "POL", "Pologne": "POL", "Polonia": "POL", "Polen": "POL",
-  "Áustria": "AUT", "Austria": "AUT", "Autriche": "AUT", "Österreich": "AUT",
-  "Dinamarca": "DNK", "Denmark": "DNK", "Danemark": "DNK", "Dänemark": "DNK",
-  "Suécia": "SWE", "Sweden": "SWE", "Suède": "SWE", "Suecia": "SWE", "Svezia": "SWE", "Schweden": "SWE",
-  "Noruega": "NOR", "Norway": "NOR", "Norvège": "NOR", "Noruega": "NOR", "Norvegia": "NOR", "Norwegen": "NOR",
-  "Finlândia": "FIN", "Finland": "FIN", "Finlande": "FIN", "Finlandia": "FIN", "Finnland": "FIN"
-};
-
-function normalizarIso3(paisTexto) {
-  if (!paisTexto) return "PRT";
-  const p = paisTexto.trim();
-  if (p.length === 3) return p.toUpperCase();
-  return iso3Map[p] || "PRT";
-}
-
-// Mapeamento estrito do Tipo de Documento para os códigos SIBA (P = Passaporte, I = Identidade, O = Outro)
-const docTypeMap = {
-  passport: "P",
-  id: "I",
-  other: "O",
-  P: "P",
-  I: "I",
-  O: "O"
-};
-
-// ============================================================
-// 3. TEXTOS MULTILÍNGUES
-// ============================================================
-const texts = {
+var texts = {
   pt: {
     subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).",
     legalHtml: `
@@ -128,7 +99,7 @@ const texts = {
     radio_yes: "Sim",
     radio_no: "Não",
     email_label: "O seu E-mail:",
-    guestTitle: i => `Hóspede ${i}`,
+    guestTitle: function(i) { return "Hóspede " + i; },
     fields: {
       fullName: "Nome Completo:",
       birthDate: "Data de Nascimento:",
@@ -160,7 +131,7 @@ const texts = {
     radio_yes: "Yes",
     radio_no: "No",
     email_label: "Your Email:",
-    guestTitle: i => `Guest ${i}`,
+    guestTitle: function(i) { return "Guest " + i; },
     fields: {
       fullName: "Full Name:",
       birthDate: "Date of Birth:",
@@ -180,11 +151,11 @@ const texts = {
   }
 };
 
-let currentLang = "pt";
+var currentLang = "pt";
 
 function setLanguage(lang) {
   currentLang = texts[lang] ? lang : "pt";
-  const t = texts[currentLang];
+  var t = texts[currentLang];
   document.documentElement.lang = currentLang;
 
   if (document.getElementById("subtitle-text")) document.getElementById("subtitle-text").textContent = t.subtitle;
@@ -207,26 +178,23 @@ function setLanguage(lang) {
   generateGuestFields();
 }
 
-// ============================================================
-// 4. GERAÇÃO DINÂMICA DOS CAMPOS DE HÓSPEDES
-// ============================================================
 function generateGuestFields() {
-  const t = texts[currentLang] || texts.pt;
-  const activeCountries = countryLists[currentLang] || countryLists.pt;
+  var t = texts[currentLang] || texts.pt;
+  var activeCountries = countryLists[currentLang] || countryLists.pt;
   
-  const adultsInput = document.getElementById("adults");
-  const childrenInput = document.getElementById("children");
-  const guestsContainerEl = document.getElementById("guestsContainer");
+  var adultsInput = document.getElementById("adults");
+  var childrenInput = document.getElementById("children");
+  var guestsContainerEl = document.getElementById("guestsContainer");
 
-  const adults = parseInt(adultsInput?.value || "1", 10);
-  const children = parseInt(childrenInput?.value || "0", 10);
-  const total = adults + children;
+  var adults = parseInt(adultsInput ? adultsInput.value : "1", 10) || 1;
+  var children = parseInt(childrenInput ? childrenInput.value : "0", 10) || 0;
+  var total = adults + children;
 
   if (!guestsContainerEl) return;
   guestsContainerEl.innerHTML = "";
 
-  for (let i = 1; i <= total; i++) {
-    const card = document.createElement("div");
+  for (var i = 1; i <= total; i++) {
+    var card = document.createElement("div");
     card.className = "form-card guest-card";
 
     card.innerHTML = `
@@ -289,112 +257,133 @@ function generateGuestFields() {
 
     guestsContainerEl.appendChild(card);
 
-    const docTypeSelect = card.querySelector(`#docType_${i}`);
-    const otherField = card.querySelector(`#otherDocField_${i}`);
-
-    docTypeSelect.addEventListener("change", () => {
-      otherField.style.display = docTypeSelect.value === "other" ? "block" : "none";
-    });
+    (function(index) {
+      var docTypeSelect = card.querySelector('#docType_' + index);
+      var otherField = card.querySelector('#otherDocField_' + index);
+      if (docTypeSelect && otherField) {
+        docTypeSelect.addEventListener("change", function() {
+          otherField.style.display = docTypeSelect.value === "other" ? "block" : "none";
+        });
+      }
+    })(i);
   }
 }
 
-document.getElementById("adults")?.addEventListener("input", generateGuestFields);
-document.getElementById("children")?.addEventListener("input", generateGuestFields);
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll("[required]").forEach(function(el) { el.removeAttribute("required"); });
 
-// ============================================================
-// 5. ENVIO DO FORMULÁRIO (RECOLHA E CONVERSÃO SIBA)
-// ============================================================
-const aimaFormEl = document.getElementById("aimaForm");
-if (aimaFormEl) {
-  aimaFormEl.addEventListener("submit", async function (e) {
-    e.preventDefault();
+  var faqModal = document.getElementById("faqModal");
+  var closeFaqBtn = document.getElementById("closeFaqModal") || 
+                      document.querySelector(".close-faq") || 
+                      document.querySelector("#faqModal .close");
 
-    const checkin = document.getElementById("checkinDate")?.value;
-    const checkout = document.getElementById("checkoutDate")?.value;
+  if (closeFaqBtn) {
+    closeFaqBtn.addEventListener("click", function() {
+      if (faqModal) faqModal.style.display = "none";
+    });
+  }
 
-    if (!checkin || !checkout) {
-      alert("Por favor selecione as datas de Check-in e Check-out.");
-      return;
-    }
-
-    if (new Date(checkin) >= new Date(checkout)) {
-      alert("Check-out deve ser posterior ao Check-in.");
-      return;
-    }
-
-    const adults = parseInt(document.getElementById("adults")?.value || "1", 10);
-    const children = parseInt(document.getElementById("children")?.value || "0", 10);
-    const totalGuests = adults + children;
-
-    const hospedes = [];
-    for (let i = 1; i <= totalGuests; i++) {
-      const nacBruta = document.querySelector(`[name="guest_${i}_nationality"]`)?.value || "";
-      const resBruta = document.querySelector(`[name="guest_${i}_residenceCountry"]`)?.value || "";
-      const docPaisBruto = document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || "";
-      const docTipoRaw = document.querySelector(`[name="guest_${i}_docType"]`)?.value || "passport";
-
-      hospedes.push({
-        nome: document.querySelector(`[name="guest_${i}_fullName"]`)?.value.trim() || "",
-        dataNascimento: document.querySelector(`[name="guest_${i}_birthDate"]`)?.value || "",
-        nacionalidade: normalizarIso3(nacBruta),
-        paisResidencia: normalizarIso3(resBruta),
-        docTipo: docTypeMap[docTipoRaw] || "P", // Garante conversão estrita para 'P', 'I' ou 'O'
-        docNumero: document.querySelector(`[name="guest_${i}_docNumber"]`)?.value.trim() || "",
-        docOutroDesc: document.querySelector(`[name="guest_${i}_docOther"]`)?.value.trim() || "",
-        docPaisEmissor: normalizarIso3(docPaisBruto)
-      });
-    }
-
-    const emailDigitado = document.getElementById("clientEmail")?.value.trim() || 
-                          document.getElementById("email")?.value.trim() || "";
-
-    const novoBoletim = {
-      criadoEm: new Date().toISOString(),
-      dataCheckin: checkin,
-      dataCheckout: checkout,
-      numAdultos: adults,
-      numCriancas: children,
-      emailCliente: emailDigitado,
-      hospedes: hospedes,
-      status: "PENDENTE"
-    };
-
-    const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
-    const originalText = submitBtn ? submitBtn.textContent : "Enviar";
-    if (submitBtn) {
-      submitBtn.textContent = "A enviar...";
-      submitBtn.disabled = true;
-    }
-
-    try {
-      // Guardar localmente no LocalStorage via aimasiba.js
-      if (typeof guardarBoletimPendente === "function") {
-        guardarBoletimPendente(novoBoletim);
-      }
-
-      // Mostrar popup de sucesso se existir
-      const popup = document.getElementById("aimaSuccessPopup");
-      if (popup) {
-        popup.style.display = "flex";
-        setTimeout(() => { popup.style.display = "none"; }, 3000);
-      } else {
-        alert(texts[currentLang]?.aima_success || "Boletim guardado com sucesso!");
-      }
-
-      this.reset();
-      generateGuestFields();
-
-    } catch (error) {
-      console.error("Erro ao processar o formulário:", error);
-      alert("Erro ao guardar os dados. Por favor tente novamente.");
-    } finally {
-      if (submitBtn) {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      }
+  window.addEventListener("click", function(e) {
+    if (faqModal && e.target === faqModal) {
+      faqModal.style.display = "none";
     }
   });
-}
 
-// Inicializar em Português por defeito
-setLanguage("pt");
+  var adultsEl = document.getElementById("adults");
+  var childrenEl = document.getElementById("children");
+  if (adultsEl) adultsEl.addEventListener("input", generateGuestFields);
+  if (childrenEl) childrenEl.addEventListener("input", generateGuestFields);
+
+  var aimaFormEl = document.getElementById("aimaForm");
+  if (aimaFormEl) {
+    aimaFormEl.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      var checkin = document.getElementById("checkinDate") ? document.getElementById("checkinDate").value : "";
+      var checkout = document.getElementById("checkoutDate") ? document.getElementById("checkoutDate").value : "";
+
+      if (!checkin || !checkout) {
+        alert("Por favor selecione as datas de Check-in e Check-out.");
+        return;
+      }
+
+      if (new Date(checkin) >= new Date(checkout)) {
+        alert("Check-out deve ser posterior ao Check-in.");
+        return;
+      }
+
+      var adults = parseInt(document.getElementById("adults") ? document.getElementById("adults").value : "1", 10) || 1;
+      var children = parseInt(document.getElementById("children") ? document.getElementById("children").value : "0", 10) || 0;
+      var totalGuests = adults + children;
+
+      var hospedes = [];
+      for (var i = 1; i <= totalGuests; i++) {
+        var nacBruta = document.querySelector('[name="guest_' + i + '_nationality"]') ? document.querySelector('[name="guest_' + i + '_nationality"]').value : "";
+        var resBruta = document.querySelector('[name="guest_' + i + '_residenceCountry"]') ? document.querySelector('[name="guest_' + i + '_residenceCountry"]').value : "";
+        var docPaisBruto = document.querySelector('[name="guest_' + i + '_docCountry"]') ? document.querySelector('[name="guest_' + i + '_docCountry"]').value : "";
+        var docTipoRaw = document.querySelector('[name="guest_' + i + '_docType"]') ? document.querySelector('[name="guest_' + i + '_docType"]').value : "passport";
+
+        hospedes.push({
+          nome: document.querySelector('[name="guest_' + i + '_fullName"]') ? document.querySelector('[name="guest_' + i + '_fullName"]').value.trim() : "",
+          dataNascimento: document.querySelector('[name="guest_' + i + '_birthDate"]') ? document.querySelector('[name="guest_' + i + '_birthDate"]').value : "",
+          nacionalidade: normalizarIso3(nacBruta),
+          paisResidencia: normalizarIso3(resBruta),
+          docTipo: docTypeMap[docTipoRaw] || "P",
+          docNumero: document.querySelector('[name="guest_' + i + '_docNumber"]') ? document.querySelector('[name="guest_' + i + '_docNumber"]').value.trim() : "",
+          docOutroDesc: document.querySelector('[name="guest_' + i + '_docOther"]') ? document.querySelector('[name="guest_' + i + '_docOther"]').value.trim() : "",
+          docPaisEmissor: normalizarIso3(docPaisBruto)
+        });
+      }
+
+      var emailDigitado = (document.getElementById("clientEmail") ? document.getElementById("clientEmail").value.trim() : "") || 
+                            (document.getElementById("email") ? document.getElementById("email").value.trim() : "");
+
+      var novoBoletim = {
+        criadoEm: new Date().toISOString(),
+        dataCheckin: checkin,
+        dataCheckout: checkout,
+        numAdultos: adults,
+        numCriancas: children,
+        emailCliente: emailDigitado,
+        hospedes: hospedes,
+        status: "PENDENTE"
+      };
+
+      var submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
+      var originalText = submitBtn ? submitBtn.textContent : "Enviar";
+      if (submitBtn) {
+        submitBtn.textContent = "A enviar...";
+        submitBtn.disabled = true;
+      }
+
+      try {
+        if (typeof guardarBoletimPendente === "function") {
+          guardarBoletimPendente(novoBoletim);
+        }
+
+        var popup = document.getElementById("aimaSuccessPopup");
+        if (popup) {
+          popup.style.display = "flex";
+          setTimeout(function() { popup.style.display = "none"; }, 3000);
+        } else {
+          alert(texts[currentLang] ? texts[currentLang].aima_success : "Boletim guardado com sucesso!");
+        }
+
+        this.reset();
+        generateGuestFields();
+
+      } catch (error) {
+        console.error("Erro ao processar o formulário:", error);
+        alert("Erro ao guardar os dados. Por favor tente novamente.");
+      } finally {
+        if (submitBtn) {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }
+      }
+    });
+  }
+
+  // Inicializar o idioma em Português
+  setLanguage("pt");
+});
