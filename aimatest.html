@@ -5,9 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apartments Belleview Lagos — Boletim de Alojamento</title>
   
+  <!-- Estilos Base -->
   <link rel="stylesheet" href="css/aima.css">
+
+  <!-- Gerador de PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <!-- EmailJS SDK -->
+
+  <!-- EmailJS SDK (Para envio da cópia por e-mail) -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 
@@ -18,7 +22,9 @@
     <a href="#" class="logo">
         <svg width="36" height="36" viewBox="0 0 100 100" class="belleview-logo">
             <circle cx="50" cy="50" r="46" fill="#005c99" stroke="#005c99" stroke-width="6"/>
-            <text x="50" y="67" text-anchor="middle" font-family="Poppins, sans-serif" font-size="42" font-weight="700" fill="#ffffff">B</text>
+            <text x="50" y="67" text-anchor="middle"
+                  font-family="Poppins, sans-serif"
+                  font-size="42" font-weight="700" fill="#ffffff">B</text>
         </svg>
         <span>Apartments Belleview Lagos</span>
     </a>
@@ -31,14 +37,26 @@
         <h1 class="main-title">Boletim de Alojamento / Guest Registration Form</h1>
         <p class="subtitle" id="subtitle-text"></p>
 
-        <!-- BOTÕES DE IDIOMA (6 IDIOMAS) -->
+        <!-- BOTÕES DE IDIOMA -->
         <div class="lang-buttons">
-            <button type="button" onclick="setLanguage('pt')"><img src="https://flagcdn.com/w40/pt.png" alt="PT"> Português</button>
-            <button type="button" onclick="setLanguage('en')"><img src="https://flagcdn.com/w40/gb.png" alt="GB"> English</button>
-            <button type="button" onclick="setLanguage('es')"><img src="https://flagcdn.com/w40/es.png" alt="ES"> Español</button>
-            <button type="button" onclick="setLanguage('fr')"><img src="https://flagcdn.com/w40/fr.png" alt="FR"> Français</button>
-            <button type="button" onclick="setLanguage('it')"><img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano</button>
-            <button type="button" onclick="setLanguage('de')"><img src="https://flagcdn.com/w40/de.png" alt="DE"> Deutsch</button>
+            <button onclick="setLanguage('pt')">
+                <img src="https://flagcdn.com/w40/pt.png" alt="PT"> Português
+            </button>
+            <button onclick="setLanguage('en')">
+                <img src="https://flagcdn.com/w40/gb.png" alt="GB"> English
+            </button>
+            <button onclick="setLanguage('es')">
+                <img src="https://flagcdn.com/w40/es.png" alt="ES"> Español
+            </button>
+            <button onclick="setLanguage('fr')">
+                <img src="https://flagcdn.com/w40/fr.png" alt="FR"> Français
+            </button>
+            <button onclick="setLanguage('it')">
+                <img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano
+            </button>
+            <button onclick="setLanguage('de')">
+                <img src="https://flagcdn.com/w40/de.png" alt="DE"> Deutsch
+            </button>
         </div>
     </section>
 
@@ -48,7 +66,7 @@
     <!-- FORMULÁRIO -->
     <section id="aimaFormSection" class="form-section" style="display:none;">
         <form id="aimaForm">
-            <!-- Unidade oculta apanhada via parâmetro do URL (ex: ?apt=1) -->
+            <!-- Campo oculto para a unidade vinda do URL (?apt= ou ?unidade=) -->
             <input type="hidden" id="hiddenUnidade" name="unidade" value="2203">
 
             <h2 id="formTitle"></h2>
@@ -77,15 +95,19 @@
                     <input type="number" id="children" name="children" min="0" value="0" required>
                 </div>
 
-                <!-- OPÇÃO DE CÓPIA POR E-MAIL -->
+                <!-- OPÇÃO DE CÓPIA POR E-MAIL (SIM / NÃO) -->
                 <div class="form-row" style="flex-direction: column; align-items: flex-start; margin-top: 15px;">
                     <label id="labelWantsCopy" style="font-weight: bold; margin-bottom: 8px;">Pretende cópia deste formulário no seu e-mail?</label>
+                    
                     <div style="display: flex; gap: 20px;">
                         <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                            <input type="radio" name="wantsCopyRadio" value="sim" onchange="toggleEmailInput()"> <span id="labelRadioYes">Sim</span>
+                            <input type="radio" name="wantsCopyRadio" value="sim" required onchange="toggleEmailInput()">
+                            <span id="labelRadioYes">Sim</span>
                         </label>
+                        
                         <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                            <input type="radio" name="wantsCopyRadio" value="nao" checked onchange="toggleEmailInput()"> <span id="labelRadioNo">Não</span>
+                            <input type="radio" name="wantsCopyRadio" value="nao" required onchange="toggleEmailInput()">
+                            <span id="labelRadioNo">Não</span>
                         </label>
                     </div>
                 </div>
@@ -100,6 +122,7 @@
                     const selected = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
                     const emailContainer = document.getElementById("emailCopyContainer");
                     const emailInput = document.getElementById("clientEmail");
+
                     if (selected === "sim") {
                       emailContainer.style.display = "flex";
                       emailInput.required = true;
@@ -112,7 +135,7 @@
                 </script>
             </div>
 
-            <!-- HÓSPEDES GERADOS DINAMICAMENTE -->
+            <!-- HÓSPEDES GERADOS DINAMICAMENTE PELO AIMA.JS -->
             <div id="guestsContainer"></div>
 
             <button type="submit" class="submit-btn" id="submitLabel"></button>
@@ -126,21 +149,26 @@
   <div class="footer-content">
     <svg width="50" height="50" viewBox="0 0 100 100" class="footer-logo">
       <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#ffffff" stroke-width="6"/>
-      <text x="50" y="67" text-anchor="middle" font-family="Poppins, sans-serif" font-size="42" font-weight="700" fill="#005c99">B</text>
+      <text x="50" y="67" text-anchor="middle"
+            font-family="Poppins, sans-serif"
+            font-size="42" font-weight="700" fill="#005c99">B</text>
     </svg>
 
     <p class="footer-title">Apartments Belleview Lagos</p>
+
     <p>
       Rua Quinta do Landeiro Lote 22, 23<br>
       Urbanização Marina Park<br>
       8600-302 Lagos, Algarve - Portugal
     </p>
+
     <p>
       Tel: <a href="tel:+351910051588" class="footer-link">+351 910 051 588</a><br>
       <span id="footer-call">(Chamada para a rede fixa nacional)</span><br>
       Whatsapp: <a href="https://wa.me/351910051588" class="footer-link">+351 910 051 588</a><br>
       Email: <a href="mailto:belleview@sapo.pt" class="footer-link">belleview@sapo.pt</a>
     </p>
+
     <p>
       <span id="footer-reg">Nº de Registos AL</span>: 26313/AL, 116670/AL, 116671/AL<br>
       <span id="footer-operator">Entidade Exploradora</span>: Luís Ferreira.
@@ -158,7 +186,9 @@
 <div id="aimaSuccessPopup" class="success-popup">
     <div class="success-popup-box">
         <span class="success-popup-icon">✔</span>
-        <p class="success-popup-text">Formulário enviado com sucesso!</p>
+        <p class="success-popup-text" data-i18n="aima_success">
+            Formulário enviado com sucesso!
+        </p>
     </div>
 </div>
 
@@ -176,11 +206,12 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-<!-- Scripts de Funcionamento (Sem o aima.js antigo para evitar conflitos de variáveis) -->
+<!-- Scripts originais e de integração -->
 <script src="js/firebase-config.js"></script>
 <script src="js/aimasiba.js"></script>
-<script src="js/aimatest.js"></script> 
+<script src="js/aima.js"></script> 
 <script src="js/aima-lang.js"></script>
+<script src="js/aimatest.js"></script>
 
 </body>
 </html>
