@@ -1,34 +1,27 @@
 // ============================================================
-// 1. INICIALIZAÇÃO E MANIPULAÇÃO DO DOM
+// JS/AIMATEST.JS — FORMULÁRIO PÚBLICO (6 IDIOMAS, FAQ, MÚLTIPLOS HÓSPEDES & GRAVAÇÃO PENDENTE)
 // ============================================================
+
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
 
+  // Fechar modal FAQ
   const faqModal = document.getElementById("faqModal");
-  const closeFaqBtn = document.getElementById("closeFaqModal") || 
-                      document.querySelector(".close-faq") || 
-                      document.querySelector("#faqModal .close");
+  const closeFaqBtn = document.getElementById("closeFaqModal") || document.querySelector(".close-faq");
 
-  if (closeFaqBtn) {
-    closeFaqBtn.addEventListener("click", () => {
-      if (faqModal) faqModal.style.display = "none";
-    });
+  if (closeFaqBtn && faqModal) {
+    closeFaqBtn.addEventListener("click", () => { faqModal.style.display = "none"; });
+    window.addEventListener("click", (e) => { if (e.target === faqModal) { faqModal.style.display = "none"; } });
   }
-
-  window.addEventListener("click", (e) => {
-    if (faqModal && e.target === faqModal) {
-      faqModal.style.display = "none";
-    }
-  });
 });
 
 // ============================================================
-// 2. LISTAS DE PAÍSES TRADUZIDAS E ORDENADAS
+// 1. LISTAS DE PAÍSES POR IDIOMA
 // ============================================================
 const countryLists = {
   pt: [
     "Afeganistão","África do Sul","Albânia","Alemanha","Andorra","Angola","Antígua e Barbuda","Arábia Saudita","Argélia","Argentina","Arménia","Austrália","Áustria","Azerbaijão",
-    "Bahamas","Bangladesh","Barbados","Barém","Bélgica","Belize","Benim","Bielorrússia","Bolívia","Bósnia e Herzegovina","Botsuana","Brasil","Brunei","Bulgária","Burquina Faso","Burundi","Butão",
+    "Bahamas","Bangladesh","Barbados","Barém","Bélgica","Belize","Benin","Bielorrússia","Bolívia","Bósnia e Herzegovina","Botsuana","Brasil","Brunei","Bulgária","Burquina Faso","Burundi","Butão",
     "Cabo Verde","Camarões","Camboja","Canadá","Catar","Cazaquistão","Chade","Chile","China","Chipre","Colômbia","Comores","Coreia do Norte","Coreia do Sul","Costa do Marfim","Costa Rica","Croácia","Cuba",
     "Dinamarca","Dominica","Egipto","Emirados Árabes Unidos","Equador","Eritreia","Eslováquia","Eslovénia","Espanha","Estados Unidos","Estónia","Etiópia",
     "Fiji","Filipinas","Finlândia","França","Gabão","Gâmbia","Gana","Geórgia","Granada","Grécia","Guatemala","Guiana","Guiné","Guiné-Bissau","Guiné Equatorial",
@@ -50,28 +43,15 @@ const countryLists = {
 };
 
 // ============================================================
-// 3. DICIONÁRIO DE TEXTOS E IDIOMAS (TEXTS)
+// 2. DICIONÁRIO COMPLETO EM 6 IDIOMAS (TEXTS)
 // ============================================================
 const texts = {
   pt: {
     subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).",
     legalHtml: `
       <h3><strong>Aviso Legal Obrigatório — Registo de Hóspedes (AIMA/SIBA)</strong></h3>
-      <p>Este formulário recolhe os dados obrigatórios de identificação de todos os hóspedes, conforme exigido pela legislação portuguesa para comunicação à AIMA (Agência para a Integração, Migrações e Asilo), através da plataforma SIBA.</p>
-      <h4><strong>Por que motivo os seus dados são obrigatórios?</strong></h4>
-      <p>Nos termos do <strong>Artigo 45.º da Lei n.º 23/2007</strong>, todos os estabelecimentos de Alojamento Local são legalmente obrigados a comunicar às autoridades de fronteira a entrada, permanência e saída de cidadãos estrangeiros no território nacional.</p>
-      <p>Esta obrigação aplica-se a <strong>todos os hóspedes sem nacionalidade portuguesa</strong>, incluindo <strong>crianças e bebés</strong>, sem exceção.</p>
-      <h4><strong>Para que servem estes dados?</strong></h4>
-      <ul>
-          <li><strong>Segurança Nacional:</strong> Apoiam a prevenção e investigação de crimes graves, terrorismo e redes transfronteiriças.</li>
-          <li><strong>Proteção do Hóspede:</strong> Em caso de acidente, emergência médica, catástrofe natural ou desaparecimento, permitem às autoridades e embaixadas identificar e localizar rapidamente os cidadãos.</li>
-          <li><strong>Gestão Pública:</strong> Contribuem para estatísticas oficiais e políticas de migração e turismo.</li>
-      </ul>
-      <h4><strong>Obrigatoriedade e consequências da recusa</strong></h4>
-      <p>A prestação destes dados é <strong>estritamente obrigatória por lei</strong>. A recusa em fornecer as informações necessárias impede legalmente a realização do check-in e implica a <strong>anulação imediata da reserva sem direito a reembolso</strong>.</p>
-      <h4><strong>Privacidade e proteção dos seus dados</strong></h4>
-      <p>Os dados recolhidos são utilizados exclusivamente para cumprimento desta obrigação legal e tratados em conformidade com o <strong>Regulamento Geral sobre a Proteção de Dados (RGPD)</strong>.</p>
-      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Verificar a informação em PDF</a> | <a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a></p>
+      <p>Este formulário recolhe os dados obrigatórios de identificação de todos os hóspedes, conforme exigido pela legislação portuguesa para comunicação à AIMA.</p>
+      <p><a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a></p>
     `,
     formTitle: "Boletim de Alojamento",
     requiredNotice: "Preenchimento e envio obrigatório dos dados de todos os hóspedes adultos e crianças",
@@ -100,15 +80,12 @@ const texts = {
     },
     placeholder_select: "Selecione",
     subject: "Cópia do Registo de Hóspedes - AIMA",
-    greeting: "Olá",
-    confirmation: "Confirmamos com sucesso a receção do seu registo de hóspedes com os seguintes dados:",
-    footer: "Desejamos-lhe uma excelente estadia!",
     submit: "Enviar Boletim de Alojamento",
-    aima_success: "Formulário enviado com sucesso!"
+    aima_success: "Formulário enviado com sucesso! Ficará registado para processamento."
   },
   en: {
     subtitle: "Mandatory Accommodation Registration Form (AIMA, formerly SEF).",
-    legalHtml: `<h3><strong>Mandatory Legal Notice — Guest Registration (AIMA/SIBA)</strong></h3><p>Portuguese law requires all non-Portuguese guests to register.</p>`,
+    legalHtml: `<h3><strong>Mandatory Legal Notice — Guest Registration (AIMA/SIBA)</strong></h3><p>Portuguese law requires all non-Portuguese guests to register.</p><p><a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a></p>`,
     formTitle: "Accommodation Registration Form",
     requiredNotice: "Mandatory completion and submission of all data for every adult and child guest",
     stayDataTitle: "Stay Information",
@@ -136,12 +113,151 @@ const texts = {
     },
     placeholder_select: "Select",
     subject: "Guest Registration Copy - AIMA",
-    greeting: "Hello",
-    confirmation: "We have successfully received your guest registration with the following details:",
-    footer: "We wish you a pleasant stay!",
     submit: "Submit Accommodation Form",
     aima_success: "Form submitted successfully!"
+  },
+  es: {
+    subtitle: "Formulario obligatorio de Registro de Alojamiento (AIMA, antiguo SEF).",
+    legalHtml: `<h3><strong>Aviso Legal Obligatorio — Registro de Huéspedes (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a></p>`,
+    formTitle: "Registro de Alojamiento",
+    requiredNotice: "Relleno y envío obligatorios",
+    stayDataTitle: "Datos de la Estancia",
+    checkinLabel: "Fecha de Check‑in:",
+    checkoutLabel: "Fecha de Check‑out:",
+    adultsLabel: "Número de Huéspedes Adultos:",
+    childrenLabel: "Número de Huéspedes Niños:",
+    wants_copy_title: "¿Pretende copia de este formulario en su correo?",
+    radio_yes: "Sí",
+    radio_no: "No",
+    email_label: "Su E-mail:",
+    guestTitle: i => `Huésped ${i}`,
+    fields: {
+      fullName: "Nombre Completo:",
+      birthDate: "Fecha de Nacimiento:",
+      nationality: "Nacionalidad:",
+      residenceCountry: "País de Residencia:",
+      docNumber: "Número del Documento:",
+      docType: "Tipo de Documento:",
+      docTypePassport: "Pasaporte",
+      docTypeID: "Documento de Identidad",
+      docTypeOther: "Otro",
+      docTypeOtherLabel: "¿Cuál?",
+      docCountry: "País Emisor del Documento:"
+    },
+    placeholder_select: "Seleccionar",
+    subject: "Copia de Registro - AIMA",
+    submit: "Enviar Registro de Alojamiento",
+    aima_success: "¡Formulario enviado con éxito!"
+  },
+  fr: {
+    subtitle: "Formulaire obligatoire d’Enregistrement des Hébergements (AIMA, ancien SEF).",
+    legalHtml: `<h3><strong>Avis Légal Obligatoire — Enregistrement des Hôtes (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a></p>`,
+    formTitle: "Formulaire d’Enregistrement",
+    requiredNotice: "Remplissage et envoi obligatoires",
+    stayDataTitle: "Données du Séjour",
+    checkinLabel: "Date d’Arrivée :",
+    checkoutLabel: "Date de Départ :",
+    adultsLabel: "Nombre d’Adultes :",
+    childrenLabel: "Nombre d’Enfants :",
+    wants_copy_title: "Souhaitez-vous une copie par e-mail ?",
+    radio_yes: "Oui",
+    radio_no: "Non",
+    email_label: "Votre E-mail :",
+    guestTitle: i => `Hôte ${i}`,
+    fields: {
+      fullName: "Nom Complet :",
+      birthDate: "Date de Naissance :",
+      nationality: "Nationalité :",
+      residenceCountry: "Pays de Résidence :",
+      docNumber: "Numéro du Document :",
+      docType: "Type de Document :",
+      docTypePassport: "Passeport",
+      docTypeID: "Carte d’Identité",
+      docTypeOther: "Autre",
+      docTypeOtherLabel: "Lequel?",
+      docCountry: "Pays Émetteur :"
+    },
+    placeholder_select: "Sélectionner",
+    subject: "Copie d'enregistrement - AIMA",
+    submit: "Envoyer le Formulaire",
+    aima_success: "Formulaire envoyé avec succès !"
+  },
+  it: {
+    subtitle: "Modulo obbligatorio di Registrazione degli Ospiti (AIMA, ex SEF).",
+    legalHtml: `<h3><strong>Avviso Legale Obbligatorio — Registrazione degli Ospiti (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a></p>`,
+    formTitle: "Modulo di Registrazione",
+    requiredNotice: "Compilazione e invio obbligatori",
+    stayDataTitle: "Dati del Soggiorno",
+    checkinLabel: "Data di Check‑in:",
+    checkoutLabel: "Data di Check‑out:",
+    adultsLabel: "Numero di Ospiti Adulti:",
+    childrenLabel: "Numero di Ospiti Bambini:",
+    wants_copy_title: "Desideri una copia via e-mail?",
+    radio_yes: "Sì",
+    radio_no: "No",
+    email_label: "La tua E-mail:",
+    guestTitle: i => `Ospite ${i}`,
+    fields: {
+      fullName: "Nome Completo:",
+      birthDate: "Data di Nascita:",
+      nationality: "Nazionalità:",
+      residenceCountry: "Paese di Residenza:",
+      docNumber: "Numero del Documento:",
+      docType: "Tipo di Documento:",
+      docTypePassport: "Passaporto",
+      docTypeID: "Carta d’Identità",
+      docTypeOther: "Altro",
+      docTypeOtherLabel: "Quale?",
+      docCountry: "Paese di Emissione:"
+    },
+    placeholder_select: "Seleziona",
+    subject: "Copia registrazione - AIMA",
+    submit: "Invia Modulo di Registrazione",
+    aima_success: "Modulo inviato con successo!"
+  },
+  de: {
+    subtitle: "Pflichtformular zur Gästeanmeldung (AIMA, ehemals SEF).",
+    legalHtml: `<h3><strong>Gesetzlich vorgeschriebener Hinweis — Gästeanmeldung (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a></p>`,
+    formTitle: "Gästeanmeldeformular",
+    requiredNotice: "Pflichtangabe",
+    stayDataTitle: "Angaben zum Aufenthalt",
+    checkinLabel: "Check‑in‑Datum:",
+    checkoutLabel: "Check‑out‑Datum:",
+    adultsLabel: "Anzahl der erwachsenen Gäste:",
+    childrenLabel: "Anzahl der Kinder:",
+    wants_copy_title: "Möchten Sie eine Kopie per E-Mail?",
+    radio_yes: "Ja",
+    radio_no: "Nein",
+    email_label: "Ihre E-Mail:",
+    guestTitle: i => `Gast ${i}`,
+    fields: {
+      fullName: "Vollständiger Name:",
+      birthDate: "Geburtsdatum:",
+      nationality: "Staatsangehörigkeit:",
+      residenceCountry: "Wohnsitzland:",
+      docNumber: "Dokumentnummer:",
+      docType: "Dokumenttyp:",
+      docTypePassport: "Reisepass",
+      docTypeID: "Personalausweis",
+      docTypeOther: "Andere",
+      docTypeOtherLabel: "Welche?",
+      docCountry: "Ausstellungsland:"
+    },
+    placeholder_select: "Auswählen",
+    subject: "Registrierungskopie - AIMA",
+    submit: "Formular absenden",
+    aima_success: "Formular erfolgreich gesendet!"
   }
+};
+
+const faqTitles = { pt: "Perguntas Frequentes", en: "FAQ", es: "FAQ", fr: "FAQ", it: "FAQ", de: "FAQ" };
+const faqTexts = {
+  pt: "<p>A lei portuguesa obriga todos os alojamentos a comunicar à AIMA a entrada de cidadãos estrangeiros.</p>",
+  en: "<p>Portuguese law requires all accommodations to report guest entries to AIMA.</p>",
+  es: "<p>La ley portuguesa exige la comunicación de huéspedes a AIMA.</p>",
+  fr: "<p>La loi portugaise exige la déclaration des hôtes à l’AIMA.</p>",
+  it: "<p>La legge portoghese richiede la comunicazione degli ospiti ad AIMA.</p>",
+  de: "<p>Das portugiesische Gesetz verlangt die Meldung von Gästen an AIMA.</p>"
 };
 
 let currentLang = "pt";
@@ -169,12 +285,22 @@ function setLanguage(lang) {
   if (document.getElementById("labelClientEmail")) document.getElementById("labelClientEmail").textContent = t.email_label;
 
   generateGuestFields();
+
+  setTimeout(() => {
+    const openFaqBtn = document.getElementById("openFaqModal");
+    if (openFaqBtn) {
+      openFaqBtn.onclick = () => {
+        document.getElementById("faqTitle").textContent = faqTitles[currentLang];
+        document.getElementById("faqContent").innerHTML = faqTexts[currentLang];
+        document.getElementById("faqModal").style.display = "block";
+      };
+    }
+  }, 100);
 }
 
 function generateGuestFields() {
-  const t = texts[currentLang] || texts.pt;
+  const t = texts[currentLang];
   const activeCountries = countryLists[currentLang] || countryLists.pt;
-  
   const adultsInput = document.getElementById("adults");
   const childrenInput = document.getElementById("children");
   const guestsContainerEl = document.getElementById("guestsContainer");
@@ -192,17 +318,14 @@ function generateGuestFields() {
 
     card.innerHTML = `
       <h4>${t.guestTitle(i)}</h4>
-
       <div class="form-row">
         <label>${t.fields.fullName}</label>
         <input type="text" name="guest_${i}_fullName" required>
       </div>
-
       <div class="form-row">
         <label>${t.fields.birthDate}</label>
         <input type="date" name="guest_${i}_birthDate" required>
       </div>
-
       <div class="form-row">
         <label>${t.fields.nationality}</label>
         <select name="guest_${i}_nationality" required>
@@ -210,7 +333,6 @@ function generateGuestFields() {
           ${activeCountries.map(c => `<option value="${c}">${c}</option>`).join("")}
         </select>
       </div>
-
       <div class="form-row">
         <label>${t.fields.residenceCountry}</label>
         <select name="guest_${i}_residenceCountry" required>
@@ -218,12 +340,10 @@ function generateGuestFields() {
           ${activeCountries.map(c => `<option value="${c}">${c}</option>`).join("")}
         </select>
       </div>
-
       <div class="form-row">
         <label>${t.fields.docNumber}</label>
         <input type="text" name="guest_${i}_docNumber" required>
       </div>
-
       <div class="form-row">
         <label>${t.fields.docType}</label>
         <select name="guest_${i}_docType" id="docType_${i}" required>
@@ -233,12 +353,10 @@ function generateGuestFields() {
           <option value="other">${t.fields.docTypeOther}</option>
         </select>
       </div>
-
       <div class="form-row" id="otherDocField_${i}" style="display: none;">
         <label>${t.fields.docTypeOtherLabel}</label>
         <input type="text" name="guest_${i}_docOther">
       </div>
-
       <div class="form-row">
         <label>${t.fields.docCountry}</label>
         <select name="guest_${i}_docCountry" required>
@@ -260,15 +378,17 @@ function generateGuestFields() {
   }
 }
 
+document.getElementById("adults")?.addEventListener("input", generateGuestFields);
+document.getElementById("children")?.addEventListener("input", generateGuestFields);
+
 // ============================================================
-// 9. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS + SIBA)
+// SUBMISSÃO: GRAVA COMO PENDENTE (FIREBASE / LOCAL) + EMAILJS
 // ============================================================
 const aimaFormEl = document.getElementById("aimaForm");
 if (aimaFormEl) {
   aimaFormEl.addEventListener("submit", async function (e) {
     e.preventDefault();
-
-    const t = texts[currentLang] || texts.pt;
+    const t = texts[currentLang];
 
     const checkin = document.getElementById("checkinDate").value;
     const checkout = document.getElementById("checkoutDate").value;
@@ -281,6 +401,7 @@ if (aimaFormEl) {
     const adults = parseInt(document.getElementById("adults")?.value || "1", 10);
     const children = parseInt(document.getElementById("children")?.value || "0", 10);
     const totalGuests = adults + children;
+    const unidadeSelecionada = document.getElementById("hiddenUnidade")?.value || "2203";
 
     const hospedes = [];
     for (let i = 1; i <= totalGuests; i++) {
@@ -290,17 +411,14 @@ if (aimaFormEl) {
         nacionalidade: document.querySelector(`[name="guest_${i}_nationality"]`)?.value || "",
         paisResidencia: document.querySelector(`[name="guest_${i}_residenceCountry"]`)?.value || "",
         docTipo: document.querySelector(`[name="guest_${i}_docType"]`)?.value || "",
-        docNumero: document.querySelector(`[name="guest_${i}_docNumber"]`)?.value.trim() || "",
+        docNumero: document.querySelector(`[name="guest_${i}_docNumero"]`)?.value.trim() || "",
         docOutroDesc: document.querySelector(`[name="guest_${i}_docOther"]`)?.value.trim() || "",
         docPaisEmissor: document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || ""
       });
     }
 
-    const selectedCopy = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
-    const wantsCopy = selectedCopy === "sim";
-    
-    const emailDigitado = document.getElementById("clientEmail")?.value.trim() || 
-                          document.getElementById("email")?.value.trim() || "";
+    const wantsCopy = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value === "sim";
+    const emailDigitado = document.getElementById("clientEmail")?.value.trim() || "";
 
     const novoBoletim = {
       criadoEm: typeof firebase !== 'undefined' ? firebase.firestore.FieldValue.serverTimestamp() : new Date().toISOString(),
@@ -311,48 +429,49 @@ if (aimaFormEl) {
       emailCliente: emailDigitado,
       pediuCopia: wantsCopy,
       hospedes: hospedes,
-      alojamentoId: null,
-      status: "PENDENTE_ATRIBUICAO"
+      unidade: unidadeSelecionada,
+      apartamento: unidadeSelecionada,
+      status: "PENDENTE"
     };
 
-    const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
+    const submitBtn = this.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
-
     submitBtn.textContent = "A enviar...";
     submitBtn.disabled = true;
 
     try {
-      // 1. Gravar na BD oficial (Firestore)
+      // 1. Gravar no Firestore como PENDENTE (aparece em siba.html)
       if (typeof db !== 'undefined') {
         await db.collection("boletins").add(novoBoletim);
       }
 
-      // 2. Enviar cópia por EmailJS se o cliente solicitou
-      if (emailDigitado && typeof emailjs !== 'undefined') {
+      // 2. Guardar no armazenamento local (aimasiba.js)
+      if (typeof guardarBoletimPendente === "function") {
+        guardarBoletimPendente(novoBoletim);
+      }
+
+      // 3. Enviar cópia por EmailJS se solicitado
+      if (wantsCopy && emailDigitado && typeof emailjs !== 'undefined') {
+        const resumoHospedes = hospedes.map((h, idx) => `Hóspede ${idx+1}: ${h.nome} (${h.docNumero})`).join('\n');
         await emailjs.send(
           "service_funp519",
           "template_0oqqqy3",
           {
             to_email: emailDigitado,
+            to_name: hospedes[0]?.nome || "Hóspede",
             subject_text: t.subject,
-            guest_name: novoBoletim.hospedes?.[0]?.nome || "Hóspede",
-            checkin: novoBoletim.dataCheckin,
-            checkout: novoBoletim.dataCheckout
+            checkin: checkin,
+            checkout: checkout,
+            adults: adults,
+            children: children,
+            guests_details: resumoHospedes,
+            message: `Check-in: ${checkin}\nCheck-out: ${checkout}\n\nHóspedes:\n${resumoHospedes}`
           },
           "imhA9ilHaWGF1hxYz"
         );
       }
 
-      // 3. GUARDAR NO PAINEL LOCAL SIBA (aimasiba.js)
-      if (typeof guardarBoletimPendente === "function") {
-        const boletimParaSiba = {
-          ...novoBoletim,
-          criadoEm: new Date().toISOString()
-        };
-        guardarBoletimPendente(boletimParaSiba);
-      }
-
-      // 4. Apresentar Popup de Sucesso
+      // 4. Mostrar popup de sucesso
       const popup = document.getElementById("aimaSuccessPopup");
       if (popup) {
         popup.style.display = "flex";
@@ -365,8 +484,8 @@ if (aimaFormEl) {
       generateGuestFields();
 
     } catch (error) {
-      console.error("Erro ao processar:", error);
-      alert("Erro ao guardar os dados. Por favor tente novamente.");
+      console.error("Erro ao guardar boletim:", error);
+      alert("Erro ao submeter o formulário. Por favor tente novamente.");
     } finally {
       submitBtn.textContent = originalText;
       submitBtn.disabled = false;
