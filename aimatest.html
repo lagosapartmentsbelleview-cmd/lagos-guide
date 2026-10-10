@@ -1,19 +1,32 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta name="robots" content="noindex, nofollow">
+
   <title>Apartments Belleview Lagos — Boletim de Alojamento</title>
-  
-  <!-- O teu ficheiro de estilos -->
+
   <link rel="stylesheet" href="css/aima.css">
 
-  <!-- Gerador de PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- Pequenos complementos (validação, aviso de erro, anti-spam). O aspeto base vem do aima.css -->
+  <style>
+    .field-invalid { border-color: #d93025 !important; background: #fff5f5 !important; outline: none; }
+    .form-error {
+      display: none; margin: 14px 0; padding: 12px 14px; border-radius: 8px;
+      background: #fdecea; border: 1px solid #f5c2c0; color: #8a1c14;
+      font-size: 0.95rem; white-space: pre-line;
+    }
+    #copyChoice { display: flex; gap: 20px; padding: 6px 8px; border-radius: 8px; border: 1px solid transparent; }
+    #copyChoice label { cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .copy-row { flex-direction: column; align-items: flex-start; margin-top: 15px; }
+    .copy-row > label.copy-title { font-weight: bold; margin-bottom: 8px; }
+    /* campo isco anti-robôs: fora do ecrã, invisível para pessoas */
+    .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  </style>
 
-  <!-- EmailJS SDK (Para envio da cópia por e-mail) -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <!-- EmailJS SDK (cópia por e-mail ao cliente) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 
 <body>
@@ -40,27 +53,22 @@
 
         <!-- BOTÕES DE IDIOMA -->
         <div class="lang-buttons">
-            <button onclick="setLanguage('pt')">
+            <button type="button" onclick="setLanguage('pt')">
                 <img src="https://flagcdn.com/w40/pt.png" alt="PT"> Português
             </button>
-
-            <button onclick="setLanguage('en')">
+            <button type="button" onclick="setLanguage('en')">
                 <img src="https://flagcdn.com/w40/gb.png" alt="GB"> English
             </button>
-
-            <button onclick="setLanguage('es')">
+            <button type="button" onclick="setLanguage('es')">
                 <img src="https://flagcdn.com/w40/es.png" alt="ES"> Español
             </button>
-
-            <button onclick="setLanguage('fr')">
+            <button type="button" onclick="setLanguage('fr')">
                 <img src="https://flagcdn.com/w40/fr.png" alt="FR"> Français
             </button>
-
-            <button onclick="setLanguage('it')">
+            <button type="button" onclick="setLanguage('it')">
                 <img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano
             </button>
-
-            <button onclick="setLanguage('de')">
+            <button type="button" onclick="setLanguage('de')">
                 <img src="https://flagcdn.com/w40/de.png" alt="DE"> Deutsch
             </button>
         </div>
@@ -71,7 +79,7 @@
 
     <!-- FORMULÁRIO -->
     <section id="aimaFormSection" class="form-section" style="display:none;">
-        <form id="aimaForm">
+        <form id="aimaForm" novalidate>
 
             <h2 id="formTitle"></h2>
             <p id="requiredNotice" class="required-notice"></p>
@@ -80,67 +88,58 @@
                 <h3 id="stayDataTitle"></h3>
 
                 <div class="form-row">
-                    <label id="checkinLabel"></label>
+                    <label id="checkinLabel" for="checkinDate"></label>
                     <input type="date" id="checkinDate" name="checkinDate" required>
                 </div>
 
                 <div class="form-row">
-                    <label id="checkoutLabel"></label>
+                    <label id="checkoutLabel" for="checkoutDate"></label>
                     <input type="date" id="checkoutDate" name="checkoutDate" required>
                 </div>
 
                 <div class="form-row">
-                    <label id="adultsLabel"></label>
-                    <input type="number" id="adults" name="adults" min="1" value="1" required>
+                    <label id="adultsLabel" for="adults"></label>
+                    <input type="number" id="adults" name="adults" min="1" max="20" value="1" required>
                 </div>
 
                 <div class="form-row">
-                    <label id="childrenLabel"></label>
-                    <input type="number" id="children" name="children" min="0" value="0" required>
+                    <label id="childrenLabel" for="children"></label>
+                    <input type="number" id="children" name="children" min="0" max="19" value="0" required>
                 </div>
 
-                <!-- OPÇÃO DE CÓPIA POR E-MAIL (SIM / NÃO) -->
-                <div class="form-row" style="flex-direction: column; align-items: flex-start; margin-top: 15px;">
-                    <label id="labelWantsCopy" style="font-weight: bold; margin-bottom: 8px;"></label>
-                    
-                    <div style="display: flex; gap: 20px;">
-                        <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                            <input type="radio" name="wantsCopyRadio" value="sim" required onchange="toggleEmailInput()">
+                <!-- CÓPIA POR E-MAIL (SIM / NÃO) -->
+                <div class="form-row copy-row">
+                    <label id="labelWantsCopy" class="copy-title"></label>
+
+                    <div id="copyChoice" role="radiogroup" aria-labelledby="labelWantsCopy">
+                        <label>
+                            <input type="radio" name="wantsCopyRadio" value="sim">
                             <span id="labelRadioYes"></span>
                         </label>
-                        
-                        <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                            <input type="radio" name="wantsCopyRadio" value="nao" required onchange="toggleEmailInput()">
+                        <label>
+                            <input type="radio" name="wantsCopyRadio" value="nao">
                             <span id="labelRadioNo"></span>
                         </label>
                     </div>
                 </div>
 
-                <div class="form-row" id="emailCopyContainer" style="display: none; margin-top: 10px;">
+                <div class="form-row" id="emailCopyContainer" style="display:none; margin-top:10px;">
                     <label for="clientEmail" id="labelClientEmail"></label>
-                    <input type="email" id="clientEmail" name="clientEmail" placeholder="exemplo@email.com">
+                    <input type="email" id="clientEmail" name="clientEmail"
+                           placeholder="exemplo@email.com" autocomplete="email">
                 </div>
-
-                <script>
-                  function toggleEmailInput() {
-                    const selected = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
-                    const emailContainer = document.getElementById("emailCopyContainer");
-                    const emailInput = document.getElementById("clientEmail");
-
-                    if (selected === "sim") {
-                      emailContainer.style.display = "flex";
-                      emailInput.required = true;
-                    } else {
-                      emailContainer.style.display = "none";
-                      emailInput.required = false;
-                      emailInput.value = "";
-                    }
-                  }
-                </script>
             </div>
 
             <!-- HÓSPEDES GERADOS DINAMICAMENTE -->
             <div id="guestsContainer"></div>
+
+            <!-- Anti-spam (não remover) -->
+            <div class="hp-field" aria-hidden="true">
+                <label for="website">Website</label>
+                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div id="formError" class="form-error" role="alert"></div>
 
             <button type="submit" class="submit-btn" id="submitLabel"></button>
         </form>
@@ -203,26 +202,20 @@
 <!-- MODAL FAQ -->
 <div id="faqModal" class="faq-modal">
   <div class="faq-modal-content">
-
     <span id="closeFaqModal" class="faq-close">&times;</span>
-
     <h2 id="faqTitle" class="faq-title"></h2>
-
     <div id="faqContent" class="faq-content"></div>
-
   </div>
 </div>
-  
+
 <!-- Firebase compat SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-<!-- Configuração do Firebase e scripts de aplicação -->
+<!-- Configuração do Firebase e scripts da aplicação (ordem importa) -->
 <script src="js/firebase-config.js"></script>
-<script src="js/aimasiba.js"></script>
 <script src="js/aimatest.js"></script>
-<script src="js/aima.js"></script>
 <script src="js/aima-lang.js"></script>
 
 </body>
