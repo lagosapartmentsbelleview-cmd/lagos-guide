@@ -1,11 +1,12 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <title>Apartments Belleview Lagos — Boletim de Alojamento</title>
   
-  <!-- Estilos Base -->
+  <!-- O teu ficheiro de estilos -->
   <link rel="stylesheet" href="css/aima.css">
 
   <!-- Gerador de PDF -->
@@ -42,18 +43,23 @@
             <button onclick="setLanguage('pt')">
                 <img src="https://flagcdn.com/w40/pt.png" alt="PT"> Português
             </button>
+
             <button onclick="setLanguage('en')">
                 <img src="https://flagcdn.com/w40/gb.png" alt="GB"> English
             </button>
+
             <button onclick="setLanguage('es')">
                 <img src="https://flagcdn.com/w40/es.png" alt="ES"> Español
             </button>
+
             <button onclick="setLanguage('fr')">
                 <img src="https://flagcdn.com/w40/fr.png" alt="FR"> Français
             </button>
+
             <button onclick="setLanguage('it')">
                 <img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano
             </button>
+
             <button onclick="setLanguage('de')">
                 <img src="https://flagcdn.com/w40/de.png" alt="DE"> Deutsch
             </button>
@@ -66,8 +72,6 @@
     <!-- FORMULÁRIO -->
     <section id="aimaFormSection" class="form-section" style="display:none;">
         <form id="aimaForm">
-            <!-- Campo oculto para a unidade vinda do URL (?apt= ou ?unidade=) -->
-            <input type="hidden" id="hiddenUnidade" name="unidade" value="2203">
 
             <h2 id="formTitle"></h2>
             <p id="requiredNotice" class="required-notice"></p>
@@ -97,23 +101,23 @@
 
                 <!-- OPÇÃO DE CÓPIA POR E-MAIL (SIM / NÃO) -->
                 <div class="form-row" style="flex-direction: column; align-items: flex-start; margin-top: 15px;">
-                    <label id="labelWantsCopy" style="font-weight: bold; margin-bottom: 8px;">Pretende cópia deste formulário no seu e-mail?</label>
+                    <label id="labelWantsCopy" style="font-weight: bold; margin-bottom: 8px;"></label>
                     
                     <div style="display: flex; gap: 20px;">
                         <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
                             <input type="radio" name="wantsCopyRadio" value="sim" required onchange="toggleEmailInput()">
-                            <span id="labelRadioYes">Sim</span>
+                            <span id="labelRadioYes"></span>
                         </label>
                         
                         <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
                             <input type="radio" name="wantsCopyRadio" value="nao" required onchange="toggleEmailInput()">
-                            <span id="labelRadioNo">Não</span>
+                            <span id="labelRadioNo"></span>
                         </label>
                     </div>
                 </div>
 
                 <div class="form-row" id="emailCopyContainer" style="display: none; margin-top: 10px;">
-                    <label for="clientEmail" id="labelClientEmail">O seu E-mail:</label>
+                    <label for="clientEmail" id="labelClientEmail"></label>
                     <input type="email" id="clientEmail" name="clientEmail" placeholder="exemplo@email.com">
                 </div>
 
@@ -135,7 +139,7 @@
                 </script>
             </div>
 
-            <!-- HÓSPEDES GERADOS DINAMICAMENTE PELO AIMA.JS -->
+            <!-- HÓSPEDES GERADOS DINAMICAMENTE -->
             <div id="guestsContainer"></div>
 
             <button type="submit" class="submit-btn" id="submitLabel"></button>
@@ -147,6 +151,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-content">
+
     <svg width="50" height="50" viewBox="0 0 100 100" class="footer-logo">
       <circle cx="50" cy="50" r="46" fill="#ffffff" stroke="#ffffff" stroke-width="6"/>
       <text x="50" y="67" text-anchor="middle"
@@ -159,13 +164,15 @@
     <p>
       Rua Quinta do Landeiro Lote 22, 23<br>
       Urbanização Marina Park<br>
-      8600-302 Lagos, Algarve - Portugal
+      8600-302 Lagos, Algarve - Portugal<br>
     </p>
 
     <p>
       Tel: <a href="tel:+351910051588" class="footer-link">+351 910 051 588</a><br>
       <span id="footer-call">(Chamada para a rede fixa nacional)</span><br>
+
       Whatsapp: <a href="https://wa.me/351910051588" class="footer-link">+351 910 051 588</a><br>
+
       Email: <a href="mailto:belleview@sapo.pt" class="footer-link">belleview@sapo.pt</a>
     </p>
 
@@ -179,6 +186,7 @@
     <p class="footer-copy">
       © 2025 Apartments Belleview Lagos — <span id="footer-rights">Todos os direitos reservados.</span>
     </p>
+
   </div>
 </footer>
 
@@ -195,9 +203,13 @@
 <!-- MODAL FAQ -->
 <div id="faqModal" class="faq-modal">
   <div class="faq-modal-content">
+
     <span id="closeFaqModal" class="faq-close">&times;</span>
+
     <h2 id="faqTitle" class="faq-title"></h2>
+
     <div id="faqContent" class="faq-content"></div>
+
   </div>
 </div>
   
@@ -206,10 +218,11 @@
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-<!-- Scripts originais e de integração -->
+<!-- Configuração do Firebase e scripts de aplicação -->
 <script src="js/firebase-config.js"></script>
 <script src="js/aimasiba.js"></script>
-<script src="js/aimatest.js"></script>
+<script src="js/aimatest.js"></script> 
+<script src="js/aima-lang.js"></script>
 
 </body>
 </html>
