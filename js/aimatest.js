@@ -128,10 +128,6 @@ const texts = {
     },
     placeholder_select: "Selecione",
     subject: "Cópia do Registo de Hóspedes - AIMA",
-    greeting: "Olá",
-    confirmation: "Confirmamos com sucesso a receção do seu registo de hóspedes com os seguintes dados:",
-    footer: "Desejamos-lhe uma excelente estadia!",
-    submit: "Enviar Boletim de Alojamento",
     aima_success: "Formulário enviado com sucesso!"
   },
   en: {
@@ -164,10 +160,6 @@ const texts = {
     },
     placeholder_select: "Select",
     subject: "Guest Registration Copy - AIMA",
-    greeting: "Hello",
-    confirmation: "We have successfully received your guest registration with the following details:",
-    footer: "We wish you a pleasant stay!",
-    submit: "Submit Accommodation Form",
     aima_success: "Form submitted successfully!"
   }
 };
@@ -188,13 +180,13 @@ function setLanguage(lang) {
   if (document.getElementById("checkoutLabel")) document.getElementById("checkoutLabel").textContent = t.checkoutLabel;
   if (document.getElementById("adultsLabel")) document.getElementById("adultsLabel").textContent = t.adultsLabel;
   if (document.getElementById("childrenLabel")) document.getElementById("childrenLabel").textContent = t.childrenLabel;
-  if (document.getElementById("submitLabel")) document.getElementById("submitLabel").textContent = t.submit;
+  if (document.getElementById("submitLabel")) document.getElementById("submitLabel").textContent = t.submit || "Enviar Boletim de Alojamento";
   if (document.getElementById("requiredNotice")) document.getElementById("requiredNotice").textContent = t.requiredNotice;
 
-  if (document.getElementById("labelWantsCopy")) document.getElementById("labelWantsCopy").textContent = t.wants_copy_title || "Pretende cópia deste formulário no seu e-mail?";
-  if (document.getElementById("labelRadioYes")) document.getElementById("labelRadioYes").textContent = t.radio_yes || "Sim";
-  if (document.getElementById("labelRadioNo")) document.getElementById("labelRadioNo").textContent = t.radio_no || "Não";
-  if (document.getElementById("labelClientEmail")) document.getElementById("labelClientEmail").textContent = t.email_label || "O seu E-mail:";
+  if (document.getElementById("labelWantsCopy")) document.getElementById("labelWantsCopy").textContent = t.wants_copy_title;
+  if (document.getElementById("labelRadioYes")) document.getElementById("labelRadioYes").textContent = t.radio_yes;
+  if (document.getElementById("labelRadioNo")) document.getElementById("labelRadioNo").textContent = t.radio_no;
+  if (document.getElementById("labelClientEmail")) document.getElementById("labelClientEmail").textContent = t.email_label;
 
   generateGuestFields();
 }
@@ -219,7 +211,7 @@ function generateGuestFields() {
     card.className = "form-card guest-card";
 
     card.innerHTML = `
-      <h4>${t.guestTitle(i)}</h4>
+      <h4>${typeof t.guestTitle === 'function' ? t.guestTitle(i) : 'Hóspede ' + i}</h4>
 
       <div class="form-row">
         <label>${t.fields.fullName}</label>
@@ -288,6 +280,19 @@ function generateGuestFields() {
   }
 }
 
+// Ouvintes dinâmicos para adultos e crianças alterarem os campos de hóspedes
+document.addEventListener("DOMContentLoaded", () => {
+  const adultsInput = document.getElementById("adults");
+  const childrenInput = document.getElementById("children");
+
+  if (adultsInput) {
+    adultsInput.addEventListener("input", generateGuestFields);
+  }
+  if (childrenInput) {
+    childrenInput.addEventListener("input", generateGuestFields);
+  }
+});
+
 // ============================================================
 // 5. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS + SIBA)
 // ============================================================
@@ -301,8 +306,13 @@ if (aimaFormEl) {
     const checkin = document.getElementById("checkinDate").value;
     const checkout = document.getElementById("checkoutDate").value;
 
+    if (!checkin || !checkout) {
+      alert("Por favor preencha as datas de check-in e check-out.");
+      return;
+    }
+
     if (new Date(checkin) >= new Date(checkout)) {
-      alert("Check-out deve ser posterior ao Check-in.");
+      alert("A data de check-out deve ser posterior à data de check-in.");
       return;
     }
 
@@ -324,7 +334,7 @@ if (aimaFormEl) {
       const docOutro = document.querySelector(`[name="guest_${i}_docOther"]`)?.value.trim() || "";
       const docPaisBruto = document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || "";
 
-      // Conversão automática para ISO-3 para a SIBA aceitar corretamente
+      // Conversão automática para códigos ISO-3 (exigido pelo WebService da SIBA)
       const nacIso = converterParaIso3(nacBruta);
       const resIso = converterParaIso3(resBruta);
       const docPaisIso = converterParaIso3(docPaisBruto);
@@ -370,7 +380,7 @@ if (aimaFormEl) {
     }
 
     try {
-      // 1. Gravar na BD oficial (Firestore)
+      // 1. Gravar no Firestore do Firebase (visível no siba.html)
       if (typeof db !== 'undefined') {
         await db.collection("boletins").add(novoBoletim);
       }
@@ -417,7 +427,7 @@ if (aimaFormEl) {
             "template_0oqqqy3",
             {
               to_email: emailDigitado,
-              subject_text: t.subject,
+              subject_text: t.subject || "Cópia do Registo de Hóspedes - AIMA",
               guest_name: hospedes[0]?.nome || "Hóspede",
               checkin: checkin,
               checkout: checkout,
@@ -434,7 +444,7 @@ if (aimaFormEl) {
         popup.style.display = "flex";
         setTimeout(() => { popup.style.display = "none"; }, 3000);
       } else {
-        alert(t.aima_success);
+        alert(t.aima_success || "Formulário enviado com sucesso!");
       }
 
       this.reset();
@@ -454,5 +464,5 @@ if (aimaFormEl) {
   });
 }
 
-// Inicializar idioma padrão
+// Inicializar idioma padrão ao carregar a página
 setLanguage("pt");
