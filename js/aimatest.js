@@ -1,5 +1,5 @@
 // ============================================================
-// 1. INICIALIZAÇÃO E MANIPULAÇÃO DO DOM
+// 1. INICIALIZAÇÃO E MANIPULAÇÃO DO DOM & FAQ
 // ============================================================
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
@@ -49,7 +49,9 @@ const countryLists = {
   de: ["Portugal","Deutschland","Großbritannien","Frankreich","Spanien","Italien","Niederlande","Belgien","Schweiz","Österreich","Irland","Brasilien","Kanada","USA","Afghanistan","Ägypten","Albanien","Algerien","Andorra","Angola","Argentinien","Australien","Bhutan","Bolivien","Dänemark","Finnland","Griechenland","Luxemburg","Marokko","Norwegen","Polen","Schweden","Tschechien","Türkei"]
 };
 
-// MAPA DE CONVERSÃO DE PAÍSES PARA CÓDIGOS ISO-3 (Exigido pelo WebService da SIBA)
+// ============================================================
+// 3. MAPA DE CONVERSÃO PARA CÓDIGOS ISO-3 (SIBA)
+// ============================================================
 const paisesIso3Map = {
   "Afeganistão": "AFG", "África do Sul": "ZAF", "Albânia": "ALB", "Alemanha": "DEU", "Andorra": "AND", "Angola": "AGO", "Antígua e Barbuda": "ATG", "Arábia Saudita": "SAU", "Argélia": "DZA", "Argentina": "ARG", "Arménia": "ARM", "Austrália": "AUS", "Áustria": "AUT", "Azerbaijão": "AZE",
   "Bahamas": "BHS", "Bangladesh": "BGD", "Barbados": "BRB", "Barém": "BHR", "Bélgica": "BEL", "Belize": "BLZ", "Benim": "BEN", "Bielorrússia": "BLR", "Bolívia": "BOL", "Bósnia e Herzegovina": "BIH", "Botsuana": "BWA", "Brasil": "BRA", "Brunei": "BRN", "Bulgária": "BGR", "Burquina Faso": "BFA", "Burundi": "BDI", "Butão": "BTN",
@@ -65,7 +67,6 @@ const paisesIso3Map = {
   "Samoa": "WSM", "Santa Lúcia": "LCA", "São Cristóvão e Neves": "KNA", "São Marino": "SMR", "São Tomé e Príncipe": "STP", "São Vicente e Granadinas": "VCT", "Senegal": "SEN", "Serra Leoa": "SLE", "Sérvia": "SRB", "Seicheles": "SYC", "Singapura": "SGP", "Síria": "SYR", "Somália": "SOM", "Sri Lanka": "LKA", "Eswatini": "SWZ", "Sudão": "SDN", "Sudão do Sul": "SSD", "Suécia": "SWE", "Suíça": "CHE", "Suriname": "SUR",
   "Tailândia": "THA", "Taiwan": "TWN", "Tajiquistão": "TJK", "Tanzânia": "TZA", "Timor-Leste": "TLS", "Togo": "TGO", "Tonga": "TON", "Trinidad e Tobago": "TTO", "Tunísia": "TUN", "Turquemenistão": "TKM", "Turquia": "TUR", "Tuvalu": "TUV",
   "Ucrânia": "UKR", "Uganda": "UGA", "Uruguai": "URY", "Uzbequistão": "UZB", "Vanuatu": "VUT", "Vaticano": "VAT", "Venezuela": "VEN", "Vietname": "VNM", "Zâmbia": "ZMB", "Zimbabué": "ZWE",
-  // Versões em inglês/espanhol comuns
   "Spain": "ESP", "France": "FRA", "Germany": "DEU", "United Kingdom": "GBR", "Italy": "ITA", "Netherlands": "NLD", "Belgium": "BEL", "Switzerland": "CHE", "Ireland": "IRL", "Brazil": "BRA", "Canada": "CAN", "United States": "USA"
 };
 
@@ -77,7 +78,7 @@ function converterParaIso3(nomePais) {
 }
 
 // ============================================================
-// 3. DICIONÁRIO DE TEXTOS E IDIOMAS (TEXTS)
+// 4. DICIONÁRIO DE TEXTOS E IDIOMAS (TEXTS)
 // ============================================================
 const texts = {
   pt: {
@@ -190,10 +191,10 @@ function setLanguage(lang) {
   if (document.getElementById("submitLabel")) document.getElementById("submitLabel").textContent = t.submit;
   if (document.getElementById("requiredNotice")) document.getElementById("requiredNotice").textContent = t.requiredNotice;
 
-  if (document.getElementById("labelWantsCopy")) document.getElementById("labelWantsCopy").textContent = t.wants_copy_title;
-  if (document.getElementById("labelRadioYes")) document.getElementById("labelRadioYes").textContent = t.radio_yes;
-  if (document.getElementById("labelRadioNo")) document.getElementById("labelRadioNo").textContent = t.radio_no;
-  if (document.getElementById("labelClientEmail")) document.getElementById("labelClientEmail").textContent = t.email_label;
+  if (document.getElementById("labelWantsCopy")) document.getElementById("labelWantsCopy").textContent = t.wants_copy_title || "Pretende cópia deste formulário no seu e-mail?";
+  if (document.getElementById("labelRadioYes")) document.getElementById("labelRadioYes").textContent = t.radio_yes || "Sim";
+  if (document.getElementById("labelRadioNo")) document.getElementById("labelRadioNo").textContent = t.radio_no || "Não";
+  if (document.getElementById("labelClientEmail")) document.getElementById("labelClientEmail").textContent = t.email_label || "O seu E-mail:";
 
   generateGuestFields();
 }
@@ -288,7 +289,7 @@ function generateGuestFields() {
 }
 
 // ============================================================
-// 9. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS + SIBA)
+// 5. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS + SIBA)
 // ============================================================
 const aimaFormEl = document.getElementById("aimaForm");
 if (aimaFormEl) {
@@ -320,10 +321,10 @@ if (aimaFormEl) {
       const resBruta = document.querySelector(`[name="guest_${i}_residenceCountry"]`)?.value || "";
       const docTipo = document.querySelector(`[name="guest_${i}_docType"]`)?.value || "";
       const docNumero = document.querySelector(`[name="guest_${i}_docNumber"]`)?.value.trim() || "";
-      const docOutro = document.querySelector(`[name="guest_${i}_guest_${i}_docOther"]`)?.value || document.querySelector(`[name="guest_${i}_docOther"]`)?.value.trim() || "";
+      const docOutro = document.querySelector(`[name="guest_${i}_docOther"]`)?.value.trim() || "";
       const docPaisBruto = document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || "";
 
-      // Conversão automática para ISO-3 para o SIBA funcionar perfeitamente
+      // Conversão automática para ISO-3 para a SIBA aceitar corretamente
       const nacIso = converterParaIso3(nacBruta);
       const resIso = converterParaIso3(resBruta);
       const docPaisIso = converterParaIso3(docPaisBruto);
@@ -344,9 +345,7 @@ if (aimaFormEl) {
 
     const selectedCopy = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
     const wantsCopy = selectedCopy === "sim";
-    
-    const emailDigitado = document.getElementById("clientEmail")?.value.trim() || 
-                          document.getElementById("email")?.value.trim() || "";
+    const emailDigitado = document.getElementById("clientEmail")?.value.trim() || "";
 
     const novoBoletim = {
       criadoEm: typeof firebase !== 'undefined' ? firebase.firestore.FieldValue.serverTimestamp() : new Date().toISOString(),
@@ -363,10 +362,12 @@ if (aimaFormEl) {
     };
 
     const submitBtn = document.getElementById("submitLabel") || this.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
+    const originalText = submitBtn ? submitBtn.textContent : "Enviar";
 
-    submitBtn.textContent = "A enviar...";
-    submitBtn.disabled = true;
+    if (submitBtn) {
+      submitBtn.textContent = "A enviar...";
+      submitBtn.disabled = true;
+    }
 
     try {
       // 1. Gravar na BD oficial (Firestore)
@@ -374,7 +375,7 @@ if (aimaFormEl) {
         await db.collection("boletins").add(novoBoletim);
       }
 
-      // 2. GUARDAR NO PAINEL LOCAL SIBA (aimasiba.js)
+      // 2. Guardar no armazenamento local do painel SIBA (aimasiba.js)
       if (typeof guardarBoletimPendente === "function") {
         const boletimParaSiba = {
           ...novoBoletim,
@@ -383,7 +384,7 @@ if (aimaFormEl) {
         guardarBoletimPendente(boletimParaSiba);
       }
 
-      // 3. ENVIAR NOTIFICAÇÃO PARA O PROPRIETÁRIO (belleview@sapo.pt)
+      // 3. Enviar notificações via EmailJS (Proprietário + Cliente)
       if (typeof emailjs !== 'undefined') {
         const mensagemAdmin = `Novo boletim de alojamento submetido (Apt ${unidadeSelecionada}):\n` +
           `Check-in: ${checkin} | Check-out: ${checkout}\n` +
@@ -404,7 +405,6 @@ if (aimaFormEl) {
           "imhA9ilHaWGF1hxYz"
         ).catch(err => console.warn("Erro ao notificar proprietário:", err));
 
-        // 4. ENVIAR CÓPIA COMPLETA PARA O CLIENTE (caso tenha pedido)
         if (wantsCopy && emailDigitado) {
           const mensagemCliente = `Olá,\nConfirmamos a receção do seu registo de hóspedes.\n` +
             `Dados da Estadia: Check-in a ${checkin} e Check-out a ${checkout}\n` +
@@ -428,7 +428,7 @@ if (aimaFormEl) {
         }
       }
 
-      // 5. Apresentar Popup de Sucesso
+      // 4. Apresentar Popup de Sucesso
       const popup = document.getElementById("aimaSuccessPopup");
       if (popup) {
         popup.style.display = "flex";
@@ -438,14 +438,18 @@ if (aimaFormEl) {
       }
 
       this.reset();
-      generateGuestFields();
+      if (typeof generateGuestFields === "function") {
+        generateGuestFields();
+      }
 
     } catch (error) {
       console.error("Erro ao processar:", error);
       alert("Erro ao guardar os dados. Por favor tente novamente.");
     } finally {
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
+      if (submitBtn) {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
     }
   });
 }
