@@ -74,10 +74,12 @@ const texts = {
           <li><strong>Gestão Pública:</strong> Contribuem para estatísticas oficiais e políticas de migração e turismo.</li>
       </ul>
       <h4><strong>Obrigatoriedade e consequências da recusa</strong></h4>
-      <p>A prestação destes dados é <strong>estritamente obrigatória por lei</strong>. A recusa em fornecer as informações necessárias impede legalmente a realização do check-in e implica a <strong>anulação imediata da reserva sem direito a reembolso</strong>.</p>
+      <p>A prestação destes dados é <strong>estritamente obrigatória por lei</strong>. A recusa em fornecer as informações necessárias impede legalmente a realização do check-in e implica a <strong>anulação imediata da reserva sem direito a reembolso</strong>, por incumprimento das normas legais aplicáveis.</p>
+      <p>Para o proprietário do alojamento, a não comunicação destes dados constitui uma <strong>contraordenação grave</strong>, punível com coimas significativas.</p>
       <h4><strong>Privacidade e proteção dos seus dados</strong></h4>
-      <p>Os dados recolhidos são utilizados exclusivamente para cumprimento desta obrigação legal e tratados em conformidade com o <strong>Regulamento Geral sobre a Proteção de Dados (RGPD)</strong>.</p>
-      <p><a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a></p>
+      <p>Os dados recolhidos são utilizados exclusivamente para cumprimento desta obrigação legal e tratados em conformidade com o <strong>Regulamento Geral sobre a Proteção de Dados (RGPD)</strong>. Não são partilhados com terceiros para fins comerciais.</p>
+      <h4><strong>Informação adicional e legislação</strong></h4>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Verificar a informação em PDF</a> | <a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a> | <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-34546475" target="_blank" class="pdf-link">Lei n.º 23/2007 — Versão Consolidada (Diário da República)</a></p>
     `,
     formTitle: "Boletim de Alojamento",
     requiredNotice: "Preenchimento e envio obrigatório dos dados de todos os hóspedes adultos e crianças",
@@ -125,9 +127,11 @@ const texts = {
       </ul>
       <h4><strong>Mandatory nature and consequences of refusal</strong></h4>
       <p>Providing this data is <strong>strictly mandatory by law</strong>. Refusal to provide the necessary information legally prevents check-in and implies the <strong>immediate cancellation of the reservation without right to a refund</strong>.</p>
+      <p>For the accommodation owner, failure to report this data constitutes a <strong>serious administrative offence</strong>, punishable by significant fines.</p>
       <h4><strong>Privacy and data protection</strong></h4>
-      <p>The collected data is used exclusively to comply with this legal obligation and is processed in accordance with the <strong>General Data Protection Regulation (GDPR)</strong>.</p>
-      <p><a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a></p>
+      <p>The collected data is used exclusively to comply with this legal obligation and is processed in accordance with the <strong>General Data Protection Regulation (GDPR)</strong>. It is not shared with third parties for commercial purposes.</p>
+      <h4><strong>Additional information and legislation</strong></h4>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">View information in PDF</a> | <a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a> | <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-34546475" target="_blank" class="pdf-link">Law no. 23/2007 — Consolidated Version (Official Gazette)</a></p>
     `,
     formTitle: "Accommodation Registration Form",
     requiredNotice: "Mandatory completion and submission of all data for every adult and child guest",
@@ -165,12 +169,24 @@ const texts = {
       <h3><strong>Aviso Legal Obligatorio — Registro de Huéspedes (AIMA/SIBA)</strong></h3>
       <p>Este formulario recopila los datos obligatorios de identificación de todos los huéspedes, según lo exige la legislación portuguesa para la comunicación a AIMA a través de la plataforma SIBA.</p>
       <h4><strong>¿Por qué son obligatorios sus datos?</strong></h4>
-      <p>En los términos del <strong>Artículo 45 de la Ley n.º 23/2007</strong>, todos los establecimientos están legalmente obligados a comunicar la entrada y salida de ciudadanos extranjeros.</p>
-      <p>Esta obligación se aplica a <strong>todos los huéspedes sin nacionalidad portuguesa</strong>, incluidos <strong>niños y bebés</strong>.</p>
-      <p><a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a></p>
+      <p>En los términos del <strong>Artículo 45 de la Ley n.º 23/2007</strong>, todos los establecimientos de Alojamiento Local están legalmente obligados a comunicar a las autoridades fronterizas la entrada, permanencia y salida de ciudadanos extranjeros en el territorio nacional.</p>
+      <p>Esta obligación se aplica a <strong>todos los huéspedes sin nacionalidad portuguesa</strong>, incluidos <strong>niños y bebés</strong>, sin excepción.</p>
+      <h4><strong>¿Para qué se utilizan estos datos?</strong></h4>
+      <ul>
+          <li><strong>Seguridad Nacional:</strong> Apoyan la prevención e investigación de delitos graves, terrorismo y redes transfronterizas.</li>
+          <li><strong>Protección del Huésped:</strong> En caso de accidente, emergencia médica, catástrofe natural o desaparición, permiten a las autoridades y embajadas identificar y localizar rápidamente a los ciudadanos.</li>
+          <li><strong>Gestión Pública:</strong> Contribuyen a las estadísticas oficiales y a las políticas de migración y turismo.</li>
+      </ul>
+      <h4><strong>Obligatoriedad y consecuencias de la negativa</strong></h4>
+      <p>La provisión de estos datos es <strong>estrictamente obligatoria por ley</strong>. La negativa a proporcionar la información necesaria impide legalmente realizar el check-in e implica la <strong>anulación inmediata de la reserva sin derecho a reembolso</strong>.</p>
+      <p>Para el propietario del alojamiento, la no comunicación de estos datos constituye una <strong>infracción grave</strong>, sancionada con multas significativas.</p>
+      <h4><strong>Privacidad y protección de sus datos</strong></h4>
+      <p>Los datos recopilados se utilizan exclusivamente para cumplir con esta obligación legal y se tratan conforme al <strong>Reglamento General de Protección de Datos (RGPD)</strong>. No se comparten con terceros para fines comerciales.</p>
+      <h4><strong>Información adicional y legislación</strong></h4>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Ver información en PDF</a> | <a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a> | <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-34546475" target="_blank" class="pdf-link">Ley n.º 23/2007 — Versión Consolidada (Diario de la República)</a></p>
     `,
     formTitle: "Registro de Alojamiento",
-    requiredNotice: "Relleno y envío obligatorios de los datos de todos los huéspedes",
+    requiredNotice: "Relleno y envío obligatorios de los datos de todos los huéspedes adultos y niños",
     stayDataTitle: "Datos de la Estancia",
     checkinLabel: "Fecha de Check‑in:",
     checkoutLabel: "Fecha de Check‑out:",
@@ -204,8 +220,21 @@ const texts = {
     legalHtml: `
       <h3><strong>Avis Légal Obligatoire — Enregistrement des Hôtes (AIMA/SIBA)</strong></h3>
       <p>Ce formulaire recueille les données d'identification obligatoires pour tous les hôtes, conformément à la législation portugaise pour la communication à l'AIMA via la plateforme SIBA.</p>
-      <p>Cette obligation s'applique à <strong>tous les hôtes sans nationalité portugaise</strong>, y compris les <strong>enfants et les bébés</strong>.</p>
-      <p><a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a></p>
+      <h4><strong>Pourquoi vos données sont-elles obligatoires ?</strong></h4>
+      <p>Aux termes de l'<strong>article 45 de la loi n° 23/2007</strong>, tous les établissements d'hébergement local sont légalement tenus de déclarer l'entrée, le séjour et la sortie des citoyens étrangers sur le territoire national.</p>
+      <p>Cette obligation s'applique à <strong>tous les hôtes n'ayant pas la nationalité portugaise</strong>, y compris les <strong>enfants et les bébés</strong>, sans exception.</p>
+      <h4><strong>À quoi servent ces données ?</strong></h4>
+      <ul>
+          <li><strong>Sécurité Nationale :</strong> Aident à prévenir et enquêter sur les crimes graves, le terrorisme et les réseaux transfrontaliers.</li>
+          <li><strong>Protection de l'Hôte :</strong> En cas d'accident, d'urgence médicale, de catastrophe naturelle ou de disparition, elles permettent aux autorités et aux ambassades d'identifier et de localiser rapidement les citoyens.</li>
+          <li><strong>Gestion Publique :</strong> Contribuent aux statistiques officielles et aux politiques de migration et de tourisme.</li>
+      </ul>
+      <h4><strong>Caractère obligatoire et conséquences du refus</strong></h4>
+      <p>La fourniture de ces données est <strong>strictement obligatoire par la loi</strong>. Le refus de fournir les informations nécessaires empêche légalement l'enregistrement (check-in) et entraîne l'<strong>annulation immédiate de la réservation sans remboursement</strong>.</p>
+      <h4><strong>Confidentialité et protection de vos données</strong></h4>
+      <p>Les données recueillies sont utilisées exclusivement pour respecter cette obligation légale et sont traitées conformément au <strong>Règlement Général sur la Protection des Données (RGPD)</strong>.</p>
+      <h4><strong>Informations supplémentaires et législation</strong></h4>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Consulter les informations en PDF</a> | <a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a> | <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-34546475" target="_blank" class="pdf-link">Loi n° 23/2007 — Version Consolidée (Journal Officiel)</a></p>
     `,
     formTitle: "Formulaire d’Enregistrement",
     requiredNotice: "Remplissage et envoi obligatoires",
@@ -242,8 +271,21 @@ const texts = {
     legalHtml: `
       <h3><strong>Avviso Legale Obbligatorio — Registrazione degli Ospiti (AIMA/SIBA)</strong></h3>
       <p>Questo modulo raccoglie i dati di identificazione obbligatori per tutti gli ospiti, come richiesto dalla legislazione portoghese per la comunicazione ad AIMA tramite la piattaforma SIBA.</p>
-      <p>Questo obbligo si applica a <strong>tutti gli ospiti senza cittadinanza portoghese</strong>, compresi <strong>bambini e neonati</strong>.</p>
-      <p><a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a></p>
+      <h4><strong>Perché i tuoi dati sono obbligatori?</strong></h4>
+      <p>Ai sensi dell'<strong>articolo 45 della legge n. 23/2007</strong>, tutte le strutture ricettive sono legalmente obbligate a comunicare l'ingresso, il soggiorno e l'uscita dei cittadini stranieri alle autorità di frontiera.</p>
+      <p>Questo obbligo si applica a <strong>tutti gli ospiti senza cittadinanza portoghese</strong>, inclusi <strong>bambini e neonati</strong>, senza eccezioni.</p>
+      <h4><strong>A cosa servono questi dati?</strong></h4>
+      <ul>
+          <li><strong>Sicurezza Nazionale:</strong> Supportano la prevenzione e l'investigazione di crimini gravi, terrorismo e reti transfrontaliere.</li>
+          <li><strong>Protezione dell'Ospite:</strong> In caso di incidente, emergenza medica, disastro naturale o scomparsa, consentono alle autorità e alle ambasciate di identificare e localizzare rapidamente i cittadini.</li>
+          <li><strong>Gestione Pubblica:</strong> Contribuiscono alle statistiche ufficiali e alle politiche di migrazione e turismo.</li>
+      </ul>
+      <h4><strong>Obbligatorietà e conseguenze del rifiuto</strong></h4>
+      <p>La fornitura di questi dati è <strong>strettamente obbligatoria per legge</strong>. Il rifiuto di fornire le informazioni necessarie impedisce legalmente il check-in e comporta l'<strong>annullamento immediato della prenotazione senza diritto al rimborso</strong>.</p>
+      <h4><strong>Privacy e protezione dei tuoi dati</strong></h4>
+      <p>I dati raccolti vengono utilizzati esclusivamente per adempiere a questo obbligo legale e sono trattati in conformità con il <strong>Regolamento Generale sulla Protezione dei Dati (GDPR)</strong>.</p>
+      <h4><strong>Informazioni aggiuntive e legislazione</strong></h4>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Visualizza le informazioni in PDF</a> | <a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a> | <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-34546475" target="_blank" class="pdf-link">Legge n. 23/2007 — Versione Consolidata (Gazzetta Ufficiale)</a></p>
     `,
     formTitle: "Modulo di Registrazione",
     requiredNotice: "Compilazione e invio obbligatori",
@@ -280,8 +322,21 @@ const texts = {
     legalHtml: `
       <h3><strong>Gesetzlich vorgeschriebener Hinweis — Gästeanmeldung (AIMA/SIBA)</strong></h3>
       <p>Dieses Formular erfasst die obligatorischen Identifikationsdaten aller Gäste gemäß den portugiesischen Rechtsvorschriften zur Meldung an AIMA über die SIBA-Plattform.</p>
-      <p>Diese Verpflichtung gilt für <strong>alle Gäste ohne portugiesische Staatsbürgerschaft</strong>, einschließlich <strong>Kinder und Babys</strong>.</p>
-      <p><a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a></p>
+      <h4><strong>Warum sind Ihre Daten obligatorisch?</strong></h4>
+      <p>Gemäß <strong>Artikel 45 des Gesetzes Nr. 23/2007</strong> sind alle Beherbergungsbetriebe gesetzlich verpflichtet, den Ein-, Auf- und Austritt ausländischer Staatsbürger den Grenzbehörden zu melden.</p>
+      <p>Diese Verpflichtung gilt für <strong>alle Gäste ohne portugiesische Staatsbürgerschaft</strong>, einschließlich <strong>Kinder und Babys</strong>, ausnahmslos.</p>
+      <h4><strong>Wofür werden diese Daten verwendet?</strong></h4>
+      <ul>
+          <li><strong>Nationale Sicherheit:</strong> Unterstützung bei der Prävention und Aufklärung schwerer Straftaten, des Terrorismus und grenzüberschreitender Netze.</li>
+          <li><strong>GästeSchutz:</strong> Im Falle eines Unfalls, medizinischer Notfälle, einer Naturkatastrophe oder eines Verschwindens ermöglichen sie Behörden und Botschaften die schnelle Identifizierung und Lokalisierung.</li>
+          <li><strong>Öffentliche Verwaltung:</strong> Beitrag zu offiziellen Statistiken sowie Migrations- und Tourismuspolitiken.</li>
+      </ul>
+      <h4><strong>Verpflichtung und Folgen einer Verweigerung</strong></h4>
+      <p>Die Bereitstellung dieser Daten ist <strong>gesetzlich vorgeschrieben</strong>. Die Weigerung macht den Check-in rechtlich unmöglich und kann zur <strong>sofortigen Stornierung der Reservierung ohne Erstattung</strong> führen.</p>
+      <h4><strong>Datenschutz und Privatsphäre</strong></h4>
+      <p>Die erhobenen Daten werden ausschließlich zur Erfüllung dieser gesetzlichen Verpflichtung verwendet und gemäß der <strong>Datenschutz-Grundverordnung (DSGVO)</strong> verarbeitet.</p>
+      <h4><strong>Zusätzliche Informationen und Gesetzgebung</strong></h4>
+      <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Informationen als PDF ansehen</a> | <a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a> | <a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-34546475" target="_blank" class="pdf-link">Gesetz Nr. 23/2007 — Konsolidierte Fassung (Amtsblatt)</a></p>
     `,
     formTitle: "Gästeanmeldeformular",
     requiredNotice: "Pflichtangabe",
