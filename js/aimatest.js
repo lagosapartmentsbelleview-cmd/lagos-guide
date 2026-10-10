@@ -20,7 +20,7 @@ if (!supportedLangs.includes(lang)) lang = "pt";
 let currentLang = lang;
 
 /* ============================================================
-   2. LINKS E TEXTOS FIXOS DO RODAPÉ (6 IDIOMAS)[cite: 3]
+   2. LINKS E TEXTOS FIXOS DO RODAPÉ (6 IDIOMAS)
 ============================================================ */
 const footerLinks = {
   pt: [
@@ -108,7 +108,6 @@ const paisesIso3Map = {
   "Saint Kitts and Nevis": "KNA", "Saint Lucia": "LCA", "Saint Vincent and the Grenadines": "VCT", "Samoa": "WSM", "San Marino": "SMR", "Sao Tome and Principe": "STP", "Saudi Arabia": "SAU", "Senegal": "SEN", "Serbia": "SRB", "Seychelles": "SYC", "Sierra Leone": "SLE", "Singapore": "SGP", "Slovakia": "SVK", "Slovenia": "SVN", "Solomon Islands": "SLB",
   "Somalia": "SOM", "South Africa": "ZAF", "South Korea": "KOR", "South Sudan": "SSD", "Spain": "ESP", "Sri Lanka": "LKA", "Sudan": "SDN", "Suriname": "SUR", "Sweden": "SWE", "Switzerland": "CHE", "Syria": "SYR", "Taiwan": "TWN", "Tajikistan": "TJK", "Tanzania": "TZA", "Thailand": "THA", "Timor-Leste": "TLS", "Togo": "TGO",
   "Tonga": "TON", "Trinidad and Tobago": "TTO", "Tunisia": "TUN", "Turkey": "TUR", "Turkmenistan": "TKM", "Tuvalu": "TUV", "Uganda": "UGA", "Ukraine": "UKR", "United Arab Emirates": "ARE", "United Kingdom": "GBR", "United States": "USA", "Uruguay": "URY", "Uzbekistan": "UZB", "Vanuatu": "VUT", "Vatican City": "VAT", "Venezuela": "VEN", "Vietnam": "VNM", "Yemen": "YEM", "Zambia": "ZMB", "Zimbabwe": "ZWE",
-  // Variações comuns em PT/ES/FR
   "Portugal": "PRT", "Espanha": "ESP", "España": "ESP", "França": "FRA", "Alemanha": "DEU", "Reino Unido": "GBR", "Itália": "ITA", "Países Baixos": "NLD", "Bélgica": "BEL", "Suíça": "CHE", "Irlanda": "IRL", "Brasil": "BRA", "Canadá": "CAN", "Polónia": "POL", "Áustria": "AUT", "Dinamarca": "DNK", "Suécia": "SWE", "Noruega": "NOR", "Finlândia": "FIN"
 };
 
@@ -120,11 +119,11 @@ function converterParaIso3(nomePais) {
 }
 
 // ============================================================
-// 4. DICIONÁRIO COMPLETO DE TEXTOS E IDIOMAS (TEXTS)[cite: 2]
+// 4. DICIONÁRIO COMPLETO DE TEXTOS E IDIOMAS (TEXTS)
 // ============================================================
 const texts = {
   pt: {
-    subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).[cite: 2]",
+    subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).",
     legalHtml: `
     <h3><strong>Aviso Legal Obrigatório — Registo de Hóspedes (AIMA/SIBA)</strong></h3>
     <p>Este formulário recolhe os dados obrigatórios de identificação de todos os hóspedes, conforme exigido pela legislação portuguesa para comunicação à AIMA (Agência para a Integração, Migrações e Asilo), através da plataforma SIBA.</p>
@@ -147,39 +146,39 @@ const texts = {
     <p><a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a></p>
     <p><a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445" target="_blank" class="pdf-link">Lei n.º 23/2007 — Versão Consolidada (Diário da República)</a></p>
     `,
-    formTitle: "Boletim de Alojamento",[cite: 2]
-    requiredNotice: "Preenchimento e envio obrigatório dos dados de todos os hóspedes adultos e crianças",[cite: 2]
-    stayDataTitle: "Dados da Estadia",[cite: 2]
-    checkinLabel: "Data de Check-in:",[cite: 2]
-    checkoutLabel: "Data de Check-out:",[cite: 2]
-    adultsLabel: "Nº de Hóspedes Adultos:",[cite: 2]
-    childrenLabel: "Nº de Hóspedes Crianças:",[cite: 2]
+    formTitle: "Boletim de Alojamento",
+    requiredNotice: "Preenchimento e envio obrigatório dos dados de todos os hóspedes adultos e crianças",
+    stayDataTitle: "Dados da Estadia",
+    checkinLabel: "Data de Check-in:",
+    checkoutLabel: "Data de Check-out:",
+    adultsLabel: "Nº de Hóspedes Adultos:",
+    childrenLabel: "Nº de Hóspedes Crianças:",
     wants_copy_title: "Pretende cópia deste formulário no seu e-mail?",
     radio_yes: "Sim",
     radio_no: "Não",
     email_label: "O seu E-mail:",
-    guestTitle: i => `Hóspede ${i}`,[cite: 2]
+    guestTitle: i => `Hóspede ${i}`,
     fields: {
-      fullName: "Nome Completo:",[cite: 2]
-      birthDate: "Data de Nascimento:",[cite: 2]
-      birthPlace: "Local de Nascimento:",[cite: 2]
-      nationality: "Nacionalidade:",[cite: 2]
-      residencePlace: "Local de Residência:",[cite: 2]
-      residenceCountry: "País de Residência:",[cite: 2]
-      docNumber: "Número do Documento:",[cite: 2]
-      docType: "Tipo de Documento:",[cite: 2]
-      docTypePassport: "Passaporte",[cite: 2]
-      docTypeID: "Bilhete de Identidade / Cartão de Cidadão",[cite: 2]
-      docCountry: "País Emissor do Documento:"[cite: 2]
+      fullName: "Nome Completo:",
+      birthDate: "Data de Nascimento:",
+      birthPlace: "Local de Nascimento:",
+      nationality: "Nacionalidade:",
+      residencePlace: "Local de Residência:",
+      residenceCountry: "País de Residência:",
+      docNumber: "Número do Documento:",
+      docType: "Tipo de Documento:",
+      docTypePassport: "Passaporte",
+      docTypeID: "Bilhete de Identidade / Cartão de Cidadão",
+      docCountry: "País Emissor do Documento:"
     },
-    placeholder_checkin: "dd/mm/aaaa",[cite: 2]
-    placeholder_checkout: "dd/mm/aaaa",[cite: 2]
-    placeholder_select: "Selecione",[cite: 2]
-    submit: "Enviar Boletim de Alojamento",[cite: 2]
-    aima_success: "Formulário enviado com sucesso!"[cite: 2]
+    placeholder_checkin: "dd/mm/aaaa",
+    placeholder_checkout: "dd/mm/aaaa",
+    placeholder_select: "Selecione",
+    submit: "Enviar Boletim de Alojamento",
+    aima_success: "Formulário enviado com sucesso!"
   },
   en: {
-    subtitle: "Mandatory Accommodation Registration Form (AIMA, formerly SEF).[cite: 2]",
+    subtitle: "Mandatory Accommodation Registration Form (AIMA, formerly SEF).",
     legalHtml: `
     <h3><strong>Mandatory Legal Notice — Guest Registration (AIMA/SIBA)</strong></h3>
     <p>This form collects the mandatory identification data of all guests, as required by Portuguese law for communication to AIMA through the SIBA platform.</p>
@@ -201,39 +200,39 @@ const texts = {
     <p><a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a></p>
     <p><a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445" target="_blank" class="pdf-link">Law 23/2007 — Consolidated Version</a></p>
     `,
-    formTitle: "Accommodation Registration Form",[cite: 2]
-    requiredNotice: "Mandatory completion and submission of all data for every adult and child guest",[cite: 2]
-    stayDataTitle: "Stay Information",[cite: 2]
-    checkinLabel: "Check‑in Date:",[cite: 2]
-    checkoutLabel: "Check‑out Date:",[cite: 2]
-    adultsLabel: "Number of Adult Guests:",[cite: 2]
-    childrenLabel: "Number of Child Guests:",[cite: 2]
+    formTitle: "Accommodation Registration Form",
+    requiredNotice: "Mandatory completion and submission of all data for every adult and child guest",
+    stayDataTitle: "Stay Information",
+    checkinLabel: "Check‑in Date:",
+    checkoutLabel: "Check‑out Date:",
+    adultsLabel: "Number of Adult Guests:",
+    childrenLabel: "Number of Child Guests:",
     wants_copy_title: "Would you like a copy of this form sent to your email?",
     radio_yes: "Yes",
     radio_no: "No",
     email_label: "Your Email:",
-    guestTitle: i => `Guest ${i}`,[cite: 2]
+    guestTitle: i => `Guest ${i}`,
     fields: {
-      fullName: "Full Name:",[cite: 2]
-      birthDate: "Date of Birth:",[cite: 2]
-      birthPlace: "Place of Birth:",[cite: 2]
-      nationality: "Nationality:",[cite: 2]
-      residencePlace: "Place of Residence:",[cite: 2]
-      residenceCountry: "Country of Residence:",[cite: 2]
-      docNumber: "Document Number:",[cite: 2]
-      docType: "Document Type:",[cite: 2]
-      docTypePassport: "Passport",[cite: 2]
-      docTypeID: "Identity Card",[cite: 2]
-      docCountry: "Issuing Country:"[cite: 2]
+      fullName: "Full Name:",
+      birthDate: "Date of Birth:",
+      birthPlace: "Place of Birth:",
+      nationality: "Nationality:",
+      residencePlace: "Place of Residence:",
+      residenceCountry: "Country of Residence:",
+      docNumber: "Document Number:",
+      docType: "Document Type:",
+      docTypePassport: "Passport",
+      docTypeID: "Identity Card",
+      docCountry: "Issuing Country:"
     },
-    placeholder_checkin: "dd/mm/yyyy",[cite: 2]
-    placeholder_checkout: "dd/mm/yyyy",[cite: 2]
-    placeholder_select: "Select",[cite: 2]
-    submit: "Submit Accommodation Form",[cite: 2]
-    aima_success: "Form submitted successfully!"[cite: 2]
+    placeholder_checkin: "dd/mm/yyyy",
+    placeholder_checkout: "dd/mm/yyyy",
+    placeholder_select: "Select",
+    submit: "Submit Accommodation Form",
+    aima_success: "Form submitted successfully!"
   },
   es: {
-    subtitle: "Formulario obligatorio de Registro de Alojamiento (AIMA, antiguo SEF).[cite: 2]",
+    subtitle: "Formulario obligatorio de Registro de Alojamiento (AIMA, antiguo SEF).",
     legalHtml: `
     <h3><strong>Aviso Legal Obligatorio — Registro de Huéspedes (AIMA/SIBA)</strong></h3>
     <p>Este formulario recoge los datos obligatorios de identificación de todos los huéspedes, según lo exige la legislación portuguesa para su comunicación a AIMA a través de la plataforma SIBA.</p>
@@ -247,7 +246,7 @@ const texts = {
         <li><strong>Gestión Pública:</strong> Contribuyen a estadísticas oficiales de turismo.</li>
     </ul>
     <h4><strong>Obligatoriedad y consecuencias de la negativa</strong></h4>
-    <p>La entrega de estos datos es <strong>estrictamente obligatoria por ley</strong>. Negarse impide legalmente realizar el check‑in e implica la <strong>cancelación inmediata de la reserva sin derecho a reembolso</strong>.</p>
+    <p>La entrega de estos datos es <strong>estritamente obligatoria por ley</strong>. Negarse impide legalmente realizar el check‑in e implica la <strong>cancelación inmediata de la reserva sin derecho a reembolso</strong>.</p>
     <h4><strong>Privacidad y protección de datos</strong></h4>
     <p>Tratados conforme al <strong>RGPD</strong>.</p>
     <h4><strong>Información adicional y legislación</strong></h4>
@@ -255,39 +254,39 @@ const texts = {
     <p><a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a></p>
     <p><a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445" target="_blank" class="pdf-link">Ley n.º 23/2007 — Versión Consolidada</a></p>
     `,
-    formTitle: "Registro de Alojamiento",[cite: 2]
-    requiredNotice: "Relleno y envío obligatorios de los datos de todos los huéspedes adultos y niños",[cite: 2]
-    stayDataTitle: "Datos de la Estancia",[cite: 2]
-    checkinLabel: "Fecha de Check‑in:",[cite: 2]
-    checkoutLabel: "Fecha de Check‑out:",[cite: 2]
-    adultsLabel: "Número de Huéspedes Adultos:",[cite: 2]
-    childrenLabel: "Número de Huéspedes Niños:",[cite: 2]
+    formTitle: "Registro de Alojamiento",
+    requiredNotice: "Relleno y envío obligatorios de los datos de todos los huéspedes adultos y niños",
+    stayDataTitle: "Datos de la Estancia",
+    checkinLabel: "Fecha de Check‑in:",
+    checkoutLabel: "Fecha de Check‑out:",
+    adultsLabel: "Número de Huéspedes Adultos:",
+    childrenLabel: "Número de Huéspedes Niños:",
     wants_copy_title: "¿Desea una copia de este formulario en su correo electrónico?",
     radio_yes: "Sí",
     radio_no: "No",
     email_label: "Su Correo Electrónico:",
-    guestTitle: i => `Huésped ${i}`,[cite: 2]
+    guestTitle: i => `Huésped ${i}`,
     fields: {
-      fullName: "Nombre Completo:",[cite: 2]
-      birthDate: "Fecha de Nacimiento:",[cite: 2]
-      birthPlace: "Lugar de Nacimiento:",[cite: 2]
-      nationality: "Nacionalidad:",[cite: 2]
-      residencePlace: "Lugar de Residencia:",[cite: 2]
-      residenceCountry: "País de Residencia:",[cite: 2]
-      docNumber: "Número del Documento:",[cite: 2]
-      docType: "Tipo de Documento:",[cite: 2]
-      docTypePassport: "Pasaporte",[cite: 2]
-      docTypeID: "Documento de Identidad",[cite: 2]
-      docCountry: "País Emisor del Documento:"[cite: 2]
+      fullName: "Nombre Completo:",
+      birthDate: "Fecha de Nacimiento:",
+      birthPlace: "Lugar de Nacimiento:",
+      nationality: "Nacionalidad:",
+      residencePlace: "Lugar de Residencia:",
+      residenceCountry: "País de Residencia:",
+      docNumber: "Número del Documento:",
+      docType: "Tipo de Documento:",
+      docTypePassport: "Pasaporte",
+      docTypeID: "Documento de Identidad",
+      docCountry: "País Emisor del Documento:"
     },
-    placeholder_checkin: "dd/mm/aaaa",[cite: 2]
-    placeholder_checkout: "dd/mm/aaaa",[cite: 2]
-    placeholder_select: "Seleccionar",[cite: 2]
-    submit: "Enviar Registro de Alojamiento",[cite: 2]
-    aima_success: "¡Formulario enviado con éxito!"[cite: 2]
+    placeholder_checkin: "dd/mm/aaaa",
+    placeholder_checkout: "dd/mm/aaaa",
+    placeholder_select: "Seleccionar",
+    submit: "Enviar Registro de Alojamiento",
+    aima_success: "¡Formulario enviado con éxito!"
   },
   fr: {
-    subtitle: "Formulaire obligatoire d’Enregistrement des Hébergements (AIMA).[cite: 2]",
+    subtitle: "Formulaire obligatoire d’Enregistrement des Hébergements (AIMA).",
     legalHtml: `
     <h3><strong>Avis Légal Obligatoire — Enregistrement des Hôtes (AIMA/SIBA)</strong></h3>
     <p>Ce formulaire recueille les données d’identification obligatoires de tous les hôtes, conformément à la législation portugaise via la plateforme SIBA.</p>
@@ -300,39 +299,39 @@ const texts = {
     <p><a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a></p>
     <p><a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445" target="_blank" class="pdf-link">Loi n.º 23/2007</a></p>
     `,
-    formTitle: "Formulaire d’Enregistrement",[cite: 2]
-    requiredNotice: "Remplissage et envoi obligatoires des données de tous les hôtes, adultes et enfants",[cite: 2]
-    stayDataTitle: "Données du Séjour",[cite: 2]
-    checkinLabel: "Date d’Arrivée :",[cite: 2]
-    checkoutLabel: "Date de Départ :",[cite: 2]
-    adultsLabel: "Nombre d’Adultes :",[cite: 2]
-    childrenLabel: "Nombre d’Enfants :",[cite: 2]
+    formTitle: "Formulaire d’Enregistrement",
+    requiredNotice: "Remplissage et envoi obligatoires des données de tous les hôtes, adultes et enfants",
+    stayDataTitle: "Données du Séjour",
+    checkinLabel: "Date d’Arrivée :",
+    checkoutLabel: "Date de Départ :",
+    adultsLabel: "Nombre d’Adultes :",
+    childrenLabel: "Nombre d’Enfants :",
     wants_copy_title: "Souhaitez-vous une copie de ce formulaire par e-mail ?",
     radio_yes: "Oui",
     radio_no: "Non",
     email_label: "Votre E-mail :",
-    guestTitle: i => `Hôte ${i}`,[cite: 2]
+    guestTitle: i => `Hôte ${i}`,
     fields: {
-      fullName: "Nom Complet :",[cite: 2]
-      birthDate: "Date de Naissance :",[cite: 2]
-      birthPlace: "Lieu de Naissance :",[cite: 2]
-      nationality: "Nationalité :",[cite: 2]
-      residencePlace: "Lieu de Résidence :",[cite: 2]
-      residenceCountry: "Pays de Résidence :",[cite: 2]
-      docNumber: "Numéro du Document :",[cite: 2]
-      docType: "Type de Document :",[cite: 2]
-      docTypePassport: "Passeport",[cite: 2]
-      docTypeID: "Carte d’Identité",[cite: 2]
-      docCountry: "Pays Émetteur :"[cite: 2]
+      fullName: "Nom Complet :",
+      birthDate: "Date de Naissance :",
+      birthPlace: "Lieu de Naissance :",
+      nationality: "Nationalité :",
+      residencePlace: "Lieu de Résidence :",
+      residenceCountry: "Pays de Résidence :",
+      docNumber: "Numéro du Document :",
+      docType: "Type de Document :",
+      docTypePassport: "Passeport",
+      docTypeID: "Carte d’Identité",
+      docCountry: "Pays Émetteur :"
     },
-    placeholder_checkin: "jj/mm/aaaa",[cite: 2]
-    placeholder_checkout: "jj/mm/aaaa",[cite: 2]
-    placeholder_select: "Sélectionner",[cite: 2]
-    submit: "Envoyer le Formulaire",[cite: 2]
-    aima_success: "Formulaire envoyé avec succès !"[cite: 2]
+    placeholder_checkin: "jj/mm/aaaa",
+    placeholder_checkout: "jj/mm/aaaa",
+    placeholder_select: "Sélectionner",
+    submit: "Envoyer le Formulaire",
+    aima_success: "Formulaire envoyé avec succès !"
   },
   it: {
-    subtitle: "Modulo obbligatorio di Registrazione degli Ospiti (AIMA).[cite: 2]",
+    subtitle: "Modulo obbligatorio di Registrazione degli Ospiti (AIMA).",
     legalHtml: `
     <h3><strong>Avviso Legale Obbligatorio — Registrazione degli Ospiti (AIMA/SIBA)</strong></h3>
     <p>Questo modulo raccoglie i dati identificativi obbligatori di tutti gli ospiti ai sensi della legge portoghese tramite la piattaforma SIBA.</p>
@@ -340,39 +339,39 @@ const texts = {
     <p><a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a></p>
     <p><a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445" target="_blank" class="pdf-link">Legge n.º 23/2007</a></p>
     `,
-    formTitle: "Modulo di Registrazione",[cite: 2]
-    requiredNotice: "Compilazione e invio obbligatori dei dati di tutti gli ospiti adulti e bambini",[cite: 2]
-    stayDataTitle: "Dati del Soggiorno",[cite: 2]
-    checkinLabel: "Data di Check‑in:",[cite: 2]
-    checkoutLabel: "Data di Check‑out:",[cite: 2]
-    adultsLabel: "Numero di Ospiti Adulti:",[cite: 2]
-    childrenLabel: "Numero di Ospiti Bambini:",[cite: 2]
+    formTitle: "Modulo di Registrazione",
+    requiredNotice: "Compilazione e invio obbligatori dei dati di tutti gli ospiti adulti e bambini",
+    stayDataTitle: "Dati del Soggiorno",
+    checkinLabel: "Data di Check‑in:",
+    checkoutLabel: "Data di Check‑out:",
+    adultsLabel: "Numero di Ospiti Adulti:",
+    childrenLabel: "Numero di Ospiti Bambini:",
     wants_copy_title: "Vuoi una copia di questo modulo nella tua email?",
     radio_yes: "Sì",
     radio_no: "No",
     email_label: "La tua Email:",
-    guestTitle: i => `Ospite ${i}`,[cite: 2]
+    guestTitle: i => `Ospite ${i}`,
     fields: {
-      fullName: "Nome Completo:",[cite: 2]
-      birthDate: "Data di Nascita:",[cite: 2]
-      birthPlace: "Luogo di Nascita:",[cite: 2]
-      nationality: "Nazionalità:",[cite: 2]
-      residencePlace: "Luogo di Residenza:",[cite: 2]
-      residenceCountry: "Paese di Residenza:",[cite: 2]
-      docNumber: "Numero del Documento:",[cite: 2]
-      docType: "Tipo de Documento:",[cite: 2]
-      docTypePassport: "Passaporto",[cite: 2]
-      docTypeID: "Carta d’Identità",[cite: 2]
-      docCountry: "Paese di Emissione:"[cite: 2]
+      fullName: "Nome Completo:",
+      birthDate: "Data di Nascita:",
+      birthPlace: "Luogo di Nascita:",
+      nationality: "Nazionalità:",
+      residencePlace: "Luogo di Residenza:",
+      residenceCountry: "Paese di Residenza:",
+      docNumber: "Numero del Documento:",
+      docType: "Tipo de Documento:",
+      docTypePassport: "Passaporto",
+      docTypeID: "Carta d’Identità",
+      docCountry: "Paese di Emissione:"
     },
-    placeholder_checkin: "gg/mm/aaaa",[cite: 2]
-    placeholder_checkout: "gg/mm/aaaa",[cite: 2]
-    placeholder_select: "Seleziona",[cite: 2]
-    submit: "Invia Modulo di Registrazione",[cite: 2]
-    aima_success: "Modulo inviato con successo!"[cite: 2]
+    placeholder_checkin: "gg/mm/aaaa",
+    placeholder_checkout: "gg/mm/aaaa",
+    placeholder_select: "Seleziona",
+    submit: "Invia Modulo di Registrazione",
+    aima_success: "Modulo inviato con successo!"
   },
   de: {
-    subtitle: "Pflichtformular zur Gästeanmeldung (AIMA).[cite: 2]",
+    subtitle: "Pflichtformular zur Gästeanmeldung (AIMA).",
     legalHtml: `
     <h3><strong>Gesetzlich vorgeschriebener Hinweis — Gästeanmeldung (AIMA/SIBA)</strong></h3>
     <p>Dieses Formular erfasst die obligatorischen Identifikationsdaten aller Gäste gemäß portugiesischem Recht über die SIBA-Plattform.</p>
@@ -380,46 +379,46 @@ const texts = {
     <p><a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a></p>
     <p><a href="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2007-67564445" target="_blank" class="pdf-link">Gesetz Nr. 23/2007</a></p>
     `,
-    formTitle: "Gästeanmeldeformular",[cite: 2]
-    requiredNotice: "Pflichtangabe und Übermittlung der Daten aller erwachsenen Gäste und Kinder",[cite: 2]
-    stayDataTitle: "Angaben zum Aufenthalt",[cite: 2]
-    checkinLabel: "Check‑in‑Datum:",[cite: 2]
-    checkoutLabel: "Check‑out‑Datum:",[cite: 2]
-    adultsLabel: "Anzahl der erwachsenen Gäste:",[cite: 2]
-    childrenLabel: "Anzahl der Kinder:",[cite: 2]
+    formTitle: "Gästeanmeldeformular",
+    requiredNotice: "Pflichtangabe und Übermittlung der Daten aller erwachsenen Gäste und Kinder",
+    stayDataTitle: "Angaben zum Aufenthalt",
+    checkinLabel: "Check‑in‑Datum:",
+    checkoutLabel: "Check‑out‑Datum:",
+    adultsLabel: "Anzahl der erwachsenen Gäste:",
+    childrenLabel: "Anzahl der Kinder:",
     wants_copy_title: "Möchten Sie eine Kopie dieses Formulars per E-Mail?",
     radio_yes: "Ja",
     radio_no: "Nein",
     email_label: "Ihre E-Mail:",
-    guestTitle: i => `Gast ${i}`,[cite: 2]
+    guestTitle: i => `Gast ${i}`,
     fields: {
-      fullName: "Vollständiger Name:",[cite: 2]
-      birthDate: "Geburtsdatum:",[cite: 2]
-      birthPlace: "Geburtsort:",[cite: 2]
-      nationality: "Staatsangehörigkeit:",[cite: 2]
-      residencePlace: "Wohnort:",[cite: 2]
-      residenceCountry: "Wohnsitzland:",[cite: 2]
-      docNumber: "Dokumentnummer:",[cite: 2]
-      docType: "Dokumenttyp:",[cite: 2]
-      docTypePassport: "Reisepass",[cite: 2]
-      docTypeID: "Personalausweis",[cite: 2]
-      docCountry: "Ausstellungsland:"[cite: 2]
+      fullName: "Vollständiger Name:",
+      birthDate: "Geburtsdatum:",
+      birthPlace: "Geburtsort:",
+      nationality: "Staatsangehörigkeit:",
+      residencePlace: "Wohnort:",
+      residenceCountry: "Wohnsitzland:",
+      docNumber: "Dokumentnummer:",
+      docType: "Dokumenttyp:",
+      docTypePassport: "Reisepass",
+      docTypeID: "Personalausweis",
+      docCountry: "Ausstellungsland:"
     },
-    placeholder_checkin: "TT/MM/JJJJ",[cite: 2]
-    placeholder_checkout: "TT/MM/JJJJ",[cite: 2]
-    placeholder_select: "Auswählen",[cite: 2]
-    submit: "Formular absenden",[cite: 2]
-    aima_success: "Formular erfolgreich gesendet!"[cite: 2]
+    placeholder_checkin: "TT/MM/JJJJ",
+    placeholder_checkout: "TT/MM/JJJJ",
+    placeholder_select: "Auswählen",
+    submit: "Formular absenden",
+    aima_success: "Formular erfolgreich gesendet!"
   }
 };
 
 const faqTitles = {
-  pt: "Perguntas Frequentes (FAQ)",[cite: 2]
-  en: "Frequently Asked Questions (FAQ)",[cite: 2]
-  es: "Preguntas Frecuentes (FAQ)",[cite: 2]
-  fr: "Foire aux Questions (FAQ)",[cite: 2]
-  it: "Domande Frequenti (FAQ)",[cite: 2]
-  de: "Häufig gestellte Fragen (FAQ)"[cite: 2]
+  pt: "Perguntas Frequentes (FAQ)",
+  en: "Frequently Asked Questions (FAQ)",
+  es: "Preguntas Frecuentes (FAQ)",
+  fr: "Foire aux Questions (FAQ)",
+  it: "Domande Frequenti (FAQ)",
+  de: "Häufig gestellte Fragen (FAQ)"
 };
 
 const faqTexts = {
