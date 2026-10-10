@@ -1,5 +1,5 @@
 // ============================================================
-// AIMATEST.JS — FICHEIRO UNIFICADO DEFINITIVO (LAYOUT + 6 IDIOMAS + FAQs + SIBA + FIREBASE + EMAILJS)
+// AIMATEST.JS — FICHEIRO UNIFICADO TOTALMENTE COMPLETO (AIMA + LANG + SIBA + FIREBASE)
 // ============================================================
 
 /* ============================================================
@@ -108,7 +108,6 @@ const paisesIso3Map = {
   "Saint Kitts and Nevis": "KNA", "Saint Lucia": "LCA", "Saint Vincent and the Grenadines": "VCT", "Samoa": "WSM", "San Marino": "SMR", "Sao Tome and Principe": "STP", "Saudi Arabia": "SAU", "Senegal": "SEN", "Serbia": "SRB", "Seychelles": "SYC", "Sierra Leone": "SLE", "Singapore": "SGP", "Slovakia": "SVK", "Slovenia": "SVN", "Solomon Islands": "SLB",
   "Somalia": "SOM", "South Africa": "ZAF", "South Korea": "KOR", "South Sudan": "SSD", "Spain": "ESP", "Sri Lanka": "LKA", "Sudan": "SDN", "Suriname": "SUR", "Sweden": "SWE", "Switzerland": "CHE", "Syria": "SYR", "Taiwan": "TWN", "Tajikistan": "TJK", "Tanzania": "TZA", "Thailand": "THA", "Timor-Leste": "TLS", "Togo": "TGO",
   "Tonga": "TON", "Trinidad and Tobago": "TTO", "Tunisia": "TUN", "Turkey": "TUR", "Turkmenistan": "TKM", "Tuvalu": "TUV", "Uganda": "UGA", "Ukraine": "UKR", "United Arab Emirates": "ARE", "United Kingdom": "GBR", "United States": "USA", "Uruguay": "URY", "Uzbekistan": "UZB", "Vanuatu": "VUT", "Vatican City": "VAT", "Venezuela": "VEN", "Vietnam": "VNM", "Yemen": "YEM", "Zambia": "ZMB", "Zimbabwe": "ZWE",
-  // Variações linguísticas
   "Portugal": "PRT", "Portogallo": "PRT",
   "Espanha": "ESP", "España": "ESP", "Spain": "ESP", "Espagne": "ESP", "Spagna": "ESP", "Spanien": "ESP",
   "França": "FRA", "France": "FRA", "Francia": "FRA", "Frankreich": "FRA",
@@ -137,7 +136,7 @@ function converterParaIso3(nomePais) {
 }
 
 // ============================================================
-// 4. DICIONÁRIO COMPLETO DE TEXTOS (PT, EN, ES, FR, IT, DE)
+// 4. TEXTOS COMPLETOS E LEGAIS EM 6 IDIOMAS (TEXTS)
 // ============================================================
 const texts = {
   pt: {
@@ -430,6 +429,9 @@ const texts = {
   }
 };
 
+// ============================================================
+// 5. FAQ COMPLETA EM TODAS AS LÍNGUAS
+// ============================================================
 const faqTitles = {
   pt: "Perguntas Frequentes (FAQ)",
   en: "Frequently Asked Questions (FAQ)",
@@ -443,38 +445,50 @@ const faqTexts = {
   pt: `
     <h3>1. Obrigatoriedade e finalidade</h3>
     <p><strong>Porque tenho de fornecer os meus dados ao alojamento?</strong><br>A lei portuguesa obriga todos os alojamentos a comunicar à AIMA a entrada e saída de cidadãos estrangeiros.</p>
-    <h3>2. Quem está obrigado?</h3>
-    <p>Aplica-se a todos os cidadãos sem nacionalidade portuguesa, incluindo crianças e bebés.</p>
+    <p><strong>O que é o SIBA?</strong><br>O SIBA é o sistema oficial onde os alojamentos registam eletronicamente os dados dos hóspedes estrangeiros.</p>
+    <p><strong>Sou cidadão europeu. Também tenho de preencher o boletim?</strong><br>Sim. A obrigação aplica-se a todos os cidadãos que não tenham nacionalidade portuguesa.</p>
+    <p><strong>Bebés e crianças também têm de ser comunicados?</strong><br>Sim. A comunicação é obrigatória para todas as idades.</p>
+    <p><strong>O que acontece se eu me recusar a fornecer os meus dados?</strong><br>O alojamento não pode legalmente realizar o check-in. A reserva pode ser anulada sem reembolso.</p>
   `,
   en: `
     <h3>1. Obligation and purpose</h3>
     <p><strong>Why do I have to provide my personal data?</strong><br>Portuguese law requires all accommodations to report the entry and exit of foreign citizens to AIMA.</p>
-    <h3>2. Who is required?</h3>
-    <p>Applies to all guests without Portuguese nationality, including children and infants.</p>
+    <p><strong>What is SIBA?</strong><br>SIBA is the official platform where accommodations register guest information electronically.</p>
+    <p><strong>I am an EU citizen. Do I still need to fill this form?</strong><br>Yes. The obligation applies to all non‑Portuguese citizens.</p>
+    <p><strong>Are babies and children also reported?</strong><br>Yes. Reporting is mandatory for all ages.</p>
+    <p><strong>What happens if I refuse to provide my data?</strong><br>The accommodation cannot legally complete your check‑in. The reservation may be cancelled without refund.</p>
   `,
   es: `
     <h3>1. Obligación y finalidad</h3>
     <p><strong>¿Por qué debo proporcionar mis datos?</strong><br>La ley portuguesa exige que todos los alojamientos comuniquen a AIMA la entrada y salida de extranjeros.</p>
-    <h3>2. ¿Quién está obligado?</h3>
-    <p>Se aplica a todos los huéspedes sin nacionalidad portuguesa, incluidos niños y bebés.</p>
+    <p><strong>¿Qué es SIBA?</strong><br>SIBA es la plataforma oficial donde los alojamientos registran electrónicamente los datos de los huéspedes.</p>
+    <p><strong>Soy ciudadano de la UE. ¿También debo rellenar el formulario?</strong><br>Sí. La obligación se aplica a todos los huéspedes sin nacionalidad portuguesa.</p>
+    <p><strong>¿Los bebés y niños también deben ser comunicados?</strong><br>Sí. La comunicación es obligatoria para todas las edades.</p>
+    <p><strong>¿Qué ocurre si me niego a proporcionar mis datos?</strong><br>El alojamiento no puede legalmente realizar el check‑in. La reserva puede ser cancelada sin reembolso.</p>
   `,
   fr: `
     <h3>1. Obligation et finalité</h3>
     <p><strong>Pourquoi dois‑je fournir mes données ?</strong><br>La loi portugaise oblige tous les hébergements à communiquer à l’AIMA l’entrée et la sortie des citoyens étrangers.</p>
-    <h3>2. Qui est concerné ?</h3>
-    <p>S’applique à tous les hôtes sans nationalité portugaise, y compris les enfants.</p>
+    <p><strong>Qu’est‑ce que le SIBA ?</strong><br>Le SIBA est la plateforme officielle où les hébergements enregistrent les données des hôtes.</p>
+    <p><strong>Je suis citoyen de l’UE. Dois‑je remplir ce formulaire ?</strong><br>Oui. L’obligation s’applique à toute personne n’ayant pas la nationalité portugaise.</p>
+    <p><strong>Les bébés et enfants doivent‑ils aussi être déclarés ?</strong><br>Oui. La déclaration est obligatoire pour tous les âges.</p>
+    <p><strong>Que se passe‑t‑il si je refuse de fournir mes données ?</strong><br>L’hébergement ne peut légalement pas effectuer votre check‑in.</p>
   `,
   it: `
     <h3>1. Obbligatorietà e finalità</h3>
     <p><strong>Perché devo fornire i miei dati?</strong><br>La legge portoghese obbliga tutte le strutture ricettive a comunicare ad AIMA l’ingresso e l’uscita degli stranieri.</p>
-    <h3>2. Chi è obbligato?</h3>
-    <p>Si applica a tutti gli ospiti senza cittadinanza portoghese, inclusi bambini e neonati.</p>
+    <p><strong>Che cos’è il SIBA?</strong><br>SIBA è la piattaforma ufficiale in cui le strutture registrano elettronicamente i dati.</p>
+    <p><strong>Sono cittadino dell’UE. Devo comunque compilare il modulo?</strong><br>Sì. L’obbligo si applica a tutti gli ospiti senza cittadinanza portoghese.</p>
+    <p><strong>Bambini e neonati devono essere comunicati?</strong><br>Sì. La comunicazione è obbligatoria per tutte le età.</p>
+    <p><strong>Cosa succede se rifiuto di fornire i miei dati?</strong><br>La struttura non può legalmente effettuare il check‑in.</p>
   `,
   de: `
     <h3>1. Verpflichtung und Zweck</h3>
     <p><strong>Warum muss ich meine Daten angeben?</strong><br>Das portugiesische Gesetz verpflichtet alle Unterkünfte, den Ein‑ und Ausstieg ausländischer Staatsbürger an AIMA zu melden.</p>
-    <h3>2. Wer ist verpflichtet?</h3>
-    <p>Gilt für alle Gäste ohne portugiesische Staatsangehörigkeit, einschließlich Kinder und Babys.</p>
+    <p><strong>Was ist SIBA?</strong><br>SIBA ist die offizielle Plattform, auf der Unterkünfte die Daten registrieren.</p>
+    <p><strong>Ich bin EU‑Bürger. Muss ich das Formular trotzdem ausfüllen?</strong><br>Ja. Die Verpflichtung gilt für alle Personen ohne portugiesische Staatsangehörigkeit.</p>
+    <p><strong>Müssen auch Babys und Kinder gemeldet werden?</strong><br>Ja. Die Meldung ist für alle Altersgruppen verpflichtend.</p>
+    <p><strong>Was passiert, wenn ich mich weigere, meine Daten anzugeben?</strong><br>Die Unterkunft darf den Check‑in rechtlich nicht durchführen.</p>
   `
 };
 
@@ -509,7 +523,7 @@ const countries = [
 ];
 
 // ============================================================
-// 5. FUNÇÕES DE RENDERIZAÇÃO E GESTÃO DO IDIOMA
+// 6. FUNÇÕES DE RENDERIZAÇÃO E GESTÃO DO IDIOMA
 // ============================================================
 function setLanguage(langCode) {
   currentLang = supportedLangs.includes(langCode) ? langCode : "pt";
@@ -582,7 +596,7 @@ function setLanguage(langCode) {
 window.setLanguage = setLanguage;
 
 // ============================================================
-// 6. GERAÇÃO DINÂMICA DE HÓSPEDES (LAYOUT IDÊNTICO)
+// 7. GERAÇÃO DINÂMICA DE HÓSPEDES
 // ============================================================
 function generateGuestFields() {
   const t = texts[currentLang];
@@ -680,7 +694,7 @@ function generateGuestFields() {
 }
 
 // ============================================================
-// 7. SUBMISSÃO INTEGRAL (FIREBASE + SIBA ISO-3 + EMAILJS)
+// 8. SUBMISSÃO INTEGRAL (FIREBASE + SIBA ISO-3 + EMAILJS)
 // ============================================================
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
