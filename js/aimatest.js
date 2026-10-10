@@ -1,9 +1,9 @@
 // ============================================================
-// JS/AIMATEST.JS — INTEGRAÇÃO FIREBASE + SIBA + CÓPIA E-MAIL
+// JS/AIMATEST.JS — INTERCEÇÃO LIMPA (MANTÉM O AIMA.JS INTACTO)
 // ============================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Capturar unidade/apartamento do URL (ex: ?apt=2204 ou ?unidade=2203)
+  // 1. Capturar parâmetro de apartamento/unidade do URL (ex: ?apt=2204 ou ?unidade=2203)
   const urlParams = new URLSearchParams(window.location.search);
   const aptParam = urlParams.get("apt") || urlParams.get("unidade") || "2203";
   const hiddenUnidade = document.getElementById("hiddenUnidade");
@@ -12,24 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("aimaForm");
   if (!form) return;
 
-  // Substituir o formulário por um clone para anular o comportamento antigo do aima.js
-  const newForm = form.cloneNode(true);
-  form.parentNode.replaceChild(newForm, form);
-
-  // Reativar os ouvintes dos inputs numéricos para gerar os hóspedes dinamicamente
-  const adultsInput = document.getElementById("adults");
-  const childrenInput = document.getElementById("children");
-
-  if (adultsInput && typeof generateGuestFields === "function") {
-    adultsInput.addEventListener("input", generateGuestFields);
-  }
-  if (childrenInput && typeof generateGuestFields === "function") {
-    childrenInput.addEventListener("input", generateGuestFields);
-  }
-
-  // 2. Novo evento de submissão unificado
-  newForm.addEventListener("submit", async function (e) {
+  // 2. Intercetar o submit na fase de captura (true) para parar o Web3Forms original do aima.js
+  // Sem clonar o form, mantemos todas as funções de calendário e geração de hóspedes do aima.js intactas.
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
+    e.stopImmediatePropagation(); // Impede o aima.js de executar o envio antigo
 
     const checkin = document.getElementById("checkinDate").value;
     const checkout = document.getElementById("checkoutDate").value;
@@ -49,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalGuests = adults + children;
     const unidadeSelecionada = document.getElementById("hiddenUnidade")?.value || "2203";
 
-    // Recolher todos os hóspedes gerados pelo aima.js
+    // Recolher todos os hóspedes gerados dinamicamente pelo aima.js
     const hospedes = [];
     for (let i = 1; i <= totalGuests; i++) {
       hospedes.push({
@@ -64,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Verificar opção de cópia por e-mail
+    // Verificar opção de cópia por e-mail[cite: 13]
     const selectedCopy = document.querySelector('input[name="wantsCopyRadio"]:checked')?.value;
     const wantsCopy = selectedCopy === "sim";
     const emailDigitado = document.getElementById("clientEmail")?.value.trim() || "";
@@ -96,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         await db.collection("boletins").add(novoBoletim);
       }
 
-      // B. Enviar cópia por EmailJS se o cliente pediu e preencheu e-mail
+      // B. Enviar cópia por EmailJS se o cliente pediu e preencheu e-mail[cite: 13]
       if (wantsCopy && emailDigitado && typeof emailjs !== 'undefined') {
         await emailjs.send(
           "service_funp519",
@@ -106,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
             subject_text: "Cópia do Registo de Hóspedes - AIMA",
             guest_name: hospedes[0]?.nome || "Hóspede",
             checkin: checkin,
-            checkout: checkout
+            checkout: checkin
           },
           "imhA9ilHaWGF1hxYz"
         );
@@ -143,5 +130,5 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.disabled = false;
       }
     }
-  });
+  }, true); // O 'true' ativa a fase de captura para intersetar antes do aima.js
 });
