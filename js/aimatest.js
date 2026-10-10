@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ============================================================
-// 2. LISTAS DE PAÍSES TRADUZIDAS E ORDENADAS
+// 2. LISTAS DE PAÍSES TRADUZIDAS E ORDENADAS (6 IDIOMAS)
 // ============================================================
 const countryLists = {
   pt: [
@@ -50,7 +50,7 @@ const countryLists = {
 };
 
 // ============================================================
-// 3. MAPA DE CONVERSÃO PARA CÓDIGOS ISO-3 (SIBA)
+// 3. MAPA DE CONVERSÃO PARA CÓDIGOS ISO-3 (SUPORTE SIBA)
 // ============================================================
 const paisesIso3Map = {
   "Afeganistão": "AFG", "África do Sul": "ZAF", "Albânia": "ALB", "Alemanha": "DEU", "Andorra": "AND", "Angola": "AGO", "Antígua e Barbuda": "ATG", "Arábia Saudita": "SAU", "Argélia": "DZA", "Argentina": "ARG", "Arménia": "ARM", "Austrália": "AUS", "Áustria": "AUT", "Azerbaijão": "AZE",
@@ -161,6 +161,134 @@ const texts = {
     placeholder_select: "Select",
     subject: "Guest Registration Copy - AIMA",
     aima_success: "Form submitted successfully!"
+  },
+  es: {
+    subtitle: "Formulario obligatorio de Registro de Alojamiento (AIMA, antiguo SEF).",
+    legalHtml: `<h3><strong>Aviso Legal Obligatorio — Registro de Huéspedes (AIMA/SIBA)</strong></h3>`,
+    formTitle: "Registro de Alojamiento",
+    requiredNotice: "Relleno y envío obligatorios de los datos de todos los huéspedes",
+    stayDataTitle: "Datos de la Estancia",
+    checkinLabel: "Fecha de Check‑in:",
+    checkoutLabel: "Fecha de Check‑out:",
+    adultsLabel: "Número de Huéspedes Adultos:",
+    childrenLabel: "Número de Huéspedes Niños:",
+    wants_copy_title: "¿Desea una copia de este formulario en su correo electrónico?",
+    radio_yes: "Sí",
+    radio_no: "No",
+    email_label: "Su Correo Electrónico:",
+    guestTitle: i => `Huésped ${i}`,
+    fields: {
+      fullName: "Nombre Completo:",
+      birthDate: "Fecha de Nacimiento:",
+      nationality: "Nacionalidad:",
+      residenceCountry: "País de Residencia:",
+      docNumber: "Número del Documento:",
+      docType: "Tipo de Documento:",
+      docTypePassport: "Pasaporte",
+      docTypeID: "Documento de Identidad",
+      docTypeOther: "Otro",
+      docTypeOtherLabel: "¿Cuál?",
+      docCountry: "País Emisor:"
+    },
+    placeholder_select: "Seleccionar",
+    subject: "Copia de Registro de Huéspedes - AIMA",
+    aima_success: "¡Formulario enviado com éxito!"
+  },
+  fr: {
+    subtitle: "Formulaire obligatoire d’Enregistrement des Hébergements (AIMA).",
+    legalHtml: `<h3><strong>Avis Légal Obligatoire — Enregistrement des Hôtes (AIMA/SIBA)</strong></h3>`,
+    formTitle: "Formulaire d’Enregistrement",
+    requiredNotice: "Remplissage et envoi obligatoires des données",
+    stayDataTitle: "Données du Séjour",
+    checkinLabel: "Date d’Arrivée :",
+    checkoutLabel: "Date de Départ :",
+    adultsLabel: "Nombre d’Adultes :",
+    childrenLabel: "Nombre d’Enfants :",
+    wants_copy_title: "Souhaitez-vous une copie de ce formulaire par e-mail ?",
+    radio_yes: "Oui",
+    radio_no: "Non",
+    email_label: "Votre E-mail :",
+    guestTitle: i => `Hôte ${i}`,
+    fields: {
+      fullName: "Nom Complet :",
+      birthDate: "Date de Naissance :",
+      nationality: "Nationalité :",
+      residenceCountry: "Pays de Résidence :",
+      docNumber: "Numéro du Document :",
+      docType: "Type de Document :",
+      docTypePassport: "Passeport",
+      docTypeID: "Carte d’Identité",
+      docTypeOther: "Autre",
+      docTypeOtherLabel: "Lequel ?",
+      docCountry: "Pays Émetteur :"
+    },
+    placeholder_select: "Sélectionner",
+    subject: "Copie d’Enregistrement - AIMA",
+    aima_success: "Formulaire envoyé avec succès !"
+  },
+  it: {
+    subtitle: "Modulo obbligatorio di Registrazione degli Ospiti (AIMA).",
+    legalHtml: `<h3><strong>Avviso Legale Obbligatorio — Registrazione degli Ospiti (AIMA/SIBA)</strong></h3>`,
+    formTitle: "Modulo di Registrazione",
+    requiredNotice: "Compilazione e invio obbligatori dei dati",
+    stayDataTitle: "Dati del Soggiorno",
+    checkinLabel: "Data di Check‑in:",
+    checkoutLabel: "Data di Check‑out:",
+    adultsLabel: "Numero di Ospiti Adulti:",
+    childrenLabel: "Numero di Ospiti Bambini:",
+    wants_copy_title: "Vuoi una copia di questo modulo nella tua email?",
+    radio_yes: "Sì",
+    radio_no: "No",
+    email_label: "La tua Email:",
+    guestTitle: i => `Ospite ${i}`,
+    fields: {
+      fullName: "Nome Completo:",
+      birthDate: "Data di Nascita:",
+      nationality: "Nazionalità:",
+      residenceCountry: "Paese di Residenza:",
+      docNumber: "Numero del Documento:",
+      docType: "Tipo di Documento:",
+      docTypePassport: "Passaporto",
+      docTypeID: "Carta d’Identità",
+      docTypeOther: "Altro",
+      docTypeOtherLabel: "Quale?",
+      docCountry: "Paese di Emissione:"
+    },
+    placeholder_select: "Seleziona",
+    subject: "Copia di Registrazione - AIMA",
+    aima_success: "Modulo inviato con successo!"
+  },
+  de: {
+    subtitle: "Pflichtformular zur Gästeanmeldung (AIMA).",
+    legalHtml: `<h3><strong>Gesetzlich vorgeschriebener Hinweis — Gästeanmeldung (AIMA/SIBA)</strong></h3>`,
+    formTitle: "Gästeanmeldeformular",
+    requiredNotice: "Pflichtangabe und Übermittlung aller Daten",
+    stayDataTitle: "Angaben zum Aufenthalt",
+    checkinLabel: "Check‑in‑Datum:",
+    checkoutLabel: "Check‑out‑Datum:",
+    adultsLabel: "Anzahl der erwachsenen Gäste:",
+    childrenLabel: "Anzahl der Kinder:",
+    wants_copy_title: "Möchten Sie eine Kopie dieses Formulars per E-Mail?",
+    radio_yes: "Ja",
+    radio_no: "Nein",
+    email_label: "Ihre E-Mail:",
+    guestTitle: i => `Gast ${i}`,
+    fields: {
+      fullName: "Vollständiger Name:",
+      birthDate: "Geburtsdatum:",
+      nationality: "Staatsangehörigkeit:",
+      residenceCountry: "Wohnsitzland:",
+      docNumber: "Dokumentnummer:",
+      docType: "Dokumenttyp:",
+      docTypePassport: "Reisepass",
+      docTypeID: "Personalausweis",
+      docTypeOther: "Andere",
+      docTypeOtherLabel: "Welche?",
+      docCountry: "Ausstellungsland:"
+    },
+    placeholder_select: "Auswählen",
+    subject: "Gästeanmeldung Kopie - AIMA",
+    aima_success: "Formular erfolgreich gesendet!"
   }
 };
 
@@ -191,6 +319,9 @@ function setLanguage(lang) {
   generateGuestFields();
 }
 
+// ============================================================
+// 5. GERAÇÃO DINÂMICA DE HÓSPEDES
+// ============================================================
 function generateGuestFields() {
   const t = texts[currentLang] || texts.pt;
   const activeCountries = countryLists[currentLang] || countryLists.pt;
@@ -280,21 +411,16 @@ function generateGuestFields() {
   }
 }
 
-// Ouvintes dinâmicos para adultos e crianças alterarem os campos de hóspedes
 document.addEventListener("DOMContentLoaded", () => {
   const adultsInput = document.getElementById("adults");
   const childrenInput = document.getElementById("children");
 
-  if (adultsInput) {
-    adultsInput.addEventListener("input", generateGuestFields);
-  }
-  if (childrenInput) {
-    childrenInput.addEventListener("input", generateGuestFields);
-  }
+  if (adultsInput) adultsInput.addEventListener("input", generateGuestFields);
+  if (childrenInput) childrenInput.addEventListener("input", generateGuestFields);
 });
 
 // ============================================================
-// 5. ENVIO DO FORMULÁRIO (FIRESTORE + EMAILJS + SIBA)
+// 6. SUBMISSÃO DO FORMULÁRIO (FIREBASE + EMAILJS + SIBA)
 // ============================================================
 const aimaFormEl = document.getElementById("aimaForm");
 if (aimaFormEl) {
@@ -302,7 +428,6 @@ if (aimaFormEl) {
     e.preventDefault();
 
     const t = texts[currentLang] || texts.pt;
-
     const checkin = document.getElementById("checkinDate").value;
     const checkout = document.getElementById("checkoutDate").value;
 
@@ -334,7 +459,7 @@ if (aimaFormEl) {
       const docOutro = document.querySelector(`[name="guest_${i}_docOther"]`)?.value.trim() || "";
       const docPaisBruto = document.querySelector(`[name="guest_${i}_docCountry"]`)?.value || "";
 
-      // Conversão automática para códigos ISO-3 (exigido pelo WebService da SIBA)
+      // Conversão automática para códigos ISO-3 para o painel SIBA funcionar perfeitamente
       const nacIso = converterParaIso3(nacBruta);
       const resIso = converterParaIso3(resBruta);
       const docPaisIso = converterParaIso3(docPaisBruto);
@@ -380,18 +505,17 @@ if (aimaFormEl) {
     }
 
     try {
-      // 1. Gravar no Firestore do Firebase (visível no siba.html)
+      // 1. Gravar no Firestore do Firebase
       if (typeof db !== 'undefined') {
         await db.collection("boletins").add(novoBoletim);
       }
 
       // 2. Guardar no armazenamento local do painel SIBA (aimasiba.js)
       if (typeof guardarBoletimPendente === "function") {
-        const boletimParaSiba = {
+        guardarBoletimPendente({
           ...novoBoletim,
           criadoEm: new Date().toISOString()
-        };
-        guardarBoletimPendente(boletimParaSiba);
+        });
       }
 
       // 3. Enviar notificações via EmailJS (Proprietário + Cliente)
@@ -438,7 +562,7 @@ if (aimaFormEl) {
         }
       }
 
-      // 4. Apresentar Popup de Sucesso
+      // 4. Mostrar Popup de Sucesso original
       const popup = document.getElementById("aimaSuccessPopup");
       if (popup) {
         popup.style.display = "flex";
@@ -448,9 +572,7 @@ if (aimaFormEl) {
       }
 
       this.reset();
-      if (typeof generateGuestFields === "function") {
-        generateGuestFields();
-      }
+      generateGuestFields();
 
     } catch (error) {
       console.error("Erro ao processar:", error);
@@ -464,5 +586,5 @@ if (aimaFormEl) {
   });
 }
 
-// Inicializar idioma padrão ao carregar a página
+// Inicializar idioma padrão
 setLanguage("pt");
