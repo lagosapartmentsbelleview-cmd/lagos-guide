@@ -4,6 +4,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
 
+  // Capturar parâmetro de apartamento/unidade do URL (ex: ?apt=1 ou ?unidade=2204)
+  const urlParams = new URLSearchParams(window.location.search);
+  const aptParam = urlParams.get("apt") || urlParams.get("unidade") || "2203";
+  const hiddenUnidade = document.getElementById("hiddenUnidade");
+  if (hiddenUnidade) hiddenUnidade.value = aptParam;
+
   const faqModal = document.getElementById("faqModal");
   const closeFaqBtn = document.getElementById("closeFaqModal") || 
                       document.querySelector(".close-faq") || 
@@ -23,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ============================================================
-// 2. LISTAS DE PAÍSES TRADUZIDAS E ORDENADAS
+// 2. LISTAS DE PAÍSES TRADUZIDAS E ORDENADAS (6 IDIOMAS)
 // ============================================================
 const countryLists = {
   pt: [
@@ -50,7 +56,7 @@ const countryLists = {
 };
 
 // ============================================================
-// 3. DICIONÁRIO DE TEXTOS E IDIOMAS (TEXTS)
+// 3. DICIONÁRIO DE TEXTOS E IDIOMAS (6 IDIOMAS COMPLETOS)
 // ============================================================
 const texts = {
   pt: {
@@ -108,7 +114,7 @@ const texts = {
   },
   en: {
     subtitle: "Mandatory Accommodation Registration Form (AIMA, formerly SEF).",
-    legalHtml: `<h3><strong>Mandatory Legal Notice — Guest Registration (AIMA/SIBA)</strong></h3><p>Portuguese law requires all non-Portuguese guests to register.</p>`,
+    legalHtml: `<h3><strong>Mandatory Legal Notice — Guest Registration (AIMA/SIBA)</strong></h3><p>Portuguese law requires all non-Portuguese guests to register.</p><p><a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a></p>`,
     formTitle: "Accommodation Registration Form",
     requiredNotice: "Mandatory completion and submission of all data for every adult and child guest",
     stayDataTitle: "Stay Information",
@@ -141,6 +147,138 @@ const texts = {
     footer: "We wish you a pleasant stay!",
     submit: "Submit Accommodation Form",
     aima_success: "Form submitted successfully!"
+  },
+  es: {
+    subtitle: "Formulario obligatorio de Registro de Alojamiento (AIMA, antiguo SEF).",
+    legalHtml: `<h3><strong>Aviso Legal Obligatorio — Registro de Huéspedes (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a></p>`,
+    formTitle: "Registro de Alojamiento",
+    requiredNotice: "Relleno y envío obligatorios de los datos de todos los huéspedes",
+    stayDataTitle: "Datos de la Estancia",
+    checkinLabel: "Fecha de Check‑in:",
+    checkoutLabel: "Fecha de Check‑out:",
+    adultsLabel: "Número de Huéspedes Adultos:",
+    childrenLabel: "Número de Huéspedes Niños:",
+    wants_copy_title: "¿Pretende copia de este formulario en su correo?",
+    radio_yes: "Sí",
+    radio_no: "No",
+    email_label: "Su E-mail:",
+    guestTitle: i => `Huésped ${i}`,
+    fields: {
+      fullName: "Nombre Completo:",
+      birthDate: "Fecha de Nacimiento:",
+      nationality: "Nacionalidad:",
+      residenceCountry: "País de Residencia:",
+      docNumber: "Número del Documento:",
+      docType: "Tipo de Documento:",
+      docTypePassport: "Pasaporte",
+      docTypeID: "Documento de Identidad",
+      docTypeOther: "Otro",
+      docTypeOtherLabel: "¿Cuál?",
+      docCountry: "País Emisor del Documento:"
+    },
+    placeholder_select: "Seleccionar",
+    subject: "Copia de Registro - AIMA",
+    submit: "Enviar Registro de Alojamiento",
+    aima_success: "¡Formulario enviado con éxito!"
+  },
+  fr: {
+    subtitle: "Formulaire obligatoire d’Enregistrement des Hébergements (AIMA, ancien SEF).",
+    legalHtml: `<h3><strong>Avis Légal Obligatoire — Enregistrement des Hôtes (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a></p>`,
+    formTitle: "Formulaire d’Enregistrement",
+    requiredNotice: "Remplissage et envoi obligatoires",
+    stayDataTitle: "Données du Séjour",
+    checkinLabel: "Date d’Arrivée :",
+    checkoutLabel: "Date de Départ :",
+    adultsLabel: "Nombre d’Adultes :",
+    childrenLabel: "Nombre d’Enfants :",
+    wants_copy_title: "Souhaitez-vous une copie par e-mail ?",
+    radio_yes: "Oui",
+    radio_no: "Non",
+    email_label: "Votre E-mail :",
+    guestTitle: i => `Hôte ${i}`,
+    fields: {
+      fullName: "Nom Complet :",
+      birthDate: "Date de Naissance :",
+      nationality: "Nationalité :",
+      residenceCountry: "Pays de Résidence :",
+      docNumber: "Numéro du Document :",
+      docType: "Type de Document :",
+      docTypePassport: "Passeport",
+      docTypeID: "Carte d’Identité",
+      docTypeOther: "Autre",
+      docTypeOtherLabel: "Lequel?",
+      docCountry: "Pays Émetteur :"
+    },
+    placeholder_select: "Sélectionner",
+    subject: "Copie d'enregistrement - AIMA",
+    submit: "Envoyer le Formulaire",
+    aima_success: "Formulaire envoyé avec succès !"
+  },
+  it: {
+    subtitle: "Modulo obbligatorio di Registrazione degli Ospiti (AIMA, ex SEF).",
+    legalHtml: `<h3><strong>Avviso Legale Obbligatorio — Registrazione degli Ospiti (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a></p>`,
+    formTitle: "Modulo di Registrazione",
+    requiredNotice: "Compilazione e invio obbligatori",
+    stayDataTitle: "Dati del Soggiorno",
+    checkinLabel: "Data di Check‑in:",
+    checkoutLabel: "Data di Check‑out:",
+    adultsLabel: "Numero di Ospiti Adulti:",
+    childrenLabel: "Numero di Ospiti Bambini:",
+    wants_copy_title: "Desideri una copia via e-mail?",
+    radio_yes: "Sì",
+    radio_no: "No",
+    email_label: "La tua E-mail:",
+    guestTitle: i => `Ospite ${i}`,
+    fields: {
+      fullName: "Nome Completo:",
+      birthDate: "Data di Nascita:",
+      nationality: "Nazionalità:",
+      residenceCountry: "Paese di Residenza:",
+      docNumber: "Numero del Documento:",
+      docType: "Tipo di Documento:",
+      docTypePassport: "Passaporto",
+      docTypeID: "Carta d’Identità",
+      docTypeOther: "Altro",
+      docTypeOtherLabel: "Quale?",
+      docCountry: "Paese di Emissione:"
+    },
+    placeholder_select: "Seleziona",
+    subject: "Copia registrazione - AIMA",
+    submit: "Invia Modulo di Registrazione",
+    aima_success: "Modulo inviato con successo!"
+  },
+  de: {
+    subtitle: "Pflichtformular zur Gästeanmeldung (AIMA, ehemals SEF).",
+    legalHtml: `<h3><strong>Gesetzlich vorgeschriebener Hinweis — Gästeanmeldung (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a></p>`,
+    formTitle: "Gästeanmeldeformular",
+    requiredNotice: "Pflichtangabe",
+    stayDataTitle: "Angaben zum Aufenthalt",
+    checkinLabel: "Check‑in‑Datum:",
+    checkoutLabel: "Check‑out‑Datum:",
+    adultsLabel: "Anzahl der erwachsenen Gäste:",
+    childrenLabel: "Anzahl der Kinder:",
+    wants_copy_title: "Möchten Sie eine Kopie per E-Mail?",
+    radio_yes: "Ja",
+    radio_no: "Nein",
+    email_label: "Ihre E-Mail:",
+    guestTitle: i => `Gast ${i}`,
+    fields: {
+      fullName: "Vollständiger Name:",
+      birthDate: "Geburtsdatum:",
+      nationality: "Staatsangehörigkeit:",
+      residenceCountry: "Wohnsitzland:",
+      docNumber: "Dokumentnummer:",
+      docType: "Dokumenttyp:",
+      docTypePassport: "Reisepass",
+      docTypeID: "Personalausweis",
+      docTypeOther: "Andere",
+      docTypeOtherLabel: "Welche?",
+      docCountry: "Ausstellungsland:"
+    },
+    placeholder_select: "Auswählen",
+    subject: "Registrierungskopie - AIMA",
+    submit: "Formular absenden",
+    aima_success: "Formular erfolgreich gesendet!"
   }
 };
 
