@@ -29,10 +29,9 @@
       enabled: true,
       endpoint: "https://api.web3forms.com/submit",
       accessKey: "950b90bc-37f4-4f5b-9d69-3e56389a054d",
-      // false = o e-mail só avisa (sem nº de documento). Os dados completos vão
-      //         por e-mail apenas se a gravação no Firestore falhar (salvaguarda).
       // true  = todos os e-mails levam os dados completos (como no sistema antigo).
-      fullDataAlways: false
+      // false = o e-mail só avisa; dados completos apenas se o Firestore falhar.
+      fullDataAlways: true
     }
   };
 
@@ -1120,6 +1119,7 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_birth: "Verifique a data de nascimento (não pode ser futura nem anterior a 1900).",
       err_email: "Indique um e-mail válido para receber a cópia.",
       err_save: "Não foi possível enviar o formulário. Por favor tente novamente ou contacte-nos por telefone/WhatsApp.",
+      mail_success: "O seu formulário foi submetido com sucesso.",
       mail_subject: "Cópia do Registo de Hóspedes - AIMA",
       mail_greeting: "Olá",
       mail_confirmation: "Confirmamos a receção do seu registo de hóspedes com os seguintes dados:",
@@ -1135,6 +1135,7 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_birth: "Please check the date of birth (it cannot be in the future or before 1900).",
       err_email: "Please enter a valid email address to receive the copy.",
       err_save: "We could not submit the form. Please try again or contact us by phone/WhatsApp.",
+      mail_success: "Your form was submitted successfully.",
       mail_subject: "Guest Registration Copy - AIMA",
       mail_greeting: "Hello",
       mail_confirmation: "We confirm receipt of your guest registration with the following details:",
@@ -1150,6 +1151,7 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_birth: "Compruebe la fecha de nacimiento (no puede ser futura ni anterior a 1900).",
       err_email: "Introduzca un correo electrónico válido para recibir la copia.",
       err_save: "No se pudo enviar el formulario. Inténtelo de nuevo o contáctenos por teléfono/WhatsApp.",
+      mail_success: "Su formulario se ha enviado correctamente.",
       mail_subject: "Copia del Registro de Huéspedes - AIMA",
       mail_greeting: "Hola",
       mail_confirmation: "Confirmamos la recepción de su registro de huéspedes con los siguientes datos:",
@@ -1165,6 +1167,7 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_birth: "Vérifiez la date de naissance (elle ne peut être ni future ni antérieure à 1900).",
       err_email: "Veuillez saisir une adresse e-mail valide pour recevoir la copie.",
       err_save: "Impossible d’envoyer le formulaire. Veuillez réessayer ou nous contacter par téléphone/WhatsApp.",
+      mail_success: "Votre formulaire a été envoyé avec succès.",
       mail_subject: "Copie de l’Enregistrement des Hôtes - AIMA",
       mail_greeting: "Bonjour",
       mail_confirmation: "Nous confirmons la réception de votre enregistrement avec les données suivantes :",
@@ -1180,6 +1183,7 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_birth: "Verifichi la data di nascita (non può essere futura né anteriore al 1900).",
       err_email: "Inserisca un indirizzo e-mail valido per ricevere la copia.",
       err_save: "Impossibile inviare il modulo. Riprovi o ci contatti per telefono/WhatsApp.",
+      mail_success: "Il suo modulo è stato inviato con successo.",
       mail_subject: "Copia della Registrazione degli Ospiti - AIMA",
       mail_greeting: "Buongiorno",
       mail_confirmation: "Confermiamo la ricezione della sua registrazione con i seguenti dati:",
@@ -1195,6 +1199,7 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_birth: "Bitte prüfen Sie das Geburtsdatum (nicht in der Zukunft und nicht vor 1900).",
       err_email: "Bitte geben Sie eine gültige E-Mail-Adresse für die Kopie an.",
       err_save: "Das Formular konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns per Telefon/WhatsApp.",
+      mail_success: "Ihr Formular wurde erfolgreich übermittelt.",
       mail_subject: "Kopie der Gästeanmeldung - AIMA",
       mail_greeting: "Guten Tag",
       mail_confirmation: "Wir bestätigen den Eingang Ihrer Gästeanmeldung mit folgenden Daten:",
@@ -1526,7 +1531,15 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
     const nome = b.hospedes[0]?.nome || "Hóspede";
     let message;
     if (opts.full) {
-      message = buildSummary(b, texts.pt, "pt").text;
+      message = [
+        "NOVO BOLETIM DE ALOJAMENTO RECEBIDO" + (opts.saved ? " (gravado no painel SIBA)" : " (ATENÇÃO: NÃO foi gravado no painel)"),
+        `Recebido em: ${new Date(b.criadoEm).toLocaleString("pt-PT")}`,
+        `Língua do formulário: ${b.idioma}`,
+        `Cópia pedida pelo cliente: ${b.pediuCopia ? "Sim — " + b.emailCliente : "Não"}`,
+        `Nº de hóspedes: ${b.hospedes.length}`,
+        "",
+        buildSummary(b, texts.pt, "pt").text
+      ].join("\n");
     } else {
       message = [
         "Novo boletim de alojamento recebido e gravado no painel SIBA.",
@@ -1558,6 +1571,20 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
     return true;
   }
 
+  function buildGuestMailHtml(b, t, summaryHtml) {
+    const name = b.hospedes[0]?.nome || "";
+    return `<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:0 auto;color:#222;line-height:1.5;">
+  <div style="background:#005c99;color:#fff;padding:14px 18px;border-radius:8px 8px 0 0;font-size:18px;font-weight:bold;">Apartments Belleview Lagos</div>
+  <div style="border:1px solid #dde3ea;border-top:0;padding:18px;border-radius:0 0 8px 8px;">
+    <p>${escapeHtml(t.mail_greeting)} ${escapeHtml(name)},</p>
+    <p style="background:#e8f5e9;border:1px solid #b7dfb9;padding:10px 12px;border-radius:6px;"><strong>✔ ${escapeHtml(t.mail_success)}</strong></p>
+    <p>${escapeHtml(t.mail_confirmation)}</p>
+    ${summaryHtml}
+    <p style="margin-top:18px;">${escapeHtml(t.mail_footer)}</p>
+  </div>
+</div>`;
+  }
+
   async function sendGuestCopy(b, t) {
     if (typeof emailjs === "undefined") throw new Error("EmailJS indisponível");
     const s = buildSummary(b, t, currentLang);
@@ -1569,7 +1596,13 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       guest_name: b.hospedes[0]?.nome || "",
       checkin: fmtDate(b.dataCheckin),
       checkout: fmtDate(b.dataCheckout),
-      // variáveis novas (adicione {{{summary_html}}} ao template para a cópia completa)
+      // CORPO COMPLETO já na língua do cliente: o template só precisa de {{{message_html}}}
+      message_html: buildGuestMailHtml(b, t, s.html),
+      message: s.text,
+      email: b.emailCliente,
+      reply_to: "belleview@sapo.pt",
+      subject: t.mail_subject,
+      success_text: t.mail_success,
       greeting: t.mail_greeting,
       confirmation: t.mail_confirmation,
       footer_text: t.mail_footer,
