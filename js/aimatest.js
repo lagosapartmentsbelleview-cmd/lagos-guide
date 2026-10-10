@@ -31,262 +31,250 @@ document.addEventListener("DOMContentLoaded", () => {
 // ============================================================
 // 2. LISTAS DE PAÍSES TRADUZIDAS E ORDENADAS (6 IDIOMAS)
 // ============================================================
-if (typeof window.countryLists === 'undefined') {
-  window.countryLists = {
-    pt: [
-      "Afeganistão","África do Sul","Albânia","Alemanha","Andorra","Angola","Antígua e Barbuda","Arábia Saudita","Argélia","Argentina","Arménia","Austrália","Áustria","Azerbaijão",
-      "Bahamas","Bangladesh","Barbados","Barém","Bélgica","Belize","Benim","Bielorrússia","Bolívia","Bósnia e Herzegovina","Botsuana","Brasil","Brunei","Bulgária","Burquina Faso","Burundi","Butão",
-      "Cabo Verde","Camarões","Camboja","Canadá","Catar","Cazaquistão","Chade","Chile","China","Chipre","Colômbia","Comores","Coreia do Norte","Coreia do Sul","Costa do Marfim","Costa Rica","Croácia","Cuba",
-      "Dinamarca","Dominica","Egipto","Emirados Árabes Unidos","Equador","Eritreia","Eslováquia","Eslovénia","Espanha","Estados Unidos","Estónia","Etiópia",
-      "Fiji","Filipinas","Finlândia","França","Gabão","Gâmbia","Gana","Geórgia","Granada","Grécia","Guatemala","Guiana","Guiné","Guiné-Bissau","Guiné Equatorial",
-      "Haiti","Honduras","Hungria","Iémen","Ilhas Marechal","Índia","Indonésia","Irão","Iraque","Irlanda","Islândia","Israel","Itália","Jamaica","Japão","Jordânia",
-      "Koweit","Laos","Lesoto","Letónia","Líbano","Libéria","Líbia","Liechtenstein","Lituânia","Luxemburgo",
-      "Macedónia do Norte","Madagáscar","Malásia","Malaui","Maldivas","Mali","Malta","Marrocos","Maurícia","Mauritânia","México","Micronésia","Moçambique","Moldávia","Mónaco","Mongólia","Montenegro","Mianmar",
-      "Namíbia","Nauru","Nepal","Nicarágua","Níger","Nigéria","Noruega","Nova Zelândia","Omã",
-      "Países Baixos","Paquistão","Palau","Panamá","Papua-Nova Guiné","Paraguai","Peru","Polónia","Portugal",
-      "Reino Unido","República Centro-Africana","República Checa","República Democrática do Congo","República do Congo","República Dominicana","Roménia","Ruanda","Rússia",
-      "Samoa","Santa Lúcia","São Cristóvão e Neves","São Marino","São Tomé e Príncipe","São Vicente e Granadinas","Senegal","Serra Leoa","Sérvia","Seicheles","Singapura","Síria","Somália","Sri Lanka","Eswatini","Sudão","Sudão do Sul","Suécia","Suíça","Suriname",
-      "Tailândia","Taiwan","Tajiquistão","Tanzânia","Timor-Leste","Togo","Tonga","Trinidad e Tobago","Tunísia","Turquemenistão","Turquia","Tuvalu",
-      "Ucrânia","Uganda","Uruguai","Uzbequistão","Vanuatu","Vaticano","Venezuela","Vietname","Zâmbia","Zimbabué"
-    ],
-    en: ["Portugal","United Kingdom","Germany","France","Spain","Italy","Netherlands","Belgium","Switzerland","Ireland","Brazil","Canada","United States","Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Bolivia","Bhutan","China","Denmark","Egypt","Finland","Greece","India","Israel","Japan","Luxembourg","Mexico","Morocco","Norway","Poland","Romania","Russia","Sweden","Turkey","Ukraine"],
-    fr: ["Portugal","France","Royaume-Uni","Allemagne","Espagne","Italie","Belgique","Suisse","Pays-Bas","Irlande","Brésil","Canada","États-Unis","Afghanistan","Algérie","Andorre","Angola","Argentine","Australie","Autriche","Bolivie","Bhoutan","Chine","Danemark","Finlande","Grèce","Luxembourg","Maroc","Norvège","Pologne","Suède"],
-    es: ["Portugal","España","Reino Unido","Alemania","Francia","Italia","Países Bajos","Bélgica","Suiza","Irlanda","Brasil","Argentina","Canadá","Chile","Colombia","Estados Unidos","México","Uruguay","Venezuela","Afganistán","Andorra","Angola","Australia","Austria","Bolivia","Bután","Dinamarca","Ecuador","Grecia","Noruega","Perú","Polonia","Suecia"],
-    it: ["Portogallo","Italia","Regno Unito","Germania","Francia","Spagna","Paesi Bassi","Belgio","Svizzera","Irlanda","Brasile","Canada","Stati Uniti","Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Bhutan","Bolivia","Cina","Danimarca","Giappone","Grecia","Lussemburgo","Marocco","Norvegia","Polonia","Svezia"],
-    de: ["Portugal","Deutschland","Großbritannien","Frankreich","Spanien","Italien","Niederlande","Belgien","Schweiz","Österreich","Irland","Brasilien","Kanada","USA","Afghanistan","Ägypten","Albanien","Algerien","Andorra","Angola","Argentinien","Australien","Bhutan","Bolivien","Dänemark","Finnland","Griechenland","Luxemburg","Marokko","Norwegen","Polen","Schweden","Tschechien","Türkei"]
-  };
-}
-const countryLists = window.countryLists;
+const countryLists = {
+  pt: [
+    "Afeganistão","África do Sul","Albânia","Alemanha","Andorra","Angola","Antígua e Barbuda","Arábia Saudita","Argélia","Argentina","Arménia","Austrália","Áustria","Azerbaijão",
+    "Bahamas","Bangladesh","Barbados","Barém","Bélgica","Belize","Benim","Bielorrússia","Bolívia","Bósnia e Herzegovina","Botsuana","Brasil","Brunei","Bulgária","Burquina Faso","Burundi","Butão",
+    "Cabo Verde","Camarões","Camboja","Canadá","Catar","Cazaquistão","Chade","Chile","China","Chipre","Colômbia","Comores","Coreia do Norte","Coreia do Sul","Costa do Marfim","Costa Rica","Croácia","Cuba",
+    "Dinamarca","Dominica","Egipto","Emirados Árabes Unidos","Equador","Eritreia","Eslováquia","Eslovénia","Espanha","Estados Unidos","Estónia","Etiópia",
+    "Fiji","Filipinas","Finlândia","França","Gabão","Gâmbia","Gana","Geórgia","Granada","Grécia","Guatemala","Guiana","Guiné","Guiné-Bissau","Guiné Equatorial",
+    "Haiti","Honduras","Hungria","Iémen","Ilhas Marechal","Índia","Indonésia","Irão","Iraque","Irlanda","Islândia","Israel","Itália","Jamaica","Japão","Jordânia",
+    "Koweit","Laos","Lesoto","Letónia","Líbano","Libéria","Líbia","Liechtenstein","Lituânia","Luxemburgo",
+    "Macedónia do Norte","Madagáscar","Malásia","Malaui","Maldivas","Mali","Malta","Marrocos","Maurícia","Mauritânia","México","Micronésia","Moçambique","Moldávia","Mónaco","Mongólia","Montenegro","Mianmar",
+    "Namíbia","Nauru","Nepal","Nicarágua","Níger","Nigéria","Noruega","Nova Zelândia","Omã",
+    "Países Baixos","Paquistão","Palau","Panamá","Papua-Nova Guiné","Paraguai","Peru","Polónia","Portugal",
+    "Reino Unido","República Centro-Africana","República Checa","República Democrática do Congo","República do Congo","República Dominicana","Roménia","Ruanda","Rússia",
+    "Samoa","Santa Lúcia","São Cristóvão e Neves","São Marino","São Tomé e Príncipe","São Vicente e Granadinas","Senegal","Serra Leoa","Sérvia","Seicheles","Singapura","Síria","Somália","Sri Lanka","Eswatini","Sudão","Sudão do Sul","Suécia","Suíça","Suriname",
+    "Tailândia","Taiwan","Tajiquistão","Tanzânia","Timor-Leste","Togo","Tonga","Trinidad e Tobago","Tunísia","Turquemenistão","Turquia","Tuvalu",
+    "Ucrânia","Uganda","Uruguai","Uzbequistão","Vanuatu","Vaticano","Venezuela","Vietname","Zâmbia","Zimbabué"
+  ],
+  en: ["Portugal","United Kingdom","Germany","France","Spain","Italy","Netherlands","Belgium","Switzerland","Ireland","Brazil","Canada","United States","Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Bolivia","Bhutan","China","Denmark","Egypt","Finland","Greece","India","Israel","Japan","Luxembourg","Mexico","Morocco","Norway","Poland","Romania","Russia","Sweden","Turkey","Ukraine"],
+  fr: ["Portugal","France","Royaume-Uni","Allemagne","Espagne","Italie","Belgique","Suisse","Pays-Bas","Irlande","Brésil","Canada","États-Unis","Afghanistan","Algérie","Andorre","Angola","Argentine","Australie","Autriche","Bolivie","Bhoutan","Chine","Danemark","Finlande","Grèce","Luxembourg","Maroc","Norvège","Pologne","Suède"],
+  es: ["Portugal","España","Reino Unido","Alemania","Francia","Italia","Países Bajos","Bélgica","Suiza","Irlanda","Brasil","Argentina","Canadá","Chile","Colombia","Estados Unidos","México","Uruguay","Venezuela","Afganistán","Andorra","Angola","Australia","Austria","Bolivia","Bután","Dinamarca","Ecuador","Grecia","Noruega","Perú","Polonia","Suecia"],
+  it: ["Portogallo","Italia","Regno Unito","Germania","Francia","Spagna","Paesi Bassi","Belgio","Svizzera","Irlanda","Brasile","Canada","Stati Uniti","Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Bhutan","Bolivia","Cina","Danimarca","Giappone","Grecia","Lussemburgo","Marocco","Norvegia","Polonia","Svezia"],
+  de: ["Portugal","Deutschland","Großbritannien","Frankreich","Spanien","Italien","Niederlande","Belgien","Schweiz","Österreich","Irland","Brasilien","Kanada","USA","Afghanistan","Ägypten","Albanien","Algerien","Andorra","Angola","Argentinien","Australien","Bhutan","Bolivien","Dänemark","Finnland","Griechenland","Luxemburg","Marokko","Norwegen","Polen","Schweden","Tschechien","Türkei"]
+};
 
 // ============================================================
 // 3. DICIONÁRIO DE TEXTOS E IDIOMAS (6 IDIOMAS COMPLETOS)
 // ============================================================
-if (typeof window.texts === 'undefined') {
-  window.texts = {
-    pt: {
-      subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).",
-      legalHtml: `
-        <h3><strong>Aviso Legal Obrigatório — Registo de Hóspedes (AIMA/SIBA)</strong></h3>
-        <p>Este formulário recolhe os dados obrigatórios de identificação de todos os hóspedes, conforme exigido pela legislação portuguesa para comunicação à AIMA (Agência para a Integração, Migrações e Asilo), através da plataforma SIBA.</p>
-        <h4><strong>Por que motivo os seus dados são obrigatórios?</strong></h4>
-        <p>Nos termos do <strong>Artigo 45.º da Lei n.º 23/2007</strong>, todos os estabelecimentos de Alojamento Local são legalmente obrigados a comunicar às autoridades de fronteira a entrada, permanência e saída de cidadãos estrangeiros no território nacional.</p>
-        <p>Esta obrigação aplica-se a <strong>todos os hóspedes sem nacionalidade portuguesa</strong>, incluindo <strong>crianças e bebés</strong>, sem exceção.</p>
-        <h4><strong>Para que servem estes dados?</strong></h4>
-        <ul>
-            <li><strong>Segurança Nacional:</strong> Apoiam a prevenção e investigação de crimes graves, terrorismo e redes transfronteiriças.</li>
-            <li><strong>Proteção do Hóspede:</strong> Em caso de acidente, emergência médica, catástrofe natural ou desaparecimento, permitem às autoridades e embaixadas identificar e localizar rapidamente os cidadãos.</li>
-            <li><strong>Gestão Pública:</strong> Contribuem para estatísticas oficiais e políticas de migração e turismo.</li>
-        </ul>
-        <h4><strong>Obrigatoriedade e consequências da recusa</strong></h4>
-        <p>A prestação destes dados é <strong>estritamente obrigatória por lei</strong>. A recusa em fornecer as informações necessárias impede legalmente a realização do check-in e implica a <strong>anulação imediata da reserva sem direito a reembolso</strong>.</p>
-        <h4><strong>Privacidade e proteção dos seus dados</strong></h4>
-        <p>Os dados recolhidos são utilizados exclusivamente para cumprimento desta obrigação legal e tratados em conformidade com o <strong>Regulamento Geral sobre a Proteção de Dados (RGPD)</strong>.</p>
-        <p><a href="/docs/sef.pdf" target="_blank" class="pdf-link">Verificar a informação em PDF</a> | <a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a></p>
-      `,
-      formTitle: "Boletim de Alojamento",
-      requiredNotice: "Preenchimento e envio obrigatório dos dados de todos os hóspedes adultos e crianças",
-      stayDataTitle: "Dados da Estadia",
-      checkinLabel: "Data de Check-in:",
-      checkoutLabel: "Data de Check-out:",
-      adultsLabel: "Nº de Hóspedes Adultos:",
-      childrenLabel: "Nº de Hóspedes Crianças:",
-      wants_copy_title: "Pretende cópia deste formulário no seu e-mail?",
-      radio_yes: "Sim",
-      radio_no: "Não",
-      email_label: "O seu E-mail:",
-      guestTitle: i => `Hóspede ${i}`,
-      fields: {
-        fullName: "Nome Completo:",
-        birthDate: "Data de Nascimento:",
-        nationality: "Nacionalidade:",
-        residenceCountry: "País de Residência:",
-        docNumber: "Número do Documento:",
-        docType: "Tipo de Documento:",
-        docTypePassport: "Passaporte",
-        docTypeID: "Bilhete de Identidade / Cartão de Cidadão",
-        docTypeOther: "Outro",
-        docTypeOtherLabel: "Qual?",
-        docCountry: "País Emissor do Documento:"
-      },
-      placeholder_select: "Selecione",
-      subject: "Cópia do Registo de Hóspedes - AIMA",
-      greeting: "Olá",
-      confirmation: "Confirmamos com sucesso a receção do seu registo de hóspedes com os seguintes dados:",
-      footer: "Desejamos-lhe uma excelente estadia!",
-      submit: "Enviar Boletim de Alojamento",
-      aima_success: "Formulário enviado com sucesso!"
+const texts = {
+  pt: {
+    subtitle: "Formulário obrigatório de Boletim de Alojamento (AIMA, antigo SEF).",
+    legalHtml: `
+      <h3><strong>Aviso Legal Obrigatório — Registo de Hóspedes (AIMA/SIBA)</strong></h3>
+      <p>Este formulário recolhe os dados obrigatórios de identificação de todos os hóspedes, conforme exigido pela legislação portuguesa para comunicação à AIMA (Agência para a Integração, Migrações e Asilo), através da plataforma SIBA.</p>
+      <h4><strong>Por que motivo os seus dados são obrigatórios?</strong></h4>
+      <p>Nos termos do <strong>Artigo 45.º da Lei n.º 23/2007</strong>, todos os estabelecimentos de Alojamento Local são legalmente obrigados a comunicar às autoridades de fronteira a entrada, permanência e saída de cidadãos estrangeiros no território nacional.</p>
+      <p>Esta obrigação aplica-se a <strong>todos os hóspedes sem nacionalidade portuguesa</strong>, incluindo <strong>crianças e bebés</strong>, sem exceção.</p>
+      <p><a id="openFaqModal" class="faq-link">Perguntas Frequentes (FAQ)</a></p>
+    `,
+    formTitle: "Boletim de Alojamento",
+    requiredNotice: "Preenchimento e envio obrigatório dos dados de todos os hóspedes adultos e crianças",
+    stayDataTitle: "Dados da Estadia",
+    checkinLabel: "Data de Check-in:",
+    checkoutLabel: "Data de Check-out:",
+    adultsLabel: "Nº de Hóspedes Adultos:",
+    childrenLabel: "Nº de Hóspedes Crianças:",
+    wants_copy_title: "Pretende cópia deste formulário no seu e-mail?",
+    radio_yes: "Sim",
+    radio_no: "Não",
+    email_label: "O seu E-mail:",
+    guestTitle: i => `Hóspede ${i}`,
+    fields: {
+      fullName: "Nome Completo:",
+      birthDate: "Data de Nascimento:",
+      nationality: "Nacionalidade:",
+      residenceCountry: "País de Residência:",
+      docNumber: "Número do Documento:",
+      docType: "Tipo de Documento:",
+      docTypePassport: "Passaporte",
+      docTypeID: "Bilhete de Identidade / Cartão de Cidadão",
+      docTypeOther: "Outro",
+      docTypeOtherLabel: "Qual?",
+      docCountry: "País Emissor do Documento:"
     },
-    en: {
-      subtitle: "Mandatory Accommodation Registration Form (AIMA, formerly SEF).",
-      legalHtml: `<h3><strong>Mandatory Legal Notice — Guest Registration (AIMA/SIBA)</strong></h3><p>Portuguese law requires all non-Portuguese guests to register.</p><p><a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a></p>`,
-      formTitle: "Accommodation Registration Form",
-      requiredNotice: "Mandatory completion and submission of all data for every adult and child guest",
-      stayDataTitle: "Stay Information",
-      checkinLabel: "Check‑in Date:",
-      checkoutLabel: "Check‑out Date:",
-      adultsLabel: "Number of Adult Guests:",
-      childrenLabel: "Number of Child Guests:",
-      wants_copy_title: "Would you like a copy of this form sent to your email?",
-      radio_yes: "Yes",
-      radio_no: "No",
-      email_label: "Your Email:",
-      guestTitle: i => `Guest ${i}`,
-      fields: {
-        fullName: "Full Name:",
-        birthDate: "Date of Birth:",
-        nationality: "Nationality:",
-        residenceCountry: "Country of Residence:",
-        docNumber: "Document Number:",
-        docType: "Document Type:",
-        docTypePassport: "Passport",
-        docTypeID: "Identity Card",
-        docTypeOther: "Other",
-        docTypeOtherLabel: "Which one?",
-        docCountry: "Issuing Country:"
-      },
-      placeholder_select: "Select",
-      subject: "Guest Registration Copy - AIMA",
-      greeting: "Hello",
-      confirmation: "We have successfully received your guest registration with the following details:",
-      footer: "We wish you a pleasant stay!",
-      submit: "Submit Accommodation Form",
-      aima_success: "Form submitted successfully!"
+    placeholder_select: "Selecione",
+    subject: "Cópia do Registo de Hóspedes - AIMA",
+    submit: "Enviar Boletim de Alojamento",
+    aima_success: "Formulário enviado com sucesso!"
+  },
+  en: {
+    subtitle: "Mandatory Accommodation Registration Form (AIMA, formerly SEF).",
+    legalHtml: `<h3><strong>Mandatory Legal Notice — Guest Registration (AIMA/SIBA)</strong></h3><p>Portuguese law requires all non-Portuguese guests to register.</p><p><a id="openFaqModal" class="faq-link">Frequently Asked Questions (FAQ)</a></p>`,
+    formTitle: "Accommodation Registration Form",
+    requiredNotice: "Mandatory completion and submission of all data for every adult and child guest",
+    stayDataTitle: "Stay Information",
+    checkinLabel: "Check‑in Date:",
+    checkoutLabel: "Check‑out Date:",
+    adultsLabel: "Number of Adult Guests:",
+    childrenLabel: "Number of Child Guests:",
+    wants_copy_title: "Would you like a copy of this form sent to your email?",
+    radio_yes: "Yes",
+    radio_no: "No",
+    email_label: "Your Email:",
+    guestTitle: i => `Guest ${i}`,
+    fields: {
+      fullName: "Full Name:",
+      birthDate: "Date of Birth:",
+      nationality: "Nationality:",
+      residenceCountry: "Country of Residence:",
+      docNumber: "Document Number:",
+      docType: "Document Type:",
+      docTypePassport: "Passport",
+      docTypeID: "Identity Card",
+      docTypeOther: "Other",
+      docTypeOtherLabel: "Which one?",
+      docCountry: "Issuing Country:"
     },
-    es: {
-      subtitle: "Formulario obligatorio de Registro de Alojamiento (AIMA, antiguo SEF).",
-      legalHtml: `<h3><strong>Aviso Legal Obligatorio — Registro de Huéspedes (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a></p>`,
-      formTitle: "Registro de Alojamiento",
-      requiredNotice: "Relleno y envío obligatorios de los datos de todos los huéspedes",
-      stayDataTitle: "Datos de la Estancia",
-      checkinLabel: "Fecha de Check‑in:",
-      checkoutLabel: "Fecha de Check‑out:",
-      adultsLabel: "Número de Huéspedes Adultos:",
-      childrenLabel: "Número de Huéspedes Niños:",
-      wants_copy_title: "¿Pretende copia de este formulario en su correo?",
-      radio_yes: "Sí",
-      radio_no: "No",
-      email_label: "Su E-mail:",
-      guestTitle: i => `Huésped ${i}`,
-      fields: {
-        fullName: "Nombre Completo:",
-        birthDate: "Fecha de Nacimiento:",
-        nationality: "Nacionalidad:",
-        residenceCountry: "País de Residencia:",
-        docNumber: "Número del Documento:",
-        docType: "Tipo de Documento:",
-        docTypePassport: "Pasaporte",
-        docTypeID: "Documento de Identidad",
-        docTypeOther: "Otro",
-        docTypeOtherLabel: "¿Cuál?",
-        docCountry: "País Emisor del Documento:"
-      },
-      placeholder_select: "Seleccionar",
-      subject: "Copia de Registro - AIMA",
-      submit: "Enviar Registro de Alojamiento",
-      aima_success: "¡Formulario enviado con éxito!"
+    placeholder_select: "Select",
+    subject: "Guest Registration Copy - AIMA",
+    submit: "Submit Accommodation Form",
+    aima_success: "Form submitted successfully!"
+  },
+  es: {
+    subtitle: "Formulario obligatorio de Registro de Alojamiento (AIMA, antiguo SEF).",
+    legalHtml: `<h3><strong>Aviso Legal Obligatorio — Registro de Huéspedes (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Preguntas Frecuentes (FAQ)</a></p>`,
+    formTitle: "Registro de Alojamiento",
+    requiredNotice: "Relleno y envío obligatorios de los datos de todos los huéspedes",
+    stayDataTitle: "Datos de la Estancia",
+    checkinLabel: "Fecha de Check‑in:",
+    checkoutLabel: "Fecha de Check‑out:",
+    adultsLabel: "Número de Huéspedes Adultos:",
+    childrenLabel: "Número de Huéspedes Niños:",
+    wants_copy_title: "¿Pretende copia de este formulario en su correo?",
+    radio_yes: "Sí",
+    radio_no: "No",
+    email_label: "Su E-mail:",
+    guestTitle: i => `Huésped ${i}`,
+    fields: {
+      fullName: "Nombre Completo:",
+      birthDate: "Fecha de Nacimiento:",
+      nationality: "Nacionalidad:",
+      residenceCountry: "País de Residencia:",
+      docNumber: "Número del Documento:",
+      docType: "Tipo de Documento:",
+      docTypePassport: "Pasaporte",
+      docTypeID: "Documento de Identidad",
+      docTypeOther: "Otro",
+      docTypeOtherLabel: "¿Cuál?",
+      docCountry: "País Emisor del Documento:"
     },
-    fr: {
-      subtitle: "Formulaire obligatoire d’Enregistrement des Hébergements (AIMA, ancien SEF).",
-      legalHtml: `<h3><strong>Avis Légal Obligatoire — Enregistrement des Hôtes (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a></p>`,
-      formTitle: "Formulaire d’Enregistrement",
-      requiredNotice: "Remplissage et envoi obligatoires",
-      stayDataTitle: "Données du Séjour",
-      checkinLabel: "Date d’Arrivée :",
-      checkoutLabel: "Date de Départ :",
-      adultsLabel: "Nombre d’Adultes :",
-      childrenLabel: "Nombre d’Enfants :",
-      wants_copy_title: "Souhaitez-vous une copie par e-mail ?",
-      radio_yes: "Oui",
-      radio_no: "Non",
-      email_label: "Votre E-mail :",
-      guestTitle: i => `Hôte ${i}`,
-      fields: {
-        fullName: "Nom Complet :",
-        birthDate: "Date de Naissance :",
-        nationality: "Nationalité :",
-        residenceCountry: "Pays de Résidence :",
-        docNumber: "Numéro du Document :",
-        docType: "Type de Document :",
-        docTypePassport: "Passeport",
-        docTypeID: "Carte d’Identité",
-        docTypeOther: "Autre",
-        docTypeOtherLabel: "Lequel?",
-        docCountry: "Pays Émetteur :"
-      },
-      placeholder_select: "Sélectionner",
-      subject: "Copie d'enregistrement - AIMA",
-      submit: "Envoyer le Formulaire",
-      aima_success: "Formulaire envoyé avec succès !"
+    placeholder_select: "Seleccionar",
+    subject: "Copia de Registro - AIMA",
+    submit: "Enviar Registro de Alojamiento",
+    aima_success: "¡Formulario enviado con éxito!"
+  },
+  fr: {
+    subtitle: "Formulaire obligatoire d’Enregistrement des Hébergements (AIMA, ancien SEF).",
+    legalHtml: `<h3><strong>Avis Légal Obligatoire — Enregistrement des Hôtes (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Foire aux Questions (FAQ)</a></p>`,
+    formTitle: "Formulaire d’Enregistrement",
+    requiredNotice: "Remplissage et envoi obligatoires",
+    stayDataTitle: "Données du Séjour",
+    checkinLabel: "Date d’Arrivée :",
+    checkoutLabel: "Date de Départ :",
+    adultsLabel: "Nombre d’Adultes :",
+    childrenLabel: "Nombre d’Enfants :",
+    wants_copy_title: "Souhaitez-vous une copie par e-mail ?",
+    radio_yes: "Oui",
+    radio_no: "Non",
+    email_label: "Votre E-mail :",
+    guestTitle: i => `Hôte ${i}`,
+    fields: {
+      fullName: "Nom Complet :",
+      birthDate: "Date de Naissance :",
+      nationality: "Nationalité :",
+      residenceCountry: "Pays de Résidence :",
+      docNumber: "Numéro du Document :",
+      docType: "Type de Document :",
+      docTypePassport: "Passeport",
+      docTypeID: "Carte d’Identité",
+      docTypeOther: "Autre",
+      docTypeOtherLabel: "Lequel?",
+      docCountry: "Pays Émetteur :"
     },
-    it: {
-      subtitle: "Modulo obbligatorio di Registrazione degli Ospiti (AIMA, ex SEF).",
-      legalHtml: `<h3><strong>Avviso Legale Obbligatorio — Registrazione degli Ospiti (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a></p>`,
-      formTitle: "Modulo di Registrazione",
-      requiredNotice: "Compilazione e invio obbligatori",
-      stayDataTitle: "Dati del Soggiorno",
-      checkinLabel: "Data di Check‑in:",
-      checkoutLabel: "Data di Check‑out:",
-      adultsLabel: "Numero di Ospiti Adulti:",
-      childrenLabel: "Numero di Ospiti Bambini:",
-      wants_copy_title: "Desideri una copia via e-mail?",
-      radio_yes: "Sì",
-      radio_no: "No",
-      email_label: "La tua E-mail:",
-      guestTitle: i => `Ospite ${i}`,
-      fields: {
-        fullName: "Nome Completo:",
-        birthDate: "Data di Nascita:",
-        nationality: "Nazionalità:",
-        residenceCountry: "Paese di Residenza:",
-        docNumber: "Numero del Documento:",
-        docType: "Tipo di Documento:",
-        docTypePassport: "Passaporte",
-        docTypeID: "Carta d’Identità",
-        docTypeOther: "Altro",
-        docTypeOtherLabel: "Quale?",
-        docCountry: "Paese di Emissione:"
-      },
-      placeholder_select: "Seleziona",
-      subject: "Copia registrazione - AIMA",
-      submit: "Invia Modulo di Registrazione",
-      aima_success: "Modulo inviato con successo!"
+    placeholder_select: "Sélectionner",
+    subject: "Copie d'enregistrement - AIMA",
+    submit: "Envoyer le Formulaire",
+    aima_success: "Formulaire envoyé avec succès !"
+  },
+  it: {
+    subtitle: "Modulo obbligatorio di Registrazione degli Ospiti (AIMA, ex SEF).",
+    legalHtml: `<h3><strong>Avviso Legale Obbligatorio — Registrazione degli Ospiti (AIMA/SIBA)</strong></h3><p><a id="openFaqModal" class="faq-link">Domande Frequenti (FAQ)</a></p>`,
+    formTitle: "Modulo di Registrazione",
+    requiredNotice: "Compilazione e invio obbligatori",
+    stayDataTitle: "Dati del Soggiorno",
+    checkinLabel: "Data di Check‑in:",
+    checkoutLabel: "Data di Check‑out:",
+    adultsLabel: "Numero di Ospiti Adulti:",
+    childrenLabel: "Numero di Ospiti Bambini:",
+    wants_copy_title: "Desideri una copia via e-mail?",
+    radio_yes: "Sì",
+    radio_no: "No",
+    email_label: "La tua E-mail:",
+    guestTitle: i => `Ospite ${i}`,
+    fields: {
+      fullName: "Nome Completo:",
+      birthDate: "Data di Nascita:",
+      nationality: "Nazionalità:",
+      residenceCountry: "Paese di Residenza:",
+      docNumber: "Numero del Documento:",
+      docType: "Tipo di Documento:",
+      docTypePassport: "Passaporte",
+      docTypeID: "Carta d’Identità",
+      docTypeOther: "Altro",
+      docTypeOtherLabel: "Quale?",
+      docCountry: "Paese di Emissione:"
     },
-    de: {
-      subtitle: "Pflichtformular zur Gästeanmeldung (AIMA, ehemals SEF).",
-      legalHtml: `<h3><strong>Gesetzlich vorgeschriebener Hinweis — Gästeanmeldung (AIMA, ehemals SEF)</strong></h3><p><a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a></p>`,
-      formTitle: "Gästeanmeldeformular",
-      requiredNotice: "Pflichtangabe",
-      stayDataTitle: "Angaben zum Aufenthalt",
-      checkinLabel: "Check‑in‑Datum:",
-      checkoutLabel: "Check‑out‑Datum:",
-      adultsLabel: "Anzahl der erwachsenen Gäste:",
-      childrenLabel: "Anzahl der Kinder:",
-      wants_copy_title: "Möchten Sie eine Kopie per E-Mail?",
-      radio_yes: "Ja",
-      radio_no: "Nein",
-      email_label: "Ihre E-Mail:",
-      guestTitle: i => `Gast ${i}`,
-      fields: {
-        fullName: "Vollständiger Name:",
-        birthDate: "Geburtsdatum:",
-        nationality: "Staatsangehörigkeit:",
-        residenceCountry: "Wohnsitzland:",
-        docNumber: "Dokumentnummer:",
-        docType: "Dokumenttyp:",
-        docTypePassport: "Reisepass",
-        docTypeID: "Personalausweis",
-        docTypeOther: "Andere",
-        docTypeOtherLabel: "Welche?",
-        docCountry: "Ausstellungsland:"
-      },
-      placeholder_select: "Auswählen",
-      subject: "Registrierungskopie - AIMA",
-      submit: "Formular absenden",
-      aima_success: "Formular erfolgreich gesendet!"
-    }
-  };
-}
-const texts = window.texts;
+    placeholder_select: "Seleziona",
+    subject: "Copia registrazione - AIMA",
+    submit: "Invia Modulo di Registrazione",
+    aima_success: "Modulo inviato con successo!"
+  },
+  de: {
+    subtitle: "Pflichtformular zur Gästeanmeldung (AIMA, ehemals SEF).",
+    legalHtml: `<h3><strong>Gesetzlich vorgeschriebener Hinweis — Gästeanmeldung (AIMA, ehemals SEF)</strong></h3><p><a id="openFaqModal" class="faq-link">Häufig gestellte Fragen (FAQ)</a></p>`,
+    formTitle: "Gästeanmeldeformular",
+    requiredNotice: "Pflichtangabe",
+    stayDataTitle: "Angaben zum Aufenthalt",
+    checkinLabel: "Check‑in‑Datum:",
+    checkoutLabel: "Check‑out‑Datum:",
+    adultsLabel: "Anzahl der erwachsenen Gäste:",
+    childrenLabel: "Anzahl der Kinder:",
+    wants_copy_title: "Möchten Sie eine Kopie per E-Mail?",
+    radio_yes: "Ja",
+    radio_no: "Nein",
+    email_label: "Ihre E-Mail:",
+    guestTitle: i => `Gast ${i}`,
+    fields: {
+      fullName: "Vollständiger Name:",
+      birthDate: "Geburtsdatum:",
+      nationality: "Staatsangehörigkeit:",
+      residenceCountry: "Wohnsitzland:",
+      docNumber: "Dokumentnummer:",
+      docType: "Dokumenttyp:",
+      docTypePassport: "Reisepass",
+      docTypeID: "Personalausweis",
+      docTypeOther: "Andere",
+      docTypeOtherLabel: "Welche?",
+      docCountry: "Ausstellungsland:"
+    },
+    placeholder_select: "Auswählen",
+    subject: "Registrierungskopie - AIMA",
+    submit: "Formular absenden",
+    aima_success: "Formular erfolgreich gesendet!"
+  }
+};
+
+const faqTitles = { pt: "Perguntas Frequentes", en: "FAQ", es: "FAQ", fr: "FAQ", it: "FAQ", de: "FAQ" };
+const faqTexts = {
+  pt: "<p>A lei portuguesa obriga todos os alojamentos a comunicar à AIMA a entrada de cidadãos estrangeiros.</p>",
+  en: "<p>Portuguese law requires all accommodations to report guest entries to AIMA.</p>",
+  es: "<p>La ley portuguesa exige la comunicación de huéspedes a AIMA.</p>",
+  fr: "<p>La loi portugaise exige la déclaration des hôtes à l’AIMA.</p>",
+  it: "<p>La legge portoghese richiede la comunicazione degli ospiti ad AIMA.</p>",
+  de: "<p>Das portugiesische Gesetz verlangt die Meldung von Gästen an AIMA.</p>"
+};
 
 let currentLang = "pt";
 
@@ -307,12 +295,24 @@ function setLanguage(lang) {
   if (document.getElementById("submitLabel")) document.getElementById("submitLabel").textContent = t.submit;
   if (document.getElementById("requiredNotice")) document.getElementById("requiredNotice").textContent = t.requiredNotice;
 
+  // Atualizar labels de cópia por e-mail
   if (document.getElementById("labelWantsCopy")) document.getElementById("labelWantsCopy").textContent = t.wants_copy_title;
   if (document.getElementById("labelRadioYes")) document.getElementById("labelRadioYes").textContent = t.radio_yes;
   if (document.getElementById("labelRadioNo")) document.getElementById("labelRadioNo").textContent = t.radio_no;
   if (document.getElementById("labelClientEmail")) document.getElementById("labelClientEmail").textContent = t.email_label;
 
   generateGuestFields();
+
+  setTimeout(() => {
+    const openFaqBtn = document.getElementById("openFaqModal");
+    if (openFaqBtn) {
+      openFaqBtn.onclick = () => {
+        document.getElementById("faqTitle").textContent = faqTitles[currentLang];
+        document.getElementById("faqContent").innerHTML = faqTexts[currentLang];
+        document.getElementById("faqModal").style.display = "block";
+      };
+    }
+  }, 100);
 }
 
 function generateGuestFields() {
