@@ -18,6 +18,12 @@
   const CONFIG = {
     maxGuests: 20,
 
+    // Worker que envia os e-mails pelo Resend (receção + cópia ao cliente).
+    // Se estiver vazio ou falhar, usa-se o EmailJS/Web3Forms abaixo como alternativa.
+    emailWorker: {
+      url: "https://enviar-aima-email.lagosapartmentsbelleview.workers.dev"
+    },
+
     emailjs: {
       service: "service_funp519",
       template: "template_0oqqqy3",
@@ -27,6 +33,7 @@
     // Aviso para si (substitui o e-mail que o antigo aima.js enviava via Web3Forms)
     ownerEmail: {
       enabled: true,
+      to: "belleview@sapo.pt",
       endpoint: "https://api.web3forms.com/submit",
       accessKey: "950b90bc-37f4-4f5b-9d69-3e56389a054d",
       // true  = todos os e-mails levam os dados completos (como no sistema antigo).
@@ -1120,6 +1127,11 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_email: "Indique um e-mail válido para receber a cópia.",
       err_save: "Não foi possível enviar o formulário. Por favor tente novamente ou contacte-nos por telefone/WhatsApp.",
       mail_success: "O seu formulário foi submetido com sucesso.",
+      mail_noreply: "Esta é uma mensagem automática. Por favor não responda a este e-mail; para qualquer questão contacte-nos por telefone, WhatsApp ou belleview@sapo.pt.",
+      mail_call: "(Chamada para a rede fixa nacional)",
+      mail_reg: "Nº de Registos AL",
+      mail_operator: "Entidade Exploradora",
+      mail_rights: "Todos os direitos reservados.",
       mail_subject: "Cópia do Registo de Hóspedes - AIMA",
       mail_greeting: "Olá",
       mail_confirmation: "Confirmamos a receção do seu registo de hóspedes com os seguintes dados:",
@@ -1136,6 +1148,11 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_email: "Please enter a valid email address to receive the copy.",
       err_save: "We could not submit the form. Please try again or contact us by phone/WhatsApp.",
       mail_success: "Your form was submitted successfully.",
+      mail_noreply: "This is an automated message. Please do not reply to this email; for any questions contact us by phone, WhatsApp or belleview@sapo.pt.",
+      mail_call: "(Call to a national landline network)",
+      mail_reg: "AL Registration Numbers",
+      mail_operator: "Operating Entity",
+      mail_rights: "All rights reserved.",
       mail_subject: "Guest Registration Copy - AIMA",
       mail_greeting: "Hello",
       mail_confirmation: "We confirm receipt of your guest registration with the following details:",
@@ -1152,6 +1169,11 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_email: "Introduzca un correo electrónico válido para recibir la copia.",
       err_save: "No se pudo enviar el formulario. Inténtelo de nuevo o contáctenos por teléfono/WhatsApp.",
       mail_success: "Su formulario se ha enviado correctamente.",
+      mail_noreply: "Este es un mensaje automático. Por favor, no responda a este correo; para cualquier consulta contáctenos por teléfono, WhatsApp o belleview@sapo.pt.",
+      mail_call: "(Llamada a la red fija nacional)",
+      mail_reg: "Números de Registro AL",
+      mail_operator: "Entidad Operadora",
+      mail_rights: "Todos los derechos reservados.",
       mail_subject: "Copia del Registro de Huéspedes - AIMA",
       mail_greeting: "Hola",
       mail_confirmation: "Confirmamos la recepción de su registro de huéspedes con los siguientes datos:",
@@ -1168,6 +1190,11 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_email: "Veuillez saisir une adresse e-mail valide pour recevoir la copie.",
       err_save: "Impossible d’envoyer le formulaire. Veuillez réessayer ou nous contacter par téléphone/WhatsApp.",
       mail_success: "Votre formulaire a été envoyé avec succès.",
+      mail_noreply: "Ceci est un message automatique. Merci de ne pas répondre à cet e-mail ; pour toute question, contactez-nous par téléphone, WhatsApp ou belleview@sapo.pt.",
+      mail_call: "(Appel vers le réseau fixe national)",
+      mail_reg: "Numéros d’Enregistrement AL",
+      mail_operator: "Entité Exploitante",
+      mail_rights: "Tous droits réservés.",
       mail_subject: "Copie de l’Enregistrement des Hôtes - AIMA",
       mail_greeting: "Bonjour",
       mail_confirmation: "Nous confirmons la réception de votre enregistrement avec les données suivantes :",
@@ -1184,6 +1211,11 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_email: "Inserisca un indirizzo e-mail valido per ricevere la copia.",
       err_save: "Impossibile inviare il modulo. Riprovi o ci contatti per telefono/WhatsApp.",
       mail_success: "Il suo modulo è stato inviato con successo.",
+      mail_noreply: "Questo è un messaggio automatico. Si prega di non rispondere a questa e-mail; per qualsiasi domanda ci contatti per telefono, WhatsApp o belleview@sapo.pt.",
+      mail_call: "(Chiamata alla rete fissa nazionale)",
+      mail_reg: "Numeri di Registrazione AL",
+      mail_operator: "Entità Gestore",
+      mail_rights: "Tutti i diritti riservati.",
       mail_subject: "Copia della Registrazione degli Ospiti - AIMA",
       mail_greeting: "Buongiorno",
       mail_confirmation: "Confermiamo la ricezione della sua registrazione con i seguenti dati:",
@@ -1200,6 +1232,11 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       err_email: "Bitte geben Sie eine gültige E-Mail-Adresse für die Kopie an.",
       err_save: "Das Formular konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns per Telefon/WhatsApp.",
       mail_success: "Ihr Formular wurde erfolgreich übermittelt.",
+      mail_noreply: "Dies ist eine automatische Nachricht. Bitte antworten Sie nicht auf diese E-Mail; bei Fragen kontaktieren Sie uns per Telefon, WhatsApp oder belleview@sapo.pt.",
+      mail_call: "(Anruf ins nationale Festnetz)",
+      mail_reg: "AL‑Registrierungsnummern",
+      mail_operator: "Betreibende Einheit",
+      mail_rights: "Alle Rechte vorbehalten.",
       mail_subject: "Kopie der Gästeanmeldung - AIMA",
       mail_greeting: "Guten Tag",
       mail_confirmation: "Wir bestätigen den Eingang Ihrer Gästeanmeldung mit folgenden Daten:",
@@ -1524,6 +1561,27 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
     });
   }
 
+  function buildOwnerMailHtml(b, saved) {
+    const s = buildSummary(b, texts.pt, "pt");
+    const e = escapeHtml;
+    const quando = new Date(b.criadoEm).toLocaleString("pt-PT");
+    const estado = saved
+      ? `<p style="background:#e8f5e9;border:1px solid #b7dfb9;padding:10px 12px;border-radius:6px;"><strong>✔ Gravado no painel SIBA</strong> — pronto a processar.</p>`
+      : `<p style="background:#fdecea;border:1px solid #f5c2c0;color:#8a1c14;padding:10px 12px;border-radius:6px;"><strong>⚠ ATENÇÃO: NÃO foi gravado no painel SIBA.</strong> Este e-mail é a única cópia — guarde os dados.</p>`;
+    return `<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:0 auto;color:#222;line-height:1.5;">
+  <div style="background:#005c99;color:#fff;padding:14px 18px;border-radius:8px 8px 0 0;font-size:18px;font-weight:bold;">Novo Boletim de Alojamento (AIMA/SIBA)</div>
+  <div style="border:1px solid #dde3ea;border-top:0;padding:18px;border-radius:0 0 8px 8px;">
+    ${estado}
+    <p style="margin:2px 0;"><strong>Recebido em:</strong> ${e(quando)}</p>
+    <p style="margin:2px 0;"><strong>Língua do formulário:</strong> ${e(b.idioma)}</p>
+    <p style="margin:2px 0;"><strong>Nº de hóspedes:</strong> ${b.hospedes.length}</p>
+    <p style="margin:2px 0;"><strong>Cópia pedida pelo cliente:</strong> ${b.pediuCopia ? "Sim — " + e(b.emailCliente) : "Não"}</p>
+    <hr style="border:0;border-top:1px solid #dde3ea;margin:14px 0;">
+    ${s.html}
+  </div>
+</div>`;
+  }
+
   async function notifyOwner(b, opts) {
     const cfg = CONFIG.ownerEmail;
     if (!cfg.enabled) return false;
@@ -1552,9 +1610,33 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       ].join("\n");
     }
 
+    const subject = (opts.saved ? "" : "[ATENÇÃO — NÃO GRAVADO NO PAINEL] ") + `Novo Formulário AIMA Recebido de ${nome}`;
+
+    // Dados completos → e-mail bonito via EmailJS (mesmo template da cópia ao cliente)
+    if (opts.full && typeof emailjs !== "undefined") {
+      try {
+        const c = CONFIG.emailjs;
+        await emailjs.send(c.service, c.template, {
+          to_email: cfg.to,
+          email: cfg.to,
+          subject_text: subject,
+          subject,
+          guest_name: nome,
+          checkin: fmtDate(b.dataCheckin),
+          checkout: fmtDate(b.dataCheckout),
+          message_html: buildOwnerMailHtml(b, opts.saved),
+          message,
+          reply_to: b.emailCliente || cfg.to
+        }, c.publicKey);
+        return true;
+      } catch (err) {
+        console.warn("EmailJS (receção) falhou, a usar Web3Forms:", err);
+      }
+    }
+
     const payload = {
       access_key: cfg.accessKey,
-      subject: (opts.saved ? "" : "[ATENÇÃO — NÃO GRAVADO NO PAINEL] ") + `Novo Formulário AIMA Recebido de ${nome}`,
+      subject,
       from_name: "Belleview — Boletim AIMA",
       message,
       botcheck: ""
@@ -1571,24 +1653,58 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
     return true;
   }
 
+  // Rodapé igual ao das páginas (aimatest.html), traduzido
+  function buildMailFooterHtml(t) {
+    const e = escapeHtml;
+    const a = "color:#ffffff;text-decoration:underline;";
+    return `<div style="background:#005c99;color:#ffffff;text-align:center;padding:22px 18px;border-radius:0 0 8px 8px;font-size:13px;line-height:1.7;">
+    <div style="width:50px;height:50px;border-radius:50%;background:#ffffff;color:#005c99;font:bold 28px/50px Arial,Helvetica,sans-serif;text-align:center;margin:0 auto 8px;">B</div>
+    <div style="font-size:16px;font-weight:bold;margin-bottom:8px;">Apartments Belleview Lagos</div>
+    <div>Rua Quinta do Landeiro Lote 22, 23<br>Urbanização Marina Park<br>8600-302 Lagos, Algarve - Portugal</div>
+    <div style="margin-top:10px;">
+      Tel: <a href="tel:+351910051588" style="${a}">+351 910 051 588</a><br>
+      <span style="font-size:12px;opacity:.85;">${e(t.mail_call)}</span><br>
+      WhatsApp: <a href="https://wa.me/351910051588" style="${a}">+351 910 051 588</a><br>
+      Email: <a href="mailto:belleview@sapo.pt" style="${a}">belleview@sapo.pt</a>
+    </div>
+    <div style="margin-top:10px;">${e(t.mail_reg)}: 26313/AL, 116670/AL, 116671/AL<br>${e(t.mail_operator)}: Luís Ferreira.</div>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.3);font-size:12px;opacity:.9;">${e(t.mail_noreply)}</div>
+    <div style="margin-top:10px;font-size:12px;opacity:.85;">© 2025 Apartments Belleview Lagos — ${e(t.mail_rights)}</div>
+  </div>`;
+  }
+
   function buildGuestMailHtml(b, t, summaryHtml) {
     const name = b.hospedes[0]?.nome || "";
     return `<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px;margin:0 auto;color:#222;line-height:1.5;">
   <div style="background:#005c99;color:#fff;padding:14px 18px;border-radius:8px 8px 0 0;font-size:18px;font-weight:bold;">Apartments Belleview Lagos</div>
-  <div style="border:1px solid #dde3ea;border-top:0;padding:18px;border-radius:0 0 8px 8px;">
+  <div style="border:1px solid #dde3ea;border-top:0;padding:18px;">
     <p>${escapeHtml(t.mail_greeting)} ${escapeHtml(name)},</p>
     <p style="background:#e8f5e9;border:1px solid #b7dfb9;padding:10px 12px;border-radius:6px;"><strong>✔ ${escapeHtml(t.mail_success)}</strong></p>
     <p>${escapeHtml(t.mail_confirmation)}</p>
     ${summaryHtml}
     <p style="margin-top:18px;">${escapeHtml(t.mail_footer)}</p>
   </div>
+  ${buildMailFooterHtml(t)}
 </div>`;
+  }
+
+  async function sendViaWorker(b, saved) {
+    const res = await fetch(CONFIG.emailWorker.url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ boletim: b, gravado: saved })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok && !data.hasOwnProperty("owner")) throw new Error("Worker " + res.status);
+    return data;   // { success, owner, guest }
   }
 
   async function sendGuestCopy(b, t) {
     if (typeof emailjs === "undefined") throw new Error("EmailJS indisponível");
     const s = buildSummary(b, t, currentLang);
     const c = CONFIG.emailjs;
+    console.info("[AIMA] A enviar cópia por EmailJS →", b.emailCliente,
+                 "| message_html:", buildGuestMailHtml(b, t, s.html).length, "caracteres");
     await emailjs.send(c.service, c.template, {
       // variáveis já existentes no seu template
       to_email: b.emailCliente,
@@ -1671,17 +1787,30 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
       try { await saveToFirestore(boletim); saved = true; }
       catch (err) { console.error("Erro Firestore:", err); }
 
-      // 2) Aviso para si. Se o Firestore falhou, vai com dados completos (salvaguarda)
-      let ownerOk = false;
-      try {
-        ownerOk = await notifyOwner(boletim, { full: CONFIG.ownerEmail.fullDataAlways || !saved, saved });
-      } catch (err) { console.error("Erro aviso ao proprietário:", err); }
+      // 2) E-mails: receção (sempre, com todos os dados) + cópia ao cliente (se pediu).
+      //    Primeiro tenta o Worker/Resend; se falhar, usa o EmailJS/Web3Forms.
+      let ownerOk = false, guestDone = false;
+      if (CONFIG.emailWorker.url) {
+        try {
+          const r = await sendViaWorker(boletim, saved);
+          ownerOk = !!r.owner;
+          guestDone = r.guest === true;
+          console.info("[AIMA] Resend via Worker:", r);
+        } catch (err) { console.warn("Worker de e-mail falhou, a usar alternativa:", err); }
+      }
+      if (!ownerOk) {
+        try {
+          ownerOk = await notifyOwner(boletim, { full: true, saved });
+        } catch (err) { console.error("Erro aviso ao proprietário:", err); }
+      }
 
       if (!saved && !ownerOk) throw new Error("Nenhum destino recebeu o boletim");
 
-      // 3) Cópia ao cliente (não bloqueia nem invalida o registo)
-      if (boletim.pediuCopia && boletim.emailCliente) {
-        sendGuestCopy(boletim, t).catch(err => console.warn("Cópia por e-mail falhou:", err));
+      // 3) Cópia ao cliente pela via alternativa (só se o Worker não a enviou)
+      if (boletim.pediuCopia && boletim.emailCliente && !guestDone) {
+        sendGuestCopy(boletim, t)
+          .then(r => console.info("[AIMA] EmailJS respondeu:", r && r.status, r && r.text))
+          .catch(err => console.warn("Cópia por e-mail falhou:", err));
       }
 
       showSuccess(t);
@@ -1748,6 +1877,7 @@ Er kann vor der Übermittlung korrigiert werden. Danach kann nur AIMA eingreifen
     $("faqModal")?.addEventListener("click", ev => { if (ev.target === $("faqModal")) closeFaq(); });
     document.addEventListener("keydown", ev => { if (ev.key === "Escape") closeFaq(); });
 
+    console.info("[AIMA] aimatest.js v3 carregado (cópia por e-mail com message_html)");
     toggleEmail();
     window.setLanguage(detectLang());   // passa pelo wrapper do aima-lang.js (rodapé)
   }
