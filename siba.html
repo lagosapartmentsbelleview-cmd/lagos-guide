@@ -45,9 +45,23 @@
       top: 10px;
       right: 10px;
     }
+  
+    /* Painel invisível até a sessão ser confirmada */
+    body.auth-pending > *:not(#authGate) { display: none !important; }
+    #authGate { display: none; min-height: 100vh; align-items: center; justify-content: center; text-align: center; padding: 24px; }
+    body.auth-pending #authGate { display: flex; }
   </style>
 </head>
-<body>
+<body class="auth-pending">
+
+  <!-- PORTA DE ACESSO: só desaparece depois de iniciar sessão -->
+  <div id="authGate">
+    <div>
+      <div class="spinner-border text-primary mb-3" id="authSpinner"></div>
+      <p id="authMsg" class="mb-3 text-muted">A verificar sessão…</p>
+      <button id="authBtn" class="btn btn-primary d-none" onclick="terminarSessao()">Terminar sessão</button>
+    </div>
+  </div>
 
   <!-- NAVBAR HEADER -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
@@ -59,11 +73,17 @@
         </svg>
         <span>Apartments Belleview Lagos — <small class="text-muted fs-6">Painel SIBA/AIMA</small></span>
       </a>
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <small id="userEmail" class="text-muted d-none d-md-inline"></small>
+        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="terminarSessao()"><i class="bi bi-box-arrow-right"></i> Sair</button>
+      </div>
     </div>
   </nav>
 
   <!-- CONTEÚDO PRINCIPAL -->
   <div class="container-fluid px-4 py-4">
+
+    <div id="avisoFirestore" class="alert alert-warning d-none" role="alert"></div>
 
     <!-- MÉTRICAS -->
     <div class="row g-3 mb-4">
@@ -229,6 +249,13 @@
   <script>
     const CLOUDFLARE_WORKER_URL = "https://enviar-siba.lagosapartmentsbelleview.workers.dev";
     const SIBA_STORAGE_KEY = "belleview_boletins_siba";
+    // Escapa texto vindo dos hóspedes antes de o pôr no HTML (evita XSS armazenado)
+    function esc(v) {
+      return String(v == null ? "" : v)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
+
     let listaBoletinsMemoria = [];
     let modalBootstrapInstance = null;
 
@@ -329,6 +356,7 @@
       if (typeof db !== "undefined") {
         try {
           const snapshot = await db.collection("boletins").get();
+          document.getElementById("avisoFirestore")?.classList.add("d-none");
           snapshot.forEach(doc => {
             const data = doc.data();
             registosBrutos.push({
@@ -342,6 +370,13 @@
           });
         } catch (err) {
           console.warn("Firestore restrito. A utilizar dados em memória:", err);
+          const aviso = document.getElementById("avisoFirestore");
+          if (aviso) {
+            aviso.textContent = (err && err.code === "permission-denied")
+              ? "O Firestore recusou a leitura (permission-denied). Confirme que iniciou sessão com a conta autorizada e que as regras permitem a leitura de 'boletins' a esta conta. Os boletins gravados na nuvem não estão a ser mostrados."
+              : "Não foi possível ler os boletins do Firestore: " + (err && err.message ? err.message : err);
+            aviso.classList.remove("d-none");
+          }
         }
       }
 
@@ -400,16 +435,16 @@
         return `
           <tr>
             <td class="small">${dataFmt}</td>
-            <td class="fw-bold text-dark">${hospedePrincipal}</td>
-            <td class="small">${d.dataCheckin || ""} ➔ ${d.dataCheckout || ""}</td>
-            <td class="text-center"><span class="badge bg-secondary">${totalHospedes}</span></td>
-            <td><small class="fw-semibold">Apt ${b.unidade || '1'}</small></td>
-            <td><span class="badge ${badgeClass}">${b.status}</span></td>
+            <td class="fw-bold text-dark">${esc(hospedePrincipal)}</td>
+            <td class="small">${esc(d.dataCheckin || "")} ➔ ${esc(d.dataCheckout || "")}</td>
+            <td class="text-center"><span class="badge bg-secondary">${esc(totalHospedes)}</span></td>
+            <td><small class="fw-semibold">Apt ${esc(b.unidade || '1')}</small></td>
+            <td><span class="badge ${badgeClass}">${esc(b.status)}</span></td>
             <td class="text-end pe-4">
-              <button class="btn btn-sm btn-primary me-1" onclick="abrirModalEditar('${b.id}')">
+              <button class="btn btn-sm btn-primary me-1" data-id="${esc(b.id)}" onclick="abrirModalEditar(this.dataset.id)">
                 <i class="bi bi-pencil-square me-1"></i> Ver / Processar
               </button>
-              <button class="btn btn-sm btn-outline-danger" onclick="eliminarBoletimDirecto('${b.id}')" title="Eliminar">
+              <button class="btn btn-sm btn-outline-danger" data-id="${esc(b.id)}" onclick="eliminarBoletimDirecto(this.dataset.id)" title="Eliminar">
                 <i class="bi bi-trash"></i>
               </button>
             </td>
@@ -477,15 +512,15 @@
         <div class="row g-2">
           <div class="col-md-6">
             <label class="form-label small mb-1">Nome Completo:</label>
-            <input type="text" class="form-control form-control-sm guest-nome" value="${dados.nome || ''}">
+            <input type="text" class="form-control form-control-sm guest-nome" value="${esc(dados.nome || '')}">
           </div>
           <div class="col-md-3">
             <label class="form-label small mb-1">Data Nascimento:</label>
-            <input type="date" class="form-control form-control-sm guest-nasc" value="${normalizarDataIso(dados.dataNascimento)}">
+            <input type="date" class="form-control form-control-sm guest-nasc" value="${esc(normalizarDataIso(dados.dataNascimento))}">
           </div>
           <div class="col-md-3">
             <label class="form-label small mb-1">Nacionalidade (Ex: PRT):</label>
-            <input type="text" class="form-control form-control-sm guest-nac" value="${dados.nacionalidade || ''}">
+            <input type="text" class="form-control form-control-sm guest-nac" value="${esc(dados.nacionalidade || '')}">
           </div>
           <div class="col-md-3">
             <label class="form-label small mb-1">Tipo Documento:</label>
@@ -497,15 +532,15 @@
           </div>
           <div class="col-md-3">
             <label class="form-label small mb-1">Número Documento:</label>
-            <input type="text" class="form-control form-control-sm guest-docnum" value="${dados.docNumero || ''}">
+            <input type="text" class="form-control form-control-sm guest-docnum" value="${esc(dados.docNumero || '')}">
           </div>
           <div class="col-md-3">
             <label class="form-label small mb-1">País Emissor (Ex: PRT):</label>
-            <input type="text" class="form-control form-control-sm guest-docpais" value="${dados.docPaisEmissor || dados.nacionalidade || ''}">
+            <input type="text" class="form-control form-control-sm guest-docpais" value="${esc(dados.docPaisEmissor || dados.nacionalidade || '')}">
           </div>
           <div class="col-md-3">
             <label class="form-label small mb-1">País Residência (Ex: PRT):</label>
-            <input type="text" class="form-control form-control-sm guest-residencia" value="${dados.paisResidencia || dados.nacionalidade || ''}">
+            <input type="text" class="form-control form-control-sm guest-residencia" value="${esc(dados.paisResidencia || dados.nacionalidade || '')}">
           </div>
         </div>
       `;
@@ -541,6 +576,28 @@
     async function executarEnvioWorker() {
       const id = document.getElementById("modalBoletimId").value;
       const dadosEditados = recolherDadosEditadosDoModal();
+
+      // PROTEÇÃO 1 (opcional): evitar comunicar duas vezes o mesmo boletim à AIMA.
+      // Só pergunta; nunca altera o que é enviado. Ponha CONFIRMAR_REENVIO = false para desligar.
+      if (CONFIRMAR_REENVIO) {
+        const registoAtual = listaBoletinsMemoria.find(b => b.id === id);
+        if (registoAtual && (registoAtual.status === "ENVIADO" || registoAtual.status === "SUBMETIDO_WS")) {
+          if (!confirm("Este boletim já foi marcado como ENVIADO. Enviar novamente para o SIBA?")) return;
+        }
+      }
+
+      // PROTEÇÃO 2 (opcional): não enviar se faltarem dados essenciais (o SIBA rejeitaria,
+      // ou pior: uma nacionalidade vazia seria enviada como PRT). Não altera o payload.
+      // Ponha VALIDAR_ANTES_DE_ENVIAR = false para desligar.
+      if (VALIDAR_ANTES_DE_ENVIAR) {
+        const emFalta = [];
+        if (!dadosEditados.dataCheckin || !dadosEditados.dataCheckout) emFalta.push("datas de check-in/check-out");
+        if (!dadosEditados.hospedes.length) emFalta.push("pelo menos um hóspede");
+        dadosEditados.hospedes.forEach((h, i) => {
+          if (!h.nome || !h.dataNascimento || !h.nacionalidade || !h.docNumero) emFalta.push(`dados do Hóspede ${i + 1}`);
+        });
+        if (emFalta.length) { alert("Faltam: " + emFalta.join("; ")); return; }
+      }
       const unidadeSelecionada = document.getElementById("selectUnidadeModal").value;
       const btn = document.getElementById("btnEnviarSibaModal");
 
@@ -722,6 +779,10 @@
       carregarBoletins();
     }
 
+    function xmlEsc(v) {
+      return String(v == null ? "" : v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
     function descarregarXmlManualCurrent() {
       const dadosEditados = recolherDadosEditadosDoModal();
       const unidade = document.getElementById("selectUnidadeModal").value;
@@ -732,12 +793,12 @@
 
       (dadosEditados.hospedes || []).forEach(h => {
         xml += `  <Boletim>\n`;
-        xml += `    <Nome>${h.nome}</Nome>\n`;
+        xml += `    <Nome>${xmlEsc(h.nome)}</Nome>\n`;
         xml += `    <DataNascimento>${normalizarDataIso(h.dataNascimento)}</DataNascimento>\n`;
         xml += `    <Nacionalidade>${normalizarPaisISO3(h.nacionalidade)}</Nacionalidade>\n`;
         xml += `    <PaisResidencia>${normalizarPaisISO3(h.paisResidencia)}</PaisResidencia>\n`;
         xml += `    <TipoDocumento>${normalizarDocTipo(h.docTipo)}</TipoDocumento>\n`;
-        xml += `    <NumeroDocumento>${h.docNumero}</NumeroDocumento>\n`;
+        xml += `    <NumeroDocumento>${xmlEsc(h.docNumero)}</NumeroDocumento>\n`;
         xml += `    <PaisEmissor>${normalizarPaisISO3(h.docPaisEmissor)}</PaisEmissor>\n`;
         xml += `    <DataEntrada>${normalizarDataIso(dadosEditados.dataCheckin)}</DataEntrada>\n`;
         xml += `    <DataSaida>${normalizarDataIso(dadosEditados.dataCheckout)}</DataSaida>\n`;
@@ -753,7 +814,70 @@
       a.click();
     }
 
-    document.addEventListener("DOMContentLoaded", carregarBoletins);
+    // ============================================================
+    // CONTROLO DE ACESSO (Firebase Auth) — usa a sessão do login.html
+    // ============================================================
+    const LOGIN_PAGE = "login.html";
+    // Limitar o painel à(s) sua(s) conta(s) pelo UID (Firebase Console → Authentication → Users → "User UID").
+    // O UID não serve para fazer login, por isso não há problema em estar visível no código.
+    // Vazio = qualquer conta com sessão iniciada (inclui a conta "bot").
+    // (A proteção real são as regras do Firestore; isto é só para a interface.)
+    const ADMIN_UIDS = ["6tYI89JtE5gcdTv21DUR1R3zN4K2"];   // ⚠ RECOMENDADO, ex.: ["Ab12Cd34Ef56Gh78Ij90Kl12Mn34"]
+    const INACTIVIDADE_MS = 30 * 60 * 1000;   // terminar sessão após 30 min sem atividade
+    // Proteções antes do envio ao SIBA (não alteram o que é enviado). false = comportamento original.
+    const CONFIRMAR_REENVIO = true;
+    const VALIDAR_ANTES_DE_ENVIAR = true;
+    let painelIniciado = false;
+    let temporizadorInatividade = null;
+
+    function irParaLogin() {
+      const destino = (location.pathname.split("/").pop() || "siba.html");
+      location.replace(LOGIN_PAGE + "?redirect=" + encodeURIComponent(destino));
+    }
+
+    function terminarSessao() {
+      firebase.auth().signOut().finally(irParaLogin);
+    }
+
+    function reiniciarTemporizadorInatividade() {
+      clearTimeout(temporizadorInatividade);
+      temporizadorInatividade = setTimeout(() => {
+        alert("Sessão terminada por inatividade.");
+        terminarSessao();
+      }, INACTIVIDADE_MS);
+    }
+
+    function mostrarBloqueio(msg) {
+      document.getElementById("authSpinner").classList.add("d-none");
+      document.getElementById("authMsg").textContent = msg;
+      document.getElementById("authBtn").classList.remove("d-none");
+    }
+
+    function iniciarPainel(user) {
+      if (painelIniciado) return;
+      painelIniciado = true;
+      document.body.classList.remove("auth-pending");
+      document.getElementById("userEmail").textContent = user.email || "";
+      ["mousemove", "keydown", "click", "touchstart"].forEach(ev =>
+        document.addEventListener(ev, reiniciarTemporizadorInatividade, { passive: true }));
+      reiniciarTemporizadorInatividade();
+      carregarBoletins();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof firebase === "undefined" || !firebase.auth) {
+        mostrarBloqueio("Não foi possível carregar o sistema de autenticação.");
+        return;
+      }
+      firebase.auth().onAuthStateChanged(user => {
+        if (!user) { irParaLogin(); return; }
+        if (ADMIN_UIDS.length && !ADMIN_UIDS.includes(user.uid)) {
+          mostrarBloqueio("Esta conta (" + (user.email || "") + ") não tem permissão para aceder a este painel.");
+          return;
+        }
+        iniciarPainel(user);
+      });
+    });
   </script>
 </body>
 </html>
