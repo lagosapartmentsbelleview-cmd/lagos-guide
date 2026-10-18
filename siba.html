@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="css/aima.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <!-- Menu comum às páginas (carregado DEPOIS do Bootstrap para prevalecer) -->
+  <link rel="stylesheet" href="css/global.css">
 
   <style>
     body {
@@ -50,6 +52,45 @@
     body.auth-pending > *:not(#authGate) { display: none !important; }
     #authGate { display: none; min-height: 100vh; align-items: center; justify-content: center; text-align: center; padding: 24px; }
     body.auth-pending #authGate { display: flex; }
+
+    /* ===== TELEMÓVEL (só ecrãs pequenos; no computador nada muda) ===== */
+    @media (max-width: 767.98px) {
+      .container-fluid { padding-left: 12px !important; padding-right: 12px !important; }
+      .navbar-brand { font-size: 1rem; white-space: normal; }
+      .navbar > .container-fluid { padding-left: 12px !important; padding-right: 12px !important; }
+      .fs-3 { font-size: 1.5rem !important; }
+      .card-metric { padding: .6rem .8rem !important; }
+
+      /* Barra de ferramentas: botões e filtro em linha, a ocupar a largura */
+      .card-header h5 { font-size: 1rem; width: 100%; }
+      .toolbar-boletins { width: 100%; }
+      .toolbar-boletins .btn, .toolbar-boletins select { flex: 1 1 45%; min-height: 40px; }
+
+      /* Tabela -> cartões (um por boletim) */
+      .tabela-boletins thead { display: none; }
+      .tabela-boletins, .tabela-boletins tbody, .tabela-boletins tr, .tabela-boletins td { display: block; width: 100%; }
+      .tabela-boletins tr { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; margin: 10px 0; padding: 8px 12px; box-shadow: 0 2px 6px rgba(0,0,0,.05); }
+      .tabela-boletins td { display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 0 !important; padding: 6px 0 !important; text-align: right !important; }
+      .tabela-boletins td[data-label]::before { content: attr(data-label); flex: 0 0 38%; text-align: left; font-weight: 600; color: #64748b; font-size: .8rem; text-transform: uppercase; }
+      .tabela-boletins td[colspan] { display: block; text-align: center !important; }
+      .tabela-boletins td.acoes { flex-wrap: wrap; gap: 8px; padding-top: 10px !important; }
+      .tabela-boletins td.acoes .btn { flex: 1 1 auto; min-height: 42px; }
+      .table-responsive { overflow-x: visible; }
+      .card-body.p-0 { padding: 0 8px !important; background: transparent; }
+
+      /* Janela de edição */
+      .modal-body { padding: 14px !important; }
+      .modal-footer { flex-direction: column; align-items: stretch; gap: 10px; }
+      .modal-footer > div { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+      .modal-footer .btn { flex: 1 1 45%; min-height: 42px; margin: 0 !important; }
+      #btnEnviarSibaModal { flex: 1 1 100%; order: -1; min-height: 48px; }
+      .guest-card-edit { padding: 12px; }
+
+      /* Evita o zoom automático do iPhone ao tocar num campo */
+      .form-control, .form-select, .form-control-sm, .form-select-sm { font-size: 16px !important; min-height: 40px; }
+      .form-select, .form-control { max-width: 100%; }
+      #selectUnidadeModal { text-overflow: ellipsis; }
+    }
   </style>
 </head>
 <body class="auth-pending">
@@ -63,6 +104,23 @@
     </div>
   </div>
 
+  <!-- MENU SUPERIOR (igual às outras páginas: css/global.css + js/menu.js) -->
+  <div class="top-menu">
+    <span class="menu-button" id="toggleMenu">☰ Menu</span>
+
+    <div class="dropdown-menu" id="dropdown-menu">
+      <a href="listagem-reservas.html">Reservas</a>
+      <a href="limpeza.html">Limpeza</a>
+      <a href="precos.html">Preços</a>
+      <a href="financeiro.html">Financeiro</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="operacional.html">Operacional</a>
+      <a href="siba.html">Siba</a>
+      <a href="mensagens.html">Mensagens</a>
+      <button id="btnLogout" class="sair">Sair</button>
+    </div>
+  </div>
+
   <!-- NAVBAR HEADER -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
     <div class="container-fluid px-4">
@@ -71,11 +129,10 @@
           <circle cx="50" cy="50" r="46" fill="#005c99" stroke="#005c99" stroke-width="6"/>
           <text x="50" y="67" text-anchor="middle" font-family="Poppins, sans-serif" font-size="42" font-weight="700" fill="#ffffff">B</text>
         </svg>
-        <span>Apartments Belleview Lagos — <small class="text-muted fs-6">Painel SIBA/AIMA</small></span>
+        <span>Apartments Belleview Lagos<small class="text-muted fs-6 d-none d-sm-inline"> — Painel SIBA/AIMA</small></span>
       </a>
       <div class="ms-auto d-flex align-items-center gap-2">
         <small id="userEmail" class="text-muted d-none d-md-inline"></small>
-        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="terminarSessao()"><i class="bi bi-box-arrow-right"></i> Sair</button>
       </div>
     </div>
   </nav>
@@ -128,7 +185,7 @@
     <div class="card border-0 shadow-sm">
       <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
         <h5 class="mb-0 fw-bold"><i class="bi bi-list-task me-2"></i>Gestão de Boletins de Alojamento</h5>
-        <div class="d-flex gap-2">
+        <div class="d-flex flex-wrap gap-2 toolbar-boletins">
           <button class="btn btn-sm btn-success fw-bold" onclick="abrirModalCriarNovo()"><i class="bi bi-plus-circle me-1"></i> + Novo Boletim Manual</button>
           <select id="filtroEstado" class="form-select form-select-sm" onchange="carregarBoletins()">
             <option value="TODOS">Todos os Estados</option>
@@ -141,7 +198,7 @@
 
       <div class="card-body p-0">
         <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
+          <table class="table table-hover align-middle mb-0 tabela-boletins">
             <thead class="table-light">
               <tr>
                 <th>Data Receção</th>
@@ -165,7 +222,7 @@
 
   <!-- MODAL DE EDIÇÃO / CRIAÇÃO E PROCESSAMENTO -->
   <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
       <div class="modal-content">
         
         <div class="modal-header bg-primary text-white">
@@ -244,6 +301,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
   <script src="js/firebase-config.js"></script>
+  <script src="js/menu.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
@@ -434,13 +492,13 @@
 
         return `
           <tr>
-            <td class="small">${dataFmt}</td>
-            <td class="fw-bold text-dark">${esc(hospedePrincipal)}</td>
-            <td class="small">${esc(d.dataCheckin || "")} ➔ ${esc(d.dataCheckout || "")}</td>
-            <td class="text-center"><span class="badge bg-secondary">${esc(totalHospedes)}</span></td>
-            <td><small class="fw-semibold">Apt ${esc(b.unidade || '1')}</small></td>
-            <td><span class="badge ${badgeClass}">${esc(b.status)}</span></td>
-            <td class="text-end pe-4">
+            <td class="small" data-label="Receção">${dataFmt}</td>
+            <td class="fw-bold text-dark" data-label="Hóspede">${esc(hospedePrincipal)}</td>
+            <td class="small" data-label="Estadia">${esc(d.dataCheckin || "")} ➔ ${esc(d.dataCheckout || "")}</td>
+            <td class="text-center" data-label="Nº hóspedes"><span class="badge bg-secondary">${esc(totalHospedes)}</span></td>
+            <td data-label="Alojamento"><small class="fw-semibold">Apt ${esc(b.unidade || '1')}</small></td>
+            <td data-label="Estado"><span class="badge ${badgeClass}">${esc(b.status)}</span></td>
+            <td class="text-end pe-4 acoes">
               <button class="btn btn-sm btn-primary me-1" data-id="${esc(b.id)}" onclick="abrirModalEditar(this.dataset.id)">
                 <i class="bi bi-pencil-square me-1"></i> Ver / Processar
               </button>
@@ -467,7 +525,7 @@
       container.innerHTML = "";
       adicionarCardHospedeModal();
 
-      modalBootstrapInstance = new bootstrap.Modal(document.getElementById("modalEditar"));
+      modalBootstrapInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalEditar"));
       modalBootstrapInstance.show();
     }
 
@@ -496,7 +554,7 @@
         hospedes.forEach(h => adicionarCardHospedeModal(h));
       }
 
-      modalBootstrapInstance = new bootstrap.Modal(document.getElementById("modalEditar"));
+      modalBootstrapInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalEditar"));
       modalBootstrapInstance.show();
     }
 
@@ -814,9 +872,15 @@
       a.click();
     }
 
+    // Proteções antes do envio ao SIBA (não alteram o que é enviado). false = comportamento original.
+    const CONFIRMAR_REENVIO = true;
+    const VALIDAR_ANTES_DE_ENVIAR = true;
+
     // ============================================================
     // CONTROLO DE ACESSO (Firebase Auth) — usa a sessão do login.html
+    // Dentro de uma função própria para nunca colidir com o js/menu.js
     // ============================================================
+    (function () {
     const LOGIN_PAGE = "login.html";
     // Limitar o painel à(s) sua(s) conta(s) pelo UID (Firebase Console → Authentication → Users → "User UID").
     // O UID não serve para fazer login, por isso não há problema em estar visível no código.
@@ -824,9 +888,7 @@
     // (A proteção real são as regras do Firestore; isto é só para a interface.)
     const ADMIN_UIDS = ["6tYI89JtE5gcdTv21DUR1R3zN4K2"];   // ⚠ RECOMENDADO, ex.: ["Ab12Cd34Ef56Gh78Ij90Kl12Mn34"]
     const INACTIVIDADE_MS = 30 * 60 * 1000;   // terminar sessão após 30 min sem atividade
-    // Proteções antes do envio ao SIBA (não alteram o que é enviado). false = comportamento original.
-    const CONFIRMAR_REENVIO = true;
-    const VALIDAR_ANTES_DE_ENVIAR = true;
+    // (CONFIRMAR_REENVIO / VALIDAR_ANTES_DE_ENVIAR estão definidas mais acima)
     let painelIniciado = false;
     let temporizadorInatividade = null;
 
@@ -853,6 +915,12 @@
       document.getElementById("authBtn").classList.remove("d-none");
     }
 
+    function iniciarMenu() {
+      // Abrir/fechar o menu é feito pelo js/menu.js (toggleMenu). Aqui só garantimos o Sair.
+      const sair = document.getElementById("btnLogout");
+      if (sair) sair.addEventListener("click", terminarSessao);
+    }
+
     function iniciarPainel(user) {
       if (painelIniciado) return;
       painelIniciado = true;
@@ -865,6 +933,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      iniciarMenu();
       if (typeof firebase === "undefined" || !firebase.auth) {
         mostrarBloqueio("Não foi possível carregar o sistema de autenticação.");
         return;
@@ -878,6 +947,34 @@
         iniciarPainel(user);
       });
     });
+
+    window.terminarSessao = terminarSessao;
+    })();
+  </script>
+
+  <script>
+    // Garante que o botão do menu abre/fecha uma (e só uma) vez, qualquer que seja a forma
+    // como o js/menu.js esteja escrito. Se o menu.js já tratou do clique, isto não faz nada.
+    (function () {
+      var btn = document.getElementById("toggleMenu");
+      var menu = document.getElementById("dropdown-menu");
+      if (!btn || !menu) return;
+      var assinatura = function () {
+        return [menu.className, menu.getAttribute("style"), btn.className,
+                menu.parentElement.className, document.body.className].join("|");
+      };
+      var antes = null;
+      btn.addEventListener("pointerdown", function () { antes = assinatura(); }, true);
+      btn.addEventListener("click", function () {
+        var ref = antes; antes = null;
+        if (ref === null) return;
+        setTimeout(function () {
+          if (assinatura() !== ref) return;                       // o menu.js tratou do clique
+          if (typeof window.toggleMenu === "function") window.toggleMenu();
+          else menu.classList.toggle("show");
+        }, 0);
+      });
+    })();
   </script>
 </body>
 </html>
