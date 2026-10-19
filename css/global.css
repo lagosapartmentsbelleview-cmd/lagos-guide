@@ -498,3 +498,10 @@ button.btn-delete {
     color: #003366;
 }
 
+/* Menu: a lista abre compacta por baixo do botão, em vez de esticar a barra */
+.dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+    min-width: 10rem;
+    border: 1px solid rgba(0, 0, 0, .15);
+}
