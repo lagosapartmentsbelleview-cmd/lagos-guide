@@ -656,14 +656,14 @@ function gerarTabelaNova() {
     document.getElementById("tabelaNovaContainer").innerHTML = html;
 }
 
-// ===============================
-// CÁLCULO DO PREÇO MÉDIO NOITE HISTÓRICO (COM BASE NO FIREBASE)
+/// ===============================
+// CÁLCULO DO PREÇO MÉDIO NOITE HISTÓRICO (ROBUSTO)
 // ===============================
 
 function calcularPrecoMedioNoiteHistorico(dataISO, desfasamentoAnos) {
     if (!window.reservas || window.reservas.length === 0) return null;
 
-    // Converter a data atual (ex: 2027-06-05) para o ano histórico correspondente (ex: 2026-06-05 ou 2025-06-05)
+    // Converter a data da tabela (ex: 2027-01-01) para o ano histórico (ex: 2026-01-01)
     const partes = dataISO.split("-");
     const anoAlvo = parseInt(partes[0]) - desfasamentoAnos;
     const dataHistoricaISO = `${anoAlvo}-${partes[1]}-${partes[2]}`;
@@ -674,18 +674,17 @@ function calcularPrecoMedioNoiteHistorico(dataISO, desfasamentoAnos) {
     window.reservas.forEach(res => {
         if (!res.checkin || !res.checkout) return;
 
-        // Converter checkin/checkout do formato "DD/MM/YYYY" para "YYYY-MM-DD"
-        const [diaIn, mesIn, anoIn] = res.checkin.split("/");
-        const [diaOut, mesOut, anoOut] = res.checkout.split("/");
+        // Garantir conversão segura de "DD/MM/YYYY" para "YYYY-MM-DD"
+        let partesIn = res.checkin.split("/");
+        let partesOut = res.checkout.split("/");
+        
+        if (partesIn.length !== 3 || partesOut.length !== 3) return;
 
-        if (!anoIn || !mesIn || !diaIn || !anoOut || !mesOut || !diaOut) return;
+        const inicioISO = `${partesIn[2]}-${partesIn[1].padStart(2, "0")}-${partesIn[0].padStart(2, "0")}`;
+        const fimISO = `${partesOut[2]}-${partesOut[1].padStart(2, "0")}-${partesOut[0].padStart(2, "0")}`;
 
-        const inicioISO = `${anoIn}-${mesIn.padStart(2, "0")}-${diaIn.padStart(2, "0")}`;
-        const fimISO = `${anoOut}-${mesOut.padStart(2, "0")}-${diaOut.padStart(2, "0")}`;
-
-        // Verificar se a data histórica cai dentro do período desta reserva (Check-in <= data < Check-out)
+        // A noite pertence à reserva se: Check-in <= dataHistorica < Check-out
         if (dataHistoricaISO >= inicioISO && dataHistoricaISO < fimISO) {
-            // Utiliza o campo 'precoNoite' guardado na reserva, ou calcula através do total/noites
             let precoNoiteReserva = parseFloat(res.precoNoite);
             
             if (isNaN(precoNoiteReserva) || precoNoiteReserva <= 0) {
@@ -704,11 +703,10 @@ function calcularPrecoMedioNoiteHistorico(dataISO, desfasamentoAnos) {
     });
 
     if (contadorReservasNoite === 0) return null;
-    
-    // Retorna a média do preço por noite das reservas ativas nesse dia
     return somaPrecosNoite / contadorReservasNoite;
 }
 
+   
 // ===============================
 // PREENCHER TABELA NOVA
 // ===============================
