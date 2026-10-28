@@ -78,17 +78,49 @@ btnExportar.addEventListener("click", () => {
         return;
     }
 
-    // Converter a tabela HTML diretamente para uma folha do Excel
+    // Converter a tabela para o formato SheetJS
     const wb = XLSX.utils.table_to_book(tabela, { sheet: "Tabela de Preços" });
+    const ws = wb.Sheets["Tabela de Preços"];
 
-    // Nome do ficheiro com a data do dia
+    // Percorrer todas as células da tabela HTML para copiar as cores de fundo
+    const linhas = tabela.querySelectorAll("tr");
+    linhas.forEach((tr, rIdx) => {
+        const celulas = tr.querySelectorAll("th, td");
+        celulas.forEach((td, cIdx) => {
+            // Converter índice para a coordenada do Excel (ex: A1, B2...)
+            const cellAddress = XLSX.utils.encode_cell({ r: rIdx, c: cIdx });
+            if (!ws[cellAddress]) return;
+
+            // Se a célula tiver uma cor de fundo definida via JS/CSS
+            const bg = td.style.backgroundColor;
+            if (bg) {
+                // Converter RGB do browser para Hexadecimal do Excel
+                const hexColor = rgbToHex(bg);
+                if (hexColor) {
+                    ws[cellAddress].s = {
+                        fill: {
+                            patternType: "solid",
+                            fgColor: { rgb: hexColor }
+                        },
+                        font: {
+                            bold: td.style.fontWeight === "bold"
+                        }
+                    };
+                }
+            }
+        });
+    });
+
     const hoje = new Date().toISOString().split("T")[0];
-    const nomeFicheiro = `Tabela_Precos_${hoje}.xlsx`;
-
-    // Disparar o download
-    XLSX.writeFile(wb, nomeFicheiro);
+    XLSX.writeFile(wb, `Tabela_Precos_${hoje}.xlsx`);
 });
 
+// Função auxiliar para converter cor de CSS (RGB) em HEX para o Excel
+function rgbToHex(rgb) {
+    const result = rgb.match(/\d+/g);
+    if (!result || result.length < 3) return null;
+    return result.slice(0, 3).map(x => parseInt(x).toString(16).padStart(2, '0')).join('').toUpperCase();
+}
 // ===============================
 // PARSER DE TEXTO (BOOKING / VITASOL)
 // ===============================
