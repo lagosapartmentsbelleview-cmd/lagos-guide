@@ -633,6 +633,8 @@ function gerarTabelaNova() {
         "Preço Vitasol",
         "Feriado",
         "Evento",
+        "Preço Médio Noite (Ano -1)", // <-- ADICIONAR ESTA LINHA
+        "Preço Médio Noite (Ano -2)", // <-- ADICIONAR ESTA LINHA
         "Preço Final",
         "Preço Base",
         "Preço Base (R)",
@@ -654,6 +656,58 @@ function gerarTabelaNova() {
     document.getElementById("tabelaNovaContainer").innerHTML = html;
 }
 
+// ===============================
+// CÁLCULO DO PREÇO MÉDIO NOITE HISTÓRICO (COM BASE NO FIREBASE)
+// ===============================
+
+function calcularPrecoMedioNoiteHistorico(dataISO, desfasamentoAnos) {
+    if (!window.reservas || window.reservas.length === 0) return null;
+
+    // Converter a data atual (ex: 2027-06-05) para o ano histórico correspondente (ex: 2026-06-05 ou 2025-06-05)
+    const partes = dataISO.split("-");
+    const anoAlvo = parseInt(partes[0]) - desfasamentoAnos;
+    const dataHistoricaISO = `${anoAlvo}-${partes[1]}-${partes[2]}`;
+
+    let somaPrecosNoite = 0;
+    let contadorReservasNoite = 0;
+
+    window.reservas.forEach(res => {
+        if (!res.checkin || !res.checkout) return;
+
+        // Converter checkin/checkout do formato "DD/MM/YYYY" para "YYYY-MM-DD"
+        const [diaIn, mesIn, anoIn] = res.checkin.split("/");
+        const [diaOut, mesOut, anoOut] = res.checkout.split("/");
+
+        if (!anoIn || !mesIn || !diaIn || !anoOut || !mesOut || !diaOut) return;
+
+        const inicioISO = `${anoIn}-${mesIn.padStart(2, "0")}-${diaIn.padStart(2, "0")}`;
+        const fimISO = `${anoOut}-${mesOut.padStart(2, "0")}-${diaOut.padStart(2, "0")}`;
+
+        // Verificar se a data histórica cai dentro do período desta reserva (Check-in <= data < Check-out)
+        if (dataHistoricaISO >= inicioISO && dataHistoricaISO < fimISO) {
+            // Utiliza o campo 'precoNoite' guardado na reserva, ou calcula através do total/noites
+            let precoNoiteReserva = parseFloat(res.precoNoite);
+            
+            if (isNaN(precoNoiteReserva) || precoNoiteReserva <= 0) {
+                const total = parseFloat(res.totalBruto || res.totalLiquidoFinal || 0);
+                const noites = parseInt(res.noites) || 1;
+                if (total > 0 && noites > 0) {
+                    precoNoiteReserva = total / noites;
+                }
+            }
+
+            if (precoNoiteReserva > 0) {
+                somaPrecosNoite += precoNoiteReserva;
+                contadorReservasNoite++;
+            }
+        }
+    });
+
+    if (contadorReservasNoite === 0) return null;
+    
+    // Retorna a média do preço por noite das reservas ativas nesse dia
+    return somaPrecosNoite / contadorReservasNoite;
+}
 
 // ===============================
 // PREENCHER TABELA NOVA
@@ -713,6 +767,16 @@ function preencherTabelaNova() {
                     valor = baseR ? (baseR * 0.95).toFixed(2) + " €" : "—";
                 }
     break;
+
+                case "Preço Médio Noite (Ano -1)":
+                const mediaAno1 = calcularPrecoMedioNoiteHistorico(dataISO, 1);
+                valor = mediaAno1 !== null ? mediaAno1.toFixed(2) + " €" : "—";
+                break;
+
+            case "Preço Médio Noite (Ano -2)":
+                const mediaAno2 = calcularPrecoMedioNoiteHistorico(dataISO, 2);
+                valor = mediaAno2 !== null ? mediaAno2.toFixed(2) + " €" : "—";
+                break;
 
 
            case "Disponibilidade":
