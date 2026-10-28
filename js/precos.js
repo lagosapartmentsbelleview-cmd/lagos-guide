@@ -767,13 +767,17 @@ function preencherTabelaNova() {
     break;
 
                 case "Preço Médio Noite (Ano -1)":
-                const mediaAno1 = calcularPrecoMedioNoiteHistorico(dataISO, 1);
-                valor = mediaAno1 !== null ? mediaAno1.toFixed(2) + " €" : "—";
+                {
+                    const mediaAno1 = calcularPrecoMedioNoiteHistorico(dataISO, 1);
+                    valor = (mediaAno1 !== null && !isNaN(mediaAno1)) ? mediaAno1.toFixed(2) + " €" : "—";
+                }
                 break;
 
-            case "Preço Médio Noite (Ano -2)":
-                const mediaAno2 = calcularPrecoMedioNoiteHistorico(dataISO, 2);
-                valor = mediaAno2 !== null ? mediaAno2.toFixed(2) + " €" : "—";
+                case "Preço Médio Noite (Ano -2)":
+                {
+                    const mediaAno2 = calcularPrecoMedioNoiteHistorico(dataISO, 2);
+                    valor = (mediaAno2 !== null && !isNaN(mediaAno2)) ? mediaAno2.toFixed(2) + " €" : "—";
+                }
                 break;
 
 
