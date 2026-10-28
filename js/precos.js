@@ -66,8 +66,27 @@ btnImportar.addEventListener("click", () => {
 // EXPORTAR (placeholder)
 // ===============================
 
+// ===============================
+// EXPORTAR TABELA DE PREÇOS PARA EXCEL
+// ===============================
+
 btnExportar.addEventListener("click", () => {
-    alert("Exportação Excel será implementada na fase 2.");
+    const tabela = document.getElementById("tabelaNova");
+
+    if (!tabela) {
+        alert("Gere primeiro a Tabela de Preços antes de exportar.");
+        return;
+    }
+
+    // Converter a tabela HTML diretamente para uma folha do Excel
+    const wb = XLSX.utils.table_to_book(tabela, { sheet: "Tabela de Preços" });
+
+    // Nome do ficheiro com a data do dia
+    const hoje = new Date().toISOString().split("T")[0];
+    const nomeFicheiro = `Tabela_Precos_${hoje}.xlsx`;
+
+    // Disparar o download
+    XLSX.writeFile(wb, nomeFicheiro);
 });
 
 // ===============================
