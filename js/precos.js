@@ -764,7 +764,34 @@ function preencherTabelaNova() {
 
             case "Preço Final":
                 const precoVit = obterPrecoVitasol(dataISO);
-                valor = precoVit ? (precoVit - margem).toFixed(2) + " €" : "—";
+                if (precoVit) {
+                    const precoFinalNum = precoVit - margem;
+                    valor = precoFinalNum.toFixed(2) + " €";
+
+                    // Obter o valor do Ano -1 para comparar
+                    const mediaAno1 = calcularPrecoMedioNoiteHistorico(dataISO, 1);
+
+                    if (mediaAno1 !== null && !isNaN(mediaAno1)) {
+                        const diferenca = mediaAno1 - precoFinalNum;
+
+                        // Aplicar cores com base na diferença
+                        if (diferenca > 5) {
+                            td.style.backgroundColor = "#ffcccc"; // Vermelho claro suave
+                            td.style.color = "#990000";
+                            td.style.fontWeight = "bold";
+                        } else if (diferenca < -5) {
+                            td.style.backgroundColor = "#d4edda"; // Verde claro suave
+                            td.style.color = "#155724";
+                            td.style.fontWeight = "bold";
+                        } else {
+                            td.style.backgroundColor = "#fff3cd"; // Amarelo/Dourado claro suave
+                            td.style.color = "#856404";
+                            td.style.fontWeight = "bold";
+                        }
+                    }
+                } else {
+                    valor = "—";
+                }
                 break;
 
             case "Preço Base":
